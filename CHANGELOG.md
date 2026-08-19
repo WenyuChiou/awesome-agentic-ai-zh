@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-08-19(第二批)
+
+- **feat** · **README 加一則手機導讀(三語)**,建議用手機的人走線上文件站而不是 GitHub 這一頁。這不是感覺,是量出來的:375px 寬之下,文件站的 `mcp-skills-catalog` 頁 79 個表格**沒有一個**需要橫向拖動(最寬 343px),而 GitHub README 的 10 個表格**有 9 個要**。(review 另外抽測 14 頁、共 139 個表格,0 個被裁切,結論一致。原本這句寫成「文件站 79 個表格」會讀成全站總數,實際只是那一頁——**把單頁抽樣講成通則,正是這份 CHANGELOG 記錄過好幾次的毛病**。)文件站另外還有跨頁搜尋與側邊目錄。桌機兩邊都好讀,差別只在手機。
+- **fix** · **順手修掉一個會讓上面那句話將來變成假話的 CSS**。`docs/stylesheets/extra.css` 為了圓角把表格設成 `overflow: hidden`,但那代表**表格一旦真的溢出,內容會被無聲裁掉、連拖都拖不到**——比它想取代的「要左右拖」還糟。改成 `overflow: auto`:圓角照樣有(任何非 visible 的 overflow 都會建立裁切脈絡),而萬一將來某個表格撐開了,降級成可以捲動而不是看不見。**一句宣稱如果只是碰巧成立,遲早會變成謊話。**
+- **chore** · **Star History 圖表本來要加,查證後撤掉**。我原本只驗了端點回 HTTP 200、SVG 有 60KB 就當作可用;review 追下去讀了 SVG 的內容,才發現那 60KB 裡只有五個文字節點,寫的是「**GitHub restricted access to star data**」——是錯誤佔位圖,不是圖表。自己覆驗:`torvalds/linux` 與 `facebook/react` 回傳**位元組數完全一樣**的同一張圖(60125 bytes),所以是平台級中斷而非本 repo 問題(star-history 官方說明起於 2026-06-30 GitHub 收緊 stargazer API)。**這個失敗模式長得跟成功一模一樣:狀態碼對、大小對、格式也是合法 SVG,錯的只是內容。**官方的解法要 repo owner 把自己的 GitHub token 交給第三方站台,那是所有者的決定,不是我該代勞的。等上游修好或決定用 token 再加。
+- **chore** · 婉拒 [#115](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/115) 與 [#116](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/116)(sandbase-harness,★624)。提案品質相當好——主動說明與現有 deepseek-harness entry 的分工、附 30 分鐘練習設計、甚至主動寫明不碰 zh-Hans——但**★1000 那條線是同一批一起定的,而它同時也排除了幾個我自己覺得不錯的專案**。用一把尺,才不會變成看提案寫得好不好來決定。
+
 ## 2026-08-18
 
 - **content** · **Stage 7 必修閱讀補三個多 agent harness / UI**(三語):[stablyai/orca](https://github.com/stablyai/orca)(★48k+、MIT)、[yc-software/qm](https://github.com/yc-software/qm)(★13k+、MIT)、[cft0808/edict](https://github.com/cft0808/edict)(★16k+、MIT)。三者剛好是同一個問題的三種切法:orca 是「**一個人開很多 agent**」(每個 agent 各自一個 git worktree,跑完並排比較挑一個 merge);qm 是 **Y Combinator 自己開源的 quartermaster**,處理「**一整間公司共用 agent**」(每個員工一個隔離 workspace,各有獨立的 memory / 金鑰視野 / 權限 / 沙箱);edict 是中文專案,拿三省六部制把「誰有權決定、誰負責審、誰只能執行」寫成明確角色。放在一起讀比單看一個有用。

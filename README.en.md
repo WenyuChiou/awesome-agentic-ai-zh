@@ -22,6 +22,8 @@
 
 </div>
 
+> 📱 **On a phone, read the [docs site](https://wenyuchiou.github.io/awesome-agentic-ai-zh/) rather than this page.** Same content, but its tables reflow to the screen instead of needing a sideways drag, and it has search across every page plus a sidebar outline. On a desktop either is fine; on a phone the gap is wide.
+
 > **Trilingual — the English edition is fully maintained, not a thin machine translation** (only ~0.4% of English lines carry any CJK, almost all intentional bilingual term-mapping). zh-TW is the curation source of truth (new content lands there first); the English and 简中 editions track the same structure, with CI checking localization correctness and anchor integrity across all three.
 
 ---

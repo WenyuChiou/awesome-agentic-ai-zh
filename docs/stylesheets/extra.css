@@ -86,7 +86,14 @@
 /* ---- Tables: tighter, rounded, hover ---- */
 .md-typeset table:not([class]) {
   border-radius: 10px;
-  overflow: hidden;
+  /* auto, not hidden. Any non-visible overflow value still gives the rounded
+     corners a clipping context, but `hidden` ALSO means a table that does
+     overflow gets silently cropped with no way to reach the rest, which is
+     worse than the sideways drag it was replacing. Today no table overflows at
+     375px (measured across 14 pages), and the README now tells phone readers so
+     — this keeps that claim true by degrading to a scroll rather than to
+     invisible content. */
+  overflow: auto;
   font-size: .80rem;
 }
 .md-typeset table:not([class]) th {
