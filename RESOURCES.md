@@ -83,6 +83,7 @@
 - [**hesreallyhim/awesome-claude-code**](https://github.com/hesreallyhim/awesome-claude-code) — Claude Code 相關資源清單（整理中）
 - [**travisvn/awesome-claude-skills**](https://github.com/travisvn/awesome-claude-skills) — Claude Skills 清單
 - [**anthropics/claude-plugins-official**](https://github.com/anthropics/claude-plugins-official) — Anthropic 官方 plugin 範本，要打包自己的 plugin 從這份開始
+- [**sandbaseai/deepseek-harness-handbook**](https://github.com/sandbaseai/deepseek-harness-handbook) — DeepSeek Harness agent runtime 社群維護手冊，115+ 篇指南涵蓋 agents、plugins、MCP、ACP、安全、故障排除（含 Claude Code hooks bridge 指南），多語言（英文權威 + 簡中審核），Apache-2.0
 
 ### 中文社群必看
 
