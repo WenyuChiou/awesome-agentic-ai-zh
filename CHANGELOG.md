@@ -6,6 +6,18 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-08-23
+
+- **content** · **Stage 5 補上 MCP 2026-07-28 的無狀態改版**(三語)。拿掉 `initialize` 握手與 `Mcp-Session-Id`、server 改用自發 handle 當普通 tool 參數、新增 `server/discover`、Roots/Sampling/Logging 與 HTTP+SSE 標為 deprecated(至少 12 個月過渡期)、MRTR 取代 server 主動發請求。每一條都從官方 changelog 讀出來。**補之前先查過 repo 現況**:`2026-07-28` 已經出現 15 處,所以這是補概念不是改錯——缺的是 MCP 語境下的 `stateless` 以及 `MRTR`、`server/discover`、`Mcp-Session-Id`——後三者先前是 0 處,`stateless` 則只在 walkthrough 裡以「agent 有沒有記憶」的無關語義出現過。
+- **content** · **四個新專案,全部表格型態**。Stage 7 參考實作新增表格收 [grok-build](https://github.com/xai-org/grok-build)(★25k+)與 [NemoClaw](https://github.com/NVIDIA/NemoClaw)(★22k+);catalog 第 17 類收 [OpenShell](https://github.com/NVIDIA/OpenShell)(★8.3k+)與 [nono](https://github.com/nolabs-ai/nono)(★3.7k+)。條目 79 → 81,39 處數字宣稱同步(照 `check-catalog-counts.py` 自己的座標定位,不是整包 sed)。星數 / license / 語言 / push 日期全部讀自 `gh api`。
+- **tooling** · **新增 `check-duplicate-repos.py` + 掛進 CI**。起因是 `microsoft/agent-framework` 被我當成新專案加進 Stage 4 的表,但它 2026-06-13 就在同一張表裡了——星數、license、push 日期全查證過,**唯獨沒有 grep 一次 slug**,而六個內容 gate 全綠,**是 reviewer 讀 diff 讀出來的**(唯一會數條目的 gate 只掃 catalog,看不到 stage 的散文表格)。**前兩版都錯在太吵**:v1 比整個檔案報 229 筆、v2 比區塊但取整行連結報 6 筆,全是誤判。最終版比「同一張表 / 清單裡每列的第一個連結」,剩 3 筆逐一確認是同一本書一章一列,用 baseline 記錄。**一個報 229 個問題的檢查會被無視,而被無視的檢查比沒有檢查更糟——它看起來像有覆蓋。**
+- **fix** · **三個讀者已經在用的詞不再翻譯**(三語):Stage 2 的 `eval harness` 曾被寫成「評估腳手架」貼在英文旁邊、後面又解釋一次;(三條都是 audit 找出來的)Stage 8 的 `accessibility tree` 段落中途變成「無障礙樹」,而同一則 callout 的標題與結尾括號都用英文;Stage 7 的 `sandbox` 被寫成「沙箱」,同檔保留英文 5 次(只改了 qm 條目那處;deepseek 條目裡那個「沙箱」是在列 plugin 元件類別、不是講產品介面,留著)。**讀者之後去 grep 工具自己的文件時,認不出那個中文詞是同一個東西。**
+- **fix** · **砍掉 13 處重述**(Stage 1/2/3/4/5/6/7/7.5,三語)。形狀都一樣:幾行前才講過的事換句話再講一次。其中 Stage 1 那則最糟——callout 標題寫「不裝 Ollama 也能讀」、下一句就給安裝指令,中間沒有轉折,**兩句話讀起來像自相矛盾**;Stage 6 有一句塞了七個模型的複合主詞、動詞最後才到,而兩行下的表格列得更清楚。Stage 5 的兩條不是刪掉而是換成表格沒有的資訊。
+- **fix** · **`协定` → `协议`**,五處 protocol 語義(RESOURCES、glossary ×2、stages/03、stages/07)。**刻意不加進自動改寫規則**:`协定` 在陸語是合法詞(貿易協定),只有指 protocol 時才錯,兩種語義都是開放集合,守衛與黑名單都攔不住;而那支 gate 會改寫 tracked 檔案,取代錯了是無聲破壞。排除理由寫進腳本並明寫「如果你正想加上去:不要」。**`--check` 從頭到尾都 clean——表裡沒有的詞,gate 就看不見。**
+- **chore** · 依 ★1000 門檻婉拒 [#115](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/115)、[#116](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/116)(sandbase-harness ★624)與 [#120](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/120)(deepseek-harness-handbook ★45)。三則都附了技術回饋:前者提案品質高於多數投稿,後者只改 `RESOURCES.md` 沒動三語鏡像。
+- **chore** · **審計時兩個既有 gate 反過來抓到新寫的腳本**:`test_check_anchors.py` 擋下它自己實作 ```` ``` ```` 開關(#95/#97 證明錯的那種)、`test_repo_scan_excludes.py` 擋下無法確認是相對路徑的元件比對(那個形狀曾讓 blocking gate 從 worktree 掃 0/68 個檔案還回報全綠)。**兩個都是先前事故後才建的,都在第一支新腳本上就發動。**
+- **chore** · 未做:audit 另外建議幫 Stage 7.5 的 12 列表格加第六欄「為什麼重要」。**刻意不做**——那張表已經五欄,加到六欄會變成全 repo 最寬,而幾天前才推了 README callout 告訴手機讀者文件站的表格會折行;且多列的定義本來就帶了後果。
+
 ## 2026-08-19(第二批)
 
 - **feat** · **README 加一則手機導讀(三語)**,建議用手機的人走線上文件站而不是 GitHub 這一頁。這不是感覺,是量出來的:375px 寬之下,文件站的 `mcp-skills-catalog` 頁 79 個表格**沒有一個**需要橫向拖動(最寬 343px),而 GitHub README 的 10 個表格**有 9 個要**。(review 另外抽測 14 頁、共 139 個表格,0 個被裁切,結論一致。原本這句寫成「文件站 79 個表格」會讀成全站總數,實際只是那一頁——**把單頁抽樣講成通則,正是這份 CHANGELOG 記錄過好幾次的毛病**。)文件站另外還有跨頁搜尋與側邊目錄。桌機兩邊都好讀,差別只在手機。
