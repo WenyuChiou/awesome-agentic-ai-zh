@@ -323,6 +323,20 @@ jobs:
         # check-links.py in a finally block.
         run: python3 scripts/mutate_check_links.py
 
+      - name: check-duplicate-repos.py (same repo listed twice in one table)
+        # 2026-08-23: microsoft/agent-framework was added to the Stage 4 table
+        # as new when it had been in that same table since 2026-06-13. Stars,
+        # license and push date were verified; the slug was never grepped, and
+        # all six content gates stayed green because the only entry-counting
+        # gate is scoped to resources/mcp-skills-catalog.* and cannot see a
+        # stage's prose table. Compares within one table or list only, using
+        # each row's first link, so cross-references and monorepo subdirectory
+        # entries are not reported. stdlib-only, network-free.
+        run: python3 scripts/check-duplicate-repos.py --quiet
+
+      - name: check-duplicate-repos.py unit tests
+        run: python3 scripts/test_duplicate_repos.py
+
       - name: zh-hans-localize.py substitution rule tests
         # This gate REWRITES tracked files, and until 2026-08-14 nothing tested
         # its substitution logic — the #102 shape. The cost was concrete:
