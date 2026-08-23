@@ -160,7 +160,7 @@ If not — go back to Stage 0 first.
 >
 > 💰 **Stage 1 budget estimate** (all 6 exercises, 3-5 runs each): **all local = $0**, **all haiku ≈ $0.30**, **all sonnet ≈ $0.90**. Full model list + Stage 1-7 total budget: [`examples/README.en.md#recommended-llm-list`](../examples/README.en.md#recommended-llm-list).
 >
-> 💡 **No Ollama yet?** Each exercise also ships a Path B Anthropic version — pick one. To enable Path A in one step: [`pip install openai && ollama pull gemma4:e4b`](https://ollama.com).
+> 💡 **Only reading, not installing Ollama?** Just use each exercise's Path B (Anthropic) block. You only need this if you actually want to run Path A: [`pip install openai && ollama pull gemma4:e4b`](https://ollama.com).
 
 ### Exercise 1: LLM API (hello world)
 Five-line Python script that calls an LLM and prints the response. **Defaults to local Ollama (free, offline)**; switch to Path B Anthropic when you want cloud-quality answers. Details in [`examples/README.en.md`](../examples/README.en.md#three-paths--default-is-ollama-cost-driven).

@@ -9,7 +9,7 @@
 > 📋 **本章組成**：〔Multi-Agent · Production 化 是什麼（先定位）+ 五層工程分工 + 何時用 multi-agent〕→ 學習目標 → 進入條件 → 必修閱讀 → Harness Engineering（**8 個核心元件含 Cost/Latency**）→ 動手練習（含練習 6 Cost Optimization）→ **Agent Benchmark Landscape：怎麼看，不要只看排行榜** → 常用工具推薦 → 精選 Projects → 自我檢查
 > 🔑 **關鍵名詞**：見 [`resources/glossary.md` 4 + 6](../resources/glossary.md#4-multi-agent)（multi-agent / orchestration / handoff / eval / observability / harness（模型外圍的執行與控制層））
 
-最後一個階段。你正從「我會做 agent」走向「我能讓 agent **真的給人穩定用**——多個 agent 協作、有 eval、有 observability、能部署到可用環境」。**「Production 化」 ≠ enterprise scale**——只要 agent 能穩定產出 + 能讓別人使用、就算進入這 stage 範圍。
+最後一個階段。你正從「我會做 agent」走向「我能讓 agent **真的給人穩定用**——多個 agent 協作、有 eval、有 observability、能部署到可用環境」。範圍怎麼界定，看下面三句話。
 
 ## 🎯 Multi-Agent · Production 化 是什麼（先定位）
 

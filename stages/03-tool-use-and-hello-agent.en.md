@@ -133,7 +133,7 @@ You should already have:
 
 ### ⚠️ Know the risk first: giving an agent tools = giving it an attack surface
 
-The moment you hand an LLM tools, you also hand it an attack surface. The clearest framing is Simon Willison's **lethal trifecta**: an agent is exploitable when it simultaneously has all three of —
+The clearest framing is Simon Willison's **lethal trifecta**: an agent is exploitable when it simultaneously has all three of —
 
 1. **access to private data** (your files / DB / API keys)
 2. **exposure to untrusted content** (web pages, emails, documents others send — any of which can hide instructions)

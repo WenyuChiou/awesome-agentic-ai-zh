@@ -391,7 +391,7 @@ These layers are often confused. **A one-line comparison**:
 
 - A single-line setting → put it in `CLAUDE.md`
 - A multi-step process, used only in a specific situation → write a **Skill** (the topic of this section)
-- Need to access external resources (API / DB) → write an **MCP server**
+- What you are wiring up is the **external system itself**, not just a rule → write an **MCP server** (a skill cannot produce the data; only MCP can actually hit the API or query the DB)
 - The skill is too large and consumes the entire main session window → turn it into a **Subagent**
 - Want to package a Skill / command / MCP / hook to share → package it as a **Plugin**
 
@@ -600,7 +600,7 @@ Multi-agent CLIs were once unique to Claude Code—in 2026 both Codex CLI and Ge
 
 - The task is independent, workers don't interact, and the result just needs to be returned to the main session → **Subagent** (simplest, most token-efficient)
 - Workers need to communicate / debate / share a task list → **Agent team** (officially documented, but still requires an opt-in env var; uses 3-5x the tokens, suitable for research / debugging competing hypotheses)
-- Multiple independent tasks running, and you want to monitor them all from one interface → **Background agent** (research preview, suitable for long-running parallel tasks)
+- No need for the workers to talk to each other, and you only want to check progress now and then → **Background agent** (research preview, suitable for long-running parallel tasks)
 
 ---
 

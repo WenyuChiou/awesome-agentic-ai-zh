@@ -460,9 +460,7 @@ text = msg.content[0].text
 
 LLM-powered system 的工程实践是分层的。这不是 1 次 call vs N 次 call 的区别。**这里先看跟“写 prompt”直接相邻的三层**——完整是**五层**，往外还有 Loop 与 Graph，见 [Stage 7 五层工程分工](07-multi-agent-production.zh-Hans.md#五层工程分工prompt--context--harness--loop--graph)（分层的 canonical 出处）。每一层工程的对象 **不一样**：
 
-- **Prompt Engineering**（本 stage）= 工程 **送进模型的那段字符串**
-- **Context Engineering**（Stage 6）= 工程 **每次 call 时，context window 里装什么信息**——动态组装 RAG retrieve 结果、memory、tool definitions、对话 history
-- **Harness Engineering**（Stage 7）= 工程 **模型外围的执行与控制层**——agent loop、retry、sandbox、observability、deployment 等所有非 LLM 代码
+三层分别工程的是:**送进模型的那段字符串**(本 stage)、**context window 里装什么**(Stage 6)、**模型外面的执行与控制层**(Stage 7)。逐项定义与各自在哪一 stage 学,见下表。
 
 → 三层 **正交**：一次 call 的 RAG app 也在做 context engineering（重点是组 context，不是 call 几次）；50 次 call 但没做 retrieval 的 chatbot 仍然只是在做 prompt engineering。
 

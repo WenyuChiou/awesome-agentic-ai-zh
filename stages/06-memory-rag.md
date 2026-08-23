@@ -647,7 +647,7 @@ Reflexion 是 **prompt-based reflection**——LLM 在 inference 時自己改自
 
 > 📺 **視覺學習**：[李宏毅 2025 第七講 — DeepSeek-R1 這類大型語言模型是如何進行「深度思考」(Reasoning) 的？](https://www.youtube.com/watch?v=bJFtcwLSNxI)（NTU 生成式AI時代下的機器學習 2025）
 
-OpenAI **o1**（2024-09）開啟、DeepSeek **R1**（2025-01）開源化、**DeepSeek-V4-Pro**（2026-04 preview、agent-focused 開源 reasoning）+ Claude Fable 5（2026-06、Mythos-class、位階在 Opus class 之上）+ Claude Opus 5（2026-07、Opus class 旗艦、Anthropic 官方建議的預設起點；前身 Opus 4.8 帶來 Dynamic Workflows + parallel subagent）+ GPT-5.5（2026-04）+ Gemini 3.1 Pro（2026-02）為當前 frontier（2026-06 後半 Gemini 3.5 Flash 登場；GPT-5.6 Sol / Terra / Luna 已於 2026-07 正式推出）——把「step-by-step thinking + 自我糾錯」**訓練進 model 權重**、inference 時自動展開長 reasoning chain（thinking tokens）。**這是 2024-2026 LLM 最大典範轉移**、目前所有 frontier model 都走這路。下表只列**當前（2026-07）frontier**——歷史前身（o1 / R1 / Sonnet 4.5 / Gemini 2.5）省略、想看 lineage 看每家發布日列。
+OpenAI **o1**（2024-09）開啟這條路、DeepSeek **R1**（2025-01）開源化——把「step-by-step thinking + 自我糾錯」**訓練進 model 權重**、inference 時自動展開長 reasoning chain（thinking tokens）。**這是 2024-2026 LLM 最大典範轉移**、目前所有 frontier model 都走這路（Claude Opus 5、Claude Fable 5、GPT-5.5、Gemini 3.1 Pro、DeepSeek-V4-Pro 等，各自的發布日與定位見下表）。下表只列**當前（2026-07）frontier**——歷史前身（o1 / R1 / Sonnet 4.5 / Gemini 2.5）省略、想看 lineage 看每家發布日列。
 
 | Model | 來源 / 發布 | 特色 | 連結 |
 |---|---|---|---|

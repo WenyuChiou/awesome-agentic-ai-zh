@@ -391,7 +391,7 @@ Skill = **一個 markdown 檔**（`.claude/skills/<name>/SKILL.md`），告訴 C
 
 - 一句話設定 → 寫進 `CLAUDE.md`
 - 多步驟流程、某情境才用 → 寫 **Skill**（本節主題）
-- 需要存取外部資源（API / DB） → 寫 **MCP server**
+- 要接的是**外部系統本身**、不只是規則 → 寫 **MCP server**（skill 生不出資料，只有 MCP 能真的打 API / 查 DB）
 - Skill 跑起來太大、會吃光主 session window → 改成 **Subagent**
 - Skill / command / MCP / hook 想打包送人 → 包成 **Plugin**
 
@@ -600,7 +600,7 @@ multi-agent CLI 一度是 Claude Code 獨有——2026 年 Codex CLI 與 Gemini 
 
 - 任務獨立、worker 不互動、結果回主 session 即可 → **Subagent**（最簡單、token 最省）
 - Worker 需要互相溝通 / debate / 共享 task list → **Agent team**（已正式有 docs、但仍需 opt-in env var；token 3-5x、適合 research / debug 競爭假設）
-- 多個獨立任務各自跑、想用 1 個介面監控全部 → **Background agent**（research preview、適合長時間任務並行）
+- 不需要 worker 之間互相溝通、你只想不定期回來看進度 → **Background agent**（research preview、適合長時間任務並行）
 
 ---
 

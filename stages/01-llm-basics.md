@@ -159,7 +159,7 @@
 >
 > 💰 **Stage 1 預算估算**（全 6 練習各跑 3-5 次）：**全本機 = $0**、**全 haiku ≈ $0.30**、**全 sonnet ≈ $0.90**。完整 model 清單 + Stage 1-7 全程預算估算見 [`examples/README.md#推薦-llm-清單`](../examples/README.md#推薦-llm-清單)。
 >
-> 💡 **不裝 Ollama 也能讀** — 每個練習的 Path B 區塊就是 Anthropic 版、選一個跑就行。先 [`pip install openai && ollama pull gemma4:e4b`](https://ollama.com) 就裝好 Path A 環境。
+> 💡 **只想讀、不想裝 Ollama** — 直接看每個練習的 Path B（Anthropic）區塊就好。想實際跑 Path A 才需要 [`pip install openai && ollama pull gemma4:e4b`](https://ollama.com) 就裝好 Path A 環境。
 
 ### 練習 1：LLM API（hello world）
 五行 Python 呼叫 LLM 並印出回應。**預設用 Ollama 本機跑（免費、offline）**；想看 cloud 答案品質改 Path B Anthropic。詳見 [`examples/README.md`](../examples/README.md#三條路徑--預設用-ollama成本考量)。
