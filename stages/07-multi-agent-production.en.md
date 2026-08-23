@@ -196,6 +196,14 @@ Want to see what a harness running in production looks like? Two references:
 - **The entire Claude Code runtime** — is a reference harness implementation. **For a source-reading exercise, see [Stage 5.7](05-claude-code-ecosystem.en.md#57--dissecting-claude-code-source-reference-harness-implementation--a-must-read-for-track-b)** (clone `claude-agent-sdk-python` and dissect the main loop + where the first 6 runtime components from the table above live; the 7th, Eval harness, is a plugin, and the 8th, Cost / Latency, is cross-cutting, see the deep-dive below)
 - **`anthropics/claude-agent-sdk-python`** source — the specific repo used in the exercise above
 
+
+**Full harnesses you can just open and read** (all open-sourced in 2026 and large enough to be worth it; read them against the eight core components above):
+
+| Project | ⭐ | Language / License | What it demonstrates |
+|---|---|---|---|
+| [xai-org/grok-build](https://github.com/xai-org/grok-build) | ★ 25k+ | Rust / Apache-2.0 | SpaceXAI's terminal coding agent. One core serves an interactive TUI, a headless mode for CI, and editor embedding, which makes it a complete example of **how many execution modes one harness has to serve** |
+| [NVIDIA/NemoClaw](https://github.com/NVIDIA/NemoClaw) | ★ 22k+ | TypeScript / Apache-2.0 | A reference stack for running other people's agents (Hermes, LangChain Deep Agents, OpenClaw) inside a managed runtime. The interesting part is **where responsibility splits between harness and sandbox**: it builds no agent of its own, only inference management and lifecycle. **⚠️ The maintainers call it alpha** and handle issues and PRs on a best-effort basis |
+
 → The remaining 6 exercises in this stage (multi-agent / eval / observability / SDK / deploy / cost) each cover one facet of the harness. Completing the full stage = assembling a complete mental model of harness engineering.
 
 ### Deep dive into the 8th core component — Cost / Latency Optimization (Required for 2024-2026 Productionization)

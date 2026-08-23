@@ -2,7 +2,7 @@
 
 > **繁體中文** | [简体中文](./mcp-skills-catalog.zh-Hans.md) | [English](./mcp-skills-catalog.en.md)
 
-> 把 Claude Code（或其他 CLI agent）接到你已經在用的工具，不用反覆切換視窗。本頁是 79+ 個分類整理過的 MCP server / Claude Skill / 整合範例（含研究工作流 + multi-LLM delegation 兩個專屬區）。
+> 把 Claude Code（或其他 CLI agent）接到你已經在用的工具，不用反覆切換視窗。本頁是 81+ 個分類整理過的 MCP server / Claude Skill / 整合範例（含研究工作流 + multi-LLM delegation 兩個專屬區）。
 
 ---
 
@@ -37,7 +37,7 @@
 14. [Multi-LLM Delegation Skills](#14-multi-llm-delegation-skills)（3）
 15. [金融 / 交易 Agents](#15-金融--交易-agents)（2）
 16. [網頁搜尋 / 檢索（Web Search / Retrieval）](#16-網頁搜尋--檢索web-search--retrieval)（2）
-17. [資安 / MCP 安全治理](#17-資安--mcp-安全治理)（2）
+17. [資安 / MCP 安全治理](#17-資安--mcp-安全治理)（4）
 
 ---
 
@@ -1081,6 +1081,30 @@ Claude 不擅長 token-heavy 機械式工作（成本高、context 容易爆）�
 **教什麼**：把每一個 MCP server 跑在隔離容器裡，用最小權限檔取代本機憑證，並提供 audit log 與可設定的身分／存取政策；另附 Kubernetes operator。
 **適合誰**：團隊裡已經有人各自裝了一堆 MCP server，開始需要回答「誰裝了什麼、它拿得到哪些憑證」的人。
 **備註**：Go 專案，桌面版與 CLI 都有。開源的 ToolHive 與 Stacklok 的企業版是分開的，評估功能時注意分界在哪。
+
+### [NVIDIA/OpenShell](https://github.com/NVIDIA/OpenShell) ⭐⭐⭐⭐
+
+| 欄位 | 內容 |
+|---|---|
+| Stars | ★ 8.3k+ |
+| License | Apache-2.0 |
+| 推薦度 | ⭐⭐⭐⭐（**NVIDIA 官方**） |
+
+**教什麼**：給自動化 agent 用的沙箱化執行環境，用宣告式政策管住檔案、網路與行程；Claude Code 與 Codex 不改任何程式碼就能跑在裡面（OpenClaw 要另外透過下面那則 NemoClaw）。
+**適合誰**：要讓 agent 真的能執行指令、但不想把整台機器交出去的人。
+**備註**：Rust 專案。需要 Docker / Podman 或主機虛擬化（MicroVM sandbox 用）；Windows 走 WSL 2 且標為 experimental。**⚠️ 專案自述仍是 alpha**（最新 release 還在 `v0.0.x`），拿來讀與試可以，正式倚賴前先自行評估。與 `toolhive` 的分工是：toolhive 管的是 MCP server，這個管的是 agent 本身的執行邊界。
+
+### [nolabs-ai/nono](https://github.com/nolabs-ai/nono) ⭐⭐⭐⭐
+
+| 欄位 | 內容 |
+|---|---|
+| Stars | ★ 3.7k+ |
+| License | Apache-2.0 |
+| 推薦度 | ⭐⭐⭐⭐ |
+
+**教什麼**：用作業系統自己的隔離機制（Linux Landlock、macOS Seatbelt）擋住 agent，不需要 daemon 也不需要容器。
+**適合誰**：想要沙箱但不想為此裝一整套 container runtime 的人。
+**備註**：Rust 專案，由做 Sigstore 的團隊維護。零容器是它跟 OpenShell 最大的取捨差異：啟動快、但隔離強度受限於作業系統提供的機制。
 
 ## 還有什麼沒收錄？
 

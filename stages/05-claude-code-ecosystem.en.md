@@ -307,7 +307,7 @@ MCP / Skills give the agent *more* abilities; **Hooks are the reverse: you attac
 ### Curated Projects (for spec / SDK / template reference)
 
 > 💡 **Looking for MCP servers for everyday tools (Notion / Obsidian / Excel / Postgres / Playwright / Figma, etc.)?**
-> Check out [`resources/mcp-skills-catalog.en.md`](../resources/mcp-skills-catalog.en.md)—it organizes 79+ common MCP servers / Skills into 16 categories, each with stars / license / intended audience. The table below retains official servers / SDKs that serve as a "**reference for writing your own MCP server**."
+> Check out [`resources/mcp-skills-catalog.en.md`](../resources/mcp-skills-catalog.en.md)—it organizes 81+ common MCP servers / Skills into 16 categories, each with stars / license / intended audience. The table below retains official servers / SDKs that serve as a "**reference for writing your own MCP server**."
 
 | Project | ⭐ | Best for | Why it's recommended / Notes |
 |---|---|---|---|

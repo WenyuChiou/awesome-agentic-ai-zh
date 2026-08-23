@@ -47,7 +47,7 @@ Wanted to surface a proposal for when you're ready:
 I maintain [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
 — a trilingual (zh-TW canonical · zh-Hans · English) 8-stage learning roadmap
 for agentic AI. **Stage 5 is dedicated entirely to the Claude Code ecosystem**
-(MCP, Skills, Plugins, Hello-World walkthroughs, 79+ entry integration catalog
+(MCP, Skills, Plugins, Hello-World walkthroughs, 81+ entry integration catalog
 by use case).
 
 awesome-claude-code is already in our `Related projects` section
@@ -77,7 +77,7 @@ trilingual translation discipline, CI lint on every PR.
 Hey @hesreallyhim — your awesome-claude-code list is already in our README's
 "Related projects". Built a complement: a trilingual (zh-TW / zh-Hans / en)
 8-stage learning roadmap, with Stage 5 dedicated to Claude Code (MCP, Skills,
-Plugins, walkthroughs, 79+ integrations grouped by use case).
+Plugins, walkthroughs, 81+ integrations grouped by use case).
 
 ★525 in week 1, MIT licensed. If a reciprocal link in awesome-claude-code's
 Learning Resources section makes sense, just opened a PR

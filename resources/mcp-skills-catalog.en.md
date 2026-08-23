@@ -2,7 +2,7 @@
 
 > [繁體中文](./mcp-skills-catalog.md) | [简体中文](./mcp-skills-catalog.zh-Hans.md) | **English**
 
-> Connect Claude Code (or any other CLI agent) to the apps you already use, without window-hopping. This page is a curated index of 79+ MCP servers / Claude Skills / integrations grouped by use case (incl. research-workflow + multi-LLM-delegation dedicated sections).
+> Connect Claude Code (or any other CLI agent) to the apps you already use, without window-hopping. This page is a curated index of 81+ MCP servers / Claude Skills / integrations grouped by use case (incl. research-workflow + multi-LLM-delegation dedicated sections).
 
 ---
 
@@ -37,7 +37,7 @@
 14. [Multi-LLM Delegation Skills](#14-multi-llm-delegation-skills) (3)
 15. [Finance / Trading Agents](#15-finance--trading-agents) (2)
 16. [Web Search / Retrieval](#16-web-search--retrieval) (2)
-17. [Security / MCP Governance](#17-security--mcp-governance) (2)
+17. [Security / MCP Governance](#17-security--mcp-governance) (4)
 
 ---
 
@@ -1080,6 +1080,30 @@ Claude is bad at token-heavy mechanical work (cost, context blowout); Codex is b
 **What it does**: runs every MCP server in an isolated container, replaces local credentials with a minimal permission file, and adds audit logs plus configurable identity and access policy. Ships a Kubernetes operator as well.
 **Audience**: teams where everyone has installed their own pile of MCP servers and somebody now has to answer "who installed what, and which credentials can it reach".
 **Notes**: Go project, available as a desktop app and a CLI. Open-source ToolHive and Stacklok's enterprise product are separate, so check which features sit on which side.
+
+### [NVIDIA/OpenShell](https://github.com/NVIDIA/OpenShell) ⭐⭐⭐⭐
+
+| Field | Value |
+|---|---|
+| Stars | ★ 8.3k+ |
+| License | Apache-2.0 |
+| Rating | ⭐⭐⭐⭐ (**NVIDIA official**) |
+
+**What it does**: a sandboxed execution environment for autonomous agents, with declarative policy over files, network and processes. Claude Code and Codex run inside it unmodified; OpenClaw goes through NemoClaw, the next entry below.
+**Audience**: people who want an agent to actually execute commands without handing it the whole machine.
+**Notes**: Rust project. Needs Docker / Podman or host virtualization for MicroVM-backed sandboxes; Windows goes through WSL 2 and is marked experimental. **⚠️ The project still calls itself alpha** (latest release is still `v0.0.x`), so read it and try it, but assess before depending on it. The split against `toolhive`: toolhive governs MCP servers, this governs the agent's own execution boundary.
+
+### [nolabs-ai/nono](https://github.com/nolabs-ai/nono) ⭐⭐⭐⭐
+
+| Field | Value |
+|---|---|
+| Stars | ★ 3.7k+ |
+| License | Apache-2.0 |
+| Rating | ⭐⭐⭐⭐ |
+
+**What it does**: confines agents using the operating system's own isolation (Linux Landlock, macOS Seatbelt), with no daemon and no container.
+**Audience**: people who want a sandbox without installing a whole container runtime for it.
+**Notes**: Rust project, maintained by the team behind Sigstore. Going container-free is the main trade against OpenShell: faster to start, but the isolation is only as strong as what the OS provides.
 
 ## What's not here?
 

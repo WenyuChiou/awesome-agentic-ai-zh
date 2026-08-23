@@ -190,7 +190,7 @@ Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/0
 
 Four categories, nine projects, one table. **Pick an entry point from the "Who it's for" column; click through to the repo when you want the details.**
 
-> 💡 **Looking for MCPs that connect to daily tools** (Notion / Obsidian / Excel / Postgres / Playwright / Slack / Linear / Figma…): see [`resources/mcp-skills-catalog.en.md`](../../resources/mcp-skills-catalog.en.md) — 79+ entries grouped by category, each with stars / license / audience. The table below is for "writing your own MCP server / finding reference implementations".
+> 💡 **Looking for MCPs that connect to daily tools** (Notion / Obsidian / Excel / Postgres / Playwright / Slack / Linear / Figma…): see [`resources/mcp-skills-catalog.en.md`](../../resources/mcp-skills-catalog.en.md) — 81+ entries grouped by category, each with stars / license / audience. The table below is for "writing your own MCP server / finding reference implementations".
 
 | Category | Project | ⭐ | Who it's for | Why recommended / notes |
 |---|---|---|---|---|

@@ -190,7 +190,7 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 
 按用途分 4 类、9 个项目一张表搞定。**挑入口看“适合谁”，想深入细节点链接看 repo**。
 
-> 💡 **要找接日常工具的 MCP**（Notion / Obsidian / Excel / Postgres / Playwright / Slack / Linear / Figma 等）：[`resources/mcp-skills-catalog.zh-Hans.md`](../../resources/mcp-skills-catalog.zh-Hans.md)——79+ 个分类整理，每个都有 stars / license / 适合谁。下表只列“写自己 MCP server / 找 reference”用的核心 catalog。
+> 💡 **要找接日常工具的 MCP**（Notion / Obsidian / Excel / Postgres / Playwright / Slack / Linear / Figma 等）：[`resources/mcp-skills-catalog.zh-Hans.md`](../../resources/mcp-skills-catalog.zh-Hans.md)——81+ 个分类整理，每个都有 stars / license / 适合谁。下表只列“写自己 MCP server / 找 reference”用的核心 catalog。
 
 | 分类 | Project | ⭐ | 适合谁 | 为什么推荐 / 备注 |
 |---|---|---|---|---|

@@ -24,7 +24,7 @@
 
 ## 精选 Projects
 
-> 💡 **想把 AI agent 接到 Notion / Gmail / Outlook / Slack / Excel / 飞书？**（例：把 Gmail 来信自动整理成 Notion 待办）79+ 个常用办公集成工具表见 [`resources/mcp-skills-catalog.zh-Hans.md`](../resources/mcp-skills-catalog.zh-Hans.md)（按使用场景分类）。下面这节保留 workflow / 集成平台级的工具。
+> 💡 **想把 AI agent 接到 Notion / Gmail / Outlook / Slack / Excel / 飞书？**（例：把 Gmail 来信自动整理成 Notion 待办）81+ 个常用办公集成工具表见 [`resources/mcp-skills-catalog.zh-Hans.md`](../resources/mcp-skills-catalog.zh-Hans.md)（按使用场景分类）。下面这节保留 workflow / 集成平台级的工具。
 
 ### 工作流工具
 

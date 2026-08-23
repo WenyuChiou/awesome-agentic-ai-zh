@@ -26,7 +26,7 @@
 
 > **CLI agent 比較**：8 個主流 CLI agent（Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build）的並列比較見 [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.md)。第一次接觸 CLI agent 想要 step-by-step 入門 → [`tracks/cli/A1-cli-intro.md`](../tracks/cli/A1-cli-intro.md)（Track A 第一站）。
 >
-> **MCP catalog**：要把 CLI 接到日常工具（GitHub、Linear、Atlassian、Postgres、Playwright、Figma 等）→ [`resources/mcp-skills-catalog.md`](../resources/mcp-skills-catalog.md)（79+ 個分類整理）。
+> **MCP catalog**：要把 CLI 接到日常工具（GitHub、Linear、Atlassian、Postgres、Playwright、Figma 等）→ [`resources/mcp-skills-catalog.md`](../resources/mcp-skills-catalog.md)（81+ 個分類整理）。
 >
 > 本頁只列**跟開發者 workflow 直接相關**的工具入口。
 

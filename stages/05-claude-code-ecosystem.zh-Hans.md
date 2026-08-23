@@ -307,7 +307,7 @@ MCP / Skills 是“给 agent 更多能力”；**Hooks 则是反过来：在 age
 ### 精选 Projects（spec / SDK / 范本参考）
 
 > 💡 **找日常工具的 MCP（Notion / Obsidian / Excel / Postgres / Playwright / Figma 等）？**
-> 看 [`resources/mcp-skills-catalog.zh-Hans.md`](../resources/mcp-skills-catalog.zh-Hans.md)——按 16 个分类整理 79+ 个常用 MCP server / Skill，每个都附 stars / license / 适合谁。下表保留的是“**写自己 MCP server 时的 reference**”性质的官方 server / SDK。
+> 看 [`resources/mcp-skills-catalog.zh-Hans.md`](../resources/mcp-skills-catalog.zh-Hans.md)——按 16 个分类整理 81+ 个常用 MCP server / Skill，每个都附 stars / license / 适合谁。下表保留的是“**写自己 MCP server 时的 reference**”性质的官方 server / SDK。
 
 | Project | ⭐ | 适合谁 | 为什么推荐 / 备注 |
 |---|---|---|---|

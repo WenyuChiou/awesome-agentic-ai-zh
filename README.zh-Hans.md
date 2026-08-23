@@ -35,7 +35,7 @@
 | 核心 | 做什么 | 规模 |
 |---|---|---|
 | **学习路线图** | 把网上散落的高质量项目、教材、必修阅读，按**从零开始、循序渐进**整理成 **8 个阶段**（含 Stage 5 + Stage 8 两个共用 hub）+ 2 条学习路线 + 5 条延伸路径 | 8 stages、2 tracks |
-| **资源 curation** | 每阶段精选 **240+** 个 project（含星等、适合谁、教什么、怎么跑），加上中文 AI 生态(DeepSeek / Zhipu / Kimi 等)MCP / Skill 完整 catalog | 240+ projects、79 MCP/Skill |
+| **资源 curation** | 每阶段精选 **240+** 个 project（含星等、适合谁、教什么、怎么跑），加上中文 AI 生态(DeepSeek / Zhipu / Kimi 等)MCP / Skill 完整 catalog | 240+ projects、81 MCP/Skill |
 | **简单 illustrative 案例** | 每阶段附 1-5 个**基础练习**（70-150 行 starter + dual-path Ollama/Anthropic SDK 对照 + mock-based test） | 23 个练习 folder |
 
 走完这条路线，你会从“**LLM 用户**”进阶到“**agent 系统构建者**”——能看懂 framework 在做什么、能设计多 agent 协作、能写自己的 MCP server。
@@ -229,7 +229,7 @@ cd awesome-agentic-ai-zh
 | 你的状况 | 去哪 | 规模 |
 |---|---|---|
 | 接 Notion / Obsidian / Excel / GitHub 等工具 | [`RESOURCES.zh-Hans.md` 接日常工具](RESOURCES.zh-Hans.md#接日常工具常用-mcp-server--skill) | 7-8 个 highlight |
-| 完整 MCP server / Skill 目录（含星等、分类） | [`resources/mcp-skills-catalog.zh-Hans.md`](resources/mcp-skills-catalog.zh-Hans.md) | 79+ 条、16 大分类 |
+| 完整 MCP server / Skill 目录（含星等、分类） | [`resources/mcp-skills-catalog.zh-Hans.md`](resources/mcp-skills-catalog.zh-Hans.md) | 81+ 条、16 大分类 |
 
 ### 🔬 研究 / production 级
 

@@ -190,14 +190,14 @@ Stage 3 教你寫 single tool / multi-tool selection（手寫 `if/elif/else` 路
 
 ## 🎯 精選 Projects
 
-按用途分 5 類、17 個項目一張表搞定。**挑入口看「適合誰」、想深入點連結看 repo / quickstart**。
+按用途分 5 類、18 個項目一張表搞定。**挑入口看「適合誰」、想深入點連結看 repo / quickstart**。
 
 | 分類 | Project | ⭐ | 適合誰 | 為什麼推薦 / 備註 |
 |---|---|---|---|---|
 | **Production 級**<br>（複雜 multi-agent / 需要 audit） | [LangGraph](https://github.com/langchain-ai/langgraph) ⭐ **本 stage 推薦 #1** | ⭐⭐⭐⭐⭐ | Production multi-agent + 稽核軌跡 / rollback / replay | 圖式 orchestration + checkpointing + time-travel debug、企業廣泛採用，★ 39k+、MIT、Python+TS。搭 LangSmith 做 observability |
 | | [microsoft/semantic-kernel](https://github.com/microsoft/semantic-kernel) | ⭐⭐⭐⭐ | 在 .NET / Java 環境做 agent、Microsoft 技術棧 | C# / Python / Java 三語官方 SDK、kernel + plugin + planner pattern，★ 28k+、MIT。抽象厚、不適合初學者 |
 | | [agno-agi/agno](https://github.com/agno-agi/agno) | ⭐⭐⭐⭐ | 要「build + serve + monitor」一條龍但不想全套 LangGraph + LangSmith | multi-modal agent runtime + control plane，★ 41k+、Apache-2.0。Stage 4 學 API、Stage 7 用 runtime |
-| | [microsoft/agent-framework](https://github.com/microsoft/agent-framework) | ⭐⭐⭐⭐ | 想用微軟整合 AutoGen + Semantic Kernel 的後繼框架（Python 或 .NET）的團隊 | 微軟開源框架、讓多個 agent 一起協作——合併 AutoGen 與 Semantic Kernel 的後繼者，★ 12k+、MIT、Python + .NET |
+| | [microsoft/agent-framework](https://github.com/microsoft/agent-framework) | ⭐⭐⭐⭐ | 想用微軟整合 AutoGen + Semantic Kernel 的後繼框架（Python 或 .NET）的團隊 | 微軟開源框架、讓多個 agent 一起協作——合併 AutoGen 與 Semantic Kernel 的後繼者，★ 13k+、MIT、Python + .NET |
 | **快速雛形 / 多 agent**<br>（role-based / handoff） | [CrewAI](https://github.com/crewAIInc/crewAI) ⭐ **本 stage 推薦 #2** | ⭐⭐⭐⭐ | 快速雛形「researcher → writer → critic」pipeline | ~20 行寫完 crew、學習曲線最低，★ 55k+、MIT。⚠️ 長 workflow 沒 checkpointing；雛形用 CrewAI、production 用 LangGraph |
 | | [Microsoft AutoGen / AG2](https://github.com/microsoft/autogen) | ⭐⭐⭐⭐ | 多 agent 辯論 / 腦力激盪 / peer review pattern | 對話式多 agent、group-chat 強，★ 60k+、CC-BY-4.0（文件 license）。⚠️ AG2 v0.4 重寫成 async-first、舊教學多半還在 v0.2、新教學用 v0.4、留意版本分支 |
 | | [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) | ⭐⭐⭐⭐⭐ | 已 commit OpenAI 生態 | OpenAI 官方、agent hand-off + 結構化輸出、API 乾淨、MIT。**2026-04 起內建** sandbox（7 個 provider）+ harness 抽象層、production coding agent 首次 architecturally sound（[詳見 Stage 8](08-agent-interfaces.md#openai-agents-sdk-april-2026-更新--why-是-milestone)）|

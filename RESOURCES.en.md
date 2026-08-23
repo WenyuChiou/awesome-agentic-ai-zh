@@ -62,7 +62,7 @@ Connect Claude Code (or any other CLI agent) to the apps you already use, withou
 
 - [**leemysw/feishu-docx**](https://github.com/leemysw/feishu-docx) ★ 235 — Feishu (Lark) docs / sheet / bitable ↔ Markdown with Claude Skills support
 
-> The above is just the highlights. **Full 79+ entry catalog by category** (incl. databases, browser automation, Figma, Excalidraw, Cloudflare, Stripe, academic-writing / multi-LLM delegation, etc.) lives in [`resources/mcp-skills-catalog.en.md`](resources/mcp-skills-catalog.en.md).
+> The above is just the highlights. **Full 81+ entry catalog by category** (incl. databases, browser automation, Figma, Excalidraw, Cloudflare, Stripe, academic-writing / multi-LLM delegation, etc.) lives in [`resources/mcp-skills-catalog.en.md`](resources/mcp-skills-catalog.en.md).
 
 > Looking for more MCP server catalogs? See [`wong2/awesome-mcp-servers`](https://github.com/wong2/awesome-mcp-servers) / [`punkpeye/awesome-mcp-servers`](https://github.com/punkpeye/awesome-mcp-servers) (categorized). **Canva** now ships an official MCP ([canva.dev/docs/mcp](https://www.canva.dev/docs/mcp/), endpoint `mcp.canva.com`, ~32 tools, works on any plan, supports Claude / ChatGPT / Cursor / VS Code).
 

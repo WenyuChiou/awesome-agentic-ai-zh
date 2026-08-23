@@ -37,7 +37,7 @@ Concretely:
 | Pillar | What it does | Scale |
 |---|---|---|
 | **Learning roadmap** | Organizes scattered high-quality projects, tutorials, and required reading into **8 stages** (including Stage 5 + Stage 8 as two shared hubs) + 2 tracks + 5 specialized branches, from zero to advanced | 8 stages, 2 tracks |
-| **Resource curation** | Each stage curates **240+** projects (star rating, audience, what they teach, how to run) plus an MCP/Skill catalog covering the Chinese AI ecosystem (DeepSeek, Zhipu, Kimi, …) | 240+ projects, 79 MCP/Skill |
+| **Resource curation** | Each stage curates **240+** projects (star rating, audience, what they teach, how to run) plus an MCP/Skill catalog covering the Chinese AI ecosystem (DeepSeek, Zhipu, Kimi, …) | 240+ projects, 81 MCP/Skill |
 | **Simple illustrative cases** | Each stage ships 1-5 **foundational exercises** (70-150 line starter + dual-path Ollama/Anthropic SDK comparison + mock-based tests) | 23 exercise folders |
 
 After the main path, you go from "**LLM user**" to "**agent system builder**" — capable of designing multi-agent collaboration, writing your own MCP server, and shipping real agent systems.
@@ -229,7 +229,7 @@ Common quick links, grouped by **scenario**:
 | Your situation | Where | Scope |
 |---|---|---|
 | Connect to Notion / Obsidian / Excel / GitHub / etc. | [`RESOURCES.en.md` daily-tool integrations](RESOURCES.en.md#daily-tool-integrations-mcp-servers--skills) | 7-8 highlights |
-| Full MCP server / Skill catalog (stars, categories) | [`resources/mcp-skills-catalog.en.md`](resources/mcp-skills-catalog.en.md) | 79+ entries, 16 categories |
+| Full MCP server / Skill catalog (stars, categories) | [`resources/mcp-skills-catalog.en.md`](resources/mcp-skills-catalog.en.md) | 81+ entries, 16 categories |
 
 ### 🔬 Research / Production
 

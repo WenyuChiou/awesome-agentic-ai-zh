@@ -24,7 +24,7 @@ The table below splits a knowledge worker's day into 7 common scenarios. Most of
 
 ## Curated Projects
 
-> 💡 **Want to wire your AI agent to Notion / Gmail / Outlook / Slack / Excel / Lark?** Example: automatically turn Gmail messages into Notion todos. 79+ commonly-used office integration tools are listed in [`resources/mcp-skills-catalog.en.md`](../resources/mcp-skills-catalog.en.md) (grouped by use case). The section below stays focused on workflow / integration-platform-level tools.
+> 💡 **Want to wire your AI agent to Notion / Gmail / Outlook / Slack / Excel / Lark?** Example: automatically turn Gmail messages into Notion todos. 81+ commonly-used office integration tools are listed in [`resources/mcp-skills-catalog.en.md`](../resources/mcp-skills-catalog.en.md) (grouped by use case). The section below stays focused on workflow / integration-platform-level tools.
 
 ### Workflow Tools
 

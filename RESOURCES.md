@@ -62,7 +62,7 @@
 
 - [**leemysw/feishu-docx**](https://github.com/leemysw/feishu-docx) ★ 235 — 飛書（Lark）docs / sheet / bitable ↔ Markdown，含 Claude Skills 支援
 
-> 上面只是 highlight。**完整 79+ 個整合的分類目錄**（含資料庫、瀏覽器自動化、Figma、Excalidraw、Cloudflare、Stripe、學術寫作 / Multi-LLM delegation 等）在 [`resources/mcp-skills-catalog.md`](resources/mcp-skills-catalog.md)。
+> 上面只是 highlight。**完整 81+ 個整合的分類目錄**（含資料庫、瀏覽器自動化、Figma、Excalidraw、Cloudflare、Stripe、學術寫作 / Multi-LLM delegation 等）在 [`resources/mcp-skills-catalog.md`](resources/mcp-skills-catalog.md)。
 
 > 想找更多 MCP server catalog？看 [`wong2/awesome-mcp-servers`](https://github.com/wong2/awesome-mcp-servers) / [`punkpeye/awesome-mcp-servers`](https://github.com/punkpeye/awesome-mcp-servers)（依分類整理）。**Canva** 現有官方 MCP（[canva.dev/docs/mcp](https://www.canva.dev/docs/mcp/)、endpoint `mcp.canva.com`、~32 工具、任何方案可用、支援 Claude / ChatGPT / Cursor / VS Code）。
 

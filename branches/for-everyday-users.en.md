@@ -74,7 +74,7 @@ Desktop version of ChatGPT. Ask questions about screenshots, voice conversation,
 >
 > Want step-by-step onboarding? See [`tracks/cli/A1-cli-intro.en.md`](../tracks/cli/A1-cli-intro.en.md) — Track A first stop, from install to your first task.
 >
-> Want to wire your CLI agent to Notion / Obsidian / Excel / Google docs / etc.? See [`resources/mcp-skills-catalog.en.md`](../resources/mcp-skills-catalog.en.md) — 79+ MCP servers / Skills grouped by use case.
+> Want to wire your CLI agent to Notion / Obsidian / Excel / Google docs / etc.? See [`resources/mcp-skills-catalog.en.md`](../resources/mcp-skills-catalog.en.md) — 81+ MCP servers / Skills grouped by use case.
 
 #### [anthropics/claude-code](https://github.com/anthropics/claude-code) ⭐⭐⭐⭐⭐
 ★ 138k+ — Anthropic's official CLI agent. Reads/writes files, runs commands, handles multi-step tasks. **The most beginner-friendly CLI tool for everyday users.**

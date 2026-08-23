@@ -196,6 +196,14 @@
 - **Claude Code 整个 runtime** — 是 reference harness 实现。**读 source 练习见 [Stage 5.7](05-claude-code-ecosystem.zh-Hans.md#57--claude-code-source-解剖reference-harness-implementation-track-b-必看)**（clone `claude-agent-sdk-python` 解剖 main loop + 上表前 6 个 runtime 元件位置；第 7 个 Eval harness 是外挂、第 8 个 Cost / Latency 是 cross-cutting、见下方深入段）
 - **`anthropics/claude-agent-sdk-python`** source — 上面练习用的具体 repo
 
+
+**可以直接打开来读的完整 harness**（都是 2026 年开源、量级够大，适合对照上面 8 个核心元件看）：
+
+| Project | ⭐ | 语言 / License | 它示范哪一块 |
+|---|---|---|---|
+| [xai-org/grok-build](https://github.com/xai-org/grok-build) | ★ 25k+ | Rust / Apache-2.0 | SpaceXAI 的 terminal coding agent。同一份 core 同时支持交互 TUI、headless（CI 用）与编辑器嵌入，是“**一个 harness 要服务几种执行模式**”的完整范例 |
+| [NVIDIA/NemoClaw](https://github.com/NVIDIA/NemoClaw) | ★ 22k+ | TypeScript / Apache-2.0 | 把别人的 agent（Hermes、LangChain Deep Agents、OpenClaw）跑在受管执行环境里的 reference stack。看点是 **harness 与 sandbox 的责任边界**：它自己不做 agent，只负责 inference 管理与生命周期。**⚠️ 官方自述是 alpha**，issue 与 PR 为 best-effort 回复 |
+
 → 本 stage 剩下的 6 个练习（multi-agent / eval / observability / SDK / deploy / cost）每个都是 harness 的一个面向。学完整 stage = 拼出完整的 harness engineering mental model。
 
 ### 第 8 个核心元件深入 — Cost / Latency Optimization（2024-2026 Production 化必修）

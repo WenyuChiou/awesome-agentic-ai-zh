@@ -37,7 +37,7 @@ catalog browsing.
 + - [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
 +   — Trilingual (zh-TW · zh-Hans · en) 8-stage learning roadmap. Stage 5.2 is
 +   a dedicated walkthrough of MCP (concept → first install → writing your
-+   own server), with prerequisites and time estimates. Catalog includes 79+
++   own server), with prerequisites and time estimates. Catalog includes 81+
 +   integrations grouped by use case.
 ```
 
