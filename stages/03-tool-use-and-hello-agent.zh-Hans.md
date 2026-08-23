@@ -453,7 +453,7 @@ messages.append({"role": "tool", "tool_call_id": tc.id,
 
 → **基础 starter 范本** → [`examples/stage-3/06-schema-design/`](../examples/stage-3/06-schema-design/)（含 bad schema vs good schema 两个版本对照；illustrative，**不是 chapter-length 完整教程**——深度章节见 stage 开头 📚 hello-agents callout）
 
-> 💡 **手写 schema 之后，认识 MCP**：你上面手写的 tool schema，真实世界已经有标准——**MCP（Model Context Protocol）** 把“工具长什么样、怎么调用”标准化成跨 agent 可复用的协定：写一次，任何支持 MCP 的 agent（Claude Code / Cursor / …）都能用。这里先记得这个名字，[Stage 5.2](05-claude-code-ecosystem.zh-Hans.md#52--mcpmodel-context-protocol-基础) 细讲。
+> 💡 **手写 schema 之后，认识 MCP**：你上面手写的 tool schema，真实世界已经有标准——**MCP（Model Context Protocol）** 把“工具长什么样、怎么调用”标准化成跨 agent 可复用的协议：写一次，任何支持 MCP 的 agent（Claude Code / Cursor / …）都能用。这里先记得这个名字，[Stage 5.2](05-claude-code-ecosystem.zh-Hans.md#52--mcpmodel-context-protocol-基础) 细讲。
 
 ## 🪞 反思（Reflexion / Self-Refine）— 概念 + 路由
 

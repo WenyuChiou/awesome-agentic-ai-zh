@@ -67,6 +67,15 @@ VOCAB = {
     #   预设/教学  : context-sensitive (default vs assume / tutorial vs
     #                teaching) — no single mainland equivalent.
     #   影片→视频  : MOVED to GUARDED_VOCAB below — see why there.
+    #   协定→协议  : NOT auto-replaced, and not guarded either. 协定 is a
+    #                legitimate mainland word for an AGREEMENT (贸易协定,
+    #                停战协定); it is only wrong when it means PROTOCOL. Both
+    #                senses are open sets, so neither a lookbehind nor a
+    #                blocklist of compounds would hold. Five protocol-sense
+    #                occurrences were fixed by hand on 2026-08-23; a reviewer
+    #                caught them because `--check` reporting clean is not
+    #                evidence for a pair this table does not contain.
+    #                If you are about to add it: don't. Fix by hand.
 }
 
 # Terms that are UNSAFE as blanket substrings but safe with a context guard.

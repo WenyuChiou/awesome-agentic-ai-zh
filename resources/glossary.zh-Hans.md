@@ -239,7 +239,7 @@ Anthropic 2024 提的方法——chunk 加上“整份文件的脉络摘要”�
 
 ### A2A（Agent-to-Agent）Protocol
 
-Google 发起、现由 Linux Foundation 治理的 agent 之间沟通协定，类似 MCP 但用于 agent ↔ agent（不是 agent ↔ tool）。2026 已达 **v1.0**（已有 150+ 组织采用，并加入身分验证、让一个 agent 能确认对方是不是真的它），是 MCP（agent↔tool）的姊妹标准。
+Google 发起、现由 Linux Foundation 治理的 agent 之间沟通协议，类似 MCP 但用于 agent ↔ agent（不是 agent ↔ tool）。2026 已达 **v1.0**（已有 150+ 组织采用，并加入身分验证、让一个 agent 能确认对方是不是真的它），是 MCP（agent↔tool）的姊妹标准。
 
 ---
 
@@ -247,7 +247,7 @@ Google 发起、现由 Linux Foundation 治理的 agent 之间沟通协定，类
 
 ### MCP（Model Context Protocol）
 
-Anthropic 在 2024 推出的开放协定，让任何 LLM host（Claude Code、Cursor、自写 agent）都能用同一套接口连接外部 tool server，2025-12 已捐给 Linux Foundation 旗下的 Agentic AI Foundation。把它想成“**LLM 的 USB 接口**”。
+Anthropic 在 2024 推出的开放协议，让任何 LLM host（Claude Code、Cursor、自写 agent）都能用同一套接口连接外部 tool server，2025-12 已捐给 Linux Foundation 旗下的 Agentic AI Foundation。把它想成“**LLM 的 USB 接口**”。
 
 **技术上标准化了 3 种 primitives**：
 

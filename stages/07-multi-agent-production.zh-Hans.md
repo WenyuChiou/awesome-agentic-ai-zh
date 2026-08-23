@@ -365,7 +365,7 @@ Production agent 跑久了，**cost / latency 两条线会吃掉你大半预算�
 
 你能不能：
 
-- [ ] 设计一个 multi-agent 系统，协作协定讲得清楚
+- [ ] 设计一个 multi-agent 系统，协作协议讲得清楚
 - [ ] 在 CI 跑自动 eval pipeline
 - [ ] 把 observability（tracing）接到 production agent
 - [ ] 在真实 workload 上量测 prompt caching 前后的成本差异
