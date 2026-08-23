@@ -436,7 +436,7 @@ for label, prompt in PROMPTS.items():
 
 </details>
 
-**Going further**: dump all 5 rounds of output to a CSV. Stage 7 Exercise 2 shows how to turn that into an eval harness (the evaluation scaffold, i.e. the outer program / control layer used to run evals; see Advanced: what layers sit above prompting?) so you can quantify *how much* a prompt actually improved.
+**Going further**: dump all 5 rounds of output to a CSV. Stage 7 Exercise 2 shows how to turn that into an eval harness (the outer program / control layer used to run evals; see Advanced: what layers sit above prompting?) so you can quantify *how much* a prompt actually improved.
 
 ## 🎯 Curated Projects
 

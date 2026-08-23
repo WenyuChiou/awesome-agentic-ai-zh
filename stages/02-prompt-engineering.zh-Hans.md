@@ -434,7 +434,7 @@ text = msg.content[0].text
 
 </details>
 
-**进阶做法**：把这 5 轮输出全存进 csv、Stage 7 练习 2 会教怎么把这变成 eval harness（评估脚手架、即“跑评估用的外围程序 / 控制层”、完整定义见下面 进阶：往上还有哪几层）量化“prompt 改善了多少”。
+**进阶做法**：把这 5 轮输出全存进 csv、Stage 7 练习 2 会教怎么把这变成 eval harness（跑评估用的外围程序 / 控制层，完整定义见下面 进阶：往上还有哪几层）量化“prompt 改善了多少”。
 
 ## 🎯 精选 Projects
 

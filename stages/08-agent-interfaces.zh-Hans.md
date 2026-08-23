@@ -188,7 +188,7 @@
 
 **结论 — 生产级浏览器智能体模式**：**DOM-first + 截图回退**——先尝试 DOM，抓不到再用视觉。browser-use / Atlas / Comet 都采用这种模式。
 
-> 🌐 **浏览器 agent 的第三种模态：accessibility tree**：除了 DOM-aware 跟 screen-pixel（看截图点坐标），2026 production 主流是读**无障碍树**——比 pixel 稳、比原始 DOM 省 token。要实际接，[microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)（★ 35k+、Apache-2.0、走 accessibility tree）是 Track A 直接挂 Claude Code 就能用的浏览器 MCP。
+> 🌐 **浏览器 agent 的第三种模态：accessibility tree**：除了 DOM-aware 跟 screen-pixel（看截图点坐标），2026 production 主流是读 **accessibility tree**——比 pixel 稳、比原始 DOM 省 token。要实际接，[microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)（★ 35k+、Apache-2.0、走 accessibility tree）是 Track A 直接挂 Claude Code 就能用的浏览器 MCP。
 
 ### 迷你术语词典（就地解释）
 
