@@ -46,7 +46,7 @@ To understand multi-agent frameworks, a useful clarification is to treat **workf
 | **Single LLM** | Linear pipeline, no branching logic | One LLM + ReAct loop, plans and adapts on its own<br>(**This is what you built in Stage 3**) |
 | **Multi LLM** | Pre-defined routing (e.g., "sales questions → agent A, tech questions → agent B") | 2+ agents handing off to each other, with an orchestrator dynamically assigning tasks<br>(**The topic of this stage**) |
 
-**Why this distinction is useful**: Most production scenarios fall into the "single agent workflow" + "single agent" quadrants. Most tasks simply don't require multi-agent setups. **The quadrant that truly needs a multi-agent framework is the bottom right**—high LLM autonomy + multi-role collaboration. In practice, the boundaries between these quadrants can be blurry (LangGraph's conditional edges can be seen as both workflow routing and dynamic agent decision-making). Don't treat this matrix as a mutually exclusive classification.
+**Why this distinction is useful**: Most production scenarios sit in the **Single LLM** row, whether in the Workflow column (a linear pipeline) or the Agent column (a ReAct loop). Most tasks simply don't require multi-agent setups. **The quadrant that truly needs a multi-agent framework is the bottom right**—high LLM autonomy + multi-role collaboration. In practice, the boundaries between these quadrants can be blurry (LangGraph's conditional edges can be seen as both workflow routing and dynamic agent decision-making). Don't treat this matrix as a mutually exclusive classification.
 
 → All later discussion in this stage assumes you already know: **a multi-agent framework mainly handles the coordination, handoff, state management, and repetitive scaffolding code between multiple agents, so you don't have to write the whole collaboration flow from scratch** (the orchestration boilerplate in the lower-right quadrant).
 
@@ -80,7 +80,7 @@ You typically need multi-agent when one of these four signals appears:
 | **3. Role Conflict** | Having the same LLM act as both writer and critic leads to self-justification. | Debate / Peer review |
 | **4. Parallel Acceleration**| Running 3 research sub-tasks concurrently reduces wall-clock time to 1/3. | Parallel / Map-Reduce variant |
 
-**None of these four signals present?** → A single agent + a good prompt + tool use is enough. **Forcing a multi-agent setup will cost you 3-10x in tokens, be a pain to debug, and won't necessarily be more accurate.**
+**None of these four signals present?** → A single agent + a good prompt + tool use is enough, without paying the three costs listed above, and multi-agent is not guaranteed to be more accurate either.
 
 > 💡 **Further Reading**: [Stage 7 But do you really need multi-agent?](07-multi-agent-production.en.md#-but-do-you-really-need-multi-agent) will revisit this decision from a production perspective. This section covers the design-phase decision; that one is the final check before deployment.
 
@@ -100,11 +100,11 @@ You typically need multi-agent when one of these four signals appears:
 
 > **This section is on a different level than the 5 patterns above**: The 5 patterns are design choices that can be implemented with or without a framework. The **Claude Code subagent** introduced here is another execution model (built-in runtime orchestration, no framework code). After reading about the 5 patterns, this section shows you "there's a second path for multi-agent."
 
-**Frameworks aren't the only way to do multi-agent.** Anthropic's own Claude Code offers another layer of abstraction: the [subagent](05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature). You create a subagent by writing a `.claude/agents/<name>.md` file—**no framework required**.
+Anthropic's own Claude Code offers another layer of abstraction: the [subagent](05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature). You create a subagent by writing a `.claude/agents/<name>.md` file—**no framework required**.
 
 The fundamental difference from the framework path (in one line): the **framework path** is cross-LLM-provider, written as Python orchestration code, with full checkpointing / audit trail; **Claude Code subagent** runs only inside the Claude Code runtime, written as markdown not code, with built-in context isolation.
 
-> 📌 **The full dimension-by-dimension comparison table (startup / runtime / context isolation / provider lock-in / learning curve) lives canonically at [Stage 5.5](05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature)** — this stage only needs you to know "there's a second, Claude-Code-native path"; see 5.5 for the per-item implementation differences.
+> 📌 **The full dimension-by-dimension comparison table (startup / runtime / context isolation / provider lock-in / learning curve) lives canonically at [Stage 5.5](05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature)** — see 5.5 for the per-item implementation differences.
 
 **When to choose subagents over a framework**:
 
@@ -229,6 +229,6 @@ If yes → Proceed to [Stage 5 — The Claude Code Ecosystem](05-claude-code-eco
 
 ## 💡 Strategic Tips + Potential Pitfalls
 
-Don't try to learn all of these. Pick **one for production deployment (LangGraph)** and **one for rapid prototyping (CrewAI)** to learn in depth. For the others, just skim their READMEs to know they exist as options.
+The reading path is in the **Selected Projects** callout above (go deep on LangGraph + CrewAI, skim the rest); it is not repeated here.
 
 **A heads-up on Memory** (you might encounter this while learning, no need to read ahead): Some framework features use memory concepts—LangGraph's checkpointing (state persistence), CrewAI agents passing task results to each other (lightweight memory). These are covered in full in [Stage 6 — Memory & RAG](06-memory-rag.en.md). If you get stuck on a framework feature in this stage, check that section, but **you don't need to read it all before continuing this stage**.

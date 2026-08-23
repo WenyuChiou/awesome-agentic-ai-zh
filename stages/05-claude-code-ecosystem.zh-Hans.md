@@ -264,6 +264,8 @@ MCP / Skills 是“给 agent 更多能力”；**Hooks 则是反过来：在 age
 
 > 📈 **规模参考**（Anthropic 2026-07 [官方数字](https://claude.com/blog/bringing-mcp-2026-07-28-to-claude)）：MCP 的 SDK 月下载量已超过 **4 亿**（今年约成长 4 倍），Claude 的 connectors 目录收录 **950+ 个 MCP server**。
 
+> 🔄 **2026-07-28 那版把 MCP 改成无状态（stateless），是目前为止最大的一次改动**：拿掉 `initialize` 握手与 `Mcp-Session-Id`，每个请求自己带协议版本与能力宣告；server 要跨调用记东西，改用自己发的 handle 当普通 tool 参数传。新增 `server/discover`，client 可以先问“你支持哪些版本”。**Roots / Sampling / Logging 三个功能与旧的 HTTP+SSE transport 都标成 deprecated**，server 主动发请求的做法由 MRTR 取代（server 回一个 `input_required`、client 补齐信息后重送原请求）。**为什么你该在意**：2025 年写的 MCP 教程几乎都在讲那个握手流程，照着做会对不上现在的规格。deprecated 不等于今天就不能用，官方保证至少 12 个月过渡期，但新写的东西不该再用它们。
+
 > 🧩 **核心之外还有 extension（选读）**：2026-07-28 那版规格把“核心协议”跟“[extension](https://modelcontextprotocol.io/extensions/overview)”正式分开。官方 extension 目前有 [Tasks](https://modelcontextprotocol.io/extensions/tasks/overview)（长时间任务的异步执行、可轮询）、[Apps](https://modelcontextprotocol.io/extensions/apps/overview)（在对话里直接显示图表 / 表单等交互 UI）跟 Skills over MCP。**初学阶段不用学这些**——你写 `@app.tool()` 打不到它们。真正该记住的只有一条**不会过期**的规则：**extension 一律默认关闭、要双方明确支持才生效**，所以看到教程叫你用某个 extension，先确认你的 client 有支持，否则会静默退回核心行为。官方 extension 用 `io.modelcontextprotocol/` 前缀、放在 MCP 组织下 `ext-` 开头的 repo；`experimental-ext-` 开头的则还在孵化、随时可能改。
 
 **MCP 三个抽象**：

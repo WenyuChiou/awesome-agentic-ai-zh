@@ -22,7 +22,7 @@
 
 </div>
 
-> 📱 **用手机看的话，建议走[在线文档站](https://wenyuchiou.github.io/awesome-agentic-ai-zh/)而不是这一页。** 内容一样，但站上的表格会随屏幕折行、不用左右拖，另外有跨页搜索与侧边目录。桌面端两边都好读，手机上差得多。
+> 📱 **用手机看的话，建议走[在线文档站](https://wenyuchiou.github.io/awesome-agentic-ai-zh/)而不是这一页。**
 
 ---
 
