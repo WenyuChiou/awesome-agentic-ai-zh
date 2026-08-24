@@ -68,7 +68,7 @@
 | 分类 | Project | ⭐ | 适合谁 | 为什么推荐 / 备注 |
 |---|---|---|---|---|
 | **8 个主流 CLI agent** | [anthropics/claude-code](https://github.com/anthropics/claude-code) | ⭐⭐⭐⭐⭐ | **推荐作为第一个 CLI agent** | 内建 SKILL / plugin 生态、CLAUDE.md prompt 系统、中文社群资源丰富（★ 140k+） |
-| | [openai/codex](https://github.com/openai/codex) | ⭐⭐⭐⭐⭐ | 已订 ChatGPT Plus / Pro 的人 | 用同一个账号就能在终端机跑（★ 105k+） |
+| | [openai/codex](https://github.com/openai/codex) | ⭐⭐⭐⭐⭐ | 已订 ChatGPT Plus / Pro 的人 | 用同一个账号就能在终端机跑（★ 115k+） |
 | | [sst/opencode](https://github.com/sst/opencode) | ⭐⭐⭐⭐⭐ | 要 self-host / 不想 vendor lock-in | 开源、不绑 LLM provider、社群迭代最快（★ 190k+） |
 | | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) | ⭐⭐⭐⭐ | 处理大 codebase / 大 PDF | 1M token 长 context（★ 103k+） |
 | | [block/goose](https://github.com/block/goose) | ⭐⭐⭐⭐ | 想用既有 Claude / ChatGPT / Gemini 订阅 + Ollama 本地 | 15+ provider 支持（含 Ollama），★ 51k+。**已迁至 `aaif-goose/goose`（AAIF / Linux Foundation）** |

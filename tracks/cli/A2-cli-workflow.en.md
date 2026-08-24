@@ -101,7 +101,7 @@ Four categories, seven projects, one table covers it. **Pick your entry point fr
 ### Recommended Tools
 
 - [**yamadashy/repomix**](https://github.com/yamadashy/repomix) ⭐⭐⭐⭐⭐ ★ 27k+ — Packs your entire codebase into a single AI-friendly file (XML / Markdown / JSON) for Claude Code / Codex code review / refactoring. Includes MCP server mode + tree-sitter compression (compression varies by language and file structure) + secretlint for secret filtering. **A must-have, daily-driver-grade tool for Track A.**
-- [**langchain-ai/openwiki**](https://github.com/langchain-ai/openwiki) ⭐⭐⭐⭐ ★ 14k+ — CLI that generates and auto-maintains a wiki of your codebase, then wires a reference into `CLAUDE.md` / `AGENTS.md` so your coding agent reads it on demand and it stays updated as code changes. `npm i -g openwiki` → `openwiki --init`. Built on DeepAgents, traces to LangSmith. MIT.
+- [**langchain-ai/openwiki**](https://github.com/langchain-ai/openwiki) ⭐⭐⭐⭐ ★ 15k+ — CLI that generates and auto-maintains a wiki of your codebase, then wires a reference into `CLAUDE.md` / `AGENTS.md` so your coding agent reads it on demand and it stays updated as code changes. `npm i -g openwiki` → `openwiki --init`. Built on DeepAgents, traces to LangSmith. MIT.
 
 > 💡 **Concept: *agent-facing documentation*.** repomix and OpenWiki attack the same gap (your agent doesn't know the repo) from two angles: a one-shot packed snapshot vs a living, auto-maintained wiki. The shared move is to give the agent *structured codebase context it reads on demand*, kept separate from your `CLAUDE.md` instructions rather than crammed into the prompt.
 

@@ -68,7 +68,7 @@
 | 分類 | Project | ⭐ | 適合誰 | 為什麼推薦 / 備註 |
 |---|---|---|---|---|
 | **8 個主流 CLI agent** | [anthropics/claude-code](https://github.com/anthropics/claude-code) | ⭐⭐⭐⭐⭐ | **推薦作為第一個 CLI agent** | 內建 SKILL / plugin 生態、CLAUDE.md prompt 系統、最完整的中文社群資源（★ 140k+） |
-| | [openai/codex](https://github.com/openai/codex) | ⭐⭐⭐⭐⭐ | 已訂 ChatGPT Plus / Pro 的人 | 用同一帳號就能在終端機跑（★ 105k+） |
+| | [openai/codex](https://github.com/openai/codex) | ⭐⭐⭐⭐⭐ | 已訂 ChatGPT Plus / Pro 的人 | 用同一帳號就能在終端機跑（★ 115k+） |
 | | [sst/opencode](https://github.com/sst/opencode) | ⭐⭐⭐⭐⭐ | 要 self-host / 不想 vendor lock-in | 開源、不綁 LLM provider、社群迭代最快（★ 190k+） |
 | | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) | ⭐⭐⭐⭐ | 處理大 codebase / 大 PDF | 1M token 長 context（★ 103k+） |
 | | [block/goose](https://github.com/block/goose) | ⭐⭐⭐⭐ | 想用既有 Claude/ChatGPT/Gemini 訂閱 + Ollama 本機 | 15+ provider 支援（含 Ollama），★ 51k+。**已遷至 `aaif-goose/goose`（AAIF / Linux Foundation）** |

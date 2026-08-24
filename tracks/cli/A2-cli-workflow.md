@@ -101,7 +101,7 @@ description: Review staged changes for security + style
 ### 推薦工具
 
 - [**yamadashy/repomix**](https://github.com/yamadashy/repomix) ⭐⭐⭐⭐⭐ ★ 27k+ — 把整個 codebase packed 成單一 AI-friendly 檔案（XML / Markdown / JSON），方便 Claude Code / Codex 做 code review / refactoring。內建 MCP server mode + tree-sitter 壓縮（壓縮率依語言與檔案結構而異）+ secretlint 過濾敏感資訊。**Track A 很值得當 daily driver 的工具。**
-- [**langchain-ai/openwiki**](https://github.com/langchain-ai/openwiki) ⭐⭐⭐⭐ ★ 14k+ — CLI，自動幫你的 codebase 生成並持續維護一份 wiki，並在 `CLAUDE.md` / `AGENTS.md` 裡加一條指向 wiki 的參照，讓 coding agent 需要時自己去讀、隨程式碼變動自動更新。`npm i -g openwiki` → `openwiki --init`。底層是 DeepAgents、可接 LangSmith 追蹤。MIT。
+- [**langchain-ai/openwiki**](https://github.com/langchain-ai/openwiki) ⭐⭐⭐⭐ ★ 15k+ — CLI，自動幫你的 codebase 生成並持續維護一份 wiki，並在 `CLAUDE.md` / `AGENTS.md` 裡加一條指向 wiki 的參照，讓 coding agent 需要時自己去讀、隨程式碼變動自動更新。`npm i -g openwiki` → `openwiki --init`。底層是 DeepAgents、可接 LangSmith 追蹤。MIT。
 
 > 💡 **概念：*agent-facing documentation*（給 agent 讀的文件）。** repomix 跟 OpenWiki 在解同一個痛點（agent 不了解你的 repo），只是切角不同：一個是一次性打包快照，一個是會持續長大、自動維護的 wiki。共同的做法是給 agent *一份它需要時自己去讀的結構化 codebase context*，跟 `CLAUDE.md` 的指令分開放，而不是全部塞進 prompt。
 
