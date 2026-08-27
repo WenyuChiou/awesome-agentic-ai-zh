@@ -2,7 +2,7 @@
 
 > [繁體中文](./01-llm-basics.md) | **English** | [简体中文](./01-llm-basics.zh-Hans.md)
 
-> Purpose: follow a repeatable local-to-cloud path to call an LLM through an API (application programming interface), understand tokens and context limits, and explain model choices using cost and latency.
+> Purpose: follow a repeatable local-to-cloud path to call an LLM through an API (application programming interface), understand **Token**, **Context Window**, and **Temperature**, and explain model choices using cost and latency.
 
 Data checked: 2026-08-27 UTC
 <!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
@@ -18,17 +18,17 @@ By the end of this stage, you can:
 
 ## Three Core Terms
 
-### 1. token
+### 1. **Token**
 
-A token is a unit the model uses to read and write text, and it is often the unit used for API pricing. Think of it as a small block cut from a sentence: an English word may be one block or several, and one Chinese character is not guaranteed to be one block. The exact count depends on the tokenizer, so character count is not an exact substitute.
+A Token is a unit the model uses to read and write text, and it is often the unit used for API pricing. Think of it as a small block cut from a sentence: an English word may be one block or several, and one Chinese character is not guaranteed to be one block. In Exercise 2, this stage reads the actual input/output token counts and uses them to estimate cost; the count depends on the tokenizer, so character count cannot give an exact answer.
 
-### 2. context window
+### 2. **Context Window**
 
-A context window is the total number of tokens a model can receive in one request, including your prompt, conversation history, and the content it is asked to produce. It is like the size of a desk: when the desk is full, you must remove, summarize, or batch some material. Limits differ by model, so check the model's official documentation.
+A Context Window is the token space a model can process for one request. Think of it as a desk: your prompt and chat history take space, and the model still needs room to write the answer. A model may also set a smaller, separate maximum-output limit, so check both numbers. This stage uses the term to decide when a long document needs trimming, summarizing, or batching.
 
-### 3. temperature
+### 3. **Temperature**
 
-Temperature controls how much sampling varies. Imagine choosing the next block from several candidates: a low value favors the most likely candidate, which suits classification and fixed formats; a high value tries less likely candidates more often, which can help brainstorming but may be less stable. It does not add knowledge or guarantee exact reproducibility.
+Temperature controls how much sampling varies. Imagine choosing the next block from several candidates: a low value favors the most likely candidate, which suits classification and fixed formats; a high value tries less likely candidates more often, which can help brainstorming but may be less stable. This stage treats it as a knob for output stability; it does not add knowledge or guarantee exact reproducibility.
 
 ## Scene-Based Model Picker
 
@@ -335,36 +335,36 @@ The finished project should show:
 - A fixed quality checklist rather than a purely subjective choice.
 - When to use local versus cloud, and how to batch when context is insufficient.
 
-The table below keeps the 17 original extension entries. They are optional entrances, not required work. Volatile star and repository counts are omitted.
+The table below keeps the 17 original extension entries. They are optional, not required work. A recommendation is an editorial judgment, not GitHub popularity: `⭐⭐⭐⭐⭐` means skipping it would block the stage. Because every entry here is supplementary, the table honestly uses `⭐⭐⭐⭐`, `⭐⭐⭐`, or `⭐⭐` for historical reference and omits volatile star counts.
 
 <table>
-  <thead><tr><th scope="col">Category</th><th scope="col">Resource</th><th scope="col">Link</th><th scope="col">Use / status</th></tr></thead>
+  <thead><tr><th scope="col">Category</th><th scope="col">Resource</th><th scope="col">Link</th><th scope="col">Recommendation</th><th scope="col">Use / status</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Official API intro</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>Claude API notebooks for tool use, batch, and prompt cache.</td></tr>
-    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>Anthropic's official courses, starting with API fundamentals.</td></tr>
-    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>OpenAI API, structured output, and function-calling examples.</td></tr>
-    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://docs.anthropic.com/en/docs/get-started">Docs</a></td><td>Quick path to a first Claude API call.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Official API intro</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Claude API notebooks for tool use, batch, and prompt cache.</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Anthropic's official courses, starting with API fundamentals.</td></tr>
+    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>⭐⭐⭐⭐</td><td>OpenAI API, structured output, and function-calling examples.</td></tr>
+    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">Docs</a></td><td>⭐⭐⭐</td><td>Quick path to a first Claude API call.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Chinese learning</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td>Understand LLM principles and training in Chinese.</td></tr>
-    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td>Extends from API basics to knowledge bases and RAG.</td></tr>
-    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td>Chinese adaptation of an Andrew Ng course; updates are slower.</td></tr>
-    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td>Implement a small model from scratch; Apache-2.0.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Chinese learning</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Understand LLM principles and training in Chinese.</td></tr>
+    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Extends from API basics to knowledge bases and RAG.</td></tr>
+    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td>⭐⭐⭐</td><td>Chinese adaptation of an Andrew Ng course; updates are slower.</td></tr>
+    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td>⭐⭐⭐</td><td>Implement a small model from scratch; Apache-2.0.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">English course</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course">Course</a></td><td>Transformers, tokenizers, and the Hugging Face ecosystem.</td></tr>
-    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">Course</a></td><td>Official free course including RAG and agents.</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">English course</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course/chapter1/1">Course</a></td><td>⭐⭐⭐⭐</td><td>Transformers, tokenizers, and the Hugging Face ecosystem.</td></tr>
+    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">Course</a></td><td>⭐⭐⭐</td><td>Official free course including RAG and agents.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Local runtime</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td>Local runtime used by this stage's Path A.</td></tr>
-    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td>Understand quantization and the local inference layer.</td></tr>
-    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td>OpenAI-compatible self-hosted service.</td></tr>
-    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td>Machine-learning framework for Apple Silicon.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Local runtime</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Local runtime used by this stage's Path A.</td></tr>
+    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Understand quantization and the local inference layer.</td></tr>
+    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td>⭐⭐⭐</td><td>OpenAI-compatible self-hosted service.</td></tr>
+    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td>⭐⭐⭐</td><td>Machine-learning framework for Apple Silicon.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">From-scratch</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Video</a></td><td>Build a GPT from scratch with PyTorch.</td></tr>
-    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td>Work through tokenizers, attention, and training with code.</td></tr>
-    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td>Archived course outline; historical reference, not current teaching.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">From-scratch</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Video</a></td><td>⭐⭐⭐⭐</td><td>Build a GPT from scratch with PyTorch.</td></tr>
+    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Work through tokenizers, attention, and training with code.</td></tr>
+    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td>⭐⭐</td><td>Archived course outline; historical reference, not current teaching.</td></tr>
   </tbody>
 </table>
 

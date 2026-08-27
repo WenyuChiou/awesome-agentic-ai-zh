@@ -64,11 +64,31 @@ pages:
       en: stages/01-llm-basics.en.md
       zh-Hans: stages/01-llm-basics.zh-Hans.md
     max_visible_chars:
-      zh-TW: 6609
-      en: 10066
-      zh-Hans: 6601
+      zh-TW: 6771
+      en: 10298
+      zh-Hans: 6764
     max_open_details: 3
     required_visible_sections:
+      core-terms:
+        zh-TW:
+          heading: "三個核心詞"
+          anchor: 三個核心詞
+        en:
+          heading: "Three Core Terms"
+          anchor: three-core-terms
+        zh-Hans:
+          heading: "三个核心词"
+          anchor: 三个核心词
+      exercise-1:
+        zh-TW:
+          heading: "練習 1：LLM API（hello world）"
+          anchor: 練習-1llm-apihello-world
+        en:
+          heading: "Exercise 1: LLM API (hello world)"
+          anchor: exercise-1-llm-api-hello-world
+        zh-Hans:
+          heading: "练习 1：LLM API（hello world）"
+          anchor: 练习-1llm-apihello-world
       exercise-4:
         zh-TW:
           heading: "練習 4：Cross-Provider 比較"
@@ -99,7 +119,27 @@ pages:
         zh-Hans:
           heading: "练习 6：Local LLM"
           anchor: 练习-6local-llm
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 20
+      terms:
+        - id: token
+          zh-TW: {term: Token, label: "Token（詞元）"}
+          en: {term: Token, label: Token}
+          zh-Hans: {term: Token, label: "Token（词元）"}
+        - id: context-window
+          zh-TW: {term: Context Window, label: "Context Window（上下文視窗）"}
+          en: {term: Context Window, label: Context Window}
+          zh-Hans: {term: Context Window, label: "Context Window（上下文窗口）"}
+        - id: temperature
+          zh-TW: {term: Temperature, label: "Temperature（溫度）"}
+          en: {term: Temperature, label: Temperature}
+          zh-Hans: {term: Temperature, label: "Temperature（温度）"}
     resource_group_rowspans: [4, 4, 2, 4, 3]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
 
   - id: stage-02
     canonical: stages/02-prompt-engineering.md

@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-27
 
+- **content / resources / tooling** · **Stage 1 三語補強 Token、Context Window、Temperature 的可見核心詞教學，並恢復 17 筆延伸資源的編輯推薦度**：三個正確術語在本章目的第一次出現及核心詞標題皆以粗體標示；每個定義保留生活比喻、說清楚本章會在哪裡使用，以及 tokenizer／模型上限／可重現性等限制，不用縮字數的理由刪掉必要觀念。Context Window 改成「一次請求可處理的 token 空間」：提示與歷史先占位、答案也要留空間，並提醒型號可能另有較小的最大輸出上限，不再把模型生成的輸出誤寫成模型「接收」的內容。資源表保持 `4/4/2/4/3` 五組真正合併分類，三語逐列 URL→推薦度一致：10 筆四星、6 筆三星、1 筆已封存歷史參考兩星、0 筆假必修五星；GitHub 熱門數字仍不回填。17 個入口於 2026-08-27 UTC 全部回傳 HTTP 200，Anthropic Quickstart 與 Hugging Face LLM Course 改用重新導向後的現行網址。reader-UX 契約新增 Stage 1 核心詞順序、粗體首次使用、練習 1 前可見位置與逐列評分 parity；必要解釋加入後，三語首屏實測為 6,721／10,248／6,714 個非空白字元，上限只調到 6,771／10,298／6,764，沒有為通過舊門檻再次過度精簡。
+
 - **docs / tooling / planning** · **核心詞改成全站可量測的閱讀契約，不再靠編輯者記憶**：完成回溯的 Stage／Track 必須在第一個練習前保留可見核心詞區；技術詞第一次出現在正文時用粗體，逐詞說清楚「它是什麼、像什麼、這章用它做什麼、正確術語是什麼」。三語 style guide 與 `stages/DESIGN.md` 同步明定不能把核心名詞藏進 `<details>`、不能為了縮短頁面刪除 Zero-Shot／Token／MCP，也不能拉普通名詞湊數。reader-UX gate 新增 per-page `core_terms` 契約，會阻擋核心區藏入收合選單或晚於第一題、首次未粗體、單一語言詞序漂移、粗體定義標籤缺漏與只有名詞沒有最短解釋。核心區只讀到下一個同級／更高級 heading，不能借後續 setup 補字數；ASCII 詞接中文、頁面 H1 例外、HTML attribute 與 fenced heading 也有專門防誤判。新增 15 條正反 regression 後為 43／43 通過。Stage 1 與 Stage 2 正文刻意留給下一個獨立 stacked layer，本層 PR 未獲使用者同意前不合併、不清分支或 worktree。
 
 - **fix / content / resources** · **Stage 0 三語補回學習資源的五級推薦制度，但不恢復會過時的 GitHub 熱門數字**：18 筆資源仍放在預設收合選單，保持 Python／Git／CLI／REST API／YAML・JSON 的 `5/4/3/3/3` 真正合併分類。既有 style guide 規定 `⭐⭐⭐⭐⭐` 是「跳過會卡住」；本表全是補充資源，因此誠實使用 `⭐⭐⭐⭐` 或 `⭐⭐⭐`，不為了好看假發五星。reader-UX gate 新增逐列 URL→推薦度三語 parity 與交換兩列星等的 regression，不再只比較 URL 順序與星星總數。主線、重要名詞、`📌／🛠／🎯／✅` 路標與可直接複製執行的 GitHub API 練習都沒有被縮掉。

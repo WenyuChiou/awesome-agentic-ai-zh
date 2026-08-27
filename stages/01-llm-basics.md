@@ -2,7 +2,7 @@
 
 > **繁體中文** | [简体中文](./01-llm-basics.zh-Hans.md) | [English](./01-llm-basics.en.md)
 
-> 本章目的：用一條可重複的本機到雲端路徑，學會透過 API（應用程式介面）呼叫 LLM、讀懂 token 與上下文限制，並用成本與延遲做出可解釋的模型選擇。
+> 本章目的：用一條可重複的本機到雲端路徑，學會透過 API（應用程式介面）呼叫 LLM，讀懂 **Token（詞元）**、**Context Window（上下文視窗）** 與 **Temperature（溫度）**，再用成本與延遲做出可解釋的模型選擇。
 
 資料查核：2026-08-27 UTC
 <!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
@@ -18,17 +18,17 @@
 
 ## 三個核心詞
 
-### 1. token（詞元）
+### 1. **Token（詞元）**
 
-Token 是模型讀寫文字時使用的計算單位，也常是 API 計價單位。可以把它想成模型處理句子時切下來的一小塊積木；一個英文單字可能是一塊，也可能被切成幾塊，中文一個字也不保證只是一塊。實際數量要看 tokenizer，不能用字數精確猜測。
+Token 是模型讀寫文字時使用的計算單位，也常是 API 計價單位。可以把它想成句子被切成的一小塊積木；一個英文單字可能是一塊，也可能被切成幾塊，中文一個字也不保證只是一塊。本章會在練習 2 讀取實際 input／output token，再用它估算成本；數量要看 tokenizer，不能用字數精確猜測。
 
-### 2. context window（上下文視窗）
+### 2. **Context Window（上下文視窗）**
 
-Context window 是模型一次可以接收的 token 總容量，包含你的提示、歷史對話與要求它產生的內容。它像桌面大小：桌面放不下的內容就必須刪掉、摘要或分批處理。模型的上限不同，使用前要查該型號的官方文件。
+Context Window 是模型處理一次請求時可用的 token 空間。它像桌面：你的 prompt 和歷史對話先占位子，模型還要留位子寫答案；型號也可能另設較小的最大輸出上限，所以兩個數字都要查。本章會用它判斷長文件何時要刪減、摘要或分批。
 
-### 3. temperature（溫度）
+### 3. **Temperature（溫度）**
 
-Temperature 是控制抽樣變化程度的參數。把模型想成每次都在下一塊積木的多個候選中選一塊：低溫會偏向最可能的候選，適合分類或固定格式；高溫會更常嘗試其他候選，適合構思但可能更不穩定。它不會增加模型知識，也不會保證完全可重現。
+Temperature 是控制抽樣變化程度的參數。把模型想成每次都從幾塊候選積木中挑下一塊：低值偏向最可能的候選，適合分類或固定格式；高值更常嘗試其他候選，適合構思但可能更不穩定。本章把它當成輸出穩定度的旋鈕；它不會增加模型知識，也不會保證完全可重現。
 
 ## 場景式模型選擇器
 
@@ -335,36 +335,36 @@ print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku、sonnet、opus �
 - 一個固定的品質檢查表，而不是只憑主觀印象選模型。
 - 一段說明：何時用本機、何時接受雲端成本，以及 context 不足時怎麼分批。
 
-以下表格保留本章原有的 17 個延伸入口；它們是選讀資源，不是本章必做項目。星數與 repository 計數不列入，避免把會變動的數字當成評估依據。
+以下表格保留本章原有的 17 個延伸入口；它們是選讀資源，不是本章必做項目。推薦度是編輯判斷，不是 GitHub 熱門度：`⭐⭐⭐⭐⭐` 代表跳過會卡住；本表都是補充入口，所以誠實使用 `⭐⭐⭐⭐`、`⭐⭐⭐` 或歷史參考的 `⭐⭐`，不列會變動的 stars。
 
 <table>
-  <thead><tr><th scope="col">分類</th><th scope="col">資源</th><th scope="col">入口</th><th scope="col">用途／狀態</th></tr></thead>
+  <thead><tr><th scope="col">分類</th><th scope="col">資源</th><th scope="col">入口</th><th scope="col">推薦度</th><th scope="col">用途／狀態</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">官方 API 入門</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>Claude API notebook；可查 tool use、batch 與 prompt cache。</td></tr>
-    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>Anthropic 官方課程；從 API 基礎逐步延伸。</td></tr>
-    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>OpenAI API、structured output 與 function calling 範例。</td></tr>
-    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://docs.anthropic.com/en/docs/get-started">官方文件</a></td><td>快速完成第一個 Claude API 呼叫。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">官方 API 入門</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Claude API notebook；可查 tool use、batch 與 prompt cache。</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Anthropic 官方課程；從 API 基礎逐步延伸。</td></tr>
+    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>⭐⭐⭐⭐</td><td>OpenAI API、structured output 與 function calling 範例。</td></tr>
+    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">官方文件</a></td><td>⭐⭐⭐</td><td>快速完成第一個 Claude API 呼叫。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">中文教材</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td>以中文理解 LLM 原理與訓練流程。</td></tr>
-    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td>從 API 基礎延伸到知識庫與 RAG。</td></tr>
-    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td>Andrew Ng 課程的中文改編；更新速度較慢。</td></tr>
-    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td>從零實作小型模型訓練；Apache-2.0。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">中文教材</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td>⭐⭐⭐⭐</td><td>以中文理解 LLM 原理與訓練流程。</td></tr>
+    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td>⭐⭐⭐⭐</td><td>從 API 基礎延伸到知識庫與 RAG。</td></tr>
+    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td>⭐⭐⭐</td><td>Andrew Ng 課程的中文改編；更新速度較慢。</td></tr>
+    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td>⭐⭐⭐</td><td>從零實作小型模型訓練；Apache-2.0。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">英文課程</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course">課程</a></td><td>Transformer、tokenizer 與 Hugging Face 生態。</td></tr>
-    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">課程</a></td><td>官方免費課程；包含 RAG 與 agent。</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">英文課程</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course/chapter1/1">課程</a></td><td>⭐⭐⭐⭐</td><td>Transformer、tokenizer 與 Hugging Face 生態。</td></tr>
+    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">課程</a></td><td>⭐⭐⭐</td><td>官方免費課程；包含 RAG 與 agent。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">本機執行</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td>本章 Path A 的本機執行入口。</td></tr>
-    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td>理解量化與本機推論底層。</td></tr>
-    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td>提供 OpenAI 相容的 self-host 服務。</td></tr>
-    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td>Apple Silicon 的機器學習框架。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">本機執行</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td>⭐⭐⭐⭐</td><td>本章 Path A 的本機執行入口。</td></tr>
+    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td>⭐⭐⭐⭐</td><td>理解量化與本機推論底層。</td></tr>
+    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td>⭐⭐⭐</td><td>提供 OpenAI 相容的 self-host 服務。</td></tr>
+    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td>⭐⭐⭐</td><td>Apple Silicon 的機器學習框架。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">從零理解</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">影片</a></td><td>以 PyTorch 示範從零建立 GPT。</td></tr>
-    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td>以書本與程式碼深入 tokenizer、attention 與訓練。</td></tr>
-    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td>已封存的課程大綱；屬歷史參考，不是現行教學。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">從零理解</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">影片</a></td><td>⭐⭐⭐⭐</td><td>以 PyTorch 示範從零建立 GPT。</td></tr>
+    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td>⭐⭐⭐⭐</td><td>以書本與程式碼深入 tokenizer、attention 與訓練。</td></tr>
+    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td>⭐⭐</td><td>已封存的課程大綱；屬歷史參考，不是現行教學。</td></tr>
   </tbody>
 </table>
 
