@@ -77,7 +77,7 @@ Shipped in commits [`d598e37`](https://github.com/WenyuChiou/awesome-agentic-ai-
 
 What learners do for Track A: follow each numbered exercise in the outline doc, on their own real repo (their work codebase, not a sample). The `tracks/cli/A*.md` files contain success criteria for self-check.
 
-**Core reference**: [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.md) (148 lines) — 8-CLI comparison + decision rubric + common pitfalls.
+**Core reference**: [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.md) — 9-CLI identity, provider, sign-in, and safety reference; the full comparison is collapsed by default.
 
 **Potential v2** (not committed): could ship `examples/track-a/` containing sample CLAUDE.md / `.claude/commands/review.md` / sample GHA workflow yml. Low priority — current outline is self-contained.
 

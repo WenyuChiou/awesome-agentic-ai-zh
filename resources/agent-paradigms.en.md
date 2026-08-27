@@ -5,7 +5,7 @@
 > [← Back to main README](../README.en.md)
 
 > 📌 **This is a mental-model reference**. After reading you'll understand: "Why do Claude Code, Hermes Agent, and OpenClaw all call themselves 'agents' but feel completely different to use?"
-> If you already know which one you want → [`resources/cli-agents-guide.en.md`](cli-agents-guide.en.md) (8-CLI side-by-side comparison) or [`resources/cookbook.en.md`](cookbook.en.md) (step-by-step deployment).
+> If you already know which one you want → [`resources/cli-agents-guide.en.md`](cli-agents-guide.en.md) (CLI agent identity & selection guide) or [`resources/cookbook.en.md`](cookbook.en.md) (step-by-step deployment).
 
 The word "agent" gets used loosely. Cursor is an agent. Claude Code is an agent. Hermes Agent — the one chatting with you on Telegram — is an agent. OpenClaw running on a Jetson board in your apartment is also an agent. But these four feel completely different in practice — because they belong to **different paradigms**. The difference isn't which LLM family they use; it's **where the agent runs, what interface you use to talk to it, and whether it needs an internet connection**.
 
@@ -59,7 +59,7 @@ You open Claude Code in a terminal and type "refactor the entire auth module, sw
 
 ## Type 3: BYO-LLM CLI — "Type 2's mental model, multi-provider"
 
-**Examples**: [Aider](https://aider.chat) / [OpenCode](https://github.com/sst/opencode) / [goose](https://block.github.io/goose) / [Hermes Agent](https://github.com/NousResearch/hermes-agent)*
+**Examples**: [Aider](https://aider.chat) / [OpenCode](https://github.com/anomalyco/opencode) / [goose](https://block.github.io/goose) / [Hermes Agent](https://github.com/NousResearch/hermes-agent)*
 
 **Hero example**:
 You want to use DeepSeek-V4-Pro (the former R1 reasoning lineage now merged into the main line) to write code (~10× cheaper than Claude Opus). Aider with `--model deepseek/deepseek-v4-pro` + an `OPENROUTER_API_KEY` does it — git-aware, automatic commit messages, the same workflow as Type 2.
@@ -180,7 +180,7 @@ Real power users often run **2 or 3 types simultaneously**, each handling what i
 ## Links to existing stages / branches
 
 - **Learn Type 2 hands-on** → [Stage 5: Claude Code Ecosystem](../stages/05-claude-code-ecosystem.en.md)
-- **See the 8-CLI detailed comparison** (Type 2 + Type 3) → [`resources/cli-agents-guide.en.md`](cli-agents-guide.en.md)
+- **Choose a CLI agent that fits you** (Type 2 + Type 3) → [`resources/cli-agents-guide.en.md`](cli-agents-guide.en.md)
 - **Compare IDE-coupled tools** (Type 1) → [`branches/for-developer.en.md`](../branches/for-developer.en.md)
 - **Step-by-step Hermes deployment** → [`resources/cookbook.en.md` Recipe 6](cookbook.en.md) (Hermes + Ollama walkthrough)
 - **Jetson + OpenClaw setup** → [Jetson AI Lab tutorial](https://www.jetson-ai-lab.com/tutorials/openclaw/) + [Seeed Studio wiki](https://wiki.seeedstudio.com/local_openclaw_on_recomputer_jetson/)

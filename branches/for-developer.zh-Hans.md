@@ -24,7 +24,7 @@
 
 ## 精选 Projects
 
-> **CLI agent 比较**：8 个主流 CLI agent（Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build）的并列比较见 [`resources/cli-agents-guide.zh-Hans.md`](../resources/cli-agents-guide.zh-Hans.md)。第一次接触 CLI agent 想要 step-by-step 入门 → [`tracks/cli/A1-cli-intro.zh-Hans.md`](../tracks/cli/A1-cli-intro.zh-Hans.md)（Track A 第一站）。
+> **CLI agent 身份与选择指南**：想按工作方式选工具，见 [`resources/cli-agents-guide.zh-Hans.md`](../resources/cli-agents-guide.zh-Hans.md)。第一次接触 CLI agent 想要 step-by-step 入门 → [`tracks/cli/A1-cli-intro.zh-Hans.md`](../tracks/cli/A1-cli-intro.zh-Hans.md)（Track A 第一站）。
 >
 > **MCP catalog**：要把 CLI 接到日常工具（GitHub、Linear、Atlassian、Postgres、Playwright、Figma 等）→ [`resources/mcp-skills-catalog.zh-Hans.md`](../resources/mcp-skills-catalog.zh-Hans.md)（81+ 个分类整理）。
 >
@@ -50,7 +50,7 @@
 #### [OpenHands (前身为 OpenDevin)](https://github.com/All-Hands-AI/OpenHands) ⭐⭐⭐⭐
 ★ 81k+ · MIT — open source 的自主软件开发 agent。设计上比 Aider / Claude Code 更激进——agent 自己跑 sandbox、自己 commit，适合“整个 issue 丢给它解”场景。
 
-#### [block/goose](https://github.com/block/goose) ⭐⭐⭐⭐
+#### [aaif-goose/goose](https://github.com/aaif-goose/goose) ⭐⭐⭐⭐
 ★ 51k+ · Apache-2.0 — 开源、可扩展的 AI agent，超出纯 code suggestion——能 install / execute / edit / test，搭配任何 LLM。同时支持多家 LLM provider 跟 MCP，提供 desktop app、CLI、API 三种接口。（repo 现指向 `aaif-goose/goose`。）
 
 #### [RooCodeInc/Roo-Code](https://github.com/RooCodeInc/Roo-Code) ⭐⭐⭐（⚠️ 已封存）

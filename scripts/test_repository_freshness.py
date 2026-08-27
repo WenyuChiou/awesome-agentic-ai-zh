@@ -193,6 +193,60 @@ def test_snapshot_coverage_compares_reference_metadata_exactly():
     assert any("sources do not match" in item for item in problems)
 
 
+def test_snapshot_coverage_rejects_metadata_after_checked_at():
+    inventory = {"a/b": {"reference_count": 1, "sources": ["one.md"]}}
+    row = {
+        "requested": "a/b", "state": "verified",
+        "checked_at": "2026-08-27T09:00:00Z", "api_status": 200,
+        "canonical": "a/b", "html_url": "https://github.com/a/b",
+        "archived": False, "disabled": False, "visibility": "public",
+        "default_branch": "main", "license": "MIT",
+        "pushed_at": "2026-08-27T09:00:01Z",
+        "latest_release": {
+            "tag": "v1", "published_at": "2026-08-27T09:00:02Z",
+        },
+        "reference_count": 1, "sources": ["one.md"],
+    }
+    snapshot = {
+        "schema_version": 1, "verified_at": "2026-08-27T09:00:00Z",
+        "repository_count": 1, "repositories": {"a/b": row},
+    }
+    problems = rf.snapshot_coverage(snapshot, inventory)
+    assert any("pushed_at cannot be later" in item for item in problems)
+    assert any("latest_release.published_at cannot be later" in item for item in problems)
+
+
+def test_snapshot_coverage_handles_naive_verified_at_without_crashing():
+    inventory = {"a/b": {"reference_count": 1, "sources": ["one.md"]}}
+    row = {
+        "requested": "a/b", "state": "verified",
+        "checked_at": "2026-08-27T09:00:00", "api_status": 200,
+        "canonical": "a/b", "html_url": "https://github.com/a/b",
+        "archived": False, "disabled": False, "visibility": "public",
+        "default_branch": "main", "license": "MIT",
+        "pushed_at": "2026-08-27T08:59:00Z", "latest_release": None,
+        "reference_count": 1, "sources": ["one.md"],
+    }
+    snapshot = {
+        "schema_version": 1, "verified_at": "2026-08-27T09:00:00",
+        "repository_count": 1, "repositories": {"a/b": row},
+    }
+    problems = rf.snapshot_coverage(snapshot, inventory)
+    assert any("timezone-aware" in item for item in problems)
+
+
+def test_scan_completion_cannot_precede_scan_start():
+    records = {"a/b": {"checked_at": "old"}}
+    try:
+        rf.stamp_scan_completed_at(
+            records, "2026-08-27T09:00:02Z", "2026-08-27T09:00:01Z",
+        )
+    except ValueError as exc:
+        assert "cannot precede" in str(exc)
+    else:
+        raise AssertionError("time reversal must fail")
+
+
 def test_inventory_is_file_stable_not_line_numbered():
     with TemporaryDirectory() as tmp:
         root = Path(tmp)
@@ -343,7 +397,9 @@ def test_unverified_scan_artifact_does_not_replace_verified_baseline():
         report = folder / "report.md"
         baseline.write_text('{"keep":true}\n', encoding="utf-8")
         client = mock.Mock()
-        client.official_checked_at.return_value = "2026-08-27T06:08:18Z"
+        client.official_checked_at.side_effect = [
+            "2026-08-27T06:08:18Z", "2026-08-27T06:08:20Z",
+        ]
         inventory = {"acme/tool": {
             "requested": "acme/tool", "reference_count": 1, "sources": ["stage.md"],
         }}
@@ -363,6 +419,9 @@ def test_unverified_scan_artifact_does_not_replace_verified_baseline():
         data = json.loads(scan.read_text(encoding="utf-8"))
         baseline_text = baseline.read_text(encoding="utf-8")
     assert code == 1 and data["repositories"]["acme/tool"]["state"] == "unverified"
+    assert data["verified_at"] == "2026-08-27T06:08:20Z"
+    assert data["repositories"]["acme/tool"]["checked_at"] == "2026-08-27T06:08:20Z"
+    assert client.official_checked_at.call_count == 2
     assert baseline_text == '{"keep":true}\n'
 
 

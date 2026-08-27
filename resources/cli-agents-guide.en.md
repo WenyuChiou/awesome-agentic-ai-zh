@@ -1,150 +1,106 @@
 > [繁體中文](./cli-agents-guide.md) | [简体中文](./cli-agents-guide.zh-Hans.md) | **English**
 
-# CLI Agents Comparison Guide
+# CLI Agents Reference Guide
 
-> [← Back to main path README](../README.en.md)
+> [← Back to the main path README](../README.en.md) · [A1: Safely run your first small task](../tracks/cli/A1-cli-intro.en.md)
 
-> 📌 **This is a reference doc** (depth comparison, selection logic, pitfalls, recommended setups).
-> First time touching CLI agents, want step-by-step onboarding → see [`tracks/cli/A1-cli-intro.en.md`](../tracks/cli/A1-cli-intro.en.md) (Track A first stop).
-> First want to understand "why does one agent live in a terminal, another in Telegram, another on a Jetson board?" mental model → see [`resources/agent-paradigms.en.md`](agent-paradigms.en.md) (5 agent paradigms).
-> Already using one, want to decide / compare / upgrade → stay here.
+This reference doc organizes 9 terminal CLIs around “what do you want to do now?” and checkable official sources. It does not score tools or choose an entry point by popularity or subjective ranking; first identify the role, then choose based on your provider, sign-in method, and safety boundaries.
 
-A cross-branch reference shared by Track A (A1-A3) + all 5 specialized branches: **how to choose between Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build?** Every branch references CLI agents but no single branch "owns" this comparison, so it lives in `resources/`.
+## First separate the roles: an agent is not a model or API
 
----
+<table>
+<thead>
+<tr><th scope="col">Type</th><th scope="col">What it does</th><th scope="col">Examples</th><th scope="col">Do not confuse it with</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">LLM</th><td>Generates text, code, or tool calls</td><td>Claude, GPT, Gemini</td><td>The model does not automatically have access to files on your computer</td></tr>
+<tr><th scope="row">Provider API</th><td>Provides requests, authentication, and billing for one model provider</td><td>Anthropic API, OpenAI API, Gemini API</td><td>An API is not a terminal workbench</td></tr>
+<tr><th scope="row">Router</th><td>Forwards requests to multiple providers</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>A Router does not manage files or command permissions on an agent’s behalf</td></tr>
+<tr><th scope="row">Coding agent / harness</th><td>Reads files, edits, runs commands, and reports results in the terminal</td><td>Claude Code, Codex, OpenCode, Pi</td><td>Its approval, sandbox, and project trust settings need separate checking</td></tr>
+<tr><th scope="row">Local runtime</th><td>Loads and runs a model locally</td><td><a href="https://ollama.com/">Ollama</a></td><td>It can be called by an agent, but it is not a coding agent</td></tr>
+</tbody>
+</table>
 
-## 📋 8 Major Terminal CLI Agents
+## Find an entry point from your situation
 
-Only terminal-based CLI agents are included. IDE-based agents (Cursor / Cline / Continue) live in [for-developer](../branches/for-developer.en.md). The first 6 numbers verified via `gh api` on 2026-05-06; Hermes Agent verified on 2026-05-10; Grok Build verified on 2026-07-16 (⚠️ open-sourced 2026-07-14, very new; numbers and features are still moving fast).
+<table>
+<thead>
+<tr><th scope="col">Your situation</th><th scope="col">What to check first</th><th scope="col">Differences to record</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">You already have an account with a model service</th><td>A CLI from that ecosystem, such as Claude Code, Codex, or Gemini CLI</td><td>Sign-in flow, approval, sandbox, and usage page</td></tr>
+<tr><th scope="row">You need to switch providers</th><td>OpenCode, goose, Aider, Hermes Agent, or Pi</td><td>Supported endpoints, model IDs, and where API keys are stored</td></tr>
+<tr><th scope="row">You want to route multiple providers through one place</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> paired with an agent</td><td>The actual provider route, data policy, usage, and billing</td></tr>
+<tr><th scope="row">You want to practice locally</th><td><a href="https://ollama.com/">Ollama</a> paired with an agent that supports a compatible API</td><td>Whether the model is local, and whether the agent can still run shell commands / write files</td></tr>
+</tbody>
+</table>
 
-| Tool | Provider | License | Primary LLM | Auth / Pricing | Stars |
-|---|---|---|---|---|---|
-| [Claude Code](https://github.com/anthropics/claude-code) | Anthropic (official) | NOASSERTION | Claude | Claude subscription **OR** Anthropic Console API key | ★ 140k+ |
-| [Codex](https://github.com/openai/codex) | OpenAI (official) | Apache-2.0 | GPT family | ChatGPT account sign-in **OR** OpenAI API key | ★ 115k+ |
-| [OpenCode](https://github.com/sst/opencode) | community (repo now at `anomalyco/opencode`) | MIT | Any (multi-provider) | BYO API key, or built-in OpenCode Zen hosted | ★ 190k+ |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google (official) | Apache-2.0 | Gemini | Generous free tier, paid above quota | ★ 103k+ |
-| [goose](https://github.com/block/goose) | Agentic AI Foundation (repo now at `aaif-goose/goose`) | Apache-2.0 | 15+ providers (incl. Ollama) | BYO API key, or existing Claude / ChatGPT / Gemini subscription via ACP | ★ 51k+ |
-| [Aider](https://github.com/Aider-AI/aider) | Aider-AI (community) | Apache-2.0 | Any | BYO API key | ★ 47k+ |
-| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | Nous Research | MIT | 200+ via OpenRouter / NVIDIA NIM / Zhipu GLM / Kimi / Xiaomi MiMo / MiniMax / HF / OpenAI | BYO API key (multi-provider) | ★ 224k+ |
-| [Grok Build](https://github.com/xai-org/grok-build) | SpaceXAI (xAI, official) | Apache-2.0 | Grok | Browser sign-in on first launch | ★ 25k+ |
+## 9 CLI tools
 
----
+The full table is collapsed by default; after expanding it, record the “checked on” date alongside your installed version. Official data checked on: **2026-08-27 UTC**.
 
-## 🎯 Which to Pick? Decide by Use Case
+<details markdown="1">
+<summary>Expand installation, authentication, provider, and safety facts for the 9 CLIs</summary>
 
-### Writing papers / literature / research
-**Top pick**: Claude Code (long context, strong reasoning, good hallucination resistance). Gemini CLI is the alternative — its million-token context fits whole-PDF / whole-dataset workflows.
+<table>
+<thead>
+<tr><th scope="col">Type</th><th scope="col">Tool</th><th scope="col">Who it currently suits</th><th scope="col">Model / provider choices</th><th scope="col">Sign-in method</th><th scope="col">Safe starting point</th><th scope="col">Status</th><th scope="col">Official sources</th></tr>
+</thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Official model ecosystems</th><td>Claude Code</td><td>People who want to use the Anthropic ecosystem in the terminal</td><td>Claude; Anthropic API</td><td>Claude account or Anthropic API key</td><td>Use a demo repo; keep the permission prompt</td><td>One of Anthropic’s official terminal, desktop, IDE, and cloud interfaces</td><td><a href="https://code.claude.com/docs/en/overview">docs</a> · <a href="https://github.com/anthropics/claude-code">repo</a></td></tr>
+<tr><td>Codex CLI</td><td>People who want to use OpenAI / ChatGPT sign-in in the terminal</td><td>GPT family; OpenAI API</td><td>ChatGPT sign-in or OpenAI API key</td><td>Use the default approval and workspace sandbox; inspect the diff first</td><td>OpenAI’s open-source terminal coding agent</td><td><a href="https://developers.openai.com/codex/cli">docs</a> · <a href="https://github.com/openai/codex">repo</a></td></tr>
+<tr><td>Gemini CLI</td><td>People with Google authentication who want Gemini in the terminal</td><td>Gemini; Google AI API or Vertex AI</td><td>Google sign-in, Gemini API key, or Vertex AI</td><td>Use approval mode; explicitly enable `--sandbox` when needed</td><td>Google’s open-source terminal agent</td><td><a href="https://google-gemini.github.io/gemini-cli/">docs</a> · <a href="https://github.com/google-gemini/gemini-cli">repo</a></td></tr>
+<tr><td>Grok Build</td><td>People who want to try xAI’s Grok terminal TUI</td><td>Grok; xAI sign-in or API key</td><td>Interactive browser sign-in on first launch; CI can use `XAI_API_KEY`</td><td>Start in a demo repo; do not copy `~/.grok/auth.json`</td><td>xAI’s official open-source TUI coding agent</td><td><a href="https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager/docs/user-guide/02-authentication.md">authentication</a> · <a href="https://github.com/xai-org/grok-build">repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">Provider-flexible</th><td>OpenCode</td><td>People who need to switch among multiple providers</td><td>Multiple providers; can connect to OpenRouter or a compatible endpoint</td><td>Use `/connect` to add a provider API key or OAuth</td><td>Check permission settings first; test outside directories only in a demo repo</td><td>Open-source terminal coding agent; project rules use `AGENTS.md`, with `CLAUDE.md` as a compatibility fallback</td><td><a href="https://opencode.ai/docs/providers">provider</a> · <a href="https://github.com/anomalyco/opencode">repo</a></td></tr>
+<tr><td>goose</td><td>People who need a CLI, desktop app, or API and want to connect tools and data sources</td><td>15+ providers, including Anthropic, OpenAI, Google, Ollama, and OpenRouter</td><td>Provider API key, or ACP sign-in through some existing subscriptions</td><td>Start with low-privilege extensions and a sandbox; do not connect production data</td><td>AAIF’s open-source local agent, with CLI, desktop, and API</td><td><a href="https://block.github.io/goose/">docs</a> · <a href="https://github.com/aaif-goose/goose">repo</a></td></tr>
+<tr><td>Aider</td><td>People who want to manage code changes with git diff / commit</td><td>Multiple cloud APIs, OpenRouter, OpenAI-compatible endpoints, and local models</td><td>Provider API key, config file, or environment variable</td><td>Start in a clean demo repo; note Aider’s git auto-commit behavior</td><td>Open-source terminal pair-programming tool; official docs specify its git integration</td><td><a href="https://aider.chat/docs/">docs</a> · <a href="https://github.com/Aider-AI/aider">repo</a></td></tr>
+<tr><td>Pi</td><td>People who want to start from a small core and extend it with extensions, skills, or RPC</td><td>Subscription providers, API-key providers, custom providers; can connect to a local endpoint</td><td>`/login` or a provider API key</td><td>Pi has no built-in sandbox; use a disposable repo or container and review commands manually</td><td>An extensible minimal terminal coding harness</td><td><a href="https://pi.dev/docs/latest/providers">provider</a> · <a href="https://github.com/earendil-works/pi">repo</a></td></tr>
+<tr><td>Hermes Agent</td><td>People who want to use the same agent in a terminal, desktop app, or chat platform</td><td>Nous Portal, OpenRouter, Anthropic, Google, and other providers</td><td>Set an API key or OAuth with `hermes model`; Nous Portal supports OAuth</td><td>Start in a low-risk repo; enable skills, MCP, and provider permissions one at a time</td><td>Nous Research’s open-source agent; docs provide CLI and multi-interface integrations</td><td><a href="https://hermes-agent.nousresearch.com/docs/integrations/providers/">provider</a> · <a href="https://github.com/NousResearch/hermes-agent">repo</a></td></tr>
+</tbody>
+</table>
 
-### Writing code / refactoring a codebase
-**Top pick**: Aider (git-native — auto-commits each change, easy to revert) or Claude Code. OpenCode fits when you need to switch between LLMs.
+### Where do OpenRouter and Ollama fit?
 
-### Privacy / offline / no cloud
-**Top pick**: goose or OpenCode + local Ollama. Both support BYO LLM and connect to `http://localhost:11434/v1` (Ollama default).
+OpenRouter is a Router, so it is not one of the 9 coding CLIs above; it provides a unified API, provider routing, and centralized usage. Ollama is a local runtime, not an agent; it can provide a compatible API at `http://localhost:11434/v1` for OpenCode, goose, Aider, or another client. Neither replaces an agent’s file permissions and sandbox design.
+</details>
 
-### Already subscribed to ChatGPT Plus / Pro
-**Top pick**: Codex — same account, no separate billing.
+## Keep four things when moving a prompt between CLIs
 
-### Want 1M-token long context + Google ecosystem
-**Top pick**: Gemini CLI. Generous free tier and long context are the differentiators. Note: Google service integration (Gmail / Drive / Docs) goes through MCP extensions, not built-in connectors — same setup pattern as other CLIs.
+1. Write down the file paths, allowed scope, and the order “list a plan first, then change after confirmation.”
+2. Record the model, provider, API key, and approval / sandbox settings separately; do not assume they stay the same when you change CLIs.
+3. Describe the goal in ordinary language; use slash commands such as `/login` and `/permissions` only in the relevant tool’s section.
+4. Ask for `git diff`, test results, and unfinished items, and restore the worktree before using another CLI.
 
-### Want to avoid vendor lock-in
-**Top pick**: OpenCode > goose > Aider. None tie you to a specific provider; models are swappable.
+<details markdown="1">
+<summary>Expand rules files, sandbox, and common questions</summary>
 
-### First time installing a CLI agent — wanting easiest start
-**Top pick**: Claude Code. Broad ecosystem, CLAUDE.md mechanism for version-controlled prompts, plenty of community resources when you hit issues.
+- Claude Code’s project rules are in `CLAUDE.md`; Codex and OpenCode can use `AGENTS.md`. OpenCode’s `CLAUDE.md` is a compatibility fallback; do not treat a nonexistent `OPENCODE.md` as a common format.
+- Gemini CLI’s project context and `.gemini/` settings follow its official docs; `--sandbox`, approval mode, and `--yolo` have different risks, so do not skip confirmation on your first try.
+- Pi’s project trust is not a sandbox. Its official safety docs explicitly warn that it runs with the permissions of the user who starts it; use a container or another OS-level boundary when isolation is needed.
+- Aider’s official docs explain git integration and auto-commit after editing; start in a clean demo repo, inspect the commit, then bring it into a working repo.
+- For goose, Hermes Agent, and other agents that can connect MCP / extensions, start with a low-privilege, read-only integration; do not use Gmail, Slack, or a production DB as your first external connection.
+- Put API keys only in an officially supported credential store or environment variable; never put them in a repo, prompt, screenshot, or issue. Calculate cost from the day’s official price and actual usage, not from the model name.
 
-### Want it running on a cloud VM, talking to it via Telegram / Slack / Discord, with mainland China LLMs as primary
-**Top pick**: Hermes Agent. Three differentiators:
+#### Official verification entry points (2026-08-27 UTC)
 
-- **Decoupled from your laptop** — agent runs on a $5 VPS / Modal serverless / Vercel Sandbox; you message it from Telegram / Discord / Slack / WhatsApp / Signal
-- **Model-neutral** — supports GLM / Kimi / Xiaomi MiMo / MiniMax, matching the 11 Chinese-ecosystem catalog entries
-- **Built-in self-improving skill loop + cron scheduler** — agent autonomously generates skills from interaction, refines them across sessions, runs scheduled jobs unattended
-- ⚠️ Self-evolving skills is a frontier feature with no independent audit yet; for production tasks, start with low-stakes experiments
+- [Claude Code overview](https://code.claude.com/docs/en/overview) · [permissions](https://code.claude.com/docs/en/permissions)
+- [OpenAI Codex CLI](https://developers.openai.com/codex/cli)
+- [OpenCode](https://opencode.ai/docs) · [canonical repository](https://github.com/anomalyco/opencode)
+- [Gemini CLI](https://google-gemini.github.io/gemini-cli/)
+- [goose](https://block.github.io/goose/) · [canonical repository](https://github.com/aaif-goose/goose)
+- [Aider](https://aider.chat/docs/)
+- [Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+- [Grok Build](https://github.com/xai-org/grok-build)
+- [Pi](https://pi.dev/docs/latest) · [canonical repository](https://github.com/earendil-works/pi)
+- [OpenRouter FAQ](https://openrouter.ai/docs/faq) · [Ollama](https://ollama.com/)
+</details>
 
----
+## Return to Track A
 
-## 📝 Portable Prompts Across CLIs
+- For your first safe operation, return to [A1](../tracks/cli/A1-cli-intro.en.md).
+- To fix rules files and repeatable workflows in place, go to [A2](../tracks/cli/A2-cli-workflow.en.md).
+- To work on MCP, CI, and usage traces, go to [A3](../tracks/cli/A3-cli-production.en.md).
 
-If you want prompts that work across CLI tools (or want to switch without rewriting), follow these principles:
-
-1. **Specify file paths explicitly** — "modify `src/auth.py`" beats "modify that auth file"
-2. **Ask for multi-step breakdowns** — "first list a plan, then act after I confirm" works in every CLI
-3. **Avoid CLI-specific magic** — `/init` `/compact` are Claude-Code-specific; OpenCode doesn't have them
-4. **Use `.cursorrules` / `CLAUDE.md` / `AGENTS.md` for persistent preferences** — Claude Code reads `CLAUDE.md`, Codex reads `AGENTS.md`, OpenCode reads `OPENCODE.md`, **content can be the same**
-5. **State review scope clearly** — "review only my diff" vs "review the whole repo"
-
-Cross-CLI prompts are usually 5-10% more verbose than CLI-specific ones, but the upside is you can switch tools without rewriting.
-
----
-
-## ⚠️ Common Pitfalls
-
-### File path handling
-- Windows uses backslashes (`C:\Users\...`); most CLIs translate internally but sometimes get confused
-- Recommendation: in git-bash / WSL use forward slashes, avoid weird quoting
-
-### Git integration differences
-- **Aider** auto-commits every change (by design, not a bug)
-- **Claude Code / Codex / OpenCode / goose** don't auto-commit by default — manual or via prompt
-
-### Default sandbox (each CLI varies; verify against official docs before use)
-- **Claude Code**: bash writes default to cwd; reads broader (except deny-rule paths)
-- **Codex**: in version-controlled folders, `Auto` (workspace-write + on-request escalation) is recommended; in non-git folders, `read-only`
-- **goose / OpenCode**: relatively permissive — add explicit sandbox / approval rules; don't rely on defaults
-
-### Token cost accumulation
-- Running a `grep` on a large codebase can consume 100k+ tokens
-- Summarizing a long PDF can hit 500k tokens (Gemini handles this; other tools need to be cost-aware)
-- Recommendation: estimate cost before each operation; set a monthly cap
-
-### Multi-CLI session interference
-- Two CLIs in the same repo (e.g. Claude Code + Aider) can race-condition file edits
-- Recommendation: one repo, one CLI (unless you genuinely need parallelism)
-
----
-
-## 🔧 Real-World Setups
-
-Three common combinations; pick one that fits:
-
-### Setup A: Claude Code primary + OpenCode backup
-- Claude Code handles 90% of daily work (code, docs, debug)
-- OpenCode + Ollama for privacy-sensitive data (medical, financial)
-- One prompt, runs in either
-
-### Setup B: Codex (GPT) + Aider (Claude) mix
-- Codex handles small tasks within ChatGPT Plus quota
-- Aider with Claude API key handles big refactors (git-native commit convenient)
-- Separate billing, no interference
-
-### Setup C: Gemini CLI primary (long-context scenarios)
-- Whole PDF / whole codebase fed at once
-- Add Aider for scenarios needing precise git diff
-- Fits scholars, knowledge workers
-
-### Setup D: Hermes Agent + Local Ollama (multi-platform + mainland China LLMs + offline)
-- **Hermes Agent** runs on a low-cost VPS or your own machine as a multi-platform agent gateway
-- **LLM endpoint** can be Ollama (`http://localhost:11434/v1`), or swapped to providers such as z.ai GLM / Kimi
-- **Chat entrypoint** can be Telegram / Slack / Discord; Hermes routes platform messages into the agent workflow
-- **When you want zero Anthropic / OpenAI dependency**, this setup fits offline, privacy-sensitive, and low-cost repeat experiments
-- Step-by-step walkthrough: [`resources/cookbook.en.md` Recipe 6](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough)
-
----
-
-## Linking Back to Branches
-
-Different audiences have different CLI needs:
-
-- **[for-developer](../branches/for-developer.en.md)**: also see IDE-based agents (Cursor, Cline, Continue)
-- **[for-everyday-users](../branches/for-everyday-users.en.md)** Tier 2: CLI is the advanced option; try Tier 0 / 1 (Web / Desktop App) first
-- **[for-researcher](../branches/for-researcher.en.md)**: also see paper-specific tools (paper-qa, gpt-researcher, ChatPaper)
-- **[for-knowledge-worker](../branches/for-knowledge-worker.en.md)**: also see workflow automation (n8n, Make)
-- **[for-teacher](../branches/for-teacher.en.md)**: CLI is advanced for teachers; start with prompt libraries
-
----
-
-## Maintenance Notes
-
-- 8 CLI tools' stars / license / pushed_at auto-refreshed weekly by the `weekly-catalog-refresh` CI (manual run: `python scripts/refresh-stars.py`)
-- The CLI market moves fast — new tools require evaluation before inclusion (bar: 30k+ stars, actively maintained, true CLI not IDE; an official-vendor or very-new CLI can be an exception, e.g. Grok Build)
-- The comparison table deliberately leaves out "strengths / weaknesses" columns — avoiding subjective bias and letting the use-case section + readers' own judgment do that work
+> Maintenance principle: tools, sign-in, pricing, sandbox, and providers change. Recheck official docs and update the checked-on date before editing the table. Keep this table factual; do not maintain popularity or subjective ratings.

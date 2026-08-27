@@ -56,6 +56,16 @@ GPT, Claude, Gemini — models that take text in and produce text out. Fundament
 
 📍 Detail: [Stage 1](../stages/01-llm-basics.en.md)
 
+### Model Provider / Provider API
+
+**The direct door to a model company.** Examples include Anthropic API, OpenAI API, and Gemini API. You choose a model and send a prompt; the provider returns the result and charges you. It provides a model service, but it is not a CLI agent that reads and writes files on your computer.
+
+### LLM Router / API Router
+
+**One entry point that forwards requests to multiple models or backends.** [OpenRouter](https://openrouter.ai/docs/faq) is an example: through one API and billing entry point, you can choose different models and, depending on your settings, use provider routing or fallback. A Router is not a model, and it is not a coding agent such as OpenCode or Pi.
+
+📍 Five identities compared: [Track A A1](../tracks/cli/A1-cli-intro.en.md)
+
 ### Token
 
 LLMs see **tokens** (sub-word units), not characters. Roughly 1 English word ≈ 1.3 tokens, 1 Chinese character ≈ 1.5–2 tokens. LLM pricing and context windows are measured in tokens. "1M-token context" ≈ 750k English words.
@@ -359,17 +369,17 @@ Simon Willison's framing: an agent becomes exploitable when it has all three of 
 
 ### CLI Agent
 
-Agents that run in a terminal (Claude Code, Codex, Aider, Gemini CLI, etc.). Versus IDE-bound (Cursor, Continue) or web-based (ChatGPT, Claude.ai).
+An agent / harness that runs in a terminal and, within the scope you allow, reads files, edits files, and runs commands (Claude Code, Codex, OpenCode, Pi, Aider, Gemini CLI, etc.). **It is the workbench, not the LLM inside it.** The same CLI may be tied to one model ecosystem or let you switch providers.
 
 📍 Detail: [Track A A1](../tracks/cli/A1-cli-intro.en.md), [`resources/cli-agents-guide.en.md`](cli-agents-guide.en.md)
 
 ### BYO API Key (Bring Your Own)
 
-Tool that supports user-provided API keys instead of bundled subscriptions. Aider / OpenCode / goose are BYO; Claude Code / Codex default to subscriptions.
+Tools that let you provide your own provider API key instead of using only the tool’s built-in subscription sign-in. Aider, OpenCode, goose, and Pi can connect to one or more providers; Claude Code and Codex also have subscription or API authentication paths listed in their official docs. Supported methods change, so read the tool’s official authentication docs before use.
 
 ### Local LLM / On-Device
 
-Models running on your own hardware (Ollama, llama.cpp, MLX, LocalAI, etc.). Data stays local — privacy-friendly but capabilities lag frontier models.
+Models running on your own machine. Ollama, llama.cpp, MLX, and LocalAI are **local runtimes**: they run the model and are not coding agents. Data stays off the cloud for this workflow only when the model, tools, and data paths all remain local and no cloud service is called; test capability and speed with your own task and hardware.
 
 📍 Detail: [Stage 1](../stages/01-llm-basics.en.md)
 

@@ -1,102 +1,157 @@
-# A1 — 選一個 CLI Agent，開始用它做事（CLI Agent Intro & Selection）
+# A1 — 選一個 CLI agent，安全地完成第一個小任務
 
 > **繁體中文** | [简体中文](./A1-cli-intro.zh-Hans.md) | [English](./A1-cli-intro.en.md)
 
-> [← 回主路線 README](../../README.md) · **Track A: CLI Power User** 第 1 站
+> [← 回主路線 README](../../README.md) · **Track A: CLI Power User** 第 1 站 · [下一站：A2](A2-cli-workflow.md)
 
-⏱ **時間估算**：1 週（約 5-10 小時）
+這一站要把「終端機裡的 AI」說清楚，然後在一個可丟棄的 demo repo（由 Git 管理的練習專案資料夾）裡安全地跑一次。你會先讓工具讀檔、找測試指令、提出計畫；確認計畫後，才做一個可用 `git diff` 看見、也能復原的小改動。
 
-> 📋 **本章組成**：學習目標 → 進入條件 → 必修閱讀 → 動手練習 → 精選 Projects → 自我檢查
-> 🔑 **關鍵名詞**：本頁只用到 **CLI agent**（在終端機跑的 AI 工具）。MCP / Skill / plugin 等其他生態名詞會在 A2 / A3 第一次使用時再解釋。完整詞表見 [`resources/glossary.md`](../../resources/glossary.md)。
+如果你想用現成工具做事，暫時不想自己寫 agent 程式，這一站就是你的入口。
 
-讀完 Stage 0-2 之後、你想直接用現成的 CLI agent 把工作做完、**不打算自己寫 agent 程式、只想先用現成工具完成任務**？這條軌就是給你的。第一站：**選一個 CLI agent、跑起來**。
+## 你現在只要做這件事
 
-## 📌 學習目標
+準備一個不含秘密、可以隨時刪除的 demo repo。還沒安裝工具時，先在下面的短表選一個，點官方入口完成安裝與登入；接著送出這段請求：
 
-完成這一節後你會：
+> 請只讀取目前的 demo repo，說明它的用途、找出測試指令，並提出一個小型文件改動計畫。先不要修改檔案、不要刪除檔案，也不要執行會改變資料的命令。
 
-- 知道 8 個主流 CLI agent（Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build）的差別
-- 依自己的場景挑出第一個 CLI 工具
-- 完成安裝 + 認證 + 第一個真正的任務（不是 hello world）
-- 知道什麼時候該換 / 加第二個 CLI
+完成後，你應該看得到 repo 摘要、測試指令、待確認的計畫，以及工具要求權限時的提示。這就是本章的第一個可驗證成果。
 
-## 🚪 進入條件
+## 學習目標
 
-你應該已經：
+- 分清 LLM、Provider API、Router、coding agent／harness 與 local runtime。
+- 依你已有的帳號、provider 或本機環境選入口，不做總排名。
+- 在 demo repo 中完成一次「先讀取 → 看計畫 → 確認 → 小改動 → `git diff` → 復原」的循環。
 
-- 跑過 Stage 0 的 練習：CLI（會用命令列）
-- 有 Claude / OpenAI / Google 任一個帳號（不一定是付費）
-- 對 prompt 寫法基本上手（Stage 2）
+<details markdown="1">
+<summary>展開時間、先備條件、帳號與費用</summary>
 
-## 📚 必修閱讀
+- **時間**：第一次只讀取與看計畫，通常可在一個短時段完成；CLI-1 至 CLI-4 可以分幾天慢慢做，不必一次做完。
+- **先備條件**：會進入資料夾、看 `git status` 和 `git diff`；手邊有一個可丟棄的 demo repo。
+- **帳號**：準備一個所選工具支援的登入方式，或把 agent 接到本機模型 runtime。沒有帳號時，先看下方選擇表和官方 Quickstart。
+- **費用**：不要猜。開始前看當日官方 pricing／usage 頁；只有整條流程都留在本機時，才不會產生這次練習的模型 API 費用。
+</details>
 
-1. [**`resources/agent-paradigms.md`**](../../resources/agent-paradigms.md) ⭐ — 5 種 agent 型態的全景圖；先讀這份知道 CLI agent 在整個 agent 生態中的位置（Type 2 + Type 3）
-2. [**`resources/cli-agents-guide.md`**](../../resources/cli-agents-guide.md) ⭐ — 本軌的核心參考。8 個主流 CLI agent 並列比較、依 use case 推薦、實用搭配
-3. [**Anthropic — Claude Code Quickstart**](https://code.claude.com/docs/en/quickstart) — 官方安裝指南
-4. [**OpenAI — Codex Quickstart**](https://github.com/openai/codex/blob/main/README.md) — Codex 安裝跟認證流程
+## 五種身分先分開
 
-## 🛠 動手練習（基礎 illustrative 練習）
+<table>
+<thead>
+<tr><th scope="col">種類</th><th scope="col">白話說法</th><th scope="col">例子</th><th scope="col">本章怎麼用</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">LLM</th><td>產生答案的模型</td><td>Claude、GPT、Gemini</td><td>提供回答；不管理 repo</td></tr>
+<tr><th scope="row">Provider API</th><td>通往一家模型服務的門</td><td>Anthropic API、OpenAI API、Gemini API</td><td>提供請求、認證與計費</td></tr>
+<tr><th scope="row">Router</th><td>把請求轉給多個 provider 的入口</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>不是 LLM 或 coding agent</td></tr>
+<tr><th scope="row">Coding agent／harness</th><td>在終端機讀檔、改檔、跑命令的工作台</td><td>Claude Code、Codex、OpenCode、Pi</td><td>會操作工作目錄；先用 demo repo</td></tr>
+<tr><th scope="row">Local runtime</th><td>在自己電腦上執行模型的引擎</td><td><a href="https://github.com/ollama/ollama">Ollama</a></td><td>可供 agent 呼叫；不是 agent</td></tr>
+</tbody>
+</table>
 
-### 動手練習 CLI-1：安裝 + 第一次跑
+## 依現有條件選入口
 
-**3 步走完**：
+<table>
+<thead>
+<tr><th scope="col">你已有的條件</th><th scope="col">可先看的入口</th><th scope="col">先確認什麼</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">Anthropic 帳號或 API</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>登入與 permission prompt</td></tr>
+<tr><th scope="row">ChatGPT 或 OpenAI API</th><td><a href="https://developers.openai.com/codex/cli">Codex CLI</a></td><td>approval、sandbox、工作目錄</td></tr>
+<tr><th scope="row">Google 帳號、API 或 Vertex AI</th><td><a href="https://google-gemini.github.io/gemini-cli/">Gemini CLI</a></td><td>認證與 sandbox</td></tr>
+<tr><th scope="row">想換 provider 或用本機模型</th><td><a href="https://opencode.ai/docs">OpenCode</a>、<a href="https://block.github.io/goose/">goose</a>、<a href="https://aider.chat/docs/">Aider</a>、<a href="https://pi.dev/docs/latest">Pi</a></td><td>provider 與權限邊界</td></tr>
+<tr><th scope="row">想用 Router 或本機 runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> 或 <a href="https://ollama.com/">Ollama</a></td><td>它們需搭配 coding agent</td></tr>
+</tbody>
+</table>
 
-1. **裝**：照你選的 CLI 的 quickstart 安裝（每個 CLI 官網都有 ≤ 5 分鐘的安裝指南）
-2. **挑一個低風險真實任務**：不要寫「hello world」——挑一件你今天本來就要做的事（例：「整理我 Downloads 資料夾、把 PDF 全部 move 到 ~/Documents/PDFs」）
-3. **觀察 3 件事**：它怎麼分解任務、何時要求確認、輸出格式如何
+<a id="cli-1"></a>
+### 動手練習 CLI-1：在 demo repo 內先讀取，再做一個可復原的小改動
 
-→ 用真任務跑、才能感受 agent 跟 chatbot 的差別。
+**成果：** 你能看到 repo 說明、測試指令與待確認計畫，確認後留下可由 `git diff` 檢查的單一小改動。
 
-### 動手練習 CLI-2：CLI 內建的 system prompt 檔
-- Claude Code → 寫一個 `CLAUDE.md` 在 repo 根目錄
-- Codex → 寫 `AGENTS.md`
-- Gemini CLI → 寫 `GEMINI.md`
-- goose / OpenCode → 看各自的設定
+<details markdown="1">
+<summary>展開 CLI-1 的準備、操作與復原步驟</summary>
 
-寫進去 3 件事：「你的個性 / 偏好的 code style / 不能做的事」。再跑一個任務，觀察行為差異。
+1. 建立或複製一個可丟棄的 demo repo。只放 README、少量原始碼與測試；不要放 API key、個資、合約或 production 設定。開始前先執行 `git status --short`，確認沒有別人的未完成改動。
+2. 先用上面的「只讀取」請求。對照工具列出的檔案、測試指令與計畫；不清楚的地方先問，不要直接核准。
+3. 你確認計畫後，只允許一個小文件改動，例如在 `README.md` 增加一段「如何執行測試」。要求工具先展示 diff，再由你核准。
+4. 在終端機執行 `git diff -- README.md`，確認只有預期內容。只有在第 1 步已確認檔案原本乾淨時，才執行 `git restore -- README.md`；最後再用 `git status --short` 確認小改動已復原。
 
-### 動手練習 CLI-3：第二個 CLI 並用
-裝第二個 CLI（建議 Codex 或 OpenCode 當 backup）。用同一個 prompt 跑，比較輸出風格、速度、cost。**不是要選一個贏家——是要學「不同 CLI 解同一個問題的角度不同」**。
+若工具沒有 git，仍要保留原檔備份並逐行比較；不要把同一個 demo repo 同時交給兩個會寫檔的 agent。
+</details>
 
-### 動手練習 CLI-4：認證細節
-故意把 API key 弄錯一個字元，看 CLI 怎麼報錯。再做一次「正確 key 但 model 名稱錯」的實驗。Production 用一定會遇到 auth 問題，先在這裡踩過。
+<a id="cli-2"></a>
+### 動手練習 CLI-2：讓專案規則被正確讀到
 
-## 🎯 精選 Projects
+**成果：** 你能用一個短規則檔說明專案用途、禁止事項、測試指令與交付格式，並驗證工具有遵守它。
 
-按用途分 2 類、10 個項目一張表搞定。**挑入口看「適合誰」、想深入細節（強弱項、推薦場景、實用搭配）→ [`resources/cli-agents-guide.md`](../../resources/cli-agents-guide.md)**。
+<details markdown="1">
+<summary>展開各 CLI 的專案規則位置與驗證方式</summary>
 
-| 分類 | Project | ⭐ | 適合誰 | 為什麼推薦 / 備註 |
-|---|---|---|---|---|
-| **8 個主流 CLI agent** | [anthropics/claude-code](https://github.com/anthropics/claude-code) | ⭐⭐⭐⭐⭐ | **推薦作為第一個 CLI agent** | 內建 SKILL / plugin 生態、CLAUDE.md prompt 系統、最完整的中文社群資源（★ 140k+） |
-| | [openai/codex](https://github.com/openai/codex) | ⭐⭐⭐⭐⭐ | 已訂 ChatGPT Plus / Pro 的人 | 用同一帳號就能在終端機跑（★ 115k+） |
-| | [sst/opencode](https://github.com/sst/opencode) | ⭐⭐⭐⭐⭐ | 要 self-host / 不想 vendor lock-in | 開源、不綁 LLM provider、社群迭代最快（★ 190k+） |
-| | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) | ⭐⭐⭐⭐ | 處理大 codebase / 大 PDF | 1M token 長 context（★ 103k+） |
-| | [block/goose](https://github.com/block/goose) | ⭐⭐⭐⭐ | 想用既有 Claude/ChatGPT/Gemini 訂閱 + Ollama 本機 | 15+ provider 支援（含 Ollama），★ 51k+。**已遷至 `aaif-goose/goose`（AAIF / Linux Foundation）** |
-| | [Aider-AI/aider](https://github.com/Aider-AI/aider) | ⭐⭐⭐⭐⭐ | 要寫 code、想要 git 流程乾淨 | git-native、自動 commit / branch（★ 47k+） |
-| | [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | ⭐⭐⭐⭐⭐ | 想要 cloud-deployed agent（Telegram / Discord / Slack 介面）+ 中文 LLM 生態 | 自動演化型 agent、200+ provider routing、含 GLM / Kimi / 小米 MiMo / MiniMax、內建 cron + skill 自動演化迴圈（★ 數據截至 2026-05；以官方 GitHub 為準）。⚠️ 自動演化 skill 是實驗性功能、缺第三方獨立審計、production 用前請自行驗證安全性與維護狀態、先在低風險場景試 |
-| | [xai-org/grok-build](https://github.com/xai-org/grok-build) | ⭐⭐⭐ | 已在用 Grok / X 生態、想嘗鮮的人 | SpaceXAI（xAI）官方 TUI coding agent、Rust、支援 headless / ACP 編輯器嵌入（★ 25k+）。⚠️ 2026-07-14 才開源、非常新——先觀察、不建議當第一個 CLI agent |
-| **進階：互補工具**<br>（不是 CLI、但常搭配） | [LM Studio](https://lmstudio.ai/) | ⭐⭐⭐ | Windows / Mac 不想學 command line、想跑本機 LLM | 非開源 desktop app、拖拉介面跑本地 LLM |
-| | [Ollama](https://github.com/ollama/ollama) | ⭐⭐⭐⭐⭐ | 想本機跑 LLM 給 CLI agent 用 | 本地 LLM runner、跟 OpenCode / goose 搭配（也能單獨提供 OpenAI-compatible API），★ 170k+。詳見 [Stage 1 — Local LLM 執行](../../stages/01-llm-basics.md#練習-6local-llm) |
+- Claude Code 讀取專案的 `CLAUDE.md`；Codex 使用 `AGENTS.md`。
+- OpenCode 使用 `AGENTS.md`，`CLAUDE.md` 是相容 fallback；不要再建立 `OPENCODE.md` 當作通用規則檔。
+- Gemini CLI 常用 `GEMINI.md`；goose、Aider、Hermes Agent、Pi 與 Grok Build 的檔名和載入範圍依各自官方文件設定。
+- 規則只留下會改變行為的內容：專案用途、不能做的事、測試指令、交付格式。不要把長篇 API 參考資料塞進每次都載入的規則檔。
 
-> 💡 **建議入手路徑**：第一個 CLI 選 Claude Code（生態最完整）→ 試裝第二個（Codex / OpenCode）感受風格差異 → 想跑本機就加 Ollama → 想 cloud-deployed 跨平台用 Hermes Agent。
+在 demo repo 內加入一條可觀察規則，例如「先提出計畫，不修改 `data/`」，再提出一個會觸發它的請求。最後檢查 agent 的回應與 `git diff`。
+</details>
+
+<a id="cli-3"></a>
+### 動手練習 CLI-3：用第二個 harness 重跑同一個請求
+
+**成果：** 你能記錄兩個工具在模型／provider、權限提示、sandbox 與輸出格式上的差異，而不是用主觀分數選贏家。
+
+<details markdown="1">
+<summary>展開第二個 CLI 的公平比較步驟</summary>
+
+在同一個乾淨 demo repo、同一份 prompt、同一組檔案上各跑一次。記錄日期、CLI 版本、LLM、provider、登入方式、approval／sandbox 設定、是否實際改檔，以及 `git diff` 結果。不要同時啟動兩個會寫檔的 session；每次完成後復原，再開始下一次。
+</details>
+
+<a id="cli-4"></a>
+### 動手練習 CLI-4：用假憑證觀察認證失敗
+
+**成果：** 你能區分「登入失敗」「provider API key 失敗」「模型名稱不存在」與「權限／sandbox 阻擋」，且不會把真正的秘密貼進 prompt 或 log。
+
+<details markdown="1">
+<summary>展開安全的認證錯誤實驗</summary>
+
+在一次性終端機 session 中使用明確標示為假的值，例如 `not-a-real-key`；不要改動正式的 shell 設定或共享 `.env`。先觀察未登入錯誤，再在已登入的 CLI 中輸入一個官方不存在的模型名稱，記下錯誤類型與補救指引。測試完立刻清除假值，並確認 shell history、工作目錄與 log 沒有真 key。
+
+使用有效憑證的請求可能產生費用；第一次練習可使用本機 Ollama 或 provider 的明確免費額度，並以當日官方價格與實際 usage 為準。
+</details>
+
+## 需要完整比較時，再看參考表
+
+A1 只教你安全開始，不在兩個頁面重複維護同一份易變資料。9 個工具的登入、provider、sandbox 與官方來源集中放在 [`CLI Agents 參考指南`](../../resources/cli-agents-guide.md)。官方資料查核日：**2026-08-27 UTC**。
+
+<details markdown="1">
+<summary>展開「工具、Router、local runtime」的最短辨識法</summary>
+
+- Claude Code、Codex、Gemini CLI、OpenCode、goose、Aider、Hermes Agent、Grok Build、Pi：會接收任務並操作工作目錄的 CLI agent／harness。
+- OpenRouter：替 agent 把請求送到 provider 的 Router，不會替你管理檔案權限。
+- Ollama：在本機跑模型的 runtime，不會自己讀 repo；要由支援它的 agent 呼叫。
+- 不確定時，只問三句：誰執行模型？誰轉送請求？誰能讀寫我的檔案？
+</details>
+
+## 必修閱讀與費用邊界
+
+<details markdown="1">
+<summary>展開官方閱讀、帳號與預算說明</summary>
+
+- [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) 與 [permissions](https://code.claude.com/docs/en/permissions)
+- [Codex CLI](https://developers.openai.com/codex/cli)
+- [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) 與 [sandbox 設定](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
+- [OpenCode 文件](https://opencode.ai/docs) 與 [goose 文件](https://block.github.io/goose/)
+- [Aider 文件](https://aider.chat/docs/)、[Hermes Agent 文件](https://hermes-agent.nousresearch.com/docs/)、[Grok Build repo](https://github.com/xai-org/grok-build)、[Pi 文件](https://pi.dev/docs/latest)
+- [OpenRouter FAQ](https://openrouter.ai/docs/faq) 與 [Ollama](https://ollama.com/)
+
+每次 cloud 請求的單次費用與本章總費用都會因帳號、provider、模型、輸入輸出 token 與訂閱額度而變動；練習前查當日官方價格或 usage 頁面。只有當 agent 與 provider 都設定成只連本機 Ollama，而且沒有另外呼叫雲端服務時，才不會產生這次練習的模型 API 費用；檔案與命令權限仍要照常檢查。
+</details>
 
 ## ✅ 進 A2 前的自我檢查
 
-你能不能：
+- [ ] 我能用自己的話分清五種身分，知道 OpenRouter 不是 LLM、Ollama 不是 coding agent。
+- [ ] 我在 demo repo 完成一次只讀取的說明與計畫，沒有把秘密交給工具。
+- [ ] 我確認一個小改動的 diff，並能復原它。
+- [ ] 我知道所選 CLI 的登入方式、provider、approval／sandbox 設定。
 
-- [ ] 講得出 8 個主流 CLI 的核心差別（不查表就答得出 3-4 個）
-- [ ] 你已經選定一個主用 CLI，並有 working setup（裝好、認證好、跑過至少 5 個非 hello-world 任務）
-- [ ] 寫過你自己的 `CLAUDE.md` / `AGENTS.md` / `GEMINI.md`
-- [ ] 至少跑過第二個 CLI 一次，知道兩個的風格差異
+完成後進入 [A2 — 建立可重複使用的 CLI 工作流程](A2-cli-workflow.md)。想再比較工具的官方狀態，回看 [`resources/cli-agents-guide.md`](../../resources/cli-agents-guide.md)。
 
-如果可以 → 進 [A2 — CLI Workflow Patterns](A2-cli-workflow.md)。
-
-如果不行 → 別跳。CLI 工具會用得 sloppy 不會用得 productive；A1 的 動手練習 CLI-1/2 至少各跑 3 次再走。
-
-## 💡 給 Track A 學習者的提醒
-
-CLI agent 跟 web 版（Claude.ai / ChatGPT）的差別不是「一樣的東西換介面」——CLI 能讀寫你電腦上的檔案、執行 shell 指令、改 git。這個能力差異**先了解再用**：
-
-- 第一週：每個任務都加 `--dry-run` 或先 review 計畫再執行
-- 不要直接讓 CLI 對 production codebase 做 commit
-- 重要資料（key、合約、病歷）放在 `.cursorignore` / `.claudeignore` 排除
+> 安全底線：不要在含有秘密或 production 權限的目錄中做第一次實驗；不要使用跳過所有確認的模式；不要把 API key、瀏覽器 token 或 auth 檔貼進 prompt、issue、log 或 git。

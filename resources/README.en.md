@@ -13,7 +13,7 @@
 | File | Role | When to Read | Lines |
 |---|---|---|---|
 | [`glossary.en.md`](glossary.en.md) | **30-second term lookup** | You hit terms like LLM / RAG / token / agent / vector DB / streaming / batch API while reading a stage | ~210 |
-| [`cli-agents-guide.en.md`](cli-agents-guide.en.md) | **8 CLI agents compared** | First time choosing among Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build | ~134 |
+| [`cli-agents-guide.en.md`](cli-agents-guide.en.md) | **CLI agent identity & selection guide** | First time choosing a CLI agent and unsure which tool fits how you work | — |
 | [`mcp-skills-catalog.en.md`](mcp-skills-catalog.en.md) | **81+ integration catalog** | You want Claude Code connected to Notion / Obsidian / Excel / Postgres / Slack / other real tools | ~775 |
 | [`schema-design-cheatsheet.en.md`](schema-design-cheatsheet.en.md) | **5 function-schema rules + 5 anti-patterns** | You are writing a tool schema / MCP server schema / function calling and the LLM picks the wrong tool or arguments | ~159 |
 | [`cookbook.en.md`](cookbook.en.md) | **6 step-by-step recipes** | You want to build a first Skill / MCP server / Office integration / NotebookLM flow / Zotero flow / local LLM in 30-50 minutes | ~620 |

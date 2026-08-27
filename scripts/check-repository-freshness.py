@@ -12,6 +12,7 @@ from pathlib import Path
 from repository_freshness import (
     GitHubClient, all_occurrences, changed_entry_occurrences, findings_for,
     git_diff, inspect_many, inventory_markdown, make_snapshot, snapshot_coverage,
+    stamp_scan_completed_at,
 )
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -100,17 +101,21 @@ def main(argv: list[str] | None = None) -> int:
                 _write_json(args.json_report, payload)
             return 0
         client = GitHubClient()
-        checked_at = client.official_checked_at()
+        scan_started_at = client.official_checked_at()
         records = inspect_many((items[0].repo for items in grouped.values()), client=client,
-                               checked_at=checked_at, workers=4)
+                               checked_at=scan_started_at, workers=4)
+        checked_at = client.official_checked_at()
+        stamp_scan_completed_at(records, scan_started_at, checked_at)
         findings = []
         for key, record in records.items():
             findings.extend(findings_for(record, grouped[key], datetime.now(timezone.utc)))
     else:
         client = GitHubClient()
-        checked_at = client.official_checked_at()
+        scan_started_at = client.official_checked_at()
         records = inspect_many((item["requested"] for item in inventory.values()),
-                               client=client, checked_at=checked_at, workers=args.workers)
+                               client=client, checked_at=scan_started_at, workers=args.workers)
+        checked_at = client.official_checked_at()
+        stamp_scan_completed_at(records, scan_started_at, checked_at)
         grouped = all_occurrences(ROOT)
         findings = []
         for key, record in records.items():

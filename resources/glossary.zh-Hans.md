@@ -56,6 +56,16 @@ GPT、Claude、Gemini 这类“给文字、回文字”的模型。本身是纯�
 
 📍 详细：[Stage 1](../stages/01-llm-basics.zh-Hans.md)
 
+### Model Provider / Provider API（模型供应商／模型 API）
+
+**直接通往模型公司的入口。** 例如 Anthropic API、OpenAI API、Gemini API。你选择模型、发送 prompt，供应商返回结果并向你计费。它提供模型服务，但不是会读写你电脑文件的 CLI agent。
+
+### LLM Router / API Router（模型路由器）
+
+**一个入口，替你转接多个模型或后端。** [OpenRouter](https://openrouter.ai/docs/faq) 就是例子：通过同一个 API 和账单入口，你可以选择不同模型，并按设置使用 provider routing 或 fallback。Router 不是模型，也不是 OpenCode、Pi 这类 coding agent。
+
+📍 五种身份对照：[Track A A1](../tracks/cli/A1-cli-intro.zh-Hans.md)
+
 ### Token
 
 LLM 看到的不是“字”，是 **token**（次字单位）。中文 1 个字 ≈ 1.5-2 token，英文 1 个 word ≈ 1.3 token。LLM 计费跟 context window 都以 token 计。“100 万 token context”≈ 75 万中文字。
@@ -359,17 +369,17 @@ Simon Willison 提出：agent 同时有（1）访问私密数据、（2）接触
 
 ### CLI Agent
 
-跑在终端机的 agent（Claude Code、Codex、Aider、Gemini CLI 等）。对比于跑在 IDE 内（Cursor、Continue）或 web 上（ChatGPT、Claude.ai）。
+跑在终端、能在你允许的范围内读文件、改文件和执行命令的 agent / harness（Claude Code、Codex、OpenCode、Pi、Aider、Gemini CLI 等）。**它是工作台，不是里面的 LLM。** 同一个 CLI 可能绑定一个模型生态，也可能让你切换 provider。
 
 📍 详细：[Track A A1](../tracks/cli/A1-cli-intro.zh-Hans.md)、[`resources/cli-agents-guide.zh-Hans.md`](cli-agents-guide.zh-Hans.md)
 
 ### BYO API Key（Bring Your Own）
 
-工具支援你自己提供 API key 而不是绑订阅。Aider / OpenCode / goose 等 CLI 都是 BYO；Claude Code / Codex 预设是订阅制。
+工具让你提供自己的 provider API key，而不是只使用工具内建的订阅登录。Aider、OpenCode、goose、Pi 等可以接一个或多个 provider；Claude Code、Codex 也各有官方文档列出的订阅或 API 认证路径。实际支持方式会变化，使用前请看该工具的官方认证文档。
 
 ### Local LLM / On-Device
 
-模型跑在你自*己*机器上（Ollama、llama.cpp、MLX、LocalAI 等），数据不外传。隐私 OK 但能力比 frontier 模型有差。
+模型在自己的机器上运行。Ollama、llama.cpp、MLX、LocalAI 是 **local runtime**：它们负责把模型运行起来，不等于 coding agent。只有模型、工具和数据路径都留在本机，而且没有另外调用云端服务时，数据才不会因为这次流程送到云端；能力和速度要用自己的任务和硬件测试。
 
 📍 详细：[Stage 1](../stages/01-llm-basics.zh-Hans.md)
 

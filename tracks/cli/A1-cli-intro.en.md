@@ -1,100 +1,157 @@
-# A1 — CLI Agent Intro & Selection
+# A1 — Choose a CLI agent and safely complete your first small task
 
 > [繁體中文](./A1-cli-intro.md) | [简体中文](./A1-cli-intro.zh-Hans.md) | **English**
 
-> [← Back to main path README](../../README.en.md) · **Track A: CLI Power User** — Stop 1
+> [← Back to the main path README](../../README.en.md) · **Track A: CLI Power User** — Stop 1 · [Next: A2](A2-cli-workflow.en.md)
 
-⏱ **Time estimate**: 1 week (~5-10 hours)
+This stop explains what “AI in the terminal” means, then has you run it once in a disposable demo repo (a Git-managed practice project folder). You will first have the tool read files, find the test command, and propose a plan; only after you confirm the plan will it make a small change that you can inspect with `git diff` and undo.
 
-> 📋 **Chapter structure**: Learning goals → Entry conditions → Required reading → Hands-on exercises → Curated Projects → Self-check
-> 🔑 **Key term**: this page only uses **CLI agent** (an AI tool that runs in the terminal). MCP / Skill / plugin and other ecosystem terms are introduced where they first appear in A2 / A3. Full glossary: [`resources/glossary.en.md`](../../resources/glossary.en.md).
+If you want to use existing tools to get work done and do not want to write agent programs yet, this is your entry point.
 
-After Stages 0-2, you want to use existing CLI agents to get real work done — **not write agent code yourself, just use existing tools to complete tasks first**. This track is for you. First stop: **pick a CLI agent and get it running**.
+## Do only this for now
 
-## 📌 Learning Goals
+Prepare a disposable demo repo with no secrets. If you have not installed a tool yet, choose one in the short table below, follow its official entry point to install and sign in, then send this request:
 
-- Know the differences between 8 mainstream CLI agents (Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build)
-- Pick a first CLI tool based on your scenario
-- Complete install + auth + your first real task (not a hello world)
-- Know when to switch / add a second CLI
+> Read the current demo repo only, explain its purpose, find the test command, and propose a small documentation-change plan. Do not modify or delete files yet, and do not run commands that change data.
 
-## 🚪 Entry Conditions
+When it is done, you should see a repo summary, a test command, a plan waiting for confirmation, and a permission prompt when the tool requests access. That is the first verifiable result of this track.
 
-You should already:
+## Learning goals
 
-- Have completed Stage 0's Exercise: CLI (basic command-line literacy)
-- Have a Claude / OpenAI / Google account (paid not required)
-- Be comfortable with prompt design (Stage 2)
+- Distinguish an LLM, Provider API, Router, coding agent / harness, and local runtime.
+- Choose an entry point based on the account, provider, or local environment you already have; do not make an overall ranking.
+- Complete one “read first → inspect the plan → confirm → small change → `git diff` → undo” cycle in a demo repo.
 
-## 📚 Required Reading
+<details markdown="1">
+<summary>Expand time, prerequisites, account, and cost</summary>
 
-1. [**`resources/agent-paradigms.en.md`**](../../resources/agent-paradigms.en.md) ⭐ — the 5-paradigm map of the agent landscape; read this first to see where CLI agents sit (Type 2 + Type 3) in the wider ecosystem
-2. [**`resources/cli-agents-guide.en.md`**](../../resources/cli-agents-guide.en.md) ⭐ — the core reference for this track. 8 mainstream CLI agents side by side, use-case picks, real-world setups
-3. [**Anthropic — Claude Code Quickstart**](https://code.claude.com/docs/en/quickstart) — official install
-4. [**OpenAI — Codex Quickstart**](https://github.com/openai/codex/blob/main/README.md) — Codex install + auth
+- **Time:** The first read-only pass and plan review can usually be completed in one short session; you can spread CLI-1 through CLI-4 over several days rather than doing them all at once.
+- **Prerequisites:** You can enter a folder and inspect `git status` and `git diff`; you have a disposable demo repo on hand.
+- **Account:** Prepare a sign-in method supported by the tool you choose, or connect the agent to a local model runtime. If you have no account, start with the selection table and the official Quickstart below.
+- **Cost:** Do not guess. Check the day’s official pricing / usage page before you start; this exercise has no model API charge only when the entire flow stays local.
+</details>
 
-## 🛠 Hands-on Exercises (foundational, illustrative)
+## Keep these five identities separate
 
-### Exercise CLI-1: Install + first run
+<table>
+<thead>
+<tr><th scope="col">Type</th><th scope="col">Plain-language meaning</th><th scope="col">Examples</th><th scope="col">How this track uses it</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">LLM</th><td>The model that generates answers</td><td>Claude, GPT, Gemini</td><td>Provides responses; does not manage the repo</td></tr>
+<tr><th scope="row">Provider API</th><td>The door to one model service</td><td>Anthropic API, OpenAI API, Gemini API</td><td>Handles requests, authentication, and billing</td></tr>
+<tr><th scope="row">Router</th><td>An entry point that sends requests to multiple providers</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>Not an LLM or a coding agent</td></tr>
+<tr><th scope="row">Coding agent / harness</th><td>A workbench that reads files, edits files, and runs commands in the terminal</td><td>Claude Code, Codex, OpenCode, Pi</td><td>Operates in the working directory; start with a demo repo</td></tr>
+<tr><th scope="row">Local runtime</th><td>An engine that runs a model on your own computer</td><td><a href="https://github.com/ollama/ollama">Ollama</a></td><td>Can be called by an agent; is not an agent</td></tr>
+</tbody>
+</table>
 
-**Finish it in 3 steps**:
+## Choose an entry point from what you already have
 
-1. **Install**: follow your chosen CLI's quickstart (each CLI's official docs should have a ≤5-minute install guide)
-2. **Pick a low-risk real task**: don't write "hello world" — choose something you were already going to do today, e.g. "organize my Downloads folder and move all PDFs to ~/Documents/PDFs"
-3. **Observe 3 things**: how it decomposes the task, when it asks for confirmation, and what output format it uses
+<table>
+<thead>
+<tr><th scope="col">What you already have</th><th scope="col">Entry points to check first</th><th scope="col">Confirm first</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">An Anthropic account or API</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>Sign-in and permission prompts</td></tr>
+<tr><th scope="row">ChatGPT or an OpenAI API</th><td><a href="https://developers.openai.com/codex/cli">Codex CLI</a></td><td>Approval, sandbox, and working directory</td></tr>
+<tr><th scope="row">A Google account, API, or Vertex AI</th><td><a href="https://google-gemini.github.io/gemini-cli/">Gemini CLI</a></td><td>Authentication and sandbox</td></tr>
+<tr><th scope="row">You want to switch providers or use a local model</th><td><a href="https://opencode.ai/docs">OpenCode</a>, <a href="https://block.github.io/goose/">goose</a>, <a href="https://aider.chat/docs/">Aider</a>, or <a href="https://pi.dev/docs/latest">Pi</a></td><td>Provider and permission boundaries</td></tr>
+<tr><th scope="row">You want a Router or local runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> or <a href="https://ollama.com/">Ollama</a></td><td>They must be paired with a coding agent</td></tr>
+</tbody>
+</table>
 
-→ Real tasks are what make the difference between an agent and a chatbot visible.
+<a id="cli-1"></a>
+### Hands-on CLI-1: Read the demo repo first, then make one reversible small change
 
-### Exercise CLI-2: CLI's built-in system prompt file
-- Claude Code → write a `CLAUDE.md` at the repo root
-- Codex → write `AGENTS.md`
-- Gemini CLI → write `GEMINI.md`
-- goose / OpenCode → see each tool's docs
+**Outcome:** You can see the repo description, test command, and a plan waiting for confirmation; after confirming, you leave one small change that can be checked with `git diff`.
 
-Put 3 things in it: "your persona / preferred code style / things you can't do". Then run a task and observe behavioral differences.
+<details markdown="1">
+<summary>Expand CLI-1 preparation, operation, and undo steps</summary>
 
-### Exercise CLI-3: Run a second CLI alongside
-Install a second CLI (suggest Codex or OpenCode as backup). Run the same prompt and compare output style, speed, cost. **Not to pick a winner — to learn that "different CLIs solve the same problem from different angles".**
+1. Create or copy a disposable demo repo. Include only a README, a small amount of source code, and tests; do not include API keys, personal data, contracts, or production settings. Before you start, run `git status --short` and confirm that no one else has unfinished changes.
+2. Use the “read only” request above first. Compare the files, test command, and plan the tool lists; ask about anything unclear instead of approving it immediately.
+3. After you confirm the plan, allow only one small documentation change, such as adding “How to run the tests” to `README.md`. Ask the tool to show the diff first, then approve it.
+4. Run `git diff -- README.md` in the terminal and confirm that it contains only the expected content. Run `git restore -- README.md` only if Step 1 confirmed that the file was clean originally; then run `git status --short` again to confirm that the small change is undone.
 
-### Exercise CLI-4: Auth corner cases
-Deliberately break your API key (one wrong character) and see how the CLI errors out. Then "correct key but wrong model name". Production usage will hit auth issues — step on these now.
+If the tool does not have git, keep an original-file backup and compare line by line; do not give the same demo repo to two agents that can write files at the same time.
+</details>
 
-## 🎯 Curated Projects
+<a id="cli-2"></a>
+### Hands-on CLI-2: Make sure the project rules are read correctly
 
-Two categories, 10 projects, one table covers it. **Pick your entry point from the "Who it's for" column; for the deeper detail (strengths and weaknesses, recommended use cases, real-world pairings) → [`resources/cli-agents-guide.en.md`](../../resources/cli-agents-guide.en.md)**.
+**Outcome:** You can use a short rules file to state the project purpose, prohibitions, test command, and delivery format, then verify that the tool followed it.
 
-| Category | Project | ⭐ | Who it's for | Why recommended / notes |
-|---|---|---|---|---|
-| **8 mainstream CLI agents** | [anthropics/claude-code](https://github.com/anthropics/claude-code) | ⭐⭐⭐⭐⭐ | **Recommended as your first CLI agent** | Built-in SKILL / plugin ecosystem, CLAUDE.md prompt system, rich community resources (★ 140k+) |
-| | [openai/codex](https://github.com/openai/codex) | ⭐⭐⭐⭐⭐ | People already subscribed to ChatGPT Plus / Pro | The same account works in the terminal (★ 115k+) |
-| | [sst/opencode](https://github.com/sst/opencode) | ⭐⭐⭐⭐⭐ | Self-hosting / avoiding vendor lock-in | Open-source, not tied to any LLM provider, fastest community iteration (★ 190k+) |
-| | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) | ⭐⭐⭐⭐ | Working on big codebases / large PDFs | 1M-token long context (★ 103k+) |
-| | [block/goose](https://github.com/block/goose) | ⭐⭐⭐⭐ | Using existing Claude / ChatGPT / Gemini subscriptions + local Ollama | 15+ provider support (incl. Ollama), ★ 51k+. **Now at `aaif-goose/goose` (AAIF / Linux Foundation)** |
-| | [Aider-AI/aider](https://github.com/Aider-AI/aider) | ⭐⭐⭐⭐⭐ | Writing code and wanting a clean git workflow | git-native, auto commit / branch (★ 47k+) |
-| | [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | ⭐⭐⭐⭐⭐ | Wanting a cloud-deployed agent (Telegram / Discord / Slack front-end) + Chinese-ecosystem LLMs | Nous Research's auto-evolving agent, 200+ provider routing incl. GLM / Kimi / Xiaomi MiMo / MiniMax, built-in cron scheduler + skill self-evolution loop (★ data as of 2026-05; check the official GitHub for current numbers). ⚠️ Auto-evolving skills are experimental and lack third-party independent audits — verify safety and maintenance status yourself before production use, and start in low-risk contexts |
-| | [xai-org/grok-build](https://github.com/xai-org/grok-build) | ⭐⭐⭐ | Already in the Grok / X ecosystem, happy to try something new | SpaceXAI's (xAI) official TUI coding agent, Rust, headless mode / ACP editor embedding (★ 25k+). ⚠️ Open-sourced 2026-07-14, very new — watch it first; not recommended as your first CLI agent |
-| **Advanced: complementary tools**<br>(not CLIs, but common pairings) | [LM Studio](https://lmstudio.ai/) | ⭐⭐⭐ | On Windows / Mac, don't want to learn the command line, want to run a local LLM | Closed-source desktop app, drag-and-drop UI for running local LLMs |
-| | [Ollama](https://github.com/ollama/ollama) | ⭐⭐⭐⭐⭐ | Wanting a local LLM for your CLI agent to use | Local LLM runner, pairs with OpenCode / goose, or any tool taking an OpenAI-compatible base_url (★ 170k+). See [Stage 1 — Local LLM section](../../stages/01-llm-basics.en.md#exercise-6-local-llm) |
+<details markdown="1">
+<summary>Expand project-rule locations and verification for each CLI</summary>
 
-> 💡 **Suggested way in**: pick Claude Code as your first CLI (most complete ecosystem) → install a second one (Codex / OpenCode) to feel the difference in style → add Ollama when you want to run locally → use Hermes Agent when you want a cloud-deployed, cross-platform setup.
+- Claude Code reads the project’s `CLAUDE.md`; Codex uses `AGENTS.md`.
+- OpenCode uses `AGENTS.md`, with `CLAUDE.md` as a compatibility fallback; do not create `OPENCODE.md` as a general rules file.
+- Gemini CLI commonly uses `GEMINI.md`; goose, Aider, Hermes Agent, Pi, and Grok Build use filenames and loading scopes set by their respective official docs.
+- Keep rules limited to content that changes behavior: project purpose, things it must not do, the test command, and the delivery format. Do not put a long API reference into a rules file that loads every time.
 
-## ✅ Self-Check Before A2
+Add one observable rule in the demo repo, such as “propose a plan first; do not modify `data/`,” then send a request that triggers it. Finally, inspect the agent’s response and `git diff`.
+</details>
 
-Can you:
+<a id="cli-3"></a>
+### Hands-on CLI-3: Run the same request again with a second harness
 
-- [ ] Articulate the core differences between the 8 mainstream CLIs (3-4 without checking the table)
-- [ ] Have a working primary CLI (installed, authed, ran 5+ real tasks)
-- [ ] Written your own `CLAUDE.md` / `AGENTS.md` / `GEMINI.md`
-- [ ] Run a second CLI at least once, know the style differences
+**Outcome:** You can record differences between two tools in model / provider, permission prompts, sandbox, and output format instead of choosing a winner by subjective score.
 
-If yes → proceed to [A2 — CLI Workflow Patterns](A2-cli-workflow.en.md).
+<details markdown="1">
+<summary>Expand the fair-comparison steps for a second CLI</summary>
 
-If no → don't skip. Sloppy CLI usage isn't productive CLI usage; do Exercises CLI-1/2 at least 3 more times.
+Run each tool once in the same clean demo repo with the same prompt and same set of files. Record the date, CLI version, LLM, provider, sign-in method, approval / sandbox settings, whether it actually changed files, and the `git diff` result. Do not start two sessions that can write at the same time; undo the changes after each run before starting the next one.
+</details>
 
-## 💡 Reminder for Track A learners
+<a id="cli-4"></a>
+### Hands-on CLI-4: Observe authentication failure with fake credentials
 
-A CLI agent is not "the same thing with a different UI" as Claude.ai / ChatGPT web — it can read/write files on your machine, run shell commands, modify git. This capability difference deserves caution **before use**:
+**Outcome:** You can distinguish “sign-in failed,” “provider API key failed,” “model name does not exist,” and “permission / sandbox blocked,” without putting a real secret into a prompt or log.
 
-- Week 1: review the plan before letting it execute (or use `--dry-run`)
-- Don't let CLI commit directly to production codebases yet
-- Put sensitive data (keys, contracts, medical records) in `.cursorignore` / `.claudeignore` to exclude
+<details markdown="1">
+<summary>Expand the safe authentication-error experiment</summary>
+
+In a one-time terminal session, use a value clearly marked as fake, such as `not-a-real-key`; do not change a production shell configuration or shared `.env`. First observe the not-signed-in error; then, in a signed-in CLI, enter an officially nonexistent model name and record the error type and recovery guidance. Clear the fake value immediately after testing, and confirm that the shell history, working directory, and logs contain no real key.
+
+Requests using valid credentials may incur charges; for the first exercise, you can use local Ollama or a provider’s explicitly free quota, based on that day’s official pricing and actual usage.
+</details>
+
+## For a full comparison, use the reference table
+
+A1 teaches you how to start safely; it does not maintain the same fast-changing data in two pages. Sign-in, provider, sandbox, and official sources for the 9 tools are centralized in the [`CLI Agents reference guide`](../../resources/cli-agents-guide.en.md). Official data checked on: **2026-08-27 UTC**.
+
+<details markdown="1">
+<summary>Expand the shortest way to distinguish “tool, Router, and local runtime”</summary>
+
+- Claude Code, Codex, Gemini CLI, OpenCode, goose, Aider, Hermes Agent, Grok Build, and Pi: CLI agents / harnesses that receive tasks and operate in the working directory.
+- OpenRouter: a Router that sends an agent’s request to a provider; it does not manage your file permissions.
+- Ollama: a runtime for running models locally; it does not read a repo by itself and must be called by an agent that supports it.
+- When unsure, ask only three questions: Who runs the model? Who forwards the request? Who can read and write my files?
+</details>
+
+## Required reading and cost boundaries
+
+<details markdown="1">
+<summary>Expand official reading, account, and budget notes</summary>
+
+- [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) and [permissions](https://code.claude.com/docs/en/permissions)
+- [Codex CLI](https://developers.openai.com/codex/cli)
+- [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) and [sandbox configuration](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
+- [OpenCode docs](https://opencode.ai/docs) and [goose docs](https://block.github.io/goose/)
+- [Aider docs](https://aider.chat/docs/), [Hermes Agent docs](https://hermes-agent.nousresearch.com/docs/), [Grok Build repo](https://github.com/xai-org/grok-build), and [Pi docs](https://pi.dev/docs/latest)
+- [OpenRouter FAQ](https://openrouter.ai/docs/faq) and [Ollama](https://ollama.com/)
+
+The per-request cost and total cost for this track’s cloud requests vary with your account, provider, model, input and output tokens, and subscription quota; check the day’s official pricing or usage page before practicing. Only when both the agent and provider are configured to connect solely to local Ollama, with no other cloud service called, will this exercise have no model API charge; file and command permissions still need the usual checks.
+</details>
+
+## ✅ Self-check before A2
+
+- [ ] I can explain the five identities in my own words and know that OpenRouter is not an LLM and Ollama is not a coding agent.
+- [ ] In a demo repo, I completed a read-only explanation and plan without giving the tool any secrets.
+- [ ] I checked the diff for one small change and can undo it.
+- [ ] I know the selected CLI’s sign-in method, provider, and approval / sandbox settings.
+
+After that, continue to [A2 — Build a reusable CLI workflow](A2-cli-workflow.en.md). To compare the tools’ official status again, return to [`resources/cli-agents-guide.en.md`](../../resources/cli-agents-guide.en.md).
+
+> Safety baseline: do not run your first experiment in a directory containing secrets or production permissions; do not use a mode that skips all confirmations; do not paste API keys, browser tokens, or auth files into prompts, issues, logs, or git.

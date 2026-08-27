@@ -70,7 +70,7 @@ Desktop version of ChatGPT. Ask questions about screenshots, voice conversation,
 
 > These tools are positioned for developers but **everyday users can use them too** — e.g. batch-rename files, organize the Downloads folder, auto-write weekly reviews, summarize PDFs into Markdown.
 >
-> Want a detailed comparison? See [`resources/cli-agents-guide.en.md`](../resources/cli-agents-guide.en.md) — eight major CLI agents side by side, recommendations by use case, common pitfalls, real-world setups.
+> Want to know which kind of CLI agent fits you? See [`resources/cli-agents-guide.en.md`](../resources/cli-agents-guide.en.md) — choose by how you work, common pitfalls, and real-world setups.
 >
 > Want step-by-step onboarding? See [`tracks/cli/A1-cli-intro.en.md`](../tracks/cli/A1-cli-intro.en.md) — Track A first stop, from install to your first task.
 >
@@ -90,7 +90,7 @@ Desktop version of ChatGPT. Ask questions about screenshots, voice conversation,
 
 **Best for**: People who already subscribe to ChatGPT Plus / Pro and want to use the same account in the terminal.
 
-#### [sst/opencode](https://github.com/sst/opencode) ⭐⭐⭐⭐⭐
+#### [anomalyco/opencode](https://github.com/anomalyco/opencode) ⭐⭐⭐⭐⭐
 
 | Field | Value |
 |---|---|

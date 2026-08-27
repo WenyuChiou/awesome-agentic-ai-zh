@@ -24,7 +24,7 @@ The table below splits a developer's day into 7 common scenarios. Each has a dif
 
 ## Curated Projects
 
-> **CLI agent comparison**: 8 major CLI agents (Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build) compared side-by-side in [`resources/cli-agents-guide.en.md`](../resources/cli-agents-guide.en.md). New to CLI agents and want step-by-step onboarding → [`tracks/cli/A1-cli-intro.en.md`](../tracks/cli/A1-cli-intro.en.md) (Track A first stop).
+> **CLI agent identity & selection guide**: choose a tool by how you work in [`resources/cli-agents-guide.en.md`](../resources/cli-agents-guide.en.md). New to CLI agents and want step-by-step onboarding → [`tracks/cli/A1-cli-intro.en.md`](../tracks/cli/A1-cli-intro.en.md) (Track A first stop).
 >
 > **MCP catalog**: Looking for integrations to wire CLI into daily tools (GitHub, Linear, Atlassian, Postgres, Playwright, Figma…) → [`resources/mcp-skills-catalog.en.md`](../resources/mcp-skills-catalog.en.md) (81+ entries by category).
 >
@@ -50,7 +50,7 @@ Editor-integrated AI pair-programming tool. Widely adopted in AI editor tools an
 #### [OpenHands (formerly OpenDevin)](https://github.com/All-Hands-AI/OpenHands) ⭐⭐⭐⭐
 ★ 81k+ · MIT — open-source autonomous software development agent. More aggressive design than Aider / Claude Code — agent runs in its own sandbox and commits autonomously. Best for "throw a whole issue at it" scenarios.
 
-#### [block/goose](https://github.com/block/goose) ⭐⭐⭐⭐
+#### [aaif-goose/goose](https://github.com/aaif-goose/goose) ⭐⭐⭐⭐
 ★ 51k+ · Apache-2.0 — Open-source, extensible AI agent that goes beyond code suggestions — install / execute / edit / test, with any LLM. Supports multiple LLM providers and MCP, ships as desktop app, CLI, and API. (Repo now resolves to `aaif-goose/goose`.)
 
 #### [RooCodeInc/Roo-Code](https://github.com/RooCodeInc/Roo-Code) ⭐⭐⭐ (⚠️ archived)

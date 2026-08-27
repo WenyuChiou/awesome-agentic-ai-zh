@@ -229,7 +229,7 @@ Main differences: the message-creation method name, the response shape (`choices
 | 5 Claude Code ecosystem | 11 | inline 6 + folder 5 (`examples/stage-5/`) |
 | 6 Memory/RAG | 5 | all folder (`examples/stage-6/`) |
 | 7 Multi-agent | 5 | inline 1 + folder 4 (`examples/stage-7/`) |
-| Track A1-A3 | 12 | all inline + 2 small folders (CLI-9 / CLI-10) |
+| Track A1-A3 | 12 | 12 inline exercises; no separate `examples/track-a/` folder |
 
 → T1 scope: **Stage 3 全 6 exercises only** (remaining stages roll out per plan tiers).
 

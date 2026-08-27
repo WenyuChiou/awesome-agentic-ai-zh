@@ -58,12 +58,12 @@
 | **Claude Code** | https://code.claude.com/docs/en/quickstart | Claude |
 | **Codex CLI** | https://github.com/openai/codex | GPT 系列 |
 | **Gemini CLI** | https://github.com/google-gemini/gemini-cli | Gemini |
-| **OpenCode** | https://github.com/sst/opencode | 任意（多 provider） |
+| **OpenCode** | https://github.com/anomalyco/opencode | 任意（多 provider） |
 | **goose** | https://block.github.io/goose | 任意 |
 | **Aider** | https://aider.chat | 任意（git-native） |
 | **Hermes Agent** | https://github.com/NousResearch/hermes-agent | 200+（model-neutral） |
 
-→ 想看 8 個 CLI 完整比較 → [`cli-agents-guide.md`](cli-agents-guide.md)
+→ 想看 CLI agent 身分與選擇指南 → [`cli-agents-guide.md`](cli-agents-guide.md)
 → Claude Code 第一次裝的詳細步驟 → 本指南 [D](#d--第一次裝-claude-code約-10-分鐘stage-5--for-developer-會用到)
 
 > 💡 **IDE-based 跟 CLI agent 怎麼選？** 邊寫 code 邊要 AI 幫忙 → IDE；下單一 prompt 讓 agent 自己跑完一整個任務 → CLI。兩個可以並用。

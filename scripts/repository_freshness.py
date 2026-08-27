@@ -438,6 +438,20 @@ def inspect_many(repos: Iterable[str], *, client: GitHubClient, checked_at: str,
     return dict(sorted(results.items()))
 
 
+def stamp_scan_completed_at(
+    records: dict[str, dict], scan_started_at: str, checked_at: str,
+) -> None:
+    """Mark every row with the official time when the whole scan finished."""
+    started = datetime.fromisoformat(scan_started_at.replace("Z", "+00:00"))
+    completed = datetime.fromisoformat(checked_at.replace("Z", "+00:00"))
+    if started.tzinfo is None or completed.tzinfo is None:
+        raise ValueError("scan timestamps must be timezone-aware")
+    if completed < started:
+        raise ValueError("scan completion time cannot precede scan start time")
+    for record in records.values():
+        record["checked_at"] = checked_at
+
+
 def _iso_days_ago(timestamp: str | None, now: datetime) -> int | None:
     if not timestamp:
         return None
@@ -547,9 +561,13 @@ def snapshot_coverage(snapshot: dict, inventory: dict[str, dict]) -> list[str]:
     if snapshot.get("schema_version") != 1:
         problems.append("schema_version must be 1")
     verified_at = snapshot.get("verified_at")
+    verified_dt = None
     try:
         verified_dt = datetime.fromisoformat(str(verified_at).replace("Z", "+00:00"))
-        if verified_dt.tzinfo is None or verified_dt > datetime.now(timezone.utc):
+        if verified_dt.tzinfo is None:
+            verified_dt = None
+            problems.append("verified_at must be timezone-aware and not in the future")
+        elif verified_dt > datetime.now(timezone.utc):
             problems.append("verified_at must be timezone-aware and not in the future")
     except ValueError:
         problems.append("verified_at must be a valid ISO timestamp")
@@ -589,6 +607,23 @@ def snapshot_coverage(snapshot: dict, inventory: dict[str, dict]) -> list[str]:
                 problems.append(f"{key}: verified row missing {', '.join(absent)}")
             if not isinstance(row.get("archived"), bool) or not isinstance(row.get("disabled"), bool):
                 problems.append(f"{key}: archived and disabled must be booleans")
+            if verified_dt is not None:
+                timestamps = {"pushed_at": row.get("pushed_at")}
+                release = row.get("latest_release")
+                if isinstance(release, dict):
+                    timestamps["latest_release.published_at"] = release.get("published_at")
+                for field, timestamp in timestamps.items():
+                    if not timestamp:
+                        continue
+                    try:
+                        observed_at = datetime.fromisoformat(str(timestamp).replace("Z", "+00:00"))
+                    except ValueError:
+                        problems.append(f"{key}: {field} must be a valid ISO timestamp")
+                        continue
+                    if observed_at.tzinfo is None:
+                        problems.append(f"{key}: {field} must be timezone-aware")
+                    elif observed_at > verified_dt:
+                        problems.append(f"{key}: {field} cannot be later than checked_at")
             if not isinstance(row.get("canonical"), str) or not isinstance(row.get("html_url"), str):
                 problems.append(f"{key}: canonical and html_url must be strings")
         elif row.get("state") == "missing" and row.get("api_status") != 404:

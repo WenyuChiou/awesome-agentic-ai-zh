@@ -592,7 +592,7 @@ For local LLM work, treat "Claude Code" and "BYO-LLM CLI agents" as separate too
 ### Further Reading
 
 - Stage 1 [Local LLM exercise](../stages/01-llm-basics.en.md#exercise-6-local-llm): Ollama / llama.cpp / vLLM tradeoffs
-- [`cli-agents-guide.en.md`](cli-agents-guide.en.md): how to choose among 8 CLI agents
+- [`cli-agents-guide.en.md`](cli-agents-guide.en.md): how to choose a CLI agent
 - Hermes Agent README: multi-platform gateway setup for Telegram / Discord / Slack and providers
 
 ---
@@ -602,6 +602,6 @@ For local LLM work, treat "Claude Code" and "BYO-LLM CLI agents" as separate too
 - See [Stage 5](../stages/05-claude-code-ecosystem.en.md) for the full concept.
 - See [`mcp-skills-catalog.en.md`](mcp-skills-catalog.en.md) for a comprehensive list of tools.
 - See [`schema-design-cheatsheet.en.md`](schema-design-cheatsheet.en.md) for details on writing tool schemas.
-- See [`cli-agents-guide.en.md`](cli-agents-guide.en.md) for a comparison of 7 popular CLI agents.
+- See [`cli-agents-guide.en.md`](cli-agents-guide.en.md) for the CLI agent identity and selection guide.
 
 Want a new recipe? Open an issue or submit a PR. Recipe format: **Why + Steps + Sample Prompt + Common Pitfalls + Further Reading**.

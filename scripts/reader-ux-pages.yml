@@ -147,3 +147,108 @@ pages:
           heading: "✅ 进入 Stage 3 前的自我检查"
           anchor: -进入-stage-3-前的自我检查
     resource_group_rowspans: [5, 4, 4, 4, 1]
+
+  - id: track-a1
+    canonical: tracks/cli/A1-cli-intro.md
+    mirrors:
+      en: tracks/cli/A1-cli-intro.en.md
+      zh-Hans: tracks/cli/A1-cli-intro.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 3900
+      en: 6400
+      zh-Hans: 4000
+    max_open_details: 0
+    required_visible_sections:
+      cli-1:
+        zh-TW:
+          heading: "動手練習 CLI-1：在 demo repo 內先讀取，再做一個可復原的小改動"
+          anchor: 動手練習-cli-1在-demo-repo-內先讀取再做一個可復原的小改動
+        en:
+          heading: "Hands-on CLI-1: Read the demo repo first, then make one reversible small change"
+          anchor: hands-on-cli-1-read-the-demo-repo-first-then-make-one-reversible-small-change
+        zh-Hans:
+          heading: "动手练习 CLI-1：在 demo repo 里先读取，再做一个可撤销的小改动"
+          anchor: 动手练习-cli-1在-demo-repo-里先读取再做一个可撤销的小改动
+      cli-2:
+        zh-TW:
+          heading: "動手練習 CLI-2：讓專案規則被正確讀到"
+          anchor: 動手練習-cli-2讓專案規則被正確讀到
+        en:
+          heading: "Hands-on CLI-2: Make sure the project rules are read correctly"
+          anchor: hands-on-cli-2-make-sure-the-project-rules-are-read-correctly
+        zh-Hans:
+          heading: "动手练习 CLI-2：让项目规则被正确读取"
+          anchor: 动手练习-cli-2让项目规则被正确读取
+      cli-3:
+        zh-TW:
+          heading: "動手練習 CLI-3：用第二個 harness 重跑同一個請求"
+          anchor: 動手練習-cli-3用第二個-harness-重跑同一個請求
+        en:
+          heading: "Hands-on CLI-3: Run the same request again with a second harness"
+          anchor: hands-on-cli-3-run-the-same-request-again-with-a-second-harness
+        zh-Hans:
+          heading: "动手练习 CLI-3：用第二个 harness 重跑同一个请求"
+          anchor: 动手练习-cli-3用第二个-harness-重跑同一个请求
+      cli-4:
+        zh-TW:
+          heading: "動手練習 CLI-4：用假憑證觀察認證失敗"
+          anchor: 動手練習-cli-4用假憑證觀察認證失敗
+        en:
+          heading: "Hands-on CLI-4: Observe authentication failure with fake credentials"
+          anchor: hands-on-cli-4-observe-authentication-failure-with-fake-credentials
+        zh-Hans:
+          heading: "动手练习 CLI-4：用假凭证观察认证失败"
+          anchor: 动手练习-cli-4用假凭证观察认证失败
+      completion:
+        zh-TW:
+          heading: "✅ 進 A2 前的自我檢查"
+          anchor: -進-a2-前的自我檢查
+        en:
+          heading: "✅ Self-check before A2"
+          anchor: -self-check-before-a2
+        zh-Hans:
+          heading: "✅ 进 A2 前的自我检查"
+          anchor: -进-a2-前的自我检查
+
+  - id: cli-agents-guide
+    canonical: resources/cli-agents-guide.md
+    mirrors:
+      en: resources/cli-agents-guide.en.md
+      zh-Hans: resources/cli-agents-guide.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 2550
+      en: 4050
+      zh-Hans: 2600
+    max_open_details: 0
+    required_visible_sections:
+      comparison:
+        zh-TW:
+          heading: "9 個 CLI 工具"
+          anchor: 9-個-cli-工具
+        en:
+          heading: "9 CLI tools"
+          anchor: 9-cli-tools
+        zh-Hans:
+          heading: "9 个 CLI 工具"
+          anchor: 9-个-cli-工具
+      portable-prompt:
+        zh-TW:
+          heading: "Prompt 跨 CLI 搬移時保留四件事"
+          anchor: prompt-跨-cli-搬移時保留四件事
+        en:
+          heading: "Keep four things when moving a prompt between CLIs"
+          anchor: keep-four-things-when-moving-a-prompt-between-clis
+        zh-Hans:
+          heading: "Prompt 在 CLI 之间搬移时保留四件事"
+          anchor: prompt-在-cli-之间搬移时保留四件事
+      return:
+        zh-TW:
+          heading: "回到 Track A"
+          anchor: 回到-track-a
+        en:
+          heading: "Return to Track A"
+          anchor: return-to-track-a
+        zh-Hans:
+          heading: "回到 Track A"
+          anchor: 回到-track-a
+    resource_group_rowspans: [4, 5]

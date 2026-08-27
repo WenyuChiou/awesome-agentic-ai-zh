@@ -1,150 +1,106 @@
 > **繁體中文** | [简体中文](./cli-agents-guide.zh-Hans.md) | [English](./cli-agents-guide.en.md)
 
-# CLI Agents 比較指南
+# CLI Agents 參考指南
 
-> [← 回主路線 README](../README.md)
+> [← 回主路線 README](../README.md) · [A1：安全地跑第一個小任務](../tracks/cli/A1-cli-intro.md)
 
-> 📌 **這份是 reference doc**（深度比較、選擇邏輯、坑、推薦搭配）。
-> 第一次接觸 CLI agent、想要 step-by-step 上手 → 看 [`tracks/cli/A1-cli-intro.md`](../tracks/cli/A1-cli-intro.md)（Track A 第一站）。
-> 想先理解「為什麼有的 agent 在 terminal、有的在 Telegram、有的在 Jetson」這層 mental model → 看 [`resources/agent-paradigms.md`](agent-paradigms.md)（5 種 agent 型態）。
-> 已經在用、想決定 / 比較 / 升級 → 留在這份。
+這份 reference doc 用「現在要做什麼」和可核對的官方資料整理 9 個 terminal CLI。它不替工具打分，也不以熱門度或主觀排行決定入口；先看身分，再依你的 provider、登入方式與安全邊界選擇。
 
-跨 5 個 branch + Track A 共用的參考——**Claude Code / Codex / OpenCode / Gemini CLI / goose / Aider / Hermes Agent / Grok Build 之間怎麼挑？** Track A（A1-A3）的 CLI workflow 設計、5 條 branch 內的 CLI 引用都連到這份；每個 branch 都會用到 CLI agent，但沒有一個 branch 真的「擁有」這份比較，所以放在 `resources/`。
+## 先分清楚：agent 不等於模型或 API
 
----
+<table>
+<thead>
+<tr><th scope="col">種類</th><th scope="col">它負責什麼</th><th scope="col">例子</th><th scope="col">不要混淆</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">LLM</th><td>產生文字、程式碼或工具呼叫</td><td>Claude、GPT、Gemini</td><td>模型不自動擁有你電腦的檔案權限</td></tr>
+<tr><th scope="row">Provider API</th><td>提供某家模型的請求、認證與計費</td><td>Anthropic API、OpenAI API、Gemini API</td><td>API 不是 terminal 工作台</td></tr>
+<tr><th scope="row">Router</th><td>把請求轉接到多家 provider</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>Router 不會代替 agent 管理檔案或命令權限</td></tr>
+<tr><th scope="row">Coding agent／harness</th><td>在終端機讀檔、編輯、執行命令並回報結果</td><td>Claude Code、Codex、OpenCode、Pi</td><td>它的 approval、sandbox 與 project trust 要另外查</td></tr>
+<tr><th scope="row">Local runtime</th><td>在本機載入並執行模型</td><td><a href="https://ollama.com/">Ollama</a></td><td>它可供 agent 呼叫，但本身不是 coding agent</td></tr>
+</tbody>
+</table>
 
-## 📋 8 個主流 CLI agent
+## 用情境找入口
 
-只列在 terminal 跑的（IDE-based 如 Cursor / Cline / Continue 不在這份；那些放在 [for-developer](../branches/for-developer.md)）。前 6 個數字 `gh api` 驗證於 2026-05-06；Hermes Agent 驗證於 2026-05-10；Grok Build 驗證於 2026-07-16（⚠️ 2026-07-14 才開源、非常新，數字與功能都還在快速變動）。
+<table>
+<thead>
+<tr><th scope="col">你的條件</th><th scope="col">先查哪一類</th><th scope="col">要記錄的差異</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">已有一家模型服務的帳號</th><td>該生態的 CLI，例如 Claude Code、Codex 或 Gemini CLI</td><td>登入流程、approval、sandbox、用量頁面</td></tr>
+<tr><th scope="row">需要更換 provider</th><td>OpenCode、goose、Aider、Hermes Agent 或 Pi</td><td>支援的 endpoint、模型 ID、API key 儲存位置</td></tr>
+<tr><th scope="row">想集中轉接多個 provider</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> 搭配一個 agent</td><td>實際路由到的 provider、資料政策、usage 與 billing</td></tr>
+<tr><th scope="row">想在本機練習</th><td><a href="https://ollama.com/">Ollama</a> 搭配支援相容 API 的 agent</td><td>模型是否在本機、agent 是否仍可執行 shell／寫檔</td></tr>
+</tbody>
+</table>
 
-| 工具 | 提供者 | License | 主推 LLM | 認證 / 計費 | Stars |
-|---|---|---|---|---|---|
-| [Claude Code](https://github.com/anthropics/claude-code) | Anthropic（官方） | NOASSERTION | Claude | Claude 訂閱 **或** Anthropic Console API key | ★ 140k+ |
-| [Codex](https://github.com/openai/codex) | OpenAI（官方） | Apache-2.0 | GPT 系列 | ChatGPT 帳號登入 **或** OpenAI API key | ★ 115k+ |
-| [OpenCode](https://github.com/sst/opencode) | 社群（repo 已遷至 `anomalyco/opencode`） | MIT | 任意（多 provider） | BYO API key 或 OpenCode Zen 內建 hosted | ★ 190k+ |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google（官方） | Apache-2.0 | Gemini | 免費額度寬，超出收費 | ★ 103k+ |
-| [goose](https://github.com/block/goose) | Agentic AI Foundation（repo 已遷至 `aaif-goose/goose`） | Apache-2.0 | 15+ provider（含 Ollama） | BYO API key 或既有 Claude / ChatGPT / Gemini 訂閱（ACP） | ★ 51k+ |
-| [Aider](https://github.com/Aider-AI/aider) | Aider-AI（社群） | Apache-2.0 | 任意 | BYO API key | ★ 47k+ |
-| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | Nous Research | MIT | 200+ via OpenRouter / NVIDIA NIM / 智譜 GLM / Kimi / 小米 MiMo / MiniMax / HF / OpenAI | BYO API key（多 provider） | ★ 224k+ |
-| [Grok Build](https://github.com/xai-org/grok-build) | SpaceXAI（xAI，官方） | Apache-2.0 | Grok | 首次啟動開瀏覽器完成登入 | ★ 25k+ |
+## 9 個 CLI 工具
 
----
+完整表預設收合；展開後請把「查核日」與你的安裝版本一起記下。官方資料查核日：**2026-08-27 UTC**。
 
-## 🎯 該選哪個？依 use case 決定
+<details markdown="1">
+<summary>展開 9 個 CLI 的安裝、認證、provider 與安全事實</summary>
 
-### 寫 paper / 文獻 / 研究
-**首推**：Claude Code（長 context、reasoning 強、擋幻覺扎實）。Gemini CLI 是備選——它的百萬 token 適合丟整本 PDF / dataset 進去問。
+<table>
+<thead>
+<tr><th scope="col">類型</th><th scope="col">工具</th><th scope="col">現在適合誰</th><th scope="col">模型／provider 選擇</th><th scope="col">登入方式</th><th scope="col">安全起手式</th><th scope="col">狀態</th><th scope="col">官方來源</th></tr>
+</thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">官方模型生態</th><td>Claude Code</td><td>要在終端機使用 Anthropic 生態的人</td><td>Claude；Anthropic API</td><td>Claude 帳號或 Anthropic API key</td><td>用 demo repo；保留 permission prompt</td><td>Anthropic 官方 terminal、desktop、IDE 與 cloud 介面之一</td><td><a href="https://code.claude.com/docs/en/overview">文件</a> · <a href="https://github.com/anthropics/claude-code">repo</a></td></tr>
+<tr><td>Codex CLI</td><td>要在終端機使用 OpenAI／ChatGPT 登入的人</td><td>GPT 系列；OpenAI API</td><td>ChatGPT 登入或 OpenAI API key</td><td>使用預設 approval 與 workspace sandbox；先看 diff</td><td>OpenAI 開源 terminal coding agent</td><td><a href="https://developers.openai.com/codex/cli">文件</a> · <a href="https://github.com/openai/codex">repo</a></td></tr>
+<tr><td>Gemini CLI</td><td>已有 Google 認證，想在 terminal 使用 Gemini 的人</td><td>Gemini；Google AI API 或 Vertex AI</td><td>Google 登入、Gemini API key 或 Vertex AI</td><td>使用 approval 模式；需要時明確開啟 `--sandbox`</td><td>Google 開源 terminal agent</td><td><a href="https://google-gemini.github.io/gemini-cli/">文件</a> · <a href="https://github.com/google-gemini/gemini-cli">repo</a></td></tr>
+<tr><td>Grok Build</td><td>要試用 xAI Grok terminal TUI 的人</td><td>Grok；xAI 登入或 API key</td><td>首次互動瀏覽器登入；CI 可用 `XAI_API_KEY`</td><td>先用 demo repo；不要複製 `~/.grok/auth.json`</td><td>xAI 官方開源 TUI coding agent</td><td><a href="https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager/docs/user-guide/02-authentication.md">認證</a> · <a href="https://github.com/xai-org/grok-build">repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">可換 provider</th><td>OpenCode</td><td>需要在多個 provider 間切換的人</td><td>多 provider；可接 OpenRouter 或相容 endpoint</td><td>用 `/connect` 加入 provider 的 API key 或 OAuth</td><td>先檢查 permission 設定；只在 demo repo 試外部目錄</td><td>開源 terminal coding agent；專案規則使用 `AGENTS.md`，`CLAUDE.md` 可相容</td><td><a href="https://opencode.ai/docs/providers">provider</a> · <a href="https://github.com/anomalyco/opencode">repo</a></td></tr>
+<tr><td>goose</td><td>需要 CLI、desktop 或 API，並想接工具與資料來源的人</td><td>15+ provider，包含 Anthropic、OpenAI、Google、Ollama、OpenRouter</td><td>provider API key，或部分既有訂閱的 ACP 登入</td><td>先用低權限 extension 與 sandbox；不連 production 資料</td><td>AAIF 的開源本機 agent，提供 CLI、desktop、API</td><td><a href="https://block.github.io/goose/">文件</a> · <a href="https://github.com/aaif-goose/goose">repo</a></td></tr>
+<tr><td>Aider</td><td>希望以 git diff／commit 管理程式修改的人</td><td>多家 cloud API、OpenRouter、OpenAI-compatible endpoint 與本機模型</td><td>provider API key、設定檔或環境變數</td><td>先用乾淨 demo repo；留意 Aider 的 git auto-commit 行為</td><td>開源 terminal pair-programming 工具，官方文件明列 git 整合</td><td><a href="https://aider.chat/docs/">文件</a> · <a href="https://github.com/Aider-AI/aider">repo</a></td></tr>
+<tr><td>Pi</td><td>想從小核心開始，用 extensions、skills 或 RPC 擴充的人</td><td>訂閱 provider、API key provider、自訂 provider；可接本機 endpoint</td><td>`/login` 或 provider API key</td><td>Pi 沒有內建 sandbox；用 disposable repo 或容器，並人工審查命令</td><td>可擴充的 minimal terminal coding harness</td><td><a href="https://pi.dev/docs/latest/providers">provider</a> · <a href="https://github.com/earendil-works/pi">repo</a></td></tr>
+<tr><td>Hermes Agent</td><td>要在 terminal、desktop 或聊天平台使用同一 agent 的人</td><td>Nous Portal、OpenRouter、Anthropic、Google 與其他 provider</td><td>`hermes model` 設定 API key 或 OAuth；Nous Portal 可用 OAuth</td><td>先在低風險 repo；把 skills、MCP 與 provider 權限逐項開啟</td><td>Nous Research 的開源 agent，文件提供 CLI 與多介面整合</td><td><a href="https://hermes-agent.nousresearch.com/docs/integrations/providers/">provider</a> · <a href="https://github.com/NousResearch/hermes-agent">repo</a></td></tr>
+</tbody>
+</table>
 
-### 寫 code / 改 codebase
-**首推**：Aider（git-native——每次改完自動 commit，方便 revert）或 Claude Code。OpenCode 適合需要在多 LLM 間切的場景。
+### OpenRouter 與 Ollama 放在哪裡？
 
-### 隱私 / offline / 不送雲端
-**首推**：goose 或 OpenCode + 本地 Ollama。兩個都支援 BYO LLM，可以接 `http://localhost:11434/v1`（Ollama 預設）。
+OpenRouter 是 Router，不列入上表的 9 個 coding CLI；它提供統一 API、provider routing 與集中用量。Ollama 是 local runtime，不是 agent；它可在 `http://localhost:11434/v1` 提供相容 API，供 OpenCode、goose、Aider 或其他 client 使用。兩者都不能取代 agent 的檔案權限與 sandbox 設計。
+</details>
 
-### 已訂 ChatGPT Plus / Pro
-**首推**：Codex——同一個帳號就能用，不另外付費。
+## Prompt 跨 CLI 搬移時保留四件事
 
-### 用 Google 生態 + 想要 1M token 長 context
-**首推**：Gemini CLI。免費額度寬、長 context 是強項。注意：Google 服務（Gmail / Drive / Docs）的整合靠 MCP 擴充，不是內建——跟其他 CLI 一樣需要安裝 MCP server。
+1. 寫清楚檔案路徑、允許的範圍與「先列計畫、確認後再改」的順序。
+2. 把模型、provider、API key、approval／sandbox 設定分開記錄；不要假設換 CLI 後相同。
+3. 用一般文字描述目標；`/login`、`/permissions` 等斜線指令只在對應工具的區塊使用。
+4. 要求輸出 `git diff`、測試結果與未完成項目，並在另一個 CLI 前先復原工作樹。
 
-### 不想被 vendor lock-in
-**首推**：OpenCode > goose > Aider。三個都不綁特定 provider，模型可換。
+<details markdown="1">
+<summary>展開規則檔、sandbox 與常見問題</summary>
 
-### 第一次裝 CLI agent，先試手感
-**首推**：Claude Code。生態廣泛、CLAUDE.md 機制讓 prompt 可以版本控制、出問題時社群資源多。
+- Claude Code 的專案規則是 `CLAUDE.md`；Codex 與 OpenCode 可使用 `AGENTS.md`。OpenCode 的 `CLAUDE.md` 是相容 fallback，不要把不存在的 `OPENCODE.md` 當共通格式。
+- Gemini CLI 的專案上下文與 `.gemini/` 設定依官方文件；`--sandbox`、approval mode 與 `--yolo` 的風險不同，第一次不要跳過確認。
+- Pi 的 project trust 不是 sandbox，官方安全文件明確提醒它依啟動使用者權限執行；需要隔離時改用容器或其他 OS 層邊界。
+- Aider 官方文件說明編輯後的 git 整合與 auto-commit；先在乾淨 demo repo 觀察，確認 commit 內容再帶入工作 repo。
+- goose、Hermes Agent 與其他可接 MCP／extension 的 agent，先開一個低權限、只讀取的整合；不要以 Gmail、Slack 或 production DB 作第一個外部連線。
+- API key 只放在官方支援的 credential store 或環境變數；不進 repo、不進 prompt、不進截圖與 issue。費用按當日官方價格和實際 usage 計算，不按模型名稱猜測。
 
-### 想跑在 cloud VM、用 Telegram / Slack 等多平台跟它聊 + 用中國大陸 LLM
-**首推**：Hermes Agent。差異化在三件事：
+#### 官方查核入口（2026-08-27 UTC）
 
-- **不綁 laptop**——agent 跑在 $5 VPS / Modal serverless，你從 Telegram / Discord / Slack / WhatsApp / Signal 任一個介面對話
-- **多 LLM 中性**——支援 GLM / Kimi / 小米 MiMo / MiniMax，剛好對應 11 中文圈生態
-- **內建 self-improving skill loop + cron 排程**——agent 跟你互動久了會自動生成 skill，跨 session 持續優化
-- ⚠️ skill 自動演化是 frontier feature，目前缺獨立審計；對 production 任務建議先在低風險場景試
+- [Claude Code overview](https://code.claude.com/docs/en/overview) · [permissions](https://code.claude.com/docs/en/permissions)
+- [OpenAI Codex CLI](https://developers.openai.com/codex/cli)
+- [OpenCode](https://opencode.ai/docs) · [canonical repository](https://github.com/anomalyco/opencode)
+- [Gemini CLI](https://google-gemini.github.io/gemini-cli/)
+- [goose](https://block.github.io/goose/) · [canonical repository](https://github.com/aaif-goose/goose)
+- [Aider](https://aider.chat/docs/)
+- [Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+- [Grok Build](https://github.com/xai-org/grok-build)
+- [Pi](https://pi.dev/docs/latest) · [canonical repository](https://github.com/earendil-works/pi)
+- [OpenRouter FAQ](https://openrouter.ai/docs/faq) · [Ollama](https://ollama.com/)
+</details>
 
----
+## 回到 Track A
 
-## 📝 跨 CLI 都通用的 prompt 寫法
+- 要第一次安全操作：回到 [A1](../tracks/cli/A1-cli-intro.md)。
+- 要把規則檔與重複流程固定下來：進入 [A2](../tracks/cli/A2-cli-workflow.md)。
+- 要做 MCP、CI 與 usage trace：進入 [A3](../tracks/cli/A3-cli-production.md)。
 
-如果想讓 prompt 在不同 CLI 之間 portable（或想隨時換工具不重寫），照這幾條原則：
-
-1. **明確指定檔案路徑**——「修改 `src/auth.py`」比「修改那個 auth 檔」好
-2. **要求多步驟拆解**——`先列 plan、確認後再動手`，所有 CLI 都吃這個結構
-3. **避免依賴特定 CLI 的 magic 指令**——`/init` `/compact` 是 Claude Code 專屬，OpenCode 沒有
-4. **用 `.cursorrules` / `CLAUDE.md` / `AGENTS.md` 記持續性偏好**——Claude Code 用 `CLAUDE.md`，Codex 用 `AGENTS.md`，OpenCode 用 `OPENCODE.md`，**內容可以一樣**
-5. **明確要 review 的 scope**——「只 review 我這次的 diff」vs 「review 整個 repo」
-
-跨 CLI 寫的 prompt 通常會比 CLI-specific prompt 麻煩 5-10%，但好處是切換工具時不用重寫。
-
----
-
-## ⚠️ 常見坑
-
-### File path 處理
-- Windows 路徑用反斜線（`C:\Users\...`），多數 CLI 內部會轉，但有時會搞混
-- 建議：在 git-bash / WSL 下用 forward slash，避免奇怪 quoting
-
-### git 整合差異
-- **Aider** 自動 commit 每次改動（這是它的設計，不是 bug）
-- **Claude Code / Codex / OpenCode / goose** 預設不自動 commit，需要手動或 prompt 要求
-
-### Sandbox 預設值（每個 CLI 文件略有差異，使用前請對照官方文件）
-- **Claude Code**：bash 寫入預設限定 cwd，讀取範圍較廣（被 deny rule 排除的除外）
-- **Codex**：版本控制目錄建議 `Auto`（workspace-write + on-request 提權）；非 git 目錄建議 `read-only`
-- **goose / OpenCode**：相對寬鬆——建議自己加 sandbox / approval 設定，不要靠預設
-
-### Token cost 累積
-- 在大 codebase 上跑 `grep` 一次可能消耗 10 萬+ token
-- 在大 PDF 上摘要可能 50 萬 token（Gemini 適合，其他要 cost-aware）
-- 建議：每次操作前估 cost；訂 monthly cap
-
-### 多 CLI session 互相干擾
-- 同一個 repo 開兩個 CLI（譬如 Claude Code + Aider），改檔可能 race condition
-- 建議：一個 repo 一個 CLI（除非真的有並行需求）
-
----
-
-## 🔧 實用搭配（real-world setup）
-
-下面 3 個常見搭配，挑一個合的場景：
-
-### Setup A：Claude Code 主推 + OpenCode 備援
-- Claude Code 處理日常 90%（寫 code、寫 doc、debug）
-- OpenCode 接 Ollama，處理隱私資料（醫療紀錄、財務分析）
-- 一個 prompt 寫一次，兩邊都能跑
-
-### Setup B：Codex（GPT）+ Aider（Claude）混用
-- Codex 處理 ChatGPT Plus 額度內的小事
-- Aider 接 Claude API key 處理大重構（git-native commit 方便）
-- 兩個帳單分開算、互不影響
-
-### Setup C：Gemini CLI 主推（給長 context 場景）
-- 整本 PDF / 整個 codebase 一次餵進去
-- 加 Aider 處理需要精準 git diff 的場景
-- 適合學者、知識工作者
-
-### Setup D：Hermes Agent + 本機 Ollama（多平台 + 中國大陸 LLM + offline）
-- **Hermes Agent** 跑在 $5 VPS 或自己的機器上，當作多平台 agent gateway
-- **LLM endpoint** 用 Ollama（`http://localhost:11434/v1`），也可以改接 z.ai GLM / Kimi 等 provider
-- **聊天入口** 用 Telegram / Slack / Discord；Hermes 負責把平台訊息轉進 agent workflow
-- **完全不想接 Anthropic / OpenAI** 時，這條路線適合做離線、隱私資料、低成本重複實驗
-- Step-by-step 做法看 [`resources/cookbook.md` Recipe 6](cookbook.md#6-本機-llm--cli-agent-快速-walkthrough)
-
----
-
-## 從這份指南連回各 branch
-
-不同 audience 對 CLI 的需求不一樣：
-
-- **[for-developer](../branches/for-developer.md)**：除了 CLI，也看 IDE-based agents（Cursor、Cline、Continue）
-- **[for-everyday-users](../branches/for-everyday-users.md)** Tier 2：CLI 是進階選項，先試 Tier 0 / 1 的 Web / Desktop App
-- **[for-researcher](../branches/for-researcher.md)**：除了 CLI，也看 paper-specific 工具（paper-qa、gpt-researcher、ChatPaper）
-- **[for-knowledge-worker](../branches/for-knowledge-worker.md)**：除了 CLI，也看 workflow 自動化（n8n、Make）
-- **[for-teacher](../branches/for-teacher.md)**：CLI 對教師偏進階；建議先看 prompt 素材庫
-
----
-
-## 維護備註
-
-- 8 個 CLI 的 stars / license / pushed_at 由 `weekly-catalog-refresh` CI 每週自動更新（手動可跑 `python scripts/refresh-stars.py`）
-- CLI 工具市場變化快——新工具出現要評估是否加入這份比較（門檻：> 30k stars + 維護中 + 真的 CLI 不是 IDE；官方大廠或極新的 CLI 可破例、如 Grok Build）
-- 比較表格的「強項 / 弱項」欄位刻意沒填——避免產生主觀 bias，讓 use case section 跟讀者自己的判斷做這件事
+> 維護原則：工具、登入、價格、sandbox 與 provider 都會變動；每次改表前重查官方文件，並更新查核日。這份表保持事實欄位，不維護熱門度或主觀評分。

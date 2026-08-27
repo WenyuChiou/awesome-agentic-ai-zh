@@ -229,7 +229,7 @@ r = client.messages.create(model="claude-haiku-4-5", ...)
 | 5 Claude Code 生態 | 11 個 | inline 6 + folder 5（`examples/stage-5/`） |
 | 6 Memory/RAG | 5 個 | 全 folder（`examples/stage-6/`） |
 | 7 Multi-agent | 5 個 | inline 1 + folder 4（`examples/stage-7/`） |
-| Track A1-A3 | 12 個 | 全 inline、外加 2 個小 folder（CLI-9 / CLI-10） |
+| Track A1-A3 | 12 個 | 12 個 inline 練習；沒有獨立的 `examples/track-a/` 資料夾 |
 
 → T1 完成範圍：**只有 Stage 3 全部 6 個**（剩餘 stage 按 plan 分批推進）。
 

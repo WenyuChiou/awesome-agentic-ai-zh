@@ -115,7 +115,7 @@ cd awesome-agentic-ai-zh
 
 | Stage | 主題 | 關鍵內容 | 預估時程 |
 |---|---|---|---|
-| **A1** | [選一個 CLI Agent，開始用它做事（CLI Agent Intro & Selection）](tracks/cli/A1-cli-intro.md) | 8 主流 CLI 比較 · 安裝 · 第一次跑 | 1 週 |
+| **A1** | [選一個 CLI Agent，開始用它做事（CLI Agent Intro & Selection）](tracks/cli/A1-cli-intro.md) | CLI agent 選擇 · 安裝 · 第一次跑 | 1 週 |
 | **A2** | [建立可重複使用的 CLI 工作流程（CLI Workflow Patterns）](tracks/cli/A2-cli-workflow.md) | CLAUDE.md · slash command · 多步驟拆解 | 1-2 週 |
 | **A3** | [把 CLI Agent 接進真實工作流程（Integration & Production）](tracks/cli/A3-cli-production.md) | MCP 接 CLI · CI 自動化 · cost / observability | 1-2 週 |
 | **+5** | [Stage 5 — Claude Code 生態](stages/05-claude-code-ecosystem.md)（**共用 hub**） | MCP · Skills · Plugins · Subagents、Track A 必看 5.1-5.4 / 選讀 5.5-5.7 | 1-2 週（Track A 視角）|
@@ -236,7 +236,7 @@ cd awesome-agentic-ai-zh
 | 你的狀況 | 去哪 | 內容 |
 |---|---|---|
 | 研究 workflow + multi-LLM delegation skill | [`RESOURCES.md` 研究工作流](RESOURCES.md#研究工作流本-repo-維護者出品) | 本 repo 維護者出品的 Claude Code 研究 skill 對 |
-| CLI agent 8 家對照 + production 搭配 | [`resources/cli-agents-guide.md`](resources/cli-agents-guide.md) | Track A 的核心參考、148 行 |
+| CLI agent 身分與選擇指南 | [`resources/cli-agents-guide.md`](resources/cli-agents-guide.md) | Track A 的核心參考 |
 | Schema 設計規則（tool calling 必看） | [`resources/schema-design-cheatsheet.md`](resources/schema-design-cheatsheet.md) | 5 條黃金規則 + 5 個 anti-pattern |
 
 ---

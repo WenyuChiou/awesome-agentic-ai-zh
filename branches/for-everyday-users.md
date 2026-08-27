@@ -72,7 +72,7 @@ ChatGPT 桌面版。可以對螢幕截圖問問題、語音對話、跟其他 Ap
 
 > 這些工具雖然定位給開發者，但**日常使用者也能用**——例如批次重新命名檔案、整理下載資料夾、自動寫每週回顧、把 PDF 摘要存成 Markdown。
 >
-> 想看詳細比較？見 [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.md)（8 個主流 CLI agent 並列、依 use case 推薦、常見坑、實用搭配）。
+> 想知道哪種 CLI agent 適合你？見 [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.md)（依工作方式選工具、常見坑、實用搭配）。
 >
 > 想要 step-by-step 上手？見 [`tracks/cli/A1-cli-intro.md`](../tracks/cli/A1-cli-intro.md)（Track A 第一站，從安裝到第一個任務）。
 >
@@ -92,7 +92,7 @@ ChatGPT 桌面版。可以對螢幕截圖問問題、語音對話、跟其他 Ap
 
 **適合誰**：已經訂 ChatGPT Plus / Pro，想在終端機用同一個帳號做事的人。
 
-#### [sst/opencode](https://github.com/sst/opencode) ⭐⭐⭐⭐⭐
+#### [anomalyco/opencode](https://github.com/anomalyco/opencode) ⭐⭐⭐⭐⭐
 
 | 欄位 | 內容 |
 |---|---|

@@ -115,7 +115,7 @@ The two tracks are **not mutually exclusive** — most people start with A to ge
 
 | Stage | Topic | Key Content | Time |
 |---|---|---|---|
-| **A1** | [CLI Agent Intro & Selection](tracks/cli/A1-cli-intro.en.md) | 8-CLI comparison · install · first run | 1 wk |
+| **A1** | [CLI Agent Intro & Selection](tracks/cli/A1-cli-intro.en.md) | CLI agent selection · install · first run | 1 wk |
 | **A2** | [CLI Workflow Patterns](tracks/cli/A2-cli-workflow.en.md) | CLAUDE.md · slash commands · multi-step decomposition | 1-2 wks |
 | **A3** | [Integration & Production](tracks/cli/A3-cli-production.en.md) | MCP-into-CLI · CI automation · cost / observability | 1-2 wks |
 | **+5** | [Stage 5 — Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**) | MCP · Skills · Plugins · Subagents; Track A reads 5.1-5.4 (5.5-5.7 optional) | 1-2 wks (Track A view) |
@@ -236,7 +236,7 @@ Common quick links, grouped by **scenario**:
 | Your situation | Where | What's there |
 |---|---|---|
 | Research workflow + multi-LLM delegation skill pair | [`RESOURCES.en.md` research workflow](RESOURCES.en.md#research-workflow-by-the-repo-maintainer) | Maintainer's own Claude Code research skill set |
-| CLI agent 8-way comparison + production combos | [`resources/cli-agents-guide.en.md`](resources/cli-agents-guide.en.md) | Track A's core reference, ~148 lines |
+| CLI agent identity & selection guide | [`resources/cli-agents-guide.en.md`](resources/cli-agents-guide.en.md) | Track A's core reference |
 | Schema design rules (must-read for tool calling) | [`resources/schema-design-cheatsheet.en.md`](resources/schema-design-cheatsheet.en.md) | 5 golden rules + 5 anti-patterns |
 
 ---
