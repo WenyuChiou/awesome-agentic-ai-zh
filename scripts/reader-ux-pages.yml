@@ -147,11 +147,13 @@ pages:
       en: stages/02-prompt-engineering.en.md
       zh-Hans: stages/02-prompt-engineering.zh-Hans.md
     max_visible_chars:
-      zh-TW: 2475
-      en: 4725
-      zh-Hans: 2525
+      zh-TW: 3185
+      en: 6332
+      zh-Hans: 3239
     max_open_details: 0
     parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
       literals:
         - "Zero-Shot"
         - "One-Shot"
@@ -168,6 +170,16 @@ pages:
         zh-Hans:
           heading: "📌 学习目标"
           anchor: -学习目标
+      core-terms:
+        zh-TW:
+          heading: "🧩 先認識核心詞"
+          anchor: -先認識核心詞
+        en:
+          heading: "🧩 Core Terms First"
+          anchor: -core-terms-first
+        zh-Hans:
+          heading: "🧩 先认识核心词"
+          anchor: -先认识核心词
       required-reading:
         zh-TW:
           heading: "📚 必修閱讀"
@@ -190,14 +202,14 @@ pages:
           anchor: -动手练习
       exercise-1:
         zh-TW:
-          heading: "練習 1：System Prompt（把要求放進四格）"
-          anchor: 練習-1system-prompt把要求放進四格
+          heading: "練習 1：Prompt 四格（把要求放進四格）"
+          anchor: 練習-1prompt-四格把要求放進四格
         en:
-          heading: "Exercise 1: System Prompt (put the request into four parts)"
-          anchor: exercise-1-system-prompt-put-the-request-into-four-parts
+          heading: "Exercise 1: Four-Part Prompt (put the request into four parts)"
+          anchor: exercise-1-four-part-prompt-put-the-request-into-four-parts
         zh-Hans:
-          heading: "练习 1：System Prompt（把要求放进四部分）"
-          anchor: 练习-1system-prompt把要求放进四部分
+          heading: "练习 1：Prompt 四部分（把要求放进四部分）"
+          anchor: 练习-1prompt-四部分把要求放进四部分
       exercise-2:
         zh-TW:
           heading: "練習 2：Few-Shot（給例子，再測同一組題目）"
@@ -238,6 +250,47 @@ pages:
         zh-Hans:
           heading: "🎯 精选 Projects"
           anchor: -精选-projects
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 20
+      terms:
+        - id: prompt
+          zh-TW: {term: Prompt, label: "Prompt（提示）"}
+          en: {term: Prompt, label: Prompt}
+          zh-Hans: {term: Prompt, label: "Prompt（提示）"}
+        - id: instruction
+          zh-TW: {term: Instruction, label: "Instruction（指令）"}
+          en: {term: Instruction, label: Instruction}
+          zh-Hans: {term: Instruction, label: "Instruction（指令）"}
+        - id: input-data
+          zh-TW: {term: Input Data, label: "Input Data（輸入資料）"}
+          en: {term: Input Data, label: Input Data}
+          zh-Hans: {term: Input Data, label: "Input Data（输入数据）"}
+        - id: example
+          zh-TW: {term: Example, label: "Example（範例）"}
+          en: {term: Example, label: Example}
+          zh-Hans: {term: Example, label: "Example（范例）"}
+        - id: eval
+          zh-TW: {term: Eval, label: "Eval（評估）"}
+          en: {term: Eval, label: Eval}
+          zh-Hans: {term: Eval, label: "Eval（评估）"}
+        - id: zero-shot
+          zh-TW: {term: Zero-Shot, label: "Zero-Shot（零範例）"}
+          en: {term: Zero-Shot, label: Zero-Shot}
+          zh-Hans: {term: Zero-Shot, label: "Zero-Shot（零范例）"}
+        - id: one-shot
+          zh-TW: {term: One-Shot, label: "One-Shot（一個範例）"}
+          en: {term: One-Shot, label: One-Shot}
+          zh-Hans: {term: One-Shot, label: "One-Shot（一个范例）"}
+        - id: few-shot
+          zh-TW: {term: Few-Shot, label: "Few-Shot（少量範例）"}
+          en: {term: Few-Shot, label: Few-Shot}
+          zh-Hans: {term: Few-Shot, label: "Few-Shot（少量范例）"}
+        - id: chain-of-thought
+          zh-TW: {term: Chain-of-Thought, label: "Chain-of-Thought（CoT，思維鏈）"}
+          en: {term: Chain-of-Thought, label: "Chain-of-Thought (CoT)"}
+          zh-Hans: {term: Chain-of-Thought, label: "Chain-of-Thought（CoT，思维链）"}
     resource_group_rowspans: [5, 4, 4, 4, 1]
 
   - id: track-a1

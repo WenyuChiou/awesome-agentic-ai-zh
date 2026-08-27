@@ -78,7 +78,7 @@ The maximum tokens an LLM can "see" in one call. **2026 frontier**: Claude Sonne
 
 ### Prompt
 
-The text you feed an LLM. **Prompt engineering** = designing that text to get good answers. Basic structure: system prompt (role/rules) + user prompt (the actual ask).
+The complete task package you give an LLM. It is not always one question; it can include instructions, input data, background, examples, and output limits, and these may be split across multiple messages. **Prompt engineering** is designing and testing this task package so results better meet success criteria. `system`, `developer`, and `user` are API message roles, not three fixed sections of a prompt and not synonyms for instruction.
 
 📍 Detail: [Stage 2](../stages/02-prompt-engineering.en.md)
 
@@ -88,7 +88,7 @@ Put "a few worked examples" in the prompt for the LLM to copy — the only diffe
 
 - **Zero-shot** (0 examples): just ask, no examples at all.
 - **One-shot** (1 example): give **1** input → output example first, then ask.
-- **Few-shot** (a handful): give **2–5** input → output examples first. It can show the format and boundary cases, but whether it helps must be checked with a fixed eval.
+- **Few-shot** (a small number): give a small number of input → output examples first. There is no universal fixed count; it can show the format and boundary cases, but whether it helps must be checked with a fixed eval.
 
 ### Chain-of-Thought (CoT)
 

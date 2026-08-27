@@ -78,7 +78,7 @@ LLM 一次能「看」多少 token。**2026 frontier**：Claude Sonnet 5 / Opus 
 
 ### Prompt（提示詞）
 
-你給 LLM 的輸入文字。**Prompt engineering** 就是設計這段輸入讓 LLM 給好答案。System prompt（角色設定）+ user prompt（這次的問題）是基本結構。
+你交給 LLM 的完整任務包。它不一定只有一句問題，可以包含**指令、輸入資料、背景、範例與輸出限制**，也可能分放在多個 message 裡。**Prompt engineering** 是設計並測試這份任務包，讓結果更符合成功條件。`system`、`developer`、`user` 是 API 的 message role（訊息角色），不是 prompt 的固定三段，也不能直接當成「指令」的同義詞。
 
 📍 詳細：[Stage 2](../stages/02-prompt-engineering.md)
 
@@ -88,7 +88,7 @@ LLM 一次能「看」多少 token。**2026 frontier**：Claude Sonnet 5 / Opus 
 
 - **Zero-shot**（0 個範例）：直接問、不給任何範例。
 - **One-shot**（1 個範例）：先給 **1 個** input → output 範例再問。
-- **Few-shot**（少數幾個）：給 **2-5 個** input → output 範例後再問。它能展示格式與邊界案例，但是否變好仍要用固定 eval 檢查。
+- **Few-shot**（少數幾個）：先給少量 input → output 範例再問。沒有通用的固定數字；它能展示格式與邊界案例，但是否變好仍要用固定 eval 檢查。
 
 ### Chain-of-Thought（CoT，思維鏈）
 

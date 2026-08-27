@@ -4,29 +4,33 @@
 
 This stage teaches only three things: **say what you mean, give examples, and check answers**.
 
+**Prompt** is not only one question. It is a complete task package for the model, which can include instructions, **Input Data**, examples, and output rules.
+
 ## 📌 Learning Goals
 
 After finishing, you can:
 
 - Break a vague request into four parts: goal, data, rules, and output.
-- Tell the difference between Zero-Shot, One-Shot, and Few-Shot: the difference is how many examples you give first.
-- Know that Chain-of-Thought means working through a problem in steps; it does not mean asking the model to reveal all its private thoughts.
-- Use the same small test set (eval) to compare before and after.
+- Tell the difference between **Zero-Shot**, **One-Shot**, and **Few-Shot**: the difference is how many examples you give first.
+- Know that **Chain-of-Thought** means working through a problem in steps; it does not mean asking the model to reveal all its private thoughts.
+- Use the same small test set (**Eval**) to compare before and after.
 - Notice when the problem is not the prompt, then change the model, data, or tool.
 
-## 🧩 Core Terms to Know First
+## 🧩 Core Terms First
 
-| Plain language | Everyday analogy | Correct term |
-|---|---|---|
-| Tell the model what to do | The teacher states the question first | Instruction; system / developer message |
-| Content given to the model | The article in the question | Input data |
-| Give 0, 1, or several examples first | See no example, one example, or a few worked examples | Zero-Shot, One-Shot, Few-Shot |
-| Break a big problem into small steps | Put together one puzzle piece at a time | Chain-of-Thought (CoT) |
-| Check results with fixed questions | A small answer card | Evaluation (eval) |
+- **Prompt**: The complete task package you give the model. Think of it like an order form with what you want, the materials, examples, and the rules for the finished result. This stage turns it into four parts: goal, data, rules, and output.
+- **Instruction**: Tells the model what to do and what not to do. It is like a teacher saying, “Make this story three sentences long.” It is the request inside a prompt, not one particular message role.
+- **Input Data**: The content the model works on this time. It is like a short passage given to a translator; the data can change while the task rules stay the same.
+- **Example**: Shows the model once that “this input goes with this answer.” It is like demonstrating one question before asking the model to follow the same pattern.
+- **Eval**: Uses fixed questions and a fixed scoring method to check results. It is like a quiz; the questions must not change halfway through if you want to know whether the new prompt is actually better.
+- **Zero-Shot**: Ask the model to do the task without giving an example first. This stage uses it as the starting point to see how the model answers on its own.
+- **One-Shot**: Give one example first, then ask the model to do the task. It can show a format, but one example may represent only one situation.
+- **Few-Shot**: Give a small number of examples first, then ask the model to follow them. There is no universal fixed number; examples should be clear and consistent, and an eval should check whether they help.
+- **Chain-of-Thought (CoT)**: A prompting technique that works through a problem in steps. It does not mean revealing all of the model’s private thoughts; when you need to check the answer, ask for a short reason or verifiable steps.
 
-> One-line reminder: **goal → data → rules → output**.
+> **Message Role** is like an envelope: it says who the content comes from and how high its priority is. **Instruction** is the request written inside the envelope. Different APIs use roles such as `system`, `developer`, and `user`; do not treat one role as the definition of an instruction.
 
-CoT does not mean printing all of the model’s private thoughts. To check an answer, ask for a **short reason or verifiable steps**.
+One-line reminder: **goal → data → rules → output**.
 
 ## 🚪 Entry Conditions
 
@@ -59,11 +63,15 @@ The official sources share a simple point: define success first, then test with 
 
 ## 🛠 Hands-on Exercises
 
-### Exercise 1: System Prompt (put the request into four parts)
+<a id="exercise-1-system-prompt-put-the-request-into-four-parts"></a>
+
+### Exercise 1: Four-Part Prompt (put the request into four parts)
 
 After finishing, you will turn “help me organize this” into a prompt you can check.
 
 **First step**: Copy the two prompts below and paste them into the same model, one after the other.
+
+This exercise deliberately puts the complete prompt in a portable `user` message. In a production product, long-term rules can go in a provider-supported `system` or `developer` message. That is a choice of message role; it does not change what the four prompt parts mean.
 
 ```text
 Help me organize this: I was charged twice. Please check.
@@ -180,12 +188,13 @@ After finishing, you will have a small experiment you can repeat instead of only
 
 **First step**: Pick one wrong answer from Exercise 2. Change only one of the four parts.
 
-Then run all six questions again and fill in this table:
+Then run all six questions again. Copy this result card and fill in the scores:
 
-| Version | What changed | Score |
-|---|---|---:|
-| Original | Nothing | `/6` |
-| New | One change only | `/6` |
+```text
+Original | What changed: Nothing | Score: __ / 6
+New | What changed: ________________ | Score: __ / 6
+Conclusion | Is the new version better: Yes / No / Not sure
+```
 
 <details markdown="1">
 <summary>Expand the change order, reasoning-model reminder, and completion criteria</summary>
@@ -238,6 +247,7 @@ Start with one of the three starting points above. The full list is a toolbox, n
 <summary>Expand 18 course, cookbook, example, and eval resources</summary>
 
 > Resource status and repository metadata verified: 2026-08-27 UTC. GitHub stars change, so this table does not list stars.
+> Recommendation is this Stage's reading order, not a popularity ranking: `⭐⭐⭐⭐⭐` = skipping it would block progress; `⭐⭐⭐⭐` = start here; `⭐⭐⭐` = read when needed; `⭐⭐` = historical or niche. This is an optional toolbox, so no forced five-star ratings.
 
 <table>
   <thead>
@@ -246,35 +256,36 @@ Start with one of the three starting points above. The full list is a toolbox, n
       <th scope="col">Resource</th>
       <th scope="col">First action</th>
       <th scope="col">Status / license</th>
+      <th scope="col">Recommendation</th>
     </tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Official courses</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>Follow the first notebook chapter.</td><td>Maintained; upstream does not provide SPDX</td></tr>
-    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>Read Real World Prompting and Prompt Evaluations.</td><td>Maintained; upstream does not provide SPDX</td></tr>
-    <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>Read “When to change a prompt” first.</td><td>Official documentation</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>Read about message roles, examples, and evals.</td><td>Official documentation</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>Read about clear instructions and fixed structures.</td><td>Official documentation</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Official courses</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>Follow the first notebook chapter.</td><td>Maintained; upstream does not provide SPDX</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>Read Real World Prompting and Prompt Evaluations.</td><td>Maintained; upstream does not provide SPDX</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>Read “When to change a prompt” first.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>Read about message roles, examples, and evals.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>Read about clear instructions and fixed structures.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Official cookbooks</th><td><a href="https://github.com/anthropics/claude-cookbooks">Anthropic Claude Cookbooks</a></td><td>Find the notebook closest to your task.</td><td>Maintained; MIT</td></tr>
-    <tr><td><a href="https://github.com/openai/openai-cookbook">OpenAI Cookbook</a></td><td>Find eval and structured-output examples.</td><td>Maintained; MIT</td></tr>
-    <tr><td><a href="https://github.com/google-gemini/cookbook">Google Gemini Cookbook</a></td><td>Run one prompting quickstart.</td><td>Maintained; Apache-2.0</td></tr>
-    <tr><td><a href="https://github.com/GoogleCloudPlatform/generative-ai">Google Cloud Generative AI</a></td><td>Read it when you need Vertex AI.</td><td>Maintained; Apache-2.0</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Official cookbooks</th><td><a href="https://github.com/anthropics/claude-cookbooks">Anthropic Claude Cookbooks</a></td><td>Find the notebook closest to your task.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/openai/openai-cookbook">OpenAI Cookbook</a></td><td>Find eval and structured-output examples.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/google-gemini/cookbook">Google Gemini Cookbook</a></td><td>Run one prompting quickstart.</td><td>Maintained; Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/GoogleCloudPlatform/generative-ai">Google Cloud Generative AI</a></td><td>Read it when you need Vertex AI.</td><td>Maintained; Apache-2.0</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Learn from examples</th><td><a href="https://github.com/dair-ai/Prompt-Engineering-Guide">DAIR.AI Prompt Engineering Guide</a></td><td>Use it as a reference. You do not need to memorize it from start to finish.</td><td>Maintained; MIT</td></tr>
-    <tr><td><a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></td><td>Use the website to find one technique quickly.</td><td>Maintained; website</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>Choose one notebook and learn while running it.</td><td>Maintained; upstream does not provide SPDX</td></tr>
-    <tr><td><a href="https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php">李宏毅 GenAI-ML</a></td><td>Use it when you need a Chinese classroom explanation.</td><td>Course website</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Learn from examples</th><td><a href="https://github.com/dair-ai/Prompt-Engineering-Guide">DAIR.AI Prompt Engineering Guide</a></td><td>Use it as a reference. You do not need to memorize it from start to finish.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></td><td>Use the website to find one technique quickly.</td><td>Maintained; website</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>Choose one notebook and learn while running it.</td><td>Maintained; upstream does not provide SPDX</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php">李宏毅 GenAI-ML (2025 Fall)</a></td><td>Use it when you need a Chinese classroom explanation.</td><td>2025 Fall course website; not current model documentation</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Evaluation and optimization</th><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>Move the six-question eval into a rerunnable configuration.</td><td>Maintained; MIT</td></tr>
-    <tr><td><a href="https://github.com/microsoft/promptflow">Microsoft Promptflow</a></td><td>Use it when you need workflow and evaluation interfaces.</td><td>Maintained; MIT</td></tr>
-    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>Use it when you want to optimize prompts with code.</td><td>Maintained; MIT</td></tr>
-    <tr><td><a href="https://github.com/UKGovernmentBEIS/inspect_ai">Inspect AI</a></td><td>Use it when you need a formal eval package.</td><td>Maintained; MIT</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Evaluation and optimization</th><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>Move the six-question eval into a rerunnable configuration.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/promptflow">Microsoft Promptflow</a></td><td>Use it when you need workflow and evaluation interfaces.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>Use it when you want to optimize prompts with code.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/UKGovernmentBEIS/inspect_ai">Inspect AI</a></td><td>Use it when you need a formal eval package.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="1">Historical material</th><td><a href="https://github.com/microsoft/prompt-engine">Microsoft Prompt Engine</a></td><td>Use it only to see an early approach.</td><td>Archived; MIT; do not use for new projects</td></tr>
+    <tr><th scope="rowgroup" rowspan="1">Historical material</th><td><a href="https://github.com/microsoft/prompt-engine">Microsoft Prompt Engine</a></td><td>Use it only to see an early approach.</td><td>Archived; MIT; do not use for new projects</td><td>⭐⭐</td></tr>
   </tbody>
 </table>
 
