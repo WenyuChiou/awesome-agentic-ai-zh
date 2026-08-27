@@ -4,8 +4,6 @@
 
 你在 Stage 3 已经自己写过工具循环。这一关要做的事很简单：看看哪些重复工作可以交给现成工具箱，并学会什么时候不要把系统变复杂。
 
-> 信息核验：2026-08-27 UTC。框架版本、维护状态与授权之后可能改变，采用前请再看官方页面。
-
 <!-- freshness: canonical=stages/04-agent-frameworks.md; verified_on=2026-08-27; scope=frameworks,releases,maintenance,licenses,security; max_age_days=90 -->
 
 ## 📌 学习目标
@@ -240,6 +238,8 @@ py -3.11 test.py
 
 <details markdown="1">
 <summary>展开 18 笔框架、harness 与基础设施</summary>
+
+<small>框架信息核查：2026-08-27 UTC</small>
 
 <table>
   <thead>

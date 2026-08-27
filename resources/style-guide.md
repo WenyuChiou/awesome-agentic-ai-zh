@@ -316,15 +316,15 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 - 轉換後保留原有資源數量、順序、連結與三語對應，並用 MkDocs 檢查實際渲染。
 - 沒有重複分類的短表格繼續使用 Markdown，避免為了格式增加維護成本。
 
-含模型、價格、context、授權或生命週期狀態的頁面，在資料附近加入可見查核日期與機器 marker：
+含模型、價格、context、授權或生命週期狀態的頁面，把可見查核日期放進最相關的預設收合區，並用小字呈現；頁首只保留不顯示的機器 marker：
 
 ```markdown
-> 資料查核：YYYY-MM-DD UTC。價格與可用性之後可能改變，使用前請再看官方頁面。
+<small>資料查核：YYYY-MM-DD UTC</small>
 
 <!-- freshness: canonical=stages/0N-slug.md; verified_on=YYYY-MM-DD; scope=models,pricing,availability,deprecations; max_age_days=90 -->
 ```
 
-三語 marker 必須完全一致；`canonical` 一律指向繁中主頁。官方沒有公布的欄位寫「官方未公布」，不要從第三方榜單反推；第三方 benchmark 只能教讀者怎麼自己評測。
+日期只寫查核範圍與日期，不重複加入「資料不會永久正確」等通用提醒。三語 marker 必須完全一致；`canonical` 一律指向繁中主頁。官方沒有公布的欄位寫「官方未公布」，不要從第三方榜單反推；第三方 benchmark 只能教讀者怎麼自己評測。
 
 **Stage 0 例外**：可以省略 `精選 Projects`、`進入條件`，因為它是 prerequisite gateway。可見主線依序保留 skip 判斷、4 個學習目標、1 個整合練習與短版完成檢查；時間、環境、補充練習、名詞與學習資源預設收合。
 

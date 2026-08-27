@@ -4,7 +4,6 @@
 
 This stage does one thing: let the model fill out a “tool work order,” then have your program validate it, execute it, and send the result back.
 
-> 🔎 Tools, prices, and resource status checked: **2026-08-27 UTC**. The date means they were rechecked on that day; it does not mean the data can never change.
 <!-- freshness: canonical=stages/03-tool-use-and-hello-agent.md; verified_on=2026-08-27; scope=models,pricing,tool-apis,security; max_age_days=90 -->
 
 ## 📌 Learning Objectives
@@ -54,6 +53,8 @@ ReAct alternates between deciding the next step, taking an action, observing wha
 ### **Structured Output**
 
 The model returns data in a fixed shape, such as JSON that conforms to a schema. It is like filling an answer into a form. This chapter contrasts it with Function Calling: the former asks for data, while the latter asks a program to take an action. Even a valid shape can contain wrong content, a refusal, or truncated output.
+
+![Tool Use loop: the model proposes a Tool Call; the app validates and runs the tool; the Tool Result returns to the model.](../resources/diagrams/tool-use-loop.en.png)
 
 ## Choose the Right Method First
 
@@ -290,7 +291,7 @@ final = client.messages.create(
     tools=tools,
     messages=messages,
 )
-print("".join(block.text for block in final.content if block.type == "text"))
+print("\n".join(block.text for block in final.content if block.type == "text"))
 ```
 
 An Anthropic client-tool failure must use the corresponding `tool_use_id` and add `"is_error": true`. Do not insert a tool result into the system prompt.
@@ -481,7 +482,7 @@ Complete one five-star route first: official docs → Exercises 1–3 → one fr
 <details markdown="1">
 <summary>Expand 21 official docs, courses, repos, and Structured Output tools</summary>
 
-> Repo status and GitHub metadata checked: 2026-08-27 UTC. GitHub stars change, so this table does not list stars.
+<small>Resources checked: 2026-08-27 UTC</small>
 
 > Ratings indicate this Stage’s learning priority, not popularity: `⭐⭐⭐⭐⭐` = skipping it will block this chapter’s route; `⭐⭐⭐⭐` = recommended early; `⭐⭐⭐` = read if needed; `⭐⭐` = historical or niche context.
 

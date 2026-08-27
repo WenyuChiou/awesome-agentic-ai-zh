@@ -4,8 +4,6 @@
 
 In Stage 3, you wrote a tool loop yourself. This stage has a simple purpose: see which repeated tasks can be handed to an existing toolkit, and learn when *not* to make the system more complex.
 
-> Fact check: 2026-08-27 UTC. Tool versions, maintenance status, and licenses may change; check the official pages again before adopting one.
-
 <!-- freshness: canonical=stages/04-agent-frameworks.md; verified_on=2026-08-27; scope=frameworks,releases,maintenance,licenses,security; max_age_days=90 -->
 
 ## 📌 Learning Goals
@@ -241,6 +239,8 @@ Choose [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐ as
 
 <details markdown="1">
 <summary>Expand 18 frameworks, harnesses, and infrastructure tools</summary>
+
+<small>Framework information checked: 2026-08-27 UTC</small>
 
 <table>
   <thead>

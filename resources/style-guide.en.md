@@ -318,15 +318,15 @@ This rule applies to the entire learning map. The goal is for a five-year-old to
 - Preserve the resource count, order, links, and three-locale correspondence, then verify the rendered result with MkDocs.
 - Keep short tables without repeated categories in Markdown to avoid needless maintenance cost.
 
-Pages containing models, prices, context limits, licenses, or lifecycle states place a visible verification date and a machine-readable marker near those facts:
+Pages containing models, prices, context limits, licenses, or lifecycle states place the visible verification date in the most relevant closed detail and render it as small text. Keep only the invisible machine marker near the page top:
 
 ```markdown
-> Data verified: YYYY-MM-DD UTC. Prices and availability may change; check the official page before use.
+<small>Data checked: YYYY-MM-DD UTC</small>
 
 <!-- freshness: canonical=stages/0N-slug.md; verified_on=YYYY-MM-DD; scope=models,pricing,availability,deprecations; max_age_days=90 -->
 ```
 
-All three locale markers must be identical; `canonical` always points to the Traditional Chinese source page. If an official source does not publish a field, write “not published by the official source” instead of inferring it from a third-party leaderboard. Third-party benchmarks may only teach readers how to run their own evaluation.
+State only the checked scope and date; do not repeat generic permanence disclaimers. All three locale markers must be identical; `canonical` always points to the Traditional Chinese source page. If an official source does not publish a field, write “not published by the official source” instead of inferring it from a third-party leaderboard. Third-party benchmarks may only teach readers how to run their own evaluation.
 
 **Stage 0 exception**: it may omit `Curated Projects` and `Entry Conditions` because it is a prerequisite gateway. The visible path keeps the skip check, four learning goals, one integrated practice, and a short completion check. Time, environment, extra practice, terms, and learning resources stay collapsed by default.
 

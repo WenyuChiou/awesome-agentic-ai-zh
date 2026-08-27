@@ -4,7 +4,6 @@
 
 這一關要做一件事：讓模型填一張「工具工作單」，再由你的程式檢查、執行並把結果送回去。
 
-> 🔎 工具、價格與資源狀態查核：**2026-08-27 UTC**。日期只表示這天重新查過，不代表資料永遠不會變。
 <!-- freshness: canonical=stages/03-tool-use-and-hello-agent.md; verified_on=2026-08-27; scope=models,pricing,tool-apis,security; max_age_days=90 -->
 
 ## 📌 學習目標
@@ -54,6 +53,8 @@ ReAct 會交替決定下一步、採取 action、查看 observation，再繼續�
 ### **Structured Output（結構化輸出）**
 
 模型直接交回固定形狀的資料，例如符合 schema 的 JSON。像把答案填進表格。本章用它和 Function Calling 對照：前者要資料，後者要程式採取動作。即使外形合法，內容仍可能錯、被拒答或被截斷。
+
+![Tool Use 六步圖：模型提出 Tool Call，程式驗證並執行，再把 Tool Result 送回模型。](../resources/diagrams/tool-use-loop.png)
 
 ## 先選對方法
 
@@ -290,7 +291,7 @@ final = client.messages.create(
     tools=tools,
     messages=messages,
 )
-print("".join(block.text for block in final.content if block.type == "text"))
+print("\n".join(block.text for block in final.content if block.type == "text"))
 ```
 
 Anthropic client tool 的失敗結果要使用對應 `tool_use_id`，並加上 `"is_error": true`。不要把工具結果插進 system prompt。
@@ -481,7 +482,7 @@ python examples/stage-3/06-schema-design/test_anthropic.py
 <details markdown="1">
 <summary>展開 21 筆官方文件、課程、repo 與 Structured Output 工具</summary>
 
-> Repo 狀態與 GitHub metadata 查核：2026-08-27 UTC。GitHub stars 會變，所以本表不列 stars。
+<small>資源查核：2026-08-27 UTC</small>
 
 > 推薦度是本 Stage 的學習優先順序，不是人氣排名：`⭐⭐⭐⭐⭐`＝跳過會卡住本章路線；`⭐⭐⭐⭐`＝建議優先；`⭐⭐⭐`＝有需要再看；`⭐⭐`＝歷史或少數情境。
 
