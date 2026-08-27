@@ -9,20 +9,24 @@ This stage teaches only three things: **say what you mean, give examples, and ch
 After finishing, you can:
 
 - Break a vague request into four parts: goal, data, rules, and output.
-- Use few-shot examples to show the model what a good answer looks like.
+- Tell the difference between Zero-Shot, One-Shot, and Few-Shot: the difference is how many examples you give first.
+- Know that Chain-of-Thought means working through a problem in steps; it does not mean asking the model to reveal all its private thoughts.
 - Use the same small test set (eval) to compare before and after.
 - Notice when the problem is not the prompt, then change the model, data, or tool.
 
-## 🧩 Four Terms to Know First
+## 🧩 Core Terms to Know First
 
 | Plain language | Everyday analogy | Correct term |
 |---|---|---|
 | Tell the model what to do | The teacher states the question first | Instruction; system / developer message |
 | Content given to the model | The article in the question | Input data |
-| Give one or two good answers first | Look at a worked example | Example; few-shot prompting |
+| Give 0, 1, or several examples first | See no example, one example, or a few worked examples | Zero-Shot, One-Shot, Few-Shot |
+| Break a big problem into small steps | Put together one puzzle piece at a time | Chain-of-Thought (CoT) |
 | Check results with fixed questions | A small answer card | Evaluation (eval) |
 
 > One-line reminder: **goal → data → rules → output**.
+
+CoT does not mean printing all of the model’s private thoughts. To check an answer, ask for a **short reason or verifiable steps**.
 
 ## 🚪 Entry Conditions
 
@@ -59,19 +63,11 @@ The official sources share a simple point: define success first, then test with 
 
 After finishing, you will turn “help me organize this” into a prompt you can check.
 
-**First step**: Copy these four lines into a text file, then fill them in.
+**First step**: Copy the two prompts below and paste them into the same model, one after the other.
 
 ```text
-Goal:
-Data:
-Rules:
-Output:
+Help me organize this: I was charged twice. Please check.
 ```
-
-Run the same support message once with “help me organize this” and once with the four-part version. Write down one visible difference.
-
-<details markdown="1">
-<summary>Expand the example, Path A / B, and completion criteria</summary>
 
 ```text
 Goal: Classify the support message as billing, bug, or other.
@@ -79,6 +75,11 @@ Data: <input_data>I was charged twice. Please check.</input_data>
 Rules: Classify only from the data; choose other when unknown.
 Output: Return only one lowercase label.
 ```
+
+After running both, write down one visible difference. Then replace only the “Data” line to make your own version.
+
+<details markdown="1">
+<summary>Expand Path A / B and completion criteria</summary>
 
 **Path A — Ollama**
 
@@ -124,6 +125,8 @@ print(reply.content[0].text)
 
 After finishing, you will know whether examples make the format or boundary cases more stable.
 
+The name only counts examples: Zero-Shot means 0, One-Shot means 1, and Few-Shot means several. This exercise compares 0 and 3.
+
 **First step**: Keep these six data points fixed. Do not change the questions halfway through.
 
 <table>
@@ -144,7 +147,7 @@ After finishing, you will know whether examples make the format or boundary case
   </tbody>
 </table>
 
-Run once without examples. Then add three examples and run the same six questions again.
+Run once with Zero-Shot (0 examples). Then add three examples and run the same six questions again with Few-Shot (three examples here).
 
 <details markdown="1">
 <summary>Expand the three-shot example, scoring, and budget</summary>
@@ -194,7 +197,7 @@ Try only one item at a time:
 3. Limit the output to three valid labels.
 4. If it still fails, check whether the model, data, or tool is the real problem.
 
-Do not treat “write out the full chain-of-thought” as a general solution. Newer reasoning models usually reason internally. When you need to check the result, ask for **a short, verifiable reason after the final answer**.
+Do not treat “write out the full Chain-of-Thought” as a general solution. A model can work through steps internally. When you need to check the answer, ask for **a short, verifiable reason after the final answer**.
 
 **Completion criteria**: Both versions use the same six questions, and you changed only one thing. Path A API cost is `$0`; keep the three-exercise Path B total within `$0.10` first.
 

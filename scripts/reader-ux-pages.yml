@@ -101,11 +101,47 @@ pages:
       en: stages/02-prompt-engineering.en.md
       zh-Hans: stages/02-prompt-engineering.zh-Hans.md
     max_visible_chars:
-      zh-TW: 2120
-      en: 4135
-      zh-Hans: 2160
+      zh-TW: 2475
+      en: 4725
+      zh-Hans: 2525
     max_open_details: 0
+    parity:
+      literals:
+        - "Zero-Shot"
+        - "One-Shot"
+        - "Few-Shot"
+        - "Chain-of-Thought"
     required_visible_sections:
+      learning-goals:
+        zh-TW:
+          heading: "📌 學習目標"
+          anchor: -學習目標
+        en:
+          heading: "📌 Learning Goals"
+          anchor: -learning-goals
+        zh-Hans:
+          heading: "📌 学习目标"
+          anchor: -学习目标
+      required-reading:
+        zh-TW:
+          heading: "📚 必修閱讀"
+          anchor: -必修閱讀
+        en:
+          heading: "📚 Required Reading"
+          anchor: -required-reading
+        zh-Hans:
+          heading: "📚 必修阅读"
+          anchor: -必修阅读
+      hands-on:
+        zh-TW:
+          heading: "🛠 動手練習"
+          anchor: -動手練習
+        en:
+          heading: "🛠 Hands-on Exercises"
+          anchor: -hands-on-exercises
+        zh-Hans:
+          heading: "🛠 动手练习"
+          anchor: -动手练习
       exercise-1:
         zh-TW:
           heading: "練習 1：System Prompt（把要求放進四格）"
@@ -146,6 +182,16 @@ pages:
         zh-Hans:
           heading: "✅ 进入 Stage 3 前的自我检查"
           anchor: -进入-stage-3-前的自我检查
+      projects:
+        zh-TW:
+          heading: "🎯 精選 Projects"
+          anchor: -精選-projects
+        en:
+          heading: "🎯 Curated Projects"
+          anchor: -curated-projects
+        zh-Hans:
+          heading: "🎯 精选 Projects"
+          anchor: -精选-projects
     resource_group_rowspans: [5, 4, 4, 4, 1]
 
   - id: track-a1
