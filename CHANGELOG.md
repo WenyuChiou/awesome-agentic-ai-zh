@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-27
 
+- **fix / content / resources** · **Stage 0 三語補回學習資源的五級推薦制度，但不恢復會過時的 GitHub 熱門數字**：18 筆資源仍放在預設收合選單，保持 Python／Git／CLI／REST API／YAML・JSON 的 `5/4/3/3/3` 真正合併分類。既有 style guide 規定 `⭐⭐⭐⭐⭐` 是「跳過會卡住」；本表全是補充資源，因此誠實使用 `⭐⭐⭐⭐` 或 `⭐⭐⭐`，不為了好看假發五星。reader-UX gate 新增逐列 URL→推薦度三語 parity 與交換兩列星等的 regression，不再只比較 URL 順序與星星總數。主線、重要名詞、`📌／🛠／🎯／✅` 路標與可直接複製執行的 GitHub API 練習都沒有被縮掉。
+- **content / freshness / planning** · **三個較弱入口換成 2026-08-27 UTC 已核實的一手來源**：runoob 改為 Python 3.14.7 官方繁中教學，並明寫官方頁預期讀者已有一點程式觀念；Oh Shit, Git 改為 Pro Git〈Undoing Things〉，先提醒哪些復原動作可能丟資料；explainshell 改為持續維護、提供跨平台短指令例子的 tldr pages。repository freshness 由既有掃描器完整重查並從 297 增為 298 個 tracked repo，tldr 為未封存、未搬家的 verified row；掃描同時量到 28 個其他 Phase 既有 redirect／license 矛盾，留給各自的回溯 layer，不混入 Stage 0。新增 Stage 0 回溯計畫，固定評分理由、三語不變量、stack base，以及「未獲使用者明確同意不得 merge 或清理分支／worktree」的發布規則。
+
 - **fix / content / tooling** · **Stage 2 補回被過度精簡刪掉的核心提示詞彙**：三語可見主線在第一次使用前，以白話說明 Zero-Shot（0 個例子）、One-Shot（1 個）、Few-Shot（幾個）與 Chain-of-Thought（分步處理）；同時明確區分 CoT 與「要求模型公開完整內部想法」，核對時只要求簡短理由或可驗證步驟。練習 1 不再叫初學者抄空白模板，改為可直接複製的模糊版與完整四格 prompt，再只替換資料做自己的版本。`stages/DESIGN.md` 將「漸進式揭露不能刪除核心名詞」、可直接執行的第一步與五個核心章節 icon 定為全站規則；reader-UX gate 新增四個跨語言精確詞彙的數量一致性檢查，並鎖住 Stage 2 的 `📌／📚／🛠／🎯／✅` 路標。恢復必要教學後，三語可見實測為 2,424／4,667／2,473 個非空白字元，門檻以最小餘量調整為 2,475／4,725／2,525；沒有為湊舊字數再次刪掉名詞。
 
 - **content / docs** · **Track A3 三語改成「只讀 → 最小權限 → demo repo → 人工 review → 才考慮寫入」的安全 production 入口**：不展開選單時，讀者先分清 MCP、CI、observability，再完成 CLI-9 限定資料夾的 filesystem MCP、CLI-10 只讀 PR checker、CLI-11 usage／成本收據、CLI-12 team Skill 分享。四個練習、既有 cookbook 深連結使用的 Playbook 4、production 安全迴圈與 Track A 完成檢查保持可見；三語各 8 個 `<details>` 全部關閉。未收合非空白字元由繁中 11,785／英文 15,811／簡中 11,966 降為 2,795／5,213／2,848。

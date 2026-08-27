@@ -51,6 +51,9 @@ pages:
           heading: "✅ 完成检查"
           anchor: -完成检查
     resource_group_rowspans: [5, 4, 3, 3, 3]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
 
   - id: stage-01
     canonical: stages/01-llm-basics.md

@@ -60,6 +60,7 @@ class PageMetrics:
 
 
 EXTERNAL_URL_RE = re.compile(r"https://[^\s<>)\"']+")
+RATING_RE = re.compile(r"(?<!⭐)(⭐{1,5})(?!⭐)")
 
 
 def _plain(text: str) -> str:
@@ -245,6 +246,69 @@ def _resource_table_errors(text: str, expected: list[int]) -> list[str]:
     return [f"resource rowgroup spans are {observed or 'missing'}; expected {expected}"]
 
 
+def _resource_url_rating_pairs(
+    text: str, expected: list[int]
+) -> tuple[list[tuple[str, str]], list[str]]:
+    """Return each resource URL with its exact editorial rating.
+
+    URL order and aggregate star counts are not enough: two translated rows can
+    silently exchange ratings while both old checks stay green. This parser is
+    intentionally limited to the same accessible grouped table shape already
+    enforced by ``_resource_table_errors``.
+    """
+    structural_source = _without_all_html_comments(strip_code_blocks(text))
+    candidates = re.findall(
+        r"<table\b[^>]*>.*?</table>", structural_source, re.IGNORECASE | re.DOTALL
+    )
+
+    for table in candidates:
+        groups = re.findall(r"<tbody\b[^>]*>(.*?)</tbody>", table, re.IGNORECASE | re.DOTALL)
+        if len(groups) != len(expected):
+            continue
+
+        rows: list[str] = []
+        matches_shape = True
+        for group, expected_rows in zip(groups, expected):
+            group_rows = re.findall(r"<tr\b[^>]*>.*?</tr>", group, re.IGNORECASE | re.DOTALL)
+            first_row_headers = [
+                tag for tag in (TH_RE.findall(group_rows[0]) if group_rows else [])
+                if (_attr(tag, "scope") or "").lower() == "rowgroup"
+            ]
+            raw_span = _attr(first_row_headers[0], "rowspan") if len(first_row_headers) == 1 else None
+            if (
+                len(group_rows) != expected_rows
+                or raw_span is None
+                or not raw_span.isdigit()
+                or int(raw_span) != expected_rows
+            ):
+                matches_shape = False
+                break
+            rows.extend(group_rows)
+
+        if not matches_shape:
+            continue
+
+        pairs: list[tuple[str, str]] = []
+        errors: list[str] = []
+        for index, row in enumerate(rows, start=1):
+            urls = EXTERNAL_URL_RE.findall(row)
+            ratings = RATING_RE.findall(TAG_RE.sub(" ", row))
+            if len(urls) != 1:
+                errors.append(
+                    f"resource row {index} must contain exactly one external URL; found {len(urls)}"
+                )
+            if len(ratings) != 1:
+                errors.append(
+                    f"resource row {index} must contain exactly one 1-to-5-star rating; "
+                    f"found {len(ratings)}"
+                )
+            if len(urls) == 1 and len(ratings) == 1:
+                pairs.append((urls[0], ratings[0]))
+        return pairs, errors
+
+    return [], ["could not find the configured grouped resource table for URL/rating parity"]
+
+
 def _load_config(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise ValueError(f"config not found: {path}")
@@ -328,12 +392,19 @@ def _load_config(path: Path) -> dict[str, Any]:
         if parity is not None:
             if not isinstance(parity, dict) or not parity:
                 raise ValueError(f"{page_id}.parity must be a non-empty mapping")
-            unknown = set(parity) - {"ordered_external_urls", "literals"}
+            unknown = set(parity) - {
+                "ordered_external_urls",
+                "literals",
+                "resource_url_ratings",
+            }
             if unknown:
                 raise ValueError(f"{page_id}.parity has unknown keys: {sorted(unknown)}")
             ordered_urls = parity.get("ordered_external_urls", False)
             if not isinstance(ordered_urls, bool):
                 raise ValueError(f"{page_id}.parity.ordered_external_urls must be a boolean")
+            resource_ratings = parity.get("resource_url_ratings", False)
+            if not isinstance(resource_ratings, bool):
+                raise ValueError(f"{page_id}.parity.resource_url_ratings must be a boolean")
             literals = parity.get("literals", [])
             if not isinstance(literals, list) or any(
                 not isinstance(value, str) or not value.strip() for value in literals
@@ -370,6 +441,10 @@ def _load_config(path: Path) -> dict[str, Any]:
             or any(not isinstance(value, int) or isinstance(value, bool) or value <= 0 for value in groups)
         ):
             raise ValueError(f"{page_id}.resource_group_rowspans must be positive integers")
+        if (page.get("parity") or {}).get("resource_url_ratings") and not groups:
+            raise ValueError(
+                f"{page_id}.parity.resource_url_ratings requires resource_group_rowspans"
+            )
     return data
 
 
@@ -471,6 +546,26 @@ def check(config_path: Path) -> list[str]:
                         failures.append(
                             f"{page_id}/{locale}: ordered external URLs differ from zh-TW"
                         )
+            if parity.get("resource_url_ratings"):
+                expected_groups = page["resource_group_rowspans"]
+                expected_pairs, pair_errors = _resource_url_rating_pairs(
+                    localized_text["zh-TW"], expected_groups
+                )
+                failures.extend(
+                    f"{page_id}/zh-TW: {item}" for item in pair_errors
+                )
+                if not pair_errors:
+                    for locale in ("en", "zh-Hans"):
+                        actual_pairs, actual_errors = _resource_url_rating_pairs(
+                            localized_text[locale], expected_groups
+                        )
+                        failures.extend(
+                            f"{page_id}/{locale}: {item}" for item in actual_errors
+                        )
+                        if not actual_errors and actual_pairs != expected_pairs:
+                            failures.append(
+                                f"{page_id}/{locale}: resource URL/rating pairs differ from zh-TW"
+                            )
             for literal in parity.get("literals", []):
                 expected_count = canonical_text.count(literal)
                 if expected_count == 0:

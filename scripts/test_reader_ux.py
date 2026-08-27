@@ -41,6 +41,7 @@ def _config(
     forbidden_include_code: bool = False,
     parity_urls: bool = False,
     parity_literals: str = "",
+    parity_resource_ratings: bool = False,
 ) -> str:
     group_line = f"    resource_group_rowspans: [{groups}]\n" if groups else ""
     details_line = f"    required_details_count: {details}\n" if details is not None else ""
@@ -56,10 +57,11 @@ def _config(
         "    forbidden_terms_include_code: true\n" if forbidden_include_code else ""
     )
     parity_lines = ""
-    if parity_urls or parity_literals:
+    if parity_urls or parity_literals or parity_resource_ratings:
         parity_lines = f"""\
     parity:
       ordered_external_urls: {str(parity_urls).lower()}
+      resource_url_ratings: {str(parity_resource_ratings).lower()}
       literals: [{parity_literals}]
 """
     return f"""\
@@ -208,6 +210,39 @@ def test_exact_literal_parity_is_blocking() -> None:
         config=_config(parity_literals="--read-only"),
     )
     assert rc == 1 and "parity literal '--read-only'" in out, out
+
+
+def _rated_resource_table(first_rating: str, second_rating: str) -> str:
+    return f"""\
+<table>
+<thead><tr><th scope="col">Group</th><th scope="col">Resource</th><th scope="col">Rating</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">A</th><td><a href="https://example.com/a">A</a></td><td>{first_rating}</td></tr>
+<tr><td><a href="https://example.com/b">B</a></td><td>{second_rating}</td></tr>
+</tbody>
+</table>
+"""
+
+
+def test_resource_url_rating_parity_passes() -> None:
+    body = _rated_resource_table("⭐⭐⭐⭐", "⭐⭐⭐")
+    rc, out = _run(
+        body,
+        config=_config(groups="2", parity_urls=True, parity_resource_ratings=True),
+    )
+    assert rc == 0, out
+
+
+def test_swapped_resource_ratings_fail_even_when_urls_and_totals_match() -> None:
+    rc, out = _run_locales(
+        {
+            "page.md": _rated_resource_table("⭐⭐⭐⭐", "⭐⭐⭐"),
+            "page.en.md": _rated_resource_table("⭐⭐⭐", "⭐⭐⭐⭐"),
+            "page.zh-Hans.md": _rated_resource_table("⭐⭐⭐⭐", "⭐⭐⭐"),
+        },
+        config=_config(groups="2", parity_urls=True, parity_resource_ratings=True),
+    )
+    assert rc == 1 and "resource URL/rating pairs differ" in out, out
 
 
 def test_open_optional_or_setup_content_is_forbidden() -> None:
