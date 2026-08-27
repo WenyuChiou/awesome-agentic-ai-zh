@@ -250,7 +250,8 @@ Start with one of the three starting points above. The full list is a toolbox, n
 <details markdown="1">
 <summary>Expand 18 course, cookbook, example, and eval resources</summary>
 
-> Resource status and repository metadata verified: 2026-08-27 UTC. GitHub stars change, so this table does not list stars.
+<small>Resources checked: 2026-08-27 UTC</small>
+
 > Recommendation is this Stage's reading order, not a popularity ranking: `⭐⭐⭐⭐⭐` = skipping it would block progress; `⭐⭐⭐⭐` = start here; `⭐⭐⭐` = read when needed; `⭐⭐` = historical or niche. This is an optional toolbox, so no forced five-star ratings.
 
 <table>

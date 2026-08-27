@@ -4,8 +4,6 @@
 
 你在 Stage 3 已經自己寫過工具迴圈。這一關要做的事很簡單：看看哪一些重複工作可以交給現成工具箱，並學會什麼時候不要把系統變複雜。
 
-> 資料查核：2026-08-27 UTC。框架版本、維護狀態與授權之後可能改變，採用前請再看官方頁面。
-
 <!-- freshness: canonical=stages/04-agent-frameworks.md; verified_on=2026-08-27; scope=frameworks,releases,maintenance,licenses,security; max_age_days=90 -->
 
 ## 📌 學習目標
@@ -241,6 +239,8 @@ py -3.11 test.py
 
 <details markdown="1">
 <summary>展開 18 筆框架、harness 與基礎設施</summary>
+
+<small>框架資訊查核：2026-08-27 UTC</small>
 
 <table>
   <thead>

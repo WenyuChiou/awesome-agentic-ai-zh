@@ -250,7 +250,8 @@ Path A 六题两轮的 API 费用为 `$0`。Path B 先设 `$0.05` 上限；如�
 <details markdown="1">
 <summary>展开 18 个课程、cookbook、范例和 eval 资源</summary>
 
-> 资源状态与 repository metadata 查核：2026-08-27 UTC。GitHub stars 会变化，所以本表不列 stars。
+<small>资源核查：2026-08-27 UTC</small>
+
 > 推荐度是本 Stage 的阅读顺序，不是热门排名：`⭐⭐⭐⭐⭐`＝不做会卡住；`⭐⭐⭐⭐`＝建议优先；`⭐⭐⭐`＝有需要再看；`⭐⭐`＝历史或少数情境。本表是选修工具箱，所以没有硬标五星。
 
 <table>

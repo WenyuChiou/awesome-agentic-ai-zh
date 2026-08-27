@@ -4,8 +4,6 @@
 
 This stage checks four tools that you will use later. If you already know them, skip ahead. If not, no problem: do the small practice below once.
 
-Data checked: 2026-08-27 UTC (learning resources and GitHub verification guidance)
-
 ## When to skip this stage
 
 Check these four things. You do not need to memorize commands. You do need to find information and finish each task yourself:
@@ -181,6 +179,8 @@ Use an entry that matches the skill you need. You do not need to read all 18 res
 
 <details markdown="1">
 <summary>📚 18 learning resources grouped by topic</summary>
+
+<small>Learning resources and GitHub verification guidance checked: 2026-08-27 UTC</small>
 
 `Recommendation` is the learning priority, not a GitHub popularity number. Under the project rules, ⭐⭐⭐⭐⭐ means “you will get stuck without it”; everything below is supplemental, so it honestly uses ⭐⭐⭐⭐ (strongly recommended) or ⭐⭐⭐ (solid reference), without fake five-star ratings.
 

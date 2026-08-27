@@ -319,15 +319,15 @@ PR 之前请先读完本文。项目维护者也会用这份指南做 review。
 - 转换后保留原有资源数量、顺序、链接和三语对应，并用 MkDocs 检查实际渲染。
 - 没有重复分类的短表格继续使用 Markdown，避免增加不必要的维护成本。
 
-含模型、价格、context、授权或生命周期状态的页面，要在资料附近加入可见查核日期与机器 marker：
+含模型、价格、context、授权或生命周期状态的页面，把可见核查日期放进最相关的默认收起区，并用小字呈现；页首只保留不显示的机器 marker：
 
 ```markdown
-> 资料查核：YYYY-MM-DD UTC。价格与可用性之后可能改变，使用前请再看官方页面。
+<small>资料核查：YYYY-MM-DD UTC</small>
 
 <!-- freshness: canonical=stages/0N-slug.md; verified_on=YYYY-MM-DD; scope=models,pricing,availability,deprecations; max_age_days=90 -->
 ```
 
-三语 marker 必须完全一致；`canonical` 一律指向繁中主页。官方没有公布的字段写“官方未公布”，不要从第三方榜单反推；第三方 benchmark 只能教读者怎样自行评测。
+日期只写核查范围与日期，不重复加入“资料不会永久正确”等通用提醒。三语 marker 必须完全一致；`canonical` 一律指向繁中主页。官方没有公布的字段写“官方未公布”，不要从第三方榜单反推；第三方 benchmark 只能教读者怎样自行评测。
 
 **Stage 0 例外**：可以省略 `精选 Projects`、`进入条件`，因为它是 prerequisite gateway。可见主线依次保留跳过判断、4 个学习目标、1 个整合练习和简短完成检查；时间、环境、补充练习、名词与学习资源默认收合。
 
