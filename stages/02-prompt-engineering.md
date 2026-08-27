@@ -32,6 +32,10 @@
 
 一句口訣：**目標 → 資料 → 規則 → 輸出**。
 
+![Prompt Engineering 一張圖看懂：Prompt 四格、範例數量、檢查迴圈，以及不要求完整內部想法的 CoT 可檢查步驟](../resources/diagrams/prompt-engineering-map.png)
+
+先照上半部把 Prompt 說清楚，再選要不要給範例；最後用固定題目檢查，改一處，再試一次。右下角的 CoT 只要求可檢查步驟，不要求完整內部想法。
+
 ## 🚪 進入條件
 
 <details markdown="1">

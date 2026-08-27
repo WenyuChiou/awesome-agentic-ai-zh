@@ -32,6 +32,10 @@
 
 一句话口诀：**目标 → 资料 → 规则 → 输出**。
 
+![Prompt Engineering 一张图看懂：Prompt 四部分、范例数量、检查循环，以及不要求完整内部想法的 CoT 可检查步骤](../resources/diagrams/prompt-engineering-map.zh-Hans.png)
+
+先照上半部分把 Prompt 说清楚，再决定要不要给范例；最后用固定题目检查，修改一处，再试一次。右下角的 CoT 只要求可检查步骤，不要求完整内部想法。
+
 ## 🚪 进入条件
 
 <details markdown="1">

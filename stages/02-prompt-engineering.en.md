@@ -32,6 +32,10 @@ After finishing, you can:
 
 One-line reminder: **goal → data → rules → output**.
 
+![Prompt Engineering at a glance: four prompt parts, example counts, the evaluation loop, and checkable CoT steps without requesting private internal thoughts](../resources/diagrams/prompt-engineering-map.en.png)
+
+Use the top row to make the prompt clear, then decide whether to add examples. Finally, check it with fixed questions, change one part, and try again. The CoT box asks only for checkable steps, not private internal thoughts.
+
 ## 🚪 Entry Conditions
 
 <details markdown="1">

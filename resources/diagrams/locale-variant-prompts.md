@@ -3,6 +3,19 @@
 > 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 那 3 張概念圖的 ChatGPT prompt）。
 > 這份記錄的是 **2026-08-02 那批 5 張圖 × 3 語系** 是怎麼產出來的，以及過程中踩到的坑。
 
+## 2026-08-27：Stage 2 Prompt Engineering 概念圖
+
+新增 `prompt-engineering-map.png`、`.en.png`、`.zh-Hans.png`。三張皆為 16:9 亮色白底卡片圖，保持同一閱讀順序：
+
+1. Prompt 四部分：目標／資料／規則／輸出
+2. Zero-shot／One-shot／Few-shot 的範例數量差別
+3. Eval → 修改一處 → 再試一次
+4. Chain-of-Thought 只畫成可檢查的編號步驟，不使用「讀取腦內想法」的意象
+
+用 Codex 內建 image generation 先做繁中 canonical，再以同一張圖做英語與簡中在地化。人工校對時抓到初稿把 Few-shot 寫成 `2–5`；由於正文已明確說沒有通用固定數字，三張最終圖全部改成「多個／multiple／多个例子」。另將初稿的腦袋思考泡泡改為 `1／2／3` checklist，避免和「不要索取完整內部思考」的正文衝突。
+
+這組圖固定放在 Stage 2 九個可見核心詞之後。圖片只整理已定義的關係，不代替正文；三語 alt text 也各自描述「四部分、範例數量、檢查迴圈、CoT 的可檢查步驟與隱私邊界」。獨立 review 又抓出兩個視覺問題：英語第二格曾把正文的 `Data` 漂成 `Context`，底部兩段回箭頭也沒有真的從「再試一次」回到 Eval。最終版已把英語欄位改回 `Data`，並以一條由右回左的長箭頭形成單一閉環。
+
 ## 這批處理了什麼
 
 `resources/diagrams/` 的慣例是 `NAME.png` = zh-TW、`NAME.en.png`、`NAME.zh-Hans.png`。

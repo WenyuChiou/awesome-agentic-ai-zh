@@ -147,9 +147,9 @@ pages:
       en: stages/02-prompt-engineering.en.md
       zh-Hans: stages/02-prompt-engineering.zh-Hans.md
     max_visible_chars:
-      zh-TW: 3185
-      en: 6332
-      zh-Hans: 3239
+      zh-TW: 3370
+      en: 6709
+      zh-Hans: 3436
     max_open_details: 0
     parity:
       ordered_external_urls: true
