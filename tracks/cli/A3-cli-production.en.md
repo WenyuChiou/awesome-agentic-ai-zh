@@ -1,241 +1,238 @@
-# A3 — Integration & Production
+# A3 — Connect a CLI agent to a safe team workflow
 
 > [繁體中文](./A3-cli-production.md) | [简体中文](./A3-cli-production.zh-Hans.md) | **English**
 
-> [← A2 — CLI Workflow Patterns](A2-cli-workflow.en.md) · **Track A: CLI Power User** — Stop 3 (final)
+> [← A2 — Make the CLI agent follow the same method every time](A2-cli-workflow.en.md) · **Track A: CLI Power User** Stop 3 (final)
 
-⏱ **Time estimate**: 1-2 weeks (~8-15 hours)
+This stop has one goal: **have a CLI agent perform a read-only check on a test PR. It may give feedback, but it must not merge, deploy, or obtain extra permissions by itself.**
 
-> 📋 **Chapter structure**: Learning goals → Entry conditions → Required reading → Hands-on exercises → Curated Projects → Self-check
-> 🔑 **Key terms** (used in this chapter):
-> - **Required here**: MCP (connect CLI to external data / tools), CI (run checks automatically on every push)
-> - **Further-reading terms**: observability (trace CLI behavior), eval (measure CLI quality), prompt caching (reduce repeated-context cost), cost tracking (record token spend)
->
-> Full definitions: [`resources/glossary.en.md` 5 + 6](../../resources/glossary.en.md#5-claude-code-ecosystem)
+## Learning goals
 
-After your CLI runs smoothly, the next step is to **wire the CLI into your real team workflow**. This stop does 3 things:
+After finishing, you can:
 
-1. **Tool connection** — MCP servers connect the CLI to Slack / Gmail / your internal API
-2. **Automated checks** — CI (GitHub Actions) runs CLI review on every PR
-3. **Cost and logs** — observability tools track cost / latency for each task
+- Give an MCP server only one safe scope.
+- Have CI automatically produce a reviewable suggestion on a PR.
+- Understand the usage, time, and result left by one run.
+- Hand the A2 Skill to a teammate and let them rerun it safely.
 
-After this stop, the CLI is no longer just your personal tool — it's part of your team's workflow.
+## Separate these three terms first
 
-## 📌 Learning Goals
+| Term | Plain-language picture | Correct meaning |
+|---|---|---|
+| **MCP** | Like an adapter | Connects an agent to external tools or data; what it can touch depends on the permissions you give it |
+| **CI** | Like a checkpoint that appears whenever you turn in an assignment | Automatically runs fixed work when a push or PR occurs |
+| **Observability** | Like a receipt plus a dashcam recording | Leaves a record of what happened, what it cost, and where it failed |
 
-- Connect 1-3 MCP servers to your CLI (Slack / Gmail / internal API / DB)
-- Set up GitHub Actions to auto-run Claude Code (PR review, release notes, etc.)
-- Add observability (trace, cost, latency) to CLI workflows
-- Plan a cost budget — know roughly what a big task costs in tokens
+The three terms appear together but are not the same thing: MCP connects tools, CI decides when to run automatically, and observability records the evidence after a run.
 
-## 🚪 Entry Conditions
+## Follow the safety ladder first
 
-You should already:
+1. **Read-only**: let the agent see data first, without letting it change data.
+2. **Least privilege**: open only the folder, repo, tool, or token scope needed for this task.
+3. **Demo repo**: test first in a disposable practice environment.
+4. **Human review**: a person decides whether to use the agent’s suggestion.
+5. **Only then consider writes**: auto-merge, push, and deploy are outside this stop.
 
-- Have completed [A1](A1-cli-intro.en.md): CLI picked, installed, authenticated
-- Have completed [A2](A2-cli-workflow.en.md): finished the project-rules card and review Skill
-- Be comfortable with GitHub Actions / CI basics (can read a `.yml` workflow)
-- Have at least a rough idea of what MCP is (if not, skim [Stage 5.2](../../stages/05-claude-code-ecosystem.en.md#52--mcp-model-context-protocol--foundation) first)
+<details markdown="1">
+<summary>Expand for time, prerequisites, environment, and cost</summary>
 
-Not there yet? → finish [A1](A1-cli-intro.en.md) + [A2](A2-cli-workflow.en.md) first. A3 is "combine everything so far → wire it into production"; skipping ahead won't make sense.
+- **Time**: finish the four smallest outcomes first. You can usually split them into several short practices; do not connect many services at once just to save time.
+- **Prerequisites**: complete [A1](A1-cli-intro.en.md) and [A2](A2-cli-workflow.en.md), and be able to recognize the basic screens for `git status`, PRs, and GitHub Actions.
+- **Environment**: a demo repo with no real secrets; use a GitHub-hosted Linux runner for the first round because a sandbox is easier to apply there.
+- **Cost**: GitHub Actions, a CLI subscription, and model APIs may be billed separately. Check your own plan before running; do not treat someone else’s prices as yours.
 
-## 📚 Required Reading
+If A2’s `review-changes` Skill cannot yet reliably output `PASS` or concrete issues, fix that first before starting A3.
+</details>
 
-1. [**Stage 5.2 — MCP (Model Context Protocol)**](../../stages/05-claude-code-ecosystem.en.md#52--mcp-model-context-protocol--foundation) — MCP concept and basics
-2. [**Anthropic — Prompt Caching**](https://www.anthropic.com/news/prompt-caching) — can significantly reduce repeated context cost under cache-eligible conditions (unchanged context, ≤5-minute reuse window, etc.); actual savings depend on the workflow, so use the official article's conditions as the reference
-3. [**Stage 7 — Observability section**](../../stages/07-multi-agent-production.en.md#exercise-3-observability) — langfuse / Helicone / weave
-4. [**`resources/cli-agents-guide.en.md`** "Common pitfalls"](../../resources/cli-agents-guide.en.md) — most common production issues with CLIs
+<details markdown="1">
+<summary>Expand for required reading and reading order (checked 2026-08-27 UTC)</summary>
 
-## 🛠 Hands-on Exercises
+1. First read [MCP Connect to local servers](https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers) to learn that a server can receive only the paths you give it.
+2. Then read [GitHub Actions Security Hardening](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions) to understand least privilege and untrusted PRs first.
+3. Choose one CI path:
+   - Claude Code: [official GitHub Actions documentation](https://docs.anthropic.com/en/docs/claude-code/github-actions)
+   - Codex: [official GitHub Action documentation](https://developers.openai.com/codex/github-action)
+4. When you need trace, eval, or complete production theory, continue to [Stage 7](../../stages/07-multi-agent-production.en.md) and [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.en.md).
 
-### Exercise CLI-9: MCP server connected to CLI
-Following [Stage 5.2 Exercise: MCP client](../../stages/05-claude-code-ecosystem.en.md#hands-on-exercises), connect at least one useful MCP server to your CLI:
+The check date means the material was checked that day; it does not mean it will never change.
+</details>
 
-- `filesystem` server → let the CLI read files outside its default scope
-- `github` server → let it read PRs / issues directly
-- Custom server → connect your internal API / DB
+## Hands-on exercises
 
-Success: in a CLI conversation, ask "does my PR have conflicts?" and have the CLI answer via MCP (without you opening a browser).
+<a id="cli-9"></a>
+### Hands-on exercise CLI-9: Connect only one MCP server
 
-### Exercise CLI-10: GitHub Actions + CLI
-Write `.github/workflows/cli-review.yml`:
+**Outcome:** the agent can read a newly created demo folder, but it has not received access to your entire home directory, disk, real project, or secrets.
 
-- Trigger: PR opened / synchronize
-- Run: in the GH Actions runner, execute Claude Code (or Codex), give it `git diff`, and ask it to use the [`review-changes` Skill](A2-cli-workflow.en.md#hands-on-exercise-cli-6-turn-a-repeated-review-into-a-skill) you built in A2
-- Output: PR comment
+First create an empty `a3-mcp-demo` folder and put a `hello.txt` file inside it. When connecting the official filesystem reference server to your CLI, **pass only the absolute path to this folder**.
 
-Success: open a new PR, see a review comment within 1-2 minutes.
+When it works, the agent can read `hello.txt`; when asked to read a file outside the allowed scope, it should fail or ask you to grant authorization again.
 
-> Starting points: Anthropic's official [`claude-code-action`](https://github.com/anthropics/claude-code-action); Codex has GitHub App and CLI modes.
+<details markdown="1">
+<summary>Expand for CLI-9 installation, permission tests, and the GitHub MCP extension</summary>
 
-### Exercise CLI-11: Cost tracking
-Run a daily task. **Predict** the token usage first, then actually run it and check the usage. The gap is usually big (you typically underestimate).
+1. Open the configuration using the official MCP documentation for your main CLI; configuration files and commands differ between CLIs.
+2. Use the official package `@modelcontextprotocol/server-filesystem`; its arguments should contain only the absolute path to `a3-mcp-demo`. Do not enter `~`, your home directory, the disk root, or the whole workspace.
+3. Restart the CLI, ask it to list the demo folder, and then read `hello.txt`.
+4. Ask it to read an ordinary filename outside the demo scope. The correct result is a refusal or a request to add authorization; it must not read the file secretly.
+5. Remove the server configuration after practice and confirm that the CLI can no longer use it.
 
-- Math: input tokens + output tokens × model price each
-- Connect langfuse or Helicone ([Stage 7 Observability](../../stages/07-multi-agent-production.en.md#exercise-3-observability)) for tracing
-- Observe: which sub-task consumes the most tokens? Are you sending unnecessary long context?
+To read PRs or issues, use GitHub’s official [`github/github-mcp-server`](https://github.com/github/github-mcp-server) instead. Start with `--read-only`, then use toolsets or a tools allow-list to open only the capabilities you need. If you use a PAT, put it in a secure secret or environment variable, grant the smallest scope, and revoke it after practice; when OAuth is available, configure it through the host’s official process.
 
-### Exercise CLI-12: Skill / plugin team sharing
-Put A2’s `review-changes` Skill at `skills/review-changes/SKILL.md` inside the plugin root, then publish the plugin to an internal marketplace or GitHub. Teammates get the same Skill after installing the plugin.
+[`modelcontextprotocol/servers`](https://github.com/modelcontextprotocol/servers) is useful for reading reference implementations, but its official description says they are not production-ready. The old `github` reference server has moved to the historical collection; do not use it as the current GitHub entry point.
 
-`CLAUDE.md` is the project’s own instruction file and stays in the repo; it is not content to package in this plugin.
+**Cost reminder:** a local filesystem server usually has no separate charge, but the CLI or model may still cost money. A remote MCP may have its own plan too.
+</details>
 
-- Skill / plugin details in [Stage 5.3 + 5.4](../../stages/05-claude-code-ecosystem.en.md)
-- Template: [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
+<a id="cli-10"></a>
+### Hands-on exercise CLI-10: Give a PR one more read-only checker
 
-## 🧭 Advanced Concepts in Daily CLI Work (7 Playbooks) 🆕
+**Outcome:** the test PR gets a review result; a person still decides whether to edit, merge, or deploy.
 
-Track A users are **already using** [Stage 7.5 advanced concepts](../../stages/07.5-advanced-agentic-concepts.en.md) — they just have not named them yet. Pick the **2-3 playbooks you use most often** and treat the rest as further reading — each in ≤ 6 lines. **Want the deeper theory → go to Stage 7.5.**
+Choose Anthropic’s [`claude-code-action`](https://github.com/anthropics/claude-code-action) or OpenAI’s [`codex-action`](https://github.com/openai/codex-action). For the first round, run it only in a demo repo and branch you control, reusing A2’s [`review-changes` Skill](A2-cli-workflow.en.md#hands-on-exercise-cli-6-turn-a-repeated-review-into-a-skill).
 
-> 📌 **Rule**: after each playbook, ask yourself "will I do something differently in the next PR?" **Yes** → applied; **No** → skip to the next one.
+The success standard is not “finish within a few minutes.” It is that the workflow finishes successfully and leaves a readable result in a PR comment, job summary, or artifact.
 
-### 📋 Playbook 1: Scope unclear, agent overreaches
+<details markdown="1">
+<summary>Expand for CLI-10 security settings and validation steps</summary>
 
-- **When**: You send Codex/Gemini on a sweep and are not sure whether it will silently touch unrelated files (the F11/F12 kind of failure)
-- **Do**: At the top of the brief, state "change X / do not cross Y" explicitly; add a path filter to the acceptance preset
-- **Concepts**: Work Boundary + Hierarchical Task Decomposition · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Service × orchestration cluster
-- **Read more**:
+1. Build the workflow from the provider’s official example; do not copy YAML from an unknown source.
+2. Put the API key in a GitHub Actions secret. Do not write it into the workflow, prompt, repo, or log.
+3. Start `GITHUB_TOKEN` at `contents: read`. Add only the necessary pull-request permission to that job when it needs to post a PR comment.
+4. For Codex read-only work, use the currently supported `permission-profile: ":read-only"` setting in the official action; do not also set mutually exclusive legacy sandbox fields. For Claude Code, restrict capabilities through the official action’s permissions and allowed tools.
+5. Make the prompt ask only to read the diff, list issues, and output `PASS` or concrete suggestions. State explicitly: do not edit, commit, push, merge, deploy, or send extra messages.
+6. Start with a same-repo test branch that you created yourself. Do not use `pull_request_target` to check out untrusted PR code; this can expose secrets or write permissions to untrusted content.
+7. Check the Actions log, review result, and repo diff. If there is any sign of secret leakage, immediately delete the log, revoke the secret, and rotate it.
 
-  | Source | Link |
-  |---|---|
-  | HumanLayer | [Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) |
-  | Anthropic | [How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) |
-  | Internal | [Stage 7.5 🧭 work boundary stack](../../stages/07.5-advanced-agentic-concepts.en.md#-concept-map-spine-the-four-layer-work-boundary) |
+GitHub recommends pinning third-party Actions in production workflows to a full commit SHA because a tag can move. The `@v1` or `@v5` forms in official documentation are useful for identifying product versions; before production use, verify and pin the trusted full SHA for that time.
 
-### 📋 Playbook 2: Multi-agent parallel runs, results conflict
+**Cost reminder:** set a job timeout and concurrency to avoid hangs or duplicate triggers. Keep model APIs, provider plans, and GitHub Actions minutes separate.
+</details>
 
-- **When**: Claude planner + 2-3 Codex agents run in parallel and the merge ends up with conflicts / drift
-- **Do**: Give each agent its own commit; use a reviewer pattern to catch drift (not one giant merge); standardize the brief format + `result.json` schema
-- **Concepts**: Contract Hand-offs + Speculative Parallel · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Service × orchestration + Types × orchestration
-- **Read more**:
+<a id="cli-11"></a>
+### Hands-on exercise CLI-11: Read the receipt for one run
 
-  | Source | Link |
-  |---|---|
-  | Addy Osmani | [Code Agent Orchestra](https://addyosmani.com/blog/code-agent-orchestra/) |
-  | Daniel Vaughan | [Running Multiple Codex Agents Parallel](https://codex.danielvaughan.com/2026/04/18/running-multiple-codex-agents-parallel-orchestration/) |
-  | Internal | [agent-collab-skills](https://github.com/WenyuChiou/agent-collab-skills) (`agent-task-splitter` + `agent-output-reconciler`) |
+**Outcome:** you record the provider/model, input usage, output usage, time, and result; fields you cannot obtain are clearly marked “unconfirmed” instead of guessed.
 
-### 📋 Playbook 3: Reviewing agent output
+First distinguish whether you use a subscription plan or pay by API usage. When the official source provides token counts and prices, calculate cost only with this formula:
 
-- **When**: An agent finished the PR, you do not want to merge it blindly, and human review cannot keep up with the throughput
-- **Do**: Add an LLM-as-judge subagent for automatic evaluation (binary pass/fail); humans only spot-check edge cases; run the acceptance-gate preset before commit
-- **Concepts**: Agent-as-Judge + Plan-Act-Reflect · 📊 See [reading-decision-tree](../../resources/diagrams/reading-decision-tree.en.png), blue eval branch
-- **Read more**:
+`input tokens × input price + output tokens × output price`
 
-  | Source | Link |
-  |---|---|
-  | Hamel Husain | [LLM-as-a-Judge: Complete Guide](https://hamel.dev/blog/posts/llm-judge/) |
-  | Hamel Husain | [Your AI Product Needs Evals](https://hamel.dev/blog/posts/evals/) |
-  | Simon Willison | [Sub-agents in Claude Code](https://simonwillison.net/2025/Oct/11/sub-agents/) |
+<details markdown="1">
+<summary>Expand for the CLI-11 record card, stop rules, and observability</summary>
+
+Start with one small task and fill in this card:
+
+| Field | What to record |
+|---|---|
+| Task | What you asked the agent to do |
+| Provider/model | The provider and model actually used; write unconfirmed if unavailable |
+| Usage | Input/output usage; do not write only a vague “total tokens” |
+| Time | The actual duration shown by the workflow or CLI |
+| Result | `PASS`, an issue list, or the reason for failure |
+| Cost | Calculate only when it matches official prices; otherwise write the billing method or unconfirmed |
+
+Then set a stop rule the tool really supports, such as a job timeout, maximum retries, provider spend limit, or human confirmation before each paid step. Do not create a setting a tool will not read just to create a false sense of safety.
+
+For comparing multiple runs, you can choose [Langfuse](https://github.com/langfuse/langfuse), [Phoenix](https://github.com/Arize-ai/phoenix), [Helicone](https://github.com/Helicone/helicone), or [promptfoo](https://github.com/promptfoo/promptfoo). First confirm where data will be sent and whether it contains the original prompt, code, or PII before deciding to connect it.
+
+Prompt caching TTL, eligibility, and pricing vary by provider and model. Anthropic’s current documentation describes both a default 5-minute TTL and an optional 1-hour TTL; treat this as a product setting to check, not a fixed rule for every CLI.
+</details>
+
+<a id="cli-12"></a>
+### Hands-on exercise CLI-12: Safely hand a Skill to a teammate
+
+**Outcome:** a second clean demo repo can find the `review-changes` Skill, and running it makes no unexpected changes.
+
+Put A2’s `review-changes` Skill in a version-controlled team repo and include four things: installation location, required permissions, test method, and removal method. Claude Code users can package it according to the official plugin format; other CLIs should follow their own Skill documentation.
+
+<details markdown="1">
+<summary>Expand for CLI-12 sharing, installation, and revocation steps</summary>
+
+1. Before sharing, read `SKILL.md` and its attached scripts. Confirm that they do not download unfamiliar programs, read secrets, or change external systems.
+2. Keep `skills/review-changes/SKILL.md` at the plugin root; do not package the project’s own `CLAUDE.md`, `AGENTS.md`, or secrets with it.
+3. Install it in a second clean demo repo according to the tool’s documentation. Claude Code users can refer to the [Plugins documentation](https://code.claude.com/docs/en/plugins) and [`anthropics/claude-plugins-official`](https://github.com/anthropics/claude-plugins-official).
+4. Make a small document diff, run the Skill, and use `git status --short` to confirm that it only reviews and does not edit files.
+5. Record the version or commit SHA. Read the diff before updating; when you stop using it, remove the plugin/Skill according to the documentation and confirm that the agent can no longer find it.
+
+The core idea of a Skill can be shared, but folders, permissions, frontmatter, and installation methods may differ. Do not describe one tool’s plugin format as universal to all CLIs.
+
+**Cost reminder:** sharing the files usually does not incur model charges, but each teammate’s Skill run may use their own subscription or API allowance.
+</details>
+
+## Remember only this production safety loop
+
+`Define the scope → run read-only → leave a record → human judgment → recoverable`
+
+If you have no scope, evidence, or recovery method, do not increase permissions yet. This matters more than memorizing many tool names.
 
 ### 📋 Playbook 4: Dispatching subagents for independent tasks
 
-> 💡 **First time hearing about subagents?** In one sentence: **a subagent is a “child Claude” spawned from the main Claude session**. It has its own isolated context and reports back when done. **Dispatch** means asking the subagent to do work, like assigning a task to a teammate. Full concept → [Stage 5.5](../../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature).
+**Outcome:** first list the agents the current tool really provides, then delegate an independent, verifiable task; do not assume every computer has an agent with the same name.
 
-- **When**: before committing a large change / entering an unfamiliar repo / running an LLM-as-judge auto-eval / applying the same review to 4 targets
-- **Do**: invoke Claude Code **built-in** subagents (no custom file required):
-  - `code-reviewer` — review staged diff, find bugs + security issues
-  - `Explore` — read-only codebase search, find entry points / symbols
-  - `Plan` — design a step-by-step implementation plan
-  - `general-purpose` — fallback when you are unsure which one to use, or for multi-step research
-- **Concepts**: Hierarchical Task Decomposition + Context Isolation · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Service × orchestration cluster
-- **Read more**:
-  - [Stage 5.5 Subagents](../../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature) (full theory + decision table)
-  - [`resources/subagent-cookbook.en.md`](../../resources/subagent-cookbook.en.md) (**15 recipes** with copy-paste prompt templates)
+<details markdown="1">
+<summary>Expand for Playbook 4 and the other six advanced playbooks</summary>
 
----
+**Playbook 4 — subagent:** a subagent is an independent helper dispatched by the main session. Claude Code currently has built-in subagents such as `Explore`, `Plan`, and `general-purpose`; the available list still depends on the version, session, and settings. `code-reviewer` is a **custom example** in the official documentation, not a built-in agent that every installation has. First run the tool’s agent list, then choose a read-only agent or create a restricted reviewer.
 
-### 📋 Playbook 5: Running CLI agent in CI
+For other situations, remember one action and keep the theory in [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.en.md):
 
-- **When**: You wire `codex exec` / `claude --print` into GitHub Actions, cannot require a human to hit yes every time, and bandwidth constraints mean you cannot always use Opus
-- **Do**: Use layered autonomy (preset auto-runs / commit requires review / push requires human sign-off); set a fallback cheaper model (if Opus is down, fall back to Haiku)
-- **Concepts**: Autonomy Gradients + Graceful Degradation · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Config × governance cluster
-- **Read more**:
+- **Unclear scope:** write down paths that may and may not change; request a plan before changing files.
+- **Multiple people/agents in parallel:** separate ownership and commits, then integrate at the end; do not change the same batch of files at the same time.
+- **Review-agent output:** the reviewer provides evidence; it does not replace tests, branch protection, or human judgment.
+- **Running an agent in CI:** start with read-only access and a trusted trigger; model fallback must be explicitly configured and revalidated, never switched silently.
+- **Cost control:** use actual usage, timeouts, retries, and provider limits; say when data is unavailable.
+- **Preventing rule drift:** deliberately make a small safe failure to confirm that the gate really blocks it; rule text by itself is not evidence.
 
-  | Source | Link |
-  |---|---|
-  | Anthropic | [How Anthropic teams use Claude Code (PDF)](https://www-cdn.anthropic.com/58284b19e702b49db9302d5b6f135ad8871e7658.pdf) |
-  | Anthropic Engineering | [Equipping Agents with Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) |
-  | Internal | [Stage 5.5 Subagents](../../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature) + Exercise CLI-10 |
+Further reading: [`resources/subagent-cookbook.en.md`](../../resources/subagent-cookbook.en.md) and [Stage 5.5](../../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature). These pages will be rechecked in their own layer later; before using agent names, follow the official documentation and the actual list available to you.
+</details>
 
-### 📋 Playbook 6: Controlling cost
+## Track A completion check
 
-- **When**: You use Codex for a large batch of work, the monthly API bill is getting out of control, and you want to stay inside budget
-- **Do**: Set `max_cost_usd` in `plan.yml`; use a cheap model (Haiku) for exploration and an expensive model (Opus) only for polish; turn on prompt caching (can significantly reduce repeated context cost under cache-eligible conditions); automate QA instead of spending human time
-- **Concepts**: Cost-aware Budget Gates + Throughput-Merge Philosophy · 📊 See [concept-cluster](../../resources/diagrams/concept-cluster.en.png), Config × resilience cluster
-- **Read more**:
+- [ ] MCP received only the demo folder or a minimal read-only toolset.
+- [ ] The PR workflow only gives feedback; it does not auto-merge, push, or deploy.
+- [ ] Secrets are not in the repo, prompt, or log; the workflow uses least privilege.
+- [ ] I can point to the result and usage for one run; unavailable data was not guessed.
+- [ ] A teammate can run the Skill in a clean demo repo, and `git status` shows no unexpected changes afterward.
 
-  | Source | Link |
-  |---|---|
-  | Simon Willison | [Sub-agents](https://simonwillison.net/2025/Oct/11/sub-agents/) |
-  | Anthropic | [Prompt Caching](https://www.anthropic.com/news/prompt-caching) |
-  | Internal | This stage's Exercise CLI-11 (token tracking + langfuse integration) |
+Once all five are true, Track A is complete. Then choose by purpose: return to [Stage 3](../../stages/03-tool-use-and-hello-agent.en.md) to build an application; go to [Stage 7](../../stages/07-multi-agent-production.en.md) to study production systems; or read [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.en.md) to understand agent concepts more deeply.
 
-### 📋 Playbook 7: Hardening workflow, preventing drift
+<details markdown="1">
+<summary>Expand the complete learning resource table (18 items, checked 2026-08-27 UTC)</summary>
 
-- **When**: You wrote rules in `CLAUDE.md` / `SKILL.md` but nobody enforces them, or you added a preset YAML and do not know whether it actually works
-- **Do**: Intentionally break one rule and run the acceptance gate to see whether it catches it (chaos test); treat `docs/` as the single source of truth and keep `CLAUDE.md` as an entry map only
-- **Concepts**: Failure Injection + System of Record · 📊 See [failure-lifecycle](../../resources/diagrams/failure-lifecycle.en.png) (the F11-F14 evolution loop)
-- **Read more**:
+<table>
+<thead>
+<tr><th scope="col">Type</th><th scope="col">Resource</th><th scope="col">Read first</th><th scope="col">When to use</th><th scope="col">Source</th></tr>
+</thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Safe MCP connections</th><td>MCP Connect to local servers</td><td>Allowed directories and explicit authorization</td><td>Connecting a local server for the first time</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">Official docs</a></td></tr>
+<tr><td>MCP Security Best Practices</td><td>Least privilege, scopes, and token handling</td><td>Before connecting an account or remote service</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">Official docs</a></td></tr>
+<tr><td><code>github/github-mcp-server</code></td><td><code>--read-only</code>, toolsets, and tools allow-list</td><td>Reading GitHub PRs/issues</td><td><a href="https://github.com/github/github-mcp-server">GitHub repo</a></td></tr>
+<tr><td><code>modelcontextprotocol/servers</code></td><td>Reference implementations and the not-production-ready warning</td><td>Learning the protocol or reading example code</td><td><a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">CI and PR review</th><td>GitHub Actions Security Hardening</td><td>Least privilege, untrusted input, and pinning SHAs</td><td>Before writing any workflow with secrets</td><td><a href="https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions">Official docs</a></td></tr>
+<tr><td>Claude Code GitHub Actions</td><td>Official setup, permissions, and troubleshooting</td><td>Running Claude Code in CI</td><td><a href="https://docs.anthropic.com/en/docs/claude-code/github-actions">Official docs</a></td></tr>
+<tr><td><code>anthropics/claude-code-action</code></td><td>Official examples and action inputs</td><td>Starting from an executable template</td><td><a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></td></tr>
+<tr><td>Codex GitHub Action</td><td>Permission profile, trigger, and output</td><td>Running Codex in CI</td><td><a href="https://developers.openai.com/codex/github-action">OpenAI official docs</a></td></tr>
+<tr><td><code>openai/codex-action</code></td><td><code>:read-only</code> and safety strategy</td><td>Checking the latest inputs and examples</td><td><a href="https://github.com/openai/codex-action">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Observability and evaluation</th><td><code>langfuse/langfuse</code></td><td>Traces, usage, and eval</td><td>Viewing multiple runs together</td><td><a href="https://github.com/langfuse/langfuse">GitHub repo</a></td></tr>
+<tr><td><code>Arize-ai/phoenix</code></td><td>Tracing and evaluation</td><td>Observing an AI system with open source</td><td><a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></td></tr>
+<tr><td><code>Helicone/helicone</code></td><td>Proxy/gateway data flow and privacy boundary</td><td>Collecting request records from a gateway</td><td><a href="https://github.com/Helicone/helicone">GitHub repo</a></td></tr>
+<tr><td><code>promptfoo/promptfoo</code></td><td>Eval cases and CI regression</td><td>Comparing whether a change made things worse</td><td><a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">Sharing Skills/plugins</th><td>Claude Code Plugins</td><td>Plugin structure, installation, and marketplace</td><td>Packaging for Claude Code</td><td><a href="https://code.claude.com/docs/en/plugins">Official docs</a></td></tr>
+<tr><td><code>anthropics/claude-plugins-official</code></td><td>Officially managed plugin directory</td><td>Finding readable official examples</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers-marketplace</code></td><td>Minimal marketplace shell</td><td>Understanding curator-only structure</td><td><a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Directories and complete examples</th><td><code>wong2/awesome-mcp-servers</code></td><td>Classify first, then check sources and permissions one by one</td><td>When official resources lack the server you need</td><td><a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers</code></td><td>How Skills, rules, and workflows fit together</td><td>Looking at a complete example after the minimal workflow works</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
+</tbody>
+</table>
 
-  | Source | Link |
-  |---|---|
-  | HumanLayer | [Writing a good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md) |
-  | agent-collab-skills | [observed-failure-modes.md](https://github.com/WenyuChiou/agent-collab-skills/blob/main/docs/observed-failure-modes.md) |
-  | Internal | [Stage 7.5 🔁 failure-mode lifecycle](../../stages/07.5-advanced-agentic-concepts.en.md#-failure-mode-lifecycle-how-industry-agent-failures-evolved-into-best-practice) |
-
----
-
-→ **7 playbooks = a bridge from 7 triggers to 12 concepts and the corresponding reading sources**. Want the underlying theory / the full set of 12 concepts / all 8 cross-vendor principles → [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.en.md).
-
-## 🎯 Curated Projects
-
-Four categories, nine projects, one table. **Pick an entry point from the "Who it's for" column; click through to the repo when you want the details.**
-
-> 💡 **Looking for MCPs that connect to daily tools** (Notion / Obsidian / Excel / Postgres / Playwright / Slack / Linear / Figma…): see [`resources/mcp-skills-catalog.en.md`](../../resources/mcp-skills-catalog.en.md) — 81+ entries grouped by category, each with stars / license / audience. The table below is for "writing your own MCP server / finding reference implementations".
-
-| Category | Project | ⭐ | Who it's for | Why recommended / notes |
-|---|---|---|---|---|
-| **MCP server collection**<br>(CLI-friendly) | [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) | ⭐⭐⭐⭐⭐ | Starting your first MCP from a reference implementation | Official reference servers (7 today: everything, fetch, filesystem, git, memory, sequentialthinking, time; github and sqlite have moved to `servers-archived`), ★ 89k+. See [Stage 5.2](../../stages/05-claude-code-ecosystem.en.md#52--mcp-model-context-protocol--foundation) |
-| | [wong2/awesome-mcp-servers](https://github.com/wong2/awesome-mcp-servers) | ⭐⭐⭐⭐ | Hunting for a community MCP in a specific domain | Community MCP server catalog, 150+ servers categorized |
-| **CI Integration Patterns** | [anthropics/claude-code-action](https://github.com/anthropics/claude-code-action) | ⭐⭐⭐⭐⭐ | Starting your first CI workflow from the official template | Official GitHub Action template, PR review / issue triage / auto-fix |
-| | [continuedev/continue](https://github.com/continuedev/continue) | ⭐⭐⭐⭐ | Wiring AI checks into the PR pipeline and enforcing them | ★ 35k+. Full intro in [`branches/for-developer.en.md`](../../branches/for-developer.en.md) |
-| **Observability + Cost** | [langfuse/langfuse](https://github.com/langfuse/langfuse) | ⭐⭐⭐⭐⭐ | Wanting trace / cost / sessions all in one place | Open-source LLM observability, ★ 32k+. See [Stage 7 Observability](../../stages/07-multi-agent-production.en.md#exercise-3-observability) |
-| | [Helicone](https://github.com/Helicone/helicone) | ⭐⭐⭐⭐ | Wanting the fastest logging there is (just change `base_url`) | Proxy-based monitoring, change `base_url` and you get logging + caching, ★ 6k+ |
-| | [promptfoo/promptfoo](https://github.com/promptfoo/promptfoo) | ⭐⭐⭐⭐⭐ | Running regression tests before promoting a CLI workflow to production | Eval framework, ★ 24k+. See [Stage 7 Eval](../../stages/07-multi-agent-production.en.md#exercise-2-eval) |
-| **Production CLI Workflow Templates** | [obra/superpowers](https://github.com/obra/superpowers) | ⭐⭐⭐⭐ | Seeing what a complete, actually-in-use workflow looks like | Production-ready skill collection, ★ 265k+. See how someone else does a complete CLI workflow |
-| | [obra/superpowers-marketplace](https://github.com/obra/superpowers-marketplace) | ⭐⭐⭐ | Packaging your team's CLI workflow for sharing | Minimal marketplace template, ★ 1.2k+ |
-
-> 💡 **Suggested order to pick these up**: start by wiring one reference MCP from `modelcontextprotocol/servers` into your CLI → run your first CI workflow with `claude-code-action` → add langfuse to see traces + cost → when you scale to production, package the workflow as a marketplace plugin.
-
-## ✅ Track A Full Self-Check
-
-Can you:
-
-- [ ] Have at least 1 MCP server connected to your daily CLI
-- [ ] Have at least 1 CI workflow auto-running a CLI agent
-- [ ] State the rough token / cost / latency for some specific task you run
-- [ ] Put at least one Skill in a plugin’s `skills/<name>/SKILL.md` and verify it is found after installation (even just for yourself)
-- [ ] Know which tasks deserve observability and which don't
-
-If yes → **Track A complete**. We recommend continuing to [**Stage 8 — Agent Interfaces**](../../stages/08-agent-interfaces.en.md) (**a shared hub for both tracks**: Computer Use / Browser Use / Code Sandbox, ~1-2 weeks from the Track A angle), or pick a [specialized branch](../../README.en.md#-learning-map-two-tracks) and continue (researcher / developer / teacher / knowledge-worker / everyday-users).
-
-If you want to go deeper into "**how to write your own CLI agent**" (not use existing) → jump to [Track B Stage 3](../../stages/03-tool-use-and-hello-agent.en.md). Track A and Track B are complementary.
-
-## 💡 What's Next
-
-After Track A you're a CLI power user. Next phase choices:
-
-1. **Deepen CLI workflow** (keep refining your setup)
-   - Subscribe to Anthropic / OpenAI changelogs
-   - Quarterly review of [`resources/cli-agents-guide.en.md`](../../resources/cli-agents-guide.en.md) for new tools
-   - Share CLAUDE.md / skills with your team
-
-2. **Cross to Track B** (learn to write your own agent)
-   - Stage 3-4: tool use + frameworks
-   - Stage 5: deep dive into Claude Code internals
-   - Stage 7: write your own multi-agent system
-
-3. **Walk a specialized branch** (apply CLI to a specific domain)
-   - Researcher / developer / knowledge-worker / teacher / everyday-users
-   - Each branch uses what you learned in Track A
+The directory only helps you “find candidates”; it does not guarantee a candidate is safe. Before installing any MCP, Action, Skill, or plugin, check its source, permissions, recent maintenance, and removal method again.
+</details>

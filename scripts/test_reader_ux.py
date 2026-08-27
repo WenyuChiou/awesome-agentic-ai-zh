@@ -36,8 +36,32 @@ def _config(
     groups: str = "",
     heading: str = "Start",
     anchor: str = "start",
+    details: int | None = None,
+    forbidden: str = "",
+    forbidden_include_code: bool = False,
+    parity_urls: bool = False,
+    parity_literals: str = "",
 ) -> str:
     group_line = f"    resource_group_rowspans: [{groups}]\n" if groups else ""
+    details_line = f"    required_details_count: {details}\n" if details is not None else ""
+    forbidden_lines = ""
+    if forbidden:
+        forbidden_lines = f"""\
+    forbidden_terms:
+      zh-TW: [{forbidden}]
+      en: [{forbidden}]
+      zh-Hans: [{forbidden}]
+"""
+    include_code_line = (
+        "    forbidden_terms_include_code: true\n" if forbidden_include_code else ""
+    )
+    parity_lines = ""
+    if parity_urls or parity_literals:
+        parity_lines = f"""\
+    parity:
+      ordered_external_urls: {str(parity_urls).lower()}
+      literals: [{parity_literals}]
+"""
     return f"""\
 schema_version: 1
 forbidden_open_summary_terms:
@@ -55,7 +79,7 @@ pages:
       en: {limit}
       zh-Hans: {limit}
     max_open_details: {opens}
-    required_visible_sections:
+{details_line}{forbidden_lines}{include_code_line}{parity_lines}    required_visible_sections:
       start:
         zh-TW: {{heading: {heading}, anchor: {anchor}}}
         en: {{heading: {heading}, anchor: {anchor}}}
@@ -63,14 +87,16 @@ pages:
 {group_line}"""
 
 
-def _run(body: str, *, config: str | None = None) -> tuple[int, str]:
+def _run_locales(
+    bodies: dict[str, str], *, config: str | None = None
+) -> tuple[int, str]:
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         _copy_checker(root)
         (root / "scripts" / "reader-ux-pages.yml").write_text(
             config or _config(), encoding="utf-8"
         )
-        for name in ("page.md", "page.en.md", "page.zh-Hans.md"):
+        for name, body in bodies.items():
             (root / name).write_text(_page(body), encoding="utf-8")
         result = subprocess.run(
             [sys.executable, str(root / "scripts" / SCRIPT.name)],
@@ -81,6 +107,13 @@ def _run(body: str, *, config: str | None = None) -> tuple[int, str]:
             errors="replace",
         )
         return result.returncode, result.stdout + result.stderr
+
+
+def _run(body: str, *, config: str | None = None) -> tuple[int, str]:
+    return _run_locales(
+        {name: body for name in ("page.md", "page.en.md", "page.zh-Hans.md")},
+        config=config,
+    )
 
 
 def test_closed_body_is_not_counted_but_summary_is() -> None:
@@ -122,6 +155,59 @@ def test_default_open_allowance_is_blocking() -> None:
     body = "<details open>\n<summary>do it now</summary>\nok\n</details>\n"
     rc, out = _run(body, config=_config(opens=0))
     assert rc == 1 and "default-open" in out, out
+
+
+def test_required_details_count_is_blocking() -> None:
+    body = "<details>\n<summary>one</summary>\nok\n</details>\n"
+    rc, out = _run(body, config=_config(details=2))
+    assert rc == 1 and "1 details block(s); expected 2" in out, out
+
+
+def test_forbidden_page_term_is_blocking() -> None:
+    rc, out = _run("obsolete-setting", config=_config(forbidden="obsolete-setting"))
+    assert rc == 1 and "forbidden term" in out, out
+
+
+def test_forbidden_term_inside_fenced_example_is_ignored() -> None:
+    rc, out = _run(
+        "```text\nobsolete-setting\n```\n",
+        config=_config(forbidden="obsolete-setting", limit=1000),
+    )
+    assert rc == 0, out
+
+
+def test_forbidden_term_inside_fenced_example_blocks_when_enabled() -> None:
+    rc, out = _run(
+        "```text\nobsolete-setting\n```\n",
+        config=_config(
+            forbidden="obsolete-setting", forbidden_include_code=True, limit=1000
+        ),
+    )
+    assert rc == 1 and "forbidden term" in out, out
+
+
+def test_ordered_external_url_parity_is_blocking() -> None:
+    rc, out = _run_locales(
+        {
+            "page.md": "https://example.com/a https://example.com/b",
+            "page.en.md": "https://example.com/b https://example.com/a",
+            "page.zh-Hans.md": "https://example.com/a https://example.com/b",
+        },
+        config=_config(parity_urls=True),
+    )
+    assert rc == 1 and "ordered external URLs differ" in out, out
+
+
+def test_exact_literal_parity_is_blocking() -> None:
+    rc, out = _run_locales(
+        {
+            "page.md": "run --read-only",
+            "page.en.md": "run --read-only",
+            "page.zh-Hans.md": "run normally",
+        },
+        config=_config(parity_literals="--read-only"),
+    )
+    assert rc == 1 and "parity literal '--read-only'" in out, out
 
 
 def test_open_optional_or_setup_content_is_forbidden() -> None:

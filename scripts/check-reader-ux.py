@@ -53,9 +53,13 @@ slugify = _check_anchors.slugify
 @dataclass
 class PageMetrics:
     visible_chars: int
+    details_count: int
     open_details_count: int
     open_summaries: list[str]
     visible_headings_outside_details: list[tuple[str, str]]
+
+
+EXTERNAL_URL_RE = re.compile(r"https://[^\s<>)\"']+")
 
 
 def _plain(text: str) -> str:
@@ -107,6 +111,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
     outside_headings: list[tuple[str, str]] = []
     errors: list[str] = []
     open_details_count = 0
+    details_count = 0
     in_comment = False
     lines = text.splitlines()
     code_flags = code_line_flags(text)
@@ -127,6 +132,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
 
         if DETAILS_START_RE.match(line):
             is_open = bool(OPEN_ATTR_RE.search(line))
+            details_count += 1
             stack.append(is_open)
             if is_open:
                 open_details_count += 1
@@ -166,7 +172,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
 
     visible_chars = len(re.sub(r"\s+", "", "\n".join(visible_lines)))
     return PageMetrics(
-        visible_chars, open_details_count, open_summaries, outside_headings
+        visible_chars, details_count, open_details_count, open_summaries, outside_headings
     ), errors
 
 
@@ -291,6 +297,50 @@ def _load_config(path: Path) -> dict[str, Any]:
         max_open = page.get("max_open_details")
         if not isinstance(max_open, int) or isinstance(max_open, bool) or max_open < 0:
             raise ValueError(f"{page_id}.max_open_details must be a non-negative integer")
+        required_details = page.get("required_details_count")
+        if required_details is not None and (
+            not isinstance(required_details, int)
+            or isinstance(required_details, bool)
+            or required_details < 0
+        ):
+            raise ValueError(
+                f"{page_id}.required_details_count must be a non-negative integer"
+            )
+
+        forbidden = page.get("forbidden_terms")
+        if forbidden is not None:
+            if not isinstance(forbidden, dict) or set(forbidden) != set(LOCALES):
+                raise ValueError(
+                    f"{page_id}.forbidden_terms must define zh-TW, en, and zh-Hans"
+                )
+            for locale, values in forbidden.items():
+                if not isinstance(values, list) or any(
+                    not isinstance(value, str) or not value.strip() for value in values
+                ):
+                    raise ValueError(
+                        f"{page_id}.forbidden_terms.{locale} must be a string list"
+                    )
+        include_code = page.get("forbidden_terms_include_code", False)
+        if not isinstance(include_code, bool):
+            raise ValueError(f"{page_id}.forbidden_terms_include_code must be a boolean")
+
+        parity = page.get("parity")
+        if parity is not None:
+            if not isinstance(parity, dict) or not parity:
+                raise ValueError(f"{page_id}.parity must be a non-empty mapping")
+            unknown = set(parity) - {"ordered_external_urls", "literals"}
+            if unknown:
+                raise ValueError(f"{page_id}.parity has unknown keys: {sorted(unknown)}")
+            ordered_urls = parity.get("ordered_external_urls", False)
+            if not isinstance(ordered_urls, bool):
+                raise ValueError(f"{page_id}.parity.ordered_external_urls must be a boolean")
+            literals = parity.get("literals", [])
+            if not isinstance(literals, list) or any(
+                not isinstance(value, str) or not value.strip() for value in literals
+            ):
+                raise ValueError(f"{page_id}.parity.literals must be a string list")
+            if len(literals) != len(set(literals)):
+                raise ValueError(f"{page_id}.parity.literals cannot contain duplicates")
 
         sections = page.get("required_visible_sections")
         if not isinstance(sections, dict) or not sections:
@@ -340,6 +390,7 @@ def check(config_path: Path) -> list[str]:
         limits = page.get("max_visible_chars") or {}
         sections = page["required_visible_sections"]
         max_open = page.get("max_open_details")
+        localized_text: dict[str, str] = {}
 
         for locale, rel in paths.items():
             path = REPO_ROOT / rel
@@ -348,6 +399,7 @@ def check(config_path: Path) -> list[str]:
                 failures.append(f"{label}: missing page")
                 continue
             text = path.read_text(encoding="utf-8")
+            localized_text[locale] = text
             metrics, parse_errors = analyze_markdown(text)
             failures.extend(f"{label}: {item}" for item in parse_errors)
 
@@ -359,6 +411,20 @@ def check(config_path: Path) -> list[str]:
                 failures.append(
                     f"{label}: {metrics.open_details_count} default-open details exceeds {max_open}"
                 )
+            required_details = page.get("required_details_count")
+            if required_details is not None and metrics.details_count != required_details:
+                failures.append(
+                    f"{label}: {metrics.details_count} details block(s); expected {required_details}"
+                )
+
+            forbidden_source = (
+                text if page.get("forbidden_terms_include_code", False)
+                else strip_code_blocks(text)
+            )
+            searchable = _without_all_html_comments(forbidden_source).casefold()
+            for term in (page.get("forbidden_terms") or {}).get(locale, []):
+                if term.casefold() in searchable:
+                    failures.append(f"{label}: forbidden term {term!r} is present")
 
             terms = config["forbidden_open_summary_terms"][locale]
             for summary in metrics.open_summaries:
@@ -391,6 +457,36 @@ def check(config_path: Path) -> list[str]:
                 failures.extend(
                     f"{label}: {item}" for item in _resource_table_errors(text, expected_groups)
                 )
+
+        parity = page.get("parity") or {}
+        if len(localized_text) == len(LOCALES):
+            canonical_text = _without_all_html_comments(localized_text["zh-TW"])
+            if parity.get("ordered_external_urls"):
+                expected_urls = EXTERNAL_URL_RE.findall(canonical_text)
+                for locale in ("en", "zh-Hans"):
+                    actual_urls = EXTERNAL_URL_RE.findall(
+                        _without_all_html_comments(localized_text[locale])
+                    )
+                    if actual_urls != expected_urls:
+                        failures.append(
+                            f"{page_id}/{locale}: ordered external URLs differ from zh-TW"
+                        )
+            for literal in parity.get("literals", []):
+                expected_count = canonical_text.count(literal)
+                if expected_count == 0:
+                    failures.append(
+                        f"{page_id}/zh-TW: parity literal {literal!r} is missing"
+                    )
+                    continue
+                for locale in ("en", "zh-Hans"):
+                    actual_count = _without_all_html_comments(
+                        localized_text[locale]
+                    ).count(literal)
+                    if actual_count != expected_count:
+                        failures.append(
+                            f"{page_id}/{locale}: parity literal {literal!r} occurs "
+                            f"{actual_count} time(s); zh-TW has {expected_count}"
+                        )
 
     return failures
 

@@ -28,13 +28,14 @@
 |---|---|---|
 | A1 | CLI 入門 + 選擇 | → 最終 A1 |
 | A2 | Workflow（project instructions / Skill / 任務拆解 / portable prompt） | → 最終 A2 |
-| A3 | MCP 接 CLI | → 合進最終 A3 |
-| A4 | 多 CLI 並用 | → 合進最終 A3 |
-| A5 | Production CLI workflow（CI / cost / observability / plugin 打包） | → 合進最終 A3 |
+| A3 | MCP 接 CLI | → 最終 A3 |
+| A4 | 多 CLI 並用 | → 移到最終 A1／A2 的工具比較與 portable prompt |
+| A5 | Production CLI workflow（CI / cost / observability / team sharing） | → 最終 A3 |
 
 合併邏輯：
 
-- 草稿 A3 + A4 + A5 都是「**把 CLI 跟外部系統 / 流程接起來**」這同一件事的不同面向，砍 3 為 1 不會切碎概念
+- 草稿 A3 + A5 都是「**把 CLI 安全接到外部系統 / 團隊流程**」這同一件事，合併後仍是一條完整主線
+- 草稿 A4 的工具比較放到 A1，跨工具可攜做法放到 A2；A3 不先教同時放出多個 agent，避免初學者在學會安全界線前把流程變複雜
 - 草稿 A1 邊界清楚（入門 + 選擇），保留為最終 A1
 - 草稿 A2 邊界清楚（一個人在 CLI 內部如何工作），保留為最終 A2
 
@@ -42,7 +43,7 @@
 
 - **A1**：入門 + 選擇（CLI 安裝、認證、第一個任務）
 - **A2**：Workflow Patterns（project instructions / Skill / 多步拆解 / portable prompt）
-- **A3**：Integration & Production（MCP 接 CLI、多 CLI 並用、CI 自動化、cost / observability、plugin 打包）
+- **A3**：Integration & Production（單一受限 MCP、唯讀 PR CI、usage / cost receipt、版本化 team Skill）
 
 判準：**3 個 stage 邊界清楚、不互相浸蝕**，每個 stage 對應一個明確的「我能跑出什麼」outcome。
 
@@ -54,11 +55,19 @@
 - 時間、先備條件、完整工具位置、CLI-7／CLI-8 步驟、multi-agent、疑難排解與完整資源表預設收合。
 - 完整資源表按語意分組；每組一個 `<tbody>`，分類欄用真正 `rowspan` 合併。三語的 rowgroup、URL、命令、日期與安全限制必須一致。
 
+### A3 的固定閱讀形狀
+
+- 第一遍先用三個白話詞與一條安全階梯說清楚主線：唯讀 → 最小權限 → 示範 repo → 人工檢查 → 最後才考慮寫入。
+- CLI-9 至 CLI-12 的標題、anchor、一句話成果與最短路徑留在可見區；時間、閱讀、完整步驟、疑難排解與 playbook 放進預設關閉的 `<details>`。
+- Playbook 4 的標題與成果留在可見區，保護既有跨頁深連結；多 agent、fallback 與 failure injection 的理論導回 Stage 7.5，不在 A3 重寫一次。
+- 完整資源表固定為 18 筆、五個語意群組，`rowspan` 為 `4／5／4／3／2`。同類型只顯示一次分類名稱，不放 stars、排行榜或會自然變舊的數量。
+- A3 的自動化預設只讀、最小權限、可留下 receipt，且必須有人檢查。不能把自動 merge、push、deploy 或未受限的 MCP 寫成初學者第一步。
+
 ### 為什麼 Stage 5 特別放在「兩軌共用」
 
 Stage 5（Claude Code 生態）兩條軌都會碰到：
 
-- Track A：A2 以多家官方 project-instructions／Skill 文件為主，Stage 5.1／5.3 只作 Claude Code 延伸；A3 用 5.2（MCP）+ 選擇性用到 5.3（Skills）跟 5.4（Plugins）——A3 的 動手練習 CLI-12 會教 plugin 打包。讀的角度是「**怎麼用 CLI agent 把工作做好**」
+- Track A：A2 以多家官方 project-instructions／Skill 文件為主，Stage 5.1／5.3 只作 Claude Code 延伸；A3 用 5.2（MCP）+ 選擇性用到 5.3（Skills）跟 5.4（Plugins）。A3 的 CLI-12 教可版本化的 team Skill；plugin 是 Claude Code 的延伸選項，不假裝成每個 CLI 都通用的打包格式。讀的角度是「**怎麼用 CLI agent 把工作做好**」
 - Track B：把整個 Stage 5 當「**Claude Code 內部運作**」的深度學，從 5.1 完整走到 5.7
 
 但兩條軌**不需要重新讀整份 Stage 5**——Track A 看「用法」、Track B 看「內部結構」。同一份內容，兩種讀法。

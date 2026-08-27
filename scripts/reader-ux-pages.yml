@@ -273,6 +273,98 @@ pages:
           anchor: 进入-a3-前的自我检查
     resource_group_rowspans: [4, 4, 4, 2, 2]
 
+  - id: track-a3
+    canonical: tracks/cli/A3-cli-production.md
+    mirrors:
+      en: tracks/cli/A3-cli-production.en.md
+      zh-Hans: tracks/cli/A3-cli-production.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 2850
+      en: 5300
+      zh-Hans: 2900
+    max_open_details: 0
+    required_details_count: 8
+    forbidden_terms:
+      zh-TW: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, ⭐, 1-2 分鐘, 1–2 分鐘]
+      en: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, ⭐, 1-2 minutes, 1–2 minutes]
+      zh-Hans: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, ⭐, 1-2 分钟, 1–2 分钟]
+    forbidden_terms_include_code: true
+    parity:
+      ordered_external_urls: true
+      literals:
+        - "2026-08-27"
+        - "2026-07-28"
+        - "--read-only"
+        - "pull_request_target"
+        - "GITHUB_TOKEN"
+        - 'permission-profile: ":read-only"'
+        - "@v1"
+        - "input tokens × input price + output tokens × output price"
+        - "provider spend limit"
+        - "job timeout"
+    required_visible_sections:
+      cli-9:
+        zh-TW:
+          heading: "動手練習 CLI-9：只連一個 MCP server"
+          anchor: 動手練習-cli-9只連一個-mcp-server
+        en:
+          heading: "Hands-on exercise CLI-9: Connect only one MCP server"
+          anchor: hands-on-exercise-cli-9-connect-only-one-mcp-server
+        zh-Hans:
+          heading: "动手练习 CLI-9：只连接一个 MCP server"
+          anchor: 动手练习-cli-9只连接一个-mcp-server
+      cli-10:
+        zh-TW:
+          heading: "動手練習 CLI-10：讓 PR 多一個只讀檢查員"
+          anchor: 動手練習-cli-10讓-pr-多一個只讀檢查員
+        en:
+          heading: "Hands-on exercise CLI-10: Give a PR one more read-only checker"
+          anchor: hands-on-exercise-cli-10-give-a-pr-one-more-read-only-checker
+        zh-Hans:
+          heading: "动手练习 CLI-10：让 PR 多一个只读检查员"
+          anchor: 动手练习-cli-10让-pr-多一个只读检查员
+      cli-11:
+        zh-TW:
+          heading: "動手練習 CLI-11：看一次執行的收據"
+          anchor: 動手練習-cli-11看一次執行的收據
+        en:
+          heading: "Hands-on exercise CLI-11: Read the receipt for one run"
+          anchor: hands-on-exercise-cli-11-read-the-receipt-for-one-run
+        zh-Hans:
+          heading: "动手练习 CLI-11：看一次运行的收据"
+          anchor: 动手练习-cli-11看一次运行的收据
+      cli-12:
+        zh-TW:
+          heading: "動手練習 CLI-12：把 Skill 安全交給隊友"
+          anchor: 動手練習-cli-12把-skill-安全交給隊友
+        en:
+          heading: "Hands-on exercise CLI-12: Safely hand a Skill to a teammate"
+          anchor: hands-on-exercise-cli-12-safely-hand-a-skill-to-a-teammate
+        zh-Hans:
+          heading: "动手练习 CLI-12：安全地把 Skill 交给队友"
+          anchor: 动手练习-cli-12安全地把-skill-交给队友
+      playbook-4:
+        zh-TW:
+          heading: "📋 Playbook 4：派遣 subagent 跑獨立任務"
+          anchor: -playbook-4派遣-subagent-跑獨立任務
+        en:
+          heading: "📋 Playbook 4: Dispatching subagents for independent tasks"
+          anchor: -playbook-4-dispatching-subagents-for-independent-tasks
+        zh-Hans:
+          heading: "📋 Playbook 4：派遣 subagent 跑独立任务"
+          anchor: -playbook-4派遣-subagent-跑独立任务
+      completion:
+        zh-TW:
+          heading: "Track A 完成檢查"
+          anchor: track-a-完成檢查
+        en:
+          heading: "Track A completion check"
+          anchor: track-a-completion-check
+        zh-Hans:
+          heading: "Track A 完成检查"
+          anchor: track-a-完成检查
+    resource_group_rowspans: [4, 5, 4, 3, 2]
+
   - id: cli-agents-guide
     canonical: resources/cli-agents-guide.md
     mirrors:
