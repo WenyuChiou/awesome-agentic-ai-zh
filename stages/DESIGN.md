@@ -133,7 +133,16 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 - 時間、先備工具、費用、長表格、補充原理、疑難排解與延伸清單預設收合；`<details>` 不加 `open`。
 - 可被其他頁面深連結的 heading 必須留在 `<details>` 外。標題後先給一句成果，再收合詳細步驟，否則瀏覽器會跳到一個仍然看不見的位置。
 - 雙路徑練習保留既有例外：Ollama Path A 是主要可執行路徑，可使用 `open`；Anthropic Path B 預設收合。外層若已是延伸練習的收合區，Path A 只在讀者展開外層後顯示。
-- ELI5 是清楚，不是幼稚：技術詞保留原名，第一次出現就用一句短定義或一個例子解釋；一段只講一件事。
+
+### 全站白話規則（ELI5）
+
+這是整份學習地圖的共同 gate，不是 Stage 0 的特殊語氣。目標是讓五歲小孩也能跟得上「現在要做什麼」，但不把技術內容寫錯或寫成幼稚口吻。
+
+- 第一次使用技術詞時，先用白話說用途，再保留正確術語；例如「讓程式拿資料的入口（API）」。
+- 一句只說一件事，一個步驟只要求一個主要動作。長句拆開，縮寫與 jargon 不可在可見主線中突然出現。
+- 指令、檔名、錯誤碼、模型名稱、價格與數字保持精確；ELI5 不能拿來刪除必要條件或安全提醒。
+- 若一個概念需要多段說明，主線先留一句「它有什麼用」與下一步，完整原理放進預設收合的 `<details>`。
+- Review 時不只問內容是否正確，也要問第一次來的讀者能否在不展開選單時，說出下一步與完成標準。
 
 ### 易變資訊與查核日期
 
@@ -144,7 +153,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 
 **已知例外**：
 
-- **Stage 0**：prerequisite gateway，沒有完整結構（見 「Stage 0 為什麼可以 skip」）
+- **Stage 0**：prerequisite gateway，使用可見的跳過判斷、單一整合練習與短版完成檢查；時間、環境、補充練習、名詞與資源預設收合（見「Stage 0 為什麼可以 skip」）
 - **Stage 5**：分 7 個核心 sub-stage（5.1-5.7）+ 5.8 SDK（選修、包成產品或服務才需要），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
 - **Stage 6 / 7**：直接跳過 進入條件 section（前面 stage 已隱含 prerequisite）
 - **Stage 7.5**：reading-map（進階概念 + reading path），沒有 動手練習、只有輕量 self-check——是 production 之後的 frontier 概念地圖，不寫 code
@@ -178,6 +187,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 - 跑完 動手練習 後的延伸學習
 - 每個 entry 照 [style guide](../resources/style-guide.md) 1 schema
 - 數量：通常 7-15 個（Stage 5 例外，20 個分散在 4 個 sub-section）
+- 分類型資源表若同一分類連續出現兩列以上，每個分類使用獨立 `<tbody>`，分類欄再以 `scope="rowgroup"` 與 `rowspan` 合併；欄位表頭使用 `scope="col"`。這讓螢幕閱讀器與視覺版面讀到同一組關係，也不讓讀者重複掃描相同標籤。不同分類不可只因欄位文字相同就跨組合併。
 
 ### 自我檢查
 - **measurable**——能 verify 的不是「了解 X」
@@ -283,9 +293,9 @@ Repo 名字是 `awesome-agentic-ai-zh`，受眾偏 Claude Code 使用者。Stage
 Stage 0 不是 stage——它是 prerequisite gateway。
 
 - Python / git / CLI / JSON 已經會的人 → 直接 Stage 1
-- 不會的人 → Stage 0 不是要從零教 Python，是給「我該不該學這 4 樣才能開始」的 self-test，順便給快速 reference 連結
+- 不會的人 → 用一個不需帳號或 token 的小工具，同時練 Python、API、JSON、CLI 與 Git
 
-所以 Stage 0 沒有完整的學習目標 / 動手練習 / self-check structure——只有「skip 條件」+ 「資源連結」。它存在是為了**讓真的初學者不會在後面 stage 卡住**，但不假設讀者要從這裡完整走完。
+Stage 0 的可見主線固定為「skip 條件 → 4 個學習目標 → 1 個整合練習 → 短版完成檢查」。時間、環境、分項補充、名詞與 18 個學習資源放進預設收合的 `<details>`。它存在是為了**讓真的初學者不會在後面 stage 卡住**，但不把這個 repo 變成完整的 Python 或 Git 教科書。
 
 ---
 

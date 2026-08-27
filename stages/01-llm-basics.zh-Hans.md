@@ -337,25 +337,36 @@ print("\n✅ 练习 3 通过（Anthropic）— 已按实际 token 算出 Haiku�
 
 下面的表格保留本章原有的 17 个延伸入口。它们是选读资源，不是本章必做项目；省略会变化的星数和仓库计数。
 
-| 分类 | 资源 | 入口 | 用途／状态 |
-|---|---|---|---|
-| 官方 API 入门 | Anthropic Cookbook | [GitHub](https://github.com/anthropics/claude-cookbooks) | Claude API notebook，可查 tool use、batch 和 prompt cache。 |
-| 官方 API 入门 | Anthropic Courses | [GitHub](https://github.com/anthropics/courses) | Anthropic 官方课程，从 API 基础逐步延伸。 |
-| 官方 API 入门 | OpenAI Cookbook | [GitHub](https://github.com/openai/openai-cookbook) | OpenAI API、structured output 和 function calling 示例。 |
-| 官方 API 入门 | Anthropic Claude API Quickstart | [官方文档](https://docs.anthropic.com/en/docs/get-started) | 快速完成第一次 Claude API 调用。 |
-| 中文教材 | datawhalechina/happy-llm | [GitHub](https://github.com/datawhalechina/happy-llm) | 用中文理解 LLM 原理和训练流程。 |
-| 中文教材 | datawhalechina/llm-universe | [GitHub](https://github.com/datawhalechina/llm-universe) | 从 API 基础延伸到知识库和 RAG。 |
-| 中文教材 | datawhalechina/llm-cookbook | [GitHub](https://github.com/datawhalechina/llm-cookbook) | Andrew Ng 课程的中文改编，更新速度较慢。 |
-| 中文教材 | jingyaogong/minimind | [GitHub](https://github.com/jingyaogong/minimind) | 从零实现小型模型训练，Apache-2.0。 |
-| 英文课程 | Hugging Face — LLM Course | [课程](https://huggingface.co/learn/llm-course) | Transformer、tokenizer 与 Hugging Face 生态。 |
-| 英文课程 | LangChain Academy | [课程](https://academy.langchain.com/) | 官方免费课程，包含 RAG 与 agent。 |
-| 本地运行 | ollama/ollama | [GitHub](https://github.com/ollama/ollama) | 本章 Path A 的本地运行入口。 |
-| 本地运行 | ggml-org/llama.cpp | [GitHub](https://github.com/ggml-org/llama.cpp) | 理解量化和本地推理底层。 |
-| 本地运行 | mudler/LocalAI | [GitHub](https://github.com/mudler/LocalAI) | 提供 OpenAI 兼容的 self-host 服务。 |
-| 本地运行 | ml-explore/mlx | [GitHub](https://github.com/ml-explore/mlx) | Apple Silicon 的机器学习框架。 |
-| 从零理解 | Karpathy — Let's build GPT from scratch | [视频](https://www.youtube.com/watch?v=kCc8FmEb1nY) | 用 PyTorch 从零构建 GPT。 |
-| 从零理解 | rasbt/LLMs-from-scratch | [GitHub](https://github.com/rasbt/LLMs-from-scratch) | 用代码深入 tokenizer、attention 和训练。 |
-| 从零理解 | karpathy/LLM101n | [GitHub](https://github.com/karpathy/LLM101n) | 已归档的课程大纲，属于历史参考，不是现行教学。 |
+<table>
+  <thead><tr><th scope="col">分类</th><th scope="col">资源</th><th scope="col">入口</th><th scope="col">用途／状态</th></tr></thead>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">官方 API 入门</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>Claude API notebook，可查 tool use、batch 和 prompt cache。</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>Anthropic 官方课程，从 API 基础逐步延伸。</td></tr>
+    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>OpenAI API、structured output 和 function calling 示例。</td></tr>
+    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://docs.anthropic.com/en/docs/get-started">官方文档</a></td><td>快速完成第一次 Claude API 调用。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">中文教材</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td>用中文理解 LLM 原理和训练流程。</td></tr>
+    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td>从 API 基础延伸到知识库和 RAG。</td></tr>
+    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td>Andrew Ng 课程的中文改编，更新速度较慢。</td></tr>
+    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td>从零实现小型模型训练，Apache-2.0。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="2">英文课程</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course">课程</a></td><td>Transformer、tokenizer 与 Hugging Face 生态。</td></tr>
+    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">课程</a></td><td>官方免费课程，包含 RAG 与 agent。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">本地运行</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td>本章 Path A 的本地运行入口。</td></tr>
+    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td>理解量化和本地推理底层。</td></tr>
+    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td>提供 OpenAI 兼容的 self-host 服务。</td></tr>
+    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td>Apple Silicon 的机器学习框架。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3">从零理解</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">视频</a></td><td>用 PyTorch 从零构建 GPT。</td></tr>
+    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td>用代码深入 tokenizer、attention 和训练。</td></tr>
+    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td>已归档的课程大纲，属于历史参考，不是现行教学。</td></tr>
+  </tbody>
+</table>
 
 **其他 Project（按难度）**
 
@@ -451,7 +462,7 @@ print("💡 本次调用为 $0（不含电费）")
 
 | 家族 | 当前推荐型号 | 状态 | Context | 价格或授权 | 适合做什么 | 限制 | 官方来源 |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5（仅限邀请）；Opus 5；Sonnet 5；Haiku 4.5 | 正式可用 | 1M（Haiku 200K） | API：Fable $10/$50、Opus $5/$25、Sonnet $2/$10、Haiku $1/$5（输入／输出） | 长文、编程、agent 工作流 | Fable 不是所有账户都能直接使用；型号与区域可用性取决于账户 | [Anthropic 模型总览](https://platform.claude.com/docs/en/models/overview) |
+| Claude | Fable 5；Opus 5；Sonnet 5；Haiku 4.5 | 正式可用 | 1M（Haiku 200K） | API：Fable $10/$50、Opus $5/$25、Sonnet $2/$10、Haiku $1/$5（输入／输出） | 长文、编程、agent 工作流 | Fable 已正式开放，不是仅限邀请；各平台的 model ID 不同，使用前确认平台和区域支持 | [Anthropic 模型总览](https://platform.claude.com/docs/en/models/overview) |
 | GPT | GPT-5.6 Sol／Terra／Luna | 正式可用 | 1.05M | API：$4/$20、$2/$12、$0.20/$1.20（输入／输出） | 通用对话、工具调用、已有 SDK 集成 | 价格与限制按型号及 API 方案变化 | [OpenAI API 模型](https://developers.openai.com/api/docs/models) |
 | Gemini | Gemini 3.7 Flash | 正式可用 | 1M | 2026-12-31 前介绍价 $0.75/$3.75（输入／输出） | 长文档、多模态与 Google 生态整合 | Gemini 3.1 Pro 为 Preview；介绍价有期限 | [Gemini 模型文档](https://ai.google.dev/gemini-api/docs/models) · [Gemini API 定价](https://ai.google.dev/gemini-api/docs/pricing) |
 | DeepSeek | `deepseek-v4-flash`／`deepseek-v4-pro` | 正式可用 | 1M | Cache-miss：Flash $0.14/$0.28、Pro $0.435/$0.87（输入／输出） | 推理、编程、大量 token 任务 | 旧 `deepseek-chat`／`deepseek-reasoner` alias 已于 2026-07-24 弃用 | [DeepSeek 定价](https://api-docs.deepseek.com/quick_start/pricing/) |

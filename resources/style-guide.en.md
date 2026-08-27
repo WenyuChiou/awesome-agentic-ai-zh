@@ -268,6 +268,25 @@ If no → ...
 
 Secondary `<details>` blocks omit `open` by default. The one standard exception is the primary Ollama Path A in a two-path exercise; Anthropic Path B remains collapsed. Do not place a linkable heading inside `<details>`, and do not nest more than three disclosure levels.
 
+### Site-wide plain-language rule (ELI5)
+
+This rule applies to the entire learning map. The goal is for a five-year-old to understand “what to do now,” without losing technical accuracy or using a childish voice.
+
+- When a technical term appears for the first time, explain its plain-language purpose first, then keep the correct term. Example: “an entry that lets a program get data (API).”
+- Put one idea in each sentence. Give each step one main action. Split long sentences, abbreviations, and jargon, or add a short definition.
+- Keep commands, file names, error codes, model names, prices, numbers, and security warnings exact.
+- Even with every `<details>` closed, the reader should know the next step and what they will see when it works.
+- During review, sample the visible main path. If a first-time reader cannot say the next step in their own words, rewrite it. Move multi-paragraph theory into collapsed content.
+
+### Grouped resource tables
+
+- When the same category spans two or more consecutive resources, use an HTML `<table>` and merge the category with `<th scope="rowgroup" rowspan="N">`.
+- Add `scope="col"` to every column-header `<th>` in `<thead>`.
+- Give each category its own `<tbody>`; keep `<th scope="rowgroup" rowspan="N">` on the category's first row.
+- Merge only a genuinely shared category. Do not merge unrelated groups merely because their status, context, or other text happens to match.
+- Preserve the resource count, order, links, and three-locale correspondence, then verify the rendered result with MkDocs.
+- Keep short tables without repeated categories in Markdown to avoid needless maintenance cost.
+
 Pages containing models, prices, context limits, licenses, or lifecycle states place a visible verification date and a machine-readable marker near those facts:
 
 ```markdown
@@ -278,7 +297,7 @@ Pages containing models, prices, context limits, licenses, or lifecycle states p
 
 All three locale markers must be identical; `canonical` always points to the Traditional Chinese source page. If an official source does not publish a field, write “not published by the official source” instead of inferring it from a third-party leaderboard. Third-party benchmarks may only teach readers how to run their own evaluation.
 
-**Stage 0 exception**: can omit `Curated Projects` and `Entry Conditions` — it's a prerequisite gateway.
+**Stage 0 exception**: it may omit `Curated Projects` and `Entry Conditions` because it is a prerequisite gateway. The visible path keeps the skip check, four learning goals, one integrated practice, and a short completion check. Time, environment, extra practice, terms, and learning resources stay collapsed by default.
 
 ---
 

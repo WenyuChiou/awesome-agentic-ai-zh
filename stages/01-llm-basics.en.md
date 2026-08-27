@@ -337,25 +337,36 @@ The finished project should show:
 
 The table below keeps the 17 original extension entries. They are optional entrances, not required work. Volatile star and repository counts are omitted.
 
-| Category | Resource | Link | Use / status |
-|---|---|---|---|
-| Official API intro | Anthropic Cookbook | [GitHub](https://github.com/anthropics/claude-cookbooks) | Claude API notebooks for tool use, batch, and prompt cache. |
-| Official API intro | Anthropic Courses | [GitHub](https://github.com/anthropics/courses) | Anthropic's official courses, starting with API fundamentals. |
-| Official API intro | OpenAI Cookbook | [GitHub](https://github.com/openai/openai-cookbook) | OpenAI API, structured output, and function-calling examples. |
-| Official API intro | Anthropic Claude API Quickstart | [Docs](https://docs.anthropic.com/en/docs/get-started) | Quick path to a first Claude API call. |
-| Chinese learning | datawhalechina/happy-llm | [GitHub](https://github.com/datawhalechina/happy-llm) | Understand LLM principles and training in Chinese. |
-| Chinese learning | datawhalechina/llm-universe | [GitHub](https://github.com/datawhalechina/llm-universe) | Extends from API basics to knowledge bases and RAG. |
-| Chinese learning | datawhalechina/llm-cookbook | [GitHub](https://github.com/datawhalechina/llm-cookbook) | Chinese adaptation of an Andrew Ng course; updates are slower. |
-| Chinese learning | jingyaogong/minimind | [GitHub](https://github.com/jingyaogong/minimind) | Implement a small model from scratch; Apache-2.0. |
-| English course | Hugging Face — LLM Course | [Course](https://huggingface.co/learn/llm-course) | Transformers, tokenizers, and the Hugging Face ecosystem. |
-| English course | LangChain Academy | [Course](https://academy.langchain.com/) | Official free course including RAG and agents. |
-| Local runtime | ollama/ollama | [GitHub](https://github.com/ollama/ollama) | Local runtime used by this stage's Path A. |
-| Local runtime | ggml-org/llama.cpp | [GitHub](https://github.com/ggml-org/llama.cpp) | Understand quantization and the local inference layer. |
-| Local runtime | mudler/LocalAI | [GitHub](https://github.com/mudler/LocalAI) | OpenAI-compatible self-hosted service. |
-| Local runtime | ml-explore/mlx | [GitHub](https://github.com/ml-explore/mlx) | Machine-learning framework for Apple Silicon. |
-| From-scratch | Karpathy — Let's build GPT from scratch | [Video](https://www.youtube.com/watch?v=kCc8FmEb1nY) | Build a GPT from scratch with PyTorch. |
-| From-scratch | rasbt/LLMs-from-scratch | [GitHub](https://github.com/rasbt/LLMs-from-scratch) | Work through tokenizers, attention, and training with code. |
-| From-scratch | karpathy/LLM101n | [GitHub](https://github.com/karpathy/LLM101n) | Archived course outline; historical reference, not current teaching. |
+<table>
+  <thead><tr><th scope="col">Category</th><th scope="col">Resource</th><th scope="col">Link</th><th scope="col">Use / status</th></tr></thead>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">Official API intro</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>Claude API notebooks for tool use, batch, and prompt cache.</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>Anthropic's official courses, starting with API fundamentals.</td></tr>
+    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>OpenAI API, structured output, and function-calling examples.</td></tr>
+    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://docs.anthropic.com/en/docs/get-started">Docs</a></td><td>Quick path to a first Claude API call.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">Chinese learning</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td>Understand LLM principles and training in Chinese.</td></tr>
+    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td>Extends from API basics to knowledge bases and RAG.</td></tr>
+    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td>Chinese adaptation of an Andrew Ng course; updates are slower.</td></tr>
+    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td>Implement a small model from scratch; Apache-2.0.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="2">English course</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course">Course</a></td><td>Transformers, tokenizers, and the Hugging Face ecosystem.</td></tr>
+    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">Course</a></td><td>Official free course including RAG and agents.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">Local runtime</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td>Local runtime used by this stage's Path A.</td></tr>
+    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td>Understand quantization and the local inference layer.</td></tr>
+    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td>OpenAI-compatible self-hosted service.</td></tr>
+    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td>Machine-learning framework for Apple Silicon.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3">From-scratch</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Video</a></td><td>Build a GPT from scratch with PyTorch.</td></tr>
+    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td>Work through tokenizers, attention, and training with code.</td></tr>
+    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td>Archived course outline; historical reference, not current teaching.</td></tr>
+  </tbody>
+</table>
 
 **Other projects (by difficulty)**
 
@@ -451,7 +462,7 @@ The following fields were checked against official sources. “Not published by 
 
 | Family | Current recommended models | Status | Context | Price or license | Good for | Limitations | Official source |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5 (invitation-only); Opus 5; Sonnet 5; Haiku 4.5 | Generally available | 1M (Haiku 200K) | API: Fable $10/$50, Opus $5/$25, Sonnet $2/$10, Haiku $1/$5 (input/output) | Long-form, coding, agent workflows | Fable is not directly available to every account; model and region availability depend on the account | [Anthropic model overview](https://platform.claude.com/docs/en/models/overview) |
+| Claude | Fable 5; Opus 5; Sonnet 5; Haiku 4.5 | Generally available | 1M (Haiku 200K) | API: Fable $10/$50, Opus $5/$25, Sonnet $2/$10, Haiku $1/$5 (input/output) | Long-form, coding, agent workflows | Fable is generally available, not invitation-only; model IDs differ by platform, so confirm platform and region support before use | [Anthropic model overview](https://platform.claude.com/docs/en/models/overview) |
 | GPT | GPT-5.6 Sol / Terra / Luna | Generally available | 1.05M | API: $4/$20, $2/$12, $0.20/$1.20 (input/output) | General chat, tool use, existing SDK integration | Price and limits vary by model and API plan | [OpenAI API models](https://developers.openai.com/api/docs/models) |
 | Gemini | Gemini 3.7 Flash | Generally available | 1M | Through 2026-12-31, introductory $0.75/$3.75 (input/output) | Long documents, multimodal tasks, Google integration | Gemini 3.1 Pro is Preview; introductory pricing has an end date | [Gemini models](https://ai.google.dev/gemini-api/docs/models) · [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) |
 | DeepSeek | `deepseek-v4-flash` / `deepseek-v4-pro` | Generally available | 1M | Cache-miss: Flash $0.14/$0.28, Pro $0.435/$0.87 (input/output) | Reasoning, coding, high-token workloads | Legacy `deepseek-chat` / `deepseek-reasoner` aliases were deprecated 2026-07-24 | [DeepSeek pricing](https://api-docs.deepseek.com/quick_start/pricing/) |
