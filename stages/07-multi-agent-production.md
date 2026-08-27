@@ -89,7 +89,7 @@
 
 ### ⚠ 但你真的需要 multi-agent 嗎？
 
-**Multi-agent 不是 default、是任務真的需要時才上的設計**。多數場景應先嘗試 simple workflow 或 single agent；**只有在任務天然可分解、需要平行探索、單一 context 不夠、或需要明確角色分工時，multi-agent 才值得引入**。硬上會付 **3-10× token、debug 困難、context fragmentation（context 被切散在多個 agent、彼此看不到全貌）嚴重**。
+**Multi-agent 不是 default、是任務真的需要時才上的設計**。多數場景應先嘗試 simple workflow 或 single agent；**只有在任務天然可分解、需要平行探索、單一 context 不夠、或需要明確角色分工時，multi-agent 才值得引入**。硬上會增加 **token、延遲、debug 與 context fragmentation（context 被切散在多個 agent、彼此看不到全貌）成本**；倍數要用自己的任務量測。Anthropic Research 系統約 `15×` 一般 chat tokens，只是特定系統結果，不是通則。
 
 > 📌 **決策框架的 canonical 在 Stage 4**：完整的 Anthropic / Cognition 立場對照 + 4 個「該上 multi-agent」訊號 + 每個訊號對應的 pattern，見 [Stage 4 §什麼時候真的需要 multi-agent](04-agent-frameworks.md#什麼時候真的需要-multi-agent不要硬上)（設計階段決策）。本節只做 production 前的最後回頭檢查——**4 個訊號一個都不在？** → single agent + 好 prompt + tool use 就夠、別硬上 multi-agent。**本 stage 的 harness engineering 部分（8 個元件 / eval / observability）即使你最後用 single agent 也都會用到**——所以即使你決定不走 multi-agent、本 stage 仍是必修。
 

@@ -84,7 +84,7 @@
 
 1. [**Anthropic — Introducing Computer Use**](https://www.anthropic.com/news/3-5-models-and-computer-use) — Computer Use 原始 launch、reading 工作原理必看
 2. [**Anthropic — Claude Release Notes（模型總覽）**](https://docs.anthropic.com/en/release-notes/overview) — Claude Opus 5（`claude-opus-5`，2026-07-24）是目前建議的預設模型，官方文件說複雜 agentic coding 與企業工作「從 Claude Opus 5 開始」。其上還有 Mythos-class 的 Claude Fable 5（`claude-fable-5`）——Anthropic 目前公開發布中能力最強的模型，留給需要最高能力的工作；Mythos 5（`claude-mythos-5`）規格相同但僅限邀請。Opus 4.8（2026-05，Dynamic Workflows + parallel subagent harness 隨它推出）仍可用，但官方文件已把它移到 Legacy models 區。
-3. [**OpenAI — The next evolution of the Agents SDK**](https://openai.com/index/the-next-evolution-of-the-agents-sdk/) ⭐ **2026-04** — 內建 sandbox + harness 抽象、production coding agent architecturally sound milestone
+3. [**OpenAI — The next evolution of the Agents SDK**](https://openai.com/index/the-next-evolution-of-the-agents-sdk/) ⭐ **2026-04** — 把 workspace、session、approval 與 sandbox client 接進同一套 Agent API；Sandbox Agents 目前仍是 beta
 4. [**OpenAI — Computer-Using Agent (CUA)**](https://openai.com/index/computer-using-agent/) — OpenAI 版 Computer Use + WebArena / OSWorld 數字
 5. [**browser-use docs**](https://docs.browser-use.com/) — OSS web agent 第一名（108k+ stars）、5 行 Python 起步
 6. [**Microsoft OmniParser**](https://microsoft.github.io/OmniParser/) — 開源 GUI parsing、Computer Use 重要 building block
@@ -288,8 +288,8 @@ agent 收到任務
 
 **這次更新為什麼重要**：
 
-- **之前**：production coding agent 用 OpenAI SDK 是「**prototype**」——sandbox 要自己接、harness 要自己寫、auditability 不足
-- **2026-04 之後**：**architecturally sound**——SDK 內建 harness 抽象層 + sandbox 抽象層 + Codex filesystem tools
+- **之前**：團隊通常要自己把 workspace、session、approval、sandbox provider 與 agent loop 接在一起。
+- **2026-04 之後**：Agents SDK 提供共用 harness／sandbox 介面與 Codex filesystem tools；Sandbox Agents 仍是 beta，不代表 production 隔離、審批與測試已自動完成。
 
 **3 個關鍵新功能**：
 
@@ -374,7 +374,7 @@ with Sandbox() as sandbox:
 
 ### 3. 用 OpenAI Agents SDK 內建 sandbox（2026-04 新）
 
-**Why 這 SDK**：之前是 prototype-only、April 2026 update 後 production architecturally sound（見 7 末）。
+**Why 這 SDK**：它把 workspace、session、approval 與 sandbox client 接進同一套 Agent API；這條 Sandbox Agents 路線仍是 beta，production 仍要自己驗證隔離、權限、審批與失敗復原。
 
 ```python
 from openai.agents import Agent, Sandbox

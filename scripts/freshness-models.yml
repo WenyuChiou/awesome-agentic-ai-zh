@@ -58,12 +58,39 @@ stage03_fact_pack:
     openai_python_sdk: 'https://pypi.org/project/openai/'
     anthropic_python_sdk: 'https://pypi.org/project/anthropic/'
 
+stage04_fact_pack:
+  canonical: 'stages/04-agent-frameworks.md'
+  verified_on: '2026-08-27'
+  scope: ['frameworks', 'releases', 'maintenance', 'licenses', 'security']
+  official_sources:
+    anthropic_agent_patterns: 'https://www.anthropic.com/engineering/building-effective-agents'
+    anthropic_multi_agent_research: 'https://www.anthropic.com/engineering/multi-agent-research-system'
+    cognition_multi_agent_limits: 'https://cognition.ai/blog/dont-build-multi-agents'
+    langgraph_overview: 'https://docs.langchain.com/oss/python/langgraph/overview'
+    langgraph_persistence: 'https://docs.langchain.com/oss/python/langgraph/persistence'
+    crewai_flows: 'https://docs.crewai.com/en/concepts/flows'
+    openai_agents_orchestration: 'https://openai.github.io/openai-agents-python/multi_agent/'
+    openai_sandbox_agents: 'https://openai.github.io/openai-agents-python/sandbox/guide/'
+    openai_swarm: 'https://github.com/openai/swarm'
+    microsoft_agent_framework: 'https://github.com/microsoft/agent-framework'
+    microsoft_migration_guide: 'https://learn.microsoft.com/en-us/agent-framework/migration-guide/'
+    autogen: 'https://microsoft.github.io/autogen/'
+    deepagents: 'https://docs.langchain.com/oss/python/deepagents/overview'
+    strands_agents: 'https://strandsagents.com/docs/user-guide/quickstart/overview/'
+    smolagents_security: 'https://huggingface.co/docs/smolagents/tutorials/secure_code_execution'
+    pydantic_ai_outputs: 'https://pydantic.dev/docs/ai/core-concepts/output/'
+    agno: 'https://docs.agno.com/'
+    vercel_eve: 'https://vercel.com/blog/introducing-eve'
+
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
     required_scopes: ['models', 'pricing', 'availability', 'deprecations']
     max_age_days: 90
   - canonical: 'stages/03-tool-use-and-hello-agent.md'
     required_scopes: ['models', 'pricing', 'tool-apis', 'security']
+    max_age_days: 90
+  - canonical: 'stages/04-agent-frameworks.md'
+    required_scopes: ['frameworks', 'releases', 'maintenance', 'licenses', 'security']
     max_age_days: 90
 
 current_frontier_models:

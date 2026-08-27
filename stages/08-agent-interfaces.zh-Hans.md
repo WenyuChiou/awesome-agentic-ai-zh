@@ -84,7 +84,7 @@
 
 1. [**Anthropic — Introducing Computer Use**](https://www.anthropic.com/news/3-5-models-and-computer-use) — Computer Use 的原始发布，必读以了解其工作原理。
 2. [**Anthropic — Claude Release Notes（模型总览）**](https://docs.anthropic.com/en/release-notes/overview) — Claude Opus 5（`claude-opus-5`，2026-07-24）是目前建议的默认模型，官方文档说复杂 agentic coding 与企业工作“从 Claude Opus 5 开始”。其上还有 Mythos-class 的 Claude Fable 5（`claude-fable-5`）——Anthropic 目前公开发布中能力最强的模型，留给需要最高能力的工作；Mythos 5（`claude-mythos-5`）规格相同但仅限邀请。Opus 4.8（2026 年 5 月，Dynamic Workflows + parallel subagent harness 随它推出）仍可用，但官方文档已把它移到 Legacy models 区。
-3. [**OpenAI — The next evolution of the Agents SDK**](https://openai.com/index/the-next-evolution-of-the-agents-sdk/) ⭐ **2026-04** — 内置沙箱和 harness 抽象，是生产级编码智能体架构的里程碑。
+3. [**OpenAI — The next evolution of the Agents SDK**](https://openai.com/index/the-next-evolution-of-the-agents-sdk/) ⭐ **2026-04** — 把工作区、会话、审批与沙箱客户端接入同一套 Agent API；Sandbox Agents 当前仍是 beta。
 4. [**OpenAI — Computer-Using Agent (CUA)**](https://openai.com/index/computer-using-agent/) — OpenAI 版本的 Computer Use，包含 WebArena / OSWorld 数据。
 5. [**browser-use docs**](https://docs.browser-use.com/) — 开源 web agent 排名第一（108k+ 星），5 行 Python 即可上手。
 6. [**Microsoft OmniParser**](https://microsoft.github.io/OmniParser/) — 开源的 GUI 解析工具，是 Computer Use 的重要组成部分。
@@ -288,8 +288,8 @@
 
 **这次更新为何重要**：
 
-- **之前**：使用 OpenAI SDK 开发生产级编码智能体只是“**原型**”——沙箱要自己接，harness 要自己写，可审计性不足。
-- **2026-04 之后**：**架构上合理**——SDK 内置 harness 抽象层 + 沙箱抽象层 + Codex 文件系统工具。
+- **之前**：团队通常要自己把工作区、会话、审批、沙箱提供商与智能体循环接在一起。
+- **2026-04 之后**：Agents SDK 提供共用的 harness／沙箱接口和 Codex 文件系统工具。Sandbox Agents 仍是 beta，不代表生产环境的隔离、审批与测试已经自动完成。
 
 **3 个关键新功能**：
 
@@ -374,7 +374,7 @@ with Sandbox() as sandbox:
 
 ### 3. 使用 OpenAI Agents SDK 内置沙箱（2026-04 新功能）
 
-**为何使用这个 SDK**：之前仅为原型设计，2026 年 4 月更新后在架构上已适合生产（见 7 末尾）。
+**为何使用这个 SDK**：它把工作区、会话、审批与沙箱客户端接入同一套 Agent API。这条 Sandbox Agents 路线仍是 beta，生产系统仍需自行验证隔离、权限、审批与故障恢复。
 
 ```python
 from openai.agents import Agent, Sandbox

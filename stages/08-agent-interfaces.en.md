@@ -84,7 +84,7 @@ If you don't meet these, go back and catch up.
 
 1. [**Anthropic — Introducing Computer Use**](https://www.anthropic.com/news/3-5-models-and-computer-use) — The original launch announcement for Computer Use. A must-read to understand how it works.
 2. [**Anthropic — Claude Release Notes (model overview)**](https://docs.anthropic.com/en/release-notes/overview) — Claude Opus 5 (`claude-opus-5`, 2026-07-24) is the current recommended default; Anthropic's docs say to "start with Claude Opus 5 for complex agentic coding and enterprise work". Above it sits the Mythos-class Claude Fable 5 (`claude-fable-5`), Anthropic's most capable widely released model, reserved for workloads that need the highest available capability; Mythos 5 (`claude-mythos-5`) has the same specs but is invitation-only. Opus 4.8 (May 2026, which shipped Dynamic Workflows + the parallel subagent harness) is still available, but the docs have moved it into the Legacy models section.
-3. [**OpenAI — The next evolution of the Agents SDK**](https://openai.com/index/the-next-evolution-of-the-agents-sdk/) ⭐ **April 2026** — A milestone for architecturally sound production coding agents, with a built-in sandbox and harness abstractions.
+3. [**OpenAI — The next evolution of the Agents SDK**](https://openai.com/index/the-next-evolution-of-the-agents-sdk/) ⭐ **April 2026** — Connects workspaces, sessions, approvals, and sandbox clients through the same Agent API; Sandbox Agents are still beta.
 4. [**OpenAI — Computer-Using Agent (CUA)**](https://openai.com/index/computer-using-agent/) — OpenAI's version of Computer Use, with WebArena/OSWorld numbers.
 5. [**browser-use docs**](https://docs.browser-use.com/) — The #1 open-source web agent (108k+ stars), get started with 5 lines of Python.
 6. [**Microsoft OmniParser**](https://microsoft.github.io/OmniParser/) — An open-source GUI parsing tool and an important building block for Computer Use.
@@ -288,8 +288,8 @@ A common sticking point for new readers, explained here:
 
 **Why this update matters**:
 
-- **Before**: Using the OpenAI SDK for a production coding agent was just a "**prototype**"—you had to wire up your own sandbox, write your own harness, and auditability was insufficient.
-- **After April 2026**: It's **architecturally sound**—the SDK has a built-in harness abstraction, a sandbox abstraction, and Codex filesystem tools.
+- **Before**: Teams usually had to connect the workspace, session, approval, sandbox-provider, and agent-loop pieces themselves.
+- **After April 2026**: The Agents SDK provides shared harness and sandbox interfaces plus Codex filesystem tools. Sandbox Agents are still beta; production isolation, approvals, and testing are not automatically solved.
 
 **3 Key New Features**:
 
@@ -374,7 +374,7 @@ with Sandbox() as sandbox:
 
 ### 3. Use the Built-in Sandbox in the OpenAI Agents SDK (New in April 2026)
 
-**Why this SDK**: It used to be for prototypes only, but the April 2026 update made it architecturally sound for production (see end of 7).
+**Why this SDK**: It connects workspaces, sessions, approvals, and sandbox clients through one Agent API. This Sandbox Agents path is still beta, so production systems must still validate isolation, permissions, approvals, and failure recovery.
 
 ```python
 from openai.agents import Agent, Sandbox

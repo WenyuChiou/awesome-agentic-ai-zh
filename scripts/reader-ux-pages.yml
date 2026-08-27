@@ -546,6 +546,284 @@ pages:
           zh-Hans: {term: Structured Output, label: "Structured Output（结构化输出）"}
     resource_group_rowspans: [6, 4, 4, 3, 2, 2]
 
+  - id: stage-04
+    canonical: stages/04-agent-frameworks.md
+    mirrors:
+      en: stages/04-agent-frameworks.en.md
+      zh-Hans: stages/04-agent-frameworks.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 5280
+      en: 10240
+      zh-Hans: 5294
+    max_open_details: 0
+    visible_section_order:
+      - learning-goals
+      - core-terms
+      - choice-map
+      - entry-conditions
+      - required-reading
+      - framework-definition
+      - two-dimensions
+      - need-multi-agent
+      - patterns
+      - chooser
+      - hands-on
+      - exercise-1
+      - exercise-2
+      - exercise-3
+      - exercise-4
+      - exercise-5
+      - mini-project
+      - projects
+      - completion
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-27"
+        - "1.15.18"
+        - ">=3.10,<3.14"
+        - "90.2%"
+        - "15×"
+        - "Sandbox Agents"
+        - "beta"
+        - "Public Preview"
+        - "autogen-agentchat"
+        - "0.7.x"
+        - "sdk-python"
+        - "harness-sdk"
+        - "py -3.11 -m pip install -r requirements.txt"
+        - "stacked 04B"
+    required_visible_sections:
+      learning-goals:
+        zh-TW:
+          heading: "📌 學習目標"
+          anchor: -學習目標
+        en:
+          heading: "📌 Learning Goals"
+          anchor: -learning-goals
+        zh-Hans:
+          heading: "📌 学习目标"
+          anchor: -学习目标
+      core-terms:
+        zh-TW:
+          heading: "🧩 先認識八個核心詞"
+          anchor: -先認識八個核心詞
+        en:
+          heading: "🧩 Eight Core Terms First"
+          anchor: -eight-core-terms-first
+        zh-Hans:
+          heading: "🧩 先认识八个核心词"
+          anchor: -先认识八个核心词
+      choice-map:
+        zh-TW:
+          heading: "🗺️ 先看一張選擇地圖"
+          anchor: -先看一張選擇地圖
+        en:
+          heading: "🗺️ Start with This Choice Map"
+          anchor: -start-with-this-choice-map
+        zh-Hans:
+          heading: "🗺️ 先看一张选择地图"
+          anchor: -先看一张选择地图
+      entry-conditions:
+        zh-TW:
+          heading: "🚪 進入條件"
+          anchor: -進入條件
+        en:
+          heading: "🚪 Entry Conditions"
+          anchor: -entry-conditions
+        zh-Hans:
+          heading: "🚪 进入条件"
+          anchor: -进入条件
+      required-reading:
+        zh-TW:
+          heading: "📚 必修閱讀"
+          anchor: -必修閱讀
+        en:
+          heading: "📚 Required Reading"
+          anchor: -required-reading
+        zh-Hans:
+          heading: "📚 必修阅读"
+          anchor: -必修阅读
+      framework-definition:
+        zh-TW:
+          heading: "🤔 什麼是 multi-agent framework？"
+          anchor: -什麼是-multi-agent-framework
+        en:
+          heading: "🤔 What Is a Multi-Agent Framework?"
+          anchor: -what-is-a-multi-agent-framework
+        zh-Hans:
+          heading: "🤔 什么是 multi-agent framework？"
+          anchor: -什么是-multi-agent-framework
+      two-dimensions:
+        zh-TW:
+          heading: "兩個維度先分清楚（workflow vs agent / single vs multi）"
+          anchor: 兩個維度先分清楚workflow-vs-agent--single-vs-multi
+        en:
+          heading: "Two Dimensions to Clarify First (workflow vs agent / single vs multi)"
+          anchor: two-dimensions-to-clarify-first-workflow-vs-agent--single-vs-multi
+        zh-Hans:
+          heading: "两个维度先分清楚（workflow vs agent / single vs multi）"
+          anchor: 两个维度先分清楚workflow-vs-agent--single-vs-multi
+      need-multi-agent:
+        zh-TW:
+          heading: "什麼時候真的需要 multi-agent（不要硬上）"
+          anchor: 什麼時候真的需要-multi-agent不要硬上
+        en:
+          heading: "When Do You Really Need Multi-Agent? (Don't Force It)"
+          anchor: when-do-you-really-need-multi-agent-dont-force-it
+        zh-Hans:
+          heading: "什么时候真的需要 multi-agent（不要硬上）"
+          anchor: 什么时候真的需要-multi-agent不要硬上
+      patterns:
+        zh-TW:
+          heading: "五種協作 pattern"
+          anchor: 五種協作-pattern
+        en:
+          heading: "Five Collaboration Patterns"
+          anchor: five-collaboration-patterns
+        zh-Hans:
+          heading: "五种协作 pattern"
+          anchor: 五种协作-pattern
+      chooser:
+        zh-TW:
+          heading: "依需求選工具"
+          anchor: 依需求選工具
+        en:
+          heading: "Choose a Tool by Need"
+          anchor: choose-a-tool-by-need
+        zh-Hans:
+          heading: "依需求选工具"
+          anchor: 依需求选工具
+      hands-on:
+        zh-TW:
+          heading: "🛠 動手練習"
+          anchor: -動手練習
+        en:
+          heading: "🛠 Hands-on Exercises"
+          anchor: -hands-on-exercises
+        zh-Hans:
+          heading: "🛠 动手练习"
+          anchor: -动手练习
+      exercise-1:
+        zh-TW:
+          heading: "練習 1：同一個 agent、兩個 framework"
+          anchor: 練習-1同一個-agent兩個-framework
+        en:
+          heading: "Exercise 1: Same Agent, Two Frameworks"
+          anchor: exercise-1-same-agent-two-frameworks
+        zh-Hans:
+          heading: "练习 1：同一个 agent、两个 framework"
+          anchor: 练习-1同一个-agent两个-framework
+      exercise-2:
+        zh-TW:
+          heading: "練習 2：多 agent 角色分配"
+          anchor: 練習-2多-agent-角色分配
+        en:
+          heading: "Exercise 2: Multi-Agent Role Assignment"
+          anchor: exercise-2-multi-agent-role-assignment
+        zh-Hans:
+          heading: "练习 2：多 agent 角色分配"
+          anchor: 练习-2多-agent-角色分配
+      exercise-3:
+        zh-TW:
+          heading: "練習 3：圖式 workflow"
+          anchor: 練習-3圖式-workflow
+        en:
+          heading: "Exercise 3: Graph-Based Workflow"
+          anchor: exercise-3-graph-based-workflow
+        zh-Hans:
+          heading: "练习 3：图式 workflow"
+          anchor: 练习-3图式-workflow
+      exercise-4:
+        zh-TW:
+          heading: "練習 4：CodeAct vs JSON tool"
+          anchor: 練習-4codeact-vs-json-tool
+        en:
+          heading: "Exercise 4: Generated-Code Actions vs JSON Tools"
+          anchor: exercise-4-generated-code-actions-vs-json-tools
+        zh-Hans:
+          heading: "练习 4：CodeAct vs JSON tool"
+          anchor: 练习-4codeact-vs-json-tool
+      exercise-5:
+        zh-TW:
+          heading: "練習 5：型別安全 agent"
+          anchor: 練習-5型別安全-agent
+        en:
+          heading: "Exercise 5: Schema-Validated Agent Output"
+          anchor: exercise-5-schema-validated-agent-output
+        zh-Hans:
+          heading: "练习 5：类型安全 agent"
+          anchor: 练习-5类型安全-agent
+      mini-project:
+        zh-TW:
+          heading: "🎒 推薦小專案：有人先檢查的研究摘要流程"
+          anchor: -推薦小專案有人先檢查的研究摘要流程
+        en:
+          heading: "🎒 Recommended Mini-Project: A Human-Checked Research-Summary Workflow"
+          anchor: -recommended-mini-project-a-human-checked-research-summary-workflow
+        zh-Hans:
+          heading: "🎒 推荐小项目：有人先检查的研究摘要流程"
+          anchor: -推荐小项目有人先检查的研究摘要流程
+      projects:
+        zh-TW:
+          heading: "🎯 精選 Projects"
+          anchor: -精選-projects
+        en:
+          heading: "🎯 Curated Projects"
+          anchor: -curated-projects
+        zh-Hans:
+          heading: "🎯 精选 Projects"
+          anchor: -精选-projects
+      completion:
+        zh-TW:
+          heading: "✅ 進 Stage 5 前的自我檢查"
+          anchor: -進-stage-5-前的自我檢查
+        en:
+          heading: "✅ Self-Check Before Stage 5"
+          anchor: -self-check-before-stage-5
+        zh-Hans:
+          heading: "✅ 进 Stage 5 前的自我检查"
+          anchor: -进-stage-5-前的自我检查
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 20
+      terms:
+        - id: framework
+          zh-TW: {term: Framework, label: "Framework（框架）"}
+          en: {term: Framework, label: Framework}
+          zh-Hans: {term: Framework, label: "Framework（框架）"}
+        - id: workflow
+          zh-TW: {term: Workflow, label: "Workflow（工作流程）"}
+          en: {term: Workflow, label: Workflow}
+          zh-Hans: {term: Workflow, label: "Workflow（工作流程）"}
+        - id: agent
+          zh-TW: {term: Agent, label: "Agent（代理程式）"}
+          en: {term: Agent, label: Agent}
+          zh-Hans: {term: Agent, label: "Agent（智能体）"}
+        - id: orchestration
+          zh-TW: {term: Orchestration, label: "Orchestration（編排）"}
+          en: {term: Orchestration, label: Orchestration}
+          zh-Hans: {term: Orchestration, label: "Orchestration（编排）"}
+        - id: state
+          zh-TW: {term: State, label: "State（狀態）"}
+          en: {term: State, label: State}
+          zh-Hans: {term: State, label: "State（状态）"}
+        - id: checkpoint
+          zh-TW: {term: Checkpoint, label: "Checkpoint（檢查點）"}
+          en: {term: Checkpoint, label: Checkpoint}
+          zh-Hans: {term: Checkpoint, label: "Checkpoint（检查点）"}
+        - id: handoff
+          zh-TW: {term: Handoff, label: "Handoff（交接）"}
+          en: {term: Handoff, label: Handoff}
+          zh-Hans: {term: Handoff, label: "Handoff（交接）"}
+        - id: human-in-the-loop
+          zh-TW: {term: Human-in-the-loop, label: "Human-in-the-loop（HITL，人在迴圈中）"}
+          en: {term: Human-in-the-loop, label: "Human-in-the-loop (HITL)"}
+          zh-Hans: {term: Human-in-the-loop, label: "Human-in-the-loop（HITL，人在循环中）"}
+    resource_group_rowspans: [4, 6, 4, 3, 1]
+
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
     mirrors:
