@@ -847,11 +847,14 @@
       "license": "NOASSERTION",
       "pushed_at": "2026-03-01T17:07:40Z",
       "latest_release": null,
-      "reference_count": 6,
+      "reference_count": 9,
       "sources": [
         "stages/02-prompt-engineering.en.md",
         "stages/02-prompt-engineering.md",
-        "stages/02-prompt-engineering.zh-Hans.md"
+        "stages/02-prompt-engineering.zh-Hans.md",
+        "tracks/cli/A2-cli-workflow.en.md",
+        "tracks/cli/A2-cli-workflow.md",
+        "tracks/cli/A2-cli-workflow.zh-Hans.md"
       ]
     },
     "anthropics/skills": {
@@ -2202,17 +2205,14 @@
       "license": "NOASSERTION",
       "pushed_at": "2026-08-27T04:53:07Z",
       "latest_release": null,
-      "reference_count": 9,
+      "reference_count": 6,
       "sources": [
         "branches/for-everyday-users.en.md",
         "branches/for-everyday-users.md",
         "branches/for-everyday-users.zh-Hans.md",
         "branches/for-teacher.en.md",
         "branches/for-teacher.md",
-        "branches/for-teacher.zh-Hans.md",
-        "tracks/cli/A2-cli-workflow.en.md",
-        "tracks/cli/A2-cli-workflow.md",
-        "tracks/cli/A2-cli-workflow.zh-Hans.md"
+        "branches/for-teacher.zh-Hans.md"
       ]
     },
     "firecrawl/firecrawl-mcp-server": {

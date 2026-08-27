@@ -198,8 +198,8 @@ The resources below are divided into five groups by purpose. Each group shows it
 <tr><td><code>obra/superpowers</code></td><td>How real workflows are split into Skills</td><td>After completing your first Skill</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Community indexes and prompts</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>Finding Claude Code resources by type</td><td>When you know the need and want more examples</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
-<tr><td><code>f/awesome-chatgpt-prompts</code></td><td>Comparing how prompts describe tasks</td><td>When the shared core in CLI-8 is unclear</td><td><a href="https://github.com/f/awesome-chatgpt-prompts">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="2">Indexes and prompt practice</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>Finding Claude Code resources by type</td><td>When you know the need and want more examples</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
+<tr><td><code>anthropics/prompt-eng-interactive-tutorial</code></td><td>Comparing prompt approaches step by step</td><td>When the shared core in CLI-8 is unclear</td><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Official GitHub repo</a></td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">Repo context tools</th><td><code>yamadashy/repomix</code></td><td>Creating a one-off codebase snapshot</td><td>When you need to organize repo contents for an agent</td><td><a href="https://github.com/yamadashy/repomix">GitHub repo</a></td></tr>

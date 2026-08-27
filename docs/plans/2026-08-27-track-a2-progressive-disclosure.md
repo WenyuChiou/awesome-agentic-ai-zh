@@ -89,7 +89,7 @@
 - Markdown 表格若同一分類跨多列，不用空白儲存格假裝合併；改用 HTML `<table>` 與真正的 `rowspan`。
 - 第一遍只顯示「專案規則／Skill／單次 prompt」三列短表，不把完整工具矩陣放在主線。
 - 完整資源表預設收合，欄位固定為：`類型｜資源｜先看什麼｜適合何時使用｜官方／repo 來源`。
-- 分組固定為：官方專案規則（4）、官方 Skill 文件（4）、標準與可讀範例（4）、社群索引與 prompt（2）、repo-context 工具（2）。三語 rowgroup 數量、順序與 URL 完全一致。
+- 分組固定為：官方專案規則（4）、官方 Skill 文件（4）、標準與可讀範例（4）、索引與 prompt 練習（2）、repo-context 工具（2）。三語 rowgroup 數量、順序與 URL 完全一致。已搬家的 `f/awesome-chatgpt-prompts` 不留在 A2，改用未封存的 Anthropic 官方互動式 prompt 教學。
 - 不顯示 stars、主觀星等、排行榜或會自然過期的數字。
 
 ## 官方事實基線

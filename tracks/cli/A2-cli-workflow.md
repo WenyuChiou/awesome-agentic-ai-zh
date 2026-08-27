@@ -198,8 +198,8 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 <tr><td><code>obra/superpowers</code></td><td>真實 workflow 如何拆成 Skills</td><td>完成第一個 Skill 後再看</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">社群索引與 prompt</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>按類型找 Claude Code 資源</td><td>已知道需求、想找更多範例</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
-<tr><td><code>f/awesome-chatgpt-prompts</code></td><td>比較不同 prompt 的任務寫法</td><td>CLI-8 卡在共用核心時</td><td><a href="https://github.com/f/awesome-chatgpt-prompts">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="2">索引與 prompt 練習</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>按類型找 Claude Code 資源</td><td>已知道需求、想找更多範例</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
+<tr><td><code>anthropics/prompt-eng-interactive-tutorial</code></td><td>一步一步比較 prompt 寫法</td><td>CLI-8 卡在共用核心時</td><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">官方 GitHub repo</a></td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">Repo context 工具</th><td><code>yamadashy/repomix</code></td><td>產生一次性的 codebase 快照</td><td>需要把 repo 內容整理給 agent</td><td><a href="https://github.com/yamadashy/repomix">GitHub repo</a></td></tr>
