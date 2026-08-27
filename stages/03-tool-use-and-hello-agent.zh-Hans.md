@@ -103,7 +103,7 @@ macOS／Linux 的设置方式是 `export ANTHROPIC_API_KEY="贴上你的密钥"`
 
 **时间**：先跑练习 1–3 约 2–3 小时；练习 4–6 约 3–5 小时；完整 active path 约 5–8 小时。
 
-**费用算法**：
+**费用计算方式**：
 
 ```text
 费用 = 输入 tokens ÷ 1,000,000 × input price

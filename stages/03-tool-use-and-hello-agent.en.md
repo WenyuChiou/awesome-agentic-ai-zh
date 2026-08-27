@@ -103,7 +103,7 @@ On macOS/Linux, set it with `export ANTHROPIC_API_KEY="paste-your-key-here"`. Do
 
 **Time**: Plan about 2–3 hours for Exercises 1–3, about 3–5 hours for Exercises 4–6, and 5–8 hours for the full active path.
 
-**Cost formula**:
+**Cost calculation**:
 
 ```text
 cost = input tokens ÷ 1,000,000 × input price
