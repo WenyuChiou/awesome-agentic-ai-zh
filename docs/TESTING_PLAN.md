@@ -64,14 +64,14 @@ Shipped in commits [`d598e37`](https://github.com/WenyuChiou/awesome-agentic-ai-
 
 | File | Lines (zh-TW) | Exercises |
 |---|---|---|
-| `tracks/cli/A1-cli-intro.md` | 107 | CLI-1 安裝 + 第一次跑 / CLI-2 CLAUDE.md / CLI-3 第二個 CLI 並用 / CLI-4 認證細節 |
-| `tracks/cli/A2-cli-workflow.md` | 126 | CLI-5 production CLAUDE.md / CLI-6 slash command / CLI-7 多步驟拆解 / CLI-8 portable prompt |
-| `tracks/cli/A3-cli-production.md` | 134 | CLI-9 MCP server 接 CLI / CLI-10 GitHub Actions / CLI-11 cost tracking / CLI-12 plugin 跨 team 分享 |
+| `tracks/cli/A1-cli-intro.md` | 157 | CLI-1 安裝與第一次唯讀任務 / CLI-2 project instructions / CLI-3 第二個 CLI 重跑 / CLI-4 假憑證與安全失敗 |
+| `tracks/cli/A2-cli-workflow.md` | 221 | CLI-5 project instructions / CLI-6 Skill / CLI-7 多步驟拆解 / CLI-8 portable prompt |
+| `tracks/cli/A3-cli-production.md` | 241 | CLI-9 MCP server 接 CLI / CLI-10 GitHub Actions / CLI-11 cost tracking / CLI-12 plugin 跨 team 分享 |
 
 **No `examples/track-a/` folder built — and this is intentional**. CLI exercises are:
 
 - Bash commands (`ollama pull`, `claude` install, MCP-server install)
-- Markdown authoring (CLAUDE.md, slash command `.md` files, SKILL.md)
+- Markdown authoring (project-instructions files and `SKILL.md`)
 - YAML / JSON config (GitHub Actions `.yml`, `plugin.json`, `marketplace.json`)
 - **Not Python SDK code**, so the dual-path Ollama/Anthropic `starter.py` + `test.py` pattern doesn't apply.
 
@@ -79,7 +79,7 @@ What learners do for Track A: follow each numbered exercise in the outline doc, 
 
 **Core reference**: [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.md) — 9-CLI identity, provider, sign-in, and safety reference; the full comparison is collapsed by default.
 
-**Potential v2** (not committed): could ship `examples/track-a/` containing sample CLAUDE.md / `.claude/commands/review.md` / sample GHA workflow yml. Low priority — current outline is self-contained.
+**Potential v2** (not committed): could ship `examples/track-a/` containing a sample project-instructions file, `skills/review-changes/SKILL.md`, and a sample GHA workflow yml. Low priority — current outline is self-contained.
 
 ### Stage 5 — partial coverage
 

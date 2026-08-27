@@ -285,7 +285,7 @@ Package multiple Skills + slash commands + hooks + MCP configs into one shippabl
 
 ### Slash Command
 
-Commands inside Claude Code starting with `/` (`/help`, `/compact`, `/plan`, etc.). Custom-definable — drop a prompt into `.claude/commands/<name>.md` and it becomes `/name`.
+Commands inside Claude Code that start with `/`, such as `/help`, `/compact`, and `/plan`. Older projects may keep a custom prompt in `.claude/commands/<name>.md`; that is a compatibility path. For a new reusable workflow, use `.claude/skills/<name>/SKILL.md`.
 
 ### CLAUDE.md
 

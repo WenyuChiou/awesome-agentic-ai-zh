@@ -116,7 +116,7 @@ The two tracks are **not mutually exclusive** — most people start with A to ge
 | Stage | Topic | Key Content | Time |
 |---|---|---|---|
 | **A1** | [CLI Agent Intro & Selection](tracks/cli/A1-cli-intro.en.md) | CLI agent selection · install · first run | 1 wk |
-| **A2** | [CLI Workflow Patterns](tracks/cli/A2-cli-workflow.en.md) | CLAUDE.md · slash commands · multi-step decomposition | 1-2 wks |
+| **A2** | [CLI Workflow Patterns](tracks/cli/A2-cli-workflow.en.md) | Project instructions · Skill · task decomposition | 1-2 wks |
 | **A3** | [Integration & Production](tracks/cli/A3-cli-production.en.md) | MCP-into-CLI · CI automation · cost / observability | 1-2 wks |
 | **+5** | [Stage 5 — Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**) | MCP · Skills · Plugins · Subagents; Track A reads 5.1-5.4 (5.5-5.7 optional) | 1-2 wks (Track A view) |
 | **+8** | [Stage 8 — Agent Interfaces](stages/08-agent-interfaces.en.md) (**Shared Hub**) | Computer Use · Browser Use · Code Sandbox; Track A reads Track A usage | 1-2 wks (Track A view) |

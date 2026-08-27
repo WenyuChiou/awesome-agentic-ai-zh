@@ -33,7 +33,7 @@ CLI 跑得顺了之后，下一步：**把 CLI 接到你的真实团队流程**�
 你应该已经：
 
 - 完成 [A1](A1-cli-intro.zh-Hans.md)：CLI 已选好、装好、认证好
-- 完成 [A2](A2-cli-workflow.zh-Hans.md)：写过 production CLAUDE.md、会写 slash command、跑过多步骤拆解
+- 完成 [A2](A2-cli-workflow.zh-Hans.md)：完成项目规则卡和 review Skill
 - 对 GitHub Actions / CI 基础熟悉（会看 `.yml` workflow）
 - 对 MCP 概念有印象（没有的话先翻 [Stage 5.2](../../stages/05-claude-code-ecosystem.zh-Hans.md#52--mcpmodel-context-protocol-基础)）
 
@@ -61,7 +61,7 @@ CLI 跑得顺了之后，下一步：**把 CLI 接到你的真实团队流程**�
 写一个 `.github/workflows/cli-review.yml`：
 
 - 触发：PR opened / synchronize
-- 跑：在 GH Actions runner 内执行 Claude Code（或 Codex），给它 `git diff` + 你的 `.claude/commands/review.zh-Hans.md`
+- 跑：在 GH Actions runner 内执行 Claude Code（或 Codex），给它 `git diff`，并请它使用 A2 做好的 [`review-changes` Skill](A2-cli-workflow.zh-Hans.md#动手练习-cli-6把重复-review-做成-skill)
 - 输出：PR comment
 
 成功标准：开新 PR，1-2 分钟内 PR 出现 review comment。
@@ -76,7 +76,9 @@ CLI 跑得顺了之后，下一步：**把 CLI 接到你的真实团队流程**�
 - 观察：哪个 sub-task 花最多 token？是不是有不必要的 long context？
 
 ### 动手练习 CLI-12：Skill / plugin 跨 team 分享
-把你的 `.claude/commands/` 跟 `CLAUDE.zh-Hans.md` 打包成 plugin，发布到内部 marketplace 或 GitHub。Team 其他人 `claude plugin install` 之后就有同样的工作流。
+把 A2 的 `review-changes` Skill 放进 plugin 根目录的 `skills/review-changes/SKILL.md`，再发布到内部 marketplace 或 GitHub。Team 其他人安装 plugin 后，就能取得同一个 Skill。
+
+`CLAUDE.md` 是项目自己的说明文件，应该留在 repo；它不是这个 plugin 要打包的内容。
 
 - Skill / plugin 细节见 [Stage 5.3 + 5.4](../../stages/05-claude-code-ecosystem.zh-Hans.md)
 - 范本：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
@@ -213,7 +215,7 @@ Track A 的人**已经在用** [Stage 7.5 的进阶概念](../../stages/07.5-adv
 - [ ] 已有至少 1 个 MCP server 接到你日常 CLI
 - [ ] 已有至少 1 个 CI workflow 在自动跑 CLI agent
 - [ ] 你能讲出某个 task 跑下去的 token 用量、cost、latency 大致范围
-- [ ] 把你的 CLAUDE.zh-Hans.md / commands 打包过至少一次（即使只有自己用）
+- [ ] 把至少一个 Skill 放进 plugin 的 `skills/<name>/SKILL.md`，并验证安装后能找到它（即使只有自己用）
 - [ ] 知道什么任务值得加 observability、什么不值得
 
 如果都可以 → **Track A 完整通关**。建议接着走 [**Stage 8 — Agent Interfaces**](../../stages/08-agent-interfaces.zh-Hans.md)（**两 track 共用 hub**：Computer Use / Browser Use / Code Sandbox，Track A 视角约 1-2 周），或挑一个 [specialized branch](../../README.zh-Hans.md#-学习地图两条学习路径) 继续走（researcher / developer / teacher / knowledge-worker / everyday-users）。

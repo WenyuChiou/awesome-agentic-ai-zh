@@ -33,7 +33,7 @@ CLI 跑得順了之後、下一步：**把 CLI 接到你的真實團隊流程**�
 你應該已經：
 
 - 完成 [A1](A1-cli-intro.md)：CLI 已選好、裝好、認證好
-- 完成 [A2](A2-cli-workflow.md)：寫過 production CLAUDE.md、會寫 slash command、跑過多步驟拆解
+- 完成 [A2](A2-cli-workflow.md)：完成專案規則卡與 review Skill
 - 對 GitHub Actions / CI 基礎熟悉（會看 `.yml` workflow）
 - 對 MCP 概念有印象（沒有的話先翻 [Stage 5.2](../../stages/05-claude-code-ecosystem.md#52--mcpmodel-context-protocol-基礎)）
 
@@ -61,7 +61,7 @@ CLI 跑得順了之後、下一步：**把 CLI 接到你的真實團隊流程**�
 寫一個 `.github/workflows/cli-review.yml`：
 
 - 觸發：PR opened / synchronize
-- 跑：在 GH Actions runner 內執行 Claude Code（或 Codex），給它 `git diff` + 你的 `.claude/commands/review.md`
+- 跑：在 GH Actions runner 內執行 Claude Code（或 Codex），給它 `git diff`，並請它使用 A2 做好的 [`review-changes` Skill](A2-cli-workflow.md#動手練習-cli-6把重複-review-做成-skill)
 - 輸出：PR comment
 
 成功標準：開新 PR，1-2 分鐘內 PR 出現 review comment。
@@ -76,7 +76,9 @@ CLI 跑得順了之後、下一步：**把 CLI 接到你的真實團隊流程**�
 - 觀察：哪個 sub-task 花最多 token？是不是有不必要的 long context？
 
 ### 動手練習 CLI-12：Skill / plugin 跨 team 分享
-把你的 `.claude/commands/` 跟 `CLAUDE.md` 打包成 plugin，發布到內部 marketplace 或 GitHub。Team 其他人 `claude plugin install` 之後就有同樣的工作流。
+把 A2 的 `review-changes` Skill 放進 plugin 根目錄的 `skills/review-changes/SKILL.md`，再發布到內部 marketplace 或 GitHub。Team 其他人安裝 plugin 後，就能取得同一個 Skill。
+
+`CLAUDE.md` 是專案自己的說明書，應留在 repo；它不是這個 plugin 要打包的內容。
 
 - Skill / plugin 細節見 [Stage 5.3 + 5.4](../../stages/05-claude-code-ecosystem.md)
 - 範本：[anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
@@ -213,7 +215,7 @@ Track A 的人**已經在用** [Stage 7.5 的進階概念](../../stages/07.5-adv
 - [ ] 已有至少 1 個 MCP server 接到你日常 CLI
 - [ ] 已有至少 1 個 CI workflow 在自動跑 CLI agent
 - [ ] 你能講出某個 task 跑下去的 token 用量、cost、latency 大致範圍
-- [ ] 把你的 CLAUDE.md / commands 打包過至少一次（即使只有自己用）
+- [ ] 把至少一個 Skill 放進 plugin 的 `skills/<name>/SKILL.md`，並驗證安裝後找得到（即使只有自己用）
 - [ ] 知道什麼任務值得加 observability、什麼不值得
 
 如果都可以 → **Track A 完整通關**。建議接著走 [**Stage 8 — Agent Interfaces**](../../stages/08-agent-interfaces.md)（**兩 track 共用 hub**：Computer Use / Browser Use / Code Sandbox，Track A 視角約 1-2 週），或挑一個 [specialized branch](../../README.md#-學習地圖兩條學習路徑) 繼續走（researcher / developer / teacher / knowledge-worker / everyday-users）。

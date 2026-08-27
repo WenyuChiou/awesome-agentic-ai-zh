@@ -27,7 +27,7 @@
 | 草稿 | 草稿主題 | 最終歸屬 |
 |---|---|---|
 | A1 | CLI 入門 + 選擇 | → 最終 A1 |
-| A2 | Workflow（CLAUDE.md / slash command / 任務拆解 / portable prompt） | → 最終 A2 |
+| A2 | Workflow（project instructions / Skill / 任務拆解 / portable prompt） | → 最終 A2 |
 | A3 | MCP 接 CLI | → 合進最終 A3 |
 | A4 | 多 CLI 並用 | → 合進最終 A3 |
 | A5 | Production CLI workflow（CI / cost / observability / plugin 打包） | → 合進最終 A3 |
@@ -41,16 +41,24 @@
 最終 3 個 stage：
 
 - **A1**：入門 + 選擇（CLI 安裝、認證、第一個任務）
-- **A2**：Workflow Patterns（CLAUDE.md / slash command / 多步拆解 / portable prompt）
+- **A2**：Workflow Patterns（project instructions / Skill / 多步拆解 / portable prompt）
 - **A3**：Integration & Production（MCP 接 CLI、多 CLI 並用、CI 自動化、cost / observability、plugin 打包）
 
 判準：**3 個 stage 邊界清楚、不互相浸蝕**，每個 stage 對應一個明確的「我能跑出什麼」outcome。
+
+### A2 的固定閱讀形狀
+
+- 第一遍只教「專案規則像共同守則、Skill 像按需操作卡、單次 prompt 像臨時交代」，並保留 CLI-5 至 CLI-8 的標題、anchor、成果與 A3 入口。
+- CLI-5 用「用途／禁止事項／驗證指令／交付格式」四欄做最小規則卡；不把 persona 或行數門檻當成跨 CLI 通則。
+- CLI-6 教目前的 `SKILL.md`，只在相容說明提 `.claude/commands/`。核心內容可以共用，工具專屬的資料夾、frontmatter、permission 與 tool 名稱分開說。
+- 時間、先備條件、完整工具位置、CLI-7／CLI-8 步驟、multi-agent、疑難排解與完整資源表預設收合。
+- 完整資源表按語意分組；每組一個 `<tbody>`，分類欄用真正 `rowspan` 合併。三語的 rowgroup、URL、命令、日期與安全限制必須一致。
 
 ### 為什麼 Stage 5 特別放在「兩軌共用」
 
 Stage 5（Claude Code 生態）兩條軌都會碰到：
 
-- Track A：A2 用 5.1（Claude Code 基礎）；A3 用 5.2（MCP）+ 選擇性用到 5.3（Skills）跟 5.4（Plugins）——A3 的 動手練習 CLI-12 會教 plugin 打包。讀的角度是「**怎麼用 Claude Code 把工作做好**」
+- Track A：A2 以多家官方 project-instructions／Skill 文件為主，Stage 5.1／5.3 只作 Claude Code 延伸；A3 用 5.2（MCP）+ 選擇性用到 5.3（Skills）跟 5.4（Plugins）——A3 的 動手練習 CLI-12 會教 plugin 打包。讀的角度是「**怎麼用 CLI agent 把工作做好**」
 - Track B：把整個 Stage 5 當「**Claude Code 內部運作**」的深度學，從 5.1 完整走到 5.7
 
 但兩條軌**不需要重新讀整份 Stage 5**——Track A 看「用法」、Track B 看「內部結構」。同一份內容，兩種讀法。

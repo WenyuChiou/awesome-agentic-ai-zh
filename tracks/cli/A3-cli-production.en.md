@@ -33,7 +33,7 @@ After this stop, the CLI is no longer just your personal tool — it's part of y
 You should already:
 
 - Have completed [A1](A1-cli-intro.en.md): CLI picked, installed, authenticated
-- Have completed [A2](A2-cli-workflow.en.md): written a production CLAUDE.md, written slash commands, decomposed multi-step tasks
+- Have completed [A2](A2-cli-workflow.en.md): finished the project-rules card and review Skill
 - Be comfortable with GitHub Actions / CI basics (can read a `.yml` workflow)
 - Have at least a rough idea of what MCP is (if not, skim [Stage 5.2](../../stages/05-claude-code-ecosystem.en.md#52--mcp-model-context-protocol--foundation) first)
 
@@ -61,7 +61,7 @@ Success: in a CLI conversation, ask "does my PR have conflicts?" and have the CL
 Write `.github/workflows/cli-review.yml`:
 
 - Trigger: PR opened / synchronize
-- Run: in the GH Actions runner, execute Claude Code (or Codex), feed it `git diff` + your `.claude/commands/review.md`
+- Run: in the GH Actions runner, execute Claude Code (or Codex), give it `git diff`, and ask it to use the [`review-changes` Skill](A2-cli-workflow.en.md#hands-on-exercise-cli-6-turn-a-repeated-review-into-a-skill) you built in A2
 - Output: PR comment
 
 Success: open a new PR, see a review comment within 1-2 minutes.
@@ -76,7 +76,9 @@ Run a daily task. **Predict** the token usage first, then actually run it and ch
 - Observe: which sub-task consumes the most tokens? Are you sending unnecessary long context?
 
 ### Exercise CLI-12: Skill / plugin team sharing
-Package your `.claude/commands/` and `CLAUDE.md` into a plugin, publish to internal marketplace or GitHub. Teammates `claude plugin install` and get the same workflow.
+Put A2’s `review-changes` Skill at `skills/review-changes/SKILL.md` inside the plugin root, then publish the plugin to an internal marketplace or GitHub. Teammates get the same Skill after installing the plugin.
+
+`CLAUDE.md` is the project’s own instruction file and stays in the repo; it is not content to package in this plugin.
 
 - Skill / plugin details in [Stage 5.3 + 5.4](../../stages/05-claude-code-ecosystem.en.md)
 - Template: [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
@@ -213,7 +215,7 @@ Can you:
 - [ ] Have at least 1 MCP server connected to your daily CLI
 - [ ] Have at least 1 CI workflow auto-running a CLI agent
 - [ ] State the rough token / cost / latency for some specific task you run
-- [ ] Packaged your CLAUDE.md / commands at least once (even just for yourself)
+- [ ] Put at least one Skill in a plugin’s `skills/<name>/SKILL.md` and verify it is found after installation (even just for yourself)
 - [ ] Know which tasks deserve observability and which don't
 
 If yes → **Track A complete**. We recommend continuing to [**Stage 8 — Agent Interfaces**](../../stages/08-agent-interfaces.en.md) (**a shared hub for both tracks**: Computer Use / Browser Use / Code Sandbox, ~1-2 weeks from the Track A angle), or pick a [specialized branch](../../README.en.md#-learning-map-two-tracks) and continue (researcher / developer / teacher / knowledge-worker / everyday-users).

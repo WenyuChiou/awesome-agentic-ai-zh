@@ -210,6 +210,69 @@ pages:
           heading: "✅ 进 A2 前的自我检查"
           anchor: -进-a2-前的自我检查
 
+  - id: track-a2
+    canonical: tracks/cli/A2-cli-workflow.md
+    mirrors:
+      en: tracks/cli/A2-cli-workflow.en.md
+      zh-Hans: tracks/cli/A2-cli-workflow.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 3000
+      en: 5000
+      zh-Hans: 3050
+    max_open_details: 0
+    required_visible_sections:
+      cli-5:
+        zh-TW:
+          heading: "動手練習 CLI-5：做一張最小專案規則卡"
+          anchor: 動手練習-cli-5做一張最小專案規則卡
+        en:
+          heading: "Hands-on exercise CLI-5: Make a minimal project-rules card"
+          anchor: hands-on-exercise-cli-5-make-a-minimal-project-rules-card
+        zh-Hans:
+          heading: "动手练习 CLI-5：做一张最小项目规则卡"
+          anchor: 动手练习-cli-5做一张最小项目规则卡
+      cli-6:
+        zh-TW:
+          heading: "動手練習 CLI-6：把重複 review 做成 Skill"
+          anchor: 動手練習-cli-6把重複-review-做成-skill
+        en:
+          heading: "Hands-on exercise CLI-6: Turn a repeated review into a Skill"
+          anchor: hands-on-exercise-cli-6-turn-a-repeated-review-into-a-skill
+        zh-Hans:
+          heading: "动手练习 CLI-6：把重复 review 做成 Skill"
+          anchor: 动手练习-cli-6把重复-review-做成-skill
+      cli-7:
+        zh-TW:
+          heading: "動手練習 CLI-7：把大任務切成看得見的小步驟"
+          anchor: 動手練習-cli-7把大任務切成看得見的小步驟
+        en:
+          heading: "Hands-on exercise CLI-7: Break a large task into visible small steps"
+          anchor: hands-on-exercise-cli-7-break-a-large-task-into-visible-small-steps
+        zh-Hans:
+          heading: "动手练习 CLI-7：把大任务拆成看得见的小步骤"
+          anchor: 动手练习-cli-7把大任务拆成看得见的小步骤
+      cli-8:
+        zh-TW:
+          heading: "動手練習 CLI-8：做一張 portable prompt 對照卡"
+          anchor: 動手練習-cli-8做一張-portable-prompt-對照卡
+        en:
+          heading: "Hands-on exercise CLI-8: Make a portable prompt comparison card"
+          anchor: hands-on-exercise-cli-8-make-a-portable-prompt-comparison-card
+        zh-Hans:
+          heading: "动手练习 CLI-8：做一张 portable prompt 对照卡"
+          anchor: 动手练习-cli-8做一张-portable-prompt-对照卡
+      completion:
+        zh-TW:
+          heading: "進 A3 前的自我檢查"
+          anchor: 進-a3-前的自我檢查
+        en:
+          heading: "Self-check before A3"
+          anchor: self-check-before-a3
+        zh-Hans:
+          heading: "进入 A3 前的自我检查"
+          anchor: 进入-a3-前的自我检查
+    resource_group_rowspans: [4, 4, 4, 2, 2]
+
   - id: cli-agents-guide
     canonical: resources/cli-agents-guide.md
     mirrors:

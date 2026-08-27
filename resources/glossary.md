@@ -285,7 +285,7 @@ Claude Code 的「行為包」。一個 Skill = 一個資料夾含 `SKILL.md`（
 
 ### Slash Command
 
-Claude Code 內以 `/` 開頭的指令（`/help`、`/compact`、`/plan` 等）。可以自訂——把一段 prompt 存到 `.claude/commands/<name>.md` 就變成 `/name`。
+Claude Code 內以 `/` 開頭的指令，例如 `/help`、`/compact`、`/plan`。舊專案可能把自訂 prompt 放在 `.claude/commands/<name>.md`；這是相容舊做法。新的可重用流程建議寫成 `.claude/skills/<name>/SKILL.md`。
 
 ### CLAUDE.md
 

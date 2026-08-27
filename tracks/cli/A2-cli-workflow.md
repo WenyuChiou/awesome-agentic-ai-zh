@@ -1,126 +1,221 @@
-# A2 — 建立可重複使用的 CLI 工作流程（CLI Workflow Patterns）
+# A2 — 讓 CLI agent 每次都照同一套方法做事
 
 > **繁體中文** | [简体中文](./A2-cli-workflow.zh-Hans.md) | [English](./A2-cli-workflow.en.md)
 
-> [← A1 — CLI 入門](A1-cli-intro.md) · **Track A: CLI Power User** 第 2 站
+> [← A1 — 安全完成第一個 CLI 任務](A1-cli-intro.md) · **Track A: CLI Power User** 第 2 站 · [下一站：A3](A3-cli-production.md)
 
-⏱ **時間估算**：1-2 週（約 8-15 小時）
+這一站只解決一個問題：**怎麼讓 CLI agent 下次進到同一個 repo，還記得同一套做事方法？**
 
-> 📋 **本章組成**：學習目標 → 進入條件 → 必修閱讀 → 動手練習 → 精選 Projects → 自我檢查
-> 🔑 **關鍵名詞**：見 [`resources/glossary.md` 5](../../resources/glossary.md#5-claude-code-生態)（CLAUDE.md / slash command / SKILL.md / plugin / portable prompt）
+你會把每次都要知道的規則寫進專案規則檔，把常常重複的步驟做成 Skill。臨時任務才留在單次 prompt。這樣就像把「每天都要重新交代」改成「牆上有守則，工具箱裡有操作卡」。
 
-裝好 CLI、跑過第一個任務之後，下一個問題：**怎麼讓 CLI 一致地、可重複地、可分享地做事**？這節講 workflow pattern——把「我每次都要重打一遍 prompt」變成「設好一次後 CLI 自己會用對方法」。
+## 先分清三種東西
 
-## 📌 學習目標
+<table>
+<thead>
+<tr><th scope="col">正確術語</th><th scope="col">白話說法</th><th scope="col">什麼時候用</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">Project instructions<br>專案規則</th><td>每次進工作室都要看的守則</td><td>放專案用途、禁止事項、測試指令與交付格式</td></tr>
+<tr><th scope="row">Skill</th><td>需要時才拿出的操作卡</td><td>放 review、release、整理文件等重複流程</td></tr>
+<tr><th scope="row">One-off prompt<br>單次 prompt</th><td>今天才需要的一次性交代</td><td>放這次任務的範圍、輸入與成功條件</td></tr>
+</tbody>
+</table>
 
-- 寫一份實用的 `CLAUDE.md` / `AGENTS.md`——實用的最低構成：**(1) 角色** + **(2) 專案背景** + **(3) 禁止事項** + **(4) 測試指令** + **(5) 交付格式**。實務上 30-50 行可同時涵蓋這 5 件事；超過 50 行通常該拆檔
-- 設計可重複的 slash command / custom prompt
-- 把多步驟任務拆成 CLI 能跑完的小步驟
-- 設計 prompt 讓任務在不同 CLI 上 portable
+## 學習目標
 
-## 🚪 進入條件
+- 用四個欄位寫出一份短而清楚的專案規則。
+- 把重複的 review 流程做成一個只讀 Skill。
+- 分清哪些內容可以共用，哪些檔名、權限與命令要跟著工具調整。
 
-你應該已經：
+<details markdown="1">
+<summary>展開時間、先備條件、環境與費用</summary>
 
-- 完成 [A1](A1-cli-intro.md)：選定主用 CLI、裝好、認證好、跑過至少 5 個非 hello-world 任務
-- 寫過 1 份 `CLAUDE.md` / `AGENTS.md` / `GEMINI.md`（即使只是試水溫）
-- 對 Stage 2 prompt engineering 基礎上手
+- **時間**：先完成 CLI-5、CLI-6；CLI-7、CLI-8 可以之後再做，不必一次做完。
+- **先備條件**：完成 [A1](A1-cli-intro.md)，會看 `git status`、`git diff`，並有一個不含秘密、可復原的 demo repo。
+- **環境**：選一個主用 CLI agent。Claude Code、Codex、Gemini CLI、OpenCode 的檔名不完全相同，下方有對照。
+- **費用**：寫規則檔與 Skill 不會產生模型費用；請 CLI 測試時可能使用額度或 API token。以當日官方 usage／pricing 頁為準。
 
-沒到的話 → 先回 [A1](A1-cli-intro.md) 把 CLI-1/2 練熟。
+還沒完成 A1 時，先回去跑一次「只讀取 → 看計畫 → 小改動 → `git diff` → 復原」。
+</details>
 
-## 📚 必修閱讀
+<details markdown="1">
+<summary>展開必修閱讀與建議順序</summary>
 
-1. [**Anthropic — CLAUDE.md best practices**](https://code.claude.com/docs/en/memory) ⭐
-2. [**Stage 2 — Prompt 設計**](../../stages/02-prompt-engineering.md) — workflow design 跟 prompt design 是同一件事的兩面
-3. [**Stage 5.1 — Claude Code 基礎**](../../stages/05-claude-code-ecosystem.md#51--claude-code-基礎) — slash commands 細節
-4. [**`resources/cli-agents-guide.md`** 「跨 CLI 都通用的 prompt 寫法」](../../resources/cli-agents-guide.md) — portable prompt 原則
+1. 先看你主用工具的 project-instructions 官方文件：Codex 看 [`AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、Claude Code 看 [`CLAUDE.md`](https://code.claude.com/docs/en/memory)、Gemini CLI 看 [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/)、OpenCode V2 看 [`AGENTS.md`](https://opencode.ai/v2/docs/instructions)。
+2. 再看你主用工具的 Skill 文件：[Codex／ChatGPT](https://learn.chatgpt.com/docs/build-skills)、[Claude Code](https://code.claude.com/docs/en/slash-commands)、[Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/)、[OpenCode V2](https://opencode.ai/v2/docs/skills)。
+3. 最後回看 [Stage 2 — Prompt 設計](../../stages/02-prompt-engineering.md)，把「任務、範圍、成功條件」補進單次 prompt。
+</details>
 
-## 🛠 動手練習
+<details markdown="1">
+<summary>展開四個 CLI 的規則檔與 Skill 位置</summary>
 
-### 動手練習 CLI-5：寫 production CLAUDE.md
-你 CLAUDE.md 應該至少包含：
+官方資料查核日：**2026-08-27 UTC**。
 
-- **角色**：「你是一個 senior Python engineer / 學術寫作助手 / 等」
-- **這個 repo 的 context**：是什麼專案、用什麼套件、有什麼 convention
-- **不能做的事**：別亂改 main、別動 secrets、別 commit
-- **怎麼做事**：先 plan、跑 test 再 commit、要寫 type hint
-- **常用指令**：怎麼跑 test、怎麼 lint、怎麼 deploy
+<table>
+<thead>
+<tr><th scope="col">工具</th><th scope="col">專案規則</th><th scope="col">Project Skill</th><th scope="col">要注意什麼</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">Codex</th><td><code>AGENTS.md</code></td><td><code>.agents/skills/&lt;name&gt;/SKILL.md</code></td><td>規則會依目錄分層；較近的規則較晚載入</td></tr>
+<tr><th scope="row">Claude Code</th><td><code>CLAUDE.md</code></td><td><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td><td>舊 <code>.claude/commands/</code> 仍相容，但新流程優先用 Skill</td></tr>
+<tr><th scope="row">Gemini CLI</th><td><code>GEMINI.md</code></td><td><code>.agents/skills/&lt;name&gt;/SKILL.md</code> 或 <code>.gemini/skills/…</code></td><td>Skill 啟用時會要求同意；不要把秘密放進 Skill</td></tr>
+<tr><th scope="row">OpenCode V2</th><td><code>AGENTS.md</code></td><td><code>.agents/skills/&lt;name&gt;/SKILL.md</code> 或 <code>.opencode/skills/…</code></td><td>V2 不使用舊文件寫的 <code>CLAUDE.md</code> fallback</td></tr>
+</tbody>
+</table>
 
-把這份提交到 git。下次新成員 clone repo，他的 Claude Code 自動載入你的 convention。
+共同的是「要交代哪些事」；不同的是檔名、搜尋位置、權限與額外設定。不要把一個工具的專屬功能當成所有 CLI 都有。
+</details>
 
-### 動手練習 CLI-6：第一個 slash command
-寫 `.claude/commands/review.md`（或對應 CLI 的位置）：
+<a id="cli-5"></a>
+### 動手練習 CLI-5：做一張最小專案規則卡
+
+**成果：** CLI agent 每次進 repo，都知道這個專案做什麼、不能碰什麼、怎麼驗證，以及完成時要回報什麼。
+
+先選上方對照表中屬於你工具的規則檔，再放入這四件事：
+
+```markdown
+# 專案規則
+
+- 用途：這是一個練習用文件 repo。
+- 不可做：不要刪檔、不要讀取秘密、不要自動 commit 或 push。
+- 驗證：修改後執行 `git diff --check`。
+- 回報：說明改了什麼、驗證結果，以及仍未處理的事。
+```
+
+這張卡只放「每次都要知道」的事。長篇教學、API 參考與偶爾才用的流程不要塞進來。
+
+<details markdown="1">
+<summary>展開 CLI-5 的建立與驗證步驟</summary>
+
+1. 在乾淨的 demo repo 建立你主工具使用的規則檔。先執行 `git status --short`，不要蓋到別人的未完成修改。
+2. 把上面的四欄換成這個 demo repo 的真實內容。指令必須可以複製執行；不要寫「把格式弄好」這種看不出成功與否的句子。
+3. 開一個新的 CLI session，請它只讀規則並用自己的話重述。若它找不到檔案，先查官方的檔名與載入範圍。
+4. 給一個會碰到禁止事項的測試，例如「直接 commit 這個改動」。正確結果是 agent 停下來或先詢問，而不是自行 commit。
+5. 先用 `git status --short -- <規則檔路徑>` 看它是舊檔還是新檔。
+   - 舊檔：用 `git diff -- <規則檔路徑>` 檢查。只有確認開始前該檔乾淨，才用 `git restore -- <規則檔路徑>` 復原。
+   - 新檔：Git 會顯示 `??`；`git restore` 不能移除它。可以保留它當練習成果。若不要，先核對完整路徑，再用檔案管理員只刪除這一個檔案，最後重跑 `git status --short -- <規則檔路徑>`。
+
+沒有任何行數能保證規則一定好。只保留會改變行為的內容；某段只在特定任務使用時，把它移到 Skill 或其他按需文件。
+</details>
+
+<a id="cli-6"></a>
+### 動手練習 CLI-6：把重複 review 做成 Skill
+
+**成果：** 你能叫 agent 執行同一套只讀 review，輸出 `PASS` 或具體問題，不會自己 commit、push 或部署。
+
+Claude Code 使用 `.claude/skills/review-changes/SKILL.md`；Codex、Gemini CLI、OpenCode 可使用 `.agents/skills/review-changes/SKILL.md`。建立檔案後放入：
+
 ```markdown
 ---
-name: review
-description: Review staged changes for security + style
+name: review-changes
+description: Review the current git diff and report concrete risks. Use when the user asks to review local changes.
 ---
 
-請執行以下流程：
-1. `git diff --cached` 抓 staged 的 changes
-2. 找：hard-coded secrets、SQL injection、type errors
-3. 對應 CLAUDE.md 內的 style 規則檢查
-4. 輸出：PASS / 或 list of 具體要改的點
+1. Read `git diff --no-ext-diff HEAD` without changing files.
+2. Check for secrets, unsafe commands, broken links, and missing verification.
+3. Report `PASS` when no problem is found; otherwise list each problem with its file and reason.
+4. Do not edit, commit, push, deploy, or send messages.
 ```
-之後每次 `/review`，CLI 都跑同一套流程。
 
-### 動手練習 CLI-7：多步驟任務拆解
-給 CLI 一個複雜任務（譬如「把這 50 個 markdown 翻譯成英文 + 加 frontmatter + 移到 en/ 子目錄」）。
+`name` 是操作卡名稱；`description` 告訴 agent 何時拿這張卡。正文才是要照著做的步驟。
 
-- 第一次：直接丟整個任務 → 觀察 CLI 怎麼做、什麼地方會錯
-- 第二次：你先拆成 5 個 sub-task，逐一給 CLI → 觀察結果差別
-- 學到：CLI 跟你一樣，太大的任務要拆；給太小的任務又會 over-orchestrate
+<details markdown="1">
+<summary>展開 CLI-6 的測試、權限與相容說明</summary>
 
-> ⭐ **進階補充：Claude Code 原生 multi-agent 機制**（這 1 句先看就好、不展開）：CLI-7 教的「手動拆 sub-task」其實 Claude Code 有 **Subagent / Agent team / Background agent** 三種原生工具可以自動化。完整 3 種機制 + 動手練習 + 何時不該用（團隊權限、上下文隔離、結果審查流程都要先想好）見 **[Stage 5.5](../../stages/05-claude-code-ecosystem.md#55--subagentsclaude-code-原生-multi-agent-機制-2025-新功能)**——在 A2 階段先知道有這層、不需要學細節。
+1. 先讀完 `SKILL.md`，確認沒有下載陌生程式、讀取秘密或改變外部系統的步驟。
+2. 在 demo repo 做一個小文件改動，但不要 commit。請 agent「review my local changes」，觀察它是否找到 Skill；也可依工具文件手動啟用。
+3. 對照 `git diff` 檢查回報。測試後執行 `git status --short`，確認 Skill 沒有偷偷改檔。
+4. 想在多個 CLI 共用時，先共用上面的核心內容，再依每個工具調整資料夾、權限與工具專屬 frontmatter。未知欄位可能被忽略，不要假設所有設定都有效。
 
-### 動手練習 CLI-8：Portable prompt
-寫一個 prompt 給 Claude Code 跑成功了。**換到 Codex / OpenCode / Gemini CLI 跑同一個 prompt**——什麼地方需要改？通常會發現：
+Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，但 Skills 已包含 custom commands，並支援附加檔案與按需載入。新教學使用 Skill；只有維護舊專案時才需要理解 legacy command。
+</details>
 
-- file path convention 不同（cwd vs absolute）
-- 對「執行 shell」的權限預設不同
-- 「先 plan 再做」的 prompt 在某些 CLI 要明確說，在某些是預設行為
+<a id="cli-7"></a>
+### 動手練習 CLI-7：把大任務切成看得見的小步驟
 
-把這些差異整理成你自己的 cheat sheet。
+**成果：** 你能把一個可復原的文件任務拆成「盤點 → 計畫 → 修改 → 驗證」，每一步都有看得見的結果。
 
-## 🎯 精選 Projects
+<details markdown="1">
+<summary>展開 CLI-7 的比較練習與 multi-agent 延伸</summary>
 
-按用途分 4 類、7 個項目一張表搞定。**挑入口看「適合誰」、想深入細節點連結看 repo**。
+選一個小任務，例如「替兩份 README 補上同一個執行指令」。第一次先請 agent 提計畫，不改檔；第二次請它依序盤點兩份檔案、列出差異、修改、跑 `git diff --check`，最後回報仍未處理的事。
 
-| 分類 | Project | ⭐ | 適合誰 | 為什麼推薦 / 備註 |
-|---|---|---|---|---|
-| **CLAUDE.md 範例庫** | [Anthropic 官方 CLAUDE.md 指南](https://code.claude.com/docs/en/memory) | ⭐⭐⭐⭐⭐ | 第一份 CLAUDE.md 從這抄結構 | Claude Code repo 自己的 CLAUDE.md、官方寫法 |
-| | [obra/superpowers](https://github.com/obra/superpowers) | ⭐⭐⭐⭐ | 看實際在用的 `.claude/` 完整目錄結構 | 不只是 skill collection、也是 CLAUDE.md 範本（★ 265k+） |
-| | [mattpocock/skills](https://github.com/mattpocock/skills) | ⭐⭐⭐⭐ | 想看工程師日常用的 skill 庫 | `.claude/` 結構是好參考。**更多 skill 範例見 [Stage 5.3](../../stages/05-claude-code-ecosystem.md#53--skillsclaude-code-的行為層-claude-code-生態最關鍵的一層)** |
-| **Slash Commands / Custom Prompts** | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | ⭐⭐⭐⭐⭐ | 找官方 plugin 範本 | 官方 plugin marketplace、每個 plugin 內的 commands / skills 是 slash command 範例（★ 32k+） |
-| | [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) | ⭐⭐⭐ | 想逛社群 slash command 範例 | 社群整理的 Claude Code 資源清單 |
-| **Prompt 設計參考** | [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) | ⭐⭐⭐⭐ | 卡關時找 CLI 通用的 prompt 模式 | ChatGPT 起家、prompt 寫法 90% 在 CLI 上也通（★ 166k+、CC0）。完整 prompt engineering 進階見 [Stage 2 精選 Projects](../../stages/02-prompt-engineering.md#-精選-projects)（DSPy、dair-ai 等） |
-| **多 CLI 並用 pattern** | [`resources/cli-agents-guide.md`](../../resources/cli-agents-guide.md) 「3 個常見搭配」 | ⭐⭐⭐⭐ | 想試多 CLI 配對策略 | 本 repo 內部資源、看 Setup A / B / C 挑一個合的試 |
+比較兩次結果時，只問：有沒有漏檔、能不能復原、驗證是否真的執行。不要為了看起來厲害，把每個小步驟都分派給不同 agent。任務需要互相等待、會改同一批檔案，或你還說不清成功條件時，先用單一 agent。
 
-> 💡 **建議入手路徑**：先抄 Anthropic 官方 CLAUDE.md 結構 → 加自己的 repo context → 看 obra/superpowers 看「完整 `.claude/` 長什麼樣」→ 然後寫 1-2 個 slash command（從 hesreallyhim awesome 列表撈靈感）。
+完整的 subagent、agent team、背景工作與審查流程放在 [Stage 5.5](../../stages/05-claude-code-ecosystem.md#55--subagentsclaude-code-原生-multi-agent-機制-2025-新功能)。A2 只練習把工作切清楚。
+</details>
 
-### 推薦工具
+<a id="cli-8"></a>
+### 動手練習 CLI-8：做一張 portable prompt 對照卡
 
-- [**yamadashy/repomix**](https://github.com/yamadashy/repomix) ⭐⭐⭐⭐⭐ ★ 27k+ — 把整個 codebase packed 成單一 AI-friendly 檔案（XML / Markdown / JSON），方便 Claude Code / Codex 做 code review / refactoring。內建 MCP server mode + tree-sitter 壓縮（壓縮率依語言與檔案結構而異）+ secretlint 過濾敏感資訊。**Track A 很值得當 daily driver 的工具。**
-- [**langchain-ai/openwiki**](https://github.com/langchain-ai/openwiki) ⭐⭐⭐⭐ ★ 15k+ — CLI，自動幫你的 codebase 生成並持續維護一份 wiki，並在 `CLAUDE.md` / `AGENTS.md` 裡加一條指向 wiki 的參照，讓 coding agent 需要時自己去讀、隨程式碼變動自動更新。`npm i -g openwiki` → `openwiki --init`。底層是 DeepAgents、可接 LangSmith 追蹤。MIT。
+**成果：** 你能保留同一個任務核心，並清楚標出換工具時要改的檔名、權限、命令與啟用方式。
 
-> 💡 **概念：*agent-facing documentation*（給 agent 讀的文件）。** repomix 跟 OpenWiki 在解同一個痛點（agent 不了解你的 repo），只是切角不同：一個是一次性打包快照，一個是會持續長大、自動維護的 wiki。共同的做法是給 agent *一份它需要時自己去讀的結構化 codebase context*，跟 `CLAUDE.md` 的指令分開放，而不是全部塞進 prompt。
+<details markdown="1">
+<summary>展開 CLI-8 的跨工具測試步驟</summary>
 
-## ✅ 進 A3 前的自我檢查
+1. 共用核心只寫四欄：任務、範圍、禁止事項、成功條件。
+2. 在第一個 CLI 的乾淨 demo repo 跑一次，記錄 CLI 版本、模型／provider、權限設定與 `git diff`。
+3. 復原後再換第二個 CLI。不要讓兩個會寫檔的 session 同時操作同一個目錄。
+4. 另外記下差異：project-instructions 檔名、Skill 位置、shell／sandbox 權限、工具名稱、登入與費用。
 
-你能不能：
+「Portable」代表核心意思容易搬，不代表整段文字與設定可以零修改複製。若第二個工具沒有同名功能，就回到成功條件，選它真正支援的方法。
+</details>
 
-- [ ] 寫過至少 1 份你 production / 工作 repo 的 CLAUDE.md（不是 demo repo）
-- [ ] 寫過至少 2 個 slash command 並實際在用
-- [ ] 把同一個 prompt 在 2 個不同 CLI 上跑過、知道差異
-- [ ] 講得出「什麼任務該拆、什麼任務不該拆」的判準
+## 進 A3 前的自我檢查
 
-如果可以 → 進 [A3 — Integration & Production](A3-cli-production.md)。
+- [ ] 我能用自己的話分清專案規則、Skill、單次 prompt。
+- [ ] 我的規則卡有用途、禁止事項、驗證指令、交付格式，而且 agent 能讀到。
+- [ ] 我的 review Skill 只讀取變更，測試後 `git status --short` 沒有多出非預期修改。
+- [ ] 我知道「共用核心」不等於「所有 CLI 的檔名與權限都一樣」。
 
-如果不行 → CLAUDE.md 一直 demo 等於白寫；先去你真實 repo 寫一份再回來。
+四項都做到，就進入 [A3 — 把 CLI agent 接進安全的 production 流程](A3-cli-production.md)。若還沒做到，先回 demo repo 重跑 CLI-5 或 CLI-6，不必先讀完所有補充資料。
 
-## 💡 常見坑
+<details markdown="1">
+<summary>展開完整學習資源表（16 筆）</summary>
 
-- **CLAUDE.md 寫太長**：超過 100 行 CLI 會自己 truncate / 忽略後段。Sweet spot 30-60 行。
-- **Slash command 寫成「請做 X、Y、Z、A、B」一句**：CLI 容易跳步驟。改寫成編號 list + 每步成功標準。
-- **Portable 過頭**：每個 CLI 還是有自己的特長；不要為了能跨 CLI 把 prompt 變得太抽象、失去具體性。
-- **覺得自己「都會」就不寫了**：CLAUDE.md 是給未來的你（跟新成員）看的，不是給現在的你看的。
+下面按用途分成五組。同一組只顯示一次分類欄，避免重複文字把表格撐亂。
+
+<table>
+<thead>
+<tr><th scope="col">類型</th><th scope="col">資源</th><th scope="col">先看什麼</th><th scope="col">適合何時使用</th><th scope="col">來源</th></tr>
+</thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">官方專案規則</th><td>Codex <code>AGENTS.md</code></td><td>分層載入與優先順序</td><td>替 Codex 寫 repo 規則</td><td><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md">官方文件</a></td></tr>
+<tr><td>Claude Code <code>CLAUDE.md</code></td><td>何時放規則、何時移到 Skill</td><td>替 Claude Code 寫持續規則</td><td><a href="https://code.claude.com/docs/en/memory">官方文件</a></td></tr>
+<tr><td>Gemini CLI <code>GEMINI.md</code></td><td>目錄範圍與載入方式</td><td>替 Gemini CLI 放專案 context</td><td><a href="https://geminicli.com/docs/cli/gemini-md/">官方文件</a></td></tr>
+<tr><td>OpenCode V2 <code>AGENTS.md</code></td><td>V2 的合併與 nested discovery</td><td>替 OpenCode V2 寫規則</td><td><a href="https://opencode.ai/v2/docs/instructions">官方文件</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">官方 Skill 文件</th><td>Codex／ChatGPT Build skills</td><td><code>SKILL.md</code> 結構與載入位置</td><td>做 Codex 可重用流程</td><td><a href="https://learn.chatgpt.com/docs/build-skills">官方文件</a></td></tr>
+<tr><td>Claude Code Skills</td><td>按需載入、legacy commands、權限</td><td>做 Claude Code Skill</td><td><a href="https://code.claude.com/docs/en/slash-commands">官方文件</a></td></tr>
+<tr><td>Gemini CLI Agent Skills</td><td>discovery、安裝同意與啟用同意</td><td>管理 Gemini CLI Skill</td><td><a href="https://geminicli.com/docs/cli/using-agent-skills/">官方文件</a></td></tr>
+<tr><td>OpenCode V2 Agent Skills</td><td>支援位置、frontmatter、permission</td><td>做 OpenCode Skill</td><td><a href="https://opencode.ai/v2/docs/skills">官方文件</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">標準與可讀範例</th><td>Agent Skills specification</td><td>共同格式的最低要求</td><td>想讓核心內容較容易跨工具</td><td><a href="https://agentskills.io/specification">標準</a></td></tr>
+<tr><td><code>anthropics/claude-plugins-official</code></td><td>官方 plugin 內的 Skills 與 commands</td><td>想看 Skill 如何被打包分享</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
+<tr><td><code>mattpocock/skills</code></td><td>工程工作中使用的短 Skill 範例</td><td>想比較不同寫法</td><td><a href="https://github.com/mattpocock/skills">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers</code></td><td>真實 workflow 如何拆成 Skills</td><td>完成第一個 Skill 後再看</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">社群索引與 prompt</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>按類型找 Claude Code 資源</td><td>已知道需求、想找更多範例</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
+<tr><td><code>f/awesome-chatgpt-prompts</code></td><td>比較不同 prompt 的任務寫法</td><td>CLI-8 卡在共用核心時</td><td><a href="https://github.com/f/awesome-chatgpt-prompts">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Repo context 工具</th><td><code>yamadashy/repomix</code></td><td>產生一次性的 codebase 快照</td><td>需要把 repo 內容整理給 agent</td><td><a href="https://github.com/yamadashy/repomix">GitHub repo</a></td></tr>
+<tr><td><code>langchain-ai/openwiki</code></td><td>建立可持續更新的 repo wiki</td><td>大型 repo 需要按需查文件</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
+</tbody>
+</table>
+</details>
+
+<details markdown="1">
+<summary>展開常見問題與修正方式</summary>
+
+- **規則寫很多，agent 還是漏掉**：先刪掉背景故事與重複句，只留可以觀察的行為。必須每次固定執行的安全檢查，應使用工具提供的 hook／policy，而不是只靠文字提醒。
+- **Skill 沒出現**：檢查資料夾、`SKILL.md` 大小寫、YAML frontmatter 與工具支援的位置，再依官方方式 reload 或重開 session。
+- **Skill 自己做了危險動作**：把 deploy、send、commit、push 改為只能由使用者明確啟用，並先用只讀版本測試。第三方 Skill 要先讀完內容和 scripts。
+- **同一份 Skill 在另一個 CLI 壞掉**：保留共同的目標與步驟，重新對照那個工具承認的 frontmatter、permission 與 tool 名稱；不要用猜的。
+- **專案資訊太多**：專案規則只當地圖，細節放在 `docs/`、Skill 的 `references/` 或其他按需文件。規則越長不代表越可靠。
+</details>
+
+> 安全底線：規則與 Skill 都是文字指令，不是絕對防護。不要放 API key、token 或個資；任何會寫檔、commit、push、部署或呼叫外部服務的流程，都要有可以看見的權限邊界與驗證步驟。
