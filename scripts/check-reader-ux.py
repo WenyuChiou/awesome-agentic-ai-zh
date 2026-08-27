@@ -57,6 +57,7 @@ class PageMetrics:
     open_details_count: int
     open_summaries: list[str]
     visible_headings_outside_details: list[tuple[str, str]]
+    visible_source: str
 
 
 EXTERNAL_URL_RE = re.compile(r"https://[^\s<>)\"']+")
@@ -172,9 +173,145 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
         errors.append("unclosed HTML comment")
 
     visible_chars = len(re.sub(r"\s+", "", "\n".join(visible_lines)))
+    visible_source = "\n".join(visible_lines)
     return PageMetrics(
-        visible_chars, details_count, open_details_count, open_summaries, outside_headings
+        visible_chars,
+        details_count,
+        open_details_count,
+        open_summaries,
+        outside_headings,
+        visible_source,
     ), errors
+
+
+def _visible_heading_span(text: str, wanted: str) -> tuple[int, int, int] | None:
+    """Return the exact visible heading span for one plain-text heading."""
+    cursor = 0
+    lines = text.splitlines(keepends=True)
+    for line, in_code in zip(lines, code_line_flags(text), strict=True):
+        if not in_code:
+            heading = HEADING_RE.match(line.rstrip("\r\n"))
+            if heading and _plain(heading.group(1)) == wanted:
+                level = len(line) - len(line.lstrip("#"))
+                return cursor, cursor + len(line), level
+        cursor += len(line)
+    return None
+
+
+def _next_section_start(text: str, after: int, max_level: int) -> int:
+    """Find the next visible heading that closes the current section."""
+    cursor = 0
+    lines = text.splitlines(keepends=True)
+    for line, in_code in zip(lines, code_line_flags(text), strict=True):
+        line_end = cursor + len(line)
+        if cursor >= after and not in_code:
+            heading = HEADING_RE.match(line.rstrip("\r\n"))
+            if heading:
+                level = len(line) - len(line.lstrip("#"))
+                if level <= max_level:
+                    return cursor
+        cursor = line_end
+    return len(text)
+
+
+def _without_link_destinations(text: str) -> str:
+    """Keep Markdown link labels while removing URL text from prose checks."""
+    return re.sub(r"\[([^]]+)]\([^)]*\)", r"\1", text)
+
+
+def _first_literal_span(text: str, literal: str) -> tuple[int, int] | None:
+    escaped = re.escape(literal)
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9 ._/-]*", literal):
+        escaped = rf"(?<![A-Za-z0-9_-]){escaped}(?![A-Za-z0-9_-])"
+    match = re.search(escaped, text, re.IGNORECASE)
+    return match.span() if match else None
+
+
+def _inside_bold_span(text: str, span: tuple[int, int]) -> bool:
+    start, end = span
+    for match in re.finditer(r"\*\*([^*\n]+)\*\*", text):
+        if match.start(1) <= start and end <= match.end(1):
+            return True
+    return False
+
+
+def _core_term_errors(
+    text: str,
+    metrics: PageMetrics,
+    core_terms: dict[str, Any],
+    sections: dict[str, Any],
+    locale: str,
+) -> list[str]:
+    """Check the visible, ordered, bold core-term block for one locale."""
+    errors: list[str] = []
+    visible = metrics.visible_source
+    section_id = core_terms["section_id"]
+    exercise_id = core_terms["first_exercise_section_id"]
+    core_heading = _plain(sections[section_id][locale]["heading"])
+    exercise_heading = _plain(sections[exercise_id][locale]["heading"])
+    core_span = _visible_heading_span(visible, core_heading)
+    exercise_span = _visible_heading_span(visible, exercise_heading)
+    if core_span is None or exercise_span is None:
+        return errors  # The required-visible-section gate reports the missing heading.
+    if core_span[0] >= exercise_span[0]:
+        return ["core terms section must appear before the first exercise"]
+
+    prose = TAG_RE.sub("", _without_link_destinations(strip_code_blocks(visible)))
+    # The page title may name the chapter topic. It is navigation, not the first
+    # explanatory use, so exclude only the H1 line from the first-use check.
+    first_use_lines: list[str] = []
+    page_title_removed = False
+    for line in prose.splitlines():
+        if not page_title_removed and re.match(r"^#\s+", line):
+            page_title_removed = True
+            continue
+        first_use_lines.append(line)
+    first_use_source = "\n".join(first_use_lines)
+
+    section_end = _next_section_start(visible, core_span[1], core_span[2])
+    core_end = min(section_end, exercise_span[0])
+    core_block = visible[core_span[1] : core_end]
+    ordered_spans: list[tuple[int, int, str]] = []
+
+    for item in core_terms["terms"]:
+        localized = item[locale]
+        term = localized["term"]
+        label = localized["label"]
+        first_span = _first_literal_span(first_use_source, term)
+        if first_span is None:
+            errors.append(f"core term {term!r} is missing from visible prose")
+        elif not _inside_bold_span(first_use_source, first_span):
+            errors.append(f"first visible use of core term {term!r} must be bold")
+
+        marker = f"**{label}**"
+        starts = [match.start() for match in re.finditer(re.escape(marker), core_block)]
+        if not starts:
+            errors.append(
+                f"core term {term!r} needs visible bold definition label {marker!r}"
+            )
+            continue
+        ordered_spans.append((starts[0], starts[0] + len(marker), term))
+
+    if len(ordered_spans) == len(core_terms["terms"]):
+        starts = [item[0] for item in ordered_spans]
+        if starts != sorted(starts):
+            errors.append("core-term definition labels are not in configured order")
+        else:
+            minimum = core_terms["min_definition_chars"]
+            for index, (_, end, term) in enumerate(ordered_spans):
+                next_start = (
+                    ordered_spans[index + 1][0]
+                    if index + 1 < len(ordered_spans)
+                    else len(core_block)
+                )
+                explanation = _plain(core_block[end:next_start])
+                explanation_chars = len(re.sub(r"\s+", "", explanation))
+                if explanation_chars < minimum:
+                    errors.append(
+                        f"core term {term!r} has only {explanation_chars} explanation "
+                        f"characters; expected at least {minimum}"
+                    )
+    return errors
 
 
 def _attr(tag: str, name: str) -> str | None:
@@ -434,6 +571,81 @@ def _load_config(path: Path) -> dict[str, Any]:
                         f"{page_id}.{section_id}.{locale} heading/anchor cannot be empty"
                     )
 
+        core_terms = page.get("core_terms")
+        if core_terms is not None:
+            if not isinstance(core_terms, dict) or set(core_terms) != {
+                "section_id",
+                "first_exercise_section_id",
+                "min_definition_chars",
+                "terms",
+            }:
+                raise ValueError(
+                    f"{page_id}.core_terms needs section_id, first_exercise_section_id, "
+                    "min_definition_chars, and terms"
+                )
+            for key in ("section_id", "first_exercise_section_id"):
+                value = core_terms[key]
+                if not isinstance(value, str) or value not in sections:
+                    raise ValueError(
+                        f"{page_id}.core_terms.{key} must name a required_visible_sections key"
+                    )
+            if core_terms["section_id"] == core_terms["first_exercise_section_id"]:
+                raise ValueError(
+                    f"{page_id}.core_terms section and first exercise must be different"
+                )
+            minimum = core_terms["min_definition_chars"]
+            if not isinstance(minimum, int) or isinstance(minimum, bool) or minimum <= 0:
+                raise ValueError(
+                    f"{page_id}.core_terms.min_definition_chars must be a positive integer"
+                )
+            configured_terms = core_terms["terms"]
+            if not isinstance(configured_terms, list) or not configured_terms:
+                raise ValueError(f"{page_id}.core_terms.terms must be a non-empty list")
+            term_ids: set[str] = set()
+            localized_terms: dict[str, set[str]] = {locale: set() for locale in LOCALES}
+            for term_index, item in enumerate(configured_terms, start=1):
+                if not isinstance(item, dict) or set(item) != {"id", *LOCALES}:
+                    raise ValueError(
+                        f"{page_id}.core_terms.terms[{term_index}] needs id and all three locales"
+                    )
+                term_id = item["id"]
+                if (
+                    not isinstance(term_id, str)
+                    or not term_id.strip()
+                    or term_id in term_ids
+                ):
+                    raise ValueError(
+                        f"{page_id}.core_terms.terms[{term_index}].id must be unique and non-empty"
+                    )
+                term_ids.add(term_id)
+                for locale in LOCALES:
+                    localized = item[locale]
+                    if not isinstance(localized, dict) or set(localized) != {"term", "label"}:
+                        raise ValueError(
+                            f"{page_id}.core_terms.terms[{term_index}].{locale} "
+                            "needs term and label"
+                        )
+                    term = localized["term"]
+                    label = localized["label"]
+                    if any(
+                        not isinstance(value, str) or not value.strip()
+                        for value in (term, label)
+                    ):
+                        raise ValueError(
+                            f"{page_id}.core_terms.terms[{term_index}].{locale} "
+                            "term and label cannot be empty"
+                        )
+                    folded = term.casefold()
+                    if folded in localized_terms[locale]:
+                        raise ValueError(
+                            f"{page_id}.core_terms has duplicate {locale} term {term!r}"
+                        )
+                    localized_terms[locale].add(folded)
+                    if folded not in label.casefold():
+                        raise ValueError(
+                            f"{page_id}.core_terms label {label!r} must contain term {term!r}"
+                        )
+
         groups = page.get("resource_group_rowspans")
         if groups is not None and (
             not isinstance(groups, list)
@@ -526,6 +738,15 @@ def check(config_path: Path) -> list[str]:
                         f"{label}: heading {section_id!r} anchor is {exact_matches}; "
                         f"expected {expected_anchor!r}"
                     )
+
+            core_terms = page.get("core_terms")
+            if core_terms:
+                failures.extend(
+                    f"{label}: {item}"
+                    for item in _core_term_errors(
+                        text, metrics, core_terms, sections, locale
+                    )
+                )
 
             expected_groups = page.get("resource_group_rowspans")
             if expected_groups:

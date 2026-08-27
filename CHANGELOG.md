@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-27
 
+- **docs / tooling / planning** · **核心詞改成全站可量測的閱讀契約，不再靠編輯者記憶**：完成回溯的 Stage／Track 必須在第一個練習前保留可見核心詞區；技術詞第一次出現在正文時用粗體，逐詞說清楚「它是什麼、像什麼、這章用它做什麼、正確術語是什麼」。三語 style guide 與 `stages/DESIGN.md` 同步明定不能把核心名詞藏進 `<details>`、不能為了縮短頁面刪除 Zero-Shot／Token／MCP，也不能拉普通名詞湊數。reader-UX gate 新增 per-page `core_terms` 契約，會阻擋核心區藏入收合選單或晚於第一題、首次未粗體、單一語言詞序漂移、粗體定義標籤缺漏與只有名詞沒有最短解釋。核心區只讀到下一個同級／更高級 heading，不能借後續 setup 補字數；ASCII 詞接中文、頁面 H1 例外、HTML attribute 與 fenced heading 也有專門防誤判。新增 15 條正反 regression 後為 43／43 通過。Stage 1 與 Stage 2 正文刻意留給下一個獨立 stacked layer，本層 PR 未獲使用者同意前不合併、不清分支或 worktree。
+
 - **fix / content / resources** · **Stage 0 三語補回學習資源的五級推薦制度，但不恢復會過時的 GitHub 熱門數字**：18 筆資源仍放在預設收合選單，保持 Python／Git／CLI／REST API／YAML・JSON 的 `5/4/3/3/3` 真正合併分類。既有 style guide 規定 `⭐⭐⭐⭐⭐` 是「跳過會卡住」；本表全是補充資源，因此誠實使用 `⭐⭐⭐⭐` 或 `⭐⭐⭐`，不為了好看假發五星。reader-UX gate 新增逐列 URL→推薦度三語 parity 與交換兩列星等的 regression，不再只比較 URL 順序與星星總數。主線、重要名詞、`📌／🛠／🎯／✅` 路標與可直接複製執行的 GitHub API 練習都沒有被縮掉。
 - **content / freshness / planning** · **三個較弱入口換成 2026-08-27 UTC 已核實的一手來源**：runoob 改為 Python 3.14.7 官方繁中教學，並明寫官方頁預期讀者已有一點程式觀念；Oh Shit, Git 改為 Pro Git〈Undoing Things〉，先提醒哪些復原動作可能丟資料；explainshell 改為持續維護、提供跨平台短指令例子的 tldr pages。repository freshness 由既有掃描器完整重查並從 297 增為 298 個 tracked repo，tldr 為未封存、未搬家的 verified row；掃描同時量到 28 個其他 Phase 既有 redirect／license 矛盾，留給各自的回溯 layer，不混入 Stage 0。新增 Stage 0 回溯計畫，固定評分理由、三語不變量、stack base，以及「未獲使用者明確同意不得 merge 或清理分支／worktree」的發布規則。
 

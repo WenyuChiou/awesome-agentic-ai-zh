@@ -211,6 +211,11 @@ Every stage (except Stage 0) should have:
 - bullet 1
 - bullet 2
 
+## 🧩 Core Terms to Know First
+
+### **Correct term (add Chinese when useful)**
+Give one plain-language definition. Then give an everyday analogy that does not distort the concept, and say which later exercise will use it.
+
 ## 🚪 Entry Conditions (Stage 1+ only)
 <details markdown="1">
 <summary>⏱ Before you start: time, prerequisites, and budget</summary>
@@ -272,17 +277,25 @@ Keep the title, outcome, and first action visible. Secondary `<details>` blocks 
 
 This rule applies to the entire learning map. The goal is for a five-year-old to understand “what to do now,” without losing technical accuracy or using a childish voice.
 
-- When a technical term appears for the first time, explain its plain-language purpose first, then keep the correct term. Example: “an entry that lets a program get data (API).”
+- When a technical term appears for the first time in visible teaching text, put it in **bold**; H1 chapter titles are the exception, but the first use in body text still follows this rule. Explain its plain-language purpose first, then keep the correct term. Example: “an entry that lets a program get data (**API**).”
 - Put one idea in each sentence. Give each step one main action. Split long sentences, abbreviations, and jargon, or add a short definition.
 - Keep commands, file names, error codes, model names, prices, numbers, and security warnings exact.
 - Even with every `<details>` closed, the reader should know the next step and what they will see when it works.
 - During review, sample the visible main path. If a first-time reader cannot say the next step in their own words, rewrite it. Move multi-paragraph theory into collapsed content.
 
+### Core-term writing
+
+- Every Stage/Track that has completed a retrospective must put a visible core-term section before the first exercise. Core-term names and their shortest explanations must not go inside `<details>`.
+- Each core term must answer four questions on its own: **what it is**, **what it is like**, **what this chapter uses it for**, and **what the correct term is**. Put deeper theory in a collapsed section when needed.
+- Collect only key concepts used later in the text, exercises, or self-check. Do not pull out every ordinary noun just to fill a quota, and do not delete necessary terms such as Zero-Shot, Token, or MCP because they seem “too detailed.”
+- Keep the concept, order, purpose, and limits consistent across the three languages. Keep English names, abbreviations, commands, and specification names exact.
+- `scripts/reader-ux-pages.yml` uses `core_terms` to record the core section, first exercise, terms/labels in all three languages, their order, and the minimum explanation length. Once added, it may only be maintained or strengthened; it must not be silently removed.
+
 ### Reader UX ratchet
 
 - Add a chapter to `scripts/reader-ux-pages.yml` only after its three-language migration and human review are complete. This tightens the rules chapter by chapter; pages not yet organized do not need to pass all checks at once.
 - `scripts/check-reader-ux.py` uses a conservative source-level proxy: non-whitespace Markdown visible on first load. Default-open content and visible fenced code count; HTML comments and collapsed bodies do not. This is a repeatable ratchet, not a browser DOM text-length claim.
-- The configuration keeps per-language character limits, the number of blocks allowed open by default, exact headings/anchors that must remain visible, and grouped row counts for resource tables. Do not raise limits or remove protections without re-review.
+- The configuration keeps per-language character limits, the number of blocks allowed open by default, exact headings/anchors that must remain visible, the core-term contract, and grouped row counts for resource tables. Do not raise limits or remove protections without re-review.
 - An automated gate can only prevent known structural regressions. Human review must still confirm that, with every disclosure closed, readers know what to do and what success looks like.
 
 ### Grouped resource tables

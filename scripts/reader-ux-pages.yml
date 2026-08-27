@@ -3,6 +3,9 @@ schema_version: 1
 # This is a ratchet, not a claim that every page has already been migrated.
 # Add one page only after its visible beginner path has been reviewed in all
 # three locales. Lower limits when a later edit makes a page easier to scan.
+# A newly reviewed page also adds core_terms: the gate then locks its visible
+# bold first use, definition order, minimum explanation, and position before
+# the first exercise. Older enrolled pages migrate in their own stacked PRs.
 forbidden_open_summary_terms:
   zh-TW: [時間, 先備, 環境, 費用, 預算, 必修閱讀, 補充, 選修, 疑難排解, 排錯, 資源]
   en: [time, prerequisite, environment, cost, budget, required reading, supplementary, optional, troubleshooting, resources]

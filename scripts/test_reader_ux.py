@@ -42,6 +42,7 @@ def _config(
     parity_urls: bool = False,
     parity_literals: str = "",
     parity_resource_ratings: bool = False,
+    core_terms: bool = False,
 ) -> str:
     group_line = f"    resource_group_rowspans: [{groups}]\n" if groups else ""
     details_line = f"    required_details_count: {details}\n" if details is not None else ""
@@ -63,6 +64,34 @@ def _config(
       ordered_external_urls: {str(parity_urls).lower()}
       resource_url_ratings: {str(parity_resource_ratings).lower()}
       literals: [{parity_literals}]
+"""
+    core_sections = ""
+    core_config = ""
+    if core_terms:
+        core_sections = """\
+      core-terms:
+        zh-TW: {heading: Core Terms, anchor: core-terms}
+        en: {heading: Core Terms, anchor: core-terms}
+        zh-Hans: {heading: Core Terms, anchor: core-terms}
+      exercise-1:
+        zh-TW: {heading: Exercise 1, anchor: exercise-1}
+        en: {heading: Exercise 1, anchor: exercise-1}
+        zh-Hans: {heading: Exercise 1, anchor: exercise-1}
+"""
+        core_config = """\
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 12
+      terms:
+        - id: token
+          zh-TW: {term: Token, label: Token}
+          en: {term: Token, label: Token}
+          zh-Hans: {term: Token, label: Token}
+        - id: context-window
+          zh-TW: {term: Context Window, label: Context Window}
+          en: {term: Context Window, label: Context Window}
+          zh-Hans: {term: Context Window, label: Context Window}
 """
     return f"""\
 schema_version: 1
@@ -86,7 +115,7 @@ pages:
         zh-TW: {{heading: {heading}, anchor: {anchor}}}
         en: {{heading: {heading}, anchor: {anchor}}}
         zh-Hans: {{heading: {heading}, anchor: {anchor}}}
-{group_line}"""
+{core_sections}{core_config}{group_line}"""
 
 
 def _run_locales(
@@ -243,6 +272,163 @@ def test_swapped_resource_ratings_fail_even_when_urls_and_totals_match() -> None
         config=_config(groups="2", parity_urls=True, parity_resource_ratings=True),
     )
     assert rc == 1 and "resource URL/rating pairs differ" in out, out
+
+
+def _core_terms_body(*, intro: str = "", swap: bool = False, short: bool = False) -> str:
+    definitions = [
+        "### **Token**\nA small text piece that the model reads and counts.",
+        "### **Context Window**\nThe model's desk: everything for this turn must fit on it.",
+    ]
+    if swap:
+        definitions.reverse()
+    if short:
+        definitions[0] = "### **Token**\ntiny"
+    return (
+        intro
+        + "\n## Core Terms\n\n"
+        + "\n\n".join(definitions)
+        + "\n\n## Exercise 1\n\nRun the example.\n"
+    )
+
+
+def test_visible_bold_ordered_core_terms_pass() -> None:
+    rc, out = _run(_core_terms_body(), config=_config(limit=2000, core_terms=True))
+    assert rc == 0, out
+
+
+def test_fenced_heading_does_not_truncate_core_term_section() -> None:
+    body = (
+        "## Core Terms\n\n```markdown\n## Setup\n```\n\n"
+        "### **Token**\nA small text piece that the model reads and counts.\n\n"
+        "### **Context Window**\nThe model's desk: everything for this turn must fit on it.\n\n"
+        "## Exercise 1\n\nRun the example.\n"
+    )
+    rc, out = _run(body, config=_config(limit=2000, core_terms=True))
+    assert rc == 0, out
+
+
+def test_fenced_configured_headings_do_not_shadow_real_sections() -> None:
+    body = (
+        "```markdown\n## Core Terms\n## Exercise 1\n```\n\n"
+        "## Core Terms\n\n"
+        "### **Token**\nA small text piece that the model reads and counts.\n\n"
+        "### **Context Window**\nThe model's desk: everything for this turn must fit on it.\n\n"
+        "## Exercise 1\n\nRun the example.\n"
+    )
+    rc, out = _run(body, config=_config(limit=2000, core_terms=True))
+    assert rc == 0, out
+
+
+def test_first_visible_core_term_use_must_be_bold() -> None:
+    rc, out = _run(
+        _core_terms_body(intro="Token is useful."),
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 1 and "first visible use of core term 'Token' must be bold" in out, out
+
+
+def test_longer_word_does_not_count_as_core_term_first_use() -> None:
+    rc, out = _run(
+        _core_terms_body(intro="A Tokenizer splits text."),
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 0, out
+
+
+def test_ascii_core_term_next_to_cjk_still_counts_as_first_use() -> None:
+    rc, out = _run(
+        _core_terms_body(intro="Token是模型讀寫文字的小單位。"),
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 1 and "first visible use of core term 'Token' must be bold" in out, out
+
+
+def test_only_the_actual_page_title_h1_is_exempt() -> None:
+    rc, out = _run(
+        _core_terms_body(intro="# Token topic"),
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 1 and "first visible use of core term 'Token' must be bold" in out, out
+
+
+def test_html_tag_attributes_do_not_count_as_visible_term_use() -> None:
+    rc, out = _run(
+        _core_terms_body(intro='<span data-name="Token">Open this panel.</span>'),
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 0, out
+
+
+def test_core_term_definition_order_is_blocking() -> None:
+    rc, out = _run(
+        _core_terms_body(swap=True),
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 1 and "definition labels are not in configured order" in out, out
+
+
+def test_core_term_needs_a_real_explanation() -> None:
+    rc, out = _run(
+        _core_terms_body(short=True),
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 1 and "explanation characters" in out, out
+
+
+def test_empty_core_section_cannot_borrow_definitions_from_later_section() -> None:
+    body = (
+        "## Core Terms\n\n## Setup\n\n"
+        "### **Token**\nA small text piece that the model reads and counts.\n\n"
+        "### **Context Window**\nThe model's desk: everything for this turn must fit on it.\n\n"
+        "## Exercise 1\n\nRun the example.\n"
+    )
+    rc, out = _run(body, config=_config(limit=2000, core_terms=True))
+    assert rc == 1 and "needs visible bold definition label" in out, out
+
+
+def test_final_core_term_cannot_borrow_explanation_from_setup_section() -> None:
+    body = (
+        "## Core Terms\n\n"
+        "### **Token**\nA small text piece that the model reads and counts.\n\n"
+        "### **Context Window**\n\n"
+        "## Setup\n\nThis later setup paragraph is long but is not a definition.\n\n"
+        "## Exercise 1\n\nRun the example.\n"
+    )
+    rc, out = _run(body, config=_config(limit=2000, core_terms=True))
+    assert rc == 1 and "core term 'Context Window' has only 0 explanation" in out, out
+
+
+def test_core_terms_must_appear_before_first_exercise() -> None:
+    body = (
+        "## Exercise 1\n\nRun the example.\n\n## Core Terms\n\n"
+        "### **Token**\nA small text piece that the model reads and counts.\n\n"
+        "### **Context Window**\nThe model's desk: everything for this turn must fit on it.\n"
+    )
+    rc, out = _run(body, config=_config(limit=2000, core_terms=True))
+    assert rc == 1 and "core terms section must appear before the first exercise" in out, out
+
+
+def test_core_terms_cannot_hide_inside_closed_details() -> None:
+    body = (
+        '<details markdown="1">\n<summary>More</summary>\n## Core Terms\n\n'
+        "### **Token**\nA small text piece that the model reads and counts.\n\n"
+        "### **Context Window**\nThe model's desk: everything for this turn must fit on it.\n"
+        "</details>\n\n## Exercise 1\n\nRun the example.\n"
+    )
+    rc, out = _run(body, config=_config(limit=2000, core_terms=True))
+    assert rc == 1 and "required visible heading 'core-terms'" in out, out
+
+
+def test_one_locale_cannot_swap_core_term_order() -> None:
+    rc, out = _run_locales(
+        {
+            "page.md": _core_terms_body(),
+            "page.en.md": _core_terms_body(swap=True),
+            "page.zh-Hans.md": _core_terms_body(),
+        },
+        config=_config(limit=2000, core_terms=True),
+    )
+    assert rc == 1 and "sample/en" in out and "definition labels" in out, out
 
 
 def test_open_optional_or_setup_content_is_forbidden() -> None:
