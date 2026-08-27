@@ -99,7 +99,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 |---|---|---|
 | **0** 基礎準備 | 「我的開發環境準備好了嗎？」 | 4 個 動手練習 self-test |
 | **1** LLM 入門 | 「LLM 是什麼、token 怎麼算、不同 LLM 的差別？」 | 從 API call 到本地 LLM，含 from-scratch 訓練 |
-| **2** Prompt 設計 | 「怎麼讓 LLM 照我的意思做事？」 | system / few-shot / CoT / DSPy |
+| **2** Prompt 設計 | 「怎麼讓 LLM 照我的意思做事，而且知道修改有沒有用？」 | 四格 prompt / few-shot / 固定 eval / 一次只改一件事 |
 | **3** ⭐ Tool Use & Agent 入門 | 「怎麼讓 LLM 呼叫外部工具？」 | function calling + ReAct + 5 個動手練習 必跑 |
 | **4** Agent 框架 | 「哪個 framework 該學、為什麼？」 | LangGraph / AutoGen / CrewAI / Smolagents 對比 |
 | **5** ⭐⭐ Claude Code 生態 | 「Claude Code 生態系怎麼吃？」 | MCP / Skills / Plugins / Marketplace 4 個 sub-stage |
@@ -115,6 +115,8 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 ## Stage 結構（dominant pattern，非絕對 invariant）
 
 多數 stage 保留以下 section；**呈現順序採漸進式揭露**。Stage 1 是第一個完成遷移的 pilot，其他 stage 在各自內容更新時逐章遷移，不要求在同一個 PR 一次重寫：
+
+Stage 2 的固定主線是「目標／資料／規則／輸出 → 六筆固定案例 → 一次只改一件事 → 比較分數」。程式碼、模型比較、安全補充與 18 筆完整資源表預設收合。CoT 保留為歷史與選修概念，不再當成所有模型都要輸出的通用步驟。
 
 ```
 1. 1-2 句核心問題

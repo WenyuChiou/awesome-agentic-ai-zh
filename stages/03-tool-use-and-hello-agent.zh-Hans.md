@@ -46,8 +46,8 @@
 
 | 范式 | 是什么 | 在哪学 |
 |---|---|---|
-| **CoT**（Chain-of-Thought、思维链） | LLM 写出推理过程再给答案、不只给结论——是个 **prompting 技巧**、不是 agent 结构 | **Stage 2** 学习目标 + 动手练习（推理任务 CoT） |
-| **ReAct**（Reasoning + Acting） | 在 Loop 里套 CoT：Thought（想）→ Action（调用 tool）→ Observation（看结果）→ Thought ...，是 **Loop 部件最常见的实现** | **本 stage 练习 3** + [ReAct paper (Yao 2022)](https://arxiv.org/abs/2210.03629) |
+| **CoT**（Chain-of-Thought、思维链） | 早期 prompting 技巧会要求模型写出中间推理。现在不要把完整思维链当成通用输出要求；需要核对时，看最后答案和简短、可验证的理由 | [Stage 2](02-prompt-engineering.zh-Hans.md) 的推理模型提醒 |
+| **ReAct**（Reasoning + Acting） | 在 loop 中交替推理、调用 tool、查看结果，再决定下一步。它是常见的 loop pattern，不要求把私有推理过程显示给用户 | **本 stage 练习 3** + [ReAct paper (Yao 2022)](https://arxiv.org/abs/2210.03629) |
 | **Reflection** | 跑完一轮后让 LLM 批改自己、根据 feedback 重答 | **本 stage 反思**（concept + 路由） |
 | **Planning**（任务分解） | 把大任务拆成子任务、可分给多个 agent 各做 | **Stage 4** 什么是 multi-agent framework |
 

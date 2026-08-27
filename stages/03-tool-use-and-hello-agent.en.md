@@ -46,8 +46,8 @@ After learning the 3 minimum components, the next layer is "**how the LLM thinks
 
 | Paradigm | What It Is | Where to Learn |
 |---|---|---|
-| **CoT** (Chain-of-Thought) | The LLM writes out its reasoning process before giving the answer, not just the conclusion—it's a **prompting technique**, not an agent architecture | **Stage 2** Learning Objectives + Hands-on Exercises (Reasoning Task CoT) |
-| **ReAct** (Reasoning + Acting) | Applying CoT within a Loop: Thought → Action (call tool) → Observation (see result) → Thought... It's the **most common implementation of the Loop component** | **Exercise 3 of this stage** + [ReAct paper (Yao 2022)](https://arxiv.org/abs/2210.03629) |
+| **CoT** (Chain-of-Thought) | Early prompting techniques asked the model to write intermediate reasoning. Do not treat a full chain of thought as a general output requirement now; when you need to check the result, look at the final answer and a short, verifiable reason | The reasoning-model reminder in [Stage 2](02-prompt-engineering.en.md) |
+| **ReAct** (Reasoning + Acting) | Alternate reasoning, tool calls, and result checks in a loop, then decide the next step. It is a common loop pattern and does not require showing private reasoning to the user | **Exercise 3 of this stage** + [ReAct paper (Yao 2022)](https://arxiv.org/abs/2210.03629) |
 | **Reflection** | After a run, the LLM critiques its own work and re-answers based on feedback | **Reflection of this stage** (concept + routing) |
 | **Planning** (Task Decomposition) | Breaking a large task into sub-tasks, which can be assigned to multiple agents | **Stage 4** What is a multi-agent framework |
 

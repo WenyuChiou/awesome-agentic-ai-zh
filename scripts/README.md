@@ -38,7 +38,7 @@ python scripts/refresh-stars.py --check
 
 ## `check-repository-freshness.py` — 查 repo 狀態與文字矛盾
 
-它會把同一個 GitHub repo 的所有引用合併後只查一次。PR 模式只查本次新增或改寫的 Markdown 行；每週模式查完整清單，記錄搬家、封存、停用、授權、最後 push 與最新 release。
+它會把同一個 GitHub repo 的所有引用合併後只查一次；Markdown 連結與分組資源表的 HTML `href` 都會納入。PR 模式只查本次新增或改寫的 Markdown 行；每週模式查完整清單，記錄搬家、封存、停用、授權、最後 push 與最新 release。
 
 ```bash
 # 不連網：確認每個 tracked repo 都在快照裡

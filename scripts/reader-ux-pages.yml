@@ -94,3 +94,56 @@ pages:
           heading: "练习 6：Local LLM"
           anchor: 练习-6local-llm
     resource_group_rowspans: [4, 4, 2, 4, 3]
+
+  - id: stage-02
+    canonical: stages/02-prompt-engineering.md
+    mirrors:
+      en: stages/02-prompt-engineering.en.md
+      zh-Hans: stages/02-prompt-engineering.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 2120
+      en: 4135
+      zh-Hans: 2160
+    max_open_details: 0
+    required_visible_sections:
+      exercise-1:
+        zh-TW:
+          heading: "練習 1：System Prompt（把要求放進四格）"
+          anchor: 練習-1system-prompt把要求放進四格
+        en:
+          heading: "Exercise 1: System Prompt (put the request into four parts)"
+          anchor: exercise-1-system-prompt-put-the-request-into-four-parts
+        zh-Hans:
+          heading: "练习 1：System Prompt（把要求放进四部分）"
+          anchor: 练习-1system-prompt把要求放进四部分
+      exercise-2:
+        zh-TW:
+          heading: "練習 2：Few-Shot（給例子，再測同一組題目）"
+          anchor: 練習-2few-shot給例子再測同一組題目
+        en:
+          heading: "Exercise 2: Few-Shot (give examples, then test the same questions)"
+          anchor: exercise-2-few-shot-give-examples-then-test-the-same-questions
+        zh-Hans:
+          heading: "练习 2：Few-Shot（给范例，再测试同一组题目）"
+          anchor: 练习-2few-shot给范例再测试同一组题目
+      exercise-3:
+        zh-TW:
+          heading: "練習 3：Iterative Refinement（一次只改一件事）"
+          anchor: 練習-3iterative-refinement一次只改一件事
+        en:
+          heading: "Exercise 3: Iterative Refinement (change one thing at a time)"
+          anchor: exercise-3-iterative-refinement-change-one-thing-at-a-time
+        zh-Hans:
+          heading: "练习 3：Iterative Refinement（一次只改一件事）"
+          anchor: 练习-3iterative-refinement一次只改一件事
+      completion:
+        zh-TW:
+          heading: "✅ 進 Stage 3 前的自我檢查"
+          anchor: -進-stage-3-前的自我檢查
+        en:
+          heading: "✅ Self-Check Before Stage 3"
+          anchor: -self-check-before-stage-3
+        zh-Hans:
+          heading: "✅ 进入 Stage 3 前的自我检查"
+          anchor: -进入-stage-3-前的自我检查
+    resource_group_rowspans: [5, 4, 4, 4, 1]

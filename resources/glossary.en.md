@@ -78,16 +78,16 @@ Put "a few worked examples" in the prompt for the LLM to copy — the only diffe
 
 - **Zero-shot** (0 examples): just ask, no examples at all.
 - **One-shot** (1 example): give **1** input → output example first, then ask.
-- **Few-shot** (a handful): give **2–5** input → output examples first. **Few-shot usually improves accuracy a lot**, especially for strict formatting.
+- **Few-shot** (a handful): give **2–5** input → output examples first. It can show the format and boundary cases, but whether it helps must be checked with a fixed eval.
 
 ### Chain-of-Thought (CoT)
 
-Make the LLM "think before answering" — have it output the reasoning process before the conclusion. **Two common forms**:
+Early prompting techniques asked the LLM to write intermediate reasoning before the answer. Two common research forms are:
 
-- **Few-shot CoT** ([Wei et al. 2022](https://arxiv.org/abs/2201.11903)): put a few examples with reasoning steps into the prompt, and the LLM imitates that style of thinking
-- **Zero-shot CoT** ([Kojima et al. 2022](https://arxiv.org/abs/2205.11916)): add "Let's think step by step" at the end of the prompt to trigger a reasoning trace
+- **Few-shot CoT** (original paper, [Wei et al. 2022](https://arxiv.org/abs/2201.11903)): put a few examples with reasoning steps into the prompt, and the LLM imitates the reasoning
+- **Zero-shot CoT** ([Kojima et al. 2022](https://arxiv.org/abs/2205.11916)): add "Let's think step by step" at the end of the prompt.
 
-**Accuracy usually improves**, at the cost of more tokens. Few-shot usually beats zero-shot.
+Do not treat outputting a full chain of thought as a general requirement now. Reasoning models usually reason internally. When you need to check the result, ask for **a short, verifiable reason after the final answer**. Which wording works better must be compared with the same eval.
 
 ---
 
@@ -313,11 +313,11 @@ How to set up: put frontmatter + system prompt + tool whitelist in `.claude/agen
 
 ## 6. Production / Eval / Cost
 
-### Eval (Evaluation Framework)
+### Eval (Evaluation)
 
-Run a test set against your agent and quantify accuracy / latency / cost. **A production agent without eval has no tests.** Common: promptfoo, LangSmith, langfuse evals.
+Use a fixed test case set to check a prompt or agent. The smallest eval is like a small answer card: the same questions, clear success conditions, and a rerun after every change. As it grows, it can also record accuracy, latency, and cost. Common tools include promptfoo, LangSmith, and Langfuse evals.
 
-📍 Detail: [Stage 7](../stages/07-multi-agent-production.en.md)
+📍 Getting started: [Stage 2](../stages/02-prompt-engineering.en.md); full eval harness: [Stage 7](../stages/07-multi-agent-production.en.md)
 
 ### Observability
 

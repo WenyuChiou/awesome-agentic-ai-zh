@@ -22,7 +22,12 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
-GITHUB_RE = re.compile(r"https://github\.com/([\w.-]+)/([\w.-]+?)(?:[#?/),;:\s]|$)")
+# Accept both Markdown punctuation and HTML attribute boundaries. Grouped
+# resource tables use href="...", so omitting quotes makes the inventory
+# silently miss the exact tables that use accessible rowspan markup.
+GITHUB_RE = re.compile(
+    r"https://github\.com/([\w.-]+)/([\w.-]+?)(?:[#?/),;:\s\"'<>]|$)"
+)
 NON_REPO_OWNERS = {
     "settings", "marketplace", "login", "logout", "join", "topics",
     "trending", "collections", "events", "explore", "issues", "pulls",

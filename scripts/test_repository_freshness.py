@@ -41,6 +41,17 @@ def test_normalize_repo_and_exclusions():
     assert rf.normalize_repo("owner", "repo") is None
 
 
+def test_repos_in_text_reads_markdown_and_html_links():
+    text = (
+        '[Markdown](https://github.com/acme/markdown)\n'
+        '<a href="https://github.com/acme/html-table">HTML table</a>\n'
+        "<a href='https://github.com/acme/single-quote'>single quote</a>"
+    )
+    assert rf.repos_in_text(text) == [
+        "acme/html-table", "acme/markdown", "acme/single-quote",
+    ]
+
+
 def test_inventory_can_include_self_repo():
     assert rf.normalize_repo("WenyuChiou", "awesome-agentic-ai-zh") is None
     assert rf.normalize_repo("WenyuChiou", "awesome-agentic-ai-zh", include_self=True)

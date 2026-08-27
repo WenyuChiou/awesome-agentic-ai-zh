@@ -78,16 +78,16 @@ LLM 一次能“看”多少 token。**2026 frontier**：Claude Sonnet 5 / Opus 
 
 - **Zero-shot**（0 个范例）：直接问、不给任何范例。
 - **One-shot**（1 个范例）：先给 **1 个** input → output 范例再问。
-- **Few-shot**（少数几个）：给 **2-5 个** input → output 范例后再问。**Few-shot 通常显著提升准确度**，特别是格式要求严的任务。
+- **Few-shot**（少数几个）：给 **2-5 个** input → output 范例后再问。它能展示格式和边界案例，但是否变好仍要用固定 eval 检查。
 
 ### Chain-of-Thought（CoT，思维链）
 
-要 LLM“先想再答”——让它先输出推理过程，再给结论。**常见有两种形式**：
+早期 prompting 技巧会要求 LLM 写出中间推理，再给答案。常见研究形式有两种：
 
-- **Few-shot CoT**（原始 paper、[Wei et al. 2022](https://arxiv.org/abs/2201.11903)）：在 prompt 里放几个带推理步骤的例子，让 LLM 模仿着想
-- **Zero-shot CoT**（[Kojima et al. 2022](https://arxiv.org/abs/2205.11916)）：在 prompt 结尾加上“Let's think step by step”来触发 reasoning trace
+- **Few-shot CoT**（原始 paper、[Wei et al. 2022](https://arxiv.org/abs/2201.11903)）：在 prompt 里放几个带推理步骤的例子，让 LLM 模仿推理
+- **Zero-shot CoT**（[Kojima et al. 2022](https://arxiv.org/abs/2205.11916)）：在 prompt 结尾加上“Let's think step by step”。
 
-**准确度通常会提升**，代价是 token 数变多。Few-shot 通常比 zero-shot 更准。
+现在不要把输出完整思维链当成通用要求。推理模型通常会在内部完成推理；需要核对时，要求**最后答案后附一段简短、可验证的理由**。哪种写法较好，必须用同一组 eval 比较。
 
 ---
 
@@ -313,11 +313,11 @@ Claude Code 内以 `/` 开头的指令（`/help`、`/compact`、`/plan` 等）�
 
 ## 6. Production / Eval / Cost
 
-### Eval（评估框架）
+### Eval（评估）
 
-针对 agent 跑一组 test case，量化它的准确度 / latency / cost。**production agent 没有 eval 等于没有测试**。常见工具：promptfoo、LangSmith、langfuse evals。
+拿一组固定 test case 检查 prompt 或 agent。最小的 eval 就像一张小答案卡：同一组题目、清楚的正确条件、每次修改后重跑。规模变大后，还能一起记录准确度、latency 与 cost。常见工具有 promptfoo、LangSmith 与 Langfuse evals。
 
-📍 详细：[Stage 7](../stages/07-multi-agent-production.zh-Hans.md)
+📍 入门：[Stage 2](../stages/02-prompt-engineering.zh-Hans.md)；完整 eval harness：[Stage 7](../stages/07-multi-agent-production.zh-Hans.md)
 
 ### Observability
 
