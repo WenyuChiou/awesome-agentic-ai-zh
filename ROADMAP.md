@@ -13,7 +13,7 @@
 ## 近期想補的缺口
 
 ### 🟡 動手練習覆蓋補齊
-`examples/` 目前涵蓋 Stage 1、3、4、5、6、7。**缺**:Stage 2(Prompt 設計)、Stage 8(Agent Interfaces),以及 Stage 0(基礎概念)、Stage 7.5(進階 Agentic 概念)這兩個現有 stage 也都沒有對應的 hands-on 範例。每個範例要能在 30 分鐘內跑完、附 `怎麼跑` 指令。
+`examples/` 目前涵蓋 Stage 1、2、3、4、5、6、7。**缺**:Stage 0(基礎概念)、Stage 7.5(進階 Agentic 概念)、Stage 8(Agent Interfaces)。也就是只剩 Stage 0、7.5、8 尚未有對應的 hands-on 範例。每個範例要能在 30 分鐘內跑完、附 `怎麼跑` 指令。
 
 ### 🟡 audience branch 深化
 5 條 audience branch 篇幅(zh-TW canonical,2026-05 snapshot):for-knowledge-worker(143 行,最短)< for-developer(166)< for-everyday-users(179)< for-researcher(208)< for-teacher(224)。**篇幅最短的 `for-knowledge-worker.md` / `for-developer.md` 最需要補情境**。`for-teacher.md` 篇幅其實最長,但 `CONTRIBUTORS.md` 仍把它標「特別歡迎自薦」——它真正薄的是**教師情境的學術引用深度**(目前只有 Chen 2020 / Mittal 2024 兩筆),歡迎補更多 3-tier 教師 AI 應用情境 + 對應引用。

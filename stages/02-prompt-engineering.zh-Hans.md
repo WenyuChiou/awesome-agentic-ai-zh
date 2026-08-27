@@ -206,6 +206,8 @@ Path A 六题两轮的 API 费用为 `$0`。Path B 先设 `$0.05` 上限；如�
 
 最小成果只有三个文件：`prompt.txt`、`cases.json` 和 `results.md`。能重复测试，比一次拿到漂亮答案更重要。
 
+> ▶️ 想直接运行？查看 [`examples/stage-2/01-prompt-eval-loop/`](../examples/stage-2/01-prompt-eval-loop/README.zh-Hans.md)。
+
 <details markdown="1">
 <summary>展开其他选修练习和安全提醒</summary>
 

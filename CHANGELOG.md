@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-27
 
+- **content / test** · **Stage 2 補上第一個可執行的 prompt-eval 練習（三語）**：讀者先用不需模型、帳號或 key 的固定答案，看同一組六題如何從原版 `3/6`、加入三個例子後變成 `6/6`；頁面明寫這只是在教計分流程，不是模型 benchmark，也不保證 few-shot 每次都加分。Ollama 與 Anthropic 真模型路徑、12 次呼叫預算、程式走查、排錯與延伸資源放進 3 個預設關閉的 `<details>`。兩個 mock suite 實測為 Path A `4/4`、Path B `2/2`，不連模型也不花 API 費用；Stage 2 三語主頁新增可見入口，examples inventory、repository freshness 引用底稿與 ROADMAP 同步更新，未覆蓋章節縮為 Stage 0／7.5／8。Ollama `gemma4:e4b`、`claude-haiku-4-5`、官方價格與 Python SDK 現行 major 於 2026-08-27 UTC 重查；新範例依賴限制為 `openai>=3.5,<4.0`、`anthropic>=1.1,<2.0`。本次沒有把 live 模型的非確定性分數當成 CI 通過條件。
+
 - **content / docs** · **Stage 2 三語改成一條可重做的初學者路徑**：不展開選單時，讀者依序看到四個白話術語、`目標 → 資料 → 規則 → 輸出`、同一組六題、一次只改一件事、修改前後分數、一個客服留言分類小專案與短版自我檢查。繁中 reader-UX proxy 從 13,702 降到 1,955；三語各 8 個 `<details>` 全部預設關閉，練習標題、成果與第一步留在外面。六題答案欄也依 `billing／bug／other` 使用 `rowspan="2"` 真正合併。Stage 2 同時加入 `reader-ux-pages.yml`，保護三個練習、完成檢查、0 個預設展開與資源表 `5/4/4/4/1` 分組。
 - **content / freshness** · **Stage 2 的 18 筆學習資源依官方課程、官方 cookbook、跟著範例學、評估與最佳化、歷史資料分組**；分類欄用真正的 `rowspan` 合併，不列會過期的 stars。狀態、canonical repo 與 SPDX metadata 以 2026-08-27 UTC 的官方文件／GitHub API 底稿重查；`microsoft/prompt-engine` 明確只作封存歷史資料。Anthropic、OpenAI、Google 現行文件共同支持「先定義成功、固定案例、反覆測試」主線。
 - **fix / docs** · glossary 與 Stage 3 三語不再把完整 chain-of-thought 當成所有新模型的通用輸出要求；改為需要核對時看最後答案與簡短、可驗證的理由，並用同一組 eval 比較。Few-shot 也不再保證一定加分。Stage 2 將嚴格 JSON 路由到 Stage 3 schema，將 prompt injection 路由到 Stage 8；OpenRouter、OpenCode、Pi 刻意留到全站架構盤點，不塞進本章主線。

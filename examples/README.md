@@ -12,6 +12,14 @@
 
 ```
 examples/
+├── stage-2/                     # Prompt 設計
+│   ├── 01-prompt-eval-loop/     # 練習：改一件事，再看分數
+│   │   ├── starter.py           # 主程式（固定答案 + --live）
+│   │   ├── starter_anthropic.py # Anthropic 對照版
+│   │   ├── test.py              # Ollama 路徑自我驗證
+│   │   ├── test_anthropic.py    # Anthropic 路徑自我驗證
+│   │   ├── README.md            # 三語走查（+.zh-Hans.md +.en.md）
+│   │   └── requirements.txt     # 有上下限的依賴版本
 ├── stage-3/                     # Tool Use & Agent 入門
 │   ├── 03-react-from-scratch/   # 練習 3：從零實作 ReAct
 │   │   ├── starter.py           # 主程式（~70 行可跑）
@@ -215,7 +223,7 @@ r = client.messages.create(model="claude-haiku-4-5", ...)
 | Stage | 練習 | 範例位置 |
 |---|---|---|
 | 1 LLM 基礎 | 6 個 | inline 4 + folder 2（`examples/stage-1/`） |
-| 2 Prompt eng | 4 個 | 全 inline |
+| 2 Prompt eng | 4 個 | inline 3 + folder 1（`examples/stage-2/`） |
 | **3 Tool use** | **6 個** | inline 1 + folder 5（`examples/stage-3/`） |
 | 4 Frameworks | 5 個 | 全 folder（`examples/stage-4/`） |
 | 5 Claude Code 生態 | 11 個 | inline 6 + folder 5（`examples/stage-5/`） |

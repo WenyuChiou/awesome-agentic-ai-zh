@@ -1,6 +1,6 @@
 # Testing Plan — T3+ Verification Log
 
-> Updated 2026-05-13. Verification is **done**; this doc is now a historical log.
+> Updated 2026-08-27. Verification is **done**; this doc is now a historical log.
 > The branch `t3-stage-4-6-7-unverified` referenced in earlier versions has been
 > fully merged into `main` and deleted.
 
@@ -19,6 +19,15 @@
 **Total: 28/30 test files run green** + 1 install caveat (CrewAI on Python 3.14) + 1 pending live test (skill auto-load).
 
 **Total bugs fixed**: 6 — all in commit [`50c3bf8`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/50c3bf8).
+
+## ✅ Stage 2 prompt-eval example (2026-08-27)
+
+`examples/stage-2/01-prompt-eval-loop/` now gives beginners one small, repeatable loop: run the same six support messages, add three examples to the prompt, rerun, and compare the two scores.
+
+- `python starter.py` and `python starter_anthropic.py` both run a deterministic fixture without a model or API key. The visible `3/6 → 6/6` result explains the mechanics; it is **not** a model benchmark or a promise that few-shot examples always improve a result.
+- `python test.py`: **4/4 passed** for prompt construction, strict label scoring, all six cases, and the Ollama/OpenAI-compatible response shape.
+- `python test_anthropic.py`: **2/2 passed** for Anthropic text-block handling and request construction.
+- Live Ollama and Anthropic quality are optional learner checks. CI does not depend on a nondeterministic model score or spend API money.
 
 ## 🟢 Pedagogy v1 also shipped (2026-05-13)
 

@@ -206,6 +206,8 @@ Connect the three exercises: a four-part prompt, three examples, and six fixed t
 
 The minimum result has only three files: `prompt.txt`, `cases.json`, and `results.md`. Being able to repeat the test matters more than getting one pretty answer.
 
+> ▶️ Want to run it directly? See [`examples/stage-2/01-prompt-eval-loop/`](../examples/stage-2/01-prompt-eval-loop/README.en.md).
+
 <details markdown="1">
 <summary>Expand optional exercises and safety reminders</summary>
 

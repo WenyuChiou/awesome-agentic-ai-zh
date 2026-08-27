@@ -12,6 +12,14 @@ Every stage in the learning roadmap has a "Hands-on Exercises" section that tell
 
 ```
 examples/
+├── stage-2/                     # Prompt Engineering
+│   ├── 01-prompt-eval-loop/     # Exercise: change one thing, then check the score
+│   │   ├── starter.py           # Main program (fixed answers + --live)
+│   │   ├── starter_anthropic.py # Anthropic comparison path
+│   │   ├── test.py              # Ollama-path self-check
+│   │   ├── test_anthropic.py    # Anthropic-path self-check
+│   │   ├── README.md            # Three-language walkthrough (+.zh-Hans.md +.en.md)
+│   │   └── requirements.txt     # Bounded dependency versions
 ├── stage-3/                     # Tool Use & Agent intro
 │   ├── 03-react-from-scratch/   # Exercise 3: ReAct from scratch
 │   │   ├── starter.py           # Main program (~70 LOC runnable)
@@ -215,7 +223,7 @@ Main differences: the message-creation method name, the response shape (`choices
 | Stage | Exercises | Example location |
 |---|---|---|
 | 1 LLM basics | 6 | inline 4 + folder 2 (`examples/stage-1/`) |
-| 2 Prompt engineering | 4 | all inline |
+| 2 Prompt engineering | 4 | inline 3 + folder 1 (`examples/stage-2/`) |
 | **3 Tool use** | **6** | inline 1 + folder 5 (`examples/stage-3/`) |
 | 4 Frameworks | 5 | all folder (`examples/stage-4/`) |
 | 5 Claude Code ecosystem | 11 | inline 6 + folder 5 (`examples/stage-5/`) |

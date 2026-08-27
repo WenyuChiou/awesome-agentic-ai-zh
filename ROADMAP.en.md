@@ -13,7 +13,7 @@ This repo is a **community-maintained learning roadmap**: no release date, no pr
 ## Near-Term Gaps We Want to Fill
 
 ### 🟡 Fill Out Hands-On Exercise Coverage
-`examples/` currently covers Stage 1, 3, 4, 5, 6, and 7. **Missing**: Stage 2 (Prompt Design), Stage 8 (Agent Interfaces), plus Stage 0 (Foundation Concepts) and Stage 7.5 (Advanced Agentic Concepts), two existing stages that also have no corresponding hands-on examples. Each example should run in under 30 minutes and include `how to run` commands.
+`examples/` currently covers Stage 1, 2, 3, 4, 5, 6, and 7. **Missing**: Stage 0 (Foundation Concepts), Stage 7.5 (Advanced Agentic Concepts), and Stage 8 (Agent Interfaces). In other words, only Stage 0, 7.5, and 8 remain without corresponding hands-on examples. Each example should run in under 30 minutes and include `how to run` commands.
 
 ### 🟡 Deepen the audience branch Files
 5 audience branch files by length (zh-TW canonical, 2026-05 snapshot): for-knowledge-worker (143 lines, shortest) < for-developer (166) < for-everyday-users (179) < for-researcher (208) < for-teacher (224). **The shortest files, `for-knowledge-worker.md` / `for-developer.md`, need scenario coverage the most**. `for-teacher.md` is actually the longest, but `CONTRIBUTORS.md` still marks it as “especially open to self-nominations”: what is truly thin is the **academic citation depth for teacher scenarios** (currently only Chen 2020 / Mittal 2024), and more 3-tier teacher AI application scenarios + matching citations are welcome.

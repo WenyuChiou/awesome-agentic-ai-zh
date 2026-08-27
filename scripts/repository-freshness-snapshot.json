@@ -5514,8 +5514,11 @@
         "tag": "0.122.1",
         "published_at": "2026-08-26T20:33:34Z"
       },
-      "reference_count": 27,
+      "reference_count": 30,
       "sources": [
+        "examples/stage-2/01-prompt-eval-loop/README.en.md",
+        "examples/stage-2/01-prompt-eval-loop/README.md",
+        "examples/stage-2/01-prompt-eval-loop/README.zh-Hans.md",
         "examples/stage-5/tool-calling-tutor/README.en.md",
         "examples/stage-5/tool-calling-tutor/README.md",
         "examples/stage-5/tool-calling-tutor/README.zh-Hans.md",
