@@ -51,7 +51,7 @@ If unsure, ask the user to run `ollama list` and verify.
 |---|---|---|
 | **`claude-fable-5`** | Mythos-class (above Opus); suspended 2026-06-12, **restored 2026-07-01** (controls lifted 2026-06-30); the highest Claude tier | $10 input / $50 output |
 | **`claude-haiku-4-5`** | Cheapest cloud option, OK for all exercises | $1 input / $5 output |
-| **`claude-sonnet-5`** | Production default, agent development | $3 input / $15 output |
+| **`claude-sonnet-5`** | Production default, agent development | $2 input / $10 output |
 | **`claude-opus-5`** | Opus-class flagship (2026-07-24; succeeds Opus 4.8 at the same price, which stays available as legacy); high quality, complex reasoning (Fable 5 is the tier above) | $5 input / $25 output |
 
 ## Framing rules (do not violate)

@@ -436,6 +436,12 @@ jobs:
         # DeepSeek space-form regex (scripts/test_freshness.py).
         run: python scripts/test_freshness.py
 
+      - name: Enforce freshness facts and page markers
+        # Structural marker errors and unqualified stale facts block PRs.
+        # Age-only findings remain annotations, so an unrelated PR cannot fail
+        # merely because a verified page crossed its review interval.
+        run: python scripts/check-2026-freshness.py
+
   anchor-slug-parity:
     name: Anchor slug parity (site vs check-anchors)
     runs-on: ubuntu-latest

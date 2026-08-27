@@ -205,8 +205,6 @@ Every stage (except Stage 0) should have:
 
 > **English** | [繁體中文](./0N-slug.md)
 
-⏱ **Time estimate**: N-M weeks (~X-Y hours)
-
 [1-2 sentence description of the stage's core question]
 
 ## 📌 Learning Goals
@@ -214,17 +212,38 @@ Every stage (except Stage 0) should have:
 - bullet 2
 
 ## 🚪 Entry Conditions (Stage 1+ only)
+<details markdown="1">
+<summary>⏱ Before you start: time, prerequisites, and budget</summary>
+
+**Time estimate**: N-M weeks (~X-Y hours)
+
 You should have:
 - ...
 
+</details>
+
 ## 📚 Required Reading
+You will use these sources during the exercises; expand them when needed.
+
+<details markdown="1">
+<summary>Show 3-5 required sources</summary>
+
 1. [Link](url) — description
 2. ...
+
+</details>
 
 ## 🛠 Hands-on Exercises (do them, not just read)
 
 ### Exercise N: Title
-Description.
+One sentence describing the observable result. Keep the heading outside details so deep links remain visible.
+
+<details markdown="1">
+<summary>Show detailed steps</summary>
+
+Time, cost, code, expected output, and troubleshooting.
+
+</details>
 
 [3-5 hands-on exercise items]
 
@@ -246,6 +265,18 @@ If no → ...
 
 ## 💡 What's Next (optional, mostly used in the last stage)
 ```
+
+Secondary `<details>` blocks omit `open` by default. The one standard exception is the primary Ollama Path A in a two-path exercise; Anthropic Path B remains collapsed. Do not place a linkable heading inside `<details>`, and do not nest more than three disclosure levels.
+
+Pages containing models, prices, context limits, licenses, or lifecycle states place a visible verification date and a machine-readable marker near those facts:
+
+```markdown
+> Data verified: YYYY-MM-DD UTC. Prices and availability may change; check the official page before use.
+
+<!-- freshness: canonical=stages/0N-slug.md; verified_on=YYYY-MM-DD; scope=models,pricing,availability,deprecations; max_age_days=90 -->
+```
+
+All three locale markers must be identical; `canonical` always points to the Traditional Chinese source page. If an official source does not publish a field, write “not published by the official source” instead of inferring it from a third-party leaderboard. Third-party benchmarks may only teach readers how to run their own evaluation.
 
 **Stage 0 exception**: can omit `Curated Projects` and `Entry Conditions` — it's a prerequisite gateway.
 

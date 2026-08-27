@@ -202,8 +202,6 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 
 > [English](./0N-slug.en.md) | **繁體中文**
 
-⏱ **時間估算**：N-M 週（約 X-Y 小時）
-
 [1-2 句話描述這個 stage 的核心問題]
 
 ## 📌 學習目標
@@ -212,17 +210,38 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 ...
 
 ## 🚪 進入條件（Stage 1+ 才需要）
+<details markdown="1">
+<summary>⏱ 開始前先看：時間、先備工具與預算</summary>
+
+**時間估算**：N-M 週（約 X-Y 小時）
+
 你應該已經：
 - ...
 
+</details>
+
 ## 📚 必修閱讀
+這些資料會在練習中用到；需要時再展開。
+
+<details markdown="1">
+<summary>展開 3-5 個必讀來源</summary>
+
 1. [連結](url) — 描述
 2. ...
+
+</details>
 
 ## 🛠 動手練習（不是看過就好）
 
 ### 練習 N：標題
-描述。
+一句話描述完成後會看到什麼。標題留在 details 外，讓深連結可見。
+
+<details markdown="1">
+<summary>展開詳細步驟</summary>
+
+時間、費用、程式碼、預期輸出與疑難排解。
+
+</details>
 
 [3-5 個動手練習 items]
 
@@ -244,6 +263,18 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 
 ## 💡 接下來（選填，多在最後一個 stage 用）
 ```
+
+次要 `<details>` 預設不加 `open`。唯一通例是雙路徑練習的主要 Ollama Path A；Anthropic Path B 仍預設收合。不要把可被連結的 heading 包進 `<details>`，也不要用三層以上的巢狀收合。
+
+含模型、價格、context、授權或生命週期狀態的頁面，在資料附近加入可見查核日期與機器 marker：
+
+```markdown
+> 資料查核：YYYY-MM-DD UTC。價格與可用性之後可能改變，使用前請再看官方頁面。
+
+<!-- freshness: canonical=stages/0N-slug.md; verified_on=YYYY-MM-DD; scope=models,pricing,availability,deprecations; max_age_days=90 -->
+```
+
+三語 marker 必須完全一致；`canonical` 一律指向繁中主頁。官方沒有公布的欄位寫「官方未公布」，不要從第三方榜單反推；第三方 benchmark 只能教讀者怎麼自己評測。
 
 **Stage 0 例外**：可以省略 `精選 Projects`、`進入條件`，因為它是 prerequisite gateway。
 

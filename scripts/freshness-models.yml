@@ -9,31 +9,83 @@
 #   - qualifier_terms 例子：前身 / 歷史 / lineage / 舊版 / 原始 / baseline / paper
 #   - 這些字眼出現代表上下文已經承認這是 historical reference、不算 stale
 
+stage01_fact_pack:
+  canonical: 'stages/01-llm-basics.md'
+  verified_on: '2026-08-27'
+  scope: ['models', 'pricing', 'availability', 'deprecations']
+  official_sources:
+    claude: 'https://platform.claude.com/docs/en/models/overview'
+    gpt: 'https://developers.openai.com/api/docs/models'
+    gemini: 'https://ai.google.dev/gemini-api/docs/models'
+    deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
+    kimi: 'https://platform.kimi.com/docs/overview'
+    hunyuan: 'https://cloud.tencent.com/document/product/1823/130055'
+    minimax: 'https://www.minimax.io/blog/minimax-m3'
+    qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
+    glm: 'https://docs.z.ai/guides/llm/glm-5.3'
+    yi: 'https://github.com/01-ai/Yi'
+    llama: 'https://ai.meta.com/llama/get-started/'
+    muse: 'https://huggingface.co/meta-models/Muse-Glimmer-30B'
+    gemma: 'https://ai.google.dev/gemma/docs/core'
+    mistral: 'https://docs.mistral.ai/models'
+    phi: 'https://azure.microsoft.com/en-us/products/phi'
+  pricing_sources:
+    gemini: 'https://ai.google.dev/gemini-api/docs/pricing'
+    kimi: 'https://platform.kimi.com/'
+    hunyuan: 'https://cloud.tencent.com/document/product/1823/130055'
+    minimax: 'https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise'
+    qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
+    glm: 'https://docs.z.ai/guides/overview/pricing'
+  migration_sources:
+    hunyuan: 'https://cloud.tencent.com/announce/detail/2391'
+
+verified_pages:
+  - canonical: 'stages/01-llm-basics.md'
+    required_scopes: ['models', 'pricing', 'availability', 'deprecations']
+    max_age_days: 90
+
 current_frontier_models:
-  # 2026-07 frontier list (review quarterly)
+  # Verified 2026-08-27 from provider docs / official model cards.
+  # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
-    - "Fable 5"      # Mythos-class, most capable widely released model
-    - "Opus 5"       # 2026-07-24, recommended Opus-class default
-    - "Opus 4.8"     # still available (docs list it under "Legacy models"), NOT deprecated
+    - "Fable 5"
+    - "Opus 5"
     - "Sonnet 5"
     - "Haiku 4.5"
   openai:
-    - "GPT-5.6"
-    - "GPT-5.5"
-    - "GPT-5.4"
-    - "GPT-5"
+    - "GPT-5.6 Sol"
+    - "GPT-5.6 Terra"
+    - "GPT-5.6 Luna"
+  google_gemini:
+    - "Gemini 3.7 Flash"
+    - "Gemini 3.1 Pro Preview"
   deepseek:
-    - "DeepSeek-V4"
     - "DeepSeek-V4-Pro"
     - "DeepSeek-V4-Flash"
-  google:
-    - "Gemini 3.5 Flash"
-    - "Gemini 3.5 Pro"
-    - "Gemini 3.1 Pro"
-    - "Gemini 3"
+  moonshot:
+    - "Kimi K3"
+  tencent:
+    - "Hy3"
+  minimax:
+    - "MiniMax M3"
   alibaba:
-    - "QwQ-32B"
-    - "QvQ-72B"
+    - "Qwen 3.8 Max"
+    - "Qwen 3.8 open weights"
+  zhipu:
+    - "GLM-5.3"
+  zero_one_ai:
+    - "Yi-34B / Yi-9B (maintenance or historical use)"
+  meta:
+    - "Llama 4 Scout / Maverick"
+    - "Muse Glimmer 30B"
+  google_gemma:
+    - "Gemma 4"
+  mistral:
+    - "Mistral Small 4"
+    - "Mistral Large 3"
+    - "Ministral 3"
+  microsoft:
+    - "Phi-4 family"
 
 # Stale patterns — 偵測過時 model name without proper historical qualifier
 # NOTE: qualifier_terms include both English ('baseline') and the localized CJK
@@ -41,6 +93,33 @@ current_frontier_models:
 # scanned — a qualifier written as "baseline" in zh-TW/en often becomes "基线" in
 # the zh-Hans mirror, and the gate must recognize all three (2026-07 gap).
 stale_patterns:
+  # Stage 01 completed its 2026-08-27 refresh. These patterns are deliberately
+  # scoped to its three mirrors so later stages can migrate in their own PRs.
+  - pattern: 'Gemini 3\.5 (Flash|Pro)'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: ['前身', '歷史', '历史', '舊版', '旧版', 'legacy', 'historical', 'replaced', 'superseded']
+    note: 'Stage 01 recommends Gemini 3.7 Flash; Gemini 3.1 Pro remains Preview'
+
+  - pattern: 'GLM-5\.2'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: ['前身', '歷史', '历史', '舊版', '旧版', 'legacy', 'historical', 'replaced', 'superseded']
+    note: 'Stage 01 recommends GLM-5.3'
+
+  - pattern: 'Hunyuan T1|TurboS'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: ['前身', '歷史', '历史', '舊', '旧', 'legacy', 'historical', 'migrated', 'migration', 'closed', '關閉', '关闭', '遷移', '迁移']
+    note: 'Tencent migrated or closed the former Hunyuan model line; Stage 01 recommends Hy3'
+
+  - pattern: 'hy3-preview'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: ['sunset', 'shutdown', 'shuts down', '2026-08-31', '下線', '下线', '歷史', '历史', 'legacy']
+    note: 'Tencent schedules hy3-preview to shut down on 2026-08-31; Stage 01 recommends Hy3'
+
+  - pattern: 'deepseek-chat|deepseek-reasoner'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: ['前身', '歷史', '历史', '舊', '旧', 'legacy', 'historical', 'deprecated', '棄用', '弃用', '停用']
+    note: 'DeepSeek retired the old aliases on 2026-07-24'
+
   - pattern: 'Claude 3\.5 Sonnet'
     qualifier_terms: ['前身', '歷史', 'lineage', '舊版', '原始', 'baseline', '基線', '基线', 'predecessor', 'history']
     note: 'Pre-2026 Claude version (Claude 3.5 Sonnet was current circa 2024-Q4)'

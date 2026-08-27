@@ -2,170 +2,92 @@
 
 > **繁體中文** | [简体中文](./01-llm-basics.zh-Hans.md) | [English](./01-llm-basics.en.md)
 
-⏱ **時間估算**：1 週（約 5-8 小時）
+> 本章目的：用一條可重複的本機到雲端路徑，學會透過 API（應用程式介面）呼叫 LLM、讀懂 token 與上下文限制，並用成本與延遲做出可解釋的模型選擇。
 
-> 👋 **從 [Stage 0](00-foundations.md) 來的**：好，環境已經夠用——這 5-8 小時：第一次成功呼叫 Claude / GPT / Gemini API、搞懂 token / context window / temperature 怎麼影響輸出、用 per-token 計算實際成本。**直接從這裡開始的**：先確認你能跑 Python script、有任一家供應商的 API key——做不到請先回 [Stage 0](00-foundations.md)。
-
-> 💡 **看不懂某個詞**（LLM / token / context window / temperature / RAG / agent⋯）→ 先翻 [`resources/glossary.md`](../resources/glossary.md) 查 30 秒再回來。
-
-> 📋 **本章組成**：學習目標 → 進入條件 → 必修閱讀 →〔可選 · 概念地圖〕→ 動手練習 → 精選 Projects → 自我檢查  
-> 🔑 **關鍵名詞**：見 [`resources/glossary.md`](../resources/glossary.md)（每 stage 用到的術語都收在那裡）
-
-### 三個核心詞（先記住、後面 stage 都會用到）
-
-| 詞 | 中文 | 一句話 |
-|---|---|---|
-| **token** | 詞元 | 模型計算文字長度與費用的基本單位（中文 1 字 ≈ 1.5-2 token） |
-| **context window** | 上下文視窗 | 模型一次能看到多少 token（Claude 1M / GPT 1.05M / Gemini 2M）|
-| **temperature** | 隨機程度參數 | 控制回答穩定或發散（0 = 最穩定、1 = 創意；分類任務用 0.0-0.3、創作用 0.7-1.0）|
-
-→ 這 3 個詞貫穿後續所有 stage。Stage 1 的目標就是讓你用 API 跑出來、親手摸到它們如何影響輸出。
-
-> 🧠 **temperature 為什麼能調？先懂 next-token**：LLM 的核心動作是**預測下一個 token**：它對「下一個字」算出一個機率分布，再從裡面**抽樣**一個。`temperature` 跟 `top_p` 就是在「重塑這個分布」——temperature 低 → 分布變尖、幾乎只挑最可能的（穩定、可重現）；temperature 高 → 分布變平、更敢挑冷門字（有創意但易跑題）。`max_tokens` 則是「最多抽幾次就停」。所以這些不是魔法旋鈕，而是在控制「怎麼從機率分布裡選字」。
+資料查核：2026-08-27 UTC
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
 
 ## 📌 學習目標
 
-走完這個階段後你會：
+完成本階段後，你可以：
 
-- 解釋 LLM 是什麼、token 是什麼、context window 是什麼意思
-- 第一次成功呼叫 Claude / GPT / Gemini API 並解析回應
-- 在強項上比較四大 LLM 家族（Claude / GPT / Gemini / Llama）
-- 用 per-token 計價來估算單次任務的成本
+- 用 Ollama 的本機模型完成第一次 API 呼叫，再用 Anthropic API 做對照。
+- 以簡單例子說明 token、context window 與 temperature。
+- 從回應的 usage 欄位讀出輸入與輸出 token。
+- 用輸入／輸出單價、延遲與資料敏感度解釋模型選擇。
 
-## 🌐 主流 LLM 家族對比（2026-05 snapshot）
+## 三個核心詞
 
-「Claude 跟 GPT 有什麼不同？」「中國模型能用嗎？」「我該裝 Ollama 跑哪個 OSS model？」——這節給你**客觀對照**。不下「最好」結論——用 **強項 / 適合任務 / 弱項** 3 維比較、附**官方 docs URL**讓你自己 verify。
+### 1. token（詞元）
 
-> 💡 **先解釋幾個名詞**：
-> - **Context window** = LLM 一次能記住的對話量、有上限（譬如 200k token ≈ 15 萬中文字）
-> - **Apache 2.0 / MIT** = 可商用 / 可改 / 可閉源的開源條款；**Llama Community License** = 開源但有條款限制（譬如 ≥ 7 億 MAU 要授權）
-> - **Frontier model** = 各家最強旗艦；**OSS** = open-source、weights 可下載 self-host
+Token 是模型讀寫文字時使用的計算單位，也常是 API 計價單位。可以把它想成模型處理句子時切下來的一小塊積木；一個英文單字可能是一塊，也可能被切成幾塊，中文一個字也不保證只是一塊。實際數量要看 tokenizer，不能用字數精確猜測。
 
-### 🇺🇸 美系商業 frontier（3 家）
+### 2. context window（上下文視窗）
 
-這 3 家是 SaaS API、付 token 用、不能 self-host：
+Context window 是模型一次可以接收的 token 總容量，包含你的提示、歷史對話與要求它產生的內容。它像桌面大小：桌面放不下的內容就必須刪掉、摘要或分批處理。模型的上限不同，使用前要查該型號的官方文件。
 
-<!-- 維護慣例（下面 3 張表共用）：「旗艦」這格只寫現在的旗艦，最多再留前一代；出了新的就把舊名字換掉、別一直往上加；太舊、官網已經查不到的就刪掉。會變的資訊（暫停、preview、還沒出）別塞在格子裡，寫到表格下面那行「註」；等狀態結束了（正式上線、恢復、或永久退役）就把那行刪掉。「Context」這格只填數字。改完記得更新標題的月份（2026-MM）。 -->
+### 3. temperature（溫度）
 
-| Model 家族 | 旗艦（2026-07）| Context | 強項 | 適合任務 | 官方 docs |
-|---|---|---|---|---|---|
-| **Claude**（Anthropic）| Opus 5 / Sonnet 5 / Haiku 4.5 | 1M | long-form / coding / agent / safety alignment | 寫 paper / code review / agent runtime | [platform.claude.com/docs](https://platform.claude.com/docs/en/about-claude/models/overview) |
-| **GPT**（OpenAI）| GPT-5.6 Sol / Terra / Luna | 1.05M | 通用 / function calling / ecosystem 最廣 | 廣度查詢 / function-call 框架 / GPTs 生態 | [platform.openai.com/docs/models](https://platform.openai.com/docs/models) |
-| **Gemini**（Google）| 3.5 Flash / 3.5 Pro（開發中）| 2M | 長 context / 原生 multimodal / Google 整合 | PDF / 影音 / 大量文件 / Google Workspace | [ai.google.dev](https://ai.google.dev/gemini-api/docs/models/gemini) |
+Temperature 是控制抽樣變化程度的參數。把模型想成每次都在下一塊積木的多個候選中選一塊：低溫會偏向最可能的候選，適合分類或固定格式；高溫會更常嘗試其他候選，適合構思但可能更不穩定。它不會增加模型知識，也不會保證完全可重現。
 
-> **註**：`（開發中）`= 還沒推出。Claude **Fable 5**（Mythos-class、位階在 Opus 之上、$10/$50）是目前最強的 Claude 層級；**Opus 5**（2026-07-24 推出、`claude-opus-5`、1M、$5/$25，跟前一代 Opus 4.8 同價）是官方 docs 建議的預設起點，Anthropic 宣稱它「接近 Fable 5 的能力、一半的價格」。**Opus 4.8 仍可用**（官方 docs 已移入 Legacy 區、未 deprecated）。Context 欄填的是旗艦的上限：Gemini Pro 系列 2M、Flash 1M；Claude 1M（Haiku 4.5 是 200k）；GPT-5.6 三款都是 1.05M。另外 **Sonnet 5**（2026-06-30 上線）是目前的 Sonnet 版本：1M context、速度快、比 Opus 便宜（$3/$15，Opus 是 $5/$25）。**GPT-5.6**（2026-07 上線）分三級：**Sol** 旗艦（$5/$30）、**Terra** 均衡（$2.50/$15）、**Luna** 最快最省（$1/$6），ChatGPT / Codex / API 皆可用。
+## 場景式模型選擇器
 
-### 🇨🇳 中國商業 + 開源 frontier（7 家）
+先看任務的限制，再看模型；不必先背排行榜。
 
-中文場景的主力，分兩類：**純 API**（雲端付費、不能 self-host）和**有開源 weights**（可在自己機器跑）。
-
-**① 純 API（雲端、付費為主）**
-
-| Model 家族 | 旗艦（2026-05）| Context | 強項 | 適合任務 | 官方 |
-|---|---|---|---|---|---|
-| **DeepSeek**（深度求索）| V4-Flash（`deepseek-v4-flash`）/ V4-Pro（`deepseek-v4-pro`）| 1M | 推理 / coding / **cost 最低** | 大量 token / code 生成 / math | [api-docs.deepseek.com](https://api-docs.deepseek.com/zh-cn/) |
-| **Kimi**（Moonshot）| K3（2.8T 參數、原生多模態）| **1M** | 長 context / 中文長文 | 整本書讀 / 文獻分流 | [platform.moonshot.cn](https://platform.moonshot.cn/) |
-| **Hunyuan**（騰訊）| T1（深度思考）+ TurboS | 128k | **深度思考推理**（對標 DeepSeek R1 這條 2025 推理基線）、中文 | 中文推理 / 騰訊生態 | [hunyuan.tencent.com](https://hunyuan.tencent.com/) |
-| **MiniMax** | M3 | 1M | 多模態 / 中文長 prose / coding | 中文寫作 / 影音 multimodal | [platform.minimax.io](https://platform.minimax.io/) |
-
-> **註**：這組以雲端 API 為主、多為 proprietary。DeepSeek 另有部分開源權重（在 HF），主要用法仍是雲端 API（舊名 `deepseek-chat`/`deepseek-reasoner` 於 2026-07-24 停用、已改指向 v4-flash）。
-
-**② 有開源 weights（可 self-host）**
-
-| Model 家族 | 旗艦（2026-05）| Context | 強項 | 適合任務 | 官方 |
-|---|---|---|---|---|---|
-| **Qwen**（阿里）| Qwen 3.7 / 3.6（開源）| 128k+ | **中文最強 OSS** / 多模態 / agent | 中文長文 / agent / self-host | [qwen.ai](https://qwen.ai/) · [DashScope](https://help.aliyun.com/zh/dashscope/) |
-| **GLM**（智譜 Zhipu）| GLM-5.2 | 1M | 中文 / tool use / agent | 中文 agent / 多輪對話 | [open.bigmodel.cn](https://open.bigmodel.cn/) · [chatglm.cn](https://chatglm.cn/) |
-| **Yi**（01.AI / 李開復）| Yi-Lightning / Yi-34B-Chat | 200k | **中文 OSS**（⚠️ 01.AI 2025 起停 foundation 訓練、Yi 已凍結）| 中文 self-host / 中文 API | [01.ai](https://01.ai/) · [GitHub](https://github.com/01-ai/Yi) |
-
-> **註**：這三家都走 **開源版（Apache 2.0 或 MIT）+ 付費雲端 API** 兩條路（GLM 開源版現為 5.2、MIT）。開源版可用 [Ollama](https://ollama.com/) 在自己機器跑。
-
-> ⚠️ **小米 MiMo** 雖在 [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.md) 列入 Hermes Agent routing、但 2026-05 無權威官方 source 可驗證、暫不收進此表。要試 → 透過 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 200+ provider routing 接入。
-
-### 🌍 西方開源（5 家、self-host 主力）
-
-跑在自己機器、不付 API、隱私敏感場景的主力——可透過 [Ollama](https://ollama.com/) 一行指令裝起來：
-
-| Model 家族 | 大小（活躍）| License | 強項 | 適合任務 | 官方 |
-|---|---|---|---|---|---|
-| **Llama**（Meta）| 3.3 70B | Llama Community License | 通用 / 生態最廣 / Ollama 預設 | self-host 入門 / fine-tune base | [llama.com](https://www.llama.com/) · [HF Meta](https://huggingface.co/meta-llama) |
-| **Muse**（Meta）| Glimmer 30B dense | Apache 2.0 | **agent 專用**（tool use / 長任務 / 失敗回復）/ 多模態輸入 / 131k context | 本機 agent / coding agent / 單張消費級 GPU | [developer.meta.com](https://developer.meta.com/ai/models/muse-glimmer/) · [HF meta-models](https://huggingface.co/meta-models/Muse-Glimmer-30B) |
-| **Gemma**（Google）| Gemma 4 26B MoE + 31B dense | Apache 2.0 | **小巧高效** / Apple MLX 整合好 / multimodal | Edge / mobile / 4-8GB RAM 機器 | [ai.google.dev/gemma](https://ai.google.dev/gemma) |
-| **Mistral**（Mistral AI）| Small 4 / Ministral 3 / Large 3 | 開源權重（license 依版本、Large 3 為 Apache 2.0）| Small 4 統一 reasoning / vision / coding、EU 主權 | 商用 self-host / EU 主權 | [mistral.ai](https://mistral.ai/) · [HF Mistral](https://huggingface.co/mistralai) |
-| **Phi**（Microsoft）| Phi-4 14B + multimodal | MIT | **小但強** / reasoning / 適 edge | 4GB+ RAM / mobile / reasoning 入門 | [HF microsoft](https://huggingface.co/microsoft) |
-
-> **註**：Llama 4（Scout / Maverick）於 2025-04 釋出，但屬大型 MoE，單機自架的實用基準仍是 3.3 70B（表中為 3.3）、Behemoth 未釋出；Gemma 4 為 2026-04 釋出、LMArena 開源組第 3；Phi-4 另有 multimodal 版。**Muse Glimmer** 為 2026-08-10 釋出、Meta 第一個專為 agent 設計的開放權重模型，由閉源的 **Muse Spark** 蒸餾而來(Meta 自己說它「整體不如 Spark」);**Spark 的 weights 目前還沒釋出**——Meta 說會放，但 HF 上還查不到，所以這裡只收 Glimmer。注意 Meta 現在兩條線並行:Llama 走 Llama Community License,Muse 走 Apache 2.0。
-
-### 🎯 我該選哪家？（按場景反查）
-
-| 你的場景 | 推薦 + 為什麼 |
-|---|---|
-| 第一次學 LLM API、教材完整度優先 | **Claude** — Anthropic Cookbook + Courses 是社群公認最完整 |
-| 寫長文 / paper / code review | **Claude Sonnet** — long-form prose 強項 |
-| 多模態（PDF / 影音 / 圖）| **Gemini** 或 **Kimi** — 原生 multimodal |
-| 廣度查詢 + function calling 框架 | **GPT** — ecosystem 最廣、SDK 整合最深 |
-| **中文場景 + 商業 API** | **Kimi**（長 context 強、能塞整本書）或 **DeepSeek**（cost 最低）或 **GLM**（agent 友善）|
-| **中文場景 + 開源 self-host** | **Qwen 3.7 / GLM-5.2**（Apache 2.0 / MIT、中文最強 OSS 之一）|
-| 推理 / math（reasoning model）| **DeepSeek V4-Pro** / **Hunyuan T1** / **OpenAI o-series** |
-| 隱私 / offline / 不付 API | **Llama 3.3** / **Gemma 4** / **Qwen 3 OSS** via [Ollama](https://ollama.com/) |
-| Edge / 4GB RAM 機器 | **Gemma 4** / **Phi-4** / **Qwen 3（3B 以下版本）** |
-| 100k+ token 大文件 | **Gemini 3.1**（2M context）或 **Kimi K3**（1M）|
-| **想 cost 最低**（API 帳單敏感）| **DeepSeek V4-Flash** — 同級英文 model 中 token 單價最低 |
-
-### 📊 中立 benchmark 資源（自己 verify、不靠單一 source）
-
-| 資源 | 用途 | URL | 2026-05 狀態 |
-|---|---|---|---|
-| **Artificial Analysis** | 第三方 benchmark + price/latency 整合（含中國 model）| https://artificialanalysis.ai/ | ✓ Active |
-| **Arena AI**（前 LMSYS Chatbot Arena）| 人類盲測 ELO 排名 | https://arena.ai/leaderboard/text | ✓ Active |
-| **Vellum LLM leaderboard** | 多 benchmark 整合 | https://www.vellum.ai/llm-leaderboard | ✓ Active |
-| **HuggingFace OpenLLM Leaderboard** | 開源 model 排名 | https://huggingface.co/spaces/open-llm-leaderboard | ⚠️ 2026-05 偶爾 runtime error、改看 [Arena AI](https://arena.ai/) 開源 tab |
-| **SuperCLUE**（中文 benchmark）| 中文場景權威評測 | https://www.superclueai.com/ | ✓ Active |
-
-### ⚠️ 重要警語
-
-- ⚠️ **Benchmark ≠ production performance**——LLM 在你 specific 任務的表現要自己跑 small eval（譬如貼 10 個你真實 prompt 看哪家答得最像你要的）、**不能只看排名選**
-- ⚠️ **Frontier 6 個月洗牌一次**——上面所有數字是 **2026-05 snapshot**、之後請以**官方 docs** / [Artificial Analysis](https://artificialanalysis.ai/) 為準
-- ⚠️ **「強項」是相對的、不是絕對的**——所有 frontier model 都能完成基本任務、差別在特殊或困難的情境（超長文件、複雜推理、多語言）
-- ⚠️ **中文場景看 [SuperCLUE](https://www.superclueai.com/)**——一般國際 benchmark（如 MMLU）以英文為主、中文表現可能跟英文不一致
+| 你的場景 | 先試哪條路 | 選擇理由 |
+|---|---|---|
+| 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`** | 本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
+| 要比較雲端品質、資料可送出 | **Claude Haiku 4.5／Sonnet 5** | Anthropic SDK 路徑簡單；按輸入與輸出 token 計費。 |
+| 文件很長，且要處理圖像或影音 | **Gemini 3.7 Flash 或 Kimi K3** | 先查型號的 context 與多模態支援，再用自己的文件小測試。 |
+| 中文 API 任務，希望控制用量 | **DeepSeek V4 或 GLM-5.3** | 先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
+| 隱私、離線或需自行部署 | **Llama 4、Qwen 3.8、Gemma 4 等開放權重** | 先估算硬體與授權，再以 Ollama 或其他推論工具測量實際速度。 |
 
 ## 🚪 進入條件
 
-你應該已經：
+主要路徑使用本機 Ollama；開始前只要確認時間、工具與預算。
 
-- 能跑 Python script
-- 概念上知道 HTTP / REST 是什麼
-- 至少有一家供應商的 API key（Anthropic / OpenAI / Google）
+<details markdown="1">
+<summary>🧭 展開時間、先備、環境與預算</summary>
 
-如果還沒——先回 Stage 0。
+**時間與先備**
+
+預留約 1 週、5–8 小時。你應能執行 Python script，並對 HTTP／REST 有概念；沒有 API key 也不會卡住，因為本章的主要練習使用本機 Ollama。若還不熟 Python 或命令列，先回 [Stage 0](00-foundations.md)。
+
+**環境**
+
+Path A 需要 [Ollama](https://ollama.com)、`pip install openai`，以及 `ollama pull gemma4:e4b`。低記憶體可改用 `gemma4:e2b`。Stage 3 以後的工具呼叫練習才使用 `qwen2.5:3b`；不要把那些 tag 混到本章的聊天範例。Path B 需要 `pip install anthropic` 與 `ANTHROPIC_API_KEY`。
+
+**預算**
+
+本階段的本機路徑為 $0／次（仍會消耗電力與時間）。若每個練習以 3–5 次作為學習量，雲端總額會隨提示長度與型號變化；先以每次 usage 計算，再把預估次數乘上去。每個練習下方都列出單次與本階段估算，這些是教學估算，不是帳單承諾。
+
+</details>
 
 ## 📚 必修閱讀
 
-1. [**Anthropic — Claude 模型總覽**](https://docs.claude.com/en/about-claude/models/overview) — 官方模型 family、含 2026 的 Claude Fable 5（`claude-fable-5`、Mythos-class、2026-06-09 GA）以及 Opus 5 / Sonnet 5 / Haiku 4.5。**Fable 5 是目前最高階的 Claude 層級；Opus 5（2026-07-24 推出、`claude-opus-5`）是現行的 Opus 級旗艦，Opus 4.8 仍可用（官方 docs 已移入 Legacy 區、未 deprecated）。**
-2. [**anthropics/courses — Anthropic API Fundamentals**](https://github.com/anthropics/courses) ⭐⭐⭐⭐⭐ ★ 22k+ — Anthropic 官方 5 course umbrella、**module 1「Anthropic API Fundamentals」對應本 stage**。Jupyter notebook、用 Claude 3 Haiku（最便宜）跑、跟著做就能拿到 API 基本功
-3. [**OpenAI Quickstart**](https://platform.openai.com/docs/quickstart) — 第一次 API call 的步驟
-4. [**A Visual Guide to LLM Tokenizers**](https://huggingface.co/learn/llm-course/chapter6/1) — Hugging Face 的入門
-5. [**Anthropic API Pricing**](https://www.anthropic.com/pricing#anthropic-api) — 把計價表看完，算一下 1k input + 1k output 的成本
+先知道這五個官方入口；需要時再展開，不必讀完才開始練習。
 
-**🎥 中文影片補充（強烈推薦）**：
+<details markdown="1">
+<summary>📚 展開必修閱讀與建議順序</summary>
 
-- [**李宏毅 — 生成式 AI 導論（2024 春台大課程）**](https://speech.ee.ntu.edu.tw/~hylee/genai/2024-spring.php) ⭐⭐⭐ — 第 1-5 集講 LLM 是什麼、怎麼運作、token / context window / temperature 怎麼影響輸出。中文圈最高品質的 LLM 學術級導論、台大授課、官方頁含投影片 + YouTube。最新整合版見 [**GenAI-ML 2025 秋**](https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php)
-- [**3Blue1Brown — Transformer 視覺化**](https://www.youtube.com/watch?v=wjZofJX0v4M)（中文配音版：[3Blue1Brown 中文](https://space.bilibili.com/88461692)）— LLM 內部運作 visual intro
-- [**Andrej Karpathy — Intro to LLMs**](https://www.youtube.com/watch?v=zjkBMFhNj_g) — 英文影片、1hr、英文圈最被推薦的 LLM 入門影片
+依序閱讀 1–3 後開始練習；4–5 在需要理解 token 或本機部署時查閱：
 
-## 🛠 動手練習（基礎 illustrative 練習）
+1. [Anthropic Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) — 型號、context 與價格入口。
+2. [OpenAI API 模型文件](https://developers.openai.com/api/docs/models) — 型號與計價欄位。
+3. [Google Gemini 模型文件](https://ai.google.dev/gemini-api/docs/models) — GA／Preview 狀態與 context。
+4. [Hugging Face LLM Course：Tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) — tokenizer 如何切分文字。
+5. [Ollama 官方網站](https://ollama.com) — 本機模型安裝與服務啟動。
 
-> 🦙 **本 stage 預設用 Ollama**（成本考量、本機 `gemma4:e4b` 跑得動、$0/run）。每個練習都有 Path A（Ollama、預設）+ Path B（Anthropic、選擇性、想看 cloud 高品質時用）。完整 3 路 trade-off 見 [`examples/README.md`](../examples/README.md#三條路徑--預設用-ollama成本考量)。
->
-> 💰 **Stage 1 預算估算**（全 6 練習各跑 3-5 次）：**全本機 = $0**、**全 haiku ≈ $0.30**、**全 sonnet ≈ $0.90**。完整 model 清單 + Stage 1-7 全程預算估算見 [`examples/README.md#推薦-llm-清單`](../examples/README.md#推薦-llm-清單)。
->
-> 💡 **只想讀、不想裝 Ollama** — 直接看每個練習的 Path B（Anthropic）區塊就好。想實際跑 Path A 才需要 [`pip install openai && ollama pull gemma4:e4b`](https://ollama.com) 就裝好 Path A 環境。
+</details>
+
+## 🛠 動手練習
 
 ### 練習 1：LLM API（hello world）
-五行 Python 呼叫 LLM 並印出回應。**預設用 Ollama 本機跑（免費、offline）**；想看 cloud 答案品質改 Path B Anthropic。詳見 [`examples/README.md`](../examples/README.md#三條路徑--預設用-ollama成本考量)。
+
+**成果：**用五行左右的核心呼叫取得一段回應，並從 `usage` 讀出輸出 token。單次預算：Ollama $0；Anthropic Haiku 請依回應的 input／output usage 與官方 `$1/$5` 費率計算。階段預算：本機反覆跑仍為 $0；雲端依 3–5 次與實際 usage 累計。
 
 <details markdown="1" open>
-<summary>📋 <b>起手碼 — Path A（本機 Ollama gemma4:e4b、預設）</b>（複製到 <code>practice_1.py</code>、<code>python practice_1.py</code> 就跑）</summary>
+<summary>📋 <b>起手碼 — Path A（本機 Ollama <code>gemma4:e4b</code>、預設）</b>（複製到 <code>practice_1.py</code>、執行 <code>python practice_1.py</code>）</summary>
 
 ```python
 # 需要：pip install openai      (用 OpenAI-compatible SDK 跟 Ollama 溝通)
@@ -198,19 +120,10 @@ assert r.usage.completion_tokens > 0, "output token 應 > 0"
 print("✅ 練習 1 通過 — Ollama gemma4:e4b 已能本機回應、$0/次")
 ```
 
-**預期輸出**（樣本）：
-```
-回應：嗨！我是 Gemma、一個由 Google 訓練的開源語言模型...
-usage: CompletionUsage(completion_tokens=35, prompt_tokens=12, total_tokens=47)
-✅ 練習 1 通過 — Ollama gemma4:e4b 已能本機回應、$0/次
-```
-
-**慢嗎？** Gemma 4B 在 CPU 上約 5-30s/答案、有 GPU（RTX 3060+）<2s。要更快用 `gemma3:1b`、要更聰明改 `qwen2.5:14b` / `llama3.3:8b`（需 8GB+ VRAM）。
-
 </details>
 
 <details markdown="1">
-<summary>📋 <b>起手碼 — Path B（Anthropic API、選擇性、想看 cloud 高品質時）</b>（複製到 <code>practice_1_anthropic.py</code>）</summary>
+<summary>📋 <b>起手碼 — Path B（Anthropic API、選擇性）</b>（複製到 <code>practice_1_anthropic.py</code>）</summary>
 
 ```python
 # 需要：pip install anthropic
@@ -239,25 +152,14 @@ assert msg.usage.input_tokens > 0 and msg.usage.output_tokens > 0, "token 數應
 print("✅ 練習 1 通過 — 你已成功打通 Anthropic API")
 ```
 
-**預期輸出**（樣本）：
-```
-回應：我是 Claude，一個由 Anthropic 訓練的 AI 助理...
-usage: Usage(input_tokens=18, output_tokens=42, ...)
-✅ 練習 1 通過 — 你已成功打通 Anthropic API
-```
-
-**成本**：每次 ~$0.001 (haiku) / $0.004 (sonnet)、跑這個 hello world 比 Ollama 快 5-15 倍。
-
 </details>
 
 ### 練習 2：Tokens
-同一個 prompt 跑 100 次，觀察 token 數的變化。
 
-- 注意：`temperature ≠ 0` 會產生變動
-- 注意：同一句話的英文 vs 中文 token 數差異
+**成果：**以同一個提示重複呼叫，觀察語言、temperature 與輸出長度如何改變 token 使用量。單次預算：Ollama $0；Anthropic Haiku 請依該次 input／output usage 與官方費率計算。階段預算：本機為 $0；Path B 以 3–5 組重複測試的實際 `usage` 加總。
 
 <details markdown="1" open>
-<summary>📋 <b>起手碼 — Path A（本機 Ollama gemma4:e4b、預設）</b>（複製到 <code>practice_2.py</code>）</summary>
+<summary>📋 <b>起手碼 — Path A（本機 Ollama <code>gemma4:e4b</code>、預設）</b>（複製到 <code>practice_2.py</code>）</summary>
 
 ```python
 # 需要：pip install openai     (OpenAI-compatible SDK 跟 Ollama 溝通)
@@ -291,18 +193,9 @@ for label, prompt in PROMPTS.items():
     print(f"  output tokens — min={min(output_tokens)} max={max(output_tokens)} mean={statistics.mean(output_tokens):.1f} stdev={statistics.stdev(output_tokens):.1f}")
 
 # === 自我驗證 ===
-assert max(output_tokens) > min(output_tokens), "temperature=1.0 下、output 長度應該有 variance"
-print("\n✅ 練習 2 通過 — 觀察到 temperature 對 output token 的 variance、本機跑 $0")
-print("💡 中文 prompt 通常 input tokens 比 English 多（中文 token 化通常一字 ≈ 2 tokens）")
-```
-
-**預期輸出**（樣本）：
-```
-[中文] prompt: 用一句話描述一隻貓在做什麼。
-  input tokens: 32
-  output tokens — min=18 max=58 mean=35.2 stdev=11.4
-
-✅ 練習 2 通過 — 觀察到 temperature 對 output token 的 variance、本機跑 $0
+assert len(output_tokens) == N and all(n > 0 for n in output_tokens), "應觀察到非空的 output token 數"
+print("\n✅ 練習 2 通過 — 已觀察到兩種語言的 output token、本機跑 $0")
+print("💡 token 數會受 tokenizer 與實際內容影響；不要只用字數推算，也不要預設某種語言一定較多。")
 ```
 
 </details>
@@ -330,15 +223,16 @@ for label, prompt in PROMPTS.items():
     print(f"[{label}] input={msg.usage.input_tokens} output min/max/mean={min(output_tokens)}/{max(output_tokens)}/{sum(output_tokens)/len(output_tokens):.1f}")
 ```
 
-**主要差異**：`client.messages.create()` → `client.chat.completions.create()`；`usage.output_tokens` → `usage.completion_tokens`；`usage.input_tokens` → `usage.prompt_tokens`。**成本**：40 次 ≈ $0.01。
+主要差異：`client.messages.create()`、`usage.input_tokens` 與 Anthropic content block 的回應形狀，和 Ollama 的 OpenAI-compatible 欄位不同。單次成本請用回應的 token 數計算。
 
 </details>
 
 ### 練習 3：Pricing / Latency
-**成本敏感的工作必修**：算出你的 hello-world prompt 在不同 model 上跑 1000 次的成本。Ollama 本機是 $0 但有 latency 成本；Cloud LLM 有 $ 成本但快。**會算這兩個 trade-off 才能挑對 model**。
+
+**成果：**把同一個小任務的 token 成本與等待時間分開量測。單次預算：Ollama $0；Anthropic Haiku 依本次 input／output usage 與官方費率計算。階段預算：本機為 $0；若用 Path B，先跑 1 次取得實際輸入／輸出 token，再乘以預計次數，避免直接套用平均值。
 
 <details markdown="1" open>
-<summary>📋 <b>起手碼 — Path A（本機 Ollama gemma4:e4b、量 latency）</b>（複製到 <code>practice_3.py</code>）</summary>
+<summary>📋 <b>起手碼 — Path A（本機 Ollama <code>gemma4:e4b</code>、量 latency）</b>（複製到 <code>practice_3.py</code>）</summary>
 
 ```python
 # 需要：pip install openai
@@ -351,8 +245,9 @@ from openai import OpenAI
 
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
-# 量 5 次 latency
+# 量 5 次 latency 與 output token
 latencies = []
+output_tokens = []
 for _ in range(5):
     t0 = time.time()
     r = client.chat.completions.create(
@@ -361,10 +256,11 @@ for _ in range(5):
         messages=[{"role": "user", "content": "你好！自我介紹一下。"}],
     )
     latencies.append(time.time() - t0)
+    output_tokens.append(r.usage.completion_tokens)
 
 # 統計
 avg_latency = sum(latencies) / len(latencies)
-out_tok_avg = r.usage.completion_tokens  # 末次當代表
+out_tok_avg = sum(output_tokens) / len(output_tokens)  # 五次平均
 tps = out_tok_avg / avg_latency if avg_latency > 0 else 0
 
 print(f"model: gemma4:e4b (本機)")
@@ -376,19 +272,7 @@ print(f"\n1000 次成本: $0 (本機)、預計時長: {avg_latency * 1000 / 60:.
 assert avg_latency > 0, "latency 應 > 0"
 assert out_tok_avg > 0, "output token 應 > 0"
 print(f"\n✅ 練習 3 通過 — 本機 model $0 但要花 {avg_latency * 1000 / 60:.0f} 分鐘跑 1000 次")
-print("💡 對照 Path B Anthropic：1000 次只要 ~10-20 分鐘但要 $0.25（haiku）")
-```
-
-**預期輸出**（樣本）：
-```
-model: gemma4:e4b (本機)
-5 次 latency (sec): min=4.21 max=8.93 mean=6.54
-avg output: 48 tokens、約 7.3 tokens/sec
-
-1000 次成本: $0 (本機)、預計時長: 109.0 分鐘
-
-✅ 練習 3 通過 — 本機 model $0 但要花 109 分鐘跑 1000 次
-💡 對照 Path B Anthropic：1000 次只要 ~10-20 分鐘但要 $0.25（haiku）
+print("💡 對照 Path B Anthropic：請以實際 input/output usage 與官方費率估算 1000 次成本，再和本機等待時間比較。")
 ```
 
 </details>
@@ -404,12 +288,12 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import anthropic
 
-# Anthropic 2026 Q2 公開計價（每 1M token、USD）— 跑前對照 https://www.anthropic.com/pricing
+# Anthropic 公開計價（每 1M token、USD）— 跑前對照 https://www.anthropic.com/pricing
 PRICING = {
     "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
-    "claude-sonnet-5":    {"input": 3.00, "output": 15.00},  # 標準價；2026-08-31 前為優惠價 2.00 / 10.00
-    "claude-opus-5":      {"input": 5.00, "output": 25.00},  # Opus 5 (2026-07-24、接替 Opus 4.8) — 維持 5/25 同價
-    "claude-fable-5":     {"input": 10.00, "output": 50.00},  # Fable 5 (Mythos-class、最高層級) 約 Opus 的 2 倍
+    "claude-sonnet-5":    {"input": 2.00, "output": 10.00},
+    "claude-opus-5":      {"input": 5.00, "output": 25.00},
+    "claude-fable-5":     {"input": 10.00, "output": 50.00},
 }
 
 client = anthropic.Anthropic()
@@ -430,51 +314,101 @@ for name, r in PRICING.items():
 
 # === 自我驗證 ===
 assert cost_one > 0, "Cloud LLM 一定有成本"
-print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku ≈ $0.25、sonnet 5 ≈ $0.76、opus 5 ≈ $1.27")
+print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku、sonnet、opus 與 fable 的成本已按實際 token 算出")
 ```
 
-**預期輸出**：
-```
-model: claude-haiku-4-5
-single: input=14 output=48 → $0.000254
-1000 calls cost across model tiers:
-  claude-haiku-4-5       $0.2540
-  claude-sonnet-5        $0.7620
-  claude-opus-5          $1.2700
-  claude-fable-5         $2.5400
-```
+</details>
 
-**Trade-off 對照**：本機 Ollama 跑 1000 次免費但要 ~2 hr；Anthropic haiku ~10 min $0.25；sonnet ~10 min $0.76。**production 場景才考慮 cloud；學習 / 實驗 / debug 全用本機**。
+## 🎯 精選 Projects
+
+### 推薦 Capstone：個人文件摘要成本／品質比較器
+
+建立一個小型命令列工具：讀入 3–5 段你有權使用的文字，分別用 Ollama 與一個 Anthropic 型號摘要；記錄輸入／輸出 token、延遲、估算成本，並用固定檢查表標註摘要是否遺漏關鍵事實。它把本章三個核心詞和模型選擇器連在一起，不要求先做 RAG 或 agent。
+
+<details markdown="1">
+<summary>📦 Capstone 的驗收清單與其他 Project 入口</summary>
+
+完成後應能展示：
+
+- 同一份輸入的兩條路徑與模型名稱。
+- 每次呼叫的 input／output token、延遲與單次成本。
+- 一個固定的品質檢查表，而不是只憑主觀印象選模型。
+- 一段說明：何時用本機、何時接受雲端成本，以及 context 不足時怎麼分批。
+
+以下表格保留本章原有的 17 個延伸入口；它們是選讀資源，不是本章必做項目。星數與 repository 計數不列入，避免把會變動的數字當成評估依據。
+
+| 分類 | 資源 | 入口 | 用途／狀態 |
+|---|---|---|---|
+| 官方 API 入門 | Anthropic Cookbook | [GitHub](https://github.com/anthropics/claude-cookbooks) | Claude API notebook；可查 tool use、batch 與 prompt cache。 |
+| 官方 API 入門 | Anthropic Courses | [GitHub](https://github.com/anthropics/courses) | Anthropic 官方課程；從 API 基礎逐步延伸。 |
+| 官方 API 入門 | OpenAI Cookbook | [GitHub](https://github.com/openai/openai-cookbook) | OpenAI API、structured output 與 function calling 範例。 |
+| 官方 API 入門 | Anthropic Claude API Quickstart | [官方文件](https://docs.anthropic.com/en/docs/get-started) | 快速完成第一個 Claude API 呼叫。 |
+| 中文教材 | datawhalechina/happy-llm | [GitHub](https://github.com/datawhalechina/happy-llm) | 以中文理解 LLM 原理與訓練流程。 |
+| 中文教材 | datawhalechina/llm-universe | [GitHub](https://github.com/datawhalechina/llm-universe) | 從 API 基礎延伸到知識庫與 RAG。 |
+| 中文教材 | datawhalechina/llm-cookbook | [GitHub](https://github.com/datawhalechina/llm-cookbook) | Andrew Ng 課程的中文改編；更新速度較慢。 |
+| 中文教材 | jingyaogong/minimind | [GitHub](https://github.com/jingyaogong/minimind) | 從零實作小型模型訓練；Apache-2.0。 |
+| 英文課程 | Hugging Face — LLM Course | [課程](https://huggingface.co/learn/llm-course) | Transformer、tokenizer 與 Hugging Face 生態。 |
+| 英文課程 | LangChain Academy | [課程](https://academy.langchain.com/) | 官方免費課程；包含 RAG 與 agent。 |
+| 本機執行 | ollama/ollama | [GitHub](https://github.com/ollama/ollama) | 本章 Path A 的本機執行入口。 |
+| 本機執行 | ggml-org/llama.cpp | [GitHub](https://github.com/ggml-org/llama.cpp) | 理解量化與本機推論底層。 |
+| 本機執行 | mudler/LocalAI | [GitHub](https://github.com/mudler/LocalAI) | 提供 OpenAI 相容的 self-host 服務。 |
+| 本機執行 | ml-explore/mlx | [GitHub](https://github.com/ml-explore/mlx) | Apple Silicon 的機器學習框架。 |
+| 從零理解 | Karpathy — Let's build GPT from scratch | [影片](https://www.youtube.com/watch?v=kCc8FmEb1nY) | 以 PyTorch 示範從零建立 GPT。 |
+| 從零理解 | rasbt/LLMs-from-scratch | [GitHub](https://github.com/rasbt/LLMs-from-scratch) | 以書本與程式碼深入 tokenizer、attention 與訓練。 |
+| 從零理解 | karpathy/LLM101n | [GitHub](https://github.com/karpathy/LLM101n) | 已封存的課程大綱；屬歷史參考，不是現行教學。 |
+
+**其他 Project（按難度）**
+
+- 入門：多語言 token 計數器、單句摘要器、temperature 對照表。
+- 中階：跨供應商 prompt 評測器、錯誤重試包裝器、本機模型延遲儀表板。
+- 延伸：小型文件分批摘要流程、可配置的模型路由器、隱私資料的本機推論服務。
 
 </details>
 
 ### 練習 4：Cross-Provider 比較
-同一個 prompt 同時送給 Claude、GPT、Gemini，比較三家的回應差異。觀察「同一句話為什麼產生不同答案」——回答風格、長度、判斷取捨都不一樣。建議用 OpenAI、Anthropic、Google 三家 SDK 各一段程式呼叫。
 
-→ **基礎 starter 範本** → [`examples/stage-1/04-cross-provider/`](../examples/stage-1/04-cross-provider/)（含三家 SDK 並行呼叫 + table 對照、缺哪家 key 就 skip 哪家；illustrative，**不是 chapter-length 完整教學**）
+**成果：**用同一提示比較不同供應商的輸出，並記錄差異而不把單次結果當成排名。單次預算：Path A Ollama $0；Path B 依三家 API 的實際 token 計費。階段預算：本機為 $0；雲端先各跑 1 次，再按 3–5 組評測估算。
+
+<details markdown="1">
+<summary>🔬 練習 4 詳細路徑（選做）</summary>
+
+- **Path A（Ollama，主要練習）：**使用 [`examples/stage-1/04-cross-provider/`](../examples/stage-1/04-cross-provider/) 的 Ollama 呼叫，先讓本機結果成為基準。
+- **Path B（Anthropic，選擇性）：**在同一資料集上加入 Anthropic SDK；若也加入 OpenAI／Google，請逐一記錄型號、參數、token 與失敗情況。
+- 比較回答風格、長度、格式遵守度與事實遺漏；把結果視為你的任務小評測，不是官方規格或普遍排名。
+
+這個 starter 含三家 SDK 並行呼叫與 table 對照，缺哪家 key 就 skip 哪家；它是 illustrative 範例，不是 chapter-length 教學。
+
+</details>
 
 ### 練習 5：Error Handling
-故意觸發錯誤情境並寫 retry：
 
-- API key 錯誤 → 看怎麼 raise
-- prompt 超長 → context window 滿了會發生什麼
-- 網路斷掉 → 寫一個有 exponential backoff 的 retry wrapper
+**成果：**為錯誤分類、重試與停止條件寫出可測試的處理流程。單次預算：Path A Ollama $0；Path B 若只用 mock 不產生 API 費用。階段預算：本機與 mock 測試為 $0；若加入雲端整合測試，限制為 1–2 次並按實際 token 加總。
 
-這是後面 Stage 3-8 寫 production agent 一定會用到的基礎。
+<details markdown="1">
+<summary>🧰 練習 5 詳細路徑（選做）</summary>
 
-→ **基礎 starter 範本** → [`examples/stage-1/05-error-handling/`](../examples/stage-1/05-error-handling/)（含 mock-based test、不用真的斷網就能驗證 retry 邏輯；illustrative，**不是 chapter-length 完整教學**）
+- **Path A（Ollama，主要練習）：**先在 [`examples/stage-1/05-error-handling/`](../examples/stage-1/05-error-handling/) 執行 mock-based test，再用本機端點觀察可恢復的網路錯誤。
+- **Path B（Anthropic，選擇性）：**以 Anthropic SDK 的例外型別接上相同的 retry wrapper；API key 錯誤與 context 過長不應無限重試。
+- 至少覆蓋錯誤 API key、提示過長與網路中斷；exponential backoff 要有上限與明確的最大嘗試次數。
+
+這個 starter 讓你不用真的斷網就能驗證重試邏輯；它是 illustrative 範例，不是 chapter-length 教學。
+
+</details>
 
 ### 練習 6：Local LLM
-**不付 API 費用、跑在自己電腦上**：用 Ollama 下載一個小模型（建議 `llama3.2:3b` 或 `qwen2.5:3b`），用 OpenAI-相容 API 呼叫它。
+
+**成果：**在自己的電腦上啟動 Ollama，並以 OpenAI-compatible API 呼叫本機模型。單次預算：Ollama $0（另有硬體電力成本）；Path B 雲端依實際 token 計費。階段預算：本機練習為 $0；若用 Anthropic 做一次品質對照，先限制為 1–3 次並記錄 usage。
+
+<details markdown="1">
+<summary>🦙 練習 6 詳細路徑（選做）</summary>
+
+**Path A（Ollama，主要可執行路徑）：**
 
 ```bash
 # 1. 裝 Ollama: https://ollama.com
 ollama pull qwen2.5:3b
 ollama serve  # 預設 port 11434
 ```
-
-<details markdown="1">
-<summary>📋 <b>起手碼</b>（複製到 <code>practice_6.py</code>）</summary>
 
 ```python
 # 需要：pip install openai
@@ -504,58 +438,69 @@ print(f"✅ 練習 6 通過 — 你的本機 Ollama 已能透過 OpenAI-compatib
 print(f"💡 跑這次完全沒花錢（除了你的電力）")
 ```
 
-**預期輸出**（樣本、實際內容因 model 而異）：
-```
-回應：ReAct 是一種讓 AI 結合「推理」和「行動」的方法...
-✅ 練習 6 通過 — 你的本機 Ollama 已能透過 OpenAI-compatible API 呼叫
-💡 跑這次完全沒花錢（除了你的電力）
-```
+**Path B（Anthropic，選擇性）：**把同一個 ReAct 提示送到 `claude-haiku-4-5`，保存回應與 `msg.usage`，再和 Path A 的格式遵守度、延遲及成本比較。不要把雲端結果當成本機模型的規格保證。
 
-**為什麼要做**：學會跑本地 LLM 後，後面 Stage 3-6 的實驗都不會被 API 費用卡住；隱私敏感場景也能 offline。
-
-**沒裝 Ollama 也想跑**：把 `base_url` 換成 [LM Studio](https://lmstudio.ai) (`http://localhost:1234/v1`) 或 [vLLM](https://github.com/vllm-project/vllm) endpoint、API 介面一樣。
+若沒有 Ollama，可把 `base_url` 換成 [LM Studio](https://lmstudio.ai)（`http://localhost:1234/v1`）或 [vLLM](https://github.com/vllm-project/vllm) endpoint；介面相同，但模型 tag 與硬體需求要重新確認。
 
 </details>
 
-## 🎯 精選 Projects
+<details markdown="1">
+<summary>🌐 完整 15 家族資料表（官方規格入口）</summary>
 
-按用途分 5 類、17 個項目一張表搞定。**挑入口看「適合誰」、想深入點連結看 repo / 課程網站**。
+以下只列已在官方來源查核的欄位；「官方未公布」表示本次查核沒有可引用的公開數字，不代表永遠沒有該資料。價格均為 USD／每 1M token（若供應商採其他方案，照官方說法記錄）。
 
-| 分類 | Project | ⭐ | 適合誰 | 為什麼推薦 / 備註 |
-|---|---|---|---|---|
-| **官方 cookbook / 入門** | [Anthropic Cookbook](https://github.com/anthropics/claude-cookbooks) | ⭐⭐⭐⭐⭐ | 開始用 Claude API、當參考書查 | Claude API 全功能 notebook（tool use / batch / prompt cache），★ 50k+、MIT |
-| | [Anthropic Courses](https://github.com/anthropics/courses) | ⭐⭐⭐⭐⭐ | 系統性從零學一遍 Claude | Anthropic 自家完整 5 門課（API 基礎 / prompt eval / real-world prompting / tool use），★ 22k+。先跑 `anthropic_api_fundamentals` |
-| | [OpenAI Cookbook](https://github.com/openai/openai-cookbook) | ⭐⭐⭐⭐⭐ | 用 OpenAI API + structured output / function calling | 跟 Anthropic Cookbook 對照、★ 73k+、MIT。比 Anthropic 大很多、用搜尋 |
-| | [Anthropic Claude API Quickstart](https://docs.anthropic.com/en/docs/get-started) | ⭐⭐⭐⭐ | 5 分鐘上手 | 官方文件、加 bookmark 用 |
-| **中文教材**<br>（章節式） | [datawhalechina/happy-llm](https://github.com/datawhalechina/happy-llm) | ⭐⭐⭐⭐⭐ | 中文讀者想徹底搞懂 LLM 原理 | 對應 Karpathy「Zero to Hero」中文版，★ 32k+。等同 HF LLM Course 中文版 |
-| | [datawhalechina/llm-universe](https://github.com/datawhalechina/llm-universe) | ⭐⭐⭐⭐⭐ | 中文新手想用 LLM 做東西 | API 基礎 / 知識庫 / RAG / 進階技巧，★ 13k+ |
-| | [datawhalechina/llm-cookbook](https://github.com/datawhalechina/llm-cookbook) | ⭐⭐⭐⭐ | 想要完整中文 LLM 學習路線 | Andrew Ng 課程中文翻譯改編（⚠️ 2025-06 後更新放緩、CC BY-NC-SA）|
-| | [jingyaogong/minimind](https://github.com/jingyaogong/minimind) | ⭐⭐⭐⭐ | 看完 Karpathy 影片想實際跑訓練 | 2hr 從零訓 64M LLM、Pretrain + SFT + LoRA + DPO + RLHF 全包，★ 53k+、Apache-2.0 |
-| **英文 course**<br>（系統式） | [HuggingFace — LLM Course](https://huggingface.co/learn/llm-course) | ⭐⭐⭐⭐⭐ | 想搞懂 transformer 內部 + HF 生態 | 含 transformer 原理 + 應用、Apache 2.0 |
-| | [LangChain Academy](https://academy.langchain.com/) | ⭐⭐⭐⭐ | 喜歡影片教學的視覺型學習者 | LangChain 官方免費課、含 RAG / agent。**忽略 LangChain 行銷段落** |
-| **本地端執行**<br>（不付 API 費）| [ollama/ollama](https://github.com/ollama/ollama) | ⭐⭐⭐⭐⭐ | 第一次跑本地 LLM | 本 repo Path A 預設、OpenAI-compat API、★ 170k+ |
-| | [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp) | ⭐⭐⭐⭐⭐ | 想搞懂 quantization / 為什麼 7B 能塞 8GB RAM | Ollama 底層 inference engine，★ 119k+、MIT |
-| | [mudler/LocalAI](https://github.com/mudler/LocalAI) | ⭐⭐⭐⭐ | 團隊合規、要 self-host 全套 OpenAI 替代 | drop-in OpenAI API 替代品（chat / embedding / image / TTS / STT），★ 48k+ |
-| | [ml-explore/mlx](https://github.com/ml-explore/mlx) | ⭐⭐⭐⭐ | Mac 開發、想榨乾 Apple Silicon | Apple 為 M1+ 量身打造的 ML framework，★ 27k+。搭 `mlx-lm` 用最方便 |
-| **從零打造**<br>（理解原理）| [karpathy — Let's build GPT from scratch](https://www.youtube.com/watch?v=kCc8FmEb1nY) | ⭐⭐⭐⭐⭐ | 想搞懂 LLM 內部、不只會呼叫 | 2hr 高密度影片、用 PyTorch 從零打造 GPT。**暫停跟著寫 code 不要被動看** |
-| | [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch) | ⭐⭐⭐⭐⭐ | 想用整本書速度慢慢讀完 | Karpathy 影片的書本版：tokenizer → attention → pretraining → finetuning，★ 100k+、Apache-2.0 |
-| | [karpathy/LLM101n](https://github.com/karpathy/LLM101n) | ⭐⭐ | 歷史紀錄 | ⚠️ 已封存（2024-08）、只有大綱、課程沒做完。**直接看上面的「Build GPT from scratch」影片即可** |
+| 家族 | 目前推薦型號 | 狀態 | Context | 價格或授權 | 適合做什麼 | 限制 | 官方來源 |
+|---|---|---|---|---|---|---|---|
+| Claude | Fable 5（邀請限定）；Opus 5；Sonnet 5；Haiku 4.5 | 正式可用 | 1M（Haiku 200K） | API：Fable $10/$50、Opus $5/$25、Sonnet $2/$10、Haiku $1/$5（輸入／輸出） | 長文、程式、agent 工作流 | Fable 不是所有帳戶都能直接使用；型號與可用區域依帳戶而異 | [Anthropic 模型總覽](https://platform.claude.com/docs/en/models/overview) |
+| GPT | GPT-5.6 Sol／Terra／Luna | 正式可用 | 1.05M | API：$4/$20、$2/$12、$0.20/$1.20（輸入／輸出） | 通用對話、工具呼叫、既有 SDK 整合 | 價格與限制依型號及 API 方案 | [OpenAI API 模型](https://developers.openai.com/api/docs/models) |
+| Gemini | Gemini 3.7 Flash | 正式可用 | 1M | 2026-12-31 前介紹價 $0.75/$3.75（輸入／輸出） | 長文件、多模態與 Google 生態整合 | Gemini 3.1 Pro 為 Preview；介紹價有期限 | [Gemini 模型文件](https://ai.google.dev/gemini-api/docs/models) · [Gemini API 定價](https://ai.google.dev/gemini-api/docs/pricing) |
+| DeepSeek | `deepseek-v4-flash`／`deepseek-v4-pro` | 正式可用 | 1M | Cache-miss：Flash $0.14/$0.28、Pro $0.435/$0.87（輸入／輸出） | 推理、程式、大量 token 任務 | 舊 `deepseek-chat`／`deepseek-reasoner` alias 已於 2026-07-24 棄用 | [DeepSeek 定價](https://api-docs.deepseek.com/quick_start/pricing/) |
+| Kimi | `kimi-k3` | 正式可用 | 1M | API：cache hit／輸入／輸出各 CNY 2／20／100，每百萬 tokens | 中文長文、視覺輸入、長上下文任務 | 2.8T 參數；部署與配額依平台 | [Kimi 平台總覽](https://platform.kimi.com/docs/overview) · [Kimi API 定價](https://platform.kimi.com/) |
+| Hunyuan | `Hy3`（TokenHub） | 正式可用 | 官方未公布 | API：cache hit／輸入／輸出各 CNY 0.25／1／4，每百萬 tokens | 中文推理與 Tencent Cloud 整合 | `hy3-preview` 將於 2026-08-31 下線；舊 T1／TurboS 已關閉或遷移 | [TokenHub 定價](https://cloud.tencent.com/document/product/1823/130055) · [Hy3 遷移公告](https://cloud.tencent.com/announce/detail/2391) |
+| MiniMax | MiniMax M3 | 正式可用 | 1M | API：context ≤512K 為 US$0.30／$1.20；512K–1M 為 $0.60／$2.40，每百萬輸入／輸出 tokens | 文字、視覺與 coding 工作 | 價格依輸入長度與方案變化 | [MiniMax M3](https://www.minimax.io/blog/minimax-m3) · [MiniMax API 定價](https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise) |
+| Qwen | qwen3.8-max（API）；Qwen3.8 開放權重變體 | 正式可用 | 1M | API 依區域定價；例如北京為 CNY 12／36，每百萬輸入／輸出 tokens；開放權重變體依各自授權 | 中文任務、多模態、可自架工作流 | API 型號與開放權重變體不可混用；各自的可用性與授權要分開確認 | [Qwen 3.8 Max](https://help.aliyun.com/en/model-studio/qwen3-8-max) |
+| GLM | GLM-5.3 | 正式可用 | 1M（輸出 128K） | API：輸入／cache hit／輸出各 US$1.40／$0.26／$4.40，每百萬 tokens | 中文 agent、工具使用、推理 | 純文字；reasoning 一律啟用 | [GLM-5.3 文件](https://docs.z.ai/guides/llm/glm-5.3) · [GLM API 定價](https://docs.z.ai/guides/overview/pricing) |
+| Yi | Yi-34B／Yi-9B 及 200K 變體 | 維護中 | 200K（部分舊型號） | 官方 repo 授權與既有服務條件；目前價格官方未公布 | 維護既有 Yi 實驗、自架基線 | 沒有查到已驗證的現行 frontier 後繼型號 | [01.AI Yi repository](https://github.com/01-ai/Yi) |
+| Llama | Llama 4 Scout／Maverick；Llama 3.3 70B（較實用舊基線） | 開放權重 | Scout 10M | Llama Community License | 自架、微調、生態整合 | Scout 需要 H100 等級硬體；授權不是 Apache／MIT | [Meta Llama Get Started](https://ai.meta.com/llama/get-started/) |
+| Muse | Muse Glimmer 30B | 開放權重 | 131K | Apache 2.0 | 本機 agent、coding agent、長任務 | 全量或量化部署仍需相當消費級 GPU 記憶體 | [Hugging Face Muse Glimmer](https://huggingface.co/meta-models/Muse-Glimmer-30B) |
+| Gemma | Gemma 4：E2B、E4B、12B、26B A4B、31B | 開放權重 | 小型型號 128K；中型型號 256K | Gemma 4 Terms／license；不是 Apache 2.0 | Edge、本機與受限硬體實驗 | 授權條款須逐項閱讀；硬體需求依型號 | [Gemma 核心文件](https://ai.google.dev/gemma/docs/core) · [Gemma Terms](https://ai.google.dev/gemma/terms) |
+| Mistral | Mistral Small 4；Large 3；Ministral 3 | 正式可用 | Small 4：256K | Small 4 $0.15/$0.60；Apache 2.0 開放權重依版本 | reasoning、vision、coding 與自架 | 不同型號的 API 與授權不同 | [Mistral Small 4](https://docs.mistral.ai/models/mistral-small-4-0-26-03) |
+| Phi | Phi-4 14B；Phi-4 mini／multimodal | 開放權重 | Phi-4 multimodal 128K | Phi-4 multimodal MIT；依型號查授權 | 小型推理、多模態、edge | 不宣稱固定 RAM；量化方法會改變硬體需求 | [Microsoft Phi](https://azure.microsoft.com/en-us/products/phi) · [Phi-4 multimodal](https://huggingface.co/microsoft/Phi-4-multimodal-instruct) |
 
-> 💡 **建議閱讀路徑**：API 入手就 Anthropic / OpenAI Cookbook → 中文系統路線就 happy-llm + llm-universe → 想深入內部就 Karpathy 影片 + rasbt 書搭 code → 想跑本地就 Ollama 起步、進階再讀 llama.cpp。
+</details>
 
-## ✅ 進 Stage 2 前的自我檢查
+<details markdown="1">
+<summary>🧪 補充解釋、排錯與個人評測工具</summary>
 
-你能不能：
+**為什麼 temperature 會改變輸出**
 
-- [ ] 用 5 行 Python 呼叫 Claude API
-- [ ] 解釋為什麼「你好」可能用 2 個 token，但「Hello」只用 1 個
-- [ ] 大致說出 Claude Sonnet vs Opus 的 per-token 價格
-- [ ] 各說出 Claude / GPT / Gemini / Llama 的一個強項
+LLM 每一步都會預測下一個 token 的機率分布，再依設定選出候選。低 temperature 讓分布更集中；高 temperature 讓較少見的候選也有機會被選到。`max_tokens` 是輸出上限，不是保證輸出長度。這個模型只是理解參數的簡化圖像；實際行為仍依供應商實作。
 
-如果可以 → 進 [Stage 2 — Prompt Engineering](02-prompt-engineering.md)。
+**常見問題**
 
-如果不行 → 重看 Anthropic Quickstart + 把上面 3 個 hello-X 都跑一次。
+- `Connection refused`：確認 `ollama serve` 正在執行，且 `base_url` 的 port 是 11434。
+- 找不到模型：先用 `ollama list`，再以 `ollama pull gemma4:e4b` 安裝；不要自行猜測 tag。
+- 回應被截斷：降低提示長度或 `max_tokens`，並檢查型號的 context window。
+- API 失敗：先保存型號、狀態碼與 request id；只有暫時性網路／服務錯誤才重試，認證與 context 錯誤應先修正輸入。
+- 成本對不上：把 input 與 output 分開乘單價；快取命中、批次與方案可能改變實際價格。
+
+**第三方 benchmark**
+
+[Artificial Analysis](https://artificialanalysis.ai/)、[Arena AI](https://arena.ai/leaderboard/text)、[Vellum leaderboard](https://www.vellum.ai/llm-leaderboard)、[Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard) 與 [SuperCLUE](https://www.superclueai.com/) 可作為個人任務的評測工具。它們不是供應商的官方規格，也不能取代你的資料、提示與延遲測試。
+
+</details>
+
+## 自我檢查
+
+前往 Stage 2 前，確認你能：
+
+- [ ] 說明 API、token 與 context window 各自解決什麼問題。
+- [ ] 跑通練習 1 的 Ollama Path A，並從 `usage` 讀到輸出 token。
+- [ ] 用一次實測的 input／output token 算出一個雲端呼叫成本。
+- [ ] 為一個場景說明選本機或雲端的理由，並列出一項限制。
+
+若可以，進入 [Stage 2 — Prompt Engineering](02-prompt-engineering.md)。若還不行，先重跑練習 1–3 的 Path A，再按需打開閱讀或排錯區塊。
 
 ---
 
-> ✅ **Stage 1 完成？** 接下來 [**Stage 2 — Prompt Engineering**](02-prompt-engineering.md) 會用 5-12 小時帶你寫出可重用的結構化 prompt、用 few-shot 跟 chain-of-thought 解推理題、並學會用 eval 量化 prompt 改善幅度。**繼續往下走 →**
+> ✅ **Stage 1 完成？** 接下來 [**Stage 2 — Prompt Engineering**](02-prompt-engineering.md) 會帶你寫出可重用的結構化 prompt，並用 eval 量化改善幅度。

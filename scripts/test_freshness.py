@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import importlib.util
 import tempfile
+from datetime import date
 from pathlib import Path
 
 _SPEC = importlib.util.spec_from_file_location(
@@ -142,6 +143,20 @@ def test_per_file_window_override_follows_mirror_to_canonical():
     assert len(_scan(text, cfg, rel="stages/narrow.en.md")) == 1
 
 
+def test_stale_pattern_include_files_applies_to_canonical_and_mirrors_only():
+    cfg = {
+        'stale_patterns': [{
+            'pattern': r'Gemini 3\.5 Flash',
+            'include_files': ['stages/01.md'],
+            'qualifier_terms': ['historical'],
+            'note': 'stage-01-only',
+        }],
+    }
+    assert len(_scan('Gemini 3.5 Flash\n', cfg, rel='stages/01.md')) == 1
+    assert len(_scan('Gemini 3.5 Flash\n', cfg, rel='stages/01.en.md')) == 1
+    assert _scan('Gemini 3.5 Flash\n', cfg, rel='stages/06.md') == []
+
+
 # ── Ties to the REAL config (breaks if someone reverts the fixes) ─────────────
 
 def test_real_config_recognizes_localized_baseline_for_opus_47():
@@ -155,6 +170,145 @@ def test_real_config_recognizes_localized_baseline_for_opus_47():
 def test_real_config_space_form_r1_hole_closed():
     assert len(_scan("Hunyuan 可比 DeepSeek R1 推理、中文\n", _REAL_CFG)) == 1
     assert _scan("Hunyuan 可比 DeepSeek R1 推理 baseline、中文\n", _REAL_CFG) == []
+
+
+# ── Machine-readable page freshness markers ──────────────────────────────────
+
+_PAGE_CFG = {
+    'stage01_fact_pack': {
+        'canonical': 'stages/01.md',
+        'verified_on': '2026-08-27',
+        'scope': ['models', 'pricing', 'availability', 'deprecations'],
+    },
+    'verified_pages': [{
+        'canonical': 'stages/01.md',
+        'required_scopes': ['models', 'pricing', 'availability', 'deprecations'],
+        'max_age_days': 90,
+    }],
+}
+
+
+def _marker(
+    day: str = '2026-08-27',
+    scopes: str | None = None,
+    age: int = 90,
+    canonical: str = 'stages/01.md',
+) -> str:
+    scopes = scopes or 'models,pricing,availability,deprecations'
+    return (
+        f'<!-- freshness: canonical={canonical}; verified_on={day}; scope={scopes}; '
+        f'max_age_days={age} -->\n'
+    )
+
+
+def _cfg_with_fact_pack(
+    day: str = '2026-08-27',
+    scopes: list[str] | None = None,
+) -> dict:
+    return {
+        'stage01_fact_pack': {
+            'canonical': 'stages/01.md',
+            'verified_on': day,
+            'scope': scopes or ['models', 'pricing', 'availability', 'deprecations'],
+        },
+        'verified_pages': _PAGE_CFG['verified_pages'],
+    }
+
+
+def _scan_markers(
+    canonical: str,
+    english: str | None = None,
+    hans: str | None = None,
+    today: date = date(2026, 8, 27),
+    cfg: dict | None = None,
+):
+    with tempfile.TemporaryDirectory() as d:
+        root = Path(d)
+        stages = root / 'stages'
+        stages.mkdir()
+        (stages / '01.md').write_text(canonical, encoding='utf-8')
+        if english is not None:
+            (stages / '01.en.md').write_text(english, encoding='utf-8')
+        if hans is not None:
+            (stages / '01.zh-Hans.md').write_text(hans, encoding='utf-8')
+        return fr.scan_verified_pages(root, cfg or _PAGE_CFG, today=today)
+
+
+def test_valid_trilingual_freshness_markers_pass():
+    marker = _marker()
+    assert _scan_markers(marker, marker, marker) == ([], [])
+
+
+def test_missing_mirror_marker_blocks():
+    errors, warnings = _scan_markers(_marker(), _marker(), 'no marker\n')
+    assert warnings == []
+    assert any('01.zh-Hans.md: missing freshness marker' in item for item in errors)
+
+
+def test_malformed_marker_blocks():
+    malformed = '<!-- freshness: yesterday -->\n'
+    errors, _ = _scan_markers(malformed, malformed, malformed)
+    assert len(errors) == 3
+    assert all('malformed freshness marker' in item for item in errors)
+
+
+def test_future_marker_blocks():
+    future = _marker(day='2026-08-28')
+    errors, _ = _scan_markers(future, future, future)
+    assert len([item for item in errors if 'in the future' in item]) == 3
+
+
+def test_locale_marker_mismatch_blocks():
+    canonical = _marker()
+    english = _marker(day='2026-08-26')
+    errors, _ = _scan_markers(canonical, english, canonical)
+    assert any('01.en.md: freshness marker differs' in item for item in errors)
+
+
+def test_old_marker_warns_without_blocking():
+    old = _marker(day='2026-05-01')
+    errors, warnings = _scan_markers(
+        old, old, old, cfg=_cfg_with_fact_pack(day='2026-05-01')
+    )
+    assert errors == []
+    assert len(warnings) == 3
+    assert all('118 days old' in item for item in warnings)
+
+
+def test_scope_and_max_age_must_match_config():
+    wrong = _marker(scopes='models,pricing', age=30)
+    errors, _ = _scan_markers(
+        wrong, wrong, wrong, cfg=_cfg_with_fact_pack(scopes=['models', 'pricing'])
+    )
+    assert len([item for item in errors if 'scope' in item]) == 3
+    assert len([item for item in errors if 'max_age_days' in item]) == 3
+
+
+def test_canonical_path_must_match_config():
+    wrong = _marker(canonical='stages/not-01.md')
+    errors, _ = _scan_markers(wrong, wrong, wrong)
+    assert len([item for item in errors if 'canonical=' in item]) == 3
+
+
+def test_fact_pack_date_must_match_page_marker():
+    cfg = {
+        'stage01_fact_pack': {
+            'canonical': 'stages/01.md',
+            'verified_on': '2026-08-26',
+            'scope': ['models', 'pricing', 'availability', 'deprecations'],
+        },
+        'verified_pages': _PAGE_CFG['verified_pages'],
+    }
+    marker = _marker()
+    errors, _ = _scan_markers(marker, marker, marker, cfg=cfg)
+    assert any('fact pack verified_on=2026-08-26 differs' in item for item in errors)
+
+
+def test_verified_page_requires_matching_fact_pack():
+    cfg = {'verified_pages': _PAGE_CFG['verified_pages']}
+    marker = _marker()
+    errors, _ = _scan_markers(marker, marker, marker, cfg=cfg)
+    assert 'stages/01.md: matching fact pack is missing' in errors
 
 
 if __name__ == "__main__":
