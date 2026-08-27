@@ -42,5 +42,14 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install reader UX checker dependency
+        run: pip install --require-hashes -r scripts/requirements-reader-ux.txt
+
+      - name: Test reader UX ratchet
+        run: python scripts/test_reader_ux.py
+
+      - name: Validate migrated-page reader UX
+        run: python scripts/check-reader-ux.py
+
       - name: Validate stage template
         run: python scripts/check-stage-template.py

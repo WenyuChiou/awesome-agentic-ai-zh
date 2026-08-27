@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-27
 
+- **tooling / docs** · 新增逐章收緊的 reader-UX ratchet：只有完成三語遷移與人工複查的頁面才加入 `reader-ux-pages.yml`；checker 會把預設展開內容算進首屏字數，並阻擋字數上限、預設展開數、精確 heading／anchor 或分組資源表結構倒退。程式碼 fence 內的 HTML 仍算可見範例，HTML comment 不算可見內容；PyYAML 以 6.0.3 + PyPI SHA-256 固定。最終 source-level proxy 將 Stage 0／1 baseline 定為繁中 2,125／6,609 字元，Stage 1 的三個 open code path 會誠實計入，不再沿用排除 summary／open body 的舊算法。Regression 與正式 gate 已接入既有 Stage Template workflow。Ollama Path A 不再無條件 `open`：標題、成果與第一步可見，但長程式碼與排錯預設收合。
+- **planning** · 全站現代化改用可逐層回退的 migration train：F0 閱讀規範之後先補 F1 repository-freshness gate，再進 Stage 02 的內容與可執行範例短 stack。F1 將 PR 的新增／變更連結檢查與排程全量 repo inventory 分開；封存、搬家、license 衝突等硬矛盾阻擋，單看 `pushed_at` 過久只警告。模型價格、API 能力等非 repo 事實仍必須用官方來源 fact pack，不能拿 GitHub 活躍度代替正確性。
+
 - **content** · **Stage 0 改成三語漸進式 prerequisite gateway**：不展開選單時，讀者依序看見 skip 判斷、4 個白話目標、1 個不需帳號或 token 的 GitHub API 整合練習、4 項完成檢查與 Stage 1 入口；繁中可見非空白字元從 3,387 降到 1,930。時間／環境、分項補充、API 驗證、名詞與完整資源表移進 5 個預設關閉的 `<details>`。主程式只用 Python 標準函式庫，已實際取得公開 JSON、輸出 UTF-8 繁中／英文／簡中並寫入 `result.txt`；三語既有 skip 錨點保持可見，Stage 6 深連結不變。
 - **content / docs** · **Stage 0 學習入口維持 18 個，分類欄真正合併為 `5/4/3/3/3`**；其中 Microsoft Learn PowerShell 官方教材取代 Learn Shell，讓 Windows 使用者有正式入口，並移除會過期的 stars 數字。GitHub 驗證改成選修：fine-grained PAT、最短期限、零額外權限、環境變數、練習後撤銷；刪除 classic PAT／`read:user` 舊指引。資源與驗證資料查核日統一為 2026-08-27 UTC。
 - **fix / docs** · **Stage 1 的 17 個延伸資源改成三語語意化分組表**，以 `4/4/2/4/3` 的 `rowspan` 合併相同分類，不再讓讀者掃描重複標籤；Claude Fable 同步改成正式開放、不是邀請限定。`stages/DESIGN.md` 與三語 style guide 將「五歲小孩也知道下一步」定為整份學習地圖的 ELI5 gate：先講白話用途、保留正確術語、一次一個動作、精確保留指令／錯誤碼／數字，較深原理預設收合。本次刻意不改 Stage 2；它的提示策略與資源 freshness 留給獨立 PR。

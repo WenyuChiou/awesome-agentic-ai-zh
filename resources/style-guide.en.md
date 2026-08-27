@@ -266,7 +266,7 @@ If no → ...
 ## 💡 What's Next (optional, mostly used in the last stage)
 ```
 
-Secondary `<details>` blocks omit `open` by default. The one standard exception is the primary Ollama Path A in a two-path exercise; Anthropic Path B remains collapsed. Do not place a linkable heading inside `<details>`, and do not nest more than three disclosure levels.
+Keep the title, outcome, and first action visible. Secondary `<details>` blocks omit `open` by default. Ollama Path A remains the primary path, but do not expand every Path A automatically: use `open` only when it is the reader's single immediate action and its content is short. Keep long code and troubleshooting collapsed by default; Anthropic Path B is also collapsed by default. Do not place a linkable heading inside `<details>`, and do not nest more than three disclosure levels.
 
 ### Site-wide plain-language rule (ELI5)
 
@@ -277,6 +277,13 @@ This rule applies to the entire learning map. The goal is for a five-year-old to
 - Keep commands, file names, error codes, model names, prices, numbers, and security warnings exact.
 - Even with every `<details>` closed, the reader should know the next step and what they will see when it works.
 - During review, sample the visible main path. If a first-time reader cannot say the next step in their own words, rewrite it. Move multi-paragraph theory into collapsed content.
+
+### Reader UX ratchet
+
+- Add a chapter to `scripts/reader-ux-pages.yml` only after its three-language migration and human review are complete. This tightens the rules chapter by chapter; pages not yet organized do not need to pass all checks at once.
+- `scripts/check-reader-ux.py` uses a conservative source-level proxy: non-whitespace Markdown visible on first load. Default-open content and visible fenced code count; HTML comments and collapsed bodies do not. This is a repeatable ratchet, not a browser DOM text-length claim.
+- The configuration keeps per-language character limits, the number of blocks allowed open by default, exact headings/anchors that must remain visible, and grouped row counts for resource tables. Do not raise limits or remove protections without re-review.
+- An automated gate can only prevent known structural regressions. Human review must still confirm that, with every disclosure closed, readers know what to do and what success looks like.
 
 ### Grouped resource tables
 

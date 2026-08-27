@@ -1,0 +1,96 @@
+schema_version: 1
+
+# This is a ratchet, not a claim that every page has already been migrated.
+# Add one page only after its visible beginner path has been reviewed in all
+# three locales. Lower limits when a later edit makes a page easier to scan.
+forbidden_open_summary_terms:
+  zh-TW: [時間, 先備, 環境, 費用, 預算, 必修閱讀, 補充, 選修, 疑難排解, 排錯, 資源]
+  en: [time, prerequisite, environment, cost, budget, required reading, supplementary, optional, troubleshooting, resources]
+  zh-Hans: [时间, 先备, 环境, 费用, 预算, 必读, 补充, 选修, 疑难排解, 排错, 资源]
+
+pages:
+  - id: stage-00
+    canonical: stages/00-foundations.md
+    mirrors:
+      en: stages/00-foundations.en.md
+      zh-Hans: stages/00-foundations.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 2125
+      en: 3493
+      zh-Hans: 2165
+    max_open_details: 0
+    required_visible_sections:
+      skip-check:
+        zh-TW:
+          heading: 何時可以跳過這個階段
+          anchor: 何時可以跳過這個階段
+        en:
+          heading: When to skip this stage
+          anchor: when-to-skip-this-stage
+        zh-Hans:
+          heading: 何时可以跳过这个阶段
+          anchor: 何时可以跳过这个阶段
+      main-practice:
+        zh-TW:
+          heading: "🛠 動手練習：做一個 GitHub 資料小工具"
+          anchor: -動手練習做一個-github-資料小工具
+        en:
+          heading: "🛠 Hands-on Practice: Build a Small GitHub Data Tool"
+          anchor: -hands-on-practice-build-a-small-github-data-tool
+        zh-Hans:
+          heading: "🛠 动手练习：做一个 GitHub 数据小工具"
+          anchor: -动手练习做一个-github-数据小工具
+      completion:
+        zh-TW:
+          heading: "✅ 完成檢查"
+          anchor: -完成檢查
+        en:
+          heading: "✅ Completion Check"
+          anchor: -completion-check
+        zh-Hans:
+          heading: "✅ 完成检查"
+          anchor: -完成检查
+    resource_group_rowspans: [5, 4, 3, 3, 3]
+
+  - id: stage-01
+    canonical: stages/01-llm-basics.md
+    mirrors:
+      en: stages/01-llm-basics.en.md
+      zh-Hans: stages/01-llm-basics.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 6609
+      en: 10066
+      zh-Hans: 6601
+    max_open_details: 3
+    required_visible_sections:
+      exercise-4:
+        zh-TW:
+          heading: "練習 4：Cross-Provider 比較"
+          anchor: 練習-4cross-provider-比較
+        en:
+          heading: "Exercise 4: Cross-Provider Comparison"
+          anchor: exercise-4-cross-provider-comparison
+        zh-Hans:
+          heading: "练习 4：Cross-Provider 比较"
+          anchor: 练习-4cross-provider-比较
+      exercise-5:
+        zh-TW:
+          heading: "練習 5：Error Handling"
+          anchor: 練習-5error-handling
+        en:
+          heading: "Exercise 5: Error Handling"
+          anchor: exercise-5-error-handling
+        zh-Hans:
+          heading: "练习 5：Error Handling"
+          anchor: 练习-5error-handling
+      exercise-6:
+        zh-TW:
+          heading: "練習 6：Local LLM"
+          anchor: 練習-6local-llm
+        en:
+          heading: "Exercise 6: Local LLM"
+          anchor: exercise-6-local-llm
+        zh-Hans:
+          heading: "练习 6：Local LLM"
+          anchor: 练习-6local-llm
+    resource_group_rowspans: [4, 4, 2, 4, 3]

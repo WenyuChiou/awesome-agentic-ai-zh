@@ -36,13 +36,27 @@ python scripts/refresh-stars.py --check
 
 依賴：`pip install requests` + `gh` CLI（`gh auth login`）
 
+## `check-reader-ux.py` — 防止已整理章節重新變成文字牆
+
+它只檢查 `reader-ux-pages.yml` 已登記的三語頁面。它用保守的 source-level proxy 計算第一次開頁可見 Markdown 的非空白字元，也檢查預設展開數量、必須留在選單外的精確 heading／anchor，以及合併分類資源表的結構。這個數字可重複比較，但不等於瀏覽器 DOM 字數。
+
+```bash
+python scripts/test_reader_ux.py
+python scripts/check-reader-ux.py
+```
+
+依賴：`pip install pyyaml`
+
+完成一章的三語內容與人工複查後，才把它加入設定檔。若要調高既有上限或刪除可見 heading，先解釋讀者體驗為什麼沒有倒退；不可只為了讓 gate 變綠而放寬。
+
 ## 建議的維護節奏
 
-- **每月**：跑一次 `check-links.py --fast` 看 GitHub repo 連結有沒有 404
+- **每週**：`weekly-catalog-refresh` 跑 GitHub repo 快速連結檢查
+- **每月**：`lint` workflow 跑一次完整 `check-links.py`，包含非 GitHub 連結
 - **星數刷新**：`weekly-catalog-refresh` CI 每週自動跑 `refresh-stars.py`（手動補跑可看大幅成長 / 衰退的 repo）
-- **每半年**：跑一次完整 `check-links.py`（包含非 GitHub 連結）
+- **每個 PR 與 main push**：`stage-template-check` 同時執行 reader-UX regression 與正式 gate
 
-可以接到 GitHub Actions 自動跑（見未來 Phase 6 的 CI 設定）。
+這些檢查已接到 GitHub Actions；本機修改前後仍可用上面的命令做最小驗證。
 
 ---
 
