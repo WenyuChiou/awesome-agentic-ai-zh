@@ -6,22 +6,17 @@
 
 This stop answers one question: **How do you make a CLI agent remember the same way of working when it enters the same repo next time?**
 
-You will put rules that must always be known into the project-instructions file, turn frequently repeated steps into a Skill, and leave temporary tasks in a one-off prompt. It is like changing “explain everything again every day” into “the rules are on the wall, and the toolbox has an instruction card.”
+You will put rules that must always be known into **Project instructions**, turn frequently repeated steps into a **Skill**, and leave temporary tasks in a **One-off prompt**. It is like changing “explain everything again every day” into “the rules are on the wall, and the toolbox has an instruction card.”
 
-## First, tell the three things apart
+## 🧩 Three Core Terms First
 
-<table>
-<thead>
-<tr><th scope="col">Correct term</th><th scope="col">Plain-language meaning</th><th scope="col">When to use it</th></tr>
-</thead>
-<tbody>
-<tr><th scope="row">Project instructions<br>project rules</th><td>Rules you read every time you enter the workshop</td><td>Put the project purpose, forbidden actions, test commands, and delivery format here</td></tr>
-<tr><th scope="row">Skill</th><td>An instruction card you take out when needed</td><td>Put repeated processes such as review, release, and document cleanup here</td></tr>
-<tr><th scope="row">One-off prompt<br>single-use prompt</th><td>Instructions needed only today</td><td>Put this task’s scope, inputs, and success conditions here</td></tr>
-</tbody>
-</table>
+| Core term | What it is, in plain language | How A2 uses it | What it is not |
+|---|---|---|---|
+| **Project instructions (project rules)** | Rules you read every time you enter the workshop | Put the project purpose, forbidden actions, test commands, and delivery format here | Not one-off tasks or long reference material |
+| **Skill (reusable instruction card)** | An instruction card you take out when needed | Put repeated review, release, and document-cleanup processes here | Not a universal path, permission set, or frontmatter format |
+| **One-off prompt (single-task prompt)** | Instructions needed only today | Put this task’s scope, inputs, and success conditions here | Not a place to repeat project rules used every time |
 
-## Learning goals
+## 📌 Learning Goals
 
 - Use four fields to write short, clear project instructions.
 - Turn a repeated review process into a read-only Skill.
@@ -37,6 +32,8 @@ You will put rules that must always be known into the project-instructions file,
 
 If you have not completed A1, go back and run “read-only inspection → view the plan → make a small change → `git diff` → restore” once.
 </details>
+
+## 📚 Required Reading
 
 <details markdown="1">
 <summary>Expand required reading and suggested order</summary>
@@ -65,6 +62,8 @@ Official information checked on: **2026-08-27 UTC**.
 
 The common part is what you need to explain; filenames, search locations, permissions, and extra settings differ. Do not treat one tool’s special feature as something every CLI has.
 </details>
+
+## 🛠 Hands-on Exercises
 
 <a id="cli-5"></a>
 ### Hands-on exercise CLI-5: Make a minimal project-rules card
@@ -161,14 +160,7 @@ The complete subagent, agent team, background-work, and review processes are in 
 “Portable” means the core meaning is easy to carry over; it does not mean the whole text and settings can be copied without changes. If the second tool has no same-named feature, return to the success conditions and choose a method it actually supports.
 </details>
 
-## Self-check before A3
-
-- [ ] I can distinguish project instructions, Skill, and one-off prompt in my own words.
-- [ ] My project-rules card states the purpose, forbidden actions, verification command, and delivery format, and the agent can read it.
-- [ ] My review Skill reads changes only; after testing, `git status --short` shows no unexpected modifications.
-- [ ] I know that a “shared core” does not mean every CLI has the same filenames and permissions.
-
-Once all four are done, move on to [A3 — Connect a CLI agent to a safe production workflow](A3-cli-production.en.md). If not, return to the demo repo and repeat CLI-5 or CLI-6; you do not need to read every supplement first.
+## 🎯 Curated Projects
 
 <details markdown="1">
 <summary>Expand the complete learning resource table (16 entries)</summary>
@@ -177,36 +169,45 @@ The resources below are divided into five groups by purpose. Each group shows it
 
 <table>
 <thead>
-<tr><th scope="col">Type</th><th scope="col">Resource</th><th scope="col">What to look at first</th><th scope="col">When it is useful</th><th scope="col">Source</th></tr>
+<tr><th scope="col">Type</th><th scope="col">Resource</th><th scope="col">What to look at first</th><th scope="col">When it is useful</th><th scope="col">Rating</th><th scope="col">Source</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Official project instructions</th><td>Codex <code>AGENTS.md</code></td><td>Layered loading and precedence</td><td>Writing repo rules for Codex</td><td><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md">Official docs</a></td></tr>
-<tr><td>Claude Code <code>CLAUDE.md</code></td><td>When to put something in rules and when to move it to a Skill</td><td>Writing persistent rules for Claude Code</td><td><a href="https://code.claude.com/docs/en/memory">Official docs</a></td></tr>
-<tr><td>Gemini CLI <code>GEMINI.md</code></td><td>Directory scope and loading method</td><td>Adding project context for Gemini CLI</td><td><a href="https://geminicli.com/docs/cli/gemini-md/">Official docs</a></td></tr>
-<tr><td>OpenCode V2 <code>AGENTS.md</code></td><td>V2 merging and nested discovery</td><td>Writing rules for OpenCode V2</td><td><a href="https://opencode.ai/v2/docs/instructions">Official docs</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">Official project instructions</th><td>Codex <code>AGENTS.md</code></td><td>Layered loading and precedence</td><td>Writing repo rules for Codex</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md">Official docs</a></td></tr>
+<tr><td>Claude Code <code>CLAUDE.md</code></td><td>When to put something in rules and when to move it to a Skill</td><td>Writing persistent rules for Claude Code</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/memory">Official docs</a></td></tr>
+<tr><td>Gemini CLI <code>GEMINI.md</code></td><td>Directory scope and loading method</td><td>Adding project context for Gemini CLI</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://geminicli.com/docs/cli/gemini-md/">Official docs</a></td></tr>
+<tr><td>OpenCode V2 <code>AGENTS.md</code></td><td>V2 merging and nested discovery</td><td>Writing rules for OpenCode V2</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/v2/docs/instructions">Official docs</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Official Skill docs</th><td>Codex/ChatGPT Build skills</td><td><code>SKILL.md</code> structure and loading location</td><td>Making a reusable Codex process</td><td><a href="https://learn.chatgpt.com/docs/build-skills">Official docs</a></td></tr>
-<tr><td>Claude Code Skills</td><td>On-demand loading, legacy commands, and permissions</td><td>Making a Claude Code Skill</td><td><a href="https://code.claude.com/docs/en/slash-commands">Official docs</a></td></tr>
-<tr><td>Gemini CLI Agent Skills</td><td>Discovery, installation consent, and activation consent</td><td>Managing Gemini CLI Skills</td><td><a href="https://geminicli.com/docs/cli/using-agent-skills/">Official docs</a></td></tr>
-<tr><td>OpenCode V2 Agent Skills</td><td>Supported locations, frontmatter, and permission</td><td>Making an OpenCode Skill</td><td><a href="https://opencode.ai/v2/docs/skills">Official docs</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">Official Skill docs</th><td>Codex/ChatGPT Build skills</td><td><code>SKILL.md</code> structure and loading location</td><td>Making a reusable Codex process</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/build-skills">Official docs</a></td></tr>
+<tr><td>Claude Code Skills</td><td>On-demand loading, legacy commands, and permissions</td><td>Making a Claude Code Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/slash-commands">Official docs</a></td></tr>
+<tr><td>Gemini CLI Agent Skills</td><td>Discovery, installation consent, and activation consent</td><td>Managing Gemini CLI Skills</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://geminicli.com/docs/cli/using-agent-skills/">Official docs</a></td></tr>
+<tr><td>OpenCode V2 Agent Skills</td><td>Supported locations, frontmatter, and permission</td><td>Making an OpenCode Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/v2/docs/skills">Official docs</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Standards and readable examples</th><td>Agent Skills specification</td><td>Minimum requirements for a shared format</td><td>Making the core content easier to carry across tools</td><td><a href="https://agentskills.io/specification">Standard</a></td></tr>
-<tr><td><code>anthropics/claude-plugins-official</code></td><td>Skills and commands inside official plugins</td><td>Seeing how a Skill is packaged for sharing</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
-<tr><td><code>mattpocock/skills</code></td><td>Short Skill examples used in engineering work</td><td>Comparing different writing styles</td><td><a href="https://github.com/mattpocock/skills">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers</code></td><td>How real workflows are split into Skills</td><td>After completing your first Skill</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">Standards and readable examples</th><td>Agent Skills specification</td><td>Minimum requirements for a shared format</td><td>Making the core content easier to carry across tools</td><td>⭐⭐⭐⭐</td><td><a href="https://agentskills.io/specification">Standard</a></td></tr>
+<tr><td><code>anthropics/claude-plugins-official</code></td><td>Skills and commands inside official plugins</td><td>Seeing how a Skill is packaged for sharing</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
+<tr><td><code>mattpocock/skills</code></td><td>Short Skill examples used in engineering work</td><td>Comparing different writing styles</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/mattpocock/skills">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers</code></td><td>How real workflows are split into Skills</td><td>After completing your first Skill</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Indexes and prompt practice</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>Finding Claude Code resources by type</td><td>When you know the need and want more examples</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
-<tr><td><code>anthropics/prompt-eng-interactive-tutorial</code></td><td>Comparing prompt approaches step by step</td><td>When the shared core in CLI-8 is unclear</td><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Official GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="2">Indexes and prompt practice</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>Finding Claude Code resources by type</td><td>When you know the need and want more examples</td><td>⭐⭐⭐</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
+<tr><td><code>anthropics/prompt-eng-interactive-tutorial</code></td><td>Comparing prompt approaches step by step</td><td>When the shared core in CLI-8 is unclear</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Official GitHub repo</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Repo context tools</th><td><code>yamadashy/repomix</code></td><td>Creating a one-off codebase snapshot</td><td>When you need to organize repo contents for an agent</td><td><a href="https://github.com/yamadashy/repomix">GitHub repo</a></td></tr>
-<tr><td><code>langchain-ai/openwiki</code></td><td>Creating a continuously updated repo wiki</td><td>When a large repo needs on-demand document lookup</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="2">Repo context tools</th><td><code>yamadashy/repomix</code></td><td>Creating a one-off codebase snapshot</td><td>When you need to organize repo contents for an agent</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/yamadashy/repomix">GitHub repo</a></td></tr>
+<tr><td><code>langchain-ai/openwiki</code></td><td>Creating a continuously updated repo wiki</td><td>When a large repo needs on-demand document lookup</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
 </tbody>
 </table>
 </details>
+
+## ✅ Self-check before A3
+
+- [ ] I can distinguish project instructions, Skill, and one-off prompt in my own words.
+- [ ] My project-rules card states the purpose, forbidden actions, verification command, and delivery format, and the agent can read it.
+- [ ] My review Skill reads changes only; after testing, `git status --short` shows no unexpected modifications.
+- [ ] I know that a “shared core” does not mean every CLI has the same filenames and permissions.
+
+Once all four are done, move on to [A3 — Connect a CLI agent to a safe production workflow](A3-cli-production.en.md). If not, return to the demo repo and repeat CLI-5 or CLI-6; you do not need to read every supplement first.
 
 <details markdown="1">
 <summary>Expand common questions and fixes</summary>

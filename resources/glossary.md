@@ -269,13 +269,25 @@ Anthropic 2024 推的開放協定、讓任何 LLM host（Claude Code、Cursor、
 
 📍 詳細：[Stage 5.2](../stages/05-claude-code-ecosystem.md#52--mcpmodel-context-protocol-基礎)
 
+### Project Instructions（專案規則）
+
+CLI agent 每次進入專案時都要讀的共同守則，像貼在工作室牆上的規則。它適合放專案用途、禁止事項、驗證指令與交付格式。不同工具使用不同檔名與載入順序，例如 Codex／OpenCode V2 的 `AGENTS.md`、Claude Code 的 `CLAUDE.md`、Gemini CLI 的 `GEMINI.md`。
+
+📍 入門：[Track A A2](../tracks/cli/A2-cli-workflow.md)
+
 ### Skills / SKILL.md
 
-Claude Code 的「行為包」。一個 Skill = 一個資料夾含 `SKILL.md`（描述「在什麼情境要做什麼、可呼叫哪些 tool」）+ 可選的 reference files / scripts。
+需要時才拿出的可重用「操作卡」。一個 Skill 通常是一個含 `SKILL.md` 的資料夾，還可以附 references、scripts 或其他檔案。Codex、Claude Code、Gemini CLI 與 OpenCode V2 都有 Skill 機制，但搜尋路徑、frontmatter、載入方式與權限不完全相同。
 
-**觸發機制**（很多人不知道、很關鍵）：Claude Code 每次處理你訊息**前**、會掃所有可用 skill 的 **frontmatter `description` 欄位**——匹配當下情境就把對應 SKILL.md 自動載入。**所以 description 寫得好不好直接決定 skill 會不會被觸發**。寫法：以「Use when ...」開頭最有效。
+`description` 要清楚說明「什麼情況使用」與「能做什麼」，讓 agent 能選到正確 Skill。第三方 Skill 可能執行程式或呼叫外部工具；安裝前要讀完內容與權限，不把 Skill 當成安全邊界。
 
-📍 詳細：[Stage 5.3](../stages/05-claude-code-ecosystem.md#53--skillsclaude-code-的行為層-claude-code-生態最關鍵的一層)
+📍 入門：[Track A A2](../tracks/cli/A2-cli-workflow.md)；Claude Code 深入：[Stage 5.3](../stages/05-claude-code-ecosystem.md#53--skillsclaude-code-的行為層-claude-code-生態最關鍵的一層)
+
+### One-off Prompt（單次提示）
+
+只為眼前任務使用的一次性交代，像今天才要用的便條。它放本次任務、範圍、輸入、禁止事項與成功條件；每次都相同的專案規則應移到 project instructions，重複流程應移到 Skill。
+
+📍 練習：[Track A A2 CLI-8](../tracks/cli/A2-cli-workflow.md#cli-8)
 
 ### Plugin / Marketplace
 
@@ -323,6 +335,12 @@ Claude Code 內以 `/` 開頭的指令，例如 `/help`、`/compact`、`/plan`�
 
 ## 6. Production / Eval / Cost
 
+### CI（Continuous Integration，持續整合）
+
+push 或 PR 出現時自動執行固定工作的檢查站。CI 可以跑測試、lint 或只讀 agent review，但它使用的 token、secret、repo 權限與觸發條件都要另外限制。CI 成功不代表可以自動 merge 或跳過人類 review。
+
+📍 練習：[Track A A3 CLI-10](../tracks/cli/A3-cli-production.md#cli-10)
+
 ### Eval（評估）
 
 拿一組固定 test case 檢查 prompt 或 agent。最小的 eval 就像一張小答案卡：同一組題目、清楚的正確條件、每次修改後重跑。規模變大後，還能一起記錄準確度、latency 與 cost。常見工具有 promptfoo、LangSmith 與 Langfuse evals。
@@ -331,9 +349,9 @@ Claude Code 內以 `/` 開頭的指令，例如 `/help`、`/compact`、`/plan`�
 
 ### Observability
 
-把 agent 內部跑的每一步（哪個 LLM call、哪個 tool、什麼結果）都記下來。出 bug 時能 replay。常見：langfuse、Helicone、weave。
+把 agent 執行過的步驟、模型、tool、usage、時間與結果留下來，像收據加行車紀錄。出 bug 時可以找出哪一步失敗；拿不到的欄位要寫「未確認」，不能靠猜。常見工具有 Langfuse、Phoenix、Helicone。
 
-📍 詳細：[Stage 7](../stages/07-multi-agent-production.md)
+📍 入門：[Track A A3 CLI-11](../tracks/cli/A3-cli-production.md#cli-11)；深入：[Stage 7](../stages/07-multi-agent-production.md)
 
 ### Prompt Caching
 

@@ -2,8 +2,9 @@
 """
 Internal anchor validator.
 
-掃所有 .md 內的 cross-file + same-file anchor link、驗 anchor 真實存在
-target file 的 H1-H6 內。GitHub markdown slugification 規則。
+掃所有 .md 內的 cross-file + same-file anchor link，驗 anchor 真實存在於
+target file 的 H1-H6 或明示 `<a id>`／`<a name>`。Markdown heading 使用
+GitHub slug 規則；HTML ID 保持瀏覽器實際使用的精確值。
 
 Usage:
     python scripts/check-anchors.py [--strict]
@@ -25,6 +26,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from html.parser import HTMLParser
 from pathlib import Path
 
 # --- Config ---
@@ -103,8 +105,45 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from md_fences import strip_code_blocks  # noqa: E402  — re-exported for callers
 
 
+class _ExplicitAnchorParser(HTMLParser):
+    """Collect exact ``id``/``name`` values from real ``<a>`` attributes."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.anchors: set[str] = set()
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        if tag.lower() != "a":
+            return
+        for attr_name, value in attrs:
+            if attr_name.lower() in {"id", "name"} and value:
+                self.anchors.add(value)
+
+
+def collect_heading_anchors(content: str) -> set[str]:
+    """Generated GitHub-style slugs for visible Markdown H1-H6 headings."""
+    visible = strip_code_blocks(content)
+    return {slugify(m.group(2)) for m in HEADER_RE.finditer(visible)}
+
+
+def collect_explicit_anchors(content: str) -> set[str]:
+    """Exact visible ``<a id>`` and ``<a name>`` values; never slugified.
+
+    An explicit HTML fragment is a literal browser target. For example,
+    ``<a id="Foo.Bar">`` is reached by ``#Foo.Bar``—not by ``#foobar``.
+    Parsing attributes also prevents ``data-id`` and ``data-name`` from being
+    mistaken for real targets.
+    """
+    parser = _ExplicitAnchorParser()
+    parser.feed(strip_code_blocks(content))
+    parser.close()
+    return parser.anchors
+
+
 def collect_anchors(content: str) -> set[str]:
-    """All anchor slugs available in this file (from H1-H6).
+    """All visible targets: generated heading slugs plus exact HTML anchors.
 
     Code blocks are stripped first. Without that, a `## Heading` shown INSIDE a
     fenced example counts as a real anchor target, so a link pointing at a
@@ -115,7 +154,15 @@ def collect_anchors(content: str) -> set[str]:
     The LINK side has been stripped since #95 — this is the TARGET side, and it
     was the half nobody had connected.
     """
-    return {slugify(m.group(2)) for m in HEADER_RE.finditer(strip_code_blocks(content))}
+    return collect_heading_anchors(content) | collect_explicit_anchors(content)
+
+
+def anchor_exists(content: str, fragment: str) -> bool:
+    """Match explicit fragments exactly, or headings by generated slug rules."""
+    return (
+        fragment in collect_explicit_anchors(content)
+        or slugify(fragment) in collect_heading_anchors(content)
+    )
 
 
 def parse_anchor_links(content: str, file_path: Path) -> list[tuple[int, str, str]]:
@@ -156,7 +203,7 @@ def validate_file(path: Path, repo_root: Path) -> list[tuple[Path, int, str]]:
     """Validate anchors in one file. Returns list of (file, lineno, message)."""
     broken = []
     content = path.read_text(encoding='utf-8')
-    own_anchors: set[str] | None = None  # lazy
+    own_content: str | None = None  # lazy; keeps exact HTML IDs separate from slugs
 
     # Repo-relative, matching every other diagnostic this script prints.
     try:
@@ -165,13 +212,11 @@ def validate_file(path: Path, repo_root: Path) -> list[tuple[Path, int, str]]:
         rel_for_msgs = path
 
     for lineno, target_raw, anchor in parse_anchor_links(content, rel_for_msgs):
-        anchor_slug = slugify(anchor)
-
         if target_raw == '':
             # Same-file anchor [text](#section)
-            if own_anchors is None:
-                own_anchors = collect_anchors(content)
-            if anchor_slug not in own_anchors:
+            if own_content is None:
+                own_content = content
+            if not anchor_exists(own_content, anchor):
                 broken.append((path, lineno, f'same-file anchor not found: #{anchor}'))
         else:
             # Cross-file: resolve target path relative to current file
@@ -184,8 +229,8 @@ def validate_file(path: Path, repo_root: Path) -> list[tuple[Path, int, str]]:
             if not tgt_path.exists():
                 broken.append((path, lineno, f'target file not found: {target_raw}'))
                 continue
-            target_anchors = collect_anchors(tgt_path.read_text(encoding='utf-8'))
-            if anchor_slug not in target_anchors:
+            target_content = tgt_path.read_text(encoding='utf-8')
+            if not anchor_exists(target_content, anchor):
                 broken.append(
                     (path, lineno, f'anchor not found in {target_raw}: #{anchor}')
                 )

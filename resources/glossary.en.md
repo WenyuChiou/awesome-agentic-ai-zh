@@ -269,13 +269,25 @@ Anthropic's open protocol, introduced in 2024, that lets any LLM host (Claude Co
 
 📍 Detail: [Stage 5.2](../stages/05-claude-code-ecosystem.en.md#52--mcp-model-context-protocol--foundation)
 
+### Project Instructions
+
+Shared rules that a CLI agent reads whenever it enters a project, like rules posted on a workshop wall. Put the project purpose, forbidden actions, verification commands, and delivery format here. Tools use different filenames and loading order, such as `AGENTS.md` for Codex/OpenCode V2, `CLAUDE.md` for Claude Code, and `GEMINI.md` for Gemini CLI.
+
+📍 Getting started: [Track A A2](../tracks/cli/A2-cli-workflow.en.md)
+
 ### Skills / SKILL.md
 
-Claude Code's "behavior bundles". A Skill = a folder containing `SKILL.md` (describing "what to do in what situations, and which tools can be called") + optional reference files / scripts.
+Reusable "instruction cards" taken out when needed. A Skill is usually a folder containing `SKILL.md`, with optional references, scripts, or other files. Codex, Claude Code, Gemini CLI, and OpenCode V2 all have Skill mechanisms, but their search paths, frontmatter, loading methods, and permissions differ.
 
-**Trigger mechanism** (many people do not know this, but it matters): before Claude Code handles each message, it scans the **frontmatter `description` field** of every available skill — if it matches the current situation, the corresponding SKILL.md is auto-loaded. **So the quality of the description directly determines whether the skill gets triggered.** In practice, starting with "Use when ..." works best.
+`description` should clearly say when to use the Skill and what it can do, so the agent can select the right one. A third-party Skill may run programs or call external tools; read its content and permissions before installing it, and do not treat a Skill as a security boundary.
 
-📍 Detail: [Stage 5.3](../stages/05-claude-code-ecosystem.en.md#53--skills-claude-codes-behavior-layer--the-most-critical-layer-of-the-claude-code-ecosystem)
+📍 Getting started: [Track A A2](../tracks/cli/A2-cli-workflow.en.md); Claude Code deep dive: [Stage 5.3](../stages/05-claude-code-ecosystem.en.md#53--skills-claude-codes-behavior-layer--the-most-critical-layer-of-the-claude-code-ecosystem)
+
+### One-off Prompt
+
+A one-time instruction for the task in front of you, like a note needed only today. It contains this task’s scope, inputs, forbidden actions, and success conditions; move project rules used every time to project instructions, and repeated workflows to a Skill.
+
+📍 Practice: [Track A A2 CLI-8](../tracks/cli/A2-cli-workflow.en.md#cli-8)
 
 ### Plugin / Marketplace
 
@@ -323,6 +335,12 @@ How to set up: put frontmatter + system prompt + tool whitelist in `.claude/agen
 
 ## 6. Production / Eval / Cost
 
+### CI (Continuous Integration)
+
+A checkpoint that automatically runs fixed work when a push or PR appears. CI can run tests, lint, or a read-only agent review, but its tokens, secrets, repo permissions, and triggers must be limited separately. A successful CI run does not mean auto-merge is safe or human review can be skipped.
+
+📍 Practice: [Track A A3 CLI-10](../tracks/cli/A3-cli-production.en.md#cli-10)
+
 ### Eval (Evaluation)
 
 Use a fixed test case set to check a prompt or agent. The smallest eval is like a small answer card: the same questions, clear success conditions, and a rerun after every change. As it grows, it can also record accuracy, latency, and cost. Common tools include promptfoo, LangSmith, and Langfuse evals.
@@ -331,9 +349,9 @@ Use a fixed test case set to check a prompt or agent. The smallest eval is like 
 
 ### Observability
 
-Capture every internal step (which LLM call, which tool, what result). Lets you replay when bugs hit. Common: langfuse, Helicone, weave.
+Keep the agent’s steps, model, tools, usage, time, and result, like a receipt plus a dashcam recording. When a bug appears, you can find the failed step; mark unavailable fields as “unconfirmed” instead of guessing. Common tools include Langfuse, Phoenix, and Helicone.
 
-📍 Detail: [Stage 7](../stages/07-multi-agent-production.en.md)
+📍 Getting started: [Track A A3 CLI-11](../tracks/cli/A3-cli-production.en.md#cli-11); deep dive: [Stage 7](../stages/07-multi-agent-production.en.md)
 
 ### Prompt Caching
 

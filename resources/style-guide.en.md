@@ -88,6 +88,8 @@ Example: an `Anthropic — Building Effective Agents` blog entry uses `Format = 
 | ⭐⭐ | Useful reference | Browse if interested |
 | ⭐ | Niche / advanced / for completeness | Most readers can skip |
 
+These are editorial ratings, not GitHub stars. When removing volatile popularity numbers such as `★ 140k+`, preserve the existing `⭐⭐⭐⭐⭐` rating; change the rating only when evidence about the resource’s purpose, quality, or maintenance changes.
+
 **Rules:**
 
 - A repo cited in different stages / branches **should have the same rating** (unless audience-specific reason, then note it explicitly)

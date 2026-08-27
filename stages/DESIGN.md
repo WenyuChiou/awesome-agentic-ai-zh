@@ -47,20 +47,27 @@
 
 判準：**3 個 stage 邊界清楚、不互相浸蝕**，每個 stage 對應一個明確的「我能跑出什麼」outcome。
 
+### A1 的固定閱讀形狀
+
+- 第一遍先用五個可見核心詞分清 **LLM**、**Provider API**、**Router**、**Coding agent** 與 **Local runtime**。OpenRouter 放在 Router；OpenCode V2 與 Pi 放在 coding agent／harness；Ollama 放在 local runtime。
+- `📌`、`📚`、`🛠`、`🎯`、`✅` 路標保持可見。時間、帳號、費用、完整步驟與 11 筆工具表預設收合。
+- CLI-1 的第一個請求使用可直接複製的完整 `text` block。CLI-1 至 CLI-4 的標題、anchor 與一句話成果保持可見。
+- 11 筆工具表固定為 `4／5／2` 三組，保留既有五星編輯評分並移除會變動的 GitHub stars 數字。評分是路徑建議，不是總排名。
+
 ### A2 的固定閱讀形狀
 
-- 第一遍只教「專案規則像共同守則、Skill 像按需操作卡、單次 prompt 像臨時交代」，並保留 CLI-5 至 CLI-8 的標題、anchor、成果與 A3 入口。
+- 第一遍只教三個可見核心詞：「Project instructions 像共同守則、Skill 像按需操作卡、One-off prompt 像臨時交代」，並保留 CLI-5 至 CLI-8 的標題、anchor、成果與 A3 入口。
 - CLI-5 用「用途／禁止事項／驗證指令／交付格式」四欄做最小規則卡；不把 persona 或行數門檻當成跨 CLI 通則。
 - CLI-6 教目前的 `SKILL.md`，只在相容說明提 `.claude/commands/`。核心內容可以共用，工具專屬的資料夾、frontmatter、permission 與 tool 名稱分開說。
 - 時間、先備條件、完整工具位置、CLI-7／CLI-8 步驟、multi-agent、疑難排解與完整資源表預設收合。
-- 完整資源表按語意分組；每組一個 `<tbody>`，分類欄用真正 `rowspan` 合併。三語的 rowgroup、URL、命令、日期與安全限制必須一致。
+- `📌`、`📚`、`🛠`、`🎯`、`✅` 路標保持可見。完整資源表按語意分組；每組一個 `<tbody>`，分類欄用真正 `rowspan` 合併。三語的 rowgroup、URL、評分、命令、日期與安全限制必須一致。
 
 ### A3 的固定閱讀形狀
 
-- 第一遍先用三個白話詞與一條安全階梯說清楚主線：唯讀 → 最小權限 → 示範 repo → 人工檢查 → 最後才考慮寫入。
+- 第一遍先用三個可見核心詞 **MCP**、**CI**、**Observability** 與一條安全階梯說清楚主線：唯讀 → 最小權限 → 示範 repo → 人工檢查 → 最後才考慮寫入。
 - CLI-9 至 CLI-12 的標題、anchor、一句話成果與最短路徑留在可見區；時間、閱讀、完整步驟、疑難排解與 playbook 放進預設關閉的 `<details>`。
 - Playbook 4 的標題與成果留在可見區，保護既有跨頁深連結；多 agent、fallback 與 failure injection 的理論導回 Stage 7.5，不在 A3 重寫一次。
-- 完整資源表固定為 18 筆、五個語意群組，`rowspan` 為 `4／5／4／3／2`。同類型只顯示一次分類名稱，不放 stars、排行榜或會自然變舊的數量。
+- `📌`、`📚`、`🛠`、`🎯`、`✅` 路標保持可見。完整資源表固定為 18 筆、五個語意群組，`rowspan` 為 `4／5／4／3／2`。同類型只顯示一次分類名稱；保留五星編輯評分，不放 GitHub stars、排行榜或會自然變舊的數量。
 - A3 的自動化預設只讀、最小權限、可留下 receipt，且必須有人檢查。不能把自動 merge、push、deploy 或未受限的 MCP 寫成初學者第一步。
 
 ### 為什麼 Stage 5 特別放在「兩軌共用」

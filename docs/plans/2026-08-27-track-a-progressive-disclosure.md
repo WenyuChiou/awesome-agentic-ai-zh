@@ -27,7 +27,7 @@
 
 事實缺陷：
 
-- OpenCode 的 canonical repo 是 `anomalyco/opencode`；專案規則使用 `AGENTS.md`，`CLAUDE.md` 是相容 fallback，不是 `OPENCODE.md`。
+- OpenCode 的 canonical repo 是 `anomalyco/opencode`；現行 V2 專案規則使用 `AGENTS.md`，不再使用舊版 `CLAUDE.md` fallback，也不是 `OPENCODE.md`。
 - goose 的 canonical repo 是 `aaif-goose/goose`，不應繼續連到搬遷前路徑。
 - Claude Code 已把 custom commands 併入 Skills；`.claude/commands/` 仍相容，但新教學應使用 `.claude/skills/<name>/SKILL.md`。
 - `CLAUDE.md` 不會因超過 100 行就截斷。官方目前建議每份維持在 200 行內，並強調具體、簡短、可驗證。
@@ -203,7 +203,7 @@ CLI-1 至 CLI-4 的標題、錨點與一句話成果都留在 `<details>` 外，
 - [OpenCode documentation](https://opencode.ai/docs)
 - [Pi documentation](https://pi.dev/docs/latest)
 - [Claude Code documentation](https://code.claude.com/docs/en/overview)
-- [OpenAI Codex documentation](https://developers.openai.com/codex/cli)
+- [OpenAI Codex documentation](https://learn.chatgpt.com/docs/codex/cli)
 - [Gemini CLI documentation](https://google-gemini.github.io/gemini-cli/)
 - [goose documentation](https://block.github.io/goose/)
 - [Aider documentation](https://aider.chat/docs/)

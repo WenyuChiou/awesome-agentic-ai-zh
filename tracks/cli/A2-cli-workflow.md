@@ -6,22 +6,17 @@
 
 這一站只解決一個問題：**怎麼讓 CLI agent 下次進到同一個 repo，還記得同一套做事方法？**
 
-你會把每次都要知道的規則寫進專案規則檔，把常常重複的步驟做成 Skill。臨時任務才留在單次 prompt。這樣就像把「每天都要重新交代」改成「牆上有守則，工具箱裡有操作卡」。
+你會把每次都要知道的規則寫進專案規則檔，把常常重複的步驟做成 **Skill**。臨時任務才留在單次 prompt。這樣就像把「每天都要重新交代」改成「牆上有守則，工具箱裡有操作卡」。
 
-## 先分清三種東西
+## 🧩 先認識三個核心詞
 
-<table>
-<thead>
-<tr><th scope="col">正確術語</th><th scope="col">白話說法</th><th scope="col">什麼時候用</th></tr>
-</thead>
-<tbody>
-<tr><th scope="row">Project instructions<br>專案規則</th><td>每次進工作室都要看的守則</td><td>放專案用途、禁止事項、測試指令與交付格式</td></tr>
-<tr><th scope="row">Skill</th><td>需要時才拿出的操作卡</td><td>放 review、release、整理文件等重複流程</td></tr>
-<tr><th scope="row">One-off prompt<br>單次 prompt</th><td>今天才需要的一次性交代</td><td>放這次任務的範圍、輸入與成功條件</td></tr>
-</tbody>
-</table>
+| 核心詞 | 它是什麼、像什麼 | A2 怎麼用 | 不適合放什麼 |
+|---|---|---|---|
+| **Project instructions（專案規則）** | 每次進工作室都要看的共同守則 | 放專案用途、禁止事項、測試指令與交付格式 | 不放只用一次的任務或長篇參考資料 |
+| **Skill（操作卡）** | 有需要時才拿出的可重用操作卡 | 放 review、release、整理文件等重複流程 | 不是每家 CLI 都使用相同路徑、權限或 frontmatter |
+| **One-off prompt（單次提示）** | 只交代今天這一件事的便條 | 放本次任務、範圍、輸入與成功條件 | 不用它重複貼上每次都相同的專案規則 |
 
-## 學習目標
+## 📌 學習目標
 
 - 用四個欄位寫出一份短而清楚的專案規則。
 - 把重複的 review 流程做成一個只讀 Skill。
@@ -37,6 +32,8 @@
 
 還沒完成 A1 時，先回去跑一次「只讀取 → 看計畫 → 小改動 → `git diff` → 復原」。
 </details>
+
+## 📚 必修閱讀
 
 <details markdown="1">
 <summary>展開必修閱讀與建議順序</summary>
@@ -65,6 +62,8 @@
 
 共同的是「要交代哪些事」；不同的是檔名、搜尋位置、權限與額外設定。不要把一個工具的專屬功能當成所有 CLI 都有。
 </details>
+
+## 🛠 動手練習
 
 <a id="cli-5"></a>
 ### 動手練習 CLI-5：做一張最小專案規則卡
@@ -161,14 +160,9 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 「Portable」代表核心意思容易搬，不代表整段文字與設定可以零修改複製。若第二個工具沒有同名功能，就回到成功條件，選它真正支援的方法。
 </details>
 
-## 進 A3 前的自我檢查
+## 🎯 精選 Projects
 
-- [ ] 我能用自己的話分清專案規則、Skill、單次 prompt。
-- [ ] 我的規則卡有用途、禁止事項、驗證指令、交付格式，而且 agent 能讀到。
-- [ ] 我的 review Skill 只讀取變更，測試後 `git status --short` 沒有多出非預期修改。
-- [ ] 我知道「共用核心」不等於「所有 CLI 的檔名與權限都一樣」。
-
-四項都做到，就進入 [A3 — 把 CLI agent 接進安全的 production 流程](A3-cli-production.md)。若還沒做到，先回 demo repo 重跑 CLI-5 或 CLI-6，不必先讀完所有補充資料。
+推薦度是本學習地圖的編輯建議，不是 GitHub stars。`⭐⭐⭐⭐⭐` 表示：如果你選那個 CLI 路徑，這份官方文件或工具是必讀／必做；不是叫你讀完所有五星列。
 
 <details markdown="1">
 <summary>展開完整學習資源表（16 筆）</summary>
@@ -177,36 +171,45 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 
 <table>
 <thead>
-<tr><th scope="col">類型</th><th scope="col">資源</th><th scope="col">先看什麼</th><th scope="col">適合何時使用</th><th scope="col">來源</th></tr>
+<tr><th scope="col">類型</th><th scope="col">資源</th><th scope="col">先看什麼</th><th scope="col">適合何時使用</th><th scope="col">推薦度</th><th scope="col">來源</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">官方專案規則</th><td>Codex <code>AGENTS.md</code></td><td>分層載入與優先順序</td><td>替 Codex 寫 repo 規則</td><td><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md">官方文件</a></td></tr>
-<tr><td>Claude Code <code>CLAUDE.md</code></td><td>何時放規則、何時移到 Skill</td><td>替 Claude Code 寫持續規則</td><td><a href="https://code.claude.com/docs/en/memory">官方文件</a></td></tr>
-<tr><td>Gemini CLI <code>GEMINI.md</code></td><td>目錄範圍與載入方式</td><td>替 Gemini CLI 放專案 context</td><td><a href="https://geminicli.com/docs/cli/gemini-md/">官方文件</a></td></tr>
-<tr><td>OpenCode V2 <code>AGENTS.md</code></td><td>V2 的合併與 nested discovery</td><td>替 OpenCode V2 寫規則</td><td><a href="https://opencode.ai/v2/docs/instructions">官方文件</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">官方專案規則</th><td>Codex <code>AGENTS.md</code></td><td>分層載入與優先順序</td><td>替 Codex 寫 repo 規則</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md">官方文件</a></td></tr>
+<tr><td>Claude Code <code>CLAUDE.md</code></td><td>何時放規則、何時移到 Skill</td><td>替 Claude Code 寫持續規則</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/memory">官方文件</a></td></tr>
+<tr><td>Gemini CLI <code>GEMINI.md</code></td><td>目錄範圍與載入方式</td><td>替 Gemini CLI 放專案 context</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://geminicli.com/docs/cli/gemini-md/">官方文件</a></td></tr>
+<tr><td>OpenCode V2 <code>AGENTS.md</code></td><td>V2 的合併與 nested discovery</td><td>替 OpenCode V2 寫規則</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/v2/docs/instructions">官方文件</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">官方 Skill 文件</th><td>Codex／ChatGPT Build skills</td><td><code>SKILL.md</code> 結構與載入位置</td><td>做 Codex 可重用流程</td><td><a href="https://learn.chatgpt.com/docs/build-skills">官方文件</a></td></tr>
-<tr><td>Claude Code Skills</td><td>按需載入、legacy commands、權限</td><td>做 Claude Code Skill</td><td><a href="https://code.claude.com/docs/en/slash-commands">官方文件</a></td></tr>
-<tr><td>Gemini CLI Agent Skills</td><td>discovery、安裝同意與啟用同意</td><td>管理 Gemini CLI Skill</td><td><a href="https://geminicli.com/docs/cli/using-agent-skills/">官方文件</a></td></tr>
-<tr><td>OpenCode V2 Agent Skills</td><td>支援位置、frontmatter、permission</td><td>做 OpenCode Skill</td><td><a href="https://opencode.ai/v2/docs/skills">官方文件</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">官方 Skill 文件</th><td>Codex／ChatGPT Build skills</td><td><code>SKILL.md</code> 結構與載入位置</td><td>做 Codex 可重用流程</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/build-skills">官方文件</a></td></tr>
+<tr><td>Claude Code Skills</td><td>按需載入、legacy commands、權限</td><td>做 Claude Code Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/slash-commands">官方文件</a></td></tr>
+<tr><td>Gemini CLI Agent Skills</td><td>discovery、安裝同意與啟用同意</td><td>管理 Gemini CLI Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://geminicli.com/docs/cli/using-agent-skills/">官方文件</a></td></tr>
+<tr><td>OpenCode V2 Agent Skills</td><td>支援位置、frontmatter、permission</td><td>做 OpenCode Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/v2/docs/skills">官方文件</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">標準與可讀範例</th><td>Agent Skills specification</td><td>共同格式的最低要求</td><td>想讓核心內容較容易跨工具</td><td><a href="https://agentskills.io/specification">標準</a></td></tr>
-<tr><td><code>anthropics/claude-plugins-official</code></td><td>官方 plugin 內的 Skills 與 commands</td><td>想看 Skill 如何被打包分享</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
-<tr><td><code>mattpocock/skills</code></td><td>工程工作中使用的短 Skill 範例</td><td>想比較不同寫法</td><td><a href="https://github.com/mattpocock/skills">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers</code></td><td>真實 workflow 如何拆成 Skills</td><td>完成第一個 Skill 後再看</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">標準與可讀範例</th><td>Agent Skills specification</td><td>共同格式的最低要求</td><td>想讓核心內容較容易跨工具</td><td>⭐⭐⭐⭐</td><td><a href="https://agentskills.io/specification">標準</a></td></tr>
+<tr><td><code>anthropics/claude-plugins-official</code></td><td>官方 plugin 內的 Skills 與 commands</td><td>想看 Skill 如何被打包分享</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
+<tr><td><code>mattpocock/skills</code></td><td>工程工作中使用的短 Skill 範例</td><td>想比較不同寫法</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/mattpocock/skills">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers</code></td><td>真實 workflow 如何拆成 Skills</td><td>完成第一個 Skill 後再看</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">索引與 prompt 練習</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>按類型找 Claude Code 資源</td><td>已知道需求、想找更多範例</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
-<tr><td><code>anthropics/prompt-eng-interactive-tutorial</code></td><td>一步一步比較 prompt 寫法</td><td>CLI-8 卡在共用核心時</td><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">官方 GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="2">索引與 prompt 練習</th><td><code>hesreallyhim/awesome-claude-code</code></td><td>按類型找 Claude Code 資源</td><td>已知道需求、想找更多範例</td><td>⭐⭐⭐</td><td><a href="https://github.com/hesreallyhim/awesome-claude-code">GitHub repo</a></td></tr>
+<tr><td><code>anthropics/prompt-eng-interactive-tutorial</code></td><td>一步一步比較 prompt 寫法</td><td>CLI-8 卡在共用核心時</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">官方 GitHub repo</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Repo context 工具</th><td><code>yamadashy/repomix</code></td><td>產生一次性的 codebase 快照</td><td>需要把 repo 內容整理給 agent</td><td><a href="https://github.com/yamadashy/repomix">GitHub repo</a></td></tr>
-<tr><td><code>langchain-ai/openwiki</code></td><td>建立可持續更新的 repo wiki</td><td>大型 repo 需要按需查文件</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="2">Repo context 工具</th><td><code>yamadashy/repomix</code></td><td>產生一次性的 codebase 快照</td><td>需要把 repo 內容整理給 agent</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/yamadashy/repomix">GitHub repo</a></td></tr>
+<tr><td><code>langchain-ai/openwiki</code></td><td>建立可持續更新的 repo wiki</td><td>大型 repo 需要按需查文件</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
 </tbody>
 </table>
 </details>
+
+## ✅ 進 A3 前的自我檢查
+
+- [ ] 我能用自己的話分清專案規則、Skill、單次 prompt。
+- [ ] 我的規則卡有用途、禁止事項、驗證指令、交付格式，而且 agent 能讀到。
+- [ ] 我的 review Skill 只讀取變更，測試後 `git status --short` 沒有多出非預期修改。
+- [ ] 我知道「共用核心」不等於「所有 CLI 的檔名與權限都一樣」。
+
+四項都做到，就進入 [A3 — 把 CLI agent 接進安全的 production 流程](A3-cli-production.md)。若還沒做到，先回 demo repo 重跑 CLI-5 或 CLI-6，不必先讀完所有補充資料。
 
 <details markdown="1">
 <summary>展開常見問題與修正方式</summary>

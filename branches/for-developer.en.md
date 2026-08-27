@@ -139,7 +139,7 @@ Recommended progression:
 | Tier | Tools | Best for | Learning cost |
 |---|---|---|---|
 | **Tier 0** | Cursor / Copilot / Claude.ai | IDE chat, autocomplete, no custom agents | 0 (if you can use an editor) |
-| **Tier 1** | Claude Code / Cline / OpenCode + `CLAUDE.md` | CLI with file-system access, human-in-the-loop | 1-2 days |
+| **Tier 1** | Claude Code (`CLAUDE.md`) / Cline / OpenCode V2 (`AGENTS.md`) | CLI with file-system access, human-in-the-loop | 1-2 days |
 | **Tier 2** | Custom Skills + MCP server | Packaging dev workflows as shared team skills | 1 week of setup |
 | **Tier 3** | Auto-running agents in CI + production observability | [Stage 7](../stages/07-multi-agent-production.en.md) territory | Several weeks, governance required |
 

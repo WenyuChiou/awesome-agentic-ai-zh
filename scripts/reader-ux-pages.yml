@@ -299,11 +299,62 @@ pages:
       en: tracks/cli/A1-cli-intro.en.md
       zh-Hans: tracks/cli/A1-cli-intro.zh-Hans.md
     max_visible_chars:
-      zh-TW: 3900
-      en: 6400
-      zh-Hans: 4000
+      zh-TW: 3676
+      en: 6291
+      zh-Hans: 3740
     max_open_details: 0
+    visible_section_order: [learning-goals, core-terms, required-reading, hands-on, projects, completion]
     required_visible_sections:
+      learning-goals:
+        zh-TW:
+          heading: "📌 學習目標"
+          anchor: -學習目標
+        en:
+          heading: "📌 Learning Goals"
+          anchor: -learning-goals
+        zh-Hans:
+          heading: "📌 学习目标"
+          anchor: -学习目标
+      core-terms:
+        zh-TW:
+          heading: "🧩 先認識五個核心詞"
+          anchor: -先認識五個核心詞
+        en:
+          heading: "🧩 Five Core Terms First"
+          anchor: -five-core-terms-first
+        zh-Hans:
+          heading: "🧩 先认识五个核心词"
+          anchor: -先认识五个核心词
+      required-reading:
+        zh-TW:
+          heading: "📚 必修閱讀"
+          anchor: -必修閱讀
+        en:
+          heading: "📚 Required Reading"
+          anchor: -required-reading
+        zh-Hans:
+          heading: "📚 必读"
+          anchor: -必读
+      hands-on:
+        zh-TW:
+          heading: "🛠 動手練習"
+          anchor: -動手練習
+        en:
+          heading: "🛠 Hands-on Exercises"
+          anchor: -hands-on-exercises
+        zh-Hans:
+          heading: "🛠 动手练习"
+          anchor: -动手练习
+      projects:
+        zh-TW:
+          heading: "🎯 精選 Projects"
+          anchor: -精選-projects
+        en:
+          heading: "🎯 Curated Projects"
+          anchor: -curated-projects
+        zh-Hans:
+          heading: "🎯 精选 Projects"
+          anchor: -精选-projects
       cli-1:
         zh-TW:
           heading: "動手練習 CLI-1：在 demo repo 內先讀取，再做一個可復原的小改動"
@@ -354,6 +405,35 @@ pages:
         zh-Hans:
           heading: "✅ 进 A2 前的自我检查"
           anchor: -进-a2-前的自我检查
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: cli-1
+      min_definition_chars: 20
+      terms:
+        - id: llm
+          zh-TW: {term: LLM, label: "LLM（大型語言模型）"}
+          en: {term: LLM, label: "LLM (Large Language Model)"}
+          zh-Hans: {term: LLM, label: "LLM（大型语言模型）"}
+        - id: provider-api
+          zh-TW: {term: Provider API, label: "Provider API（模型服務入口）"}
+          en: {term: Provider API, label: "Provider API (model-service entry point)"}
+          zh-Hans: {term: Provider API, label: "Provider API（模型服务入口）"}
+        - id: router
+          zh-TW: {term: Router, label: "Router（路由器）"}
+          en: {term: Router, label: "Router"}
+          zh-Hans: {term: Router, label: "Router（路由器）"}
+        - id: coding-agent
+          zh-TW: {term: Coding agent, label: "Coding agent（程式工作台）"}
+          en: {term: Coding agent, label: "Coding agent (coding workbench)"}
+          zh-Hans: {term: Coding agent, label: "Coding agent（编程工作台）"}
+        - id: local-runtime
+          zh-TW: {term: Local runtime, label: "Local runtime（本機模型引擎）"}
+          en: {term: Local runtime, label: "Local runtime (local model engine)"}
+          zh-Hans: {term: Local runtime, label: "Local runtime（本地模型引擎）"}
+    resource_group_rowspans: [4, 5, 2]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
 
   - id: track-a2
     canonical: tracks/cli/A2-cli-workflow.md
@@ -361,11 +441,62 @@ pages:
       en: tracks/cli/A2-cli-workflow.en.md
       zh-Hans: tracks/cli/A2-cli-workflow.zh-Hans.md
     max_visible_chars:
-      zh-TW: 3000
-      en: 5000
-      zh-Hans: 3050
+      zh-TW: 2699
+      en: 4872
+      zh-Hans: 2682
     max_open_details: 0
+    visible_section_order: [core-terms, learning-goals, required-reading, hands-on, projects, completion]
     required_visible_sections:
+      learning-goals:
+        zh-TW:
+          heading: "📌 學習目標"
+          anchor: -學習目標
+        en:
+          heading: "📌 Learning Goals"
+          anchor: -learning-goals
+        zh-Hans:
+          heading: "📌 学习目标"
+          anchor: -学习目标
+      core-terms:
+        zh-TW:
+          heading: "🧩 先認識三個核心詞"
+          anchor: -先認識三個核心詞
+        en:
+          heading: "🧩 Three Core Terms First"
+          anchor: -three-core-terms-first
+        zh-Hans:
+          heading: "🧩 先认识三个核心词"
+          anchor: -先认识三个核心词
+      required-reading:
+        zh-TW:
+          heading: "📚 必修閱讀"
+          anchor: -必修閱讀
+        en:
+          heading: "📚 Required Reading"
+          anchor: -required-reading
+        zh-Hans:
+          heading: "📚 必读"
+          anchor: -必读
+      hands-on:
+        zh-TW:
+          heading: "🛠 動手練習"
+          anchor: -動手練習
+        en:
+          heading: "🛠 Hands-on Exercises"
+          anchor: -hands-on-exercises
+        zh-Hans:
+          heading: "🛠 动手练习"
+          anchor: -动手练习
+      projects:
+        zh-TW:
+          heading: "🎯 精選 Projects"
+          anchor: -精選-projects
+        en:
+          heading: "🎯 Curated Projects"
+          anchor: -curated-projects
+        zh-Hans:
+          heading: "🎯 精选 Projects"
+          anchor: -精选-projects
       cli-5:
         zh-TW:
           heading: "動手練習 CLI-5：做一張最小專案規則卡"
@@ -408,15 +539,35 @@ pages:
           anchor: 动手练习-cli-8做一张-portable-prompt-对照卡
       completion:
         zh-TW:
-          heading: "進 A3 前的自我檢查"
-          anchor: 進-a3-前的自我檢查
+          heading: "✅ 進 A3 前的自我檢查"
+          anchor: -進-a3-前的自我檢查
         en:
-          heading: "Self-check before A3"
-          anchor: self-check-before-a3
+          heading: "✅ Self-check before A3"
+          anchor: -self-check-before-a3
         zh-Hans:
-          heading: "进入 A3 前的自我检查"
-          anchor: 进入-a3-前的自我检查
+          heading: "✅ 进入 A3 前的自我检查"
+          anchor: -进入-a3-前的自我检查
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: cli-5
+      min_definition_chars: 20
+      terms:
+        - id: project-instructions
+          zh-TW: {term: Project instructions, label: "Project instructions（專案規則）"}
+          en: {term: Project instructions, label: "Project instructions (project rules)"}
+          zh-Hans: {term: Project instructions, label: "Project instructions（项目规则）"}
+        - id: skill
+          zh-TW: {term: Skill, label: "Skill（操作卡）"}
+          en: {term: Skill, label: "Skill (reusable instruction card)"}
+          zh-Hans: {term: Skill, label: "Skill（操作卡）"}
+        - id: one-off-prompt
+          zh-TW: {term: One-off prompt, label: "One-off prompt（單次提示）"}
+          en: {term: One-off prompt, label: "One-off prompt (single-task prompt)"}
+          zh-Hans: {term: One-off prompt, label: "One-off prompt（单次提示）"}
     resource_group_rowspans: [4, 4, 4, 2, 2]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
 
   - id: track-a3
     canonical: tracks/cli/A3-cli-production.md
@@ -424,18 +575,20 @@ pages:
       en: tracks/cli/A3-cli-production.en.md
       zh-Hans: tracks/cli/A3-cli-production.zh-Hans.md
     max_visible_chars:
-      zh-TW: 2850
-      en: 5300
-      zh-Hans: 2900
+      zh-TW: 3387
+      en: 5928
+      zh-Hans: 3438
     max_open_details: 0
     required_details_count: 8
+    visible_section_order: [learning-goals, core-terms, required-reading, hands-on, projects, completion]
     forbidden_terms:
-      zh-TW: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, ⭐, 1-2 分鐘, 1–2 分鐘]
-      en: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, ⭐, 1-2 minutes, 1–2 minutes]
-      zh-Hans: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, ⭐, 1-2 分钟, 1–2 分钟]
+      zh-TW: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, 1-2 分鐘, 1–2 分鐘]
+      en: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, 1-2 minutes, 1–2 minutes]
+      zh-Hans: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, 1-2 分钟, 1–2 分钟]
     forbidden_terms_include_code: true
     parity:
       ordered_external_urls: true
+      resource_url_ratings: true
       literals:
         - "2026-08-27"
         - "2026-07-28"
@@ -448,6 +601,56 @@ pages:
         - "provider spend limit"
         - "job timeout"
     required_visible_sections:
+      learning-goals:
+        zh-TW:
+          heading: "📌 學習目標"
+          anchor: -學習目標
+        en:
+          heading: "📌 Learning Goals"
+          anchor: -learning-goals
+        zh-Hans:
+          heading: "📌 学习目标"
+          anchor: -学习目标
+      core-terms:
+        zh-TW:
+          heading: "🧩 先認識三個核心詞"
+          anchor: -先認識三個核心詞
+        en:
+          heading: "🧩 Three Core Terms First"
+          anchor: -three-core-terms-first
+        zh-Hans:
+          heading: "🧩 先认识三个核心词"
+          anchor: -先认识三个核心词
+      required-reading:
+        zh-TW:
+          heading: "📚 必修閱讀"
+          anchor: -必修閱讀
+        en:
+          heading: "📚 Required Reading"
+          anchor: -required-reading
+        zh-Hans:
+          heading: "📚 必读"
+          anchor: -必读
+      hands-on:
+        zh-TW:
+          heading: "🛠 動手練習"
+          anchor: -動手練習
+        en:
+          heading: "🛠 Hands-on Exercises"
+          anchor: -hands-on-exercises
+        zh-Hans:
+          heading: "🛠 动手练习"
+          anchor: -动手练习
+      projects:
+        zh-TW:
+          heading: "🎯 精選 Projects"
+          anchor: -精選-projects
+        en:
+          heading: "🎯 Curated Projects"
+          anchor: -curated-projects
+        zh-Hans:
+          heading: "🎯 精选 Projects"
+          anchor: -精选-projects
       cli-9:
         zh-TW:
           heading: "動手練習 CLI-9：只連一個 MCP server"
@@ -500,14 +703,31 @@ pages:
           anchor: -playbook-4派遣-subagent-跑独立任务
       completion:
         zh-TW:
-          heading: "Track A 完成檢查"
-          anchor: track-a-完成檢查
+          heading: "✅ Track A 完成檢查"
+          anchor: -track-a-完成檢查
         en:
-          heading: "Track A completion check"
-          anchor: track-a-completion-check
+          heading: "✅ Track A Completion Check"
+          anchor: -track-a-completion-check
         zh-Hans:
-          heading: "Track A 完成检查"
-          anchor: track-a-完成检查
+          heading: "✅ Track A 完成检查"
+          anchor: -track-a-完成检查
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: cli-9
+      min_definition_chars: 20
+      terms:
+        - id: mcp
+          zh-TW: {term: MCP, label: "MCP（Model Context Protocol）"}
+          en: {term: MCP, label: "MCP (Model Context Protocol)"}
+          zh-Hans: {term: MCP, label: "MCP（Model Context Protocol）"}
+        - id: ci
+          zh-TW: {term: CI, label: "CI（Continuous Integration）"}
+          en: {term: CI, label: "CI (Continuous Integration)"}
+          zh-Hans: {term: CI, label: "CI（Continuous Integration）"}
+        - id: observability
+          zh-TW: {term: Observability, label: "Observability（觀測與紀錄）"}
+          en: {term: Observability, label: "Observability"}
+          zh-Hans: {term: Observability, label: "Observability（观测与记录）"}
     resource_group_rowspans: [4, 5, 4, 3, 2]
 
   - id: cli-agents-guide

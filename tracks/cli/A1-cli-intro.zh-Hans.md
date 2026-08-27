@@ -10,15 +10,17 @@
 
 ## 你现在只要做这件事
 
-准备一个不含秘密、可以随时删除的 demo repo。还没安装工具时，先在下面的短表选一个，点官方入口完成安装和登录；接着发送这段请求：
+准备一个不含秘密、可以随时删除的 demo repo。还没安装工具时，先在下面的短表选一个，点官方入口完成安装和登录；接着直接复制这段请求：
 
-> 请只读取当前的 demo repo，说明它的用途，找出测试指令，并提出一个小型文档改动计划。先不要修改文件、不要删除文件，也不要执行会改变数据的命令。
+```text
+请只读取当前的 demo repo，说明它的用途，找出测试指令，并提出一个小型文档改动计划。先不要修改文件、不要删除文件，也不要执行会改变数据的命令。
+```
 
 完成后，你应该能看到 repo 摘要、测试指令、待确认的计划，以及工具请求权限时的提示。这就是本章的第一个可验证成果。
 
-## 学习目标
+## 📌 学习目标
 
-- 分清 LLM、Provider API、Router、coding agent / harness 和 local runtime。
+- 分清 **LLM**、**Provider API**、**Router**、**Coding agent** 和 **Local runtime**。
 - 根据你已有的账号、provider 或本机环境选择入口，不做总排名。
 - 在 demo repo 中完成一次“先读取 → 看计划 → 确认 → 小改动 → `git diff` → 撤销”的循环。
 
@@ -31,20 +33,15 @@
 - **费用**：不要猜。开始前查看当天的官方 pricing / usage 页面；只有整条流程都留在本机时，才不会产生这次练习的模型 API 费用。
 </details>
 
-## 先分开这五种身份
+## 🧩 先认识五个核心词
 
-<table>
-<thead>
-<tr><th scope="col">种类</th><th scope="col">白话说法</th><th scope="col">例子</th><th scope="col">本章怎么用</th></tr>
-</thead>
-<tbody>
-<tr><th scope="row">LLM</th><td>生成答案的模型</td><td>Claude、GPT、Gemini</td><td>提供回答；不管理 repo</td></tr>
-<tr><th scope="row">Provider API</th><td>通往一家模型服务的入口</td><td>Anthropic API、OpenAI API、Gemini API</td><td>提供请求、认证和计费</td></tr>
-<tr><th scope="row">Router</th><td>把请求转给多个 provider 的入口</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>不是 LLM，也不是 coding agent</td></tr>
-<tr><th scope="row">Coding agent / harness</th><td>在终端里读文件、改文件、跑命令的工作台</td><td>Claude Code、Codex、OpenCode、Pi</td><td>会操作工作目录；先用 demo repo</td></tr>
-<tr><th scope="row">Local runtime</th><td>在自己电脑上运行模型的引擎</td><td><a href="https://github.com/ollama/ollama">Ollama</a></td><td>可以供 agent 调用；不是 agent</td></tr>
-</tbody>
-</table>
+| 核心词 | 它是什么、像什么 | A1 怎么用 | 不是什么 |
+|---|---|---|---|
+| **LLM（大型语言模型）** | 生成文字或代码的模型，像工作台里负责想答案的大脑 | Claude、GPT、Gemini 都是模型家族 | 不会自己管理 repo、文件权限或账单 |
+| **Provider API（模型服务入口）** | 让工具向一家模型服务发送请求的门 | Anthropic API、OpenAI API、Gemini API 会处理认证和计费 | 不是会改文件的 coding agent |
+| **Router（路由器）** | 把同一个请求转给不同 provider 的中转站 | [OpenRouter](https://openrouter.ai/docs/faq) 可集中 API、routing 和 usage | 不是 LLM，也不管理你的文件权限 |
+| **Coding agent（编程工作台）** | 能在终端里读文件、改文件和执行命令的工作台 | Claude Code、Codex、OpenCode V2、Pi 都属于这一类 | 里面使用的模型、provider 和 sandbox 要另外确认 |
+| **Local runtime（本地模型引擎）** | 在自己的电脑上运行模型的引擎，像启动模型的马达 | [Ollama](https://github.com/ollama/ollama) 可以让支持它的 agent 调用本地模型 | 不是 coding agent，不会自己读取 repo |
 
 ## 根据已有条件选择入口
 
@@ -54,12 +51,29 @@
 </thead>
 <tbody>
 <tr><th scope="row">Anthropic 账号或 API</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>登录和 permission prompt</td></tr>
-<tr><th scope="row">ChatGPT 或 OpenAI API</th><td><a href="https://developers.openai.com/codex/cli">Codex CLI</a></td><td>approval、sandbox、工作目录</td></tr>
+<tr><th scope="row">ChatGPT 或 OpenAI API</th><td><a href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a></td><td>approval、sandbox、工作目录</td></tr>
 <tr><th scope="row">Google 账号、API 或 Vertex AI</th><td><a href="https://google-gemini.github.io/gemini-cli/">Gemini CLI</a></td><td>认证和 sandbox</td></tr>
-<tr><th scope="row">想换 provider 或使用本地模型</th><td><a href="https://opencode.ai/docs">OpenCode</a>、<a href="https://block.github.io/goose/">goose</a>、<a href="https://aider.chat/docs/">Aider</a>、<a href="https://pi.dev/docs/latest">Pi</a></td><td>provider 和权限边界</td></tr>
+<tr><th scope="row">想换 provider 或使用本地模型</th><td><a href="https://opencode.ai/v2/docs">OpenCode V2</a>、<a href="https://block.github.io/goose/">goose</a>、<a href="https://aider.chat/docs/">Aider</a>、<a href="https://pi.dev/docs/latest">Pi</a></td><td>provider 和权限边界</td></tr>
 <tr><th scope="row">想用 Router 或本机 runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> 或 <a href="https://ollama.com/">Ollama</a></td><td>它们需要搭配 coding agent</td></tr>
 </tbody>
 </table>
+
+## 📚 必读
+
+<details markdown="1">
+<summary>展开官方阅读、账号和预算说明</summary>
+
+- [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) 和 [permissions](https://code.claude.com/docs/en/permissions)
+- [Codex CLI](https://learn.chatgpt.com/docs/codex/cli)
+- [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) 和 [sandbox 设置](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
+- [OpenCode V2 文档](https://opencode.ai/v2/docs) 和 [goose 文档](https://block.github.io/goose/)
+- [Aider 文档](https://aider.chat/docs/)、[Hermes Agent 文档](https://hermes-agent.nousresearch.com/docs/)、[Grok Build repo](https://github.com/xai-org/grok-build)、[Pi 文档](https://pi.dev/docs/latest)
+- [OpenRouter FAQ](https://openrouter.ai/docs/faq) 和 [Ollama](https://ollama.com/)
+
+每次 cloud 请求的单次费用和本章总费用，都会因账号、provider、模型、输入输出 token 和订阅额度而变化；练习前查看当天的官方价格或 usage 页面。只有 agent 和 provider 都设置为只连接本机 Ollama，且没有另外调用云端服务时，这次练习才不会产生模型 API 费用；文件和命令权限仍要照常检查。
+</details>
+
+## 🛠 动手练习
 
 <a id="cli-1"></a>
 ### 动手练习 CLI-1：在 demo repo 里先读取，再做一个可撤销的小改动
@@ -86,7 +100,7 @@
 <summary>展开各 CLI 的项目规则位置和验证方式</summary>
 
 - Claude Code 读取项目的 `CLAUDE.md`；Codex 使用 `AGENTS.md`。
-- OpenCode 使用 `AGENTS.md`，`CLAUDE.md` 是兼容 fallback；不要再建立 `OPENCODE.md` 作为通用规则文件。
+- OpenCode V2 使用 `AGENTS.md`；现行 V2 不使用旧版 `CLAUDE.md` fallback。不要把 `OPENCODE.md` 当成通用规则文件。
 - Gemini CLI 常用 `GEMINI.md`；goose、Aider、Hermes Agent、Pi 和 Grok Build 的文件名及加载范围以各自官方文档为准。
 - 规则只保留会改变行为的内容：项目用途、不能做的事、测试指令和交付格式。不要把长篇 API 参考资料塞进每次都会加载的规则文件。
 
@@ -117,32 +131,46 @@
 使用有效凭证的请求可能产生费用；第一次练习可以使用本机 Ollama 或 provider 明确提供的免费额度，并以当天官方价格和实际 usage 为准。
 </details>
 
-## 需要完整比较时，再看参考表
+## 🎯 精选 Projects
 
 A1 只教你安全开始，不在两个页面重复维护同一份易变数据。9 个工具的登录、provider、sandbox 和官方来源集中放在 [`CLI Agents 参考指南`](../../resources/cli-agents-guide.zh-Hans.md)。官方资料查核日：**2026-08-27 UTC**。
 
 <details markdown="1">
+<summary>展开 11 条完整工具评分表</summary>
+
+推荐度是本学习地图的编辑建议，不是 GitHub stars 或总排名。`⭐⭐⭐⭐⭐` 表示：如果你选择这条工具路径，这一行应先看；不是让你安装所有五星工具。
+
+<table>
+<thead>
+<tr><th scope="col">分类</th><th scope="col">Project</th><th scope="col">推荐度</th><th scope="col">适合谁</th><th scope="col">先注意什么</th></tr>
+</thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">官方模型生态</th><td><a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a></td><td>⭐⭐⭐⭐⭐</td><td>使用 Anthropic 生态的人</td><td>保留 permission prompt，先用 demo repo</td></tr>
+<tr><td><a href="https://github.com/openai/codex">openai/codex</a></td><td>⭐⭐⭐⭐⭐</td><td>已有 ChatGPT 或 OpenAI API 的人</td><td>确认 approval、sandbox 和工作目录</td></tr>
+<tr><td><a href="https://github.com/google-gemini/gemini-cli">google-gemini/gemini-cli</a></td><td>⭐⭐⭐⭐</td><td>已有 Google 认证或 Vertex AI 的人</td><td>先确认认证方式和 sandbox</td></tr>
+<tr><td><a href="https://github.com/xai-org/grok-build">xai-org/grok-build</a></td><td>⭐⭐⭐</td><td>已在使用 xAI 生态、想比较新工具的人</td><td>先在 demo repo 观察，不作第一个 production 工具</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">可换 provider</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>⭐⭐⭐⭐⭐</td><td>想切换 provider 或接兼容 endpoint 的人</td><td>V2 使用 <code>AGENTS.md</code>；另查 permission 设置</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>⭐⭐⭐⭐</td><td>想同时使用 CLI、desktop 和 extensions 的人</td><td>先只开低权限 extension</td></tr>
+<tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>⭐⭐⭐⭐⭐</td><td>重视 git diff 和 commit 流程的人</td><td>先理解它的 git auto-commit 行为</td></tr>
+<tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>⭐⭐⭐⭐</td><td>想从小核心加 extensions、skills 或 RPC 的人</td><td>没有内建 sandbox；需要隔离时用容器或 VM</td></tr>
+<tr><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>⭐⭐⭐⭐⭐</td><td>想在 terminal、desktop 或聊天平台使用同一 agent 的人</td><td>逐项开启 provider、Skill 和 MCP 权限</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Router／本地引擎</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>⭐⭐⭐⭐</td><td>想用一个 API 入口切换 provider 的人</td><td>它是 Router，仍要搭配 agent</td></tr>
+<tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>想在自己电脑上运行模型的人</td><td>它是 local runtime，仍要搭配 agent</td></tr>
+</tbody>
+</table>
+</details>
+
+<details markdown="1">
 <summary>展开“工具、Router、local runtime”的最短辨识法</summary>
 
-- Claude Code、Codex、Gemini CLI、OpenCode、goose、Aider、Hermes Agent、Grok Build、Pi：会接收任务并操作工作目录的 CLI agent / harness。
+- Claude Code、Codex、Gemini CLI、OpenCode V2、goose、Aider、Hermes Agent、Grok Build、Pi：会接收任务并操作工作目录的 CLI agent / harness。
 - OpenRouter：替 agent 把请求送到 provider 的 Router，不会替你管理文件权限。
 - Ollama：在本机运行模型的 runtime，不会自己读取 repo；要由支持它的 agent 调用。
 - 不确定时，只问三句：谁运行模型？谁转发请求？谁能读写我的文件？
-</details>
-
-## 必修阅读和费用边界
-
-<details markdown="1">
-<summary>展开官方阅读、账号和预算说明</summary>
-
-- [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) 和 [permissions](https://code.claude.com/docs/en/permissions)
-- [Codex CLI](https://developers.openai.com/codex/cli)
-- [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) 和 [sandbox 设置](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
-- [OpenCode 文档](https://opencode.ai/docs) 和 [goose 文档](https://block.github.io/goose/)
-- [Aider 文档](https://aider.chat/docs/)、[Hermes Agent 文档](https://hermes-agent.nousresearch.com/docs/)、[Grok Build repo](https://github.com/xai-org/grok-build)、[Pi 文档](https://pi.dev/docs/latest)
-- [OpenRouter FAQ](https://openrouter.ai/docs/faq) 和 [Ollama](https://ollama.com/)
-
-每次 cloud 请求的单次费用和本章总费用，都会因账号、provider、模型、输入输出 token 和订阅额度而变化；练习前查看当天的官方价格或 usage 页面。只有 agent 和 provider 都设置为只连接本机 Ollama，且没有另外调用云端服务时，这次练习才不会产生模型 API 费用；文件和命令权限仍要照常检查。
 </details>
 
 ## ✅ 进 A2 前的自我检查

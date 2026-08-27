@@ -6,22 +6,22 @@
 
 This stop has one goal: **have a CLI agent perform a read-only check on a test PR. It may give feedback, but it must not merge, deploy, or obtain extra permissions by itself.**
 
-## Learning goals
+## 📌 Learning Goals
 
 After finishing, you can:
 
-- Give an MCP server only one safe scope.
-- Have CI automatically produce a reviewable suggestion on a PR.
-- Understand the usage, time, and result left by one run.
+- Give an **MCP** server only one safe scope.
+- Have **CI** automatically produce a reviewable suggestion on a PR.
+- Use **Observability** to understand the usage, time, and result left by one run.
 - Hand the A2 Skill to a teammate and let them rerun it safely.
 
-## Separate these three terms first
+## 🧩 Three Core Terms First
 
-| Term | Plain-language picture | Correct meaning |
-|---|---|---|
-| **MCP** | Like an adapter | Connects an agent to external tools or data; what it can touch depends on the permissions you give it |
-| **CI** | Like a checkpoint that appears whenever you turn in an assignment | Automatically runs fixed work when a push or PR occurs |
-| **Observability** | Like a receipt plus a dashcam recording | Leaves a record of what happened, what it cost, and where it failed |
+| Core term | What it is, in plain language | How A3 uses it | What it is not |
+|---|---|---|---|
+| **MCP (Model Context Protocol)** | A standard adapter that connects an agent to external tools or data | Give a server only one demo folder or read-only tool | Not automatically safe; permissions still decide what it can touch |
+| **CI (Continuous Integration)** | A checkpoint that runs automatically when a push or PR appears | Run one read-only review automatically on a test PR | Not an auto-merge button that skips human review |
+| **Observability** | A receipt plus dashcam recording that keeps what happened | Record provider, model, usage, time, result, and failure reason | Not just one total-token number or a guess about unavailable cost |
 
 The three terms appear together but are not the same thing: MCP connects tools, CI decides when to run automatically, and observability records the evidence after a run.
 
@@ -44,27 +44,45 @@ The three terms appear together but are not the same thing: MCP connects tools, 
 If A2’s `review-changes` Skill cannot yet reliably output `PASS` or concrete issues, fix that first before starting A3.
 </details>
 
+## 📚 Required Reading
+
 <details markdown="1">
 <summary>Expand for required reading and reading order (checked 2026-08-27 UTC)</summary>
 
 1. First read [MCP Connect to local servers](https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers) to learn that a server can receive only the paths you give it.
 2. Then read [GitHub Actions Security Hardening](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions) to understand least privilege and untrusted PRs first.
 3. Choose one CI path:
-   - Claude Code: [official GitHub Actions documentation](https://docs.anthropic.com/en/docs/claude-code/github-actions)
-   - Codex: [official GitHub Action documentation](https://developers.openai.com/codex/github-action)
+   - Claude Code: [official GitHub Actions documentation](https://code.claude.com/docs/en/github-actions)
+   - Codex: [official GitHub Action documentation](https://learn.chatgpt.com/docs/github-action)
 4. When you need trace, eval, or complete production theory, continue to [Stage 7](../../stages/07-multi-agent-production.en.md) and [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.en.md).
 
 The check date means the material was checked that day; it does not mean it will never change.
 </details>
 
-## Hands-on exercises
+## 🛠 Hands-on Exercises
 
 <a id="cli-9"></a>
 ### Hands-on exercise CLI-9: Connect only one MCP server
 
 **Outcome:** the agent can read a newly created demo folder, but it has not received access to your entire home directory, disk, real project, or secrets.
 
-First create an empty `a3-mcp-demo` folder and put a `hello.txt` file inside it. When connecting the official filesystem reference server to your CLI, **pass only the absolute path to this folder**.
+First copy the command for your computer to create `a3-mcp-demo/hello.txt`.
+
+PowerShell:
+
+```powershell
+New-Item -ItemType Directory -Force -Path a3-mcp-demo | Out-Null
+Set-Content -LiteralPath a3-mcp-demo/hello.txt -Value 'hello from A3'
+```
+
+macOS/Linux:
+
+```bash
+mkdir -p a3-mcp-demo
+printf 'hello from A3\n' > a3-mcp-demo/hello.txt
+```
+
+When connecting the official filesystem reference server to your CLI, **pass only the absolute path to this folder**.
 
 When it works, the agent can read `hello.txt`; when asked to read a file outside the allowed scope, it should fail or ask you to grant authorization again.
 
@@ -89,7 +107,7 @@ To read PRs or issues, use GitHub’s official [`github/github-mcp-server`](http
 
 **Outcome:** the test PR gets a review result; a person still decides whether to edit, merge, or deploy.
 
-Choose Anthropic’s [`claude-code-action`](https://github.com/anthropics/claude-code-action) or OpenAI’s [`codex-action`](https://github.com/openai/codex-action). For the first round, run it only in a demo repo and branch you control, reusing A2’s [`review-changes` Skill](A2-cli-workflow.en.md#hands-on-exercise-cli-6-turn-a-repeated-review-into-a-skill).
+Choose Anthropic’s [`claude-code-action`](https://github.com/anthropics/claude-code-action) or OpenAI’s [`codex-action`](https://github.com/openai/codex-action). For the first round, run it only in a demo repo and branch you control, reusing A2’s [`review-changes` Skill](A2-cli-workflow.en.md#cli-6).
 
 The success standard is not “finish within a few minutes.” It is that the workflow finishes successfully and leaves a readable result in a PR comment, job summary, or artifact.
 
@@ -187,7 +205,51 @@ For other situations, remember one action and keep the theory in [Stage 7.5](../
 Further reading: [`resources/subagent-cookbook.en.md`](../../resources/subagent-cookbook.en.md) and [Stage 5.5](../../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature). These pages will be rechecked in their own layer later; before using agent names, follow the official documentation and the actual list available to you.
 </details>
 
-## Track A completion check
+## 🎯 Curated Projects
+
+Editorial ratings are learning-map guidance, not GitHub stars. `⭐⭐⭐⭐⭐` marks a must-read or must-run entry for this path; it does not mean the tool is always safe or that production can skip its own threat model.
+
+<details markdown="1">
+<summary>Expand the complete learning resource table (18 items, checked 2026-08-27 UTC)</summary>
+
+<table>
+<thead>
+<tr><th scope="col">Type</th><th scope="col">Resource</th><th scope="col">Read first</th><th scope="col">When to use</th><th scope="col">Rating</th><th scope="col">Source</th></tr>
+</thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Safe MCP connections</th><td>MCP Connect to local servers</td><td>Allowed directories and explicit authorization</td><td>Connecting a local server for the first time</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">Official docs</a></td></tr>
+<tr><td>MCP Security Best Practices</td><td>Least privilege, scopes, and token handling</td><td>Before connecting an account or remote service</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">Official docs</a></td></tr>
+<tr><td><code>github/github-mcp-server</code></td><td><code>--read-only</code>, toolsets, and tools allow-list</td><td>Reading GitHub PRs/issues</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/github/github-mcp-server">GitHub repo</a></td></tr>
+<tr><td><code>modelcontextprotocol/servers</code></td><td>Reference implementations and the not-production-ready warning</td><td>Learning the protocol or reading example code</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">CI and PR review</th><td>GitHub Actions Secure Use</td><td>Least privilege, untrusted input, and pinning SHAs</td><td>Before writing any workflow with secrets</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://docs.github.com/en/actions/reference/security/secure-use">Official docs</a></td></tr>
+<tr><td>Claude Code GitHub Actions</td><td>Official setup, permissions, and troubleshooting</td><td>Running Claude Code in CI</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/github-actions">Official docs</a></td></tr>
+<tr><td><code>anthropics/claude-code-action</code></td><td>Official examples and action inputs</td><td>Starting from an executable template</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></td></tr>
+<tr><td>Codex GitHub Action</td><td>Permission profile, trigger, and output</td><td>Running Codex in CI</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/github-action">OpenAI official docs</a></td></tr>
+<tr><td><code>openai/codex-action</code></td><td><code>:read-only</code> and safety strategy</td><td>Checking the latest inputs and examples</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/openai/codex-action">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Observability and evaluation</th><td><code>langfuse/langfuse</code></td><td>Traces, usage, and eval</td><td>Viewing multiple runs together</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/langfuse/langfuse">GitHub repo</a></td></tr>
+<tr><td><code>Arize-ai/phoenix</code></td><td>Tracing and evaluation</td><td>Observing an AI system with open source</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></td></tr>
+<tr><td><code>Helicone/helicone</code></td><td>Proxy/gateway data flow and privacy boundary</td><td>Collecting request records from a gateway</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/Helicone/helicone">GitHub repo</a></td></tr>
+<tr><td><code>promptfoo/promptfoo</code></td><td>Eval cases and CI regression</td><td>Comparing whether a change made things worse</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">Sharing Skills/plugins</th><td>Claude Code Plugins</td><td>Plugin structure, installation, and marketplace</td><td>Packaging for Claude Code</td><td>⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/plugins">Official docs</a></td></tr>
+<tr><td><code>anthropics/claude-plugins-official</code></td><td>Officially managed plugin directory</td><td>Finding readable official examples</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers-marketplace</code></td><td>Minimal marketplace shell</td><td>Understanding curator-only structure</td><td>⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Directories and complete examples</th><td><code>wong2/awesome-mcp-servers</code></td><td>Classify first, then check sources and permissions one by one</td><td>When official resources lack the server you need</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers</code></td><td>How Skills, rules, and workflows fit together</td><td>Looking at a complete example after the minimal workflow works</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
+</tbody>
+</table>
+
+The directory only helps you “find candidates”; it does not guarantee a candidate is safe. Before installing any MCP, Action, Skill, or plugin, check its source, permissions, recent maintenance, and removal method again.
+</details>
+
+## ✅ Track A Completion Check
 
 - [ ] MCP received only the demo folder or a minimal read-only toolset.
 - [ ] The PR workflow only gives feedback; it does not auto-merge, push, or deploy.
@@ -196,43 +258,3 @@ Further reading: [`resources/subagent-cookbook.en.md`](../../resources/subagent-
 - [ ] A teammate can run the Skill in a clean demo repo, and `git status` shows no unexpected changes afterward.
 
 Once all five are true, Track A is complete. Then choose by purpose: return to [Stage 3](../../stages/03-tool-use-and-hello-agent.en.md) to build an application; go to [Stage 7](../../stages/07-multi-agent-production.en.md) to study production systems; or read [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.en.md) to understand agent concepts more deeply.
-
-<details markdown="1">
-<summary>Expand the complete learning resource table (18 items, checked 2026-08-27 UTC)</summary>
-
-<table>
-<thead>
-<tr><th scope="col">Type</th><th scope="col">Resource</th><th scope="col">Read first</th><th scope="col">When to use</th><th scope="col">Source</th></tr>
-</thead>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4">Safe MCP connections</th><td>MCP Connect to local servers</td><td>Allowed directories and explicit authorization</td><td>Connecting a local server for the first time</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">Official docs</a></td></tr>
-<tr><td>MCP Security Best Practices</td><td>Least privilege, scopes, and token handling</td><td>Before connecting an account or remote service</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">Official docs</a></td></tr>
-<tr><td><code>github/github-mcp-server</code></td><td><code>--read-only</code>, toolsets, and tools allow-list</td><td>Reading GitHub PRs/issues</td><td><a href="https://github.com/github/github-mcp-server">GitHub repo</a></td></tr>
-<tr><td><code>modelcontextprotocol/servers</code></td><td>Reference implementations and the not-production-ready warning</td><td>Learning the protocol or reading example code</td><td><a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="5">CI and PR review</th><td>GitHub Actions Security Hardening</td><td>Least privilege, untrusted input, and pinning SHAs</td><td>Before writing any workflow with secrets</td><td><a href="https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions">Official docs</a></td></tr>
-<tr><td>Claude Code GitHub Actions</td><td>Official setup, permissions, and troubleshooting</td><td>Running Claude Code in CI</td><td><a href="https://docs.anthropic.com/en/docs/claude-code/github-actions">Official docs</a></td></tr>
-<tr><td><code>anthropics/claude-code-action</code></td><td>Official examples and action inputs</td><td>Starting from an executable template</td><td><a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></td></tr>
-<tr><td>Codex GitHub Action</td><td>Permission profile, trigger, and output</td><td>Running Codex in CI</td><td><a href="https://developers.openai.com/codex/github-action">OpenAI official docs</a></td></tr>
-<tr><td><code>openai/codex-action</code></td><td><code>:read-only</code> and safety strategy</td><td>Checking the latest inputs and examples</td><td><a href="https://github.com/openai/codex-action">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4">Observability and evaluation</th><td><code>langfuse/langfuse</code></td><td>Traces, usage, and eval</td><td>Viewing multiple runs together</td><td><a href="https://github.com/langfuse/langfuse">GitHub repo</a></td></tr>
-<tr><td><code>Arize-ai/phoenix</code></td><td>Tracing and evaluation</td><td>Observing an AI system with open source</td><td><a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></td></tr>
-<tr><td><code>Helicone/helicone</code></td><td>Proxy/gateway data flow and privacy boundary</td><td>Collecting request records from a gateway</td><td><a href="https://github.com/Helicone/helicone">GitHub repo</a></td></tr>
-<tr><td><code>promptfoo/promptfoo</code></td><td>Eval cases and CI regression</td><td>Comparing whether a change made things worse</td><td><a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="3">Sharing Skills/plugins</th><td>Claude Code Plugins</td><td>Plugin structure, installation, and marketplace</td><td>Packaging for Claude Code</td><td><a href="https://code.claude.com/docs/en/plugins">Official docs</a></td></tr>
-<tr><td><code>anthropics/claude-plugins-official</code></td><td>Officially managed plugin directory</td><td>Finding readable official examples</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers-marketplace</code></td><td>Minimal marketplace shell</td><td>Understanding curator-only structure</td><td><a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="2">Directories and complete examples</th><td><code>wong2/awesome-mcp-servers</code></td><td>Classify first, then check sources and permissions one by one</td><td>When official resources lack the server you need</td><td><a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers</code></td><td>How Skills, rules, and workflows fit together</td><td>Looking at a complete example after the minimal workflow works</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
-</tbody>
-</table>
-
-The directory only helps you “find candidates”; it does not guarantee a candidate is safe. Before installing any MCP, Action, Skill, or plugin, check its source, permissions, recent maintenance, and removal method again.
-</details>

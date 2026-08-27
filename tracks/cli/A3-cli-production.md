@@ -6,22 +6,22 @@
 
 這一站只做一件事：**讓 CLI agent 在測試用 PR 做一個只讀檢查。它可以提出意見，但不能自己合併、部署或取得多餘權限。**
 
-## 學習目標
+## 📌 學習目標
 
 完成後，你可以：
 
-- 只把一個安全範圍交給 MCP server。
-- 讓 CI 在 PR 自動產生一份可檢查的建議。
-- 看懂一次執行留下的 usage、時間與結果。
+- 只把一個安全範圍交給 **MCP** server。
+- 讓 **CI** 在 PR 自動產生一份可檢查的建議。
+- 用 **Observability** 看懂一次執行留下的 usage、時間與結果。
 - 把 A2 的 Skill 交給隊友，並讓對方安全地重跑。
 
-## 三個詞先分清
+## 🧩 先認識三個核心詞
 
-| 詞 | 白話說法 | 正確意思 |
-|---|---|---|
-| **MCP** | 像轉接頭 | 讓 agent 連到外部工具或資料；能碰什麼取決於你給的權限 |
-| **CI** | 像每次交作業都會出現的檢查站 | push 或 PR 發生時，自動執行固定工作 |
-| **Observability** | 像收據加行車紀錄 | 留下做了什麼、花了多少、哪裡失敗的紀錄 |
+| 核心詞 | 它是什麼、像什麼 | A3 怎麼用 | 不是什麼 |
+|---|---|---|---|
+| **MCP（Model Context Protocol）** | 讓 agent 連外部工具或資料的標準轉接頭 | 只把一個 demo 資料夾或唯讀工具交給 server | 不是自動安全；能碰什麼仍取決於權限 |
+| **CI（Continuous Integration）** | push 或 PR 出現時會自動工作的檢查站 | 讓測試 PR 自動跑一次只讀 review | 不是可以跳過人類 review 的 auto-merge 按鈕 |
+| **Observability（觀測與紀錄）** | 像收據加行車紀錄，留下發生過的事 | 記下 provider、model、usage、時間、結果與失敗原因 | 不是只看一個總 token 或猜出拿不到的成本 |
 
 三個詞會一起出現，但不是同一件事：MCP 負責「接工具」，CI 負責「何時自動跑」，observability 負責「跑完留下什麼證據」。
 
@@ -44,27 +44,45 @@
 如果 A2 的 `review-changes` Skill 還不能穩定輸出 `PASS` 或具體問題，先回去修好再進 A3。
 </details>
 
+## 📚 必修閱讀
+
 <details markdown="1">
 <summary>展開必讀資料與閱讀順序（查核於 2026-08-27 UTC）</summary>
 
 1. 先看 [MCP Connect to local servers](https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers)，知道 server 只能拿到你交給它的路徑。
 2. 再看 [GitHub Actions Security Hardening](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)，先理解 least privilege 與不可信 PR。
 3. 選一條 CI 路徑：
-   - Claude Code：[官方 GitHub Actions 文件](https://docs.anthropic.com/en/docs/claude-code/github-actions)
-   - Codex：[官方 GitHub Action 文件](https://developers.openai.com/codex/github-action)
+   - Claude Code：[官方 GitHub Actions 文件](https://code.claude.com/docs/en/github-actions)
+   - Codex：[官方 GitHub Action 文件](https://learn.chatgpt.com/docs/github-action)
 4. 需要 trace、eval 或完整 production 理論時，再進 [Stage 7](../../stages/07-multi-agent-production.md) 與 [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.md)。
 
 查核日期只代表上面資料在當天已檢查，不代表它們永遠不會改。
 </details>
 
-## 動手練習
+## 🛠 動手練習
 
 <a id="cli-9"></a>
 ### 動手練習 CLI-9：只連一個 MCP server
 
 **成果：** agent 能讀到一個新建的 demo 資料夾，但沒有取得整個 home、磁碟、真正專案或 secrets。
 
-先建立空的 `a3-mcp-demo` 資料夾，裡面放一個 `hello.txt`。把官方 filesystem reference server 接到你的 CLI 時，**只傳入這個資料夾的絕對路徑**。
+先複製適合你電腦的指令，建立 `a3-mcp-demo/hello.txt`。
+
+PowerShell：
+
+```powershell
+New-Item -ItemType Directory -Force -Path a3-mcp-demo | Out-Null
+Set-Content -LiteralPath a3-mcp-demo/hello.txt -Value 'hello from A3'
+```
+
+macOS／Linux：
+
+```bash
+mkdir -p a3-mcp-demo
+printf 'hello from A3\n' > a3-mcp-demo/hello.txt
+```
+
+把官方 filesystem reference server 接到你的 CLI 時，**只傳入這個資料夾的絕對路徑**。
 
 成功時，agent 能讀出 `hello.txt`；要求它讀取範圍外的檔案時，應該失敗或要求你重新授權。
 
@@ -89,7 +107,7 @@
 
 **成果：** 測試用 PR 會留下 review 結果；人仍決定是否修改、合併或部署。
 
-選 Anthropic 的 [`claude-code-action`](https://github.com/anthropics/claude-code-action) 或 OpenAI 的 [`codex-action`](https://github.com/openai/codex-action)。第一輪只在自己控制的 demo repo 與 branch 執行，沿用 A2 的 [`review-changes` Skill](A2-cli-workflow.md#動手練習-cli-6把重複-review-做成-skill)。
+選 Anthropic 的 [`claude-code-action`](https://github.com/anthropics/claude-code-action) 或 OpenAI 的 [`codex-action`](https://github.com/openai/codex-action)。第一輪只在自己控制的 demo repo 與 branch 執行，沿用 A2 的 [`review-changes` Skill](A2-cli-workflow.md#cli-6)。
 
 成功標準不是「幾分鐘內完成」，而是 workflow 成功結束，並以 PR comment、job summary 或 artifact 留下可閱讀的結果。
 
@@ -187,7 +205,51 @@ Skill 的核心意思可以共用，但資料夾、權限、frontmatter 與安�
 延伸閱讀：[`resources/subagent-cookbook.md`](../../resources/subagent-cookbook.md)與 [Stage 5.5](../../stages/05-claude-code-ecosystem.md#55--subagentsclaude-code-原生-multi-agent-機制-2025-新功能)。這些頁面之後會在自己的 layer 重新查證；使用 agent 名稱前仍以你當下的官方文件與實際清單為準。
 </details>
 
-## Track A 完成檢查
+## 🎯 精選 Projects
+
+推薦度是本學習地圖的編輯建議，不是 GitHub stars。`⭐⭐⭐⭐⭐` 表示這條學習路徑的必讀／必做入口；它不代表工具永遠安全，也不代表 production 可以跳過自己的 threat model。
+
+<details markdown="1">
+<summary>展開完整學習資源表（18 筆，查核於 2026-08-27 UTC）</summary>
+
+<table>
+<thead>
+<tr><th scope="col">類型</th><th scope="col">資源</th><th scope="col">先看什麼</th><th scope="col">何時使用</th><th scope="col">推薦度</th><th scope="col">來源</th></tr>
+</thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">安全連接 MCP</th><td>MCP Connect to local servers</td><td>allowed directories 與明確授權</td><td>第一次接本機 server</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">官方文件</a></td></tr>
+<tr><td>MCP Security Best Practices</td><td>least privilege、scope 與 token handling</td><td>要連帳號或遠端服務前</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">官方文件</a></td></tr>
+<tr><td><code>github/github-mcp-server</code></td><td><code>--read-only</code>、toolsets 與 tools allow-list</td><td>要讀 GitHub PR／issue</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/github/github-mcp-server">GitHub repo</a></td></tr>
+<tr><td><code>modelcontextprotocol/servers</code></td><td>reference implementation 與非 production-ready 警告</td><td>學協定或讀範例程式</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">CI 與 PR review</th><td>GitHub Actions Secure Use</td><td>最小權限、不可信輸入、pin SHA</td><td>寫任何有 secrets 的 workflow 前</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://docs.github.com/en/actions/reference/security/secure-use">官方文件</a></td></tr>
+<tr><td>Claude Code GitHub Actions</td><td>官方 setup、permissions 與 troubleshooting</td><td>使用 Claude Code 跑 CI</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/github-actions">官方文件</a></td></tr>
+<tr><td><code>anthropics/claude-code-action</code></td><td>官方範例與 action inputs</td><td>從可執行範本開始</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></td></tr>
+<tr><td>Codex GitHub Action</td><td>permission profile、trigger 與輸出</td><td>使用 Codex 跑 CI</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/github-action">OpenAI 官方文件</a></td></tr>
+<tr><td><code>openai/codex-action</code></td><td><code>:read-only</code> 與 safety strategy</td><td>核對最新 inputs 與範例</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/openai/codex-action">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">觀察與評估</th><td><code>langfuse/langfuse</code></td><td>traces、usage 與 eval</td><td>想把多次執行放在一起看</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/langfuse/langfuse">GitHub repo</a></td></tr>
+<tr><td><code>Arize-ai/phoenix</code></td><td>tracing 與 evaluation</td><td>想用開放原始碼觀察 AI 系統</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></td></tr>
+<tr><td><code>Helicone/helicone</code></td><td>proxy／gateway 的資料流與隱私邊界</td><td>想從 gateway 收集 request 紀錄</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/Helicone/helicone">GitHub repo</a></td></tr>
+<tr><td><code>promptfoo/promptfoo</code></td><td>eval cases 與 CI regression</td><td>要比較改動前後是否退步</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">分享 Skill／plugin</th><td>Claude Code Plugins</td><td>plugin 結構、安裝與 marketplace</td><td>要替 Claude Code 打包</td><td>⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/plugins">官方文件</a></td></tr>
+<tr><td><code>anthropics/claude-plugins-official</code></td><td>官方管理的 plugin 目錄</td><td>找可讀的正式範例</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers-marketplace</code></td><td>最小 marketplace 外殼</td><td>理解 curator-only 結構</td><td>⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">目錄與完整範例</th><td><code>wong2/awesome-mcp-servers</code></td><td>先分類，再逐一查來源與權限</td><td>官方資源沒有需要的 server 時</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></td></tr>
+<tr><td><code>obra/superpowers</code></td><td>Skill、規則與 workflow 如何組在一起</td><td>完成最小流程後看完整例子</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
+</tbody>
+</table>
+
+目錄只幫你「找到候選項」，不替候選項保證安全。安裝任何 MCP、Action、Skill 或 plugin 前，都要再看 source、權限、最近維護狀態與移除方法。
+</details>
+
+## ✅ Track A 完成檢查
 
 - [ ] MCP 只拿到 demo 資料夾或最小 read-only toolset。
 - [ ] PR workflow 只提出意見，沒有 auto-merge、push 或 deploy。
@@ -196,43 +258,3 @@ Skill 的核心意思可以共用，但資料夾、權限、frontmatter 與安�
 - [ ] 隊友能在乾淨 demo repo 執行 Skill，之後 `git status` 沒有非預期修改。
 
 五項都做到，就完成 Track A。接著依目的選路：想做應用，回到 [Stage 3](../../stages/03-tool-use-and-hello-agent.md)；想研究 production 系統，進 [Stage 7](../../stages/07-multi-agent-production.md)；想理解更深的 agent 概念，再讀 [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.md)。
-
-<details markdown="1">
-<summary>展開完整學習資源表（18 筆，查核於 2026-08-27 UTC）</summary>
-
-<table>
-<thead>
-<tr><th scope="col">類型</th><th scope="col">資源</th><th scope="col">先看什麼</th><th scope="col">何時使用</th><th scope="col">來源</th></tr>
-</thead>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4">安全連接 MCP</th><td>MCP Connect to local servers</td><td>allowed directories 與明確授權</td><td>第一次接本機 server</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">官方文件</a></td></tr>
-<tr><td>MCP Security Best Practices</td><td>least privilege、scope 與 token handling</td><td>要連帳號或遠端服務前</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">官方文件</a></td></tr>
-<tr><td><code>github/github-mcp-server</code></td><td><code>--read-only</code>、toolsets 與 tools allow-list</td><td>要讀 GitHub PR／issue</td><td><a href="https://github.com/github/github-mcp-server">GitHub repo</a></td></tr>
-<tr><td><code>modelcontextprotocol/servers</code></td><td>reference implementation 與非 production-ready 警告</td><td>學協定或讀範例程式</td><td><a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="5">CI 與 PR review</th><td>GitHub Actions Security Hardening</td><td>最小權限、不可信輸入、pin SHA</td><td>寫任何有 secrets 的 workflow 前</td><td><a href="https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions">官方文件</a></td></tr>
-<tr><td>Claude Code GitHub Actions</td><td>官方 setup、permissions 與 troubleshooting</td><td>使用 Claude Code 跑 CI</td><td><a href="https://docs.anthropic.com/en/docs/claude-code/github-actions">官方文件</a></td></tr>
-<tr><td><code>anthropics/claude-code-action</code></td><td>官方範例與 action inputs</td><td>從可執行範本開始</td><td><a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></td></tr>
-<tr><td>Codex GitHub Action</td><td>permission profile、trigger 與輸出</td><td>使用 Codex 跑 CI</td><td><a href="https://developers.openai.com/codex/github-action">OpenAI 官方文件</a></td></tr>
-<tr><td><code>openai/codex-action</code></td><td><code>:read-only</code> 與 safety strategy</td><td>核對最新 inputs 與範例</td><td><a href="https://github.com/openai/codex-action">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4">觀察與評估</th><td><code>langfuse/langfuse</code></td><td>traces、usage 與 eval</td><td>想把多次執行放在一起看</td><td><a href="https://github.com/langfuse/langfuse">GitHub repo</a></td></tr>
-<tr><td><code>Arize-ai/phoenix</code></td><td>tracing 與 evaluation</td><td>想用開放原始碼觀察 AI 系統</td><td><a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></td></tr>
-<tr><td><code>Helicone/helicone</code></td><td>proxy／gateway 的資料流與隱私邊界</td><td>想從 gateway 收集 request 紀錄</td><td><a href="https://github.com/Helicone/helicone">GitHub repo</a></td></tr>
-<tr><td><code>promptfoo/promptfoo</code></td><td>eval cases 與 CI regression</td><td>要比較改動前後是否退步</td><td><a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="3">分享 Skill／plugin</th><td>Claude Code Plugins</td><td>plugin 結構、安裝與 marketplace</td><td>要替 Claude Code 打包</td><td><a href="https://code.claude.com/docs/en/plugins">官方文件</a></td></tr>
-<tr><td><code>anthropics/claude-plugins-official</code></td><td>官方管理的 plugin 目錄</td><td>找可讀的正式範例</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers-marketplace</code></td><td>最小 marketplace 外殼</td><td>理解 curator-only 結構</td><td><a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="2">目錄與完整範例</th><td><code>wong2/awesome-mcp-servers</code></td><td>先分類，再逐一查來源與權限</td><td>官方資源沒有需要的 server 時</td><td><a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers</code></td><td>Skill、規則與 workflow 如何組在一起</td><td>完成最小流程後看完整例子</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
-</tbody>
-</table>
-
-目錄只幫你「找到候選項」，不替候選項保證安全。安裝任何 MCP、Action、Skill 或 plugin 前，都要再看 source、權限、最近維護狀態與移除方法。
-</details>
