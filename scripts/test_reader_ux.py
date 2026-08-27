@@ -43,6 +43,7 @@ def _config(
     parity_literals: str = "",
     parity_resource_ratings: bool = False,
     core_terms: bool = False,
+    section_order: str = "",
 ) -> str:
     group_line = f"    resource_group_rowspans: [{groups}]\n" if groups else ""
     details_line = f"    required_details_count: {details}\n" if details is not None else ""
@@ -67,6 +68,9 @@ def _config(
 """
     core_sections = ""
     core_config = ""
+    order_line = (
+        f"    visible_section_order: [{section_order}]\n" if section_order else ""
+    )
     if core_terms:
         core_sections = """\
       core-terms:
@@ -110,7 +114,7 @@ pages:
       en: {limit}
       zh-Hans: {limit}
     max_open_details: {opens}
-{details_line}{forbidden_lines}{include_code_line}{parity_lines}    required_visible_sections:
+{details_line}{forbidden_lines}{include_code_line}{parity_lines}{order_line}    required_visible_sections:
       start:
         zh-TW: {{heading: {heading}, anchor: {anchor}}}
         en: {{heading: {heading}, anchor: {anchor}}}
@@ -452,6 +456,24 @@ def test_required_heading_match_is_exact_not_a_substring() -> None:
 def test_required_anchor_must_match_heading_slug() -> None:
     rc, out = _run("ok", config=_config(anchor="old-start-anchor"))
     assert rc == 1 and "anchor is" in out, out
+
+
+def test_required_visible_section_order_is_blocking() -> None:
+    body = (
+        "## Exercise 1\n\nRun it.\n\n"
+        "## Core Terms\n\n"
+        "### **Token**\nA small text piece that the model reads and counts.\n\n"
+        "### **Context Window**\nThe model's desk: everything for this turn must fit on it.\n"
+    )
+    rc, out = _run(
+        body,
+        config=_config(
+            limit=2000,
+            core_terms=True,
+            section_order="start, core-terms, exercise-1",
+        ),
+    )
+    assert rc == 1 and "required visible sections are out of order" in out, out
 
 
 def test_missing_mirror_fails() -> None:

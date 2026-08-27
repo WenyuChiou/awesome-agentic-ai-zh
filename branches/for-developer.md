@@ -139,7 +139,7 @@ jobs:
 | Tier | 工具 | 適合誰 | 學習成本 |
 |---|---|---|---|
 | **Tier 0** | Cursor / Copilot / Claude.ai | IDE 內 chat、autocomplete、不自己寫 agent | 0（會用編輯器就行） |
-| **Tier 1** | Claude Code / Cline / OpenCode + `CLAUDE.md` | CLI 接 file system、human-in-the-loop | 1-2 天上手 |
+| **Tier 1** | Claude Code（`CLAUDE.md`）／Cline／OpenCode V2（`AGENTS.md`） | CLI 接 file system、human-in-the-loop | 1-2 天上手 |
 | **Tier 2** | 自寫 Skills + MCP server | 把 dev workflow 包成 skill 給團隊共用 | 1 週 setup |
 | **Tier 3** | CI 自動跑 agent + production observability | 進到 [Stage 7](../stages/07-multi-agent-production.md) 領域 | 數週、需 governance |
 

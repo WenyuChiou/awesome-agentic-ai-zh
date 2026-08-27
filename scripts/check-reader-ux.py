@@ -571,6 +571,24 @@ def _load_config(path: Path) -> dict[str, Any]:
                         f"{page_id}.{section_id}.{locale} heading/anchor cannot be empty"
                     )
 
+        visible_order = page.get("visible_section_order")
+        if visible_order is not None:
+            if (
+                not isinstance(visible_order, list)
+                or len(visible_order) < 2
+                or any(not isinstance(value, str) or not value for value in visible_order)
+                or len(visible_order) != len(set(visible_order))
+            ):
+                raise ValueError(
+                    f"{page_id}.visible_section_order must be a unique string list with at least two items"
+                )
+            unknown_sections = set(visible_order) - set(sections)
+            if unknown_sections:
+                raise ValueError(
+                    f"{page_id}.visible_section_order has unknown section ids: "
+                    f"{sorted(unknown_sections)}"
+                )
+
         core_terms = page.get("core_terms")
         if core_terms is not None:
             if not isinstance(core_terms, dict) or set(core_terms) != {
@@ -737,6 +755,35 @@ def check(config_path: Path) -> list[str]:
                     failures.append(
                         f"{label}: heading {section_id!r} anchor is {exact_matches}; "
                         f"expected {expected_anchor!r}"
+                    )
+
+            visible_order = page.get("visible_section_order") or []
+            if visible_order:
+                ordered_positions: list[int] = []
+                for section_id in visible_order:
+                    identity = sections[section_id][locale]
+                    wanted = _plain(identity["heading"])
+                    expected_anchor = identity["anchor"]
+                    position = next(
+                        (
+                            index
+                            for index, (heading, anchor) in enumerate(
+                                metrics.visible_headings_outside_details
+                            )
+                            if heading == wanted and anchor == expected_anchor
+                        ),
+                        None,
+                    )
+                    if position is None:
+                        break
+                    ordered_positions.append(position)
+                if (
+                    len(ordered_positions) == len(visible_order)
+                    and ordered_positions != sorted(ordered_positions)
+                ):
+                    failures.append(
+                        f"{label}: required visible sections are out of order; "
+                        f"expected {' -> '.join(visible_order)}"
                     )
 
             core_terms = page.get("core_terms")

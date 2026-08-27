@@ -5,15 +5,17 @@
 
 跑法：
     pip install -r requirements.txt
-    export ANTHROPIC_API_KEY=sk-ant-...
+    $env:ANTHROPIC_API_KEY = "your-key"
     python starter_anthropic.py
 
-預算：每次 ≈ $0.005（claude-haiku-4-5、5 輪 messages 累積）。
-Ollama 版本見 starter.py（本機 $0、但小 model 在多步任務上可能漏步）。
+預算：每次先保留 $0.05；實際費用依 token 數與累積 messages 計算。
+Ollama 版本見 starter.py（API 費 $0）。
 """
 
 from __future__ import annotations
 
+import json
+import math
 import os
 import sys
 from typing import Any
@@ -23,7 +25,37 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import anthropic
 
-MODEL = os.environ.get("MODEL", "claude-haiku-4-5")
+MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
+MAX_ABS_NUMBER = 1_000_000_000_000.0
+
+
+class ToolExecutionError(ValueError):
+    """A tool error that the loop should return to the model as data."""
+
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(message)
+        self.code = code
+
+
+def bounded_number(value: float, field: str) -> float:
+    """Accept only ordinary finite numbers that stay inside the lesson's limit."""
+    if isinstance(value, int) and abs(value) > MAX_ABS_NUMBER:
+        raise ToolExecutionError("number_too_large", f"{field} is outside the allowed range")
+    try:
+        number = float(value)
+    except OverflowError as exc:
+        raise ToolExecutionError(
+            "number_too_large", f"{field} is outside the allowed range"
+        ) from exc
+    if not math.isfinite(number):
+        raise ToolExecutionError("non_finite_number", f"{field} must be finite")
+    if abs(number) > MAX_ABS_NUMBER:
+        raise ToolExecutionError("number_too_large", f"{field} is outside the allowed range")
+    return number
+
+
+def error_payload(code: str, message: str) -> str:
+    return json.dumps({"error": {"code": code, "message": message}}, ensure_ascii=False)
 
 
 def lookup_population(city: str) -> str:
@@ -32,23 +64,27 @@ def lookup_population(city: str) -> str:
 
 
 def divide(a: float, b: float) -> str:
-    b = float(b)
-    return "0" if b == 0 else str(float(a) / b)
+    numerator = bounded_number(a, "a")
+    denominator = bounded_number(b, "b")
+    if denominator == 0:
+        raise ToolExecutionError("division_by_zero", "b must not be zero")
+    return str(bounded_number(numerator / denominator, "result"))
 
 
 def to_percentage(ratio: float) -> str:
-    return f"{float(ratio) * 100:.2f}"
+    result = bounded_number(bounded_number(ratio, "ratio") * 100, "result")
+    return f"{result:.2f}"
 
 
 def round_int(x: float) -> str:
-    return str(round(float(x)))
+    return str(round(bounded_number(x, "x")))
 
 
 TOOLS_SPEC = [
-    {"name": "lookup_population", "description": "Return the population for a known city.", "input_schema": {"type": "object", "properties": {"city": {"type": "string"}}, "required": ["city"]}},
-    {"name": "divide", "description": "Divide a by b. Returns 0 instead of crashing when b is zero.", "input_schema": {"type": "object", "properties": {"a": {"type": "number"}, "b": {"type": "number"}}, "required": ["a", "b"]}},
-    {"name": "to_percentage", "description": "Convert a ratio such as 0.31 into a percentage number.", "input_schema": {"type": "object", "properties": {"ratio": {"type": "number"}}, "required": ["ratio"]}},
-    {"name": "round_int", "description": "Round a number to the nearest integer.", "input_schema": {"type": "object", "properties": {"x": {"type": "number"}}, "required": ["x"]}},
+    {"name": "lookup_population", "description": "Return the population for a known city.", "input_schema": {"type": "object", "properties": {"city": {"type": "string"}}, "required": ["city"], "additionalProperties": False}},
+    {"name": "divide", "description": "Divide a by b. Returns a structured error when b is zero.", "input_schema": {"type": "object", "properties": {"a": {"type": "number"}, "b": {"type": "number"}}, "required": ["a", "b"], "additionalProperties": False}},
+    {"name": "to_percentage", "description": "Convert a ratio such as 0.31 into a percentage number.", "input_schema": {"type": "object", "properties": {"ratio": {"type": "number"}}, "required": ["ratio"], "additionalProperties": False}},
+    {"name": "round_int", "description": "Round a number to the nearest integer.", "input_schema": {"type": "object", "properties": {"x": {"type": "number"}}, "required": ["x"], "additionalProperties": False}},
 ]
 
 TOOL_IMPL = {
@@ -57,6 +93,43 @@ TOOL_IMPL = {
     "to_percentage": lambda i: to_percentage(i["ratio"]),
     "round_int": lambda i: round_int(i["x"]),
 }
+
+TOOL_ARGUMENTS = {
+    "lookup_population": {"city": "string"},
+    "divide": {"a": "number", "b": "number"},
+    "to_percentage": {"ratio": "number"},
+    "round_int": {"x": "number"},
+}
+
+
+def execute_tool(name: str, arguments: Any) -> tuple[dict, str, bool]:
+    """Validate an untrusted tool call before dispatch."""
+    if name not in TOOL_IMPL:
+        return {}, f"error: tool not allowed: {name}", True
+    if not isinstance(arguments, dict):
+        return {}, "error: arguments must be an object", True
+    args = dict(arguments)
+    expected = TOOL_ARGUMENTS[name]
+    if set(args) != set(expected):
+        return {}, "error: arguments contain unexpected or missing fields", True
+    for field, kind in expected.items():
+        value = args[field]
+        if kind == "string":
+            if not isinstance(value, str) or not value.strip():
+                return {}, f"error: {field} must be a non-empty string", True
+        elif not isinstance(value, (int, float)) or isinstance(value, bool):
+            return {}, f"error: {field} must be a number", True
+        else:
+            try:
+                bounded_number(value, field)
+            except ToolExecutionError as exc:
+                return args, error_payload(exc.code, str(exc)), True
+    try:
+        return args, TOOL_IMPL[name](args), False
+    except ToolExecutionError as exc:
+        return args, error_payload(exc.code, str(exc)), True
+    except (KeyError, OverflowError, TypeError, ValueError) as exc:
+        return args, f"error: invalid arguments: {exc}", True
 
 
 def react_loop(question: str, max_iter: int = 8, client: Any = None) -> dict:
@@ -68,15 +141,25 @@ def react_loop(question: str, max_iter: int = 8, client: Any = None) -> dict:
         text = " ".join(getattr(b, "text", "") for b in resp.content if getattr(b, "type", None) == "text")
         calls = [b for b in resp.content if getattr(b, "type", None) == "tool_use"]
         messages.append({"role": "assistant", "content": resp.content})
-        if resp.stop_reason == "end_turn" or not calls:
-            trace.append({"step": step, "thought": text, "tool": None, "obs": None})
-            return {"final": text, "trace": trace, "steps": step + 1}
+        if not calls:
+            trace.append({"step": step, "assistant_text": text, "tool": None, "obs": None})
+            if resp.stop_reason == "end_turn":
+                return {"final": text, "trace": trace, "steps": step + 1}
+            return {
+                "final": None,
+                "trace": trace,
+                "steps": step + 1,
+                "terminal_reason": resp.stop_reason or "missing_tool_call",
+                "truncated": resp.stop_reason == "max_tokens",
+            }
         results = []
         for call in calls:
-            args = dict(call.input)
-            obs = TOOL_IMPL.get(call.name, lambda _: f"error: unknown tool {call.name}")(args)
-            results.append({"type": "tool_result", "tool_use_id": call.id, "content": obs})
-            trace.append({"step": step, "thought": text, "tool": call.name, "tool_input": args, "obs": obs})
+            args, obs, is_error = execute_tool(call.name, call.input)
+            result_block = {"type": "tool_result", "tool_use_id": call.id, "content": obs}
+            if is_error:
+                result_block["is_error"] = True
+            results.append(result_block)
+            trace.append({"step": step, "assistant_text": text, "tool": call.name, "tool_input": args, "obs": obs})
         messages.append({"role": "user", "content": results})
     return {"final": None, "trace": trace, "steps": max_iter, "truncated": True}
 

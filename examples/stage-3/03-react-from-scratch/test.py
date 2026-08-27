@@ -24,7 +24,7 @@ import json
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from starter import react_loop, tool_calculator, tool_lookup_fact
+from starter import execute_tool, react_loop, tool_calculator, tool_lookup_fact
 
 
 # === Helpers for building mock OpenAI-compat responses ===
@@ -51,10 +51,15 @@ def test_calculator_basic():
     print("✅ test_calculator_basic")
 
 
-def test_calculator_rejects_eval_injection():
-    out = tool_calculator("__import__('os').system('ls')")
-    assert out.startswith("error:"), f"預期 reject、得到 {out}"
-    print("✅ test_calculator_rejects_eval_injection")
+def test_calculator_rejects_unsafe_expressions():
+    expressions = [
+        "2 ** 3", "7 // 2", "10 ** 1000", "1000000000001",
+        "-" * 20 + "1", "1+" * 100 + "1",
+        "__import__('os').system('ls')", "1 / 0",
+    ]
+    for expression in expressions:
+        assert tool_calculator(expression).startswith("error:"), expression
+    print("✅ test_calculator_rejects_unsafe_expressions")
 
 
 def test_lookup_fact():
@@ -122,11 +127,35 @@ def test_react_loop_respects_max_iter():
     print("✅ test_react_loop_respects_max_iter")
 
 
+def test_invalid_tool_call_is_returned_as_data():
+    _, malformed, malformed_error = execute_tool("calculator", "{not-json")
+    _, unknown, unknown_error = execute_tool("delete_everything", "{}")
+    _, extra, extra_error = execute_tool("calculator", json.dumps({"expression": "2 + 2", "unexpected": "x"}))
+    _, wrong_type, wrong_type_error = execute_tool("calculator", json.dumps({"expression": 4}))
+    _, empty, empty_error = execute_tool("lookup_fact", json.dumps({"query": "  "}))
+    assert malformed_error is True and malformed.startswith("error:")
+    assert unknown_error is True and "not allowed" in unknown
+    assert extra_error is True and extra.startswith("error:")
+    assert wrong_type_error is True and wrong_type.startswith("error:")
+    assert empty_error is True and empty.startswith("error:")
+
+
+def test_non_stop_terminal_reason_is_not_a_final_answer():
+    client = MagicMock()
+    client.chat.completions.create.return_value = make_resp("length", "unfinished", None)
+    result = react_loop("too long", client=client)
+    assert result["final"] is None
+    assert result["terminal_reason"] == "length"
+    assert result["truncated"] is True
+
+
 if __name__ == "__main__":
     test_calculator_basic()
-    test_calculator_rejects_eval_injection()
+    test_calculator_rejects_unsafe_expressions()
     test_lookup_fact()
     test_react_loop_single_tool_call()
     test_react_loop_multi_step()
     test_react_loop_respects_max_iter()
+    test_invalid_tool_call_is_returned_as_data()
+    test_non_stop_terminal_reason_is_not_a_final_answer()
     print("\n🎉 全部通過 — Ollama path ReAct loop 邏輯正確")

@@ -17,30 +17,30 @@
 
 把練習 3 的 ReAct loop 延伸成 **3-5 步任務**：查台北人口 → 查紐約人口 → 相除 → 轉百分比。LLM 負責規劃下一步、工具負責可靠地執行小動作；兩者合起來才像能完成 workflow 的 agent。
 
-這題也是觀察「**model 規模 vs 多步推理穩定度**」的好實驗。同樣 loop、claude-haiku 通常 4 步走完；qwen2.5:3b 可能中間漏一步（譬如忘了轉百分比），或停太早。
+這題適合觀察不同模型在多步任務上的行為差異；結果可能漏步或提早停止。固定 prompt、tools 和測試題，用 eval 記錄每一步的成功與失敗。
 
 ## 怎麼跑 — 兩條路徑
 
 ### Path A（默認、本機免費）
 
-```bash
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-預算：**$0**。多步 loop ≈ 30-120 秒（CPU、4-5 輪累積）。
+預算：**$0 API 費用**；不包含硬體、記憶體與電力成本。
 
-### Path B（Anthropic、想看 cloud 高品質）
+### Path B（Anthropic、雲端比較）
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = "your-key"
 python starter_anthropic.py
 ```
 
-預算：每次 ≈ **$0.005**（claude-haiku-4-5、5 輪 messages 累積、每輪 prompt 漸長）。
+預算：每次先保留 **$0.05**。實際費用依 `輸入 tokens × $1 / 1,000,000 + 輸出 tokens × $5 / 1,000,000` 計算，Tool Use 還會加入 prompt tokens；價格查核日：`2026-08-27`。
 
 預期看到（Path A、本機，理想 4 步走完）：
 
@@ -59,7 +59,7 @@ python starter_anthropic.py
 
 ## 不花錢驗證程式邏輯（mock-based）
 
-```bash
+```powershell
 python test.py # 驗 Path A (Ollama) starter.py 邏輯
 python test_anthropic.py # 驗 Path B (Anthropic) starter_anthropic.py 邏輯
 ```
@@ -70,7 +70,7 @@ python test_anthropic.py # 驗 Path B (Anthropic) starter_anthropic.py 邏輯
 
 多步任務的核心不是「模型很會算」、而是把複雜任務拆成可靠的小步：
 
-- **工具要窄而穩**：`divide(a, b)` 只做一件事、`b=0` 也不 crash 而是回 0
+- **工具要窄而有界**：`divide(a, b)` 只做一件事、`b=0` 也不 crash 而是回 0
 - **LLM 負責規劃**：決定下一步要呼叫哪個工具、何時停
 - **`max_iter=8` 是必要安全網**：避免模型一直要求工具而沒收尾
 - **每輪 messages 一直長**：assistant response + tool_result 都接回去、LLM 才看得到歷史
@@ -79,26 +79,26 @@ python test_anthropic.py # 驗 Path B (Anthropic) starter_anthropic.py 邏輯
 
 | 觀察項 | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| 走完 4 步機率 | 高 | 中（可能漏「轉百分比」） |
-| 中間步驟順序 | 穩定 | 可能跳序 |
-| 收尾判斷 | 穩定 `end_turn` | 可能多跑一輪冗餘 tool call |
-| 單次成本 | $0.005 | $0 |
+| 走完 4 步 | 用固定 eval 測量 | 用固定 eval 測量 |
+| 中間步驟順序 | 用固定 eval 測量 | 用固定 eval 測量 |
+| 收尾判斷 | 用固定 eval 測量 | 用固定 eval 測量 |
+| 預算預留 | $0.05 | $0 API 費用 |
 
-這恰好是 Stage 3 練習 4 的教學重點——**同樣 ReAct loop、不同 model、在哪一步開始崩**。Production 選 model 時、多步穩定度是 cost 之外的關鍵考量。
+這恰好是 Stage 3 練習 4 的教學重點——**同樣 ReAct loop、不同 model、在哪一步開始崩**。Production 選 model 時，用固定 eval 測量行為與成本。
 
 ## 想看更聰明的答案？
 
-預設用 `claude-haiku-4-5`（最便宜）。改成 sonnet：
+預設用固定 ID `claude-haiku-4-5-20251001`。想比較 sonnet 時：
 
-```bash
-MODEL=claude-sonnet-5 python starter_anthropic.py
+```powershell
+$env:MODEL = "claude-sonnet-5"; python starter_anthropic.py
 ```
 
 或 Ollama path 換更大 model：
 
-```bash
-MODEL=qwen2.5:7b python starter.py # 4.7 GB、更穩
-MODEL=mistral-nemo:12b python starter.py # 7.1 GB、更接近 cloud
+```powershell
+$env:MODEL = "qwen2.5:7b"; python starter.py
+$env:MODEL = "mistral-nemo:12b"; python starter.py
 ```
 
 ## 延伸

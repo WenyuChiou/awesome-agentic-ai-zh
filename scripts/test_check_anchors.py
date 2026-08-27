@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression tests for scripts/check-anchors.py's fenced-code-block parser.
+"""Regression tests for scripts/check-anchors.py's anchor and fence parsing.
 
 Pins issue #95. `strip_code_blocks` used to toggle `in_code` on any line
 starting with ```, which disagrees with CommonMark — and therefore with the
@@ -48,6 +48,37 @@ _SPEC.loader.exec_module(ca)
 def _visible(md: str) -> set[str]:
     """Headings the gate can see after code blocks are blanked."""
     return ca.collect_anchors(ca.strip_code_blocks(md))
+
+
+def test_explicit_html_anchor_is_a_real_target() -> None:
+    assert "cli-8" in _visible('<a id="cli-8"></a>\n')
+    assert "legacy-name" in _visible("<a name='legacy-name'></a>\n")
+    assert ca.anchor_exists('<a id="cli-8"></a>\n', "cli-8")
+    assert ca.anchor_exists("<a name='legacy-name'></a>\n", "legacy-name")
+
+
+def test_data_attributes_are_not_explicit_anchor_targets() -> None:
+    md = '<a data-id="phantom-id" data-name="phantom-name"></a>\n'
+    assert "phantom-id" not in _visible(md)
+    assert "phantom-name" not in _visible(md)
+    assert not ca.anchor_exists(md, "phantom-id")
+    assert not ca.anchor_exists(md, "phantom-name")
+
+
+def test_explicit_anchor_ids_are_exact_not_slugified() -> None:
+    md = '<a id="Foo.Bar"></a>\n'
+    assert "Foo.Bar" in _visible(md)
+    assert "foobar" not in _visible(md)
+    assert ca.anchor_exists(md, "Foo.Bar")
+    assert not ca.anchor_exists(md, "foobar")
+    assert not ca.anchor_exists(md, "foo.bar")
+
+
+def test_explicit_html_anchor_inside_fence_is_not_a_target() -> None:
+    assert "phantom" not in _visible('```html\n<a id="phantom"></a>\n```\n')
+    assert not ca.anchor_exists(
+        '```html\n<a id="phantom"></a>\n```\n', "phantom"
+    )
 
 
 def test_info_string_fence_does_not_close_a_block() -> None:

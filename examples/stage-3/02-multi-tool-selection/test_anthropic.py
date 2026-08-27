@@ -16,7 +16,7 @@ from unittest.mock import MagicMock
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-from starter_anthropic import TOOLS_SPEC, calculator, run_tool_selection
+from starter_anthropic import TOOLS_SPEC, calculator, execute_tool, run_tool_selection
 
 
 def block_text(text: str):
@@ -46,6 +46,16 @@ def test_tool_spec_contains_three_tools():
     assert calculator("2 * (3 + 4)") == "14"
 
 
+def test_calculator_rejects_unsafe_expressions():
+    expressions = [
+        "2 ** 3", "7 // 2", "10 ** 1000", "1000000000001",
+        "-" * 20 + "1", "1+" * 100 + "1",
+        "__import__('os').system('ls')", "1 / 0",
+    ]
+    for expression in expressions:
+        assert calculator(expression).startswith("error:"), expression
+
+
 def test_llm_selects_calculator():
     client = mock_client_for("calculator", {"expression": "20 / 5"})
     result = run_tool_selection("What is 20 divided by 5?", client=client)
@@ -67,9 +77,39 @@ def test_llm_uses_search_instead_of_calendar_for_news():
     assert "latest Claude tool use examples" in result["observation"]
 
 
+def test_untrusted_arguments_are_rejected():
+    _, missing = execute_tool("calculator", {})
+    _, wrong_shape = execute_tool("calculator", ["2 + 2"])
+    _, unknown = execute_tool("delete_everything", {})
+    _, extra = execute_tool("calculator", {"expression": "2 + 2", "unexpected": "x"})
+    _, wrong_type = execute_tool("calculator", {"expression": 4})
+    _, empty = execute_tool("calculator", {"expression": "  "})
+    assert missing.startswith("error:")
+    assert wrong_shape.startswith("error:")
+    assert "not allowed" in unknown
+    assert extra.startswith("error:")
+    assert wrong_type.startswith("error:")
+    assert empty.startswith("error:")
+
+
+def test_multiple_calls_are_not_silently_partially_executed():
+    client = MagicMock()
+    client.messages.create.return_value = make_resp(
+        "tool_use",
+        block_tool_use("toolu_1", "calculator", {"expression": "2 + 2"}),
+        block_tool_use("toolu_2", "calendar_lookup", {"date": "tomorrow"}),
+    )
+    result = run_tool_selection("Do both", client=client)
+    assert result["tool"] is None
+    assert "exactly one" in result["observation"]
+
+
 if __name__ == "__main__":
     test_tool_spec_contains_three_tools()
+    test_calculator_rejects_unsafe_expressions()
     test_llm_selects_calculator()
     test_llm_selects_calendar()
     test_llm_uses_search_instead_of_calendar_for_news()
+    test_untrusted_arguments_are_rejected()
+    test_multiple_calls_are_not_silently_partially_executed()
     print("all pass")

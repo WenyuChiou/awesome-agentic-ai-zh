@@ -1,0 +1,2 @@
+openai>=3.5,<4
+anthropic>=1.1,<2  # Only starter_anthropic.py needs this package.

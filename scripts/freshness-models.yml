@@ -39,9 +39,31 @@ stage01_fact_pack:
   migration_sources:
     hunyuan: 'https://cloud.tencent.com/announce/detail/2391'
 
+stage03_fact_pack:
+  canonical: 'stages/03-tool-use-and-hello-agent.md'
+  verified_on: '2026-08-27'
+  scope: ['models', 'pricing', 'tool-apis', 'security']
+  official_sources:
+    openai_function_calling: 'https://developers.openai.com/api/docs/guides/function-calling'
+    openai_structured_outputs: 'https://developers.openai.com/api/docs/guides/structured-outputs'
+    anthropic_tool_loop: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works'
+    anthropic_tool_results: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls'
+    anthropic_security: 'https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks'
+    anthropic_pricing: 'https://platform.claude.com/docs/en/about-claude/pricing'
+    anthropic_model_ids: 'https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions'
+    gemini_function_calling: 'https://ai.google.dev/gemini-api/docs/function-calling'
+    ollama_tool_calling: 'https://docs.ollama.com/capabilities/tool-calling'
+    ollama_openai_compatibility: 'https://docs.ollama.com/api/openai-compatibility'
+    react_paper: 'https://arxiv.org/abs/2210.03629'
+    openai_python_sdk: 'https://pypi.org/project/openai/'
+    anthropic_python_sdk: 'https://pypi.org/project/anthropic/'
+
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
     required_scopes: ['models', 'pricing', 'availability', 'deprecations']
+    max_age_days: 90
+  - canonical: 'stages/03-tool-use-and-hello-agent.md'
+    required_scopes: ['models', 'pricing', 'tool-apis', 'security']
     max_age_days: 90
 
 current_frontier_models:

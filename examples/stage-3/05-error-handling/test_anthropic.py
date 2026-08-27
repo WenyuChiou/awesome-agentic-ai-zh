@@ -16,7 +16,7 @@ from unittest.mock import MagicMock
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-from starter_anthropic import fetch_weather, react_loop, set_weather_failures
+from starter_anthropic import execute_tool, fetch_weather, react_loop, set_weather_failures
 
 
 def block_text(text: str):
@@ -69,8 +69,36 @@ def test_repeated_errors_can_end_gracefully():
     assert "unavailable" in result["final"]
 
 
+def test_failed_result_is_marked_and_correlated():
+    set_weather_failures([True])
+    client = MagicMock()
+    client.messages.create.side_effect = [
+        make_resp("tool_use", block_tool_use("weather_1", "fetch_weather", {"city": "Taipei"})),
+        make_resp("end_turn", block_text("Weather is unavailable.")),
+    ]
+    react_loop("Weather?", client=client)
+    sent = client.messages.create.call_args_list[1].kwargs["messages"][-2]["content"][0]
+    assert sent["tool_use_id"] == "weather_1"
+    assert sent["is_error"] is True
+
+
+def test_invalid_input_and_terminal_reason_are_safe():
+    _, invalid, invalid_error = execute_tool("fetch_weather", {"city": "", "extra": True})
+    _, unknown, unknown_error = execute_tool("delete_everything", {})
+    assert invalid_error is True and invalid["error"] == "invalid arguments"
+    assert unknown_error is True and unknown["error"] == "tool not allowed"
+
+    client = MagicMock()
+    client.messages.create.return_value = make_resp("max_tokens", block_text("unfinished"))
+    result = react_loop("too long", client=client)
+    assert result["final"] is None
+    assert result["terminal_reason"] == "max_tokens"
+
+
 if __name__ == "__main__":
     test_fetch_weather_failure_plan()
     test_retry_then_success()
     test_repeated_errors_can_end_gracefully()
+    test_failed_result_is_marked_and_correlated()
+    test_invalid_input_and_terminal_reason_are_safe()
     print("all pass")

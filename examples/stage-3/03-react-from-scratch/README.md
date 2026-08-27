@@ -37,24 +37,24 @@ LangGraph / CrewAI 把這個 loop 藏起來了。你**自己寫過一次**才知
 
 ### Path A（默認、本機免費）
 
-```bash
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-預算：**$0**。本機 qwen2.5:3b 跑 ReAct loop 4-6 輪 ≈ 30-120 秒（CPU 慢、GPU 快）。
+預算：**$0 API 費用**；不包含硬體、記憶體與電力成本。
 
-### Path B（Anthropic、想看 cloud 高品質）
+### Path B（Anthropic、雲端比較）
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = "your-key"
 python starter_anthropic.py
 ```
 
-預算：每次 ≈ **$0.001** (claude-haiku-4-5)。比本機快 5-15 倍、答案品質更穩。
+預算：每次先保留 **$0.05**。實際費用依 `輸入 tokens × $1 / 1,000,000 + 輸出 tokens × $5 / 1,000,000` 計算，Tool Use 還會加入 prompt tokens；價格查核日：`2026-08-27`。
 
 預期看到（Path A、本機）：
 
@@ -76,7 +76,7 @@ python starter_anthropic.py
 
 ## 不花錢驗證程式邏輯（mock-based）
 
-```bash
+```powershell
 python test.py # 驗 Path A (Ollama) starter.py 邏輯
 python test_anthropic.py # 驗 Path B (Anthropic) starter_anthropic.py 邏輯
 ```
@@ -111,17 +111,17 @@ python test_anthropic.py # 驗 Path B (Anthropic) starter_anthropic.py 邏輯
 1. **忘記把 assistant response 加進 messages**：下一輪 LLM 就看不到自己上一輪講過什麼、會 loop forever
 2. **tool_result 沒帶 `tool_use_id`**：LLM 無法配對哪個 result 對應哪個 call
 3. **`while True` 沒 max_iter**：tool 結果寫得不好、LLM 會無限呼叫；safety net 一定要設
-4. **eval 沒過濾**：calculator 直接 `eval(user_input)` = RCE 漏洞；用 whitelist 或 `ast.literal_eval`
+4. **未過濾的 eval**：不要把 model text 送進 `eval`，否則可能造成 RCE；不要靠字元 whitelist 或 `ast.literal_eval` 做算術。改用明確的 AST operator allowlist，並限制輸入長度、AST 深度、節點數與數字／結果大小。
 
 ## 想看更聰明的答案？
 
-預設用 `claude-haiku-4-5`（最便宜）。改成 sonnet：
+預設用固定 ID `claude-haiku-4-5-20251001`。想比較 sonnet 時：
 
-```bash
-MODEL=claude-sonnet-5 python starter.py
+```powershell
+$env:MODEL = "claude-sonnet-5"; python starter_anthropic.py
 ```
 
-或在 `starter.py` 改 `MODEL = ...` 那行。
+或在 `starter_anthropic.py` 改 `MODEL = ...` 那行。
 
 ## 延伸
 

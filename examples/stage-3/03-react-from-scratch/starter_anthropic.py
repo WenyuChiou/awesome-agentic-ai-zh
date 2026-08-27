@@ -1,21 +1,23 @@
 """
 練習 3：從零實作 ReAct（不用 framework）— starter.py
 
-目的：用 ~70 行 Python 把 Thought → Action → Observation 迴圈寫出來。
+目的：用一小段 Python 把「assistant 文字 → Tool Call → Tool Result」迴圈寫出來。
 不要 LangChain、不要 LangGraph，就是純 while loop。
 
 跑法：
     pip install -r requirements.txt
-    export ANTHROPIC_API_KEY=sk-ant-...
-    python starter.py
+    $env:ANTHROPIC_API_KEY = "your-key"
+    python starter_anthropic.py
 
 驗證：
-    python test.py  （用 mock、不花 API 錢）
+    python test_anthropic.py  （用 mock、不花 API 錢）
 """
 
 from __future__ import annotations
 
+import ast
 import json
+import math
 import os
 import sys
 from typing import Any
@@ -26,19 +28,74 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import anthropic
 
-MODEL = os.environ.get("MODEL", "claude-haiku-4-5")  # 想換 sonnet 改這行
+MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
 
 # === 1. Tools 定義（含實作） ===
 
+MAX_EXPRESSION_LENGTH = 200
+MAX_AST_NODES = 50
+MAX_AST_DEPTH = 12
+MAX_ABS_NUMBER = 1_000_000_000_000
+
+
+def _within_bounds(value: int | float) -> bool:
+    if isinstance(value, int):
+        return abs(value) <= MAX_ABS_NUMBER
+    return math.isfinite(value) and abs(value) <= MAX_ABS_NUMBER
+
+
+def _evaluate_arithmetic(expression: str) -> int | float:
+    """只計算小型數學式；模型文字永遠不會變成程式碼。"""
+    if len(expression) > MAX_EXPRESSION_LENGTH:
+        raise ValueError("expression is too long")
+    try:
+        tree = ast.parse(expression, mode="eval")
+    except (SyntaxError, ValueError, TypeError):
+        raise ValueError("calculator only accepts basic arithmetic") from None
+    if sum(1 for _ in ast.walk(tree)) > MAX_AST_NODES:
+        raise ValueError("expression has too many parts")
+
+    def visit(node: ast.AST, depth: int = 0) -> int | float:
+        if depth > MAX_AST_DEPTH:
+            raise ValueError("expression is too deeply nested")
+        if isinstance(node, ast.Expression):
+            return visit(node.body, depth + 1)
+        if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+            value = node.value
+            if not _within_bounds(value):
+                raise ValueError("number is out of bounds")
+            return value
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+            value = visit(node.operand, depth + 1)
+            result = value if isinstance(node.op, ast.UAdd) else -value
+        elif isinstance(node, ast.BinOp) and isinstance(node.op, (ast.Add, ast.Sub, ast.Mult, ast.Div)):
+            left = visit(node.left, depth + 1)
+            right = visit(node.right, depth + 1)
+            if isinstance(node.op, ast.Div):
+                if right == 0:
+                    raise ValueError("division by zero")
+                result = left / right
+            elif isinstance(node.op, ast.Add):
+                result = left + right
+            elif isinstance(node.op, ast.Sub):
+                result = left - right
+            else:
+                result = left * right
+        else:
+            raise ValueError("calculator only accepts numbers and + - * /")
+        if not _within_bounds(result):
+            raise ValueError("result is out of bounds")
+        return result
+
+    return visit(tree)
+
+
 def tool_calculator(expression: str) -> str:
     """安全的計算器：只允許 + - * / 跟數字。"""
-    allowed = set("0123456789.+-*/() ")
-    if any(c not in allowed for c in expression):
-        return f"error: 表達式含不允許字元（{expression}）"
     try:
-        return str(eval(expression))  # noqa: S307 — 已用 whitelist
-    except Exception as e:  # noqa: BLE001
-        return f"error: {e}"
+        return str(_evaluate_arithmetic(expression))
+    except (TypeError, ValueError) as exc:
+        return f"error: {exc}"
 
 
 def tool_lookup_fact(query: str) -> str:
@@ -61,6 +118,7 @@ TOOLS_SPEC = [
                 "expression": {"type": "string", "description": "算術表達式"},
             },
             "required": ["expression"],
+            "additionalProperties": False,
         },
     },
     {
@@ -72,6 +130,7 @@ TOOLS_SPEC = [
                 "query": {"type": "string", "description": "查詢關鍵字（如「台北人口」、「光速」）"},
             },
             "required": ["query"],
+            "additionalProperties": False,
         },
     },
 ]
@@ -80,6 +139,30 @@ TOOL_IMPL = {
     "calculator": lambda inp: tool_calculator(inp["expression"]),
     "lookup_fact": lambda inp: tool_lookup_fact(inp["query"]),
 }
+
+TOOL_FIELDS = {
+    "calculator": "expression",
+    "lookup_fact": "query",
+}
+
+
+def execute_tool(name: str, arguments: Any) -> tuple[dict, str, bool]:
+    """Validate an untrusted tool call before dispatch."""
+    if name not in TOOL_IMPL:
+        return {}, f"error: tool not allowed: {name}", True
+    if not isinstance(arguments, dict):
+        return {}, "error: arguments must be an object", True
+    args = dict(arguments)
+    field = TOOL_FIELDS[name]
+    if set(args) != {field}:
+        return {}, f"error: arguments must contain exactly {field}", True
+    if not isinstance(args[field], str) or not args[field].strip():
+        return {}, f"error: {field} must be a non-empty string", True
+    try:
+        observation = TOOL_IMPL[name](args)
+    except (KeyError, TypeError, ValueError) as exc:
+        return args, f"error: invalid arguments: {exc}", True
+    return args, observation, observation.startswith("error:")
 
 
 # === 2. ReAct loop ===
@@ -90,7 +173,7 @@ def react_loop(question: str, max_iter: int = 6, client: Any = None) -> dict:
       1. 問 LLM（含 tools）
       2. 看 stop_reason：tool_use → 執行工具、把結果加進 messages、繼續
                        end_turn → 完成、回傳最終答案
-    回傳 {final, trace}。trace 紀錄每輪 (thought, tool, obs)。
+    回傳 {final, trace}。trace 只記錄可觀察的 assistant 文字、tool 與 result。
     """
     client = client or anthropic.Anthropic()
     messages = [{"role": "user", "content": question}]
@@ -104,35 +187,40 @@ def react_loop(question: str, max_iter: int = 6, client: Any = None) -> dict:
             messages=messages,
         )
 
-        # 收 thought（assistant 的 text block）跟 tool call
-        thought_text = " ".join(b.text for b in resp.content if b.type == "text")
+        assistant_text = " ".join(b.text for b in resp.content if b.type == "text")
         tool_calls = [b for b in resp.content if b.type == "tool_use"]
 
         # 把 assistant 整個 response 加進 messages（給下一輪 context）
         messages.append({"role": "assistant", "content": resp.content})
 
-        if resp.stop_reason == "end_turn" or not tool_calls:
-            # 已收尾、最後一段 text 就是答案
-            trace.append({"step": step, "thought": thought_text, "tool": None, "obs": None})
-            return {"final": thought_text, "trace": trace, "steps": step + 1}
+        if not tool_calls:
+            trace.append({"step": step, "assistant_text": assistant_text, "tool": None, "obs": None})
+            if resp.stop_reason == "end_turn":
+                return {"final": assistant_text, "trace": trace, "steps": step + 1}
+            return {
+                "final": None,
+                "trace": trace,
+                "steps": step + 1,
+                "terminal_reason": resp.stop_reason or "missing_tool_call",
+                "truncated": resp.stop_reason == "max_tokens",
+            }
 
         # 執行所有 tool call、把 observation 接回去
         tool_results = []
-        last_obs = ""
         for call in tool_calls:
-            fn = TOOL_IMPL.get(call.name)
-            obs = fn(call.input) if fn else f"error: unknown tool {call.name}"
-            last_obs = obs
-            tool_results.append({"type": "tool_result", "tool_use_id": call.id, "content": obs})
+            args, obs, is_error = execute_tool(call.name, call.input)
+            result_block = {"type": "tool_result", "tool_use_id": call.id, "content": obs}
+            if is_error:
+                result_block["is_error"] = True
+            tool_results.append(result_block)
+            trace.append({
+                "step": step,
+                "assistant_text": assistant_text,
+                "tool": call.name,
+                "tool_input": args,
+                "obs": obs,
+            })
         messages.append({"role": "user", "content": tool_results})
-
-        trace.append({
-            "step": step,
-            "thought": thought_text,
-            "tool": tool_calls[0].name,
-            "tool_input": dict(tool_calls[0].input),
-            "obs": last_obs,
-        })
 
     # 跑滿 max_iter 還沒收尾
     return {"final": None, "trace": trace, "steps": max_iter, "truncated": True}
@@ -148,7 +236,7 @@ if __name__ == "__main__":
     result = react_loop(question, max_iter=5)
 
     for entry in result["trace"]:
-        print(f"[step {entry['step']}] thought: {entry['thought'][:80]}...")
+        print(f"[step {entry['step']}] assistant: {entry['assistant_text'][:80]}...")
         if entry["tool"]:
             print(f"           tool: {entry['tool']}({entry.get('tool_input')}) → {entry['obs']}")
     print("-" * 60)

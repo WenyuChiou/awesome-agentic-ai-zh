@@ -88,6 +88,8 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 | ⭐⭐ | 有用參考 | 有興趣再看 |
 | ⭐ | 利基 / 進階 / 為了完整性 | 多數讀者可跳 |
 
+這是編輯評分，不是 GitHub stars。移除 `★ 140k+` 這類會變動的人氣數字時，必須保留原有 `⭐⭐⭐⭐⭐` 評分；只有資源用途、品質或維護狀態的查證結果改變時，才能連同理由調整評分。
+
 **準則**：
 
 - 同一個 repo 出現在不同 stage / branch 時，**星等應一致**（除非有明確 audience-specific 理由，且註明在備註）
@@ -247,6 +249,8 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 時間、費用、程式碼、預期輸出與疑難排解。
 
 </details>
+
+可執行資料夾必須先提供可直接複製的 PowerShell 指令，再用預設收合的 `<details>` 提供 macOS/Linux 替代指令；同時提供 Path A 與 Path B 腳本，以及不打 API 的 offline mock tests。SDK 依賴要限制 major version，cloud model 要使用釘住的 model ID；執行前必須驗證不受信任的工具名稱與參數。Cloud 成本寫成 token 公式並標示核對日期，不要假設一個固定金額。
 
 [3-5 個動手練習 items]
 

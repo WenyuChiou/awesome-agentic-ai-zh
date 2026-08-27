@@ -13,15 +13,15 @@
     python test.py   （用 mock、不打 API）
 
 想看 Anthropic Claude 版本：
-    python starter_anthropic.py   （需 ANTHROPIC_API_KEY、$0.005/run）
+    python starter_anthropic.py   （需 ANTHROPIC_API_KEY；每次先保留 $0.05）
 
-⚠️ 注意：4 步推理對小 model 是挑戰。qwen2.5:3b 可能中間漏一步、或停太早。
-Claude haiku 比較穩——這恰好是教學重點：對比同樣 loop、不同 model 在哪一步崩。
+⚠️ 不同模型、版本與 prompt 的結果會變。用固定題目跑多次，記錄每一步再比較。
 """
 
 from __future__ import annotations
 
 import json
+import math
 import os
 import sys
 from typing import Any
@@ -32,6 +32,36 @@ if hasattr(sys.stdout, "reconfigure"):
 from openai import OpenAI
 
 MODEL = os.environ.get("MODEL", "qwen2.5:3b")
+MAX_ABS_NUMBER = 1_000_000_000_000.0
+
+
+class ToolExecutionError(ValueError):
+    """A tool error that the loop should return to the model as data."""
+
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(message)
+        self.code = code
+
+
+def bounded_number(value: float, field: str) -> float:
+    """Accept only ordinary finite numbers that stay inside the lesson's limit."""
+    if isinstance(value, int) and abs(value) > MAX_ABS_NUMBER:
+        raise ToolExecutionError("number_too_large", f"{field} is outside the allowed range")
+    try:
+        number = float(value)
+    except OverflowError as exc:
+        raise ToolExecutionError(
+            "number_too_large", f"{field} is outside the allowed range"
+        ) from exc
+    if not math.isfinite(number):
+        raise ToolExecutionError("non_finite_number", f"{field} must be finite")
+    if abs(number) > MAX_ABS_NUMBER:
+        raise ToolExecutionError("number_too_large", f"{field} is outside the allowed range")
+    return number
+
+
+def error_payload(code: str, message: str) -> str:
+    return json.dumps({"error": {"code": code, "message": message}}, ensure_ascii=False)
 
 
 # === 1. Tools 定義（含實作）===
@@ -42,16 +72,20 @@ def lookup_population(city: str) -> str:
 
 
 def divide(a: float, b: float) -> str:
-    b = float(b)
-    return "0" if b == 0 else str(float(a) / b)
+    numerator = bounded_number(a, "a")
+    denominator = bounded_number(b, "b")
+    if denominator == 0:
+        raise ToolExecutionError("division_by_zero", "b must not be zero")
+    return str(bounded_number(numerator / denominator, "result"))
 
 
 def to_percentage(ratio: float) -> str:
-    return f"{float(ratio) * 100:.2f}"
+    result = bounded_number(bounded_number(ratio, "ratio") * 100, "result")
+    return f"{result:.2f}"
 
 
 def round_int(x: float) -> str:
-    return str(round(float(x)))
+    return str(round(bounded_number(x, "x")))
 
 
 # OpenAI-compat 包一層 {"type": "function", "function": {...}}
@@ -65,6 +99,7 @@ TOOLS_SPEC = [
                 "type": "object",
                 "properties": {"city": {"type": "string"}},
                 "required": ["city"],
+                "additionalProperties": False,
             },
         },
     },
@@ -72,11 +107,12 @@ TOOLS_SPEC = [
         "type": "function",
         "function": {
             "name": "divide",
-            "description": "Divide a by b. Returns 0 instead of crashing when b is zero.",
+            "description": "Divide a by b. Returns a structured error when b is zero.",
             "parameters": {
                 "type": "object",
                 "properties": {"a": {"type": "number"}, "b": {"type": "number"}},
                 "required": ["a", "b"],
+                "additionalProperties": False,
             },
         },
     },
@@ -89,6 +125,7 @@ TOOLS_SPEC = [
                 "type": "object",
                 "properties": {"ratio": {"type": "number"}},
                 "required": ["ratio"],
+                "additionalProperties": False,
             },
         },
     },
@@ -101,6 +138,7 @@ TOOLS_SPEC = [
                 "type": "object",
                 "properties": {"x": {"type": "number"}},
                 "required": ["x"],
+                "additionalProperties": False,
             },
         },
     },
@@ -112,6 +150,48 @@ TOOL_IMPL = {
     "to_percentage": lambda i: to_percentage(i["ratio"]),
     "round_int": lambda i: round_int(i["x"]),
 }
+
+TOOL_ARGUMENTS = {
+    "lookup_population": {"city": "string"},
+    "divide": {"a": "number", "b": "number"},
+    "to_percentage": {"ratio": "number"},
+    "round_int": {"x": "number"},
+}
+
+
+def execute_tool(name: str, raw_arguments: str) -> tuple[dict, str, bool]:
+    """Validate an untrusted tool call before dispatch."""
+    if name not in TOOL_IMPL:
+        return {}, f"error: tool not allowed: {name}", True
+    try:
+        args = json.loads(raw_arguments)
+    except (TypeError, json.JSONDecodeError):
+        return {}, "error: arguments must be valid JSON", True
+    except ValueError:
+        return {}, error_payload("number_too_large", "numeric argument is too large"), True
+    if not isinstance(args, dict):
+        return {}, "error: arguments must be a JSON object", True
+    expected = TOOL_ARGUMENTS[name]
+    if set(args) != set(expected):
+        return {}, "error: arguments contain unexpected or missing fields", True
+    for field, kind in expected.items():
+        value = args[field]
+        if kind == "string":
+            if not isinstance(value, str) or not value.strip():
+                return {}, f"error: {field} must be a non-empty string", True
+        elif not isinstance(value, (int, float)) or isinstance(value, bool):
+            return {}, f"error: {field} must be a number", True
+        else:
+            try:
+                bounded_number(value, field)
+            except ToolExecutionError as exc:
+                return args, error_payload(exc.code, str(exc)), True
+    try:
+        return args, TOOL_IMPL[name](args), False
+    except ToolExecutionError as exc:
+        return args, error_payload(exc.code, str(exc)), True
+    except (KeyError, OverflowError, TypeError, ValueError) as exc:
+        return args, f"error: invalid arguments: {exc}", True
 
 
 # === 2. ReAct loop（OpenAI-compat）===
@@ -144,20 +224,27 @@ def react_loop(question: str, max_iter: int = 8, client: Any = None) -> dict:
             ]
         messages.append(assistant_entry)
 
-        if resp.choices[0].finish_reason == "stop" or not tool_calls:
-            trace.append({"step": step, "thought": text, "tool": None, "obs": None})
-            return {"final": text, "trace": trace, "steps": step + 1}
+        finish_reason = resp.choices[0].finish_reason
+        if not tool_calls:
+            trace.append({"step": step, "assistant_text": text, "tool": None, "obs": None})
+            if finish_reason == "stop":
+                return {"final": text, "trace": trace, "steps": step + 1}
+            return {
+                "final": None,
+                "trace": trace,
+                "steps": step + 1,
+                "terminal_reason": finish_reason or "missing_tool_call",
+                "truncated": finish_reason == "length",
+            }
 
         for tc in tool_calls:
-            fn = TOOL_IMPL.get(tc.function.name, lambda _: f"error: unknown tool {tc.function.name}")
-            args = json.loads(tc.function.arguments)
-            obs = fn(args)
+            args, obs, _ = execute_tool(tc.function.name, tc.function.arguments)
             messages.append({
                 "role": "tool",
                 "tool_call_id": tc.id,
                 "content": obs,
             })
-            trace.append({"step": step, "thought": text, "tool": tc.function.name, "tool_input": args, "obs": obs})
+            trace.append({"step": step, "assistant_text": text, "tool": tc.function.name, "tool_input": args, "obs": obs})
 
     return {"final": None, "trace": trace, "steps": max_iter, "truncated": True}
 
@@ -179,4 +266,5 @@ if __name__ == "__main__":
 
     # 寬鬆驗證：小 model 不一定走完 4 步、但 loop 至少要收尾或顯式 truncate
     assert result.get("final") is not None or result.get("truncated"), "loop 應收尾或 truncate"
+    assert result["steps"] <= 8, "loop 不可超過 max_iter"
     print("✅ 練習 4 通過 — 你已用本機 qwen2.5:3b 跑通多步 ReAct loop、$0/run")

@@ -88,6 +88,8 @@ Example: an `Anthropic — Building Effective Agents` blog entry uses `Format = 
 | ⭐⭐ | Useful reference | Browse if interested |
 | ⭐ | Niche / advanced / for completeness | Most readers can skip |
 
+These are editorial ratings, not GitHub stars. When removing volatile popularity numbers such as `★ 140k+`, preserve the existing `⭐⭐⭐⭐⭐` rating; change the rating only when evidence about the resource’s purpose, quality, or maintenance changes.
+
 **Rules:**
 
 - A repo cited in different stages / branches **should have the same rating** (unless audience-specific reason, then note it explicitly)
@@ -249,6 +251,8 @@ One sentence describing the observable result. Keep the heading outside details 
 Time, cost, code, expected output, and troubleshooting.
 
 </details>
+
+Every runnable folder must provide copy-ready PowerShell commands first, followed by a closed `<details>` block with the macOS/Linux alternative; it must also provide Path A and Path B scripts plus offline mock tests. Bound SDK dependencies to major versions and use a pinned cloud model ID; validate untrusted tool names and arguments before execution. Describe cloud cost as a token formula with a verification date, rather than assuming a fixed amount.
 
 [3-5 hands-on exercise items]
 

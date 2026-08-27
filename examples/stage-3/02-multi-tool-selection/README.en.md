@@ -21,24 +21,24 @@ This exercise puts an LLM in front of three tools in a single turn: `web_search`
 
 ### Path A (default, free, local)
 
-```bash
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-Budget: **$0**. A single qwen2.5:3b tool call takes ~1-5s (CPU slower, GPU faster).
+Budget: **$0 API cost**; hardware, memory, and electricity are excluded.
 
-### Path B (Anthropic, cloud-quality comparison)
+### Path B (Anthropic, cloud comparison)
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = "your-key"
 python starter_anthropic.py
 ```
 
-Budget: ~**$0.0005** per run (claude-haiku-4-5).
+Budget: reserve **$0.05** per run. Actual cost is `input tokens × $1 / 1,000,000 + output tokens × $5 / 1,000,000`; Tool Use also adds prompt tokens. Prices checked on `2026-08-27`.
 
 Expected output (Path A, local):
 
@@ -52,7 +52,7 @@ Expected output (Path A, local):
 
 ## Validate the logic without API credits (mock-based)
 
-```bash
+```powershell
 python test.py            # validates Path A (Ollama) starter.py logic
 python test_anthropic.py  # validates Path B (Anthropic) starter_anthropic.py logic
 ```
@@ -69,7 +69,7 @@ Three key differences (everything else is identical):
 | Reading tool call | `resp.content[i].type == "tool_use"` | `resp.choices[0].message.tool_calls[i]` |
 | input format | `call.input` is already a dict | `call.function.arguments` is a JSON string — needs `json.loads(...)` |
 
-The selection **logic** is backend-agnostic — write a good schema and qwen2.5:3b picks the right tool too. This exercise is a great place to compare "on which questions does Claude pick the right tool but qwen2.5 doesn't?" — a clean way to feel the boundary of small models.
+The selection **logic** is backend-agnostic, but observed behavior varies by model and prompt. Keep the prompt, schema, and test set fixed; use an eval to record success rates and failure types.
 
 ## Common pitfalls
 
@@ -77,20 +77,20 @@ The most common failure in multi-tool design is descriptions that read like docu
 
 - `calendar_lookup` described as "calendar" is ambiguous with `web_search`; "look up events for a specific date" is clearer
 - `web_search` is for "external / recent / uncertain info", `calculator` for arithmetic — the clearer the boundary, the fewer wrong picks
-- Small models (qwen2.5:3b) are **more sensitive** to description quality than Claude — the same schema where Claude might guess correctly can lead qwen astray
+- Models may react differently to description quality; do not assume one is more stable. Measure with the same fixed eval.
 
 ## Want smarter answers?
 
-Default is `claude-haiku-4-5` (cheapest). Try Sonnet:
+Default is the pinned ID `claude-haiku-4-5-20251001`. To compare Sonnet:
 
-```bash
-MODEL=claude-sonnet-5 python starter_anthropic.py
+```powershell
+$env:MODEL = "claude-sonnet-5"; python starter_anthropic.py
 ```
 
-Or on the Ollama path, swap to `qwen2.5:7b` (bigger, more stable, but slower):
+Or on the Ollama path, try `qwen2.5:7b`; measure behavior and cost with the same fixed eval:
 
-```bash
-MODEL=qwen2.5:7b python starter.py
+```powershell
+$env:MODEL = "qwen2.5:7b"; python starter.py
 ```
 
 ## Extensions
