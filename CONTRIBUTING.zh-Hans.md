@@ -77,6 +77,8 @@
 3. **明确 license**：MIT、Apache 2、BSD 或类似。避免没 license 的 repo。
 4. **可信赖的维护者**：知名组织、公司，或有口碑的个人
 
+自动检查会合并同一个 repo 的重复链接，查看它是否搬家、归档、停用，以及 GitHub 显示的 SPDX license。半年没有 push 只是在提醒你再看一眼：稳定而且仍有教学价值的项目可以保留，但要把状态写清楚。如果 GitHub API 暂时无法回答，结果会标成“无法确认”，不会假装一切正常。
+
 ## 双语风格
 
 - **繁中（Traditional Chinese, zh-TW）为正本**，英文版（`*.en.md`）是 companion。

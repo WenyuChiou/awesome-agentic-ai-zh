@@ -254,7 +254,7 @@ This repo is an AI learning document — if you've also curated great resources,
 
 PR process and style rules: [CONTRIBUTING.en.md](CONTRIBUTING.en.md) + [resources/style-guide.en.md](resources/style-guide.en.md).
 
-> 🤖 **New project links are auto-audited** — when a PR adds a new `github.com/owner/repo` link, a GitHub Action comments with its stars, license, archived status, and last-push, flagging archived / stale (>6 months) / unlicensed entries against the curation bar. Advisory only, never blocks — the maintainer decides what gets in (v1 runs on maintainer-branch PRs; fork PRs are skipped for now due to token scope).
+> 🤖 **Project links have two automated checks** — on maintainer branches, the comment bot reports stars, license, archive state, and last push for newly added repos; that layer is informational only. A separate read-only freshness gate runs on every PR, including forks, and checks each repo entry touched by the change. It blocks only hard contradictions such as 404/private, an outdated moved slug, calling an archived repo current, or an explicit license mismatch. Six months without a push is only a reminder; maintainers still decide what belongs.
 
 > 📅 **Want to see what shipped recently?** → [`CHANGELOG.md`](CHANGELOG.md) (last 14 days).
 > Internal phase rollout progress and launch checklist: [`.github/launch-checklist.md`](.github/launch-checklist.md) (maintainer-facing internal doc).

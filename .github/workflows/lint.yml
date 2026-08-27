@@ -306,6 +306,13 @@ jobs:
         # (scripts/test_pr_link_audit.py). stdlib-only, network-free.
         run: python3 scripts/test_pr_link_audit.py
 
+      - name: Repository freshness unit tests and snapshot coverage
+        # Network-free. The live changed-link check runs in its own workflow;
+        # this pins classification and proves every tracked repo has a row.
+        run: |
+          python3 scripts/test_repository_freshness.py
+          python3 scripts/check-repository-freshness.py verify-snapshot
+
       - name: check-links.py classification unit tests
         # Pins issue #94: the checker reported 14 failures of which 5 were real.
         # It identified itself in the UA (hosts refuse that), trusted HEAD (widely

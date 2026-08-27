@@ -26,7 +26,9 @@ Create one generated snapshot keyed by lowercase `owner/repo`. Each record store
 - canonical `html_url` and whether the original slug redirects;
 - `archived`, `disabled`, visibility, default branch, SPDX license;
 - `pushed_at`, latest release tag and publish date when one exists;
-- every Markdown file and line that references the repository;
+- every Markdown file plus the total reference count. Line numbers are computed
+  in each report instead of stored, so inserting one paragraph does not rewrite
+  hundreds of otherwise unchanged snapshot rows;
 - `checked_at`, HTTP/API result, and an explicit `verified`, `unverified`, or `missing` state.
 
 Do not store authentication data or raw API headers. Deduplicate before querying so the same repo is fetched once per run.

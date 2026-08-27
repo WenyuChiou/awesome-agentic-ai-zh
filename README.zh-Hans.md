@@ -254,7 +254,7 @@ cd awesome-agentic-ai-zh
 
 PR 流程跟 style 规范请看 [CONTRIBUTING.zh-Hans.md](CONTRIBUTING.zh-Hans.md) 和 [resources/style-guide.zh-Hans.md](resources/style-guide.zh-Hans.md)。
 
-> 🤖 **新增 project 的链接会自动过审核** — PR 一加新的 `github.com/owner/repo` 链接，一个 GitHub Action 会留言贴出它的 star 数、license、是否封存、最后更新，并对照策展标准标出已封存 / 停更（>6 个月）/ 无 license 的项目。纯信息、不挡 PR，收不收仍由 maintainer 决定（目前只在 maintainer 开的 branch 上跑，fork PR 因 token 限制暂略）。
+> 🤖 **Project 链接有两层自动检查** — maintainer branch 新增 repo 时，留言 bot 会贴出 stars、license、归档状态与最后更新；这一层只提供信息。另一个 read-only freshness gate 会在所有 PR（包括 fork）检查本次碰到的 repo entry，只有 404／搬家后仍用旧链接／归档却写成当前可用／明确 license 冲突等硬矛盾会阻挡；仅仅半年没有更新只会提醒，收不收仍由 maintainer 决定。
 
 > 📅 **想看最近 ship 了什么** → [`CHANGELOG.md`](CHANGELOG.md)（最近 14 天）。
 > Maintainer 内部进度与 launch checklist 放在 [.github/launch-checklist.md](.github/launch-checklist.md)（内部文件）。

@@ -78,6 +78,8 @@ A project worth listing must have:
 3. **Clear license**: MIT, Apache 2, BSD, or comparable. Avoid no-license repos.
 4. **Trustworthy maintainer**: well-known org, company, or individual with track record
 
+The automated check merges duplicate links to the same repo, then checks whether it moved, was archived or disabled, and which SPDX license GitHub reports. No push in six months is only a prompt to look again: a stable project with teaching value may stay when its status is clear. If the GitHub API cannot answer, the result says “unverified”; it never pretends everything is healthy.
+
 ## Bilingual Style
 
 - **Traditional Chinese (zh-TW) is canonical**; English (`*.en.md`) is the companion.

@@ -3,8 +3,9 @@ name: PR link audit (new repo links)
 # Advisory bot: when a PR adds a new github.com/owner/repo link, post a sticky
 # comment with that repo's stars / license / archived / last-push, checked
 # against CONTRIBUTING §策展標準 (maintained ≤6mo · clear license · not archived).
-# NEVER fails the build — it surfaces facts; the maintainer decides. No LLM, no
-# pip deps: gh CLI + stdlib Python only (scripts/pr-link-audit.py).
+# NEVER fails the build — it surfaces facts; the maintainer decides. The separate
+# Repository freshness workflow performs the fork-safe, blocking contradiction
+# check. No LLM, no pip deps: gh CLI + stdlib Python only.
 
 on:
   pull_request:
@@ -25,8 +26,8 @@ jobs:
   audit:
     name: Audit new repo links
     runs-on: ubuntu-latest
-    # Fork PRs get a read-only GITHUB_TOKEN, so the comment POST would 403.
-    # Skip them cleanly rather than fail; maintainer-side branches still run.
+    # This job only owns the optional sticky comment. Fork PRs still run the
+    # read-only Repository freshness check in repository-freshness.yml.
     if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v6

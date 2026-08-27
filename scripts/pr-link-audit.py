@@ -39,31 +39,15 @@ automatically on ubuntu-latest runners). stdlib-only — no pip deps.
 
 import argparse
 import json
-import re
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-# --- kept in sync with scripts/refresh-stars.py (same URL grammar) ------------
-# https://github.com/owner/repo  (stops at #, ?, /, ), or whitespace)
-GITHUB_RE = re.compile(r"https://github\.com/([\w.-]+)/([\w.-]+?)(?:[#?/)\s]|$)")
-
-# GitHub paths that are not repos (settings / marketplace / login / ...).
-NON_REPO_OWNERS = {
-    "settings", "marketplace", "login", "logout", "join",
-    "topics", "trending", "collections", "events", "explore",
-    "issues", "pulls", "notifications", "search", "new",
-    "organizations", "users", "blog", "about", "pricing",
-    "features", "security", "enterprise", "customer-stories",
-    "sponsors", "apps", "orgs",
-}
-PLACEHOLDER_REPOS = {
-    "owner/repo", "example/repo", "your-org/your-repo", "user/repo",
-}
-# Don't audit self-references to this very catalog.
-SELF_REPO = "wenyuchiou/awesome-agentic-ai-zh"
-# -----------------------------------------------------------------------------
+from repository_freshness import (
+    GITHUB_RE, NON_REPO_OWNERS, PLACEHOLDER_REPOS, SELF_REPO,
+    normalize_repo as _normalize_repo,
+)
 
 STALE_DAYS = 183  # ~6 months, matching CONTRIBUTING §策展標準 "最近 6 個月內有 commit"
 MARKER = "<!-- pr-link-audit -->"  # sticky-comment anchor used by the workflow
@@ -81,17 +65,7 @@ _DIFF_HEADER_PREFIXES = (
 
 def normalize_repo(owner: str, name: str) -> str | None:
     """Normalize an owner/name pair; return None to skip (non-repo / placeholder / self)."""
-    name = name.removesuffix(".git")
-    if not owner or not name:
-        return None
-    if owner in NON_REPO_OWNERS:
-        return None
-    repo_id = f"{owner}/{name}"
-    if repo_id in PLACEHOLDER_REPOS:
-        return None
-    if repo_id.lower() == SELF_REPO:
-        return None
-    return repo_id
+    return _normalize_repo(owner, name)
 
 
 def _repos_in_line(line: str) -> set[str]:

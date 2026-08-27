@@ -36,6 +36,25 @@ python scripts/refresh-stars.py --check
 
 依賴：`pip install requests` + `gh` CLI（`gh auth login`）
 
+## `check-repository-freshness.py` — 查 repo 狀態與文字矛盾
+
+它會把同一個 GitHub repo 的所有引用合併後只查一次。PR 模式只查本次新增或改寫的 Markdown 行；每週模式查完整清單，記錄搬家、封存、停用、授權、最後 push 與最新 release。
+
+```bash
+# 不連網：確認每個 tracked repo 都在快照裡
+python scripts/check-repository-freshness.py verify-snapshot
+
+# 查目前分支改到的 repo；硬矛盾會回傳 exit 1
+python scripts/check-repository-freshness.py changed --base origin/main --head HEAD
+
+# 維護者全量重查（需要 GitHub token 或 gh auth login）
+python scripts/check-repository-freshness.py full \
+  --update-baseline scripts/repository-freshness-snapshot.json \
+  --report repository-freshness-report.md
+```
+
+`--output-snapshot` 會誠實輸出本次掃描（包含 `unverified`），供 CI artifact 使用；`--update-baseline` 只有在全部 API 結果可驗證時才會覆蓋長期底稿。這個 gate 只驗 GitHub 能回答的事。半年沒 push 只會提醒，不會自動刪除仍然好用的穩定教材；模型價格、API 行為與教學品質仍要靠各章官方來源與人工複查。API 失敗或 rate limit 會明確標成 `unverified`，不能當作健康。
+
 ## `check-reader-ux.py` — 防止已整理章節重新變成文字牆
 
 它只檢查 `reader-ux-pages.yml` 已登記的三語頁面。它用保守的 source-level proxy 計算第一次開頁可見 Markdown 的非空白字元，也檢查預設展開數量、必須留在選單外的精確 heading／anchor，以及合併分類資源表的結構。這個數字可重複比較，但不等於瀏覽器 DOM 字數。
@@ -52,6 +71,7 @@ python scripts/check-reader-ux.py
 ## 建議的維護節奏
 
 - **每週**：`weekly-catalog-refresh` 跑 GitHub repo 快速連結檢查
+- **每週**：`repository-freshness` 對每個 unique repo 做一次完整狀態盤點並上傳報告
 - **每月**：`lint` workflow 跑一次完整 `check-links.py`，包含非 GitHub 連結
 - **星數刷新**：`weekly-catalog-refresh` CI 每週自動跑 `refresh-stars.py`（手動補跑可看大幅成長 / 衰退的 repo）
 - **每個 PR 與 main push**：`stage-template-check` 同時執行 reader-UX regression 與正式 gate
