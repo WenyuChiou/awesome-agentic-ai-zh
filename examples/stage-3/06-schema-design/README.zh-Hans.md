@@ -9,7 +9,7 @@
 
 > 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 70-150 行 illustrative 版、聚焦 `核心 pattern + 两条 SDK path`，不是进阶深度教材。深度教材推荐：
 > - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的 [Extra08 — 如何写出好的 Skill](https://github.com/datawhalechina/hello-agents/blob/main/Extra-Chapter/Extra08-如何写出好的Skill.md)**
-> - [OpenAI Function Calling guide](https://platform.openai.com/docs/guides/function-calling) + [schema 设计 cheatsheet](../../../resources/schema-design-cheatsheet.zh-Hans.md)
+> - [OpenAI Function Calling guide](https://developers.openai.com/api/docs/guides/function-calling) + [schema 设计 cheatsheet](../../../resources/schema-design-cheatsheet.zh-Hans.md)
 > - 完整 references 见 [Stage 3 精选 Projects](../../../stages/03-tool-use-and-hello-agent.zh-Hans.md#-精选-projects)
 
 
@@ -18,7 +18,7 @@
 Schema 是 **prompt 的一部分**、而且是模型做工具选择时**最依赖**的 prompt。这题用 `starter_bad` 与 `starter_good` 对照同一题：“把摄氏 32 度换成华氏”。
 
 - **Bad schema**：description 太短、参数都 string、没 required、没 enum → LLM 容易把温度转换丢给 `process_data`
-- **Good schema**：用途明确、`value: number`、`unit: enum["celsius", "fahrenheit"]`、required 都列好 → 稳定选到 `convert_temperature`
+- **Good schema**：用途明确、`value: number`、`unit: enum["celsius", "fahrenheit"]`、required 都列好 → 用固定 eval 测量是否更常选到 `convert_temperature`
 
 写 schema 不要只想“人看得懂”、要想“模型能不能用它排除错误工具”。
 
@@ -26,7 +26,7 @@ Schema 是 **prompt 的一部分**、而且是模型做工具选择时**最依�
 
 ### Path A（默认、本机免费、4 个 starter）
 
-```bash
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
@@ -35,23 +35,23 @@ python starter_bad.py    # 观察坏 schema 怎么让 qwen 挑错
 python starter_good.py   # 观察好 schema 怎么让 qwen 挑对
 ```
 
-预算：**$0**。
+预算：**$0 API 费用**；不包含硬件、内存与电力成本。
 
-### Path B（Anthropic、想看 cloud 高质量）
+### Path B（Anthropic、云端比较）
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = "your-key"
 
 python starter_bad_anthropic.py
 python starter_good_anthropic.py
 ```
 
-预算：每次 ≈ **$0.0005**（claude-haiku-4-5、单轮 call）。
+预算：每次先预留 **$0.05**。实际费用按 `输入 tokens × $1 / 1,000,000 + 输出 tokens × $5 / 1,000,000` 计算，Tool Use 还会加入 prompt tokens；价格查核日：`2026-08-27`。
 
 ## 不花钱验证程序逻辑（mock-based）
 
-```bash
+```powershell
 python test.py            # 验 Path A (Ollama) starter_bad + starter_good
 python test_anthropic.py  # 验 Path B (Anthropic) starter_*_anthropic
 ```
@@ -70,15 +70,15 @@ python test_anthropic.py  # 验 Path B (Anthropic) starter_*_anthropic
 
 ## 两个 path 的观察重点（教学重点）
 
-**小 model 对 schema 质量的敏感度比大 model 高**——这题在 Ollama 上**反而更有教学意义**：
+不同 model 对 schema 质量的反应可能不同；固定 prompt、schema 与测试题，用 eval 记录行为。这题在 Ollama 上也很适合观察这个差异：
 
 | 观察项 | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| Bad schema 仍能猜对 | 中-高机率 | 低机率（几乎必错） |
-| Good schema 选对 | 稳定 | 稳定 |
-| 差距 | 小 | 大 |
+| Bad schema 是否猜对 | 用固定 eval 测量 | 用固定 eval 测量 |
+| Good schema 是否选对 | 用固定 eval 测量 | 用固定 eval 测量 |
+| Bad／Good 差距 | 用固定 eval 测量 | 用固定 eval 测量 |
 
-换句话说：**写 schema 的功夫、在小 model 上能省下换大 model 的成本**。Production 想用便宜 model（qwen / mistral）？schema 必须写到能上线跑的程度。
+换句话说：schema 质量与模型行为要用固定 eval 一起测量。Production 想用便宜 model（qwen / mistral）？schema 必须写到能上线跑的程度。
 
 ## 延伸阅读
 

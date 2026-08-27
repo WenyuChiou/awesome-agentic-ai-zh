@@ -21,8 +21,17 @@ examples/
 │   │   ├── README.md            # 三语走查（+.zh-Hans.md +.en.md）
 │   │   └── requirements.txt     # 有上下限的依赖版本
 ├── stage-3/                     # Tool Use & Agent 入门
+│   ├── 01-function-calling/     # 练习 1：一个工具、一次调用
+│   │   ├── starter.py           # Ollama 路径
+│   │   ├── starter_anthropic.py # Anthropic 路径
+│   │   ├── test.py              # Ollama 路径自我验证
+│   │   ├── test_anthropic.py    # Anthropic 路径自我验证
+│   │   ├── README.md            # 三语走查（+.zh-Hans.md +.en.md）
+│   │   ├── README.en.md         # English walkthrough
+│   │   ├── README.zh-Hans.md    # 简体中文走查
+│   │   └── requirements.txt     # 有上下限的依赖版本
 │   ├── 03-react-from-scratch/   # 练习 3：从零实现 ReAct
-│   │   ├── starter.py           # 主程式（~70 行可跑）
+│   │   ├── starter.py           # 主程序
 │   │   ├── test.py              # 自我验证（pure assert、无 pytest）
 │   │   ├── README.md            # 200-400 字走查（+.zh-Hans.md +.en.md）
 │   │   └── requirements.txt     # 依赖钉版本
@@ -35,11 +44,14 @@ examples/
 
 ## 怎么跑任一个范例
 
-```bash
-cd examples/stage-3/03-react-from-scratch
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...   # 各范例顶端会说它要哪个 key
-python starter.py                     # 跑真的 API 看输出（会花一点点钱、约 $0.001）
+```powershell
+cd examples/stage-3/01-function-calling
+python -m pip install -r requirements.txt
+ollama pull qwen2.5:3b
+ollama serve
+python starter.py                     # Ollama 路径
+$env:ANTHROPIC_API_KEY = "your-key"
+python starter_anthropic.py           # Anthropic 路径
 python test.py                        # 跑验证（用 mock、不花钱）
 ```
 
@@ -70,7 +82,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 ## 三条路径 — **默认用 Ollama（成本考量）**
 
-> 💰 **为什么默认 Ollama？** 练习场景跑 1000 次跑满 Sonnet ~$4、跑 haiku ~$0.25、跑本机 Ollama $0。**学习阶段不该被 API 成本卡住**。Cloud LLM 留给“想看高质量答案 / production deployment”时用。
+> 💰 **为什么默认 Ollama？** Ollama 的 API 成本是 $0，但不包含硬件和电费。Cloud LLM 按 token 计费：Haiku 4.5 每 1M input $1、每 1M output $5；预留 $0.05，用 `（input_tokens × $1 + output_tokens × $5） / 1,000,000` 估算，并以 2026-08-27 的官方定价核对。**学习阶段不该被 API 成本卡住**。
 
 每个练习都同时提供 3 条路径：
 
@@ -78,15 +90,15 @@ if hasattr(sys.stdout, "reconfigure"):
 - 预设 `starter.py` / 第一个 inline `<details markdown="1">` 用本机 LLM
 - 需 [Ollama](https://ollama.com)、按 stage pull 对应 model：
   - **Stage 1 + 2**（纯 chat / prompt eng）：`ollama pull gemma4:e4b`（~7.5 GB、多模态、CPU 跑得动）
-  - **Stage 3+**（tool use / agent）：`ollama pull qwen2.5:3b`（1.9 GB、tool-use 支持稳定）
-- 全程 $0、offline、隐私敏感资料 OK
+  - **Stage 3+**（tool use / agent）：`ollama pull qwen2.5:3b`（1.9 GB；模型表现会变化，请在自己的电脑上运行文件夹内的固定测试）
+- Ollama API 成本是 $0（不包含硬件和电费）、offline、隐私敏感资料 OK
 - SDK 用 `openai` package（OpenAI 兼容 API）、`base_url="http://localhost:11434/v1"`
 - 适合：所有读者（默认推这条）
 
 ### Path B（选择性）— Anthropic API（想看 cloud 高质量时）
 - 对照 `starter_anthropic.py`（folder）或第二个 inline `<details markdown="1">` 区块
-- 需 `ANTHROPIC_API_KEY`、跑一轮约 $0.001（haiku）/ $0.004（sonnet）
-- 答案质量 / latency 都比本机 Ollama 强
+- 需 `ANTHROPIC_API_KEY`；按 Haiku 4.5 每 1M input $1、每 1M output $5 的公式估算，预留 $0.05，并以 2026-08-27 的官方定价核对
+- 行为会随模型、提示和硬件而变；用固定 eval 实测
 - 适合：production 要求高质量、需要 long-context、Stage 7 production tier
 
 ### Path C（验逻辑、不打 API）
@@ -97,10 +109,10 @@ if hasattr(sys.stdout, "reconfigure"):
 
 | 维度 | A Ollama（默认）| B Anthropic | C Mock |
 |---|---|---|---|
-| Cost / call | $0 | ~$0.001-0.004 | $0 |
+| Cost / call | $0（不含硬件／电费） | $0.05 预留；按上方 token 公式 | $0 |
 | 需要 | Ollama install | API key | 无 |
-| 答案质量 | 中（3-4B model） | 高 | 预设、看不出真实质量 |
-| 速度 | 5-30s/call（无 GPU） | ~1-3s/call | <0.1s |
+| 答案质量 | 会变化；请运行文件夹内的固定测试 | 会变化；请用同一组固定测试比较 | 预设答案，看不出模型的真实表现 |
+| 速度 | 依硬件；用固定 eval 实测 | 依服务；用固定 eval 实测 | 依环境；用固定 eval 实测 |
 | Offline | ✅ | ❌ | ✅ |
 | 隐私敏感资料 | ✅ | ❌ | ✅ |
 | Stage 3+ tool use | ✅（qwen2.5 / llama3.2） | ✅ | ✅ |
@@ -113,16 +125,21 @@ if hasattr(sys.stdout, "reconfigure"):
 > 本机 + cloud、user 视角。  
 > 💡 不是要你全装、是让你看到“练习用哪个”“production 升级到哪个”。**Claude 是 canonical / production 主轴；Ollama 是练习默认**。
 
+不知道怎么选时：Stage 1–2 用 `gemma4:e4b`，Stage 3 起用 `qwen2.5:3b`；想做 cloud 对照再用 Haiku 4.5。
+
+<details markdown="1">
+<summary>📚 展开：模型详表、价格和替代供应商</summary>
+
 ### 本机 LLM（练习默认、用 Ollama）
 
 | Model | 下载大小 | 建议 RAM | 对应 Stage | Tool-use | 速度（CPU/GPU） | 主用途 |
 |---|---|---|---|---|---|---|
 | **`gemma4:e4b`** ⭐ | 7.5 GB | 8 GB | 1+2 | 基本 | 慢 / 中 | Stage 1-2 纯 chat / prompt eng（默认）|
-| **`qwen2.5:3b`** ⭐ | 1.9 GB | 4 GB | 3+ | **稳定** | 中 / 快 | Stage 3+ tool use / agent（默认）|
-| `llama3.2:3b` | 2.0 GB | 4 GB | 3+ | 稳定 | 中 / 快 | qwen2.5:3b 的替代 |
-| `mistral-nemo:12b` | 7.1 GB | 16 GB | 3+ | 强 | 慢 / 中 | 想看更接近 cloud 质量 |
-| `qwen2.5:14b` | 9.0 GB | 16 GB | 进阶 | 强 | 慢 / 中 | 大 model 对照（需 GPU 偏好）|
-| `gemma4:e2b` | 4.0 GB | 4 GB | 1+2 | 基本 | 中 / 快 | 4GB RAM 机器替代 |
+| **`qwen2.5:3b`** ⭐ | 1.9 GB | 4 GB | 3+ | 会变化；请运行固定测试 | 依硬件实测 | Stage 3+ tool use / agent（默认）|
+| `llama3.2:3b` | 2.0 GB | 4 GB | 3+ | 会变化；请运行固定测试 | 依硬件实测 | qwen2.5:3b 的替代 |
+| `mistral-nemo:12b` | 7.1 GB | 16 GB | 3+ | 会变化；请运行固定测试 | 依硬件实测 | 用固定 eval 比较 |
+| `qwen2.5:14b` | 9.0 GB | 16 GB | 进阶 | 会变化；请运行固定测试 | 依硬件实测 | 大 model 对照 |
+| `gemma4:e2b` | 4.0 GB | 4 GB | 1+2 | 基本 | 依硬件实测 | 4GB RAM 机器替代 |
 
 安装：`ollama pull <model>` + `ollama serve`。详细硬件配置看 [resources/cli-agents-guide.zh-Hans.md](../resources/cli-agents-guide.zh-Hans.md)。
 
@@ -131,13 +148,13 @@ if hasattr(sys.stdout, "reconfigure"):
 | Model | 每 1M input | 每 1M output | Context | 主用途 |
 |---|---|---|---|---|
 | `claude-fable-5` | $10 | $50 | 1M | Mythos 级（位阶在 Opus 之上）；2026-06-12 暂停、**2026-07-01 恢复**（出口管制解除）——目前最高阶的 Claude 层级 |
-| **`claude-haiku-4-5`** ⭐ | $1 | $5 | 200k | 最便宜、Stage 1-7 练习 cloud 对照都 OK |
-| **`claude-sonnet-5`** ⭐ | $3 | $15 | 1M | **production 默认**、Stage 5+ agent 开发 |
+| **`claude-haiku-4-5-20251001`** ⭐ | $1 | $5 | 200k | Stage 1-7 练习 cloud 对照 |
+| **`claude-sonnet-5`** ⭐ | $2 | $10 | 1M | **production 默认**、Stage 5+ agent 开发 |
 | `claude-opus-5` | $5 | $25 | 1M | Opus 级旗舰（2026-07-24 推出、接替 Opus 4.8、同价）、复杂推理 / 长 context refactor |
 
-> 💰 **Sonnet 5 目前是优惠价**：[官方定价页](https://platform.claude.com/docs/en/about-claude/pricing) 标明 **2026-08-31 前为 $2 / $10**、2026-09-01 起才回到表中的 $3 / $15。下面的预算估算用的是回归后的标准价，所以现在实际跑会比估算便宜约三分之一。
+> 💰 API 价格已于 **2026-08-27** 对照 [Anthropic 官方定价页](https://platform.claude.com/docs/en/about-claude/pricing)。价格会变化；真正运行前请再看一次官方页面。
 
-订阅替代：Claude Pro $20/月含 Sonnet 用量、Claude Max $100/月含 Opus。详细看 [resources/cli-agents-guide.zh-Hans.md](../resources/cli-agents-guide.zh-Hans.md)。
+如果你使用订阅方案而不是 API 计费，请看官方方案页面；订阅额度和 API 费用不是一回事。工具选择详见 [resources/cli-agents-guide.zh-Hans.md](../resources/cli-agents-guide.zh-Hans.md)。
 
 ### Cloud LLM 中国 / 开源 alternatives（地区限制 / 预算敏感 / 中文场景）
 
@@ -182,23 +199,30 @@ r = client.chat.completions.create(model="meta/llama-3.3-70b-instruct", messages
 | 情境 | 选 | 理由 |
 |---|---|---|
 | 中国大陆、无 cloud 访问 | Ollama 本机 / DeepSeek API | 本机免费；DeepSeek 在中国有 endpoint |
-| 预算极敏感（< $1/月） | DeepSeek API | 比 haiku 便宜约 7 倍、质量接近 |
+| 预算极敏感（< $1/月） | DeepSeek API | 列示 token 价格较低；用固定 eval 核对行为 |
 | 大文件 / 长文档 RAG | Moonshot Kimi | 1M token context 卖点 |
 | 中文 native task（古文、中文搜索）| Qwen / GLM | 训练语料中文占比高 |
 | 想试 10+ open model 没 GPU | NVIDIA NIM | 一个 key 玩 Llama / Mixtral / Qwen / DeepSeek |
-| Production agent（agent / tool use）| Anthropic Claude（canonical）| 本 repo Path B 默认、tool calling 最稳 |
+| Production agent（agent / tool use）| Anthropic Claude（canonical）| 本 repo Path B 默认；用固定 eval 核对 tool calling 行为 |
 
-### 预算估算（跑完 Stage 1-7 全 54 练习）
+</details>
 
-| 学习路径 | 总时间 | 总成本 | 适合谁 |
+### 预算和时间怎么估（Stage 1–7 共 54 个练习）
+
+<details markdown="1">
+<summary>💰 展开：按自己的电脑和 token 用量计算</summary>
+
+| 学习路径 | 时间怎么估 | 成本怎么估 | 适合谁 |
 |---|---|---|---|
-| **全本机 Ollama** | ~30 hr (CPU) / ~10 hr (GPU) | **$0** | 预算敏感、隐私需求、中国大陆无 cloud 访问 |
-| **混合：本机练 + haiku 终验** ⭐ | ~30 hr | **$2-5** | **推荐默认**：练习 local 跑、最后 1-2 次用 haiku 看 cloud 质量 |
-| **全 haiku** | ~10 hr | $5-15 | 想快、预算允许、想看完整 cloud 体验 |
-| **全 sonnet** | ~8 hr | $20-50 | 深度练习、追求高质量答案 |
-| **混合：sonnet 为主 + opus 难题** | ~8 hr | $30-80 | 已是 production agent 开发者 |
+| **全本机 Ollama** | 用一个练习实测，再乘预计练习数 | API $0；不含硬件和电费 | 预算敏感、隐私需求、中国大陆无 cloud 访问 |
+| **混合：本机练 + Haiku 终验** ⭐ | 本机实测时间 + cloud 调用次数 | 本机 API $0；cloud 按 Haiku token 公式 | **推荐默认**：先本机练，最后用同一组固定测试核对 cloud 行为 |
+| **全 Haiku** | 按服务速度和调用次数实测 | `（input × $1 + output × $5）/ 1,000,000` | 想看完整 cloud 体验 |
+| **全 Sonnet** | 按服务速度和调用次数实测 | `（input × $2 + output × $10）/ 1,000,000` | 深度练习和 production 对照 |
+| **Sonnet 为主 + Opus 难题** | 按两种模型的调用次数实测 | 分别用官方 token 单价计算后相加 | 已是 production agent 开发者 |
 
-> 🎯 **新手默认**：先全本机跑、预算上限 $5。**Stage 7 production tier 才考虑 sonnet 升级**。
+> 🎯 **新手默认**：先在本机运行。要用 cloud 前，先用公式估算，再在供应商账户设置你能接受的费用上限。**Stage 7 production tier 才考虑 Sonnet 升级**。
+
+</details>
 
 ### 怎么从 Ollama 换到 Anthropic？
 
@@ -213,7 +237,7 @@ r = client.chat.completions.create(model="gemma4:e4b", ...)
 # 换成这个（Path B、若有 ANTHROPIC_API_KEY）：
 import anthropic
 client = anthropic.Anthropic()
-r = client.messages.create(model="claude-haiku-4-5", ...)
+r = client.messages.create(model="claude-haiku-4-5-20251001", ...)
 ```
 
 主要差异：messages create 方法名、response shape（`choices[0].message.content` vs `content[0].text`）、tool spec wrap（OpenAI 多一层 `{"type": "function", "function": {...}}`）。详细对照表见 [`resources/cli-agents-guide.zh-Hans.md`](../resources/cli-agents-guide.zh-Hans.md)。
@@ -224,7 +248,7 @@ r = client.messages.create(model="claude-haiku-4-5", ...)
 |---|---|---|
 | 1 LLM 基础 | 6 个 | inline 4 + folder 2（`examples/stage-1/`） |
 | 2 Prompt eng | 4 个 | inline 3 + folder 1（`examples/stage-2/`） |
-| **3 Tool use** | **6 个** | inline 1 + folder 5（`examples/stage-3/`） |
+| **3 Tool use** | **6 个** | folder 6（`examples/stage-3/`） |
 | 4 Frameworks | 5 个 | 全 folder（`examples/stage-4/`） |
 | 5 Claude Code 生态 | 11 个 | inline 6 + folder 5（`examples/stage-5/`） |
 | 6 Memory/RAG | 5 个 | 全 folder（`examples/stage-6/`） |

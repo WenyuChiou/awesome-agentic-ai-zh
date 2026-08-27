@@ -1,2 +1,2 @@
-openai>=1.50,<2.0
-anthropic>=0.40,<1.0   # 只 starter_anthropic.py 需要、Ollama path 不用
+openai>=3.5,<4
+anthropic>=1.1,<2  # Only Anthropic starters need this package.

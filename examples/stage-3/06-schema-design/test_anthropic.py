@@ -62,10 +62,52 @@ def test_good_schema_has_required_fields_and_enum():
     assert "required" not in bad_temp["input_schema"]
     assert good_temp["input_schema"]["required"] == ["value", "unit"]
     assert good_temp["input_schema"]["properties"]["unit"]["enum"] == ["celsius", "fahrenheit"]
+    assert good_temp["input_schema"]["additionalProperties"] is False
+
+
+def test_application_rejects_untrusted_calls_for_both_schemas():
+    _, bad_unknown = bad.execute_tool("delete_everything", {})
+    _, good_wrong_shape = good.execute_tool("convert_temperature", [32, "celsius"])
+    _, good_missing = good.execute_tool("convert_temperature", {"value": 32})
+    _, bad_missing = bad.execute_tool("convert_temperature", {"value": "32"})
+    _, bad_unit = bad.execute_tool(
+        "convert_temperature", {"value": "32", "unit": "kelvin-ish"}
+    )
+    _, bad_extra = bad.execute_tool("process_data", {"data": "rows", "unexpected": "x"})
+    _, bad_wrong_type = bad.execute_tool("process_data", {"data": 42})
+    _, good_extra = good.execute_tool("convert_temperature", {"value": 32, "unit": "celsius", "unexpected": 1})
+    _, good_wrong_type = good.execute_tool("convert_temperature", {"value": True, "unit": "celsius"})
+    _, good_bad_rows = good.execute_tool("process_data", {"data": ["row"], "operation": "count_rows"})
+    _, good_bad_operation = good.execute_tool("process_data", {"data": [], "operation": "delete_rows"})
+    assert bad_unknown["error"] == "tool not allowed"
+    assert good_wrong_shape["error"] == "arguments must be an object"
+    assert good_missing["error"] == "arguments contain unexpected or missing fields"
+    assert bad_missing["error"] == "arguments contain unexpected or missing fields"
+    assert bad_unit["error"] == "unit must be celsius or fahrenheit"
+    assert bad_extra["error"] == "arguments contain unexpected or missing fields"
+    assert bad_wrong_type["error"] == "data must be a non-empty string"
+    assert good_extra["error"] == "arguments contain unexpected or missing fields"
+    assert good_wrong_type["error"] == "value must be a number"
+    assert good_bad_rows["error"] == "data must be a list of objects"
+    assert good_bad_operation["error"] == "operation must be count_rows or list_columns"
+
+
+def test_multiple_calls_are_not_partially_executed():
+    client = MagicMock()
+    client.messages.create.return_value = make_resp(
+        "tool_use",
+        block_tool_use("t1", "convert_temperature", {"value": 32, "unit": "celsius"}),
+        block_tool_use("t2", "process_data", {"data": [], "operation": "count_rows"}),
+    )
+    result = good.select_and_run("Do both", client=client)
+    assert result["tool"] is None
+    assert "expected one" in result["observation"]["error"]
 
 
 if __name__ == "__main__":
     test_bad_schema_can_select_wrong_tool()
     test_good_schema_selects_temperature_tool()
     test_good_schema_has_required_fields_and_enum()
+    test_application_rejects_untrusted_calls_for_both_schemas()
+    test_multiple_calls_are_not_partially_executed()
     print("all pass")

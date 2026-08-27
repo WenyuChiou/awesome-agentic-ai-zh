@@ -141,6 +141,8 @@ Path A 的 **API 费用是 `$0`**；仍会使用你的硬件、内存与电力�
 
 完成后，你会看到模型先生成 `get_weather` Tool Call，程序执行它，再由模型用 Tool Result 回答。
 
+如果你偏好使用文件实现，可以打开[练习 1 完整文件夹](../examples/stage-3/01-function-calling/README.zh-Hans.md)。
+
 **第一步**：复制并运行 `ollama pull qwen2.5:3b`。接着展开 Path A，把完整程序直接复制成 `hello_tool.py`。
 
 <details markdown="1">

@@ -14,10 +14,9 @@
     python test.py   （用 mock、不打 API）
 
 想看 Anthropic Claude 版本：
-    python starter_anthropic.py   （需 ANTHROPIC_API_KEY、$0.003/run）
+    python starter_anthropic.py   （需 ANTHROPIC_API_KEY；每次先保留 $0.05）
 
-⚠️ 注意：小 model 對 retry_hint 的 follow-up 較弱、可能直接放棄或無視 hint。
-這恰好是教學點——同樣 structured error pattern、不同 model 的「閱讀力」差。
+⚠️ 不同模型、版本與 prompt 對 retry hint 的反應會變；請用固定失敗情境做 eval。
 """
 
 from __future__ import annotations
@@ -59,10 +58,30 @@ TOOLS_SPEC = [
                 "type": "object",
                 "properties": {"city": {"type": "string", "description": "City name"}},
                 "required": ["city"],
+                "additionalProperties": False,
             },
         },
     }
 ]
+
+
+def execute_tool(name: str, raw_arguments: str) -> tuple[dict, dict, bool]:
+    """Validate an untrusted call and always return a structured result."""
+    if name != "fetch_weather":
+        return {}, {"error": "tool not allowed", "retry_hint": "choose fetch_weather"}, True
+    try:
+        args = json.loads(raw_arguments)
+    except (TypeError, json.JSONDecodeError):
+        return {}, {"error": "invalid arguments", "retry_hint": "send a JSON object with city"}, True
+    if (
+        not isinstance(args, dict)
+        or set(args) != {"city"}
+        or not isinstance(args.get("city"), str)
+        or not args["city"].strip()
+    ):
+        return args if isinstance(args, dict) else {}, {"error": "invalid arguments", "retry_hint": "city must be a non-empty string"}, True
+    observation = fetch_weather(args["city"].strip())
+    return args, observation, "error" in observation
 
 
 def react_loop(question: str, max_iter: int = 5, client: Any = None) -> dict:
@@ -93,20 +112,28 @@ def react_loop(question: str, max_iter: int = 5, client: Any = None) -> dict:
             ]
         messages.append(assistant_entry)
 
-        if resp.choices[0].finish_reason == "stop" or not tool_calls:
-            trace.append({"step": step, "thought": text, "tool": None, "obs": None})
-            return {"final": text, "trace": trace, "steps": step + 1}
+        finish_reason = resp.choices[0].finish_reason
+        if not tool_calls:
+            trace.append({"step": step, "assistant_text": text, "tool": None, "obs": None})
+            if finish_reason == "stop":
+                return {"final": text, "trace": trace, "steps": step + 1}
+            return {
+                "final": None,
+                "trace": trace,
+                "steps": step + 1,
+                "terminal_reason": finish_reason or "missing_tool_call",
+                "truncated": finish_reason == "length",
+            }
 
         for tc in tool_calls:
-            args = json.loads(tc.function.arguments)
-            obs = fetch_weather(args["city"]) if tc.function.name == "fetch_weather" else {"error": "unknown tool"}
+            args, obs, _ = execute_tool(tc.function.name, tc.function.arguments)
             # OpenAI-compat 的 tool message content 接受字串、把 dict 序列化
             messages.append({
                 "role": "tool",
                 "tool_call_id": tc.id,
                 "content": json.dumps(obs, ensure_ascii=False),
             })
-            trace.append({"step": step, "thought": text, "tool": tc.function.name, "tool_input": args, "obs": obs})
+            trace.append({"step": step, "assistant_text": text, "tool": tc.function.name, "tool_input": args, "obs": obs})
 
     return {"final": None, "trace": trace, "steps": max_iter, "truncated": True}
 
@@ -126,4 +153,5 @@ if __name__ == "__main__":
     # 寬鬆驗證：loop 至少要看到結構化 error 在 trace 裡（小 model 不一定 retry）
     saw_error = any(isinstance(e["obs"], dict) and "error" in e["obs"] for e in result["trace"])
     assert saw_error, "預期至少一輪 tool 回傳結構化 error"
+    assert result["steps"] <= 5, "loop 不可超過 max_iter"
     print("✅ 練習 5 通過 — 你已用本機 qwen2.5:3b 看見 tool error 在 ReAct loop 裡是 data 不是 exception、$0/run")

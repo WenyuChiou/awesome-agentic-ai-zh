@@ -17,30 +17,30 @@ Corresponds to [Stage 3 — Tool Use & Agent Intro](../../../stages/03-tool-use-
 
 Extends the ReAct loop from Exercise 3 into a **3-5 step task**: look up Taipei population → look up NY population → divide → convert to percentage. The LLM plans the next step; the tools reliably execute small actions. Together they look like an agent that can complete a workflow.
 
-It's also a great place to feel **model scale vs multi-step stability**. Same loop, claude-haiku usually finishes in 4 steps; qwen2.5:3b may skip a step (e.g., forget to convert to percentage) or stop too early.
+This is a good place to observe how models behave differently on multi-step tasks; a run may skip a step or stop early. Keep the prompt, tools, and test set fixed, and use an eval to record each step’s successes and failures.
 
 ## How to run — two paths
 
 ### Path A (default, free, local)
 
-```bash
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-Budget: **$0**. A 4-5 round loop takes ~30-120s on CPU.
+Budget: **$0 API cost**; hardware, memory, and electricity are excluded.
 
-### Path B (Anthropic, cloud-quality comparison)
+### Path B (Anthropic, cloud comparison)
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = "your-key"
 python starter_anthropic.py
 ```
 
-Budget: ~**$0.005** per run (claude-haiku-4-5, 5 rounds of accumulating messages).
+Budget: reserve **$0.05** per run. Actual cost is `input tokens × $1 / 1,000,000 + output tokens × $5 / 1,000,000`; Tool Use also adds prompt tokens. Prices checked on `2026-08-27`.
 
 Expected output (Path A, local, ideal 4-step path):
 
@@ -59,7 +59,7 @@ Expected output (Path A, local, ideal 4-step path):
 
 ## Validate the logic without API credits (mock-based)
 
-```bash
+```powershell
 python test.py            # validates Path A (Ollama) starter.py logic
 python test_anthropic.py  # validates Path B (Anthropic) starter_anthropic.py logic
 ```
@@ -70,7 +70,7 @@ Both test suites use `unittest.mock`, no real API call, $0/run.
 
 The core of multi-step tasks isn't "the model is good at math" — it's breaking a complex task into reliable small steps:
 
-- **Tools should be narrow and stable**: `divide(a, b)` does one thing; even `b=0` doesn't crash, it returns 0
+- **Tools should be narrow and bounded**: `divide(a, b)` does one thing; even `b=0` doesn't crash, it returns 0
 - **The LLM plans**: decides which tool to call next and when to stop
 - **`max_iter=8` is a mandatory safety net**: prevents the model from looping forever without finishing
 - **`messages` grows each round**: assistant response + tool_result are appended so the LLM can see history
@@ -79,26 +79,26 @@ The core of multi-step tasks isn't "the model is good at math" — it's breaking
 
 | Observation | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| Probability of completing 4 steps | High | Medium (may skip "to_percentage") |
-| Step ordering | Stable | Can swap order |
-| End-turn detection | Reliable `end_turn` | May add a redundant tool call before stopping |
-| Cost per run | $0.005 | $0 |
+| Completing 4 steps | Measure with a fixed eval | Measure with a fixed eval |
+| Step ordering | Measure with a fixed eval | Measure with a fixed eval |
+| End-turn detection | Measure with a fixed eval | Measure with a fixed eval |
+| Budget reserve | $0.05 | $0 API cost |
 
-This is precisely the teaching point of Exercise 4 — **same ReAct loop, different model, which step breaks first**. When picking a production model, multi-step stability is as important as cost.
+This is precisely the teaching point of Exercise 4 — **same ReAct loop, different model, which step breaks first**. For production, measure behavior and cost with a fixed eval.
 
 ## Want smarter answers?
 
-Default is `claude-haiku-4-5` (cheapest). Try Sonnet:
+Default is the pinned ID `claude-haiku-4-5-20251001`. To compare Sonnet:
 
-```bash
-MODEL=claude-sonnet-5 python starter_anthropic.py
+```powershell
+$env:MODEL = "claude-sonnet-5"; python starter_anthropic.py
 ```
 
 Or on the Ollama path, swap to a larger model:
 
-```bash
-MODEL=qwen2.5:7b python starter.py    # 4.7 GB, more stable
-MODEL=mistral-nemo:12b python starter.py  # 7.1 GB, closer to cloud
+```powershell
+$env:MODEL = "qwen2.5:7b"; python starter.py
+$env:MODEL = "mistral-nemo:12b"; python starter.py
 ```
 
 ## Extensions

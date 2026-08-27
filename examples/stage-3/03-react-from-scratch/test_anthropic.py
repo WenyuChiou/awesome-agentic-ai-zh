@@ -21,7 +21,7 @@ if hasattr(sys.stdout, "reconfigure"):
 from unittest.mock import MagicMock
 from types import SimpleNamespace
 
-from starter_anthropic import react_loop, tool_calculator, tool_lookup_fact
+from starter_anthropic import execute_tool, react_loop, tool_calculator, tool_lookup_fact
 
 
 # === Helpers for building mock Anthropic responses ===
@@ -46,10 +46,15 @@ def test_calculator_basic():
     print("✅ test_calculator_basic")
 
 
-def test_calculator_rejects_eval_injection():
-    out = tool_calculator("__import__('os').system('ls')")
-    assert out.startswith("error:"), f"預期 reject，得到 {out}"
-    print("✅ test_calculator_rejects_eval_injection")
+def test_calculator_rejects_unsafe_expressions():
+    expressions = [
+        "2 ** 3", "7 // 2", "10 ** 1000", "1000000000001",
+        "-" * 20 + "1", "1+" * 100 + "1",
+        "__import__('os').system('ls')", "1 / 0",
+    ]
+    for expression in expressions:
+        assert tool_calculator(expression).startswith("error:"), expression
+    print("✅ test_calculator_rejects_unsafe_expressions")
 
 
 def test_lookup_fact():
@@ -124,11 +129,42 @@ def test_react_loop_respects_max_iter():
     print("✅ test_react_loop_respects_max_iter")
 
 
+def test_invalid_tool_call_is_marked_as_error():
+    client = MagicMock()
+    client.messages.create.side_effect = [
+        make_resp("tool_use", block_tool_use("bad", "calculator", {})),
+        make_resp("end_turn", block_text("The tool failed.")),
+    ]
+    result = react_loop("calculate", client=client)
+    sent_block = client.messages.create.call_args_list[1].kwargs["messages"][-2]["content"][0]
+    assert sent_block["is_error"] is True
+    assert result["trace"][0]["obs"].startswith("error:")
+    _, unknown, unknown_error = execute_tool("delete_everything", {})
+    _, extra, extra_error = execute_tool("calculator", {"expression": "2 + 2", "unexpected": "x"})
+    _, wrong_type, wrong_type_error = execute_tool("calculator", {"expression": 4})
+    _, empty, empty_error = execute_tool("lookup_fact", {"query": "  "})
+    assert unknown_error is True and "not allowed" in unknown
+    assert extra_error is True and extra.startswith("error:")
+    assert wrong_type_error is True and wrong_type.startswith("error:")
+    assert empty_error is True and empty.startswith("error:")
+
+
+def test_non_end_turn_is_not_a_final_answer():
+    client = MagicMock()
+    client.messages.create.return_value = make_resp("max_tokens", block_text("unfinished"))
+    result = react_loop("too long", client=client)
+    assert result["final"] is None
+    assert result["terminal_reason"] == "max_tokens"
+    assert result["truncated"] is True
+
+
 if __name__ == "__main__":
     test_calculator_basic()
-    test_calculator_rejects_eval_injection()
+    test_calculator_rejects_unsafe_expressions()
     test_lookup_fact()
     test_react_loop_single_tool_call()
     test_react_loop_multi_step()
     test_react_loop_respects_max_iter()
+    test_invalid_tool_call_is_marked_as_error()
+    test_non_end_turn_is_not_a_final_answer()
     print("\n🎉 全部通過 — 你的 ReAct loop 邏輯正確")

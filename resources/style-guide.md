@@ -250,6 +250,8 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 
 </details>
 
+可執行資料夾必須先提供可直接複製的 PowerShell 指令，再用預設收合的 `<details>` 提供 macOS/Linux 替代指令；同時提供 Path A 與 Path B 腳本，以及不打 API 的 offline mock tests。SDK 依賴要限制 major version，cloud model 要使用釘住的 model ID；執行前必須驗證不受信任的工具名稱與參數。Cloud 成本寫成 token 公式並標示核對日期，不要假設一個固定金額。
+
 [3-5 個動手練習 items]
 
 ## 🎯 精選 Projects

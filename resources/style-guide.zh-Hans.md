@@ -253,6 +253,8 @@ PR 之前请先读完本文。项目维护者也会用这份指南做 review。
 
 </details>
 
+可运行文件夹必须先提供可直接复制的 PowerShell 指令，再用默认收合的 `<details>` 提供 macOS/Linux 替代指令；同时提供 Path A 和 Path B 脚本，以及不调用 API 的 offline mock tests。SDK 依赖要限制 major version，cloud model 要使用钉住的 model ID；执行前必须验证不受信任的工具名称和参数。Cloud 成本写成 token 公式并标注核对日期，不要假设一个固定金额。
+
 [3-5 个动手练习 items]
 
 ## 🎯 精选 Projects

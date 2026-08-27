@@ -23,24 +23,24 @@ Core idea: **tool errors are data, not exceptions**. Return structured dicts, do
 
 ### Path A (default, free, local)
 
-```bash
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-Budget: **$0**. A 3-round loop takes ~10-60s.
+Budget: **$0 API cost**; hardware, memory, and electricity are excluded.
 
-### Path B (Anthropic, cloud-quality comparison)
+### Path B (Anthropic, cloud comparison)
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = "your-key"
 python starter_anthropic.py
 ```
 
-Budget: ~**$0.003** per run (claude-haiku-4-5, 3 rounds of accumulating messages).
+Budget: reserve **$0.05** per run. Actual cost is `input tokens × $1 / 1,000,000 + output tokens × $5 / 1,000,000`; Tool Use also adds prompt tokens. Prices checked on `2026-08-27`.
 
 Expected output (Path A, local, ideal retry-then-succeed path):
 
@@ -56,7 +56,7 @@ Expected output (Path A, local, ideal retry-then-succeed path):
 
 ## Validate the logic without API credits (mock-based)
 
-```bash
+```powershell
 python test.py            # validates Path A (Ollama) starter.py logic
 python test_anthropic.py  # validates Path B (Anthropic) starter_anthropic.py logic
 ```
@@ -77,26 +77,26 @@ Returning just `"failed"` leaves the model with nothing to act on. Adding `retry
 
 ## What to watch on each path
 
-**Side observation**: small models (qwen2.5:3b) follow `retry_hint` less reliably than Claude — they might give up immediately or ignore the hint and repeat the same call. **That's exactly the teaching point**: in production, the same retry pattern produces different behaviors depending on how well a model reads structured errors — a real consideration when picking a model (we'll revisit in Stage 7).
+**Side observation**: models may respond differently to `retry_hint`: they may give up, ignore the hint, or repeat the same call. Keep the prompt, error, and test set fixed; use an eval to record structured-error handling. This is also evidence for production model selection (we’ll revisit it in Stage 7).
 
 | Observation | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| Retries on `retry_hint` | High | Medium (may give up) |
-| Graceful end after repeated failure | Stable | May retry a third time |
-| Distinguishing transient vs permanent | Finer | Coarser |
+| Retries on `retry_hint` | Measure with a fixed eval | Measure with a fixed eval |
+| Graceful end after repeated failure | Measure with a fixed eval | Measure with a fixed eval |
+| Distinguishing transient vs permanent | Measure with a fixed eval | Measure with a fixed eval |
 
 ## Want smarter answers?
 
-Default is `claude-haiku-4-5` (cheapest). Try Sonnet:
+Default is the pinned ID `claude-haiku-4-5-20251001`. To compare Sonnet:
 
-```bash
-MODEL=claude-sonnet-5 python starter_anthropic.py
+```powershell
+$env:MODEL = "claude-sonnet-5"; python starter_anthropic.py
 ```
 
 Or on the Ollama path, swap to a larger model:
 
-```bash
-MODEL=qwen2.5:7b python starter.py
+```powershell
+$env:MODEL = "qwen2.5:7b"; python starter.py
 ```
 
 ## Extensions

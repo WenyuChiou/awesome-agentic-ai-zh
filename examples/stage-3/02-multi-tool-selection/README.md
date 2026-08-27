@@ -21,24 +21,24 @@
 
 ### Path A（默認、本機免費）
 
-```bash
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-預算：**$0**。qwen2.5:3b 單輪 tool call ≈ 1-5 秒（CPU 慢、GPU 快）。
+預算：**$0 API 費用**；不包含硬體、記憶體與電力成本。
 
-### Path B（Anthropic、想看 cloud 高品質）
+### Path B（Anthropic、雲端比較）
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = "your-key"
 python starter_anthropic.py
 ```
 
-預算：每次 ≈ **$0.0005**（claude-haiku-4-5）。
+預算：每次先保留 **$0.05**。實際費用依 `輸入 tokens × $1 / 1,000,000 + 輸出 tokens × $5 / 1,000,000` 計算，Tool Use 還會加入 prompt tokens；價格查核日：`2026-08-27`。
 
 預期看到（Path A、本機）：
 
@@ -52,7 +52,7 @@ python starter_anthropic.py
 
 ## 不花錢驗證程式邏輯（mock-based）
 
-```bash
+```powershell
 python test.py # 驗 Path A (Ollama) starter.py 邏輯
 python test_anthropic.py # 驗 Path B (Anthropic) starter_anthropic.py 邏輯
 ```
@@ -69,7 +69,7 @@ python test_anthropic.py # 驗 Path B (Anthropic) starter_anthropic.py 邏輯
 | 抓 tool call | `resp.content[i].type == "tool_use"` | `resp.choices[0].message.tool_calls[i]` |
 | input 格式 | `call.input` 是 dict（自動 parse） | `call.function.arguments` 是 JSON string、要 `json.loads(...)` |
 
-Tool selection **邏輯本身**跨 backend——schema 寫好、qwen2.5:3b 也會挑對 tool。這題很適合拿來對照 Claude vs qwen2.5「在哪幾題會挑錯」，是觀察小 model 邊界的好實驗。
+Tool selection **邏輯本身**跨 backend，但實際行為會隨模型與題目變化。固定 prompt、schema 和測試題，用 eval 記錄成功率與失敗類型。
 
 ## 容易踩坑
 
@@ -77,20 +77,20 @@ Tool selection **邏輯本身**跨 backend——schema 寫好、qwen2.5:3b 也�
 
 - `calendar_lookup` 描述只說「行事曆」就會跟 `web_search` 邊界模糊；明寫「查特定日期事件」才好
 - `web_search` 適合「外部 / 近期 / 不確定資訊」、`calculator` 只處理算式；邊界寫越清楚、模型越少誤判
-- 小 model（qwen2.5:3b）對 description 質量比 Claude **更敏感**——同一份 schema、Claude 可能還能猜對、qwen 直接挑錯
+- 不同模型對 description 質量的反應可能不同；不要預設哪一個一定較穩，用同一組固定 eval 實測
 
 ## 想看更聰明的答案？
 
-預設用 `claude-haiku-4-5`（最便宜）。改成 sonnet：
+預設用固定 ID `claude-haiku-4-5-20251001`。想比較 sonnet 時：
 
-```bash
-MODEL=claude-sonnet-5 python starter_anthropic.py
+```powershell
+$env:MODEL = "claude-sonnet-5"; python starter_anthropic.py
 ```
 
-或在 Ollama path 換 `qwen2.5:7b`（更大、更穩、但慢）：
+或在 Ollama path 換 `qwen2.5:7b`；行為和成本要用固定 eval 實測：
 
-```bash
-MODEL=qwen2.5:7b python starter.py
+```powershell
+$env:MODEL = "qwen2.5:7b"; python starter.py
 ```
 
 ## 延伸

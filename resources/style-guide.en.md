@@ -252,6 +252,8 @@ Time, cost, code, expected output, and troubleshooting.
 
 </details>
 
+Every runnable folder must provide copy-ready PowerShell commands first, followed by a closed `<details>` block with the macOS/Linux alternative; it must also provide Path A and Path B scripts plus offline mock tests. Bound SDK dependencies to major versions and use a pinned cloud model ID; validate untrusted tool names and arguments before execution. Describe cloud cost as a token formula with a verification date, rather than assuming a fixed amount.
+
 [3-5 hands-on exercise items]
 
 ## 🎯 Curated Projects

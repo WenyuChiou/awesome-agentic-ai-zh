@@ -299,9 +299,9 @@ pages:
       en: stages/03-tool-use-and-hello-agent.en.md
       zh-Hans: stages/03-tool-use-and-hello-agent.zh-Hans.md
     max_visible_chars:
-      zh-TW: 4287
-      en: 8025
-      zh-Hans: 4345
+      zh-TW: 4365
+      en: 8140
+      zh-Hans: 4431
     max_open_details: 0
     visible_section_order:
       - learning-goals

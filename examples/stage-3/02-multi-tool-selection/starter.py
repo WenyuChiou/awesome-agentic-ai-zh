@@ -13,12 +13,14 @@
     python test.py   （用 mock、不打 API）
 
 想看 Anthropic Claude 版本：
-    python starter_anthropic.py   （需 ANTHROPIC_API_KEY、$0.0005/run）
+    python starter_anthropic.py   （需 ANTHROPIC_API_KEY；每次先保留 $0.05）
 """
 
 from __future__ import annotations
 
+import ast
 import json
+import math
 import os
 import sys
 from typing import Any
@@ -28,7 +30,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from openai import OpenAI
 
-MODEL = os.environ.get("MODEL", "qwen2.5:3b")  # tool-use 穩定的 Ollama model
+MODEL = os.environ.get("MODEL", "qwen2.5:3b")
 
 
 # === 1. Tools 定義（含實作）===
@@ -37,13 +39,68 @@ def web_search(query: str) -> str:
     return f"search result: {query} -> Anthropic tool use docs and examples"
 
 
-def calculator(expression: str) -> str:
-    allowed = set("0123456789.+-*/() ")
-    if any(ch not in allowed for ch in expression):
-        return "error: calculator only accepts basic arithmetic"
+MAX_EXPRESSION_LENGTH = 200
+MAX_AST_NODES = 50
+MAX_AST_DEPTH = 12
+MAX_ABS_NUMBER = 1_000_000_000_000
+
+
+def _within_bounds(value: int | float) -> bool:
+    if isinstance(value, int):
+        return abs(value) <= MAX_ABS_NUMBER
+    return math.isfinite(value) and abs(value) <= MAX_ABS_NUMBER
+
+
+def _evaluate_arithmetic(expression: str) -> int | float:
+    """Evaluate only small numeric expressions; model text never becomes code."""
+    if len(expression) > MAX_EXPRESSION_LENGTH:
+        raise ValueError("expression is too long")
     try:
-        return str(eval(expression, {"__builtins__": {}}, {}))  # noqa: S307
-    except Exception as exc:  # noqa: BLE001
+        tree = ast.parse(expression, mode="eval")
+    except (SyntaxError, ValueError, TypeError):
+        raise ValueError("calculator only accepts basic arithmetic") from None
+    if sum(1 for _ in ast.walk(tree)) > MAX_AST_NODES:
+        raise ValueError("expression has too many parts")
+
+    def visit(node: ast.AST, depth: int = 0) -> int | float:
+        if depth > MAX_AST_DEPTH:
+            raise ValueError("expression is too deeply nested")
+        if isinstance(node, ast.Expression):
+            return visit(node.body, depth + 1)
+        if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+            value = node.value
+            if not _within_bounds(value):
+                raise ValueError("number is out of bounds")
+            return value
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+            value = visit(node.operand, depth + 1)
+            result = value if isinstance(node.op, ast.UAdd) else -value
+        elif isinstance(node, ast.BinOp) and isinstance(node.op, (ast.Add, ast.Sub, ast.Mult, ast.Div)):
+            left = visit(node.left, depth + 1)
+            right = visit(node.right, depth + 1)
+            if isinstance(node.op, ast.Div):
+                if right == 0:
+                    raise ValueError("division by zero")
+                result = left / right
+            elif isinstance(node.op, ast.Add):
+                result = left + right
+            elif isinstance(node.op, ast.Sub):
+                result = left - right
+            else:
+                result = left * right
+        else:
+            raise ValueError("calculator only accepts numbers and + - * /")
+        if not _within_bounds(result):
+            raise ValueError("result is out of bounds")
+        return result
+
+    return visit(tree)
+
+
+def calculator(expression: str) -> str:
+    try:
+        return str(_evaluate_arithmetic(expression))
+    except (TypeError, ValueError) as exc:
         return f"error: {exc}"
 
 
@@ -66,6 +123,7 @@ def _wrap(name: str, description: str, field: str, field_description: str) -> di
                 "type": "object",
                 "properties": {field: {"type": "string", "description": field_description}},
                 "required": [field],
+                "additionalProperties": False,
             },
         },
     }
@@ -83,6 +141,33 @@ TOOL_IMPL = {
     "calendar_lookup": lambda args: calendar_lookup(args["date"]),
 }
 
+TOOL_FIELDS = {
+    "web_search": "query",
+    "calculator": "expression",
+    "calendar_lookup": "date",
+}
+
+
+def execute_tool(name: str, raw_arguments: str) -> tuple[dict, str]:
+    """Parse and validate model output before dispatching an allowlisted tool."""
+    if name not in TOOL_IMPL:
+        return {}, f"error: tool not allowed: {name}"
+    try:
+        args = json.loads(raw_arguments)
+    except (TypeError, json.JSONDecodeError):
+        return {}, "error: arguments must be valid JSON"
+    if not isinstance(args, dict):
+        return {}, "error: arguments must be a JSON object"
+    field = TOOL_FIELDS[name]
+    if set(args) != {field}:
+        return {}, f"error: arguments must contain exactly {field}"
+    if not isinstance(args[field], str) or not args[field].strip():
+        return {}, f"error: {field} must be a non-empty string"
+    try:
+        return args, TOOL_IMPL[name](args)
+    except (KeyError, TypeError, ValueError) as exc:
+        return args, f"error: invalid arguments: {exc}"
+
 
 # === 2. 單輪 tool selection ===
 
@@ -98,11 +183,21 @@ def run_tool_selection(question: str, client: Any = None) -> dict:
     text = msg.content or ""
     tool_calls = msg.tool_calls or []
     if not tool_calls:
-        return {"tool": None, "thought": text, "observation": None}
+        return {"tool": None, "assistant_text": text, "observation": None}
+    if len(tool_calls) != 1:
+        return {
+            "tool": None,
+            "assistant_text": text,
+            "observation": f"error: expected exactly one tool call; received {len(tool_calls)}",
+        }
     call = tool_calls[0]
-    args = json.loads(call.function.arguments)
-    fn = TOOL_IMPL.get(call.function.name, lambda _: f"error: unknown tool {call.function.name}")
-    return {"tool": call.function.name, "tool_input": args, "thought": text, "observation": fn(args)}
+    args, observation = execute_tool(call.function.name, call.function.arguments)
+    return {
+        "tool": call.function.name,
+        "tool_input": args,
+        "assistant_text": text,
+        "observation": observation,
+    }
 
 
 # === 3. 自我驗證 ===

@@ -1,6 +1,6 @@
 # Stage 03 工具使用與第一個 Agent 重整計畫
 
-> - 狀態：三語內容已重整，第一次 review 擋下的參數驗證缺口已修正，正在重新驗證
+> - 狀態：PR 03A 已開啟且 CI 全綠；PR 03B 正在補齊六題可執行資料夾與安全回歸測試
 > - 查核日期：2026-08-27 UTC
 > - 工作分支：`codex/stage03-reader-ux`
 > - 堆疊基底：`codex/track-a-reader-ux`（PR #147）
@@ -77,7 +77,9 @@ Stage 03 是讀者第一次把「只會回答文字的模型」接到程式。�
 5. **錯誤處理**：分開處理程式錯誤與可回傳給模型的語意錯誤；不做無限 retry。
 6. **Schema 設計**：比較壞 schema 與好 schema，使用固定 eval，不做無來源的模型排名。
 
-練習 2–6 保留既有 `examples/stage-3/` 入口。練習 1 先提供完整可複製 inline 範例；對應獨立資料夾在範例硬化 PR 補上。
+練習 2–6 保留既有 `examples/stage-3/` 入口。練習 1 的 inline 範例保持可直接複製，範例硬化 layer 另補上 `examples/stage-3/01-function-calling/` 的雙路徑完整 round trip、README 與離線測試。
+
+範例資料夾入口加入可見主線後，三語未展開實測為 `4,315／8,090／4,381` 個非空白字元；reader-UX 上限只保留 50 字餘量，調成 `4,365／8,140／4,431`。這是讓讀者可以直接開檔執行的必要導航，不以刪掉入口來維持舊門檻。
 
 ## 2026-08-27 官方事實包
 
@@ -142,11 +144,15 @@ Stage 03 是讀者第一次把「只會回答文字的模型」接到程式。�
 
 **Branch:** `codex/stage03-example-hardening`，base 為 PR 03A。
 
-- 補上練習 1 的雙路徑範例資料夾與測試。
-- 更新五個既有資料夾的 OpenAI／Anthropic SDK 範圍。
-- 修正 Path B model pin、Windows／POSIX 環境變數、錯誤回傳與 bounded retry。
-- 對齊 15 份 README、10 個既有 mock tests 與新練習 1 tests。
-- 不把 README 擴成章節式教材；進階深度仍路由到官方 cookbook 與 hello-agents。
+- 新增 `01-function-calling/`：Ollama／Anthropic starter、兩個離線測試、requirements 與三語 README，共八個檔案；Stage 3 六題因此全部有獨立可執行資料夾。
+- 六個資料夾的 SDK 範圍更新為 2026-08-27 PyPI 已查核的 OpenAI 3.x／Anthropic 1.x，Python 最低需求皆為 3.10；Anthropic starter 使用固定 `claude-haiku-4-5-20251001`。
+- 六題都把模型產生的工具名稱與參數當成不可信資料：先做 allowlist、JSON／物件／必要欄位檢查，再執行；解析、未知工具與參數錯誤都變成可觀察結果，不讓 Python 直接 crash。
+- Exercise 3–5 的多輪路徑明分正常完成與 `length`／`max_tokens`／其他停止原因，並保留 `max_iter`；Anthropic 的失敗結果帶原 call ID 與 `is_error: true`。
+- 12 個既有 starter、10 個既有 mock tests、15 份既有 README、五個 requirements 全部對齊；新增一個結構 regression，鎖住六資料夾、雙路徑、SDK major、固定模型、PowerShell、查核日期與 starter 自我檢查。
+- 三語範例索引改為 `folder 6`，Stage 03 第一題直接連到相同語言 README；DESIGN 與 style guide 同步留下日後章節可複用的安全範例契約。
+- README 保持走查用途，不擴成另一章；深入內容仍路由到官方 Function Calling／Tool Use 文件。
+
+PR 03B 的驗收不是「舊測試仍綠」而已。每個 starter 至少有兩個執行時 assert；12 個資料夾測試入口都要逐一跑，另在乾淨 Python 3.10+ 環境安裝當次 requirements，確認目前 SDK major 可以 import 與執行 mock。三語 README 必須同 URL、同模型 ID、同價格公式、同查核日，且不能殘留 Unix-only 第一指令、浮動 Haiku alias、無 token 假設的固定價格或沒有 eval 的速度／品質排名。
 
 兩層都只開 PR，不合併。這能讓內容設計與可執行程式各自回朔，也讓 review 的 staged fingerprint 保持可理解。
 

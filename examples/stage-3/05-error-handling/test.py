@@ -22,7 +22,7 @@ from unittest.mock import MagicMock
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-from starter import fetch_weather, react_loop, set_weather_failures
+from starter import execute_tool, fetch_weather, react_loop, set_weather_failures
 
 
 def make_tool_call(call_id: str, name: str, args: dict):
@@ -88,8 +88,23 @@ def test_unknown_tool_returns_structured_error():
         make_resp("stop", "OK, no magic tool here."),
     ]
     result = react_loop("Try magic.", client=client)
-    assert result["trace"][0]["obs"]["error"] == "unknown tool"
+    assert result["trace"][0]["obs"]["error"] == "tool not allowed"
     print("✅ test_unknown_tool_returns_structured_error")
+
+
+def test_malformed_arguments_return_structured_error():
+    _, malformed, malformed_error = execute_tool("fetch_weather", "{not-json")
+    _, empty, empty_error = execute_tool("fetch_weather", json.dumps({"city": ""}))
+    assert malformed_error is True and malformed["error"] == "invalid arguments"
+    assert empty_error is True and empty["error"] == "invalid arguments"
+
+
+def test_length_is_not_a_final_answer():
+    client = MagicMock()
+    client.chat.completions.create.return_value = make_resp("length", "unfinished")
+    result = react_loop("too long", client=client)
+    assert result["final"] is None
+    assert result["terminal_reason"] == "length"
 
 
 if __name__ == "__main__":
@@ -97,4 +112,6 @@ if __name__ == "__main__":
     test_retry_then_success()
     test_repeated_errors_can_end_gracefully()
     test_unknown_tool_returns_structured_error()
+    test_malformed_arguments_return_structured_error()
+    test_length_is_not_a_final_answer()
     print("\n🎉 全部通過 — Ollama path tool error handling 邏輯正確")

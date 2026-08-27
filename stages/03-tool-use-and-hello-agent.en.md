@@ -141,6 +141,8 @@ Complete Exercises 1–3 first. Exercises 4–6 make the loop more robust; you d
 
 After finishing, you will see the model first produce a `get_weather` Tool Call, the program execute it, and the model answer using the Tool Result.
 
+If you prefer working from files, open the [complete Exercise 1 folder](../examples/stage-3/01-function-calling/README.en.md).
+
 **First action**: Copy and run `ollama pull qwen2.5:3b`. Then expand Path A and copy the complete program into `hello_tool.py`.
 
 <details markdown="1">
