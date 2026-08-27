@@ -17,6 +17,9 @@ This table is the project's **enforced naming convention** — every stage uses 
 | Harness Engineering | Agent 執行系統設計 / Agent 执行系统设计 | Stage 7 |
 | Tool Use | 工具使用 | Stage 3 |
 | Function Calling | 函式 / 函数 / 工具呼叫 | Stage 3 |
+| Tool Schema | 工具綱要 / 工具纲要 / 工具說明卡 | Stage 3 |
+| Tool Call | 工具請求 / 工具请求 | Stage 3 |
+| Tool Result | 工具結果 / 工具结果 | Stage 3 |
 | Structured Output | 結構化輸出 / 结构化输出 | Stage 3 |
 | Agent Loop | Agent 執行迴圈 / Agent 执行循环 | Stage 3 |
 | Framework | 框架 | Stage 4 |
@@ -52,7 +55,7 @@ This table is the project's **enforced naming convention** — every stage uses 
 
 ### LLM (Large Language Model)
 
-GPT, Claude, Gemini — models that take text in and produce text out. Fundamentally a pure function: input prompt → output text. **They don't browse the web, they don't remember past conversations** — those need to be wired up externally.
+GPT, Claude, Gemini — models that predict the next token from their input. Different models may accept text, images, or audio, and may produce different media. A model does not execute your client tool itself; networks, files, tools, and cross-session memory must be connected by an external system.
 
 📍 Detail: [Stage 1](../stages/01-llm-basics.en.md)
 
@@ -105,48 +108,60 @@ Do not treat outputting a full chain of thought as a general requirement now. Re
 
 ### Agent
 
-A system centered on an LLM that can **perceive state → make decisions → take actions → observe results** in a **loop**, repeating until the goal is completed. **Three core elements**:
+A system centered on a model that can **read state → choose an action → execute → observe results** in a **bounded loop**, until it completes, fails, or reaches a limit. This roadmap teaches the beginner version with three parts:
 
 - **LLM** (reasoning / planning / deciding)
 - **Actions** (ways to do things — not limited to function calls. This can include writing and running code (CodeAct), operating a browser (computer use), retrieving from a KB (RAG retrieval), calling an MCP server, or pure planning / task decomposition)
-- **Loop** (the heartbeat — the fundamental difference between an agent and plain LLM Q&A)
+- **Loop** (an execution loop with a maximum step count, timeout, cost, and stopping condition)
 
-The difference is this: plain LLM = Q&A; agent = the three elements + a continuing loop until the goal is reached or the budget runs out. **ReAct is one agent pattern, not the definition of an agent** — CodeAct, computer-use, and planning agents are all agents.
+This is the roadmap’s **working definition**, not the only academic definition. **ReAct is one agent pattern, not the definition of an agent**; CodeAct, computer-use, and planning agents may use different actions and loops.
 
 📍 Detail: [Stage 3](../stages/03-tool-use-and-hello-agent.en.md)
 
 ### Tool Use / Function Calling
 
-Lets the LLM call functions you defined (DB lookup, math, browser, …). Instead of plain text, the LLM returns `{"function": "search", "args": {…}}`. Your code executes it and feeds the result back to the LLM.
+When a model needs data or an action, it returns a structured request with a tool name, call ID, and arguments. For a client tool, **the model only makes the request**; your program validates the arguments, executes the function, and sends the corresponding result back to the model.
 
-**The concept is the same; the API schema differs**:
+**Tool Use** is the broader capability; **Function Calling** is a common structured calling mechanism. Providers use different schemas and message formats:
 
 - **Anthropic "Tool Use"**: uses `input_schema` (JSON Schema directly)
 - **OpenAI / Ollama "Function Calling"**: wraps it in an outer `{"type": "function", "function": {...}}`
-- The token representation the LLM sees differs internally, so when writing a cross-vendor SDK you need to map them correctly
+- A cross-provider SDK must handle Tool Call, Tool Result, error flags, and stop reasons separately
 
 📍 Detail: [Stage 3](../stages/03-tool-use-and-hello-agent.en.md)
 📍 How to write good schemas: [Function Schema Design cheatsheet](schema-design-cheatsheet.en.md)
 
+### Tool Schema
+
+A tool’s information card: its name, purpose, input fields, types, and constraints. A schema can constrain the shape of a request, but it cannot replace permission, value-range, or business-rule validation. Strict-mode support differs by provider.
+
+### Tool Call
+
+The work order filled out by the model from the Tool Schema, usually containing a tool name, call ID, and arguments. It is only a **request**, not proof that the function ran. The program should check the allowlist before parsing and validating arguments.
+
+### Tool Result
+
+Data returned after the program executes a tool, matched to the correct Tool Call by call ID. Success and errors must be explicit; external tool results may contain errors, malicious content, or prompt injection and must be treated as untrusted data.
+
 ### ReAct (Reasoning + Acting)
 
-The classic agent pattern: **Thought → Action (call tool) → Observation (see result) → Thought ...** loop until done. Most agent frameworks implement this internally.
+A pattern alternating **Reasoning → Action → Observation**. This roadmap requires only observable Tool Calls, Tool Results, stop reasons, and short verifiable summaries; it does not require exposing private Chain-of-Thought. The loop must have step, time, and cost limits.
 
 📍 Detail: [Stage 3](../stages/03-tool-use-and-hello-agent.en.md)
 
 ### Structured Output
 
-Make the LLM output **JSON or another fixed schema** instead of free text. All major LLM APIs have `response_format` or similar. Agent frameworks rely on it for LLM ↔ code communication.
+Ask a model for **JSON or another fixed schema** instead of free text. It may use a schema like Function Calling, but the purpose differs: Structured Output asks for fixed-shape data; Function Calling asks the application to take an action. Provider support varies, and a valid schema does not guarantee correct content; the program must handle refusal, truncation, parsing, and semantic errors.
 
 ### Agent Loop
 
-The "LLM → tool → result → LLM" repeated cycle. Termination: LLM says "done" / step budget exhausted / cost cap hit.
+The repeated cycle “model → Tool Call → program execution → Tool Result → model.” Each result must match the original call ID. The Loop must stop on completion, refusal, error, maximum steps, timeout, or a cost limit; retries must not be left entirely to the model.
 
 ⚠️ **This is the loop *inside a single run*** — one component of a harness. It shares a name with [Loop Engineering](#loop-engineering), Layer 4 of the five-layer ladder, which governs long-horizon execution *across* sessions. Different levels, same word. The boundary is drawn in [Stage 7](../stages/07-multi-agent-production.en.md).
 
 ### Self-Refine (Basic reflection / no memory)
 
-The agent evaluates the previous round's output and changes the next round's behavior — an "Actor answers → Critic finds issues → Actor reads feedback and answers again" single-session loop. **It does not need a persistent memory layer**; it is purely a reasoning-loop mechanism, a sibling pattern to ReAct. Production agents (Cursor / Cline / Claude Code) run variants of this every day.
+The model evaluates the previous round’s output and changes the next round’s behavior — an “Actor answers → Critic finds issues → Actor reads feedback and answers again” single-session loop. **It does not necessarily need a persistent memory layer**; it is a sibling pattern to ReAct, not a synonym for Tool Use.
 
 Representative paper: [Self-Refine (Madaan 2023)](https://arxiv.org/abs/2303.17651). **For the full Reflexion version** (with episodic memory), see 3 Memory / Retrieval / RAG.
 

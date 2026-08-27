@@ -293,6 +293,259 @@ pages:
           zh-Hans: {term: Chain-of-Thought, label: "Chain-of-Thought（CoT，思维链）"}
     resource_group_rowspans: [5, 4, 4, 4, 1]
 
+  - id: stage-03
+    canonical: stages/03-tool-use-and-hello-agent.md
+    mirrors:
+      en: stages/03-tool-use-and-hello-agent.en.md
+      zh-Hans: stages/03-tool-use-and-hello-agent.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 4287
+      en: 8025
+      zh-Hans: 4345
+    max_open_details: 0
+    visible_section_order:
+      - learning-goals
+      - entry-conditions
+      - core-terms
+      - required-reading
+      - classic-patterns
+      - hands-on
+      - exercise-1
+      - exercise-2
+      - structured-output
+      - exercise-3
+      - exercise-4
+      - exercise-5
+      - exercise-6
+      - mini-project
+      - reflection
+      - projects
+      - completion
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-27"
+        - "qwen2.5:3b"
+        - "claude-haiku-4-5-20251001"
+        - "$1 / $5"
+        - "$0.007"
+        - "2,000"
+        - "1,000"
+        - "MAX_STEPS"
+        - "additionalProperties"
+        - "is_error"
+        - "schema → call → execute → result → answer"
+    required_visible_sections:
+      learning-goals:
+        zh-TW:
+          heading: "📌 學習目標"
+          anchor: -學習目標
+        en:
+          heading: "📌 Learning Objectives"
+          anchor: -learning-objectives
+        zh-Hans:
+          heading: "📌 学习目标"
+          anchor: -学习目标
+      entry-conditions:
+        zh-TW:
+          heading: "🚪 進入條件"
+          anchor: -進入條件
+        en:
+          heading: "🚪 Entry Conditions"
+          anchor: -entry-conditions
+        zh-Hans:
+          heading: "🚪 进入条件"
+          anchor: -进入条件
+      core-terms:
+        zh-TW:
+          heading: "🧩 先認識八個核心詞"
+          anchor: -先認識八個核心詞
+        en:
+          heading: "🧩 Eight Core Terms First"
+          anchor: -eight-core-terms-first
+        zh-Hans:
+          heading: "🧩 先认识八个核心词"
+          anchor: -先认识八个核心词
+      required-reading:
+        zh-TW:
+          heading: "📚 必修閱讀"
+          anchor: -必修閱讀
+        en:
+          heading: "📚 Required Reading"
+          anchor: -required-reading
+        zh-Hans:
+          heading: "📚 必修阅读"
+          anchor: -必修阅读
+      classic-patterns:
+        zh-TW:
+          heading: "Agent 的經典範式（thinking patterns）"
+          anchor: agent-的經典範式thinking-patterns
+        en:
+          heading: "Classic Agent Paradigms (thinking patterns)"
+          anchor: classic-agent-paradigms-thinking-patterns
+        zh-Hans:
+          heading: "Agent 的经典范式（thinking patterns）"
+          anchor: agent-的经典范式thinking-patterns
+      hands-on:
+        zh-TW:
+          heading: "🛠 動手練習"
+          anchor: -動手練習
+        en:
+          heading: "🛠 Hands-on Exercises"
+          anchor: -hands-on-exercises
+        zh-Hans:
+          heading: "🛠 动手练习"
+          anchor: -动手练习
+      exercise-1:
+        zh-TW:
+          heading: "練習 1：Function Calling（一個工具、一次呼叫）"
+          anchor: 練習-1function-calling一個工具一次呼叫
+        en:
+          heading: "Exercise 1: Function Calling (One Tool, One Call)"
+          anchor: exercise-1-function-calling-one-tool-one-call
+        zh-Hans:
+          heading: "练习 1：Function Calling（一个工具、一次调用）"
+          anchor: 练习-1function-calling一个工具一次调用
+      exercise-2:
+        zh-TW:
+          heading: "練習 2：多工具選擇"
+          anchor: 練習-2多工具選擇
+        en:
+          heading: "Exercise 2: Multi-Tool Selection"
+          anchor: exercise-2-multi-tool-selection
+        zh-Hans:
+          heading: "练习 2：多工具选择"
+          anchor: 练习-2多工具选择
+      structured-output:
+        zh-TW:
+          heading: "結構化輸出（Structured Outputs / JSON mode）⭐ function calling 的孿生兄弟"
+          anchor: 結構化輸出structured-outputs--json-mode-function-calling-的孿生兄弟
+        en:
+          heading: "Structured Output (Structured Outputs / JSON mode) ⭐ function calling’s twin"
+          anchor: structured-output-structured-outputs--json-mode--function-callings-twin
+        zh-Hans:
+          heading: "结构化输出（Structured Outputs / JSON mode）⭐ function calling 的孪生兄弟"
+          anchor: 结构化输出structured-outputs--json-mode-function-calling-的孪生兄弟
+      exercise-3:
+        zh-TW:
+          heading: "練習 3：從零實作 ReAct（不用 framework）"
+          anchor: 練習-3從零實作-react不用-framework
+        en:
+          heading: "Exercise 3: Implement ReAct from Scratch (No Framework)"
+          anchor: exercise-3-implement-react-from-scratch-no-framework
+        zh-Hans:
+          heading: "练习 3：从零实现 ReAct（不用 framework）"
+          anchor: 练习-3从零实现-react不用-framework
+      exercise-4:
+        zh-TW:
+          heading: "練習 4：多步驟推理任務"
+          anchor: 練習-4多步驟推理任務
+        en:
+          heading: "Exercise 4: Multi-Step Reasoning Task"
+          anchor: exercise-4-multi-step-reasoning-task
+        zh-Hans:
+          heading: "练习 4：多步骤推理任务"
+          anchor: 练习-4多步骤推理任务
+      exercise-5:
+        zh-TW:
+          heading: "練習 5：錯誤處理"
+          anchor: 練習-5錯誤處理
+        en:
+          heading: "Exercise 5: Error Handling"
+          anchor: exercise-5-error-handling
+        zh-Hans:
+          heading: "练习 5：错误处理"
+          anchor: 练习-5错误处理
+      exercise-6:
+        zh-TW:
+          heading: "練習 6：Function schema 設計（壞 schema 修到好）"
+          anchor: 練習-6function-schema-設計壞-schema-修到好
+        en:
+          heading: "Exercise 6: Function Schema Design (Fixing a Bad Schema)"
+          anchor: exercise-6-function-schema-design-fixing-a-bad-schema
+        zh-Hans:
+          heading: "练习 6：Function schema 设计（坏 schema 修到好）"
+          anchor: 练习-6function-schema-设计坏-schema-修到好
+      mini-project:
+        zh-TW:
+          heading: "🎒 推薦小專案：安全的天氣小幫手"
+          anchor: -推薦小專案安全的天氣小幫手
+        en:
+          heading: "🎒 Recommended Mini-Project: A Safe Weather Helper"
+          anchor: -recommended-mini-project-a-safe-weather-helper
+        zh-Hans:
+          heading: "🎒 推荐小项目：安全的天气小助手"
+          anchor: -推荐小项目安全的天气小助手
+      reflection:
+        zh-TW:
+          heading: "🪞 反思（Reflexion / Self-Refine）— 概念 + 路由"
+          anchor: -反思reflexion--self-refine-概念--路由
+        en:
+          heading: "🪞 Reflection (Reflexion / Self-Refine) — Concept + Routing"
+          anchor: -reflection-reflexion--self-refine--concept--routing
+        zh-Hans:
+          heading: "🪞 反思（Reflexion / Self-Refine）— 概念 + 路由"
+          anchor: -反思reflexion--self-refine-概念--路由
+      projects:
+        zh-TW:
+          heading: "🎯 精選 Projects"
+          anchor: -精選-projects
+        en:
+          heading: "🎯 Curated Projects"
+          anchor: -curated-projects
+        zh-Hans:
+          heading: "🎯 精选 Projects"
+          anchor: -精选-projects
+      completion:
+        zh-TW:
+          heading: "✅ 進 Stage 4 前的自我檢查"
+          anchor: -進-stage-4-前的自我檢查
+        en:
+          heading: "✅ Self-Check Before Stage 4"
+          anchor: -self-check-before-stage-4
+        zh-Hans:
+          heading: "✅ 进 Stage 4 前的自我检查"
+          anchor: -进-stage-4-前的自我检查
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 20
+      terms:
+        - id: tool-use
+          zh-TW: {term: Tool Use, label: "Tool Use（工具使用）"}
+          en: {term: Tool Use, label: Tool Use}
+          zh-Hans: {term: Tool Use, label: "Tool Use（工具使用）"}
+        - id: function-calling
+          zh-TW: {term: Function Calling, label: "Function Calling（函式呼叫）"}
+          en: {term: Function Calling, label: Function Calling}
+          zh-Hans: {term: Function Calling, label: "Function Calling（函数调用）"}
+        - id: tool-schema
+          zh-TW: {term: Tool Schema, label: "Tool Schema（工具綱要）"}
+          en: {term: Tool Schema, label: Tool Schema}
+          zh-Hans: {term: Tool Schema, label: "Tool Schema（工具纲要）"}
+        - id: tool-call
+          zh-TW: {term: Tool Call, label: "Tool Call（工具請求）"}
+          en: {term: Tool Call, label: Tool Call}
+          zh-Hans: {term: Tool Call, label: "Tool Call（工具请求）"}
+        - id: tool-result
+          zh-TW: {term: Tool Result, label: "Tool Result（工具結果）"}
+          en: {term: Tool Result, label: Tool Result}
+          zh-Hans: {term: Tool Result, label: "Tool Result（工具结果）"}
+        - id: agent-loop
+          zh-TW: {term: Agent Loop, label: "Agent Loop（Agent 執行迴圈）"}
+          en: {term: Agent Loop, label: Agent Loop}
+          zh-Hans: {term: Agent Loop, label: "Agent Loop（Agent 执行循环）"}
+        - id: react
+          zh-TW: {term: ReAct, label: "ReAct（Reasoning + Acting）"}
+          en: {term: ReAct, label: ReAct}
+          zh-Hans: {term: ReAct, label: "ReAct（Reasoning + Acting）"}
+        - id: structured-output
+          zh-TW: {term: Structured Output, label: "Structured Output（結構化輸出）"}
+          en: {term: Structured Output, label: Structured Output}
+          zh-Hans: {term: Structured Output, label: "Structured Output（结构化输出）"}
+    resource_group_rowspans: [6, 4, 4, 3, 2, 2]
+
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
     mirrors:

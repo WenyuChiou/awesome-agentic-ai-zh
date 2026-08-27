@@ -4,7 +4,7 @@
 
 > [Stage 3 — Tool Use & Agent 入門](../stages/03-tool-use-and-hello-agent.md) 的補充參考。寫 tool / function schema 時的 5 條黃金規則 + 5 個 anti-pattern。
 
-LLM 怎麼用你的 tool **80% 取決於 schema 寫得好不好**——schema 模糊，再強的模型也會選錯、傳錯。
+> 規格查核：2026-08-27 UTC。Schema 是模型和程式共同看的介面；寫清楚會減少歧義，但不能取代應用程式驗證或固定 eval。
 
 ---
 
@@ -12,7 +12,7 @@ LLM 怎麼用你的 tool **80% 取決於 schema 寫得好不好**——schema �
 
 ### 規則 1：description 是寫給 LLM 看的，不是 docstring
 
-LLM 只看 `description` 決定要不要叫這個 tool、什麼時候叫。所以要：
+模型會一起看 tool name、`description`、schema 與對話內容，決定要不要提出 Tool Call。所以要：
 
 - ✅ 寫**情境**（when）跟**做什麼**（what）：`"當使用者問特定城市的當前天氣時呼叫"`
 - ❌ 不要寫實作細節：`"使用 OpenWeather API v2.5 取得 JSON"`
@@ -41,16 +41,17 @@ LLM 對 `type: string` 自由度高、容易亂傳。能用窄型別就用：
 
 ### 規則 3：required vs optional 分清楚
 
-- `required` 列**真的必要**的參數（少了這個 tool 就跑不起來）
-- 有預設值的放 `default`，不要列 required
-- LLM 看到 required 多會「**自己編參數**」，所以 required 越少越好
+- 一般 JSON Schema 中，`required` 列出少了就不能執行的欄位。
+- 有預設值不代表供應商一定會替你填值；程式要明確套用 default。
+- **OpenAI strict mode 是例外**：properties 全部要列入 `required`，真正可選的欄位用包含 `null` 的 type 表示，並設定 `additionalProperties: false`。
+- Anthropic、Ollama 與其他 compatible endpoint 的 strict 支援不同；不要把一家規則當成通用規格。
 
 ```python
 # 壞：把 timezone 列 required，LLM 會亂編「Asia/Taipei」即便使用者沒提到
 "required": ["city", "timezone"]
 
-# 好
-"required": ["city"]
+# 一般非 strict schema 的簡化例子
+"required": ["city"],
 "properties": {
     "timezone": {"type": "string", "default": "UTC", "description": "..."}
 }
@@ -67,7 +68,7 @@ LLM 看到 `do_thing(x, y, z)` 跟看到 `get_weather(city, unit)` 用法完全�
 
 ### 規則 5：error 回傳要讓 LLM 可以恢復
 
-LLM 看到錯誤訊息後決定要 retry / 換工具 / 放棄。錯誤訊息要結構化：
+程式先捕捉錯誤，再決定是否把最小、可處理的錯誤結果交回模型。錯誤可以結構化：
 
 ```json
 {
@@ -77,7 +78,7 @@ LLM 看到錯誤訊息後決定要 retry / 換工具 / 放棄。錯誤訊息要�
 }
 ```
 
-而不是只回 `"Error 500"`——LLM 拿這個沒招。
+而不是只回 `"Error 500"`。Anthropic client tool 用 `is_error: true` 標示失敗；其他 API 有自己的格式。無論哪一家，程式都要設定最大重試、timeout 和停止條件。
 
 ---
 
@@ -91,7 +92,7 @@ def do_database_op(operation: str, table: str, data: str) -> str:
     """Do anything with the database."""
 ```
 
-LLM 會把錯的 operation 配上對的 table 然後爛掉。**拆成 `query_users` / `create_order` / `update_inventory`** 等具體 tool，LLM 選擇正確率大幅提升。
+這種工具把讀取、建立和修改混在一起，也很難配置最小權限。改成 `query_users`、`create_order`、`update_inventory` 等用途清楚的工具，再用固定 eval 檢查選擇是否改善。
 
 ### Anti-2：description 是 docstring
 
@@ -123,37 +124,40 @@ LLM 不是程式，它要的是 **「這個 tool 什麼時候有用」**。
 }}
 ```
 
-### Anti-4：沒寫範例
+### Anti-4：只看一次成功就宣布 schema 很好
 
-LLM 對 description **加上 example 比沒加準確很多**。
+清楚的例子可以幫模型理解輸入，但不能證明 schema 一定可靠。固定 5–10 個正常、模糊與惡意案例，讓壞版與好版跑同一組題目。
 
 ```python
-"description": "Search products by query string. Examples: 'laptop under $1000', 'red shoes size 10'. Do NOT use for product ID lookup (use get_product_by_id)."
+"description": "Search products by query text, such as 'red shoes'. Do not use for product ID lookup; use get_product_by_id."
 ```
+
+記錄工具選擇、參數是否合法、程式是否拒絕未授權輸入；不要只評最後一句話好不好看。
 
 ### Anti-5：沉默的失敗
 
-Tool 失敗只回 `null` 或 `{}`，LLM 以為成功，繼續用空資料推論。**永遠回**：
+Tool 失敗只回 `null` 或 `{}`，模型可能把空資料當成功。回傳明確狀態，例如：
 
 - 成功 → `{"success": true, "data": {...}}`
 - 失敗 → `{"success": false, "error": "...", "retry_hint": "..."}`
 
-LLM 看到 `success: false` 就知道要處理錯誤，不會把空資料當答案編造。
+這個 JSON 外形只是應用程式約定，不是所有 API 的強制格式。程式仍要處理模型忽略錯誤、反覆重試或提早停止的情況。
 
 ---
 
 ## Schema 演進的小建議
 
-- 加參數要 backward-compatible：新參數設 `default` 而不是 required
+- 加參數先確認供應商規則：一般 schema 可加 optional + default；OpenAI strict mode 則要把欄位列為 required，並用 `null` 表示可省略
 - 改參數含義 → 開新 tool（`get_weather_v2`），舊的標 deprecated 一段時間再下
-- description 改了要重新測——LLM 行為對 description 敏感，連標點都會影響
+- description 改了要重新跑同一組 eval；不要假設文字小改一定沒有行為差異
 - 上 production 前用 [promptfoo](https://github.com/promptfoo/promptfoo) eval 一下「LLM 在 5-10 個典型 query 是否選對 tool」
 
 ---
 
 ## 延伸閱讀
 
-- [Anthropic — Tool Use Guide](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview) — 官方 schema 規格
-- [OpenAI — Function Calling](https://platform.openai.com/docs/guides/function-calling) — OpenAI 的 schema 規格（跟 Anthropic 略有差異）
+- [Anthropic — Define Tools](https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools) — 官方 schema 與 description 指南
+- [Anthropic — Handle Tool Calls](https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls) — Tool Result 與 `is_error`
+- [OpenAI — Function Calling](https://developers.openai.com/api/docs/guides/function-calling) — strict mode 與 function schema 規格
 - [Stage 3 — Tool Use & Agent 入門](../stages/03-tool-use-and-hello-agent.md) — 主要動手練習
-- [Stage 5.2 — MCP 基礎](../stages/05-claude-code-ecosystem.md#52--mcpmodel-context-protocol-基礎) — MCP server 的 tool schema（跟 function calling schema 結構幾乎相同）
+- [Stage 5.2 — MCP 基礎](../stages/05-claude-code-ecosystem.md#52--mcpmodel-context-protocol-基礎) — MCP server 也使用 tool schema，但 host、權限與協定層不同

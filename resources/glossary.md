@@ -17,6 +17,9 @@
 | Harness Engineering | Agent 執行系統設計 | Stage 7 |
 | Tool Use | 工具使用 | Stage 3 |
 | Function Calling | 函式 / 工具呼叫 | Stage 3 |
+| Tool Schema | 工具綱要 / 工具說明卡 | Stage 3 |
+| Tool Call | 工具請求 | Stage 3 |
+| Tool Result | 工具結果 | Stage 3 |
 | Structured Output | 結構化輸出 | Stage 3 |
 | Agent Loop | Agent 執行迴圈 | Stage 3 |
 | Framework | 框架 | Stage 4 |
@@ -52,7 +55,7 @@
 
 ### LLM（Large Language Model，大語言模型）
 
-GPT、Claude、Gemini 這類「給文字、回文字」的模型。本身是純函式：input prompt → output text。它**不會自己上網、不會記住上次對話**——這些都要外接系統來做。
+GPT、Claude、Gemini 這類模型會依輸入預測下一個 token。不同模型可以接收文字、圖片或聲音，也可能產生不同媒體。模型不會自行執行你的 client tool；網路、檔案、工具與跨 session 記憶要由外部系統接上。
 
 📍 詳細：[Stage 1](../stages/01-llm-basics.md)
 
@@ -105,48 +108,60 @@ LLM 一次能「看」多少 token。**2026 frontier**：Claude Sonnet 5 / Opus 
 
 ### Agent（代理人）
 
-以 LLM 為核心、能在**迴圈**中**感知狀態 → 做決策 → 採取行動 → 觀察結果**、重複到完成目標的系統。**核心三要素**：
+以模型為核心、能在**有界迴圈**中**讀狀態 → 選動作 → 執行 → 觀察結果**，直到完成、失敗或碰到上限的系統。本學習地圖使用三個零件來教入門：
 
 - **LLM**（推理 / 規劃 / decide）
 - **Actions**（做事的手段——不限於 function call。可以是寫程式碼執行（CodeAct）、操作瀏覽器（computer use）、查 KB（RAG retrieval）、call MCP server、純規劃分解任務等）
-- **Loop**（心跳——agent 跟純 LLM Q&A 的根本差別）
+- **Loop**（有最大步數、timeout、費用與停止條件的執行迴圈）
 
-差別在於：純 LLM = Q&A、agent = 三要素 + 持續迴圈直到目標達成或耗盡 budget。**ReAct 是其中一種 agent pattern、不是 agent 的定義**——CodeAct、computer-use、planning agent 都是 agent。
+這是本路線圖的 **working definition**，不是唯一學術定義。**ReAct 是其中一種 agent pattern、不是 agent 的定義**；CodeAct、computer-use、planning agent 也可能使用不同的 action 與 loop。
 
 📍 詳細：[Stage 3](../stages/03-tool-use-and-hello-agent.md)
 
 ### Tool Use / Function Calling
 
-讓 LLM 呼叫你定義好的 function（查 DB、算數學、開瀏覽器…）。LLM 回的不是文字而是 `{"function": "search", "args": {...}}`、你的程式去執行、把結果再丟回 LLM。
+模型需要查資料或採取動作時，回傳一個有工具名稱、call ID 與參數的結構化請求。對 client tool 而言，**模型只提出請求**；你的程式驗證參數、執行函式，再把對應結果送回模型。
 
-**兩個詞概念相同、API schema 不一樣**：
+**Tool Use** 是較廣的能力名稱；**Function Calling** 是常見的結構化呼叫機制。供應商的 schema 與訊息格式不同：
 
 - **Anthropic「Tool Use」**：schema 用 `input_schema`（JSON Schema 直接放）
 - **OpenAI / Ollama「Function Calling」**：包一層 `{"type": "function", "function": {...}}` 外層
-- LLM 內部接收的 token 表達不同、寫 SDK 跨家時要記得對應好
+- 寫跨供應商 SDK 時，要分別處理 Tool Call、Tool Result、錯誤旗標與停止原因
 
 📍 詳細：[Stage 3](../stages/03-tool-use-and-hello-agent.md)
 📍 schema 怎麼寫好：[Function Schema 設計 cheatsheet](schema-design-cheatsheet.md)
 
+### Tool Schema（工具綱要）
+
+工具的說明卡：名稱、用途、輸入欄位、型別與限制。Schema 能限制請求外形，但不能代替權限、數值範圍與業務規則驗證。供應商的 strict mode 支援也不完全相同。
+
+### Tool Call（工具請求）
+
+模型依 Tool Schema 填好的工作單，通常包含工具名稱、call ID 與參數。它只是**請求**，不是函式已經執行的證明。程式應先比對 allowlist，再解析和驗證參數。
+
+### Tool Result（工具結果）
+
+程式執行工具後回傳的資料，並用 call ID 對回正確的 Tool Call。成功與錯誤都要明確表示；外部工具結果可能含錯誤、惡意內容或 prompt injection，必須視為不可信資料。
+
 ### ReAct（Reasoning + Acting）
 
-最經典的 agent pattern：**Thought（想）→ Action（叫工具）→ Observation（看結果）→ Thought ...** 一直 loop 到答得出來。多數 agent framework 內部都實作這個。
+一種交替 **Reasoning → Action → Observation** 的 agent pattern。本路線圖只要求可觀察的 Tool Call、Tool Result、停止原因和簡短可驗證摘要；不要求模型公開私人 Chain-of-Thought。迴圈必須有步數、時間與費用上限。
 
 📍 詳細：[Stage 3](../stages/03-tool-use-and-hello-agent.md)
 
 ### Structured Output（結構化輸出）
 
-要 LLM 輸出 **JSON / 其他固定 schema**，而不是自由文字。各家 LLM API 都有 `response_format` 或類似旗標支援。Agent 框架幾乎都靠這個跟 LLM 溝通。
+要模型輸出 **JSON 或其他固定 schema**，而不是自由文字。它和 Function Calling 都可能使用 schema，但目的不同：Structured Output 要固定形狀的資料；Function Calling 要應用程式採取動作。供應商支援不一，schema 合法也不保證內容正確，程式仍要處理 refusal、截斷、解析與語意錯誤。
 
 ### Agent Loop
 
-「LLM → tool → 結果 → LLM」這個重複的循環。Loop 結束條件可能是：LLM 說「I'm done」、跑超過 N 步、超出 budget。
+「模型 → Tool Call → 程式執行 → Tool Result → 模型」這個重複循環。每個結果要對回原 call ID。Loop 必須在完成、拒答、錯誤、最大步數、timeout 或費用上限時停止；不能把 retry 全交給模型。
 
 ⚠️ **這是「一次執行裡面」的迴圈**，是 harness 的一個零件，跟五層階梯第 4 層的 [Loop Engineering（迴圈工程）](#loop-engineering迴圈工程)（管的是跨 session 的長時間執行）同名但不同層次。兩者的分界見 [Stage 7](../stages/07-multi-agent-production.md)。
 
 ### Self-Refine（基本版反思 / 無記憶）
 
-agent 自我評估上一回合輸出、改下一回合的 pattern——「Actor 出答案 → Critic 找問題 → Actor 看 feedback 再答」的 single-session loop。**不需要持久記憶層**，純粹是 reasoning loop 機制、是 ReAct 的 sibling pattern。production agent（Cursor / Cline / Claude Code）每天在跑這個變種。
+模型自我評估上一回合輸出、改下一回合的 pattern——「Actor 出答案 → Critic 找問題 → Actor 看 feedback 再答」的 single-session loop。**不一定需要持久記憶層**，是 ReAct 的 sibling pattern，不是 Tool Use 的同義詞。
 
 代表 paper：[Self-Refine (Madaan 2023)](https://arxiv.org/abs/2303.17651)。**完整版 Reflexion**（含 episodic memory）見 3 Memory / Retrieval / RAG（不同層的東西）。
 

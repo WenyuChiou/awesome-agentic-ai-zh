@@ -124,7 +124,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 | **0** 基礎準備 | 「我的開發環境準備好了嗎？」 | 4 個 動手練習 self-test |
 | **1** LLM 入門 | 「LLM 是什麼、token 怎麼算、不同 LLM 的差別？」 | 從 API call 到本地 LLM，含 from-scratch 訓練 |
 | **2** Prompt 設計 | 「怎麼讓 LLM 照我的意思做事，而且知道修改有沒有用？」 | 四格 prompt / few-shot / 固定 eval / 一次只改一件事 |
-| **3** ⭐ Tool Use & Agent 入門 | 「怎麼讓 LLM 呼叫外部工具？」 | function calling + ReAct + 5 個動手練習 必跑 |
+| **3** ⭐ Tool Use & Agent 入門 | 「怎麼讓 LLM 呼叫外部工具？」 | 完整 tool round trip + 有界 ReAct loop + 6 個動手練習 |
 | **4** Agent 框架 | 「哪個 framework 該學、為什麼？」 | LangGraph / AutoGen / CrewAI / Smolagents 對比 |
 | **5** ⭐⭐ Claude Code 生態 | 「Claude Code 生態系怎麼吃？」 | MCP / Skills / Plugins / Marketplace 4 個 sub-stage |
 | **6** Memory · RAG | 「怎麼讓 agent 記得事情？怎麼讓它能查自家文件？」 | embedding / vector DB / RAG / contextual retrieval |
@@ -141,6 +141,8 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 多數 stage 保留以下 section；**呈現順序採漸進式揭露**。Stage 1 是第一個完成遷移的 pilot，其他 stage 在各自內容更新時逐章遷移，不要求在同一個 PR 一次重寫：
 
 Stage 2 的固定主線是「目標／資料／規則／輸出 → Zero-Shot／One-Shot／Few-Shot → Chain-of-Thought 的正確邊界 → 六筆固定案例 → 一次只改一件事 → 比較分數」。程式碼、模型比較、安全補充與 18 筆完整資源表預設收合。CoT 必須先用白話解釋，但不當成要求模型公開完整內部推理的通用步驟。
+
+Stage 3 的固定主線是「八個可見核心詞 → 一般回答／Structured Output／Function Calling 的選擇 → 五條安全底線 → schema → Tool Call → 程式執行 → Tool Result → final answer → 有界 Agent Loop」。六題的標題、成果與第一個可複製動作保持可見；完整程式、供應商差異、費用、排錯、Reflection 路由與 21 筆資源表預設收合。ReAct 使用可觀察的 action／observation loop 教學，不要求公開私人 Chain-of-Thought。
 
 ```
 1. 1-2 句核心問題
@@ -245,11 +247,11 @@ Stage 2 的固定主線是「目標／資料／規則／輸出 → Zero-Shot／O
 
 ### 為什麼必跑、不能只是讀
 
-Stage 3 的 5 個動手練習 是整個 catalog 最重要的設計決定。理由：
+Stage 3 的 6 個動手練習是整個 catalog 最重要的設計決定。理由：
 
 agent 寫過 vs 沒寫過 ≠ 多讀一篇 paper vs 少讀一篇。寫過的人後面學 LangGraph 知道 framework 在抽象什麼；沒寫過直接學 framework 會被 magic 困住。
 
-所以 Stage 3 結尾的「進 Stage 4 前的自我檢查」第一條就是：**「用不到 100 行 Python、不靠任何 framework，把 ReAct 迴圈寫出來」**——這是 binary 的 gate，跳不過就回去再跑一次。
+所以 Stage 3 結尾的 gate 會直接檢查：讀者能否說出 `schema → call → execute → result → answer`，並寫出有 allowlist、參數驗證、最大步數與停止條件的 loop。跳不過就回練習 1 或 3 重跑，不必重讀整章。
 
 ### 具體成功標準（不是「了解 X」）
 反例：「了解 ReAct pattern」→ 不可量化
@@ -259,6 +261,7 @@ agent 寫過 vs 沒寫過 ≠ 多讀一篇 paper vs 少讀一篇。寫過的人�
 - 3-5 個是 sweet spot
 - 多會 dilute（讀者覺得負擔大、跳過）
 - 少會 under-cover（譬如 Stage 1 只有 3 個 動手練習，但要涵蓋 API call / token / pricing / cross-provider / error handling / local LLM——所以該 stage 後來補到 6 個）
+- Stage 3 也是明確的 6 題例外：完整來回、多工具、ReAct loop、多步任務、錯誤處理與 schema eval 各自有不同成功條件；主線先要求 1–3，4–6 作為穩定性加固，避免一次造成負擔。
 - Stage 5 因為 4 個 sub-section，每個 sub-section 再有 2-3 個 動手練習
 
 ---

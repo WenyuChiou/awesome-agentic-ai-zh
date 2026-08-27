@@ -1,526 +1,541 @@
 # Stage 3 — 工具使用與第一個 Agent（Tool Use & Hello Agent）⭐
 
-> **繁體中文** | [简体中文](./03-tool-use-and-hello-agent.zh-Hans.md) | [English](./03-tool-use-and-hello-agent.en.md)
+🌐 [English](03-tool-use-and-hello-agent.en.md) | [简体中文](03-tool-use-and-hello-agent.zh-Hans.md) | **繁體中文**
 
-⏱ **時間估算**：2-3 週（約 10-20 小時）
+這一關要做一件事：讓模型填一張「工具工作單」，再由你的程式檢查、執行並把結果送回去。
 
-> 💡 用語密集（agent / tool use / function calling / ReAct / structured output⋯）→ 翻 [`resources/glossary.md` 2](../resources/glossary.md#2-agent--工具使用)。
-> 🗺️ **進 Track A（CLI Power User）還是 Track B（Agent Builder）前**，先看 [`resources/agent-paradigms.md`](../resources/agent-paradigms.md) — 5 種 agent 型態的全景圖，幫你選軌。
-
-> 📋 **本章組成**：〔開場框景：AI/LLM/Agent 三者關係〕→ 學習目標 → 進入條件 → 必修閱讀 →〔可選 · 概念地圖〕→ 動手練習 → 反思（概念 + 路由）→ 精選 Projects → 自我檢查
-> 🔑 **關鍵名詞**：見 [`resources/glossary.md` 2](../resources/glossary.md#2-agent--工具使用)
-
-## 🤖 開始前：AI / LLM / Agent — 三者怎麼分？
-
-> **本節是「開場框景」（由大到小 pedagogy）**：先把學習者腦中的 mental hierarchy 建好，再進 學習目標、練習。這節只做**簡短說明 + 對照**，深度入門讀物已經是中英文圈各自的 canonical reference（見下方資源）。**不是重寫 hello-agents Ch1。**
-
-### 一張階層圖先建立認知
-
-![AI / ML / DL / LLM 與 Agent 的關係](../resources/diagrams/ai-ml-llm-agent-hierarchy.png)
-
-→ **「Agent」不是「比 LLM 更厲害的模型」，也不是 LLM 樹狀分類底下的一個分支**。Agent 是個**跨層抽象的系統**，把 LLM 當作其中一個元件來用。Cursor / Claude Code / Hermes Agent 內部都還是同一批 LLM（Claude / GPT / Gemini）—— 差別是怎麼把 LLM 包進工具呼叫迴圈裡。
-
-### 三行對照（最快版）
-
-| 詞 | 是什麼 | 你給它什麼、它回什麼 | 例子 |
-|---|---|---|---|
-| **AI** | 整個學科 | 太抽象、不能直接「用」 | ML、DL、LLM、RL 都是 AI 子領域 |
-| **LLM** | 把文字映射到文字的單一模型 | 給 prompt → 回字 | GPT-5、Claude、Llama 3、Qwen |
-| **Agent** | LLM + 工具 + loop 的**系統** | 給任務 → 自己跑多步驟達成 | Cursor、Claude Code、Hermes Agent |
-
-**一句話**：LLM 像是會理解與產生文字的大腦；Agent 則是把這個大腦接上工具、流程與回饋迴圈，讓它能完成多步驟任務的系統。
-
-### Agent 的 3 個**最小必要**部件（這就是 agent vs LLM 的核心差別）
-
-| 部件 | 角色 | 在哪學 |
-|---|---|---|
-| 🧠 **LLM**（brain） | 推理 / 決策 / 自然語言 | Stage 1 已學 |
-| 🔧 **Tools**（hands） | 對世界做事（call API、跑 code、查資料） | **本 stage** |
-| 🔁 **Loop**（heartbeat） | 想 → 做 → 看結果 → 再想（ReAct） | **本 stage 練習 3** |
-
-→ **這 3 個合在一起就是 agent 的最低定義**。沒有 tools / loop，那只是「LLM + 你寫 retry」，不算 agent。
-
-### Agent 的經典範式（thinking patterns）
-
-學完最小 3 部件後、下一層是「**LLM 怎麼想**」。hello-agents Ch4「智能體經典範式構建」整章在講這個。簡短對照：
-
-| 範式 | 是什麼 | 在哪學 |
-|---|---|---|
-| **CoT**（Chain-of-Thought、思維鏈） | 早期 prompting 技巧會要求模型寫出中間推理。現在不把完整思維鏈當成通用輸出要求；需要核對時，看最後答案與簡短、可驗證的理由 | [Stage 2](02-prompt-engineering.md) 的推理模型提醒 |
-| **ReAct**（Reasoning + Acting） | 在 loop 裡交替推理、呼叫 tool、查看結果，再決定下一步。它是常見的 loop pattern，不要求把私人思維過程顯示給使用者 | **本 stage 練習 3** + [ReAct paper (Yao 2022)](https://arxiv.org/abs/2210.03629) |
-| **Reflection** | 跑完一輪後讓 LLM 批改自己、根據 feedback 重答 | **本 stage 反思**（concept + 路由） |
-| **Planning**（任務分解） | 把大任務拆成子任務、可分給多個 agent 各做 | **Stage 4** 什麼是 multi-agent framework |
-
-→ 這些範式都是「**LLM 自我引導**」的不同變化、堆疊在 3 部件（LLM + Tools + Loop）之上。**「Agent 是什麼」用 3 部件就講完了；「Agent 怎麼想」需要這 4 個範式才講得完整**。
-
-> 💡 **延伸組件**（agent 變強的 infrastructure、但**不是「是不是 agent」的判準**）：
-> - **記憶 / RAG**（agent 能跨對話記住東西）→ **Stage 6** 完整教
-> - **反思 / self-critique**（agent 看自己答案、發現問題、回頭改）→ 基本版見 **本 stage 反思**（concept + paper routing）；帶持久 memory 的進階版見 **Stage 6 Reflexion with Memory**
-> - **Production harness**（telemetry / safety / retry / orchestration）→ **Stage 5 5.7**
->
-> 這些都是 advanced pattern——Stage 3 教最小可行 agent、後面 stage 教怎麼變強。
-
-### 📚 深度入門資源（中英文 / 影片優先）
-
-**🀄 中文**：
-
-1. [**李宏毅 — 生成式 AI 導論（2024 春台大課程）**](https://speech.ee.ntu.edu.tw/~hylee/genai/2024-spring.php) ⭐⭐⭐ — 中文圈最高品質的 AI / LLM / agent 學術級導論。每集 30-60 分鐘、台大授課、官方頁含投影片 + YouTube 連結。LLM / agent 概念都涵蓋。最新整合版見 [**GenAI-ML 2025 秋**](https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php)、YouTube 主頻道 [**@HungyiLeeNTU**](https://www.youtube.com/@HungyiLeeNTU)
-2. [**datawhalechina/hello-agents** Ch1「初識智能體」](https://github.com/datawhalechina/hello-agents) ⭐ — 文字版最完整中文 agent 導論
-3. [**datawhalechina/hello-agents** Ch2「智能體發展史」](https://github.com/datawhalechina/hello-agents) — BabyAGI → AutoGPT → Claude Code 演化脈絡
-4. [**3Blue1Brown 中文配音版**](https://space.bilibili.com/88461692) — LLM / Transformer 視覺化解說（中文配音）
-
-**🇺🇸 English**：
-
-1. [**Andrej Karpathy — "Intro to Large Language Models"**](https://www.youtube.com/watch?v=zjkBMFhNj_g) ⭐⭐⭐（1hr）— LLM 從零開始 visual intro（ex-OpenAI / ex-Tesla AI Director、英文圈最重視的 LLM 入門影片）
-2. [**Andrej Karpathy — "Let's build GPT from scratch"**](https://www.youtube.com/watch?v=kCc8FmEb1nY) ⭐⭐（2hr）— 想看 LLM 內部到程式碼級的人
-3. [**3Blue1Brown — "But what is a Transformer?"**](https://www.youtube.com/watch?v=wjZofJX0v4M) ⭐⭐⭐ — visual 解釋 LLM，英文圈最被推薦的視覺化教材
-4. [**Lilian Weng — "LLM Powered Autonomous Agents"**](https://lilianweng.github.io/posts/2023-06-23-agent/) ⭐⭐⭐ — canonical 1-page agent anatomy（Planning / Memory / Tool use / Action）、英文圈被引用最多的 agent 解剖文
-5. [**Anthropic — "Building Effective Agents"**](https://www.anthropic.com/research/building-effective-agents) ⭐ — Anthropic 觀點：何時該用 agent、何時 workflow 就夠
-6. [**Chip Huyen — "Agents"**](https://huyenchip.com/2025/01/07/agents.html) — practitioner 視角，full chapter 級深度
-
-**選讀 / 進階補充**：
-
-- [**Simon Willison — "I think 'agent' may finally have a widely enough agreed upon definition"**](https://simonwillison.net/2025/Sep/18/agents/) — working definition：「agent runs tools in a loop to achieve a goal」、含對照 OpenAI 等不同定義的爭議（**給已有基礎的人**）
-- [**DeepLearning.AI Short Courses**](https://www.deeplearning.ai/short-courses/)：「AI Agents in LangGraph」/「Multi AI Agent Systems with crewAI」/「Functions, Tools and Agents with LangChain」（**API 多數是 2023-2024 舊版**、看概念為主、寫 code 對照官方最新 docs）
-- [**microsoft/ai-agents-for-beginners**](https://github.com/microsoft/ai-agents-for-beginners) — 微軟官方 12 課 build-agent 入門（MIT、★ 70k+）。結構化、英文、含 code；適合想要一條**平行入門課對照**的人，不是本 stage 動手練習的替代
-- [**liyupi/ai-guide**](https://github.com/liyupi/ai-guide) — 中文圈最大 AI 資源**聚合**型 repo（不是原創教材、適合廣度延伸）
-
-> 📌 **資源清單上限規則**：本 section 是 router 不是 tutorial。主清單合計上限 **10 條**（中 4 + 英 6），要加新資源前**必須先移除一條**。選讀區不計入主清單上限。
-
-> 💡 **推薦學習路徑**：先看 1-2 個影片（中：李宏毅、英：Karpathy / 3Blue1Brown）建立 visual mental model → 再讀 1-2 個 blog（Lilian Weng / Anthropic）拿到 working definition → 再回本 stage 動手練習。**不必全部看完**，這是 reference library 不是 reading list。
-
----
-
-這是整個學習路線最關鍵的一站。**你建過一個 agent 才算真懂 agent**——本 stage 的基礎練習建議至少實際手寫一次、再依需求往 [hello-agents](https://github.com/datawhalechina/hello-agents) 或本 stage 精選 projects 找深度教材。
+> 🔎 工具、價格與資源狀態查核：**2026-08-27 UTC**。日期只表示這天重新查過，不代表資料永遠不會變。
+<!-- freshness: canonical=stages/03-tool-use-and-hello-agent.md; verified_on=2026-08-27; scope=models,pricing,tool-apis,security; max_age_days=90 -->
 
 ## 📌 學習目標
 
-完成這個 stage 後你會：
+完成後，你可以：
 
-- 講得出為什麼 LLM 需要 tools（它不是萬能的，而且文字以外的事它都做不了）
-- 定義一個 tool schema，並讓 LLM 呼叫它
-- 從零（不靠任何 framework）寫出一個單步 ReAct agent
-- 寫出多步 ReAct agent，並讓它自己判斷何時該停
-- 分得出哪種問題該用 tool use、哪種純 prompt 就夠
+- 說出 `schema → call → execute → result → answer` 五個步驟。
+- 定義一個工具，檢查參數，再安全地執行對應函式。
+- 不靠 framework，寫出有次數上限和停止條件的 **Agent Loop**。
+- 分清 **Function Calling** 與 **Structured Output**，不再把兩者當成同一件事。
+- 用固定題目比較 schema 或模型，而不是靠一次結果下結論。
 
 ## 🚪 進入條件
 
-你應該已經：
+你能執行一個 Python 檔、看懂 function 與 dict，並完成 [Stage 02](02-prompt-engineering.md)，就可以開始。環境還沒好時，先回 [Stage 00](00-foundations.md)。
 
-- 有可以跑的 Claude / OpenAI / Gemini API 權限（Stage 1）
-- 對 prompt engineering 基礎已經上手（Stage 2）
-- 能寫一個吃 JSON 進、吐 JSON 出的 Python 函式
+## 🧩 先認識八個核心詞
+
+### **Tool Use（工具使用）**
+
+模型需要外部資料或動作時，先提出工具請求。像孩子請大人幫忙開高處的盒子；模型提出要做什麼，程式才真正動手。本章用它查天氣和做計算。**模型本身不會執行你的 client tool。**
+
+### **Function Calling（函式呼叫）**
+
+模型按照約定格式，回傳要呼叫的函式名稱與參數。像填一張有固定欄位的工作單。本章用它把自然語言問題變成程式能讀的請求。不同供應商的訊息格式不完全相同。
+
+### **Tool Schema（工具綱要）**
+
+Schema 是工具的說明卡：名字、用途、可填欄位和資料型別。像點餐單告訴客人能點什麼。本章會用 JSON Schema 描述工具。Schema 能約束外形，但程式仍要驗證數值、權限與業務規則。
+
+### **Tool Call（工具請求）**
+
+Tool Call 是模型填好的工作單，包含工具名稱、call ID 和參數。像「請查台北，單位用攝氏」。本章的程式會先讀它，再從 allowlist 找到合法函式。它是請求，不是執行結果。
+
+### **Tool Result（工具結果）**
+
+Tool Result 是程式做完事後交回的資料，並用 call ID 對回原請求。像廚房把完成的餐點放回正確桌號。本章會把成功或錯誤結果送回模型。外部結果可能不可信，不能當成最高優先指令。
+
+### **Agent Loop（Agent 執行迴圈）**
+
+程式重複「問模型 → 執行工具 → 回傳結果」，直到得到答案或碰到上限。像照食譜一步一步做，完成就停。本章的 working definition 是 `模型 + 工具 + 有界迴圈`；這是學習用定義，不是所有 Agent 的唯一學術定義。
+
+### **ReAct（Reasoning + Acting）**
+
+ReAct 會交替決定下一步、採取 action、查看 observation，再繼續。像找鑰匙時先看桌上，沒看到再查抽屜。本章寫的是 **ReAct-inspired 的可觀察工具迴圈**；不要求模型公開私人 Chain-of-Thought。
+
+### **Structured Output（結構化輸出）**
+
+模型直接交回固定形狀的資料，例如符合 schema 的 JSON。像把答案填進表格。本章用它和 Function Calling 對照：前者要資料，後者要程式採取動作。即使外形合法，內容仍可能錯、被拒答或被截斷。
+
+## 先選對方法
+
+| 你要什麼 | 先用什麼 | 例子 |
+|---|---|---|
+| 只要文字答案 | 一般模型回答 | 改寫一封信 |
+| 要固定形狀的資料 | Structured Output | 抽出姓名與日期 |
+| 要查即時資料或採取動作 | Function Calling / Tool Use | 查天氣、建立工單 |
+
+## ⚠️ 寫第一個 Agent 前的五條底線
+
+1. 只執行 allowlist 裡的工具，不用模型輸出的名字做任意函式呼叫。
+2. 把工具參數當成不可信輸入；先檢查型別、範圍和權限。
+3. 工具只拿完成任務需要的最小權限。
+4. 刪除、付款、寄信等高風險動作，執行前要讓人確認。
+5. 設定最大輪數、timeout 和費用上限；不能讓 Agent 無限繞圈。
 
 ## 📚 必修閱讀
 
-1. [**Anthropic — Tool Use**](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview) — 官方指南
-2. [**anthropics/courses — Tool Use**](https://github.com/anthropics/courses) ⭐⭐⭐⭐⭐ ★ 22k+ — Anthropic 官方 5 course umbrella、**module 5「Tool Use」對應本 stage**。Jupyter notebook 互動式練習、含 multimodal prompts / streaming / tool 實作 walk-through
-3. [**ReAct: Synergizing Reasoning and Acting in Language Models**](https://arxiv.org/abs/2210.03629) — Yao et al. 2022，奠基論文。至少讀 abstract 跟 Section 3。
-4. [**OpenAI — Function Calling**](https://platform.openai.com/docs/guides/function-calling) — function calling 格式參考
-5. [**Build an agent from scratch**](https://shafiqulai.github.io/blogs/blog_3.html) — 從零打造 agent 的故事式導覽
+<details markdown="1">
+<summary>展開三篇必讀、閱讀順序與本章設定</summary>
 
-## 🛠 動手練習（基礎 illustrative 練習）
+依序讀：
 
-> 🦙 **本 stage 預設用 Ollama qwen2.5:3b**（成本考量、tool-use 支援穩定）。Stage 3 進到 tool calling / ReAct loop、`gemma4:e4b` 不夠、改用 `qwen2.5:3b`（1.9 GB、`ollama pull qwen2.5:3b` 即裝）。每個練習都有 Path A（Ollama、預設）+ Path B（Anthropic、選擇性、想看 cloud 高品質 tool-use 時用）。
->
-> 💰 **Stage 3 預算估算**（全 6 練習、tool use 較重）：**全本機 = $0**、**全 haiku ≈ $0.50**、**全 sonnet ≈ $1.50**。ReAct loop 練習單次 4-6 tool calls × 5 練習 × 5 reps ≈ $0.80 haiku。完整預算見 [`examples/README.md#推薦-llm-清單`](../examples/README.md#推薦-llm-清單)。
->
-> 完整 3 路 trade-off 見 [`examples/README.md`](../examples/README.md#三條路徑--預設用-ollama成本考量)。
->
-> 🆘 **卡住了？** Tool calling 是整個 curriculum 最陡的學習曲線。裝 [`examples/stage-5/tool-calling-tutor/`](../examples/stage-5/tool-calling-tutor/) skill——當你 prompt Claude Code「為什麼 LLM 不呼叫我的 tool」、「我這 schema 哪裡寫壞」會自動載入、走 4-symptom 診斷流程。
->
-> 🪜 **本 stage 是 single-agent 起點**：一個 LLM + ReAct loop。**Multi-agent 概念**（多個 agent 協作）入門看 [Stage 4 什麼是 multi-agent framework](04-agent-frameworks.md#-什麼是-multi-agent-framework)、**Claude 原生 subagent 機制**（`.claude/agents/` + Task tool、不需 framework）看 [Stage 5.5](05-claude-code-ecosystem.md#55--subagentsclaude-code-原生-multi-agent-機制-2025-新功能)。
+1. [Ollama Tool Calling](https://docs.ollama.com/capabilities/tool-calling) ⭐⭐⭐⭐⭐ — 先看 single tool 與 multi-turn loop。
+2. [Anthropic — How Tool Use Works](https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works) ⭐⭐⭐⭐⭐ — 看清楚模型、應用程式和 tool result 各自負責什麼。
+3. [ReAct paper](https://arxiv.org/abs/2210.03629) ⭐⭐⭐⭐ — 先讀 abstract；知道 Reasoning + Acting 的來源，不必一次讀完公式。
 
-### ⚠️ 先懂風險：給 agent 工具 = 給它一個攻擊面
+**先備知識**：能執行 Python、看懂 list／dict／function，並完成 [Stage 02](02-prompt-engineering.md)。
 
-最清楚的框架是 Simon Willison 的 **lethal trifecta（致命三角）**：當一個 agent 同時具備這三件事，就可能被攻擊者操控去偷資料再外傳——
+**本機主路徑**：Ollama + `qwen2.5:3b`。這是專案依使用者安裝驗證保留的入門模型，不代表它在每個 schema 都最好。
 
-1. **能存取私密資料**（你的檔案 / DB / API key）
-2. **會接觸不可信內容**（網頁、Email、別人傳的文件，裡面可能藏指令）
-3. **能對外送東西**（發 request、寄信、寫檔）
+```powershell
+ollama pull qwen2.5:3b
+ollama serve
+python -m pip install "openai>=3.3,<4"
+```
 
-根因是 LLM 會「照內容裡的指令做」，分不清哪些是你下的、哪些是不可信資料裡夾帶的——這就是 **prompt injection**。本階段先建立這個意識就好，具體防法（隔離不可信輸入、權限 gate、最小工具集、高風險動作要人審）在 [Stage 8](08-agent-interfaces.md) 與 [Stage 5](05-claude-code-ecosystem.md) 細談。詞表：[prompt injection / lethal trifecta](../resources/glossary.md)。
+**雲端比較路徑**：Anthropic + pinned Haiku model ID。
 
----
+```powershell
+$env:ANTHROPIC_API_KEY="貼上你的金鑰"
+python -m pip install "anthropic>=1.0,<2"
+```
+
+macOS／Linux 設定方式是 `export ANTHROPIC_API_KEY="貼上你的金鑰"`。金鑰不要寫進程式或 commit。
+
+**時間**：先跑練習 1–3 約 2–3 小時；再做練習 4–6 約 3–5 小時。完整主動路線合計約 5–8 小時。
+
+**費用算法**：
+
+```text
+費用 = 輸入 tokens ÷ 1,000,000 × input price
+     + 輸出 tokens ÷ 1,000,000 × output price
+```
+
+2026-08-27 查核時，Claude Haiku 4.5 是 `$1 / $5`（input / output，每百萬 tokens）。若一次請求用 2,000 input + 1,000 output，範例費用約 `$0.007`。工具迴圈會發出多次請求；每題先保留 `$0.05`、全章五輪實驗先設 `$1` provider spend limit。這是保守上限，不是帳單保證。
+
+Path A 的 **API 費用是 `$0`**；仍會使用你的硬體、記憶體與電力。
+
+</details>
+
+### Agent 的經典範式（thinking patterns）
+
+<details markdown="1">
+<summary>展開 CoT、ReAct、Reflection 與 Planning 的差別</summary>
+
+| 名詞 | 白話用途 | 放在哪裡學 |
+|---|---|---|
+| **Chain-of-Thought（CoT）** | 早期 prompt 技巧常要求寫出中間推理。現在不把完整私人思維鏈當成通用輸出要求；需要檢查時，看最後答案與簡短、可驗證的理由 | [Stage 02](02-prompt-engineering.md) |
+| **ReAct** | 在迴圈中交替採取 action、讀 observation、再決定下一步 | 本章練習 3 |
+| **Reflection** | 用一次回饋改下一次嘗試的廣義做法 | 本章下方路由 |
+| **Reflexion／Self-Refine** | 有明確 Actor／Critic 或自我回饋流程的研究 pattern | 本章概念；持久記憶版到 [Stage 06](06-memory-rag.md) |
+| **Planning** | 先拆成多步，再依結果調整計畫 | [Stage 07.5](07.5-advanced-agentic-concepts.md) |
+
+這些詞描述不同解題方式，不是 Agent 的唯一判定表。Computer-use、CodeAct 和 workflow agent 也可能使用不同 loop。
+
+</details>
+
+## 🛠 動手練習
+
+先完成練習 1–3。練習 4–6 用來讓迴圈更穩，不需要一天全部做完。
 
 ### 練習 1：Function Calling（一個工具、一次呼叫）
-給 Claude 一個工具（假的天氣 API）跟一個問題（「台北現在有下雨嗎？」）。看 Claude 怎麼呼叫工具、拿到結果、再回答你。
 
-<details markdown="1" open>
-<summary>📋 <b>起手碼 — Path A（本機 Ollama qwen2.5:3b、預設）</b>（複製到 <code>practice_1.py</code>）</summary>
+完成後，你會看到模型先產生 `get_weather` Tool Call，程式執行它，再由模型用 Tool Result 回答。
+
+**第一步**：複製並執行 `ollama pull qwen2.5:3b`。接著展開 Path A，把完整程式直接複製成 `hello_tool.py`。
+
+<details markdown="1">
+<summary>Path A：Ollama 完整可複製範例（API 費 `$0`）</summary>
 
 ```python
-# 需要：pip install openai
-# 前置：ollama pull qwen2.5:3b && ollama serve
-# Note: Stage 3+ 用 qwen2.5:3b（tool-use 穩定）、不是 gemma4:e4b
-import sys, json
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+import json
 
 from openai import OpenAI
 
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
-# Step 1: 定義 tool schema — OpenAI-compatible 格式包一層 {"type":"function", "function":{...}}
-weather_tool = {
+TOOLS = [{
     "type": "function",
     "function": {
         "name": "get_weather",
-        "description": "查詢城市目前天氣（晴/雨/陰），回傳一個短字串。",
+        "description": "取得指定城市的示範天氣資料",
         "parameters": {
             "type": "object",
             "properties": {
-                "city": {"type": "string", "description": "城市名稱（如「台北」）"},
+                "city": {"type": "string", "description": "城市名稱，例如台北"},
+                "unit": {"type": "string", "enum": ["celsius"]},
             },
-            "required": ["city"],
+            "required": ["city", "unit"],
+            "additionalProperties": False,
         },
     },
-}
+}]
 
-# Step 2: 問問題、讓 LLM 自己決定要不要呼叫 tool
-resp = client.chat.completions.create(
-    model="qwen2.5:3b",
-    max_tokens=512,
-    tools=[weather_tool],
-    messages=[{"role": "user", "content": "台北現在有下雨嗎？"}],
+
+def get_weather(city: str, unit: str) -> dict:
+    if unit != "celsius":
+        raise ValueError("只接受 celsius")
+    return {"city": city, "temperature": 26, "unit": unit}
+
+
+messages = [{"role": "user", "content": "台北現在幾度？"}]
+first = client.chat.completions.create(
+    model="qwen2.5:3b", messages=messages, tools=TOOLS
 )
+assistant = first.choices[0].message
+messages.append(assistant.model_dump(exclude_none=True))
 
-# === 自我驗證 ===
-msg = resp.choices[0].message
-print("finish_reason:", resp.choices[0].finish_reason)
-print("tool_calls:", msg.tool_calls)
+for call in assistant.tool_calls or []:
+    if call.function.name != "get_weather":
+        raise ValueError(f"不允許的工具：{call.function.name}")
+    args = json.loads(call.function.arguments)
+    if (
+        not isinstance(args, dict)
+        or set(args) != {"city", "unit"}
+        or not isinstance(args["city"], str)
+        or not args["city"].strip()
+        or args["unit"] != "celsius"
+    ):
+        raise ValueError("city 必須是非空字串，unit 必須是 celsius")
+    result = get_weather(args["city"], args["unit"])
+    messages.append({
+        "role": "tool",
+        "tool_call_id": call.id,
+        "content": json.dumps(result, ensure_ascii=False),
+    })
 
-assert msg.tool_calls, "預期 LLM 會選擇呼叫 tool（而非直接回答）"
-tc = msg.tool_calls[0]
-assert tc.function.name == "get_weather", f"預期呼叫 get_weather、實際 {tc.function.name}"
-args = json.loads(tc.function.arguments)
-assert args.get("city"), "預期 city 參數有值"
-print(f"✅ 練習 1 通過 — qwen2.5:3b 正確選了 get_weather、帶 city='{args['city']}' 參數")
+if not assistant.tool_calls:
+    raise RuntimeError("模型沒有呼叫工具；請檢查模型與 schema")
+
+final = client.chat.completions.create(
+    model="qwen2.5:3b", messages=messages, tools=TOOLS
+)
+print(final.choices[0].message.content)
+
+assert assistant.tool_calls[0].function.name == "get_weather"
+assert any(message["role"] == "tool" for message in messages)
 ```
 
-**預期輸出**（樣本）：
-```
-finish_reason: tool_calls
-tool_calls: [ChatCompletionMessageToolCall(id='call_xxx', function=Function(name='get_weather', arguments='{"city": "台北"}'), type='function')]
-✅ 練習 1 通過 — qwen2.5:3b 正確選了 get_weather、帶 city='台北' 參數
+```powershell
+python hello_tool.py
 ```
 
-**沒裝 Ollama 也能驗邏輯**：用 `unittest.mock.MagicMock` 取代 client、塞固定 response、assert 一樣 work。完整 mock 範例見 [`examples/stage-3/03-react-from-scratch/test.py`](../examples/stage-3/03-react-from-scratch/test.py)（pattern 跨 backend 通用）。
+這裡用的是 **OpenAI Python SDK 連到 Ollama 的 compatible Chat Completions endpoint**，沒有把資料送到 OpenAI 雲端。`additionalProperties: false` 對 schema 很有幫助，但 Ollama 和 OpenAI strict mode 的保證不能畫上等號；程式仍要驗證。
+
+若模型沒有呼叫工具，先保持問題、模型和 schema 不變重跑三次，記錄成功次數；不要用一次失敗宣布模型「不支援」。
 
 </details>
 
 <details markdown="1">
-<summary>📋 <b>起手碼 — Path B（Anthropic API、選擇性）</b>（複製到 <code>practice_1_anthropic.py</code>）</summary>
+<summary>Path B：Anthropic 完整來回（每次先保留 `$0.05`）</summary>
 
 ```python
-# 需要：pip install anthropic
-# 環境變數：export ANTHROPIC_API_KEY=sk-ant-...
+import json
+import os
+
 import anthropic
 
-client = anthropic.Anthropic()
-
-# Anthropic native tool schema — 不用包 wrapper
-weather_tool = {
+client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+tools = [{
     "name": "get_weather",
-    "description": "查詢城市目前天氣（晴/雨/陰），回傳一個短字串。",
+    "description": "取得指定城市的示範天氣資料",
     "input_schema": {
         "type": "object",
-        "properties": {
-            "city": {"type": "string", "description": "城市名稱（如「台北」）"},
-        },
+        "properties": {"city": {"type": "string"}},
         "required": ["city"],
+        "additionalProperties": False,
     },
-}
+}]
 
-resp = client.messages.create(
-    model="claude-haiku-4-5",
+
+def get_weather(city: str) -> dict:
+    return {"city": city, "temperature": 26, "unit": "celsius"}
+
+
+messages = [{"role": "user", "content": "台北現在幾度？"}]
+
+first = client.messages.create(
+    model="claude-haiku-4-5-20251001",
     max_tokens=512,
-    tools=[weather_tool],
-    messages=[{"role": "user", "content": "台北現在有下雨嗎？"}],
+    tools=tools,
+    messages=messages,
 )
+messages.append({"role": "assistant", "content": first.content})
+tool_results = []
+for block in first.content:
+    if block.type == "tool_use":
+        if block.name != "get_weather":
+            raise ValueError(f"不允許的工具：{block.name}")
+        if (
+            set(block.input) != {"city"}
+            or not isinstance(block.input["city"], str)
+            or not block.input["city"].strip()
+        ):
+            raise ValueError("get_weather 需要一個字串 city")
+        result = get_weather(block.input["city"])
+        tool_results.append({
+            "type": "tool_result",
+            "tool_use_id": block.id,
+            "content": json.dumps(result, ensure_ascii=False),
+        })
 
-# === 自我驗證 ===
-assert resp.stop_reason == "tool_use", f"非預期 stop_reason: {resp.stop_reason}"
-tool_calls = [b for b in resp.content if b.type == "tool_use"]
-assert tool_calls[0].name == "get_weather"
-assert tool_calls[0].input.get("city")
-print(f"✅ 練習 1 通過（Anthropic）— Claude 選了 get_weather、city='{tool_calls[0].input['city']}'")
+if not tool_results:
+    raise RuntimeError(f"沒有工具請求；stop_reason={first.stop_reason}")
+
+messages.append({"role": "user", "content": tool_results})
+final = client.messages.create(
+    model="claude-haiku-4-5-20251001",
+    max_tokens=512,
+    tools=tools,
+    messages=messages,
+)
+print("".join(block.text for block in final.content if block.type == "text"))
 ```
 
-**3 個關鍵 SDK 差異**：
-
-- **Schema wrap**：Anthropic 直接 `tools=[{name, description, input_schema}]`；OpenAI/Ollama 要包 `[{"type":"function", "function":{...}}]`
-- **Response 路徑**：Anthropic 從 `resp.content[i].type=="tool_use"` 抓；OpenAI/Ollama 從 `resp.choices[0].message.tool_calls[i]`
-- **Args 格式**：Anthropic `.input` 是 dict（自動 parse）；OpenAI/Ollama `.function.arguments` 是 JSON string，要 `json.loads(...)`
-
-**成本**：1 次 ≈ $0.001。**Claude 的 tool-use 比 qwen2.5:3b 更穩**——複雜場景（5+ tools、模糊問題）gap 會明顯。
+Anthropic client tool 的失敗結果要使用對應 `tool_use_id`，並加上 `"is_error": true`。不要把工具結果插進 system prompt。
 
 </details>
 
 ### 練習 2：多工具選擇
-給 Claude 三個工具（搜尋、計算機、行事曆）跟一個任務。看 Claude 怎麼挑工具，順便注意它什麼時候會挑錯。
 
-<details markdown="1">
-<summary>📋 <b>簡化版核心觀念 — Path A (Ollama)</b></summary>
+完成後，模型會在 `calculator` 和 `get_weather` 中選一個，程式只派發 allowlist 內的名稱。
 
-**NEW vs 練習 1**：tools 從 1 個變 3 個。LLM 看 `description` 邊界決定挑哪個——`description` 寫得越像「給人讀的 docstring」、越容易挑錯。
+**第一步**：直接複製這行執行 mock test，不需要金鑰：
 
-```python
-from openai import OpenAI
-import json
-
-client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
-
-TOOLS = [
-    {"type": "function", "function": {"name": "web_search",
-        "description": "Search current or external info not in the prompt.",
-        "parameters": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}}},
-    {"type": "function", "function": {"name": "calculator",
-        "description": "Evaluate basic arithmetic with +, -, *, /, parentheses.",
-        "parameters": {"type": "object", "properties": {"expression": {"type": "string"}}, "required": ["expression"]}}},
-    {"type": "function", "function": {"name": "calendar_lookup",
-        "description": "Look up events for a specific date.",
-        "parameters": {"type": "object", "properties": {"date": {"type": "string"}}, "required": ["date"]}}},
-]
-
-resp = client.chat.completions.create(model="qwen2.5:3b", tools=TOOLS,
-    messages=[{"role": "user", "content": "What is (19 * 42) - 8?"}])
-
-tc = resp.choices[0].message.tool_calls[0]
-print(f"LLM 挑了: {tc.function.name}, args: {json.loads(tc.function.arguments)}")
-# 預期：calculator, {"expression": "(19 * 42) - 8"}
+```powershell
+python examples/stage-3/02-multi-tool-selection/test.py
 ```
 
-**punchline**：3 個 tool 的 `description` 邊界要互斥——`calendar` 寫「行事曆」太籠統、會跟 `web_search` 撞；寫「特定日期事件」就清楚。小 model 對 description 質量比 Claude 更敏感。
+<details markdown="1">
+<summary>展開 Path A／Path B、觀察重點與預算</summary>
 
-**Path B (Anthropic) 改 3 行**：schema 拿掉 `{"type": "function", "function": {...}}` 外包、`tool_calls` 變 `[b for b in resp.content if b.type == "tool_use"]`、`tc.input` 已經是 dict 不用 `json.loads`。完整版見 folder。
+- [Path A README（Ollama）](../examples/stage-3/02-multi-tool-selection/README.md)：執行 `python starter.py`。
+- 同一資料夾的 `starter_anthropic.py` 是 Path B；執行 `python test_anthropic.py` 可先用 mock 驗證訊息形狀。
+- 觀察 `tool_calls[0].function.name`，再確認程式是否拒絕未知名稱。
+- 不要使用 `globals()[model_name]()` 或 `eval()` 派發工具。
+
+Path A 的 API 費用是 `$0`；Path B 一輪先保留 `$0.05`。
 
 </details>
-
-→ **基礎 starter 範本** → [`examples/stage-3/02-multi-tool-selection/`](../examples/stage-3/02-multi-tool-selection/)（starter.py 含 stub + 簡單 test，illustrative，**不是 chapter-length 完整教學**；深度章節見 stage 開頭 📚 hello-agents callout）
 
 ### 結構化輸出（Structured Outputs / JSON mode）⭐ function calling 的孿生兄弟
 
-function calling 是「**讓模型決定要不要動手**」；**結構化輸出是「強制模型回傳一個固定形狀的 JSON」**——兩者常搞混，但用途不同：前者讓 agent 採取行動，後者讓你拿到可程式解析的資料（填表、分類、抽取、eval 評分）。
+Function Calling 是「請程式做事」；Structured Output 是「請模型把資料放進固定形狀」。兩者都用 schema，但目的不同。
 
-**三種做法（由弱到強）**：
+<details markdown="1">
+<summary>展開 strict mode、JSON mode 與常見限制</summary>
 
-1. **prompt 要求 JSON**——最簡單、但模型有時會多嘴或格式跑掉。
-2. **JSON mode / `response_format`**——API 保證回合法 JSON（但不保證符合你的 schema）。
-3. **JSON-schema 強制 / constrained decoding**——連 schema 都鎖死，回來的一定符合（最可靠）。
+- **JSON mode** 通常只保證可解析成 JSON，不一定符合你的欄位規則。
+- **Structured Output** 會依供應商支援限制 schema 外形；仍可能遇到 refusal、截斷或語意錯誤。
+- **OpenAI strict mode** 要求每個 object 設 `additionalProperties: false`，並把 properties 全列為 required；Chat Completions 預設仍不是 strict。
+- **Anthropic strict tool use** 與 OpenAI 的 schema 格式、訊息格式不同，不要直接複製旗標名稱。
+- **Ollama／其他 compatible endpoint** 支援範圍取決於模型與版本。以固定 eval 驗證，不以「compatible」推論完全相同。
 
-> 💡 為什麼重要：agent 的 state、tool 參數、eval 評分全都依賴「拿得到結構化資料」。這是 tool calling 底下那層 load-bearing 的可靠度基礎。
+想用 Python model 管理 schema，可看 [567-labs/instructor](https://github.com/567-labs/instructor)；想研究 constrained decoding，可看 [dottxt-ai/outlines](https://github.com/dottxt-ai/outlines)。不論使用哪一個，程式都要處理解析與語意錯誤。
 
-**動手工具**：[jxnl/instructor](https://github.com/jxnl/instructor)（★ 13k+，把 Pydantic model 當 schema、自動 retry）、[dottxt-ai/outlines](https://github.com/dottxt-ai/outlines)（★14k，constrained decoding、連本機 LLM 都能鎖 schema）；Stage 4 的 Pydantic AI 也是同路線。
+</details>
 
 ### 練習 3：從零實作 ReAct（不用 framework）
-用 50-80 行 Python 把 Thought → Action → Observation 迴圈寫出來。不要 LangChain、不要 LangGraph，就是純 `while not done: thought; action; observation; ...`。
 
-<details markdown="1">
-<summary>📋 <b>簡化版核心觀念 — Path A (Ollama)、ReAct loop 的全部就在這 13 行</b></summary>
+完成後，你會有一個最小 Agent Loop：模型可以多次叫工具，但超過上限一定停止。
 
-**NEW vs 練習 2**：把單次 call 包進迴圈、`messages` 一直長、看 `tool_calls` 在不在來決定收尾。
+**第一步**：先跑不需要金鑰的測試：
 
-```python
-# 假設 TOOLS + TOOL_IMPL（dict: name → callable）已經像練習 2 一樣定義好
-messages = [{"role": "user", "content": "台北人口除以紐約人口？"}]
-
-for step in range(5): # max_iter safety net
-    r = client.chat.completions.create(model="qwen2.5:3b", tools=TOOLS, messages=messages)
-    msg = r.choices[0].message
-    # 把 assistant response 接回 messages（重要！下輪 LLM 才看得到自己上輪講什麼）
-    messages.append({"role": "assistant", "content": msg.content, "tool_calls": msg.tool_calls})
-    if not msg.tool_calls:
-        print(f"✅ 收尾：{msg.content}"); break
-    for tc in msg.tool_calls:
-        args = json.loads(tc.function.arguments)
-        obs = TOOL_IMPL[tc.function.name](args) # 本地執行
-        # observation 接回 messages（用 role="tool"、配 tool_call_id）
-        messages.append({"role": "tool", "tool_call_id": tc.id, "content": obs})
+```powershell
+python examples/stage-3/03-react-from-scratch/test.py
 ```
 
-**3 個容易踩坑**：
+<details markdown="1">
+<summary>展開 13 行 loop、雙路徑與完成條件</summary>
 
-1. **忘記把 assistant response 加回 messages**——下輪 LLM 看不到自己上輪講什麼、會 loop forever
-2. **`tool` message 沒帶 `tool_call_id`**——LLM 無法配對哪個 result 對應哪個 call
-3. **沒 `max_iter`**——tool 結果寫不好時、LLM 會無限呼叫，safety net 必須設
+```python
+for step in range(MAX_STEPS):
+    response = ask_model(messages, tools)
+    calls = read_tool_calls(response)
+    if not calls:
+        return read_final_text(response)
+    for call in calls:
+        name, args, call_id = validate_call(call)
+        result = TOOL_IMPL[name](**args)
+        messages.append(make_tool_result(call_id, result))
+raise RuntimeError(f"Agent 超過 {MAX_STEPS} 步，已停止")
+```
 
-**Path B (Anthropic) 差幾行**：迴圈架構一模一樣、`msg.tool_calls` 變 `[b for b in resp.content if b.type == "tool_use"]`、用 `stop_reason == "end_turn"` 判停、tool result 包成 `{"type": "tool_result", "tool_use_id": ..., "content": obs}` 放進 user message。完整版見 folder。
+真正的程式還要把 assistant 的 Tool Call 放回 history，並處理 refusal、max tokens、timeout、未知工具、JSON 解析與工具例外。完整雙路徑在 [`03-react-from-scratch`](../examples/stage-3/03-react-from-scratch/README.md)。
+
+把 trace 記成 `action / observation / final` 或簡短可驗證摘要即可；不要把私人 Chain-of-Thought 當 log 契約。
+
+Path A 的 API 費用是 `$0`；Path B 一次 loop 先保留 `$0.05`。**完成條件**：測試能證明「沒有 tool call 就停」與「超過 `MAX_STEPS` 會報錯」。
 
 </details>
-
-→ **基礎 starter 範本** → [`examples/stage-3/03-react-from-scratch/`](../examples/stage-3/03-react-from-scratch/)（含 mock-based test.py、不花 API 錢也能驗；illustrative，**不是 chapter-length 完整教學**——深度章節見 stage 開頭 📚 hello-agents callout）
 
 ### 練習 4：多步驟推理任務
-一個需要連續呼叫 3-5 次 tool 的任務。例如：「找出台北人口，除以紐約人口，再把比例換成百分比。」每一步用不同的工具。
 
-<details markdown="1">
-<summary>📋 <b>簡化版核心觀念 — 跟練習 3 同一個 loop、跑久一點而已</b></summary>
+完成後，同一個 loop 會先查資料、再計算，且每一步都有對應 call ID 和結果。
 
-**NEW vs 練習 3**：**完全同一個 loop**——只是 `TOOLS` 換成 4 個（`lookup_population` / `divide` / `to_percentage` / `round_int`）、題目自然走完 4 輪 tool call 才收尾。
+**第一步**：複製測試命令：
 
-```python
-# 沒有新 code、純粹是 TOOLS / TOOL_IMPL 換內容
-TOOL_IMPL = {
-    "lookup_population": lambda i: lookup_population(i["city"]),
-    "divide": lambda i: divide(i["a"], i["b"]),
-    "to_percentage": lambda i: to_percentage(i["ratio"]),
-    "round_int": lambda i: round_int(i["x"]),
-}
-# loop 完全照 練習 3，只是 max_iter 拉大到 8
+```powershell
+python examples/stage-3/04-multi-step-reasoning/test.py
 ```
 
-**punchline**：多步推理不是新 pattern、是**讓 ReAct loop 跑久一點**。**真正的挑戰是「LLM 會不會中間漏一步」**——qwen2.5:3b 可能漏「轉百分比」、Claude haiku 較穩。**這恰好是觀察「model 規模 vs 多步穩定度」的好實驗**。試試 `MODEL=qwen2.5:7b python starter.py` 對照。
+<details markdown="1">
+<summary>展開任務、比較方法與預算</summary>
+
+任務範例：「查台北溫度，再換算成華氏。」工具分成 `get_weather` 與 `celsius_to_fahrenheit`。不要把兩個步驟偷偷合成一個假工具，這題要觀察模型是否會接續使用前一個結果。
+
+完整雙路徑在 [`04-multi-step-reasoning`](../examples/stage-3/04-multi-step-reasoning/README.md)。比較模型時，固定 prompt、tools、schema、`MAX_STEPS` 和測試題，至少重跑五次，再記成功率與失敗類型。
+
+Path A 的 API 費用是 `$0`；Path B 多輪請求先保留 `$0.10`。較大的模型可能比較穩，也可能只是更貴；用 eval 決定。
 
 </details>
-
-→ **基礎 starter 範本** → [`examples/stage-3/04-multi-step-reasoning/`](../examples/stage-3/04-multi-step-reasoning/)（starter.py 含 stub + 簡單 test，illustrative，**不是 chapter-length 完整教學**；深度章節見 stage 開頭 📚 hello-agents callout）
 
 ### 練習 5：錯誤處理
-讓某個工具失敗（網路錯誤、輸入無效）。看看 agent 會怎麼處理錯誤、能不能恢復，再加上 retry 機制。
 
-<details markdown="1">
-<summary>📋 <b>簡化版核心觀念 — tool error 是 data、不是 exception</b></summary>
+完成後，程式會把「可以讓模型修正的工具錯誤」送回去，同時對 transport、解析或超出上限的錯誤明確停止。
 
-**NEW vs 練習 4**：tool error 回傳**結構化 dict**、不要 `raise`。loop 把 dict 接回 LLM、模型自己決定 retry / 改 query / 放棄。
+**第一步**：先跑兩條 mock test：
 
-```python
-def fetch_weather(city: str) -> dict:
-    if network_failed():
-        return {"error": "network timeout", "retry_hint": "try again in 1s"}
-    return {"city": city, "forecast": "rain", "temperature_c": 24}
-
-# loop 裡：
-obs = fetch_weather(args["city"])
-messages.append({"role": "tool", "tool_call_id": tc.id,
-                 "content": json.dumps(obs, ensure_ascii=False)}) # error dict 也是 string 化接回去
-# 下一輪 LLM 看到 retry_hint、可能會 retry、可能會放棄、可能會改 query
+```powershell
+python examples/stage-3/05-error-handling/test.py
+python examples/stage-3/05-error-handling/test_anthropic.py
 ```
 
-**為什麼不 `raise`**：`raise` 直接中斷 loop、LLM 沒機會 recover。**Production 的 retry 不在 Python 層、而在 LLM 層**——這個 mental flip 是 Stage 3 練習 5 的核心。
+<details markdown="1">
+<summary>展開錯誤分類、bounded retry 與預算</summary>
 
-**Bad vs Good error 回傳**：
+| 錯誤 | 程式先做什麼 | 是否送回模型 |
+|---|---|---|
+| 網路 timeout／rate limit | 有上限地 retry；記錄錯誤 | 通常先不要 |
+| Tool Call JSON 解析失敗 | 不執行工具；回報格式錯誤 | 可以，用 error result |
+| 未知工具／未授權參數 | 拒絕執行；留下 audit log | 可以，但不能放寬權限 |
+| 工具查無資料 | 回傳明確、最小的語意錯誤 | 可以，讓模型改查詢或放棄 |
+| 達到 `MAX_STEPS`／費用上限 | 立刻停止 | 不再 retry |
 
-| Bad | Good |
-|---|---|
-| `raise Exception("failed")` | `return {"error": "network timeout", "retry_hint": "try again in 1s"}` |
-| `return "failed"` | `return {"error": "...", "category": "transient", "retry_hint": "..."}` |
-| 無限 retry | `max_iter` safety + 業務層 retry quota |
+Anthropic 的失敗 `tool_result` 使用 `"is_error": true`。OpenAI-compatible 路徑可在 `role: tool` 的 content 放結構化錯誤，但應用程式仍要自己限制 retry。
 
-**小 model 觀察**：qwen2.5:3b 對 `retry_hint` follow-up 較弱、可能直接放棄；Claude haiku 較穩。完整版（含連續失敗 graceful end 範例）見 folder。
+完整雙路徑在 [`05-error-handling`](../examples/stage-3/05-error-handling/README.md)。Path A 的 API 費用是 `$0`；Path B 一輪錯誤復原先保留 `$0.10`。
 
 </details>
-
-→ **基礎 starter 範本** → [`examples/stage-3/05-error-handling/`](../examples/stage-3/05-error-handling/)（starter.py 含 stub + 簡單 test，illustrative，**不是 chapter-length 完整教學**；深度章節見 stage 開頭 📚 hello-agents callout）
 
 ### 練習 6：Function schema 設計（壞 schema 修到好）
-**先給 LLM 一份故意寫爛的 schema**——`description` 模糊（「處理資料」）、參數全用 `type: string`、沒分 required / optional、enum 該用沒用。觀察 LLM 怎麼選錯 tool、傳錯參數。然後逐項修：
 
-- description 寫到 LLM 一眼就懂這個 tool 適用情境（不是寫給人讀的 docstring）
-- parameters 用對 type（number / boolean / enum / array），required 列清楚
-- 模糊邊界用 enum 強制收斂（例如 `unit: "celsius" | "fahrenheit"` 而不是 `unit: string`）
-- error 回傳要包 `{"error": "...", "retry_hint": "..."}` 讓 LLM 能恢復
+完成後，你會用同一組題目比較兩個 schema，並指出描述、欄位、enum 或限制哪裡改善。
 
-> 💡 詳細 cheatsheet 看 [`resources/schema-design-cheatsheet.md`](../resources/schema-design-cheatsheet.md)——5 條黃金規則 + 5 個常見 anti-pattern。
+**第一步**：直接跑壞版和好版的 mock test：
 
-<details markdown="1">
-<summary>📋 <b>簡化版核心觀念 — bad vs good schema 對照</b></summary>
-
-**NEW vs 練習 5**：同一個工具（溫度轉換）、兩種 schema 寫法。看 4 個差別。
-
-```python
-# ❌ BAD — qwen2.5:3b 幾乎必錯（Claude haiku 還能猜對、但機率明顯下降）
-{"name": "convert", "description": "Convert a value.",
- "parameters": {"type": "object", "properties": {
-     "value": {"type": "string"}, "unit": {"type": "string"}}}}
-
-# ✅ GOOD — qwen 也能穩定挑對
-{"name": "convert_temperature",
- "description": "Use when user asks to convert temperatures between Fahrenheit and Celsius.",
- "parameters": {"type": "object", "properties": {
-     "value": {"type": "number", "description": "Temperature value"},
-     "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}},
-     "required": ["value", "unit"]}}
+```powershell
+python examples/stage-3/06-schema-design/test.py
+python examples/stage-3/06-schema-design/test_anthropic.py
 ```
 
-**4 個改進**：(1) `name` 改具體、(2) `description` 寫「**何時**用」而非「**做什麼**」、(3) `type` 改 `number`、(4) 加 `required` + `enum`。
+<details markdown="1">
+<summary>展開五條規則、eval 卡與預算</summary>
 
-**punchline**：**寫 schema 的功夫能省下換大 model 的成本**——小 model 對 schema 質量比大 model 敏感，相同 bad schema 在 Claude 上可能還能猜對、在 qwen 上幾乎必錯。Production 想用便宜 model？schema 必須寫到能上線跑的程度。
+1. 工具名稱用清楚的動詞加名詞，例如 `get_weather`。
+2. Description 說明何時用，也說明何時不要用。
+3. 每個欄位都有清楚名稱、型別與例子。
+4. 能用 `enum`、範圍和 `additionalProperties: false` 就明確限制。
+5. Schema 只負責介面；權限、業務規則和資料安全仍在程式驗證。
 
-**搞不定 schema 怎麼辦**：裝 [`examples/stage-5/tool-calling-tutor/`](../examples/stage-5/tool-calling-tutor/) skill，遇到「LLM 不呼叫我的 tool」、「我這 schema 哪裡寫壞」會自動跳出來幫你 debug。
+完整雙路徑在 [`06-schema-design`](../examples/stage-3/06-schema-design/README.md)，速查表在 [`resources/schema-design-cheatsheet.md`](../resources/schema-design-cheatsheet.md)。
+
+直接複製這張結果卡，不必先畫空表：
+
+```text
+固定題目：________________
+壞 schema｜成功 __ / 5｜主要錯誤：________________
+好 schema｜成功 __ / 5｜主要改善：________________
+結論｜哪個欄位幫助最大：________________
+```
+
+不要寫「某模型幾乎必錯」。Path A 的 API 費用是 `$0`；Path B 五輪比較先保留 `$0.25`。
 
 </details>
 
-→ **基礎 starter 範本** → [`examples/stage-3/06-schema-design/`](../examples/stage-3/06-schema-design/)（含 bad schema vs good schema 兩個版本對照；illustrative，**不是 chapter-length 完整教學**——深度章節見 stage 開頭 📚 hello-agents callout）
+## 🎒 推薦小專案：安全的天氣小幫手
 
-> 💡 **手寫 schema 之後，認識 MCP**：你上面手寫的 tool schema，真實世界已經有標準——**MCP（Model Context Protocol）** 把「工具長什麼樣、怎麼呼叫」標準化成跨 agent 可重用的協定：寫一次，任何支援 MCP 的 agent（Claude Code / Cursor / …）都能用。這裡先記得這個名字，[Stage 5.2](05-claude-code-ecosystem.md#52--mcpmodel-context-protocol-基礎) 細講。
+把練習 1–6 接起來，只保留兩個只讀工具：`get_weather` 和 `convert_temperature`。加入 allowlist、參數驗證、`MAX_STEPS`、timeout、錯誤結果和五題 eval。
 
-## 🪞 反思（Reflexion / Self-Refine）— 概念 + 路由
+最小成果是 `agent.py`、`test_agent.py`、`eval_cases.json` 和一張結果卡。先讓 mock tests 通過，再跑本機模型；不要先接付款、刪檔或寄信工具。
 
-> **本節是 concept + routing、不是練習**。沒有 verified working solution、不掛「練習 N」label、不給 success criteria——遵守本 repo「沒驗證答案不寫練習、頂多 routing」原則。想動手做？直接讀下方 paper / project。
+### 🪞 反思（Reflexion / Self-Refine）— 概念 + 路由
 
-**反思是什麼**：練習 5 的 error handling 是「LLM 出錯 → 你（外部）catch + retry」；**反思**是「LLM 觀察自己出錯 → 自己改」。差別是 agency 在哪一邊——這是 production agent（Cursor / Cline / Claude Code）每天都在跑的迴圈。
+<details markdown="1">
+<summary>展開 Reflection、Reflexion、Self-Refine 與記憶的關係</summary>
 
-**為什麼這節在 Stage 3 而不是 Stage 6**：反思在學術（Reflexion paper Shinn 2023、Self-Refine Madaan 2023）跟 production（Cursor / Claude Code）上都被歸類在 **planning / reasoning loop** 機制——是 ReAct（練習 3）的 sibling pattern，**不是 memory pattern**。同樣是 LLM 自我引導的多輪迴圈，只是「下一輪要做什麼」從「呼叫 tool」換成「批改自己」。
+- **Reflection** 是廣義名稱：看上一輪結果，再改善下一輪。
+- **Reflexion** 常把失敗、回饋與下一次策略寫進可重用的文字記錄。
+- **Self-Refine** 常用「產生 → 批評 → 改寫」循環改善同一份輸出。
+- 這些都是 ReAct 的 sibling patterns，不等於 Tool Use，也不一定需要持久記憶。
 
-**進階版（帶 persistent memory 的 Reflexion 完整版）→ [Stage 6 進階：Reflexion with Memory](06-memory-rag.md#-進階帶持久記憶的-reflexion-完整版--track-b-選讀)**——當反思要跨 session、把過去失敗存起來當下一輪 context，這個版本才真的需要 memory 層。
+本章只理解 single-session loop。需要跨 session 保存失敗經驗時，進 [Stage 06 的 Reflection Memory](06-memory-rag.md)；需要更完整的 planning、verification 與長時執行，進 [Stage 07.5](07.5-advanced-agentic-concepts.md)。
 
-### 一張對照圖
-
-| Pattern | 形式 | 需要 memory？ | 在哪學 |
-|---|---|---|---|
-| **Error handling**（練習 5） | 外部 catch + retry | 不需 | **本 stage 練習 5** |
-| **ReAct loop**（練習 3） | LLM → tool → 結果 → LLM | 不需 | **本 stage 練習 3** |
-| **基本反思 / Self-Refine** | Actor → Critic → Actor，single session | 不需 | **本節 routing（下方）** |
-| **完整 Reflexion**（含 episodic memory） | 上面 + 把失敗反思存起來、跨 session 累積 | **需要** | **Stage 6 進階：Reflexion with Memory** |
-
-### 📚 想動手 / 想深入？直接讀這些
-
-**Paper**：
-
-- [**Reflexion (Shinn et al. 2023)**](https://arxiv.org/abs/2303.11366) ⭐ — 原 paper，定義「verbal reinforcement learning」
-- [**Self-Refine (Madaan et al. 2023)**](https://arxiv.org/abs/2303.17651) — single-agent self-critique，是「基本反思」的學術定義
-
-**Reference 實作**：
-
-- [**arunpshankar/react-from-scratch**](https://github.com/arunpshankar/react-from-scratch) — 已在本 stage 精選 Projects 列出，含 Reflection 實作可直接讀
-- [**LangChain — Reflection Agents（blog）**](https://blog.langchain.dev/reflection-agents/) — framework 實作參考 + 完整 working notebook
-- [**datawhalechina/hello-agents**](https://github.com/datawhalechina/hello-agents) — 對應章節（自我反思 / Self-Refine 段落、中文完整教學）
-
-> 💡 **想看反思怎麼長進 production agent**：[Stage 5 5.7 Harness Internals](05-claude-code-ecosystem.md#57--claude-code-source-解剖reference-harness-implementation-track-b-必看) 解剖 Claude Code source 時可以看到——agent 跑完 tool call 後自我評估 patch、有問題回頭改、修正後再 commit。**這是現代 production agent 的核心 building block 之一**。
+</details>
 
 ## 🎯 精選 Projects
 
-按用途分 4 類、12 個項目一張表搞定。**挑入口看「適合誰」、想深入點連結看 repo README**。
+先完成一條五星路線：官方文件 → 練習 1–3 → 一個從零實作。完整表是工具箱，不是 21 筆待辦清單。
 
-| 分類 | Project | ⭐ | 適合誰 | 為什麼推薦 / 備註 |
-|---|---|---|---|---|
-| **官方 cookbook**<br>（先看這個） | [Anthropic — Tool Use Cookbook](https://github.com/anthropics/claude-cookbooks/tree/main/tool_use) | ⭐⭐⭐⭐⭐ | 練習 1 / 練習 2 入手 | 單工具 → 多工具 → parallel → structured output 全部 notebook（重點看 `tool_use/customer_service_agent.ipynb`） |
-| | [Anthropic — Quickstarts](https://github.com/anthropics/claude-quickstarts) | ⭐⭐⭐⭐⭐ | 練習 1/2 跑完想看「真的應用長什麼樣」 | 3 個 deploy-ready 範本（financial / customer-support / computer-use）、★ 17k+。比社群實作更 canonical |
-| | [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) | ⭐⭐⭐⭐⭐ | 練習 3 寫完、進 Stage 4 之前**必讀** | 部落格文章：何時用 agent vs workflow / 常見 pattern / 容易踩的坑——Anthropic 官方觀念框架 |
-| **從零實作 ReAct**<br>（理解原理） | [pguso/ai-agents-from-scratch](https://github.com/pguso/ai-agents-from-scratch) | ⭐⭐⭐⭐⭐ | 練習 3（從零寫 ReAct） | 用本機 Ollama 從零打造、zero framework、章節結構好。**最乾淨的「不靠 framework」參考實作** |
-| | [arunpshankar/react-from-scratch](https://github.com/arunpshankar/react-from-scratch) | ⭐⭐⭐⭐ | 練習 3 替代（偏好 Gemini）+ 想看反思變體 | ReAct + Reflection + Self-consistency、Gemini 最佳化（⚠️ 2025-05 後更新放緩、Apache-2.0） |
-| | [mattambrogi/agent-implementation](https://github.com/mattambrogi/agent-implementation) | ⭐⭐⭐ | 練習 3 卡住時逐行對照 | ~150 行最精簡 ReAct（⚠️ 已停滯 2024-01、留作教學玩具參考） |
-| | [lsdefine/GenericAgent](https://github.com/lsdefine/GenericAgent) | ⭐⭐⭐⭐ | 練習 3/4，想看「精簡但完整」framework | 自我演化 framework、~3K 行、★ 13k+、支援 Claude / Gemini / Kimi / MiniMax。介於玩具版與 LangGraph 之間 |
-| **CodeAct 路線**<br>（agent 寫程式碼當 action） | [HuggingFace Smolagents](https://github.com/huggingface/smolagents) | ⭐⭐⭐⭐ | 練習 5 替代方案、本地 LLM 實驗 | ≤1000 LOC、CodeAct pattern 代表、★ 28k+。HF 立場：agent 應該要小 |
-| | [QuantaLogic/quantalogic](https://github.com/quantalogic/quantalogic) | ⭐⭐⭐ | 練習 3 後想比較 CodeAct vs JSON-tool | 另一條 CodeAct 路線、agent 直接寫 Python 程式碼當 action、Apache-2.0 |
-| **中文章節式深度教材**<br>（chapter-length） | [datawhalechina/hello-agents](https://github.com/datawhalechina/hello-agents) ⭐ **本 stage 推薦** | ⭐⭐⭐⭐⭐ | 中文讀者想要結構化教學 + 完整覆蓋 | **16 種能力**含 tool use / ReAct / context engineering / sub-agents / circuit breaker / observability。中文圈最完整章節式（CC BY-NC-SA、非商用） |
-| | [HelloAgents (jjyaoao)](https://github.com/jjyaoao/HelloAgents) | ⭐⭐⭐⭐⭐ | 中文讀者、想跑上面教材的 code | 上面教材 code repo、**請切 `learn_version` 分支**對齊章節（`pip install hello-agents`、CC BY-NC-SA） |
-| **Framework 對照**<br>（看 framework 怎麼藏掉 ReAct loop） | [LangChain — ReAct Agent Template](https://github.com/langchain-ai/react-agent) | ⭐⭐⭐ | 練習 3 自己寫完後再來 | LangGraph Studio 範本、framework 怎麼把 ReAct 抽象化 |
+<details markdown="1">
+<summary>展開 21 筆官方文件、課程、repo 與 Structured Output 工具</summary>
 
-> 💡 **建議閱讀路徑**：練習 1-2 跑 Anthropic Cookbook → 練習 3 跑 pguso/ai-agents-from-scratch → 練習 3 後讀 Building Effective Agents → 中文章節式教材就 hello-agents + jjyaoao 配對 → 進 Stage 4 前看 LangChain ReAct template 對照 framework 抽象。
+> Repo 狀態與 GitHub metadata 查核：2026-08-27 UTC。GitHub stars 會變，所以本表不列 stars。
 
+> 推薦度是本 Stage 的學習優先順序，不是人氣排名：`⭐⭐⭐⭐⭐`＝跳過會卡住本章路線；`⭐⭐⭐⭐`＝建議優先；`⭐⭐⭐`＝有需要再看；`⭐⭐`＝歷史或少數情境。
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">分類</th>
+      <th scope="col">資源</th>
+      <th scope="col">先做什麼</th>
+      <th scope="col">狀態／授權</th>
+      <th scope="col">推薦度</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="6">官方核心文件</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works">Anthropic — How Tool Use Works</a></td><td>先看 client tool 的五步來回。</td><td>官方文件</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls">Anthropic — Handle Tool Calls</a></td><td>看 call ID、result 與 <code>is_error</code>。</td><td>官方文件</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://docs.ollama.com/capabilities/tool-calling">Ollama — Tool Calling</a></td><td>照 single tool 和 agent loop 範例跑一次。</td><td>官方文件</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/function-calling">OpenAI — Function Calling</a></td><td>比較 function schema 與 strict mode。</td><td>官方文件</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/function-calling">Google Gemini — Function Calling</a></td><td>需要 Gemini 時比較 sequential／parallel call。</td><td>官方文件</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2210.03629">ReAct paper</a></td><td>先讀 abstract 與方法圖。</td><td>原始論文；arXiv</td><td>⭐⭐⭐⭐</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">官方課程與範例</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>做 Tool Use notebook。</td><td>官方課程；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/claude-cookbooks/tree/main/tool_use">Anthropic Tool Use Cookbook</a></td><td>從單工具讀到平行工具。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/claude-quickstarts">Anthropic Quickstarts</a></td><td>練習後看完整應用怎麼接工具。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/ai-agents-for-beginners">Microsoft AI Agents for Beginners</a></td><td>需要另一條完整課程時選讀一章。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">從零實作</th><td><a href="https://github.com/pguso/ai-agents-from-scratch">pguso/ai-agents-from-scratch</a></td><td>用 Ollama 對照練習 3 的 loop。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/arunpshankar/react-from-scratch">arunpshankar/react-from-scratch</a></td><td>需要 Gemini／Reflection 變體時再看。</td><td>更新放緩（最後 push 2025-05）；Apache-2.0</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/mattambrogi/agent-implementation">mattambrogi/agent-implementation</a></td><td>只用來逐行看最小教學玩具。</td><td>歷史參考（最後 push 2024-01）；上游未提供 SPDX</td><td>⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/lsdefine/GenericAgent">lsdefine/GenericAgent</a></td><td>想看小型 framework 時再比較。</td><td>維護中；MIT</td><td>⭐⭐⭐</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3">Framework／CodeAct 對照</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>完成 JSON-tool loop 後比較 CodeAct。</td><td>維護中；Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/QuantaLogic/quantalogic">QuantaLogic</a></td><td>需要第二個 CodeAct 實作時再看。</td><td>更新較慢（最後 push 2025-12）；Apache-2.0</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/react-agent">LangChain ReAct Agent</a></td><td>看 framework 如何包住自己寫過的 loop。</td><td>維護中；MIT</td><td>⭐⭐⭐</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="2">中文章節式教材</th><td><a href="https://github.com/datawhalechina/hello-agents">datawhalechina/hello-agents</a></td><td>需要完整中文章節時走這條主線。</td><td>維護中；上游 metadata 未提供 SPDX</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/jjyaoao/HelloAgents">jjyaoao/HelloAgents</a></td><td>配合上面教材跑程式；先確認對應分支。</td><td>維護中；上游 metadata 未提供 SPDX</td><td>⭐⭐⭐⭐⭐</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="2">Structured Output 工具</th><td><a href="https://github.com/567-labs/instructor">567-labs/instructor</a></td><td>想用 typed model、驗證與 retry 時看。</td><td>原 <code>jxnl/instructor</code> 已轉址；MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/dottxt-ai/outlines">dottxt-ai/outlines</a></td><td>研究本機 constrained decoding 時看。</td><td>維護中；Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
+  </tbody>
+</table>
+
+</details>
 
 ## ✅ 進 Stage 4 前的自我檢查
 
-你能不能：
+- [ ] 我能用自己的話說出 schema → call → execute → result → answer。
+- [ ] 我能分清 Tool Call、Tool Result 與 Structured Output。
+- [ ] 我的程式只派發 allowlist 工具，會驗證參數，也有 `MAX_STEPS`。
+- [ ] 我跑過練習 1–3，並看過至少一次成功和一次錯誤路徑。
+- [ ] 我比較模型或 schema 時使用同一組題目與明確分數。
 
-- [ ] 定義一個 tool schema（name + description + JSON schema 輸入/輸出）
-- [ ] 用不到 100 行 Python、不靠任何 framework，把 ReAct 迴圈寫出來
-- [ ] 解釋為什麼 agent 需要一個「我做完了」的退出條件
-- [ ] 比較 CodeAct（程式碼即 action）跟 JSON-tool 兩種路線
-- [ ] 看出哪些問題其實不需要 agent
-
-如果可以 → 進 [Stage 4 — Agent Frameworks](04-agent-frameworks.md)。
-
-如果不行 → 把 練習 3 再跑一次，不要跳過。如果你不懂 framework 在幫你抽象什麼，Stage 4 的那些東西看起來會像黑魔法。
+都做到後，進入 [Stage 4 — Agent Frameworks](04-agent-frameworks.md)。如果還說不出完整來回，先重跑練習 1；不需要把整章重新讀一遍。
