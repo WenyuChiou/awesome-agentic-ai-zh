@@ -4,54 +4,13 @@
 
 ⏱ **Time estimate**: 3-4 weeks (~15-25 hours)
 
-> 🚪 **Entry condition** (shared hub — differs by track): **Track A (CLI Power User)** arrives from A1-A2 — knowing Python + having run a basic CLI is enough; start from 5.1/5.2. **Track B (Agent Builder)** should first complete [Stage 3](03-tool-use-and-hello-agent.en.md) (tool use) + [Stage 4](04-agent-frameworks.en.md) (agent frameworks), then read this whole stage as "how Claude Code works internally". Not sure which track? → see the 📌 two-track note below.
+> 🚪 **Entry condition and the two tracks** (this stage and [Stage 8 — Agent Interfaces](08-agent-interfaces.en.md) are the curriculum's two shared hubs):
+> - **Track A (CLI Power User)**: arrives from A1-A2 — knowing Python and having run a basic CLI is enough. A2 uses [5.1 (Claude Code Basics)](#51--claude-code-basics); A3 uses [5.2 (MCP)](#52--mcp-model-context-protocol--foundation) plus, optionally, [5.3 (Skills)](#53--skills-claude-codes-behavior-layer--the-most-critical-layer-of-the-claude-code-ecosystem) and [5.4 (Plugins)](#54--plugins--marketplaces) (A3's Exercise CLI-12 teaches you to package CLAUDE.md and commands into a plugin). The reading perspective is "**how to get work done with Claude Code**."
+> - **Track B (Agent Builder)**: complete [Stage 3](03-tool-use-and-hello-agent.en.md) (tool use) + [Stage 4](04-agent-frameworks.en.md) (agent frameworks) first, then read the whole stage as "**how Claude Code works internally**," from 5.1 all the way to 5.7.
 
-> 💡 This entire stage revolves around 4 keywords (**MCP / Skills / Plugins / Marketplace**) → if you're not familiar with them, first check out [`resources/glossary.en.md` 5](../resources/glossary.en.md#5-claude-code-ecosystem).
-
-**👥 Shared Hub**: This stage is used by both Track A (CLI Power User) and Track B (Agent Builder). Stage 5 and [Stage 8 — Agent Interfaces](08-agent-interfaces.en.md) are the two central hubs of this curriculum.
-
-> 📌 **This stage is used by both tracks**:
-> - **Track A (CLI Power User)**: A2 uses [5.1 (Claude Code Basics)](#51--claude-code-basics); A3 uses [5.2 (MCP)](#52--mcp-model-context-protocol--foundation) + selectively uses [5.3 (Skills)](#53--skills-claude-codes-behavior-layer--the-most-critical-layer-of-the-claude-code-ecosystem) and [5.4 (Plugins)](#54--plugins--marketplaces) (A3's Exercise CLI-12 will teach you how to package CLAUDE.md and commands into a plugin). The reading perspective is "**how to get work done with Claude Code**."
-> - **Track B (Agent Builder)**: Treats the entire stage as a deep dive into "**how Claude Code works internally**," from 5.1 all the way to 5.4.
-
-> 🗺️ **What kind of agent is Claude Code?** → See [`resources/agent-paradigms.en.md`](../resources/agent-paradigms.en.md) Type 1 (IDE-coupled) + Type 2 (Terminal pair-programmer); start there for a full comparison of all 5 paradigms.
-
-> 🧭 **Claude Code is just one *shape* of agent** (orientation before you dive in): Claude Code is the **terminal** agent for **developers** — it lives in your command line and works on code. Anthropic also ships **Claude Cowork**, a **desktop app for non-coders** (researchers, analysts, ops): you give it a goal and it works across your files and apps to hand back a finished result. OpenAI has both shapes too. The rest of Stage 5 is about Claude Code specifically; this table just shows where it sits.
-
-| Shape | What it does for you | Anthropic | OpenAI |
-|---|---|---|---|
-| **Terminal · for developers** | reads / edits / runs your code | Claude Code | Codex CLI |
-| **App · for everyone** | works across your files, apps, and the web to finish a task | Claude Cowork | ChatGPT agent |
+> 📋 **Structure of this chapter**: 7 core sub-chapters (5.1 Basics / 5.2 MCP / 5.3 Skills / 5.4 Plugins / 5.5 Subagents / 5.6 Dynamic Workflows / 5.7 Dissecting Claude Code Source) plus 5.8 SDK (optional — only needed when you package it into a product or service). Each sub-chapter runs "Learning Goals → Required Reading → Hands-on Exercises → Curated Projects," with a self-check at the end of the chapter. The whole stage revolves around 4 keywords: **MCP / Skills / Plugins / Marketplace** — if they are unfamiliar, start with [`resources/glossary.en.md` 5](../resources/glossary.en.md#5-claude-code-ecosystem).
 
 > ⚠️ **Looking to use a local LLM? This stage is not that path.** Claude Code requires the Anthropic API / OAuth and cannot be directly pointed to Ollama or a local endpoint. For offline work, sensitive data, or to avoid using API quota, please see [`resources/cookbook.en.md` Recipe 6](../resources/cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough) and use a CLI agent that supports BYO LLM, like OpenCode / goose / Aider / Hermes.
-
-> 📋 **Structure of this chapter**: 7 sub-chapters (5.1 Basics / 5.2 MCP / 5.3 Skills / 5.4 Plugins / 5.5 Subagents / 5.6 Dynamic Workflows / 5.7 Dissecting Claude Code Source), each with "Learning Goals → Required Reading → Hands-on Exercises → Curated Projects" → followed by a self-check at the end of the chapter. **Note**: The **discipline-level** concept of Harness Engineering (plain version: the "runtime shell" around the model — how it gets tools, memory, and permissions, and how each turn actually runs) is systematically covered in [Stage 7](07-multi-agent-production.en.md); 5.7 in this chapter uses Claude Code as a case study, observing how a mature agent tool handles tools, memory, configuration, permissions, and execution flow
-> 🔑 **Key Terms**: See [`resources/glossary.en.md` 5](../resources/glossary.en.md#5-claude-code-ecosystem).
-
-## Stack at a Glance
-
-From top to bottom, each layer builds on the one below it:
-
-![Claude Code Ecosystem Stack](../resources/diagrams/stage5-stack.en.png)
-
-Each layer adds a capability:
-
-- **API + SDK**: Programmatic access to the LLM.
-- **Tool Use**: Allows the LLM to call functions you define.
-- **MCP**: A standardized protocol that lets any LLM host use any tool server.
-- **Skills**: Behavior bundles for Claude Code that can wrap MCP tools.
-- **Plugins**: Package and distribute Skills, hooks, commands, and MCP settings as a single unit.
-
-This stage has 4 sub-sections. **Please do them in order**—each one builds on the last.
-
-```
-5.1 Claude Code Basics 3-5 days (installation, slash commands, CLAUDE.md)
-5.2 MCP — Protocol Layer 5-7 days (write your first MCP server)
-5.3 Skills — Behavior Layer 5-7 days (write your first SKILL.md)
-5.4 Plugins & Marketplaces 5-7 days (package and publish)
-```
-
-After completing this stage, you will be able to extend Claude Code, write your own MCP server, and publish a plugin marketplace.
 
 ---
 
@@ -117,6 +76,15 @@ Differences from other Claude interfaces:
 | **Claude API** (programmatic) | Your server / script | LLM calls, you build the agent loop | Building production systems |
 | **Claude Agent SDK** | Your Python / TS environment | Full agent runtime + tool use + multiple sessions | Building production agent systems |
 | **Claude Code** (**This Section**) | Your terminal | **Full OS-level agent** (file / shell / git / subprocess) + skill / plugin / subagent ecosystem | **Primary daily work tool** |
+
+Zooming out one more step: Claude Code occupies the "terminal · for developers" cell, and the same agent capability also comes in an **app shape for non-coders** — Claude Cowork is the desktop app for researchers, analysts, and ops: you give it a goal and it works across your files and apps to hand back a finished result. Both vendors ship both shapes:
+
+| Shape | What it does for you | Anthropic | OpenAI |
+|---|---|---|---|
+| **Terminal · for developers** | reads / edits / runs your code | Claude Code | Codex CLI |
+| **App · for everyone** | works across your files, apps, and the web to finish a task | Claude Cowork | ChatGPT agent |
+
+The rest of Stage 5 is about Claude Code specifically. For a full comparison of all 5 agent paradigms → [`resources/agent-paradigms.en.md`](../resources/agent-paradigms.en.md) (Claude Code is Type 1 IDE-coupled + Type 2 Terminal pair-programmer).
 
 Before moving on to 5.2-5.7, you will learn about **4 core structures of Claude Code** in this section: CLAUDE.md (memory layer) / slash commands (control layer) / the `~/.claude/` directory (configuration layer) / settings.json (behavior layer).
 

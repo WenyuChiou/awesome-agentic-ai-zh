@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-08-27
+
+- **content** · **刪掉 Stage 5 的「Stack 一覽」整節**(三語)。它寫「這個階段有 4 個子章節」並只列 5.1-5.4,但這章現在是 5.1 到 5.8;而它下面 27 行就是 `🗺 7-Layer Architecture Map`,同樣在講分層,還多了「誰管」「學在哪一章」兩欄。**修數字不夠——修完仍然是兩個分層說明背靠背**,正是這份 CHANGELOG 上一批在講的「同一件事講兩次」。刪前確認全 repo 沒有任何連結指向 `#stack-一覽`。連帶刪掉孤兒資產:三個 `stage5-stack*.png`(3.37 MB)與只為產生它們而存在的 `generate-stage5-stack.py`(265 行),以及 `.gitignore` 裡一條指向已不存在產生器的 `*.svg` 樣式。**`check-image-locale.py` 全綠——它檢查語系對稱,不檢查孤兒。**
+- **content** · **Stage 5 進正題前的文字牆從 8 則 callout + 1 段粗體 + 1 張表砍到 3 則**(三語),第一個 `##` 從第 31 行提前到第 17 行。其中兩對是字面重複:「👥 共用 hub」與「📌 兩條軌都用」隔一行講同一件事、「💡 4 個關鍵詞」與「🔑 關鍵名詞」隔 20 行放同一個 glossary 錨點。`🗺️ agent-paradigms` 連結與 `🧭 Claude Cowork` 段落連同型態表**移進 5.1**,接在既有那張「跟其他 Claude 介面差別」表後面——前者是 Anthropic 內部四個介面,後者是跨廠商兩種型態,順序讀起來是往外放大一格。開頭那段「Harness Engineering 學科級概念在 Stage 7」則**刻意刪掉不搬**:5.7 自己已經講同一件事,該節有 7 個段落提到 Stage 7(其中 4 處是可點的連結)。
+- **fix** · **順手修掉三處舊數字**:Track B 寫「從 5.1 完整走到 5.4」(實際到 5.7)、本章組成寫「7 個子章」(現在寫成 7 個核心子章 + 5.8 SDK 選修,依 5.8 自己開頭「99% 的人讀完 5.1-5.7 已經夠用」的定位)、`check-stage-template.py` 的 `SKIP_STAGES` 註解寫 `(5.1-5.6)`。**同一章原本有三個互相打架的子章數,三個都錯。** reviewer 另外在 `stages/DESIGN.md` 抓到同樣過時的三處(Track B 的 5.4、sub-stage 數、sub-section 範圍),一併修掉——那份是 maintainer 內部文件,先前已經落後三個子章。同檔 line 234「因為它把 5.1-5.4 的概念集成在一個工具裡」**蓄意不動**:它在「為什麼 4 → 5 → 6 → 7 → 8 是這順序」清單裡,同列其他 bullet 全是 stage 層級,語意要的是 Stage 1-4 而不是 5.1-5.4,是另一種缺陷、不在本次範圍。
+- **chore** · **改寫過程自己踩了一次 gate 看不見的內容遺失**。第一版把替換範圍設成「🚪 那行到 🔑 那行」,結果把夾在中間的 `⚠️ 想用本機 LLM` callout 一起吃掉——**10 個 gate 全綠,`check-mirror-parity` 也綠**(另外 4 支 checker 單元測試也過,但那驗的是 checker 自己的邏輯、不驗這次的內容),因為三語同步少了同一段,結構完全對稱。是逐項比對「刪掉的元素有沒有在別處落腳」才發現的,已從 `git show HEAD:` 原文還原、reviewer 覆驗三語 byte-for-byte 相同。**鏡像一起壞掉的時候,對稱性檢查會說一切正常。**
+
 ## 2026-08-23
 
 - **content** · **Stage 5 補上 MCP 2026-07-28 的無狀態改版**(三語)。拿掉 `initialize` 握手與 `Mcp-Session-Id`、server 改用自發 handle 當普通 tool 參數、新增 `server/discover`、Roots/Sampling/Logging 與 HTTP+SSE 標為 deprecated(至少 12 個月過渡期)、MRTR 取代 server 主動發請求。每一條都從官方 changelog 讀出來。**補之前先查過 repo 現況**:`2026-07-28` 已經出現 15 處,所以這是補概念不是改錯——缺的是 MCP 語境下的 `stateless` 以及 `MRTR`、`server/discover`、`Mcp-Session-Id`——後三者先前是 0 處,`stateless` 則只在 walkthrough 裡以「agent 有沒有記憶」的無關語義出現過。

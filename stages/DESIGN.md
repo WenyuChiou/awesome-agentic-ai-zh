@@ -51,7 +51,7 @@
 Stage 5（Claude Code 生態）兩條軌都會碰到：
 
 - Track A：A2 用 5.1（Claude Code 基礎）；A3 用 5.2（MCP）+ 選擇性用到 5.3（Skills）跟 5.4（Plugins）——A3 的 動手練習 CLI-12 會教 plugin 打包。讀的角度是「**怎麼用 Claude Code 把工作做好**」
-- Track B：把整個 Stage 5 當「**Claude Code 內部運作**」的深度學，從 5.1 完整走到 5.4
+- Track B：把整個 Stage 5 當「**Claude Code 內部運作**」的深度學，從 5.1 完整走到 5.7
 
 但兩條軌**不需要重新讀整份 Stage 5**——Track A 看「用法」、Track B 看「內部結構」。同一份內容，兩種讀法。
 
@@ -129,7 +129,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 **已知例外**：
 
 - **Stage 0**：prerequisite gateway，沒有完整結構（見 「Stage 0 為什麼可以 skip」）
-- **Stage 5**：分 4 個 sub-stage（5.1-5.4），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
+- **Stage 5**：分 7 個核心 sub-stage（5.1-5.7）+ 5.8 SDK（選修、包成產品或服務才需要），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
 - **Stage 6 / 7**：直接跳過 進入條件 section（前面 stage 已隱含 prerequisite）
 - **Stage 7.5**：reading-map（進階概念 + reading path），沒有 動手練習、只有輕量 self-check——是 production 之後的 frontier 概念地圖，不寫 code
 - **Stage 8**：跟 Stage 5 一樣是兩軌共用 hub，分 3 層 interface（Computer Use / Browser Use / Code Sandbox）+ Safety / Security section，各層有自己的工具與練習
@@ -155,7 +155,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 - 每個都有具體成功標準（跑出某個輸出、看到某個錯誤等）
 - **必須是「不動手就學不會」的東西**——光讀光看不算
 - 動手練習 跟 self-check 是 **conceptual coverage 對應**（不是 1:1 編號對應）——跑過 動手練習 後，self-check 整體應該能過；單一條 self-check 可能對應到多個 動手練習
-- Stage 5 因為 sub-section（5.1-5.4）結構，動手練習 分散在各 sub-section
+- Stage 5 因為 sub-section（5.1-5.8）結構，動手練習 分散在各 sub-section
 
 ### 精選 Projects
 - 跑完 動手練習 後的延伸學習

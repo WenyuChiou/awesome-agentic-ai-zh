@@ -56,7 +56,7 @@ EXPECTED_PATTERNS = [
 
 # Stages that don't follow the per-stage template:
 #   - 00- prerequisites: short intro doc, doesn't need full template
-#   - 05- Claude Code ecosystem: multi-sub-stage container (5.1-5.6),
+#   - 05- Claude Code ecosystem: multi-sub-stage container (5.1-5.8),
 #     each sub-stage has its own learning goals/practice structure;
 #     template check at file level doesn't make sense.
 #   - 07.5- advanced agentic concepts: reading-map chapter (12 concepts

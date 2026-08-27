@@ -4,54 +4,13 @@
 
 ⏱ **时间估算**：3-4 周（约 15-25 小时）
 
-> 🚪 **进入条件**（共用 hub、依 track 不同）：**Track A（CLI Power User）** 从 A1-A2 过来、会用 Python + 跑过基本 CLI 即可、从 5.1/5.2 起步；**Track B（Agent Builder）** 建议先完成 [Stage 3](03-tool-use-and-hello-agent.zh-Hans.md)（tool use）+ [Stage 4](04-agent-frameworks.zh-Hans.md)（agent frameworks）再进、把整个 stage 当“Claude Code 内部怎么运作”深读。不确定走哪条 → 看下面 📌 的两轨说明。
+> 🚪 **进入条件与两条轨**（本 stage 跟 [Stage 8 — Agent Interfaces](08-agent-interfaces.zh-Hans.md) 是 curriculum 的两个共用 hub）：
+> - **Track A（CLI Power User）**：从 A1-A2 过来、会用 Python + 跑过基本 CLI 即可。A2 用 [5.1（Claude Code 基础）](#51--claude-code-基础)；A3 用 [5.2（MCP）](#52--mcpmodel-context-protocol-基础) + 选择性用到 [5.3（Skills）](#53--skillsclaude-code-的行为层-claude-code-生态最关键的一层) 跟 [5.4（Plugins）](#54--plugins-与-marketplaces)（A3 的 动手练习 CLI-12 会教把 CLAUDE.md 跟 commands 打包成 plugin）。读的角度是“**怎么用 Claude Code 把工作做好**”。
+> - **Track B（Agent Builder）**：建议先完成 [Stage 3](03-tool-use-and-hello-agent.zh-Hans.md)（tool use）+ [Stage 4](04-agent-frameworks.zh-Hans.md)（agent frameworks）再进，把整个 stage 当“**Claude Code 内部怎么运作**”深读，从 5.1 完整走到 5.7。
 
-> 💡 整个 stage 围绕 4 个关键词（**MCP / Skills / Plugins / Marketplace**）展开 → 不熟先翻 [`resources/glossary.zh-Hans.md` 5](../resources/glossary.zh-Hans.md#5-claude-code-生态)。
-
-**👥 共用 hub**：本 stage 是 Track A（CLI Power User）+ Track B（Agent Builder）两条路径的共用中心。Stage 5 跟 [Stage 8 — Agent Interfaces](08-agent-interfaces.zh-Hans.md) 是 curriculum 的两个 hub。
-
-> 📌 **这个 stage 两条轨都用**：
-> - **Track A（CLI Power User）**：A2 用 [5.1（Claude Code 基础）](#51--claude-code-基础)；A3 用 [5.2（MCP）](#52--mcpmodel-context-protocol-基础) + 选择性用到 [5.3（Skills）](#53--skillsclaude-code-的行为层-claude-code-生态最关键的一层) 跟 [5.4（Plugins）](#54--plugins-与-marketplaces)（A3 的 动手练习 CLI-12 会教把 CLAUDE.md 跟 commands 打包成 plugin）。读的角度是“**怎么用 Claude Code 把工作做好**”。
-> - **Track B（Agent Builder）**：把整个 stage 当“**Claude Code 内部怎么运作**”的深度学习，从 5.1 完整走到 5.4。
-
-> 🗺️ **Claude Code 属于哪种 agent 型态**？→ [`resources/agent-paradigms.zh-Hans.md`](../resources/agent-paradigms.zh-Hans.md) Type 1（IDE-coupled）+ Type 2（Terminal pair-programmer）；想看完整 5 种 paradigm 对照也从这份开始。
-
-> 🧭 **Claude Code 只是 agent 的其中一种形态**（往下读前先有个全局感）：Claude Code 是给**工程师**的**终端** agent——活在命令行、处理代码。Anthropic 另外还有 **Claude Cowork**：给**非工程师**（研究、分析、运营）的**桌面 app**——给它一个目标、它会跨你的文件跟应用程序把事情做完、交回成品。OpenAI 这两种形态也都有。Stage 5 接下来专讲 Claude Code，这张表只是让你知道它在整张地图的位置。
-
-| 形态 | 它帮你做什么 | Anthropic | OpenAI |
-|---|---|---|---|
-| **终端 · 给工程师** | 读 / 改 / 跑你的代码 | Claude Code | Codex CLI |
-| **App · 给所有人** | 跨你的文件、应用程序、网页把一件事做完 | Claude Cowork | ChatGPT agent |
+> 📋 **本章组成**：7 个核心子章（5.1 基础 / 5.2 MCP / 5.3 Skills / 5.4 Plugins / 5.5 Subagents / 5.6 Dynamic Workflows / 5.7 Claude Code Source 解剖）+ 5.8 SDK（选修、包成产品或服务才需要）。每个子章都是“学习目标 → 必修阅读 → 动手练习 → 精选 Projects”，章末有自我检查。整个 stage 围绕 4 个关键词：**MCP / Skills / Plugins / Marketplace**——不熟先翻 [`resources/glossary.zh-Hans.md` 5](../resources/glossary.zh-Hans.md#5-claude-code-生态)。
 
 > ⚠️ **想用本地 LLM？这个 stage 不是那条路线。** Claude Code 需要 Anthropic API / OAuth，不能直接改接 Ollama 或本地 endpoint。离线、隐私数据或不想用 API 额度时，请看 [`resources/cookbook.zh-Hans.md` Recipe 6](../resources/cookbook.zh-Hans.md#6-本地-llm--cli-agent-快速-walkthrough)，用 OpenCode / goose / Aider / Hermes 这类支持 BYO LLM 的 CLI agent。
-
-> 📋 **本章组成**：7 个子章（5.1 基础 / 5.2 MCP / 5.3 Skills / 5.4 Plugins / 5.5 Subagents / 5.6 Dynamic Workflows / 5.7 Claude Code Source 解剖），每个子章都有“学习目标 → 必修阅读 → 动手练习 → 精选 Projects” → 章末 自我检查。**注意**：Harness Engineering（白话：model 外面的"运行外壳"——怎么给它工具、记忆、权限，怎么跑每一轮）的**学科级概念**会在 [Stage 7](07-multi-agent-production.zh-Hans.md) 系统整理；本章 5.7 把 Claude Code 当作案例，观察一个成熟 agent 工具如何处理工具、记忆、配置、权限与执行流程。
-> 🔑 **关键名词**：见 [`resources/glossary.zh-Hans.md` 5](../resources/glossary.zh-Hans.md#5-claude-code-生态)。
-
-## Stack 一览
-
-由上往下，每一层都建立在底下那一层上：
-
-![Claude Code Ecosystem Stack](../resources/diagrams/stage5-stack.zh-Hans.png)
-
-每一层各自加上一种能力：
-
-- **API + SDK**：用程序访问 LLM
-- **Tool Use**：让 LLM 调用你定义的 function
-- **MCP**：标准化协议，让任何 LLM host 都能使用任何 tool server
-- **Skills**：Claude Code 的行为包，可以封装 MCP tool
-- **Plugins**：把 Skills、hooks、commands、MCP 设置打包成一个单位发布
-
-这个阶段有 4 个子章节，**请按顺序做**——每一节都建立在前一节之上。
-
-```
-5.1 Claude Code 基础 3-5 天 （安装、slash commands、CLAUDE.md）
-5.2 MCP — 协议层 5-7 天 （写你的第一个 MCP server）
-5.3 Skills — 行为层 5-7 天 （写你的第一个 SKILL.md）
-5.4 Plugins 与 Marketplaces 5-7 天 （打包并发布）
-```
-
-跑完这个阶段，你会能扩充 Claude Code、写自己的 MCP server、发布一个 plugin marketplace。
 
 ---
 
@@ -117,6 +76,15 @@ Claude Code 的 **7-layer stack 最完整**；Codex CLI / Gemini CLI 在 2026 �
 | **Claude API**（programmatic） | 你的 server / script | LLM call、自己包 agent loop | 写 production system |
 | **Claude Agent SDK** | 你的 Python / TS 环境 | 完整 agent runtime + tool use + 多 session | 写 production agent system |
 | **Claude Code**（**本节**） | 你的 terminal | **完整 OS-level agent**（file / shell / git / subprocess）+ skill / plugin / subagent 生态 | **日常工作主力工具** |
+
+再放大一格看：Claude Code 占的是“终端 · 给工程师”这一格，而同样的 agent 能力也有**给非工程师的 app 形态**——Claude Cowork 就是给研究、分析、运营的人用的桌面 app：给它一个目标，它跨你的文件跟应用程序把事情做完、交回成品。两家都做了这两种：
+
+| 形态 | 它帮你做什么 | Anthropic | OpenAI |
+|---|---|---|---|
+| **终端 · 给工程师** | 读 / 改 / 跑你的代码 | Claude Code | Codex CLI |
+| **App · 给所有人** | 跨你的文件、应用程序、网页把一件事做完 | Claude Cowork | ChatGPT agent |
+
+Stage 5 接下来专讲 Claude Code。想看完整 5 种 agent paradigm 对照 → [`resources/agent-paradigms.zh-Hans.md`](../resources/agent-paradigms.zh-Hans.md)（Claude Code 是 Type 1 IDE-coupled + Type 2 Terminal pair-programmer）。
 
 进 5.2-5.7 之前你会在这节学到 **4 个 Claude Code 核心结构**：CLAUDE.md（记忆层）/ slash commands（控制层）/ `~/.claude/` 目录（设置层）/ settings.json（行为层）。
 
