@@ -344,7 +344,7 @@ An agent design that comes "fully equipped" — beyond just calling tools, it ha
 
 A spawned agent from the main Claude Code session, with its own context window, dedicated to a specific task. E.g. "spin up a code-reviewer subagent for this diff."
 
-How to set up: put frontmatter + system prompt + tool whitelist in `.claude/agents/<name>.md`. The main session invokes it with the Task tool (automatic parallel / sequential). **Compared with framework-based multi-agent**: a subagent does not require LangGraph / CrewAI or similar frameworks; markdown is enough, but it is tied to the Claude Code runtime. Full guide: [Stage 5.5](../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature); **15 copy-paste dispatch recipes** → [`subagent-cookbook.en.md`](./subagent-cookbook.en.md).
+How to set up: put frontmatter + system prompt + tool whitelist in `.claude/agents/<name>.md`. The main session invokes it with the **Agent tool** (automatic parallel / sequential). **Compared with framework-based multi-agent**: a subagent does not require LangGraph / CrewAI or similar frameworks; markdown is enough, but it is tied to the Claude Code runtime. Full guide: [Stage 5.5](../stages/05-claude-code-ecosystem.en.md#55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature); **15 copy-paste dispatch recipes** → [`subagent-cookbook.en.md`](./subagent-cookbook.en.md).
 
 ---
 

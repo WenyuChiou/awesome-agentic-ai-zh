@@ -116,7 +116,7 @@ description: Use PROACTIVELY before commits touching auth or payment code. Check
 - 4 个 file 都要做同样的 audit（spawn 4 个 `general-purpose`）
 - 同时跑“code review”+“找相关 paper”+“写 changelog”3 个独立任务
 
-**怎么跑**：在**一个 prompt 里**列出 N 个独立任务（例如“请同时 audit 这 4 个文件：A.md / B.md / C.md / D.md”）——Claude 在单一 turn 内**多次调用 Task tool**，自动并行。**不是**连续输入 N 个 prompt（那是 sequential，要等前一个结束）。要长时间独立背景跑，用 `/bg`。
+**怎么跑**：在**一个 prompt 里**列出 N 个独立任务（例如“请同时 audit 这 4 个文件：A.md / B.md / C.md / D.md”）——Claude 在单一 turn 内多次调用 **Agent tool**，自动并行。**不是**连续输入 N 个 prompt（那是 sequential，要等前一个结束）。要长时间独立背景跑，用 `/bg`。
 
 **成本**：低（不需要 coordination）
 

@@ -144,7 +144,7 @@ There are two main implementation paths:
 | Path | How it starts | Examples |
 |---|---|---|
 | **Framework-based** (Stage 4) | `pip install langgraph / crewai / autogen` + Python orchestration code | LangGraph / CrewAI / AutoGen / Swarm / Strands |
-| **Claude Code native** (Stage 5.5) | Write `.claude/agents/<name>.md`; invoke it from the main session with the Task tool | Claude Code subagents + Claude Agent SDK |
+| **Claude Code native** (Stage 5.5) | Write `.claude/agents/<name>.md`; invoke it from the main session with the **Agent tool** | Claude Code subagents + Claude Agent SDK |
 
 **The difference is runtime ownership**:
 

@@ -144,7 +144,7 @@
 | 路径 | 怎么启动 | 代表 |
 |---|---|---|
 | **Framework-based**（Stage 4） | `pip install langgraph / crewai / autogen` + Python orchestration code | LangGraph / CrewAI / AutoGen / Swarm / Strands |
-| **Claude Code 原生**（Stage 5.5） | 写 `.claude/agents/<name>.md`，主 session 用 Task tool invoke | Claude Code subagent + Claude Agent SDK |
+| **Claude Code 原生**（Stage 5.5） | 写 `.claude/agents/<name>.md`，主 session 用 **Agent tool** invoke | Claude Code subagent + Claude Agent SDK |
 
 **差别在 runtime ownership**：
 

@@ -82,6 +82,29 @@ stage04_fact_pack:
     agno: 'https://docs.agno.com/'
     vercel_eve: 'https://vercel.com/blog/introducing-eve'
 
+stage05_fact_pack:
+  canonical: 'stages/05-claude-code-ecosystem.md'
+  verified_on: '2026-08-28'
+  scope: ['claude-code', 'mcp', 'skills', 'plugins', 'subagents', 'workflows', 'agent-sdk', 'security']
+  official_sources:
+    claude_code_overview: 'https://code.claude.com/docs/en/features-overview'
+    claude_code_memory: 'https://code.claude.com/docs/en/memory'
+    claude_code_skills: 'https://code.claude.com/docs/en/slash-commands'
+    claude_code_mcp: 'https://code.claude.com/docs/en/mcp'
+    mcp_specification: 'https://modelcontextprotocol.io/specification'
+    mcp_2026_07_28: 'https://blog.modelcontextprotocol.io/posts/2026-07-28/'
+    claude_code_hooks: 'https://code.claude.com/docs/en/hooks'
+    claude_code_plugins: 'https://code.claude.com/docs/en/plugins'
+    claude_code_plugin_reference: 'https://code.claude.com/docs/en/plugins-reference'
+    claude_code_subagents: 'https://code.claude.com/docs/en/sub-agents'
+    claude_code_parallel_agents: 'https://code.claude.com/docs/en/agents'
+    claude_code_dynamic_workflows: 'https://code.claude.com/docs/en/workflows'
+    claude_code_worktrees: 'https://code.claude.com/docs/en/worktrees'
+    claude_code_model_config: 'https://code.claude.com/docs/en/model-config'
+    agent_sdk_overview: 'https://code.claude.com/docs/en/agent-sdk/overview'
+    agent_sdk_migration: 'https://code.claude.com/docs/en/agent-sdk/migration-guide'
+    agent_sdk_hosting: 'https://code.claude.com/docs/en/agent-sdk/hosting'
+
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
     required_scopes: ['models', 'pricing', 'availability', 'deprecations']
@@ -91,6 +114,9 @@ verified_pages:
     max_age_days: 90
   - canonical: 'stages/04-agent-frameworks.md'
     required_scopes: ['frameworks', 'releases', 'maintenance', 'licenses', 'security']
+    max_age_days: 90
+  - canonical: 'stages/05-claude-code-ecosystem.md'
+    required_scopes: ['claude-code', 'mcp', 'skills', 'plugins', 'subagents', 'workflows', 'agent-sdk', 'security']
     max_age_days: 90
 
 current_frontier_models:
@@ -204,6 +230,28 @@ stale_patterns:
   - pattern: 'Opus 4\.7'
     qualifier_terms: ['前身', '歷史', 'lineage', '舊版', '原始', 'baseline', '基線', '基线', 'predecessor', 'history']
     note: 'Opus 4.8 (May 2026) supersedes 4.7. Opus 5 (2026-07-24) is now the recommended Opus-class default, but Opus 4.8 stays ACTIVE (not deprecated) and is deliberately NOT listed as a stale pattern'
+
+  # Stage 05 direct dependencies: Claude Code renamed the dispatch tool in
+  # v2.1.63. `Task` survives only as a compatibility alias, so learner-facing
+  # instructions must say Agent tool unless the old name is clearly historical.
+  - pattern: '\bTask tool\b'
+    include_files:
+      - 'resources/agent-paradigms.md'
+      - 'resources/glossary.md'
+      - 'resources/subagent-advanced.md'
+      - 'resources/subagent-cookbook.md'
+    qualifier_terms: ['compatibility alias', 'legacy alias', 'historical', '舊稱', '旧称', '相容別名', '兼容别名', '歷史', '历史']
+    note: 'Claude Code v2.1.63 renamed the instructional surface to Agent tool; Task remains only a compatibility alias'
+
+  - pattern: 'Dynamic Workflows.{0,120}(remains|still|仍是|仍為|仍为|綁定|绑定|bound).{0,80}Opus 4\.8|Opus 4\.8.{0,120}(feature|功能|專屬|专属)'
+    include_files: ['stages/07.5-advanced-agentic-concepts.md']
+    qualifier_terms: ['historical', 'history', 'originally', 'launch', 'legacy', '歷史', '历史', '最初', '發表時', '发布时']
+    note: 'Dynamic workflows are a Claude Code v2.1.154+ capability and are not bound to Opus 4.8'
+
+  - pattern: 'prompt.{0,40}(裡含|里含|contains).{0,20}`workflow`.{0,20}(字|word|keyword)|word `workflow`.{0,20}prompt'
+    include_files: ['stages/07.5-advanced-agentic-concepts.md']
+    qualifier_terms: ['before v2.1.160', 'pre-v2.1.160', 'v2.1.160 之前', 'v2.1.160 以前', '舊版', '旧版', 'historical', 'history', 'legacy']
+    note: 'Current Dynamic workflow opt-in uses an explicit natural-language request or `ultracode`; literal `workflow` was the trigger before Claude Code v2.1.160'
 
   # --- MCP Python SDK (added 2026-08 after the v2 breakage) -------------------
   # The 2026-07-28 spec revision itself is invisible to a learner, but the SDK
