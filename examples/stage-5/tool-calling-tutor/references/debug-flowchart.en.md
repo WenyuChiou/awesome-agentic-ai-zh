@@ -1,164 +1,90 @@
-# Debug Flowchart: "Why won't the LLM call my tool?"
+# Debug Flowchart: “Why won’t the LLM call my tool?”
 
 > [繁體中文](./debug-flowchart.md) | [简体中文](./debug-flowchart.zh-Hans.md) | **English**
 
+> Start with the symptom, then run the smallest check. This supports Step 2 in `SKILL.md`.
 
-> 4-symptom diagnostic. Pairs with SKILL.md Step 2.
+## Section A — Symptom (a): the LLM never produces tool_calls
 
-## Section A — Symptom (a): LLM doesn't trigger tool_calls at all
+The LLM saw `tools=[...]` but returned only text. Check these items:
 
-Most common: you pass `tools=[...]`, the LLM responds in plain text, no tool selected.
-
-### Quick check (30 seconds)
-
-Tick each of these:
-
-```
-[ ] resp.choices[0].finish_reason == "tool_calls"?
-[ ] Or "stop"?        ← if "stop", the LLM actively chose not to call a tool
-[ ] Is resp.choices[0].message.tool_calls None / empty?
-[ ] Is resp.choices[0].message.content a long block of text?  ← LLM answered from knowledge
+```text
+[ ] Is finish_reason "tool_calls" or "stop"?
+[ ] Is message.tool_calls empty?
+[ ] Does the user’s question actually need an external tool?
+[ ] Does the sent schema match the current SDK format?
 ```
 
-### 5 common causes (by frequency)
+### Check these five items first
 
-#### 1. `description` is too generic (70% of cases)
+#### 1. The `description` is vague
 
 ```python
-# ❌ LLM can't tell when to use it
+# ❌ No clear trigger
 {"name": "get_data", "description": "Get data."}
 
-# ✅ LLM knows immediately when this applies
-{"name": "get_weather", "description": "Use this when the user asks about current weather, forecast, or temperature for a specific city."}
+# ✅ Clear trigger
+{"name": "get_weather", "description": "Use this when the user asks about current weather, forecasts, or temperatures for a city."}
 ```
 
-**Fix**: rewrite descriptions to start with "Use this when..." and list 2-3 trigger situations.
-
-#### 2. Multiple tools have overlapping boundaries (15%)
-
-Both tool descriptions match the same query — LLM can't pick — so it picks neither:
+#### 2. Tool jobs overlap
 
 ```python
-# ❌ Overlapping
-tool_a = {"name": "search", "description": "Find information."}
-tool_b = {"name": "lookup", "description": "Look up data."}
-# user: "look up Taipei's population" → LLM can't pick
+# ❌ search and lookup appear interchangeable
+{"name": "search", "description": "Find information."}
+{"name": "lookup", "description": "Look up data."}
 
-# ✅ Mutually exclusive
-tool_a = {"name": "web_search", "description": "Use for current/external info not in knowledge: news, weather, prices."}
-tool_b = {"name": "fact_lookup", "description": "Use for static facts: populations, physical constants, capital cities."}
+# ✅ Each tool has a positive and negative boundary
+{"name": "web_search", "description": "Use for current external information. Do not use for facts already provided by the user."}
+{"name": "fact_lookup", "description": "Use for stored facts. Do not use for live news or prices."}
 ```
 
-**Fix**: add "Do NOT use for ..." to each tool to spell out the negative boundary.
+#### 3. The question does not need a tool
 
-#### 3. The query genuinely doesn't need a tool (10%)
+“What is Python?” usually does not need a weather or calculator tool. No tool call is not always a bug.
+
+#### 4. The schema does not match the SDK
+
+OpenAI-compatible schemas need `{"type": "function", "function": {...}}`; Anthropic schemas use `input_schema`. Clients can validate and report errors differently, so inspect the request, response, and application log.
+
+#### 5. The current combination has no usable tool-calling support
+
+Check the current SDK and model documentation, then run one **fixed test case (fixture)**—like asking the same test question every time. Keep the model, settings, and question unchanged when comparing. Do not infer support from a model name or size alone.
+
+## Section B — Symptom (b): the tool is called, but its args are wrong
 
 ```python
-# user: "What is Python?"
-# tools: [calculator, weather_lookup]
-# Correct behavior: LLM answers from knowledge, doesn't select a tool
+# Expected
+convert_temperature(value=32, unit="celsius")
+
+# Possible output
+convert_temperature(value="32 Celsius", unit="")
 ```
 
-**Not a bug** — sanity-check whether the query actually needs a tool.
-
-#### 4. Tool schema structure is wrong (3%)
-
-```python
-# ❌ OpenAI-compat missing the wrapper
-TOOLS = [{"name": "x", "description": "...", "parameters": {...}}]
-
-# ✅ OpenAI-compat needs the wrapper
-TOOLS = [{"type": "function", "function": {"name": "x", "description": "...", "parameters": {...}}}]
-```
-
-SDKs usually raise; Ollama sometimes swallows it and replies in plain text.
-
-#### 5. Model is too small (2%)
-
-`gemma4:e4b` / 1.5B-class models have unstable tool-calling support. **Stage 3+ defaults to `qwen2.5:3b`** or `llama3.2:3b`.
-
-```bash
-ollama pull qwen2.5:3b
-MODEL=qwen2.5:3b python starter.py
-```
-
-## Section B — Symptom (b): tool called, but args are wrong
-
-```python
-# user: "Convert 32 Celsius to Fahrenheit"
-# expected: convert_temperature(value=32, unit="celsius")
-# actual:   convert_temperature(value="32 Celsius", unit="")   ← wrong
-```
-
-### 3 causes + fixes
-
-| Cause | Symptom | Fix |
+| What you see | Schema fix | What the app must still do |
 |---|---|---|
-| All params `string` | `value: "32"` instead of `32` | `parameters.value.type = "number"` |
-| No `required` | `unit` missing | `"required": ["value", "unit"]` |
-| No `enum` | `unit: "C" / "Celsius" / "celsius"` appearing randomly | `"enum": ["celsius", "fahrenheit"]` |
+| A number becomes text | `type: "number"` | Validate type and range again |
+| A field is missing | `required` | Return a clear missing-value error |
+| One unit has many spellings | `enum` | Accept only allowlisted values |
 
-Full A/B in [`schema-evolution.en.md`](schema-evolution.en.md).
+See [`schema-evolution.en.md`](schema-evolution.en.md) for the complete example.
 
-## Section C — Symptom (c): ReAct loop won't terminate
+## Section C — Symptom (c): the ReAct loop never stops
 
-```python
-# Hits max_iter=10, never end_turn
-```
+Check three things:
 
-### 3 causes
+1. Append the complete assistant response to `messages`.
+2. Return each result with the matching `tool_call_id` or `tool_use_id`.
+3. Make the result self-contained, such as `{"city":"Taipei","forecast":"rain"}`, not just `"ok"`.
 
-#### 1. Forgot to append assistant response to messages
+Every loop needs `MAX_STEPS`. Stop and report when the limit is reached; never retry forever.
 
-```python
-# ❌ infinite loop
-for step in range(5):
-    resp = client.chat.completions.create(...)
-    # missing: messages.append({"role": "assistant", ...})
-    if resp.tool_calls:
-        obs = run_tool(...)
-        messages.append({"role": "tool", "content": obs})
-# Next round LLM can't see its previous thought — infinite repeat
+## Section D — Symptom (d): a multi-step task skips a step
 
-# ✅ fix
-messages.append({"role": "assistant", "content": msg.content, "tool_calls": msg.tool_calls})
-```
+For example, the model divides two numbers but forgets to convert the ratio to a percentage. Check it this way:
 
-#### 2. Tool message missing `tool_call_id`
+1. Record the actual tool sequence for a fixed case.
+2. State ordering in the description, such as `Call this last after dividing.`
+3. Ask for a short, observable tool plan containing only steps and tool names. Do not request, store, or reveal hidden reasoning.
 
-```python
-# ❌ LLM can't pair result with call
-messages.append({"role": "tool", "content": obs})
-
-# ✅
-messages.append({"role": "tool", "tool_call_id": tc.id, "content": obs})
-```
-
-#### 3. Tool returns garbage — LLM doesn't know what "done" looks like
-
-```python
-# user: "Check Taipei weather"
-# tool returns "ok"  ← LLM can't tell if this is the answer or a placeholder
-
-# ✅ tool results must be self-contained
-return {"city": "Taipei", "forecast": "rain", "temperature_c": 24}
-```
-
-## Section D — Symptom (c, sub): ReAct loop skips a step
-
-Multi-step task misses an intermediate tool call:
-
-```
-[step 0] lookup_population(city=Taipei)  → 2602000
-[step 1] lookup_population(city=NewYork) → 8336000
-[step 2] divide(2602000, 8336000)        → 0.3122
-[step 3] end_turn: "The answer is 0.3122"   ← skipped to_percentage
-```
-
-### Fixes
-
-1. **Upgrade model**: `qwen2.5:7b` or `claude-haiku-4-5` substantially improves multi-step stability
-2. **Description encodes ordering**: `{"name": "to_percentage", "description": "Convert a ratio to percentage. **Call this LAST after dividing.**"}`
-3. **Add chain-of-thought prompt**: prepend user message with "Plan the steps first, then execute one by one."
-
-Full runnable comparison → [`../../stage-3/04-multi-step-reasoning/`](../../../stage-3/04-multi-step-reasoning/)
+Runnable multi-step example: [Stage 3 multi-step reasoning](https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/examples/stage-3/04-multi-step-reasoning).
