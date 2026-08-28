@@ -4,7 +4,6 @@
 
 > 本章目的：用一條可重複的本機到雲端路徑，學會透過 API（應用程式介面）呼叫 LLM，讀懂 **Token（詞元）**、**Context Window（上下文視窗）** 與 **Temperature（溫度）**，再用成本與延遲做出可解釋的模型選擇。
 
-資料查核：2026-08-27 UTC
 <!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
 
 ## 📌 學習目標
@@ -458,7 +457,9 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details markdown="1">
 <summary>🌐 完整 15 家族資料表（官方規格入口）</summary>
 
-以下只列已在官方來源查核的欄位；「官方未公布」表示本次查核沒有可引用的公開數字，不代表永遠沒有該資料。價格均為 USD／每 1M token（若供應商採其他方案，照官方說法記錄）。
+<small>資料查核：2026-08-27 UTC。</small>
+
+沒有可靠公開數字就寫「官方未公布」。價格通常是 USD／每 1M token；供應商若用別的單位，就照官方單位記錄。
 
 | 家族 | 目前推薦型號 | 狀態 | Context | 價格或授權 | 適合做什麼 | 限制 | 官方來源 |
 |---|---|---|---|---|---|---|---|

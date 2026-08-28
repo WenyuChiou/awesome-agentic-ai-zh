@@ -4,7 +4,6 @@
 
 > 本章目的：通过一条可重复的本地到云端路径，学会通过 API（应用程序接口）调用 LLM，理解 **Token（词元）**、**Context Window（上下文窗口）** 和 **Temperature（温度）**，并用成本与延迟解释模型选择。
 
-资料查核：2026-08-27 UTC
 <!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
 
 ## 📌 学习目标
@@ -458,7 +457,9 @@ print("💡 本次调用为 $0（不含电费）")
 <details markdown="1">
 <summary>🌐 完整 15 个家族表（官方规格入口）</summary>
 
-以下字段均依据官方来源查核。“官方未公布”表示本次查核没有可引用的公开数字，不代表永远没有该资料。价格在供应商使用该单位时均为 USD／每 1M token。
+<small>数据查核：2026-08-27 UTC。</small>
+
+没有可靠公开数字就写“官方未公布”。价格通常是 USD／每 1M token；供应商若用别的单位，就按官方单位记录。
 
 | 家族 | 当前推荐型号 | 状态 | Context | 价格或授权 | 适合做什么 | 限制 | 官方来源 |
 |---|---|---|---|---|---|---|---|
