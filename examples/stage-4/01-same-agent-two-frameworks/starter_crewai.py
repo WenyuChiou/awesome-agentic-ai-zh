@@ -9,9 +9,9 @@
     ollama serve
     python starter_crewai.py
 
-預算：$0/run。要切 Anthropic 改 LLM_PROVIDER env var（CrewAI 用 LiteLLM 底層）。
+模型 API 預算：$0（Ollama）；本機硬體與電力仍有成本。
 
-⚠️ 注意：CrewAI 對小 model（qwen2.5:3b）較吃力，可能會多繞幾步。Claude / sonnet 較穩。
+⚠️ 注意：模型、prompt 與工具描述都可能改變步數；用相同題組比較，不先假設哪個 backend 較穩。
 """
 
 from __future__ import annotations
@@ -25,12 +25,11 @@ if hasattr(sys.stdout, "reconfigure"):
 from crewai import Agent, Crew, Task
 from crewai.tools import tool
 
-MODEL = os.environ.get("MODEL", "ollama/qwen2.5:3b")  # LiteLLM 格式
+MODEL = os.environ.get("MODEL", "ollama/qwen2.5:3b")  # LiteLLM format
 OLLAMA_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434")
 
 
-@tool("search")
-def search(query: str) -> str:
+def search_knowledge_base(query: str) -> str:
     """Search a (fake, offline) knowledge base for a topic."""
     db = {
         "taipei": "Taipei is the capital of Taiwan, population ~2.6M, known for night markets.",
@@ -39,7 +38,13 @@ def search(query: str) -> str:
     return db.get(query.strip().lower(), f"no entry for {query}")
 
 
-def build_crew(query: str) -> Crew:
+@tool("search")
+def search(query: str) -> str:
+    """Search the fixed offline knowledge base."""
+    return search_knowledge_base(query)
+
+
+def build_crew(query: str, llm_model: str = MODEL) -> Crew:
     """CrewAI 風格：一個 agent + 一個 task。"""
     os.environ["OPENAI_API_BASE"] = f"{OLLAMA_BASE}/v1"
     os.environ["OPENAI_API_KEY"] = "ollama"
@@ -49,7 +54,7 @@ def build_crew(query: str) -> Crew:
         goal="Find and summarize the requested topic.",
         backstory="You search a knowledge base and give concise summaries.",
         tools=[search],
-        llm=MODEL,
+        llm=llm_model,
         verbose=False,
     )
     task = Task(
@@ -60,8 +65,8 @@ def build_crew(query: str) -> Crew:
     return Crew(agents=[researcher], tasks=[task], verbose=False)
 
 
-def run(query: str) -> dict:
-    crew = build_crew(query)
+def run(query: str, llm_model: str = MODEL) -> dict:
+    crew = build_crew(query, llm_model=llm_model)
     result = crew.kickoff()
     return {"final": str(result), "steps": None}
 
@@ -73,5 +78,6 @@ if __name__ == "__main__":
     result = run(query)
     print(f"✅ Final: {result['final']}")
     assert result["final"], "expected non-empty summary"
-    print("✅ CrewAI 版本通過 — 同樣任務、不同 framework、$0/run")
+    assert result["steps"] is None
+    print("✅ CrewAI 版本通過 — 同樣任務、不同 framework、模型 API $0")
     print("   對照 starter.py（LangGraph）看程式碼風格差異")

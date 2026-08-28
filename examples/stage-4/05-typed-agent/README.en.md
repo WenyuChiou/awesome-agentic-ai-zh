@@ -1,5 +1,5 @@
 <div align="right">
-  <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
+  <a href="./README.md">Traditional Chinese</a> | <a href="./README.zh-Hans.md">Simplified Chinese</a> | <strong>English</strong>
 </div>
 
 # Exercise 5: Type-Safe Agent (Pydantic AI structured output)
@@ -24,39 +24,56 @@ class AnswerWithConfidence(BaseModel):
     sources: list[str]
 ```
 
-Pydantic AI lifts schema validation from the prompt layer (Stage 3 Exercise 6) **to the type layer** — if the LLM violates the schema, the framework auto-retries. Production teams use this to fight hallucination.
+Pydantic AI puts **schema validation**—rules about data shape—into the program. If the LLM violates the schema, the framework can reject or retry it. This checks the shape; it **does not prove the answer is true**.
 
 ## How to run — two paths
 
+> ⚠️ **Give each exercise its own Python 3.11 `.venv`.** Do not mix this Pydantic requirement set with the CrewAI exercises.
+
 ### Path A (default, free, local)
 
-```bash
-pip install -r requirements.txt
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
-python starter.py
+.\.venv\Scripts\python.exe starter.py
 ```
 
-Budget: **$0**. But qwen2.5:3b may retry several times to satisfy the schema, raising total token usage.
+Budget: the model API costs **$0**. Local hardware, electricity, and retry time still have a cost.
 
-### Path B (Anthropic, cloud-quality)
+### Path B (Anthropic, compare a cloud result)
+
+```powershell
+$env:ANTHROPIC_API_KEY="sk-ant-..."
+.\.venv\Scripts\python.exe starter_anthropic.py
+```
+
+Pinned default: `claude-haiku-4-5-20251001`. A request with 2,000 input + 1,000 output tokens costs `2,000 / 1,000,000 × $1 + 1,000 / 1,000,000 × $5 = $0.007`. Validation failure can cause a retry, so set a provider spend limit of **$0.05**.
+
+<details markdown="1">
+<summary>macOS/Linux commands and verification information</summary>
 
 ```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+python3.11 -m venv .venv
+./.venv/bin/python -m pip install -r requirements.txt
+export ANTHROPIC_API_KEY="sk-ant-..."
+./.venv/bin/python test.py
 ```
 
-Budget: ~**$0.001** per run (claude-haiku-4-5, usually one shot, no retry).
+Official sources: [Pydantic AI output](https://ai.pydantic.dev/output/) | [Pydantic AI testing](https://ai.pydantic.dev/testing/) | [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+
+<small>Packages, model IDs, prices, and official links verified: 2026-08-28 UTC.</small>
+</details>
 
 ## Validate the logic
 
-```bash
-python test.py             # Pydantic schema validation + agent structure
-python test_anthropic.py   # Path B import check
+```powershell
+.\.venv\Scripts\python.exe test.py # official TestModel + schema boundaries
+.\.venv\Scripts\python.exe test_anthropic.py # Anthropic setup + the same output contract
 ```
 
-`test.py` directly verifies `AnswerWithConfidence` raises `ValidationError` on invalid data (confidence > 1.0, wrong type, sources not a list) — no LLM calls, pure type-layer testing.
+`test.py` uses Pydantic AI's official `TestModel` and verifies that `AnswerWithConfidence` rejects out-of-range confidence, wrong types, blank answers, and empty sources. It makes no LLM call.
 
 ## Why type-safe agents matter
 
@@ -66,7 +83,8 @@ Stage 3 Exercise 6: schema = JSON Schema in the prompt
 
 Stage 4 Exercise 5: schema = Pydantic model in code
     LLM violates → framework auto-raises → retry / fix
-    Final output is guaranteed to conform (runtime guarantee)
+    A successful output has passed runtime shape checks
+    Factual truth still needs a separate check
 ```
 
 For production:
@@ -76,9 +94,9 @@ For production:
 | LLM drops a field | Your downstream code needs try/except | Auto-retry until conformant |
 | Wrong type (confidence="high") | Downstream crash | Pydantic ValidationError, retry |
 | Out of bound (confidence=1.5) | Downstream gets bad data | Reject, retry |
-| LLM hallucinates extra fields | Silently accepted | Default ignore (configurable to strict) |
+| Extra fields | Depends on your parser | Handled by the Pydantic model's configuration |
 
-**Bottom line**: production agents must use type-safe output. Stage 3 Exercise 6 teaches schema design; Stage 4 Exercise 5 teaches turning that schema into a runtime contract.
+**Bottom line**: typed output is useful when downstream code needs fixed fields. Stage 3 Exercise 6 teaches schema design; this exercise turns a schema into a runtime contract and reminds you to add fact checking.
 
 ## Core Pydantic AI concepts
 
@@ -94,7 +112,7 @@ result = agent.run_sync(question)
 answer: AnswerWithConfidence = result.output   # validated object
 ```
 
-**Key**: behind the scenes, the framework converts the Pydantic schema into structured-output instructions for the LLM, validates the response, and retries on failure.
+**Key**: the framework converts the Pydantic schema into structured-output instructions, validates the response, and retries according to your settings. A successful retry means the format passed—not that the content is true.
 
 ### Field constraints
 
@@ -116,31 +134,31 @@ When Pydantic AI sees a ValidationError, it appends the error message back into 
 
 | Observation | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| One-shot schema correct | 90%+ | 50-70% |
-| Average retries | 0-1 | 1-3 |
-| Confidence bound respected | Stable | Occasional 1.5 / negative (rejected, retry) |
-| Sources is a list | Stable | Occasional string (rejected) |
-| Total token cost | Low (few retries) | High (multiple retries) |
+| First-attempt schema pass | Measure with the same cases | Measure with the same cases |
+| Retry count | Record the actual result | Record the actual result |
+| Confidence bounds | Enforced by Pydantic | Enforced by Pydantic |
+| Sources is a list | Enforced by Pydantic | Enforced by Pydantic |
+| Cost | Depends on tokens and retries | Model API $0 |
 
-**Counterintuitive**: Path B (Claude) can actually have **lower total token cost** than Path A (qwen) — retries add up. Looking at the full bill, production teams pick the larger model.
+**Teaching point**: when comparing models, record pass rate, retries, latency, and cost together. Do not look only at per-token price, and do not assume a larger model is always cheaper.
 
 ## Common pitfalls
 
-- **`output_type` too complex**: deeply nested models are hard for the LLM to produce in one shot. Aim for flat, ≤5 top-level fields
+- **`output_type` too complex**: deep nesting is harder to generate and maintain. Start with the minimum fields, then use evaluations to decide whether to split it
 - **Missing `description`**: `Field(...)` without `description=` leaves the LLM guessing what the field is for
-- **`retries=0`**: failure raises immediately, no chance to fix. Empirically `retries=1-3` works well
+- **`retries=0`**: failure raises immediately. Choose a bounded retry count from your cost, latency, and failure patterns
 - **Small model + deep nesting**: qwen2.5:3b may retry many times and still fail. Upgrade or flatten
 
 ## Want smarter answers?
 
-```bash
-MODEL=claude-sonnet-5 python starter_anthropic.py    # highest one-shot rate
-MODEL=qwen2.5:7b python starter.py                      # larger local model
+```powershell
+$env:MODEL="claude-sonnet-5"; .\.venv\Scripts\python.exe starter_anthropic.py
+$env:MODEL="qwen2.5:7b"; .\.venv\Scripts\python.exe starter.py
 ```
 
 ## Extensions
 
 - **Add tools**: Pydantic AI agents can have tools + structured output simultaneously via `@agent.tool`
 - **Stream typed output**: `agent.run_stream(...)` validates as it streams
-- **Cross-model comparison**: same schema across Claude / GPT / Gemini / local — see who's most stable
-- **Production wiring**: Pydantic AI integrates with FastAPI; output doubles as your API response model
+- **Cross-model comparison**: run the same schema across Claude / GPT / Gemini / local models; compare pass rate, retries, and cost
+- **Production wiring**: Pydantic AI integrates with FastAPI; a validated output can become an API response model

@@ -1,2 +1,2 @@
-smolagents>=1.0,<2.0
-litellm>=1.50,<2.0
+smolagents[docker]>=1.26,<2.0
+litellm>=1.98,<2.0

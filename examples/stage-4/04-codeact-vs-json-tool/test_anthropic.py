@@ -1,7 +1,4 @@
-"""Stage 4 練習 4 — Path B 載入檢查。
-
-Smolagents 整個 CodeAct 太重、純 mock 困難。實測請跑 starter_anthropic.py 配 ANTHROPIC_API_KEY。
-"""
+"""Path B 離線行為測試：不呼叫模型，也不執行模型產生的程式碼。"""
 
 from __future__ import annotations
 
@@ -10,21 +7,27 @@ import sys
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-
-def test_litellm_model_importable():
-    from smolagents import LiteLLMModel
-    assert LiteLLMModel is not None
-    print("✅ test_litellm_model_importable")
+from starter import run_json_tool_call
+from starter_anthropic import MODEL, make_anthropic_model
 
 
-def test_starter_anthropic_loadable():
-    import starter_anthropic
-    assert hasattr(starter_anthropic, "MODEL")
-    assert "anthropic/" in starter_anthropic.MODEL
-    print("✅ test_starter_anthropic_loadable")
+def test_litellm_provider_configuration() -> None:
+    model = make_anthropic_model()
+    assert MODEL == "anthropic/claude-haiku-4-5-20251001"
+    assert model.model_id == MODEL
+
+
+def test_anthropic_path_uses_the_same_safe_json_boundary() -> None:
+    assert run_json_tool_call({"name": "calculator", "arguments": {"expression": "8 / 2"}}) == "4.0"
+    try:
+        run_json_tool_call({"name": "shell", "arguments": {"command": "whoami"}})
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Unexpected tool names must be rejected.")
 
 
 if __name__ == "__main__":
-    test_litellm_model_importable()
-    test_starter_anthropic_loadable()
-    print("\n🎉 通過 — Path B 可載入（實測需 ANTHROPIC_API_KEY）")
+    test_litellm_provider_configuration()
+    test_anthropic_path_uses_the_same_safe_json_boundary()
+    print("all pass")

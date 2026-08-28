@@ -1,5 +1,5 @@
 <div align="right">
-  <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
+  <a href="./README.md">Traditional Chinese</a> | <a href="./README.zh-Hans.md">Simplified Chinese</a> | <strong>English</strong>
 </div>
 
 # Exercise 4: CodeAct vs JSON tool (Smolagents)
@@ -24,33 +24,58 @@ Pairs with [Stage 4 — Agent Frameworks](../../../stages/04-agent-frameworks.en
 
 ## How to run — two paths
 
+> ⚠️ **Give each exercise its own Python 3.11 `.venv`.** This one also requires Docker. Never run model-generated code directly on the host. This teaching container may still access the network, so do not put secrets or private data inside it.
+
 ### Path A (default, free, local)
 
-```bash
-pip install -r requirements.txt
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
-python starter.py
+docker version
+.\.venv\Scripts\python.exe test_docker_smoke.py
+.\.venv\Scripts\python.exe starter.py
 ```
 
-Budget: **$0**. CodeAct is hard on small models — qwen2.5:3b sometimes produces syntax errors and iterates to fix.
+Budget: the model API costs **$0**. Local hardware, electricity, and Docker resources still have a cost. A smaller model may need correction steps, so the starter limits `max_steps` to 4.
 
-### Path B (Anthropic, cloud-quality)
+### Path B (Anthropic, compare a cloud result)
+
+```powershell
+$env:ANTHROPIC_API_KEY="sk-ant-..."
+.\.venv\Scripts\python.exe starter_anthropic.py
+```
+
+Pinned default: `anthropic/claude-haiku-4-5-20251001`. A request with 2,000 input + 1,000 output tokens costs **$0.007**. CodeAct can make several requests, so set a provider spend limit of **$0.10**. Actual cost depends on tokens and steps.
+
+<details markdown="1">
+<summary>macOS/Linux commands and verification information</summary>
 
 ```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+python3.11 -m venv .venv
+./.venv/bin/python -m pip install -r requirements.txt
+export ANTHROPIC_API_KEY="sk-ant-..."
+docker version
+./.venv/bin/python test.py
+./.venv/bin/python test_docker_smoke.py
 ```
 
-Budget: ~**$0.005-0.02** per run (CodeAct typically multi-step, claude-haiku-4-5). Claude writes correct Python far more reliably than qwen2.5:3b.
+Price formula: `input_tokens / 1,000,000 × $1 + output_tokens / 1,000,000 × $5`.
+
+Official sources: [Secure code execution](https://huggingface.co/docs/smolagents/tutorials/secure_code_execution) | [Python executors](https://huggingface.co/docs/smolagents/reference/python_executors) | [Docker port publishing](https://docs.docker.com/engine/network/port-publishing/) | [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+
+<small>Packages, model IDs, prices, and official links verified: 2026-08-28 UTC.</small>
+</details>
 
 ## Validate the logic
 
-```bash
-python test.py             # tool function + agent structure
-python test_anthropic.py   # Path B import check
+```powershell
+.\.venv\Scripts\python.exe test.py # AST, JSON allowlist, loopback control port, and resource limits
+.\.venv\Scripts\python.exe test_anthropic.py # Anthropic setup + the same safe boundary
 ```
+
+These two offline tests **do not** execute model-generated code and do not need a Docker daemon. `test_docker_smoke.py` is a separate manual smoke test: it starts the Jupyter executor, proves the host control channel works, and confirms the control port is bound only to `127.0.0.1`. Run it only after `docker version` succeeds. It does not pretend the container has no network access.
 
 ## How CodeAct works
 
@@ -70,7 +95,7 @@ print(ratio)
 (Smolagents runs the code in a sandbox and feeds the print output back to the LLM)
 ````
 
-The framework provides a sandboxed Python interpreter; the agent imports tools, writes code, sees stdout, continues.
+This example explicitly uses a Docker executor. The Jupyter control port is bound only to host `127.0.0.1`; Linux capabilities are dropped, privilege escalation and pickle are blocked, and memory, process count, and agent steps are limited. A normal Docker bridge **may still let the container reach external networks or host services**. This is therefore a controlled teaching example, not a production sandbox. Untrusted code also needs real egress and host-access firewalling, or a remote sandbox with documented isolation boundaries.
 
 ## CodeAct vs JSON tool
 
@@ -82,7 +107,7 @@ The framework provides a sandboxed Python interpreter; the agent imports tools, 
 | Tokens per round | Fewer | More (code is longer) |
 | Small-model friendliness | Better (stable JSON) | Worse (must produce valid Python) |
 | Debug | Inspect tool calls | Inspect code execution log |
-| Safety | Tool args validated | Sandboxed Python (watch eval/exec limits) |
+| Safety | Allowlist + argument validation | Untrusted code: isolate it and limit permissions/resources |
 | Best for | Single-step, clear boundaries | Multi-step computation, intermediate variables |
 
 **HuggingFace's stance**: CodeAct is closer to how humans solve problems — use a variable for intermediate results, don't re-fetch each step.
@@ -91,31 +116,31 @@ The framework provides a sandboxed Python interpreter; the agent imports tools, 
 
 | Observation | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| Valid Python syntax | Stable | Occasional syntax errors, iterates to fix |
-| Variable naming / reuse | Natural | Tends to re-call tools instead of using vars |
-| Correct multi-step ratio | High | Medium |
-| Total steps | 1-2 | 3-5 (iterating fixes) |
-| Cost | $0.005-0.02 | $0 |
+| Executable Python | Measure with the same cases | Measure with the same cases |
+| Variable naming / reuse | Inspect the execution log | Inspect the execution log |
+| Correct ratio | Validate the final value | Validate the final value |
+| Total steps | Limited by `max_steps=4` | Limited by `max_steps=4` |
+| Model API cost | Depends on tokens and steps | $0 |
 
-**Punchline**: CodeAct is **model-quality-sensitive** — the LLM has to write Python that's solid enough for production. **Small models favor JSON-tool over CodeAct** (Exercise 6 of Stage 3 confirms a similar pattern at the schema layer).
+**Punchline**: CodeAct adds an "execute code" risk surface that JSON tools do not have. Do not assume a model or path wins; compare success rate, steps, cost, and safety boundaries on the same tasks.
 
 ## Common pitfalls
 
 - **`@tool` function docstring is part of the prompt**: Smolagents passes the docstring to the LLM as the tool description. **Bad docstring = LLM doesn't know when to use it.**
-- **CodeAct sandbox**: by default Smolagents bans `import os`, `open`, etc. To allow specific modules, set `additional_authorized_imports=[...]`
-- **`max_steps` too low**: CodeAct iterates; `max_steps=4` may not be enough. But too high = infinite loops. 4-8 is the empirical range
-- **Small models produce syntax errors**: Smolagents feeds the error back to the LLM, but you waste tokens. Production wants a larger model
+- **Treating Docker as a complete sandbox**: it is not. This starter reduces privileges and binds the control port to loopback; deployment still needs image, permission, egress, host-access, resource, and logging review
+- **`max_steps` too low**: inspect which step failed before raising the limit; a higher number increases cost and loop risk
+- **Model code has a syntax error**: Smolagents can return the error for correction, but that adds steps. Change models only after checking evaluation results
 
 ## Want smarter answers?
 
-```bash
-MODEL=anthropic/claude-sonnet-5 python starter_anthropic.py  # most stable
-MODEL=qwen2.5:7b python starter.py                              # larger local model
+```powershell
+$env:MODEL="anthropic/claude-sonnet-5"; .\.venv\Scripts\python.exe starter_anthropic.py
+$env:MODEL="qwen2.5:7b"; .\.venv\Scripts\python.exe starter.py
 ```
 
 ## Extensions
 
 - **More tools**: just `@tool`-decorate; Smolagents auto-extracts docstring as description
 - **Try `ToolCallingAgent`**: Smolagents also offers JSON-tool-style agents. Compare side-by-side
-- **Hugging Face Hub**: `HfApiModel` for HF inference (no need for local Ollama)
-- **Read [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)**: Anthropic argues both paradigms are valid; pick by task
+- **Hugging Face Hub**: use the current `InferenceClientModel` for HF inference (no local Ollama required)
+- **Read [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)**: both shapes can be useful; choose based on the task

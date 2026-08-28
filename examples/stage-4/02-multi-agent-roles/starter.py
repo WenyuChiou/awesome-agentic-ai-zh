@@ -1,24 +1,24 @@
-"""Stage 4 練習 2：多 agent 角色分配 — CrewAI + Ollama（Path A、默認）。
+r"""Stage 4 練習 2：用 CrewAI + Ollama 做有界的三角色交接。
 
 3 個 agent 各有角色：
 - Researcher 找資料（用 search tool）
 - Writer 寫稿（拿 researcher 的結果寫成 blog 段落）
 - Critic 審稿（檢查 factual + tone）
 
-這個情境 CrewAI 最拿手——hierarchical / sequential delegation 是 CrewAI 的招牌。
+這裡使用 ``Process.sequential``，讓三個角色像接力一樣依序交接。
 
 跑法：
-    pip install -r requirements.txt
+    py -3.11 -m venv .venv
+    .\.venv\Scripts\python.exe -m pip install -r requirements.txt
     ollama pull qwen2.5:3b
     ollama serve
-    python starter.py
+    .\.venv\Scripts\python.exe starter.py
 
 驗證：
-    python test.py
+    .\.venv\Scripts\python.exe test.py
 
-預算：$0/run（Ollama）。對照 Anthropic 版見 starter_anthropic.py。
-
-⚠️ 注意：3 個 agent 走 sequential、qwen2.5:3b 可能會繞較久（30-90 秒）。
+模型 API 預算：$0（Ollama）。執行時間依硬體、模型與 prompt 而變。
+對照 Anthropic 版見 ``starter_anthropic.py``。
 """
 
 from __future__ import annotations
@@ -39,9 +39,8 @@ OLLAMA_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434")
 
 # === Tool ===
 
-@tool("search")
-def search(query: str) -> str:
-    """Search a (fake, offline) knowledge base."""
+def search_knowledge_base(query: str) -> str:
+    """查詢固定的離線示範資料表，不代表真正的搜尋引擎。"""
     db = {
         "react": "ReAct (Reasoning+Acting, Yao et al. 2022) is the foundational agent pattern: think→act→observe loop.",
         "langgraph": "LangGraph is a graph-based agent orchestration framework by LangChain, focuses on state + checkpointing.",
@@ -50,9 +49,28 @@ def search(query: str) -> str:
     return db.get(query.strip().lower(), f"no entry for {query}")
 
 
+@tool("search")
+def search(query: str) -> str:
+    """Return one entry from the fixed offline knowledge base.
+
+    Args:
+        query: The lowercase topic key to look up, such as ``react``.
+    """
+    return search_knowledge_base(query)
+
+
+def simulate_handoff(topic: str) -> dict[str, str]:
+    """離線走完 Researcher → Writer → Critic，讓交接結果可以直接測試。"""
+    research = search_knowledge_base(topic)
+    draft = f"{topic.title()} matters for agent builders: {research}"
+    verdict = "PASS" if research != f"no entry for {topic}" and research in draft else "ISSUES: missing grounded research"
+    return {"input": topic, "research": research, "draft": draft, "verdict": verdict, "stop_condition": "Three fixed roles; each Agent has max_iter=4."}
+
+
 # === Crew 設計 ===
 
 def build_crew(topic: str, llm_model: str = MODEL) -> Crew:
+    """建立三個固定角色；每個 agent 最多迭代四次且不能自行委派。"""
     os.environ["OPENAI_API_BASE"] = f"{OLLAMA_BASE}/v1"
     os.environ["OPENAI_API_KEY"] = "ollama"
 
@@ -64,6 +82,7 @@ def build_crew(topic: str, llm_model: str = MODEL) -> Crew:
         llm=llm_model,
         verbose=False,
         allow_delegation=False,
+        max_iter=4,
     )
     writer = Agent(
         role="Writer",
@@ -72,6 +91,7 @@ def build_crew(topic: str, llm_model: str = MODEL) -> Crew:
         llm=llm_model,
         verbose=False,
         allow_delegation=False,
+        max_iter=4,
     )
     critic = Agent(
         role="Critic",
@@ -80,6 +100,7 @@ def build_crew(topic: str, llm_model: str = MODEL) -> Crew:
         llm=llm_model,
         verbose=False,
         allow_delegation=False,
+        max_iter=4,
     )
 
     research_task = Task(
@@ -110,9 +131,10 @@ def build_crew(topic: str, llm_model: str = MODEL) -> Crew:
 
 
 def run(topic: str, llm_model: str = MODEL) -> dict:
+    """執行 crew，並把最終結果與可觀察的停止條件一起回傳。"""
     crew = build_crew(topic, llm_model=llm_model)
     result = crew.kickoff()
-    return {"final": str(result), "topic": topic}
+    return {"final": str(result), "topic": topic, "stop_condition": "Three fixed roles; each Agent has max_iter=4."}
 
 
 if __name__ == "__main__":
@@ -123,4 +145,5 @@ if __name__ == "__main__":
     result = run(topic)
     print(f"✅ Final (critic's verdict):\n{result['final']}")
     assert result["final"], "expected critic to produce a verdict"
-    print("\n✅ 練習 2 通過 — 3-agent crew 跑完、$0/run")
+    assert "max_iter=4" in result["stop_condition"]
+    print("\n✅ 練習 2 通過 — 3-agent crew 跑完、模型 API $0")

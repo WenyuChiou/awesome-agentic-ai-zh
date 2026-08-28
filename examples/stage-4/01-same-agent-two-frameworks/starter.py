@@ -12,7 +12,7 @@
 驗證：
     python test.py
 
-預算：$0/run。對照 Anthropic 版見 starter_anthropic.py。
+模型 API 預算：$0（Ollama）；本機硬體與電力仍有成本。對照 Anthropic 版見 starter_anthropic.py。
 """
 
 from __future__ import annotations
@@ -63,7 +63,13 @@ def build_graph(llm: Any) -> Any:
         msg = state["messages"][-1]
         results = []
         for call in msg.tool_calls:
-            obs = search.invoke(call["args"])
+            name = call.get("name")
+            args = call.get("args")
+            if name != "search":
+                raise ValueError(f"Unknown tool: {name!r}")
+            if not isinstance(args, dict) or set(args) != {"query"} or not isinstance(args["query"], str):
+                raise ValueError("search needs exactly one string query.")
+            obs = search.invoke(args)
             results.append(ToolMessage(content=obs, tool_call_id=call["id"]))
         return {"messages": results}
 
@@ -86,7 +92,7 @@ def run(query: str, llm: Any = None) -> dict:
         model=MODEL, temperature=0,
     )
     graph = build_graph(llm)
-    final_state = graph.invoke({"messages": [HumanMessage(content=query)]})
+    final_state = graph.invoke({"messages": [HumanMessage(content=query)]}, config={"recursion_limit": 6})
     return {
         "final": final_state["messages"][-1].content,
         "steps": len(final_state["messages"]),
@@ -101,4 +107,5 @@ if __name__ == "__main__":
     print(f"✅ Final: {result['final']}")
     print(f"   Steps: {result['steps']}")
     assert result["final"], "expected non-empty summary"
-    print("✅ 練習 1 通過 — LangGraph + Ollama qwen2.5:3b、$0/run")
+    assert result["steps"] >= 2, "expected a visible graph trace"
+    print("✅ 練習 1 通過 — LangGraph + Ollama qwen2.5:3b、模型 API $0")

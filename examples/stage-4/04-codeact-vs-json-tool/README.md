@@ -24,33 +24,58 @@
 
 ## 怎麼跑 — 兩條路徑
 
+> ⚠️ **每個練習都要有自己的 Python 3.11 `.venv`。** 這題還需要 Docker；不要把模型產生的程式碼直接放到主機執行。這個示範容器仍可能連網，所以裡面不要放密碼或私密資料。
+
 ### Path A（默認、本機免費）
 
-```bash
-pip install -r requirements.txt
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
-python starter.py
+docker version
+.\.venv\Scripts\python.exe test_docker_smoke.py
+.\.venv\Scripts\python.exe starter.py
 ```
 
-預算：**$0**。CodeAct 對小 model 比較吃力——qwen2.5:3b 可能會產 syntax error、agent 自己迭代修。
+預算：模型 API 是 **$0**；本機硬體、電力與 Docker 資源仍有成本。小模型可能需要更多修正步驟，所以程式把 `max_steps` 限制為 4。
 
-### Path B（Anthropic、想看 cloud 高品質）
+### Path B（Anthropic、比較雲端結果）
+
+```powershell
+$env:ANTHROPIC_API_KEY="sk-ant-..."
+.\.venv\Scripts\python.exe starter_anthropic.py
+```
+
+預設固定型號：`anthropic/claude-haiku-4-5-20251001`。單次 2,000 input + 1,000 output tokens 的例子為 `$0.007`；CodeAct 可能多輪呼叫，因此先設供應商支出上限 **$0.10**。實際費用看 tokens 與步數。
+
+<details markdown="1">
+<summary>macOS／Linux 指令與查核資訊</summary>
 
 ```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+python3.11 -m venv .venv
+./.venv/bin/python -m pip install -r requirements.txt
+export ANTHROPIC_API_KEY="sk-ant-..."
+docker version
+./.venv/bin/python test.py
+./.venv/bin/python test_docker_smoke.py
 ```
 
-預算：每次 ≈ **$0.005-0.02**（CodeAct 通常多步、claude-haiku-4-5）。Claude 寫 Python code 比 qwen2.5:3b 穩很多。
+價格公式：`input_tokens / 1,000,000 × $1 + output_tokens / 1,000,000 × $5`。
+
+官方來源：[Secure code execution](https://huggingface.co/docs/smolagents/tutorials/secure_code_execution)｜[Python executors](https://huggingface.co/docs/smolagents/reference/python_executors)｜[Docker port publishing](https://docs.docker.com/engine/network/port-publishing/)｜[Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+
+<small>套件、model ID、價格與官方連結查核：2026-08-28 UTC。</small>
+</details>
 
 ## 不花錢驗證程式邏輯
 
-```bash
-python test.py # tool function + agent 結構
-python test_anthropic.py # Path B 可載入檢查
+```powershell
+.\.venv\Scripts\python.exe test.py # AST、JSON allowlist、loopback 控制埠與資源限制
+.\.venv\Scripts\python.exe test_anthropic.py # Anthropic 設定 + 相同安全邊界
 ```
+
+這兩個離線測試**不會**執行模型產生的程式碼，也不需要 Docker daemon。`test_docker_smoke.py` 是另外一個手動 smoke test：它真的啟動 Jupyter executor，確認主機控制通道可用，而且控制埠只綁在 `127.0.0.1`；先讓 `docker version` 成功再跑。它不會假裝容器不能連網。
 
 ## CodeAct 是怎麼運作的
 
@@ -70,7 +95,7 @@ print(ratio)
 （Smolagents 執行這段 code、把 print 結果接回去給 LLM 繼續）
 ````
 
-Framework 提供 sandboxed Python interpreter、agent 在裡面 import tool、寫 code、看 print 結果繼續。
+這份範例明確使用 Docker executor。Jupyter 控制埠只綁到主機的 `127.0.0.1`，並移除 Linux capabilities、禁止提權與 pickle，再限制記憶體、process 數與 agent 步數。一般 Docker bridge **仍可能讓容器連到外部網路或主機服務**，所以這只是受控教學示範，不是 production sandbox。需要執行不可信程式碼時，還要加真正的 egress／host 防火牆，或改用有正式隔離邊界的遠端 sandbox。
 
 ## CodeAct vs JSON tool 對照
 
@@ -82,7 +107,7 @@ Framework 提供 sandboxed Python interpreter、agent 在裡面 import tool、�
 | 一輪 token 數 | 較少 | 較多（code 較長） |
 | 對小 model | 較友善（穩定的 JSON） | 較吃力（要產正確 Python） |
 | Debug 友善 | tool call 看得清楚 | 看 code execution log |
-| 安全考量 | tool args validated | Sandboxed Python（注意 eval/exec 限制） |
+| 安全考量 | allowlist + 參數驗證 | 不可信程式碼，必須隔離、限權、限資源 |
 | 哪些題目擅長 | 單步、邊界明確 | 多步運算、需要中間 variable |
 
 **HuggingFace 的觀點**：CodeAct 更貼近「人類怎麼解問題」——你也是用變數記中間結果、不是每步都重新查。
@@ -91,31 +116,31 @@ Framework 提供 sandboxed Python interpreter、agent 在裡面 import tool、�
 
 | 觀察項 | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| 產正確 Python syntax | 穩 | 偶爾 syntax error、會自己迭代修 |
-| 變數命名 / 重用 | 自然 | 容易重複呼叫 tool 而非用 variable |
-| 多步 ratio 算對 | 高機率 | 中機率 |
-| 步數 | 1-2 步 | 3-5 步（迭代修錯） |
-| 成本 | $0.005-0.02 | $0 |
+| 產出可執行 Python | 用相同測試題量測 | 用相同測試題量測 |
+| 變數命名 / 重用 | 看 execution log | 看 execution log |
+| 比例是否算對 | 驗證最終值 | 驗證最終值 |
+| 步數 | 由 `max_steps=4` 限制 | 由 `max_steps=4` 限制 |
+| 模型 API 成本 | 依 tokens 與步數 | $0 |
 
-**punchline**：CodeAct 是 **model 質量敏感** pattern——LLM 要會寫能在 production 跑的 Python。**小 model 在 JSON tool 路線比 CodeAct 路線優**（Stage 3 練習 6 也驗證過這點）。
+**punchline**：CodeAct 比 JSON tool 多了一個「執行程式碼」的風險面。不要先假設哪個模型或路線較好；用相同任務比較成功率、步數、成本與安全邊界。
 
 ## 常見坑
 
 - **`@tool` 函式 docstring 是 prompt 的一部分**：Smolagents 把 docstring 當 tool description 給 LLM 看。**docstring 沒寫好、LLM 不知道何時用這 tool**
-- **CodeAct sandbox**：Smolagents 預設禁 `import os`、`open` 等危險操作。要放行特定 module、設 `additional_authorized_imports=[...]`
-- **`max_steps` 不夠**：CodeAct 跑多步、`max_steps=4` 可能不夠。但太大又會無限迴圈。經驗值 4-8
-- **小 model 寫的 code 有 syntax error**：Smolagents 會把 error 接回去讓 LLM 修、但會浪費 token。Production 用大 model 比較划算
+- **把 Docker 當完整 sandbox**：錯。這份範例只縮小權限並把控制埠綁在 loopback；上線前還要做映像、權限、egress、host access、資源與記錄審查
+- **`max_steps` 不夠**：先看錯在哪一步，不要只把數字調大；較大上限會增加費用與 loop 風險
+- **模型程式碼有 syntax error**：Smolagents 可以把錯誤接回模型修正，但會增加步數；是否換模型要看評測結果
 
 ## 想看更聰明的答案？
 
-```bash
-MODEL=anthropic/claude-sonnet-5 python starter_anthropic.py # 最穩
-MODEL=qwen2.5:7b python starter.py # 較大本機 model
+```powershell
+$env:MODEL="anthropic/claude-sonnet-5"; .\.venv\Scripts\python.exe starter_anthropic.py
+$env:MODEL="qwen2.5:7b"; .\.venv\Scripts\python.exe starter.py
 ```
 
 ## 延伸
 
 - **加更多 tools**：`@tool` 裝飾函式即自動 wrap、Smolagents 自動拿 docstring 當 description
 - **改 ToolCallingAgent**：Smolagents 也有非 CodeAct 的 `ToolCallingAgent`、用 JSON tool 路線。對照看
-- **接 Hugging Face Hub**：`HfApiModel` 直接打 HF inference（不必本機 ollama）
+- **接 Hugging Face Hub**：用現行 `InferenceClientModel` 呼叫 HF inference（不必本機 Ollama）
 - **看 [Anthropic Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)**：Anthropic 的觀點是兩條路線都合理、看任務

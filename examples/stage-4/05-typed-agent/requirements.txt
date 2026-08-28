@@ -1,2 +1,2 @@
-pydantic-ai>=0.0.20,<2.0
-pydantic>=2.6,<3.0
+pydantic-ai>=2.35,<3.0
+pydantic>=2.13,<3.0

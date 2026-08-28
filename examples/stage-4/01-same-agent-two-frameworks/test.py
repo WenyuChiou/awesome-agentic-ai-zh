@@ -54,11 +54,31 @@ def test_run_skip_tool_when_known():
 
     result = run("what is Python", llm=llm)
     assert "Python" in result["final"]
+    assert result["steps"] == 2
     print("✅ test_run_skip_tool_when_known")
+
+
+def test_reject_unknown_tool_name():
+    """模型不能把未知名稱偷偷當成 search 執行。"""
+    llm = MagicMock()
+    llm.bind_tools.return_value = llm
+    llm.invoke.return_value = AIMessage(
+        content="",
+        tool_calls=[{"name": "delete_files", "args": {"query": "Taipei"}, "id": "call_bad", "type": "tool_call"}],
+    )
+
+    try:
+        run("summarize Taipei", llm=llm)
+    except ValueError as error:
+        assert "Unknown tool" in str(error)
+    else:
+        raise AssertionError("unknown tool name must be rejected")
+    print("✅ test_reject_unknown_tool_name")
 
 
 if __name__ == "__main__":
     test_search_tool_basic()
     test_run_with_mock_llm()
     test_run_skip_tool_when_known()
-    print("\n🎉 全部通過 — LangGraph + Ollama 邏輯正確")
+    test_reject_unknown_tool_name()
+    print("all pass")

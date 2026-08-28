@@ -152,6 +152,8 @@ Stage 4 的時間、環境、完整閱讀、研究證據、進階 tool patterns�
 
 Stage 4 使用兩層 stacked PR：第一層只定稿三語教材、官方事實包、圖、資源表與 reader-UX gate；第二層才更新五個 `examples/stage-4/` 資料夾的 current-major SDK、Ollama／Anthropic 雙路徑、安全邊界與離線測試。這讓閱讀設計和 executable API migration 可以各自回溯、review 與驗證。
 
+Stage 4 的五個可執行資料夾必須各自建立 Python 3.11 `.venv`，不能把不同 framework 的 `requirements.txt` 合併安裝。每題的 Path A 與 Path B 測試都要實際走過核心行為；只確認 import 成功不算驗收。LangGraph 要測分支、checkpoint、`interrupt()` 與 `Command(resume=...)`；CrewAI 要測角色、handoff 與有界停止；CodeAct 只在受限 Docker executor 示範模型程式碼，Jupyter 控制埠只綁 loopback，並明說一般 bridge 仍可對外連線、不是 production sandbox；typed output 要明說格式正確不等於內容真實。
+
 ```
 1. 1-2 句核心問題
 2. ## 📌 學習目標
