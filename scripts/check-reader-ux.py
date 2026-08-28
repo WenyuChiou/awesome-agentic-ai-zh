@@ -38,6 +38,12 @@ SUMMARY_RE = re.compile(r"<summary\b[^>]*>(.*?)</summary>", re.IGNORECASE)
 HEADING_RE = re.compile(r"^#{1,6}\s+(.+?)\s*$")
 TAG_RE = re.compile(r"<[^>]+>")
 TH_RE = re.compile(r"<th\b[^>]*>", re.IGNORECASE)
+EMPTY_ANCHOR_RE = re.compile(
+    r"<a\b[^>]*(?:>\s*</a>|\s*/>)", re.IGNORECASE
+)
+INLINE_CODE_SPAN_RE = re.compile(
+    r"(?<!`)(?P<ticks>`+)(?P<body>.*?)(?P=ticks)(?!`)"
+)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from md_fences import code_line_flags, strip_code_blocks  # noqa: E402
@@ -99,6 +105,19 @@ def _without_all_html_comments(text: str) -> str:
     return re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
 
+def _without_empty_anchors_outside_inline_code(line: str) -> str:
+    """Drop renderless anchors while preserving literals shown in code spans."""
+
+    parts: list[str] = []
+    cursor = 0
+    for match in INLINE_CODE_SPAN_RE.finditer(line):
+        parts.append(EMPTY_ANCHOR_RE.sub("", line[cursor : match.start()]))
+        parts.append(match.group(0))
+        cursor = match.end()
+    parts.append(EMPTY_ANCHOR_RE.sub("", line[cursor:]))
+    return "".join(parts)
+
+
 def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
     """Measure the visible Markdown source before the reader clicks anything.
 
@@ -109,6 +128,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
     """
     stack: list[bool] = []
     visible_lines: list[str] = []
+    visible_measurement_lines: list[str] = []
     open_summaries: list[str] = []
     outside_headings: list[tuple[str, str]] = []
     errors: list[str] = []
@@ -118,6 +138,15 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
     lines = text.splitlines()
     code_flags = code_line_flags(text)
 
+    def append_visible(line: str, *, in_fenced_code: bool = False) -> None:
+        visible_lines.append(line)
+        if in_fenced_code:
+            visible_measurement_lines.append(line)
+        else:
+            visible_measurement_lines.append(
+                _without_empty_anchors_outside_inline_code(line)
+            )
+
     for line_no, (line, in_code) in enumerate(zip(lines, code_flags), start=1):
         if in_comment:
             line, in_comment = _without_html_comments(line, in_comment)
@@ -125,7 +154,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
                 continue
         elif in_code:
             if not stack or all(stack):
-                visible_lines.append(line)
+                append_visible(line, in_fenced_code=True)
             continue
         else:
             line, in_comment = _without_html_comments(line, False)
@@ -154,7 +183,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
                 continue
             # A summary is visible only when every ancestor disclosure is open.
             if all(stack[:-1]):
-                visible_lines.append(line)
+                append_visible(line)
             if stack[-1]:
                 open_summaries.append(_plain(summary.group(1)))
             continue
@@ -165,15 +194,18 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
             outside_headings.append((_plain(raw_heading), slugify(raw_heading)))
 
         if not stack or all(stack):
-            visible_lines.append(line)
+            append_visible(line)
 
     if stack:
         errors.append(f"{len(stack)} unclosed <details> block(s)")
     if in_comment:
         errors.append("unclosed HTML comment")
 
-    visible_chars = len(re.sub(r"\s+", "", "\n".join(visible_lines)))
     visible_source = "\n".join(visible_lines)
+    # Empty compatibility anchors keep old deep links working but render no
+    # text. Literals in fenced or inline code are visible and still count.
+    visible_measurement_source = "\n".join(visible_measurement_lines)
+    visible_chars = len(re.sub(r"\s+", "", visible_measurement_source))
     return PageMetrics(
         visible_chars,
         details_count,

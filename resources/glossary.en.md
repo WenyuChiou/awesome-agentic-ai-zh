@@ -178,7 +178,7 @@ Representative paper: [Self-Refine (Madaan 2023)](https://arxiv.org/abs/2303.176
 - **Time axis**: short-term (current conversation) vs long-term (persistent across sessions)
 - **Content axis** (CoALA framework): **Working** (scratch space) / **Episodic** (past experiences) / **Semantic** (factual knowledge) / **Procedural** (how to do things)
 
-→ The two axes do not conflict: long-term memory can contain **at the same time** episodic memory (what the user said last time), semantic memory (facts from the company's knowledge base), and procedural memory (tool sequences that worked before).
+→ The two axes do not conflict: long-term memory can contain episodic memory (what the user said last time), semantic memory (small stable facts), and procedural memory (tool sequences that worked before). Large external corpora usually belong in a RAG knowledge base, not all in agent memory.
 
 📍 Detail: [Stage 6 What is Memory + How to Design It](../stages/06-memory-rag.en.md#-what-is-memory--how-to-design-it) + [Stage 6 CoALA Framework](../stages/06-memory-rag.en.md#advanced-coala-framework--a-4-layer-taxonomy-for-agent-memory)
 
@@ -189,16 +189,16 @@ Two-stage architectural pattern:
 1. **Ingest** (one-time / periodic): document → chunk → embed → store in a vector store (build a retrievable KB)
 2. **Query** (every user question): embed the question → semantic search (or hybrid + BM25) → top-K chunks → put them into the prompt → LLM answers
 
-**Solves the problem that the LLM does not know your private / changing / stale data**. Retrieval is **not limited to dense embeddings** — the production default is hybrid (dense + BM25) + reranker.
+**Solves the problem that the LLM does not know your private / changing / stale data**. Retrieval can use dense vectors, keywords, SQL, web search, or combinations. Whether to add hybrid search, BM25, or a reranker must be evaluated on your data and success criteria.
 
 📍 Detail: [Stage 6](../stages/06-memory-rag.en.md)
 📍 Paper: [Lewis et al. 2020](https://arxiv.org/abs/2005.11401)
 
 ### Reflexion (Full reflection / with episodic memory)
 
-Unlike Self-Refine (2 Agents), Reflexion **requires a persistent episodic memory store** — after each trial, the agent **writes a reflection summary into memory**, then retrieves it into the prompt at the start of the next trial. **Accumulating lessons across trials** is the essence of Reflexion (not a single-session loop).
+Unlike Self-Refine (2 Agents), the Reflexion paper accumulates lessons across trials with episodic memory — after each trial, the agent **writes a reflection summary into memory**, then retrieves it into the prompt at the start of the next trial. Process-persistent storage is needed only when lessons must survive program restarts; persistence is not always intrinsic.
 
-It is placed in 3 instead of 2 because it is **fundamentally a memory pattern** — the episodic memory store is core, not optional.
+It is placed in 3 instead of 2 because it demonstrates an episodic-memory pattern across trials; whether storage must persist depends on the lifecycle you need.
 
 Representative paper: [Reflexion (Shinn 2023)](https://arxiv.org/abs/2303.11366).
 
@@ -206,19 +206,19 @@ Representative paper: [Reflexion (Shinn 2023)](https://arxiv.org/abs/2303.11366)
 
 ### Embedding
 
-Turn text / images into N-dimensional **vectors** so that things with similar meanings are close together. This roadmap defaults to **dense embeddings** (dense vectors produced by sentence-transformers / OpenAI ada-002, etc.); there are also **sparse embeddings** (BM25 / SPLADE, etc., based on lexical token matching) — production RAG often uses both together for hybrid search.
+Turn text / images into N-dimensional **vectors** so that things with similar meanings are close together. **Dense embeddings** use continuous vectors for semantics; **sparse representations** keep fewer nonzero token weights and excel at lexical matching (BM25, SPLADE, etc.). They can be combined, but evaluate the choice on your query set.
 
 📍 Detail: [Stage 6](../stages/06-memory-rag.en.md)
 
 ### Vector DB
 
-The storage layer for storing + efficiently querying embeddings. **The main query type = approximate nearest-neighbor (ANN)** — the whole point of a vector DB is that ANN is hundreds of times faster than brute-force cosine scanning. Examples: Pinecone / Chroma / Qdrant / Weaviate / pgvector.
+The storage layer for storing and querying embeddings. Vector-store and vector-database capabilities differ across indexing, metadata, filtering, persistence, backup, and operations; ANN is only one common query method. Examples: Pinecone / Chroma / Qdrant / Weaviate / pgvector.
 
 📍 Detail: [Stage 6](../stages/06-memory-rag.en.md)
 
 ### Semantic Search
 
-Use embeddings to compare "meaning similarity" rather than "exact string match". "How do I charge an EV" can retrieve "electric car battery tutorial". Traditional keyword search (BM25, etc.) can't do this.
+Use embeddings to compare "meaning similarity" rather than "exact string match". "How do I charge an EV" can retrieve "electric car battery tutorial". Keyword search may miss paraphrases, but it is complementary and strong for exact terms and identifiers.
 
 ### Chunking
 

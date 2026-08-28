@@ -98,6 +98,14 @@ Stage 5 (`stages/05-claude-code-ecosystem.md`) has five cumulative exercises and
 
 The 05B layer validates the `tool-calling-tutor` frontmatter, installed and repository-relative links, translations, eval contract, model／SDK wording, and offline behavior. It stays separate from 05A so the reader rewrite and executable-example migration can be reviewed and rolled back independently.
 
+### Stage 6 — reader path covered; executable hardening stays in the next layer
+
+Stage 6 (`stages/06-memory-rag.md`) now keeps seven core terms, five cumulative exercise outcomes, the first copyable PowerShell action, one RAG + Memory mini-project, and the Stage 7 check visible. Time, setup, advanced RAG patterns, memory taxonomy, chunking, reflection, evaluation, and the 18-row resource table stay closed by default.
+
+`scripts/test_stage06_content.py` locks the three locales to the same freshness marker, concepts, five exercise headings, 109 legacy heading aliases, 18 resource URLs and ratings, five accessible rowgroups (`4／5／4／3／2`), distinct `1672×941` localized images, current project owners/statuses, the honest temporary-storage boundary in Exercise 5, and the absence of stale or mixed-language text. `scripts/check-reader-ux.py` excludes empty compatibility anchors because they render no reader-visible text, measures the collapsed mainline at `3,290／6,367／3,340` non-whitespace characters, and permits only 50 characters of growth per locale.
+
+This reader layer does not claim that the five example folders are fully hardened. The next stacked layer will separately test the chunk-overlap boundary, isolate Chroma collections, replace ephemeral “long-term” memory with real persistence, preserve Ollama／Anthropic paths, and make the teaching tests offline and behavior-based.
+
 ## v2 path (deferred)
 
 Per `docs/HOW_TO_USE.md` "給維護者：v2 path":

@@ -181,6 +181,32 @@ def test_html_comments_do_not_count_as_visible() -> None:
     assert rc == 0, out
 
 
+def test_empty_compatibility_anchors_do_not_count_as_visible_text() -> None:
+    anchors = "\n".join(
+        f'<a id="legacy-deep-link-{index:03d}"></a>' for index in range(100)
+    )
+    rc, out = _run(anchors, config=_config(limit=80))
+    assert rc == 0, out
+
+
+def test_empty_anchor_literal_inside_fenced_code_still_counts() -> None:
+    body = "```html\n" + '<a id="visible-code"></a>\n' * 8 + "```\n"
+    rc, out = _run(body, config=_config(limit=80))
+    assert rc == 1 and "visible characters" in out, out
+
+
+def test_empty_anchor_literal_inside_inline_code_still_counts() -> None:
+    body = " ".join(f'`<a id="visible-inline-{index}"></a>`' for index in range(8))
+    rc, out = _run(body, config=_config(limit=80))
+    assert rc == 1 and "visible characters" in out, out
+
+
+def test_anchor_text_that_readers_can_see_still_counts() -> None:
+    body = '<a id="visible-link">' + "x" * 100 + "</a>"
+    rc, out = _run(body, config=_config(limit=80))
+    assert rc == 1 and "visible characters" in out, out
+
+
 def test_visible_limit_is_blocking() -> None:
     rc, out = _run("x" * 800, config=_config(limit=80))
     assert rc == 1 and "visible characters" in out, out

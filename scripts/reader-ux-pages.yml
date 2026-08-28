@@ -1004,6 +1004,141 @@ pages:
           zh-Hans: {term: Claude Agent SDK, label: Claude Agent SDK}
     resource_group_rowspans: [4, 8, 8, 7, 4, 4]
 
+  - id: stage-06
+    canonical: stages/06-memory-rag.md
+    mirrors:
+      en: stages/06-memory-rag.en.md
+      zh-Hans: stages/06-memory-rag.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 3340
+      en: 6417
+      zh-Hans: 3390
+    max_open_details: 0
+    required_details_count: 7
+    visible_section_order:
+      - learning-goals
+      - core-terms
+      - choice-table
+      - entry-paths
+      - required-reading
+      - hands-on
+      - exercise-1
+      - exercise-2
+      - exercise-3
+      - exercise-4
+      - exercise-5
+      - project
+      - projects
+      - completion
+    forbidden_terms:
+      zh-TW: [text-embedding-ada-002, explodinggradients/ragas, "★", '""', "“”"]
+      en: [text-embedding-ada-002, explodinggradients/ragas, "★", '""', "“”"]
+      zh-Hans: [text-embedding-ada-002, explodinggradients/ragas, "★", '""', "“”"]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-28"
+        - "5.7%"
+        - "1.9%"
+        - "top-20"
+        - "MIT"
+        - "Apache-2.0"
+        - "Zep Cloud"
+        - "letta-ai/letta-code"
+        - "vibrantlabsai/ragas"
+    required_visible_sections:
+      learning-goals:
+        zh-TW: {heading: "📌 學習目標", anchor: -學習目標}
+        en: {heading: "📌 Learning goals", anchor: -learning-goals}
+        zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
+      core-terms:
+        zh-TW: {heading: "🧩 先認識七個核心詞", anchor: -先認識七個核心詞}
+        en: {heading: "🧩 Meet seven core terms first", anchor: -meet-seven-core-terms-first}
+        zh-Hans: {heading: "🧩 先认识七个核心术语", anchor: -先认识七个核心术语}
+      choice-table:
+        zh-TW: {heading: "一張表先選對方法", anchor: 一張表先選對方法}
+        en: {heading: "Choose the right method with one table", anchor: choose-the-right-method-with-one-table}
+        zh-Hans: {heading: "一张表先选对方法", anchor: 一张表先选对方法}
+      entry-paths:
+        zh-TW: {heading: "🚪 進入條件與閱讀路線", anchor: -進入條件與閱讀路線}
+        en: {heading: "🚪 Entry requirements and reading paths", anchor: -entry-requirements-and-reading-paths}
+        zh-Hans: {heading: "🚪 进入条件与阅读路径", anchor: -进入条件与阅读路径}
+      required-reading:
+        zh-TW: {heading: "📚 必修閱讀", anchor: -必修閱讀}
+        en: {heading: "📚 Required reading", anchor: -required-reading}
+        zh-Hans: {heading: "📚 必修阅读", anchor: -必修阅读}
+      hands-on:
+        zh-TW: {heading: "🛠 動手練習", anchor: -動手練習}
+        en: {heading: "🛠 Hands-on exercises", anchor: -hands-on-exercises}
+        zh-Hans: {heading: "🛠 动手练习", anchor: -动手练习}
+      exercise-1:
+        zh-TW: {heading: "練習 1：把兩句話變成 Embedding", anchor: 練習-1把兩句話變成-embedding}
+        en: {heading: "Exercise 1: Turn two sentences into embeddings", anchor: exercise-1-turn-two-sentences-into-embeddings}
+        zh-Hans: {heading: "练习 1：把两句话变成 Embedding", anchor: 练习-1把两句话变成-embedding}
+      exercise-2:
+        zh-TW: {heading: "練習 2：把 Embedding 放進 Vector Database", anchor: 練習-2把-embedding-放進-vector-database}
+        en: {heading: "Exercise 2: Put embeddings in a vector database", anchor: exercise-2-put-embeddings-in-a-vector-database}
+        zh-Hans: {heading: "练习 2：把 Embedding 放进 Vector Database", anchor: 练习-2把-embedding-放进-vector-database}
+      exercise-3:
+        zh-TW: {heading: "練習 3：比較三種 Chunking 方法", anchor: 練習-3比較三種-chunking-方法}
+        en: {heading: "Exercise 3: Compare three chunking methods", anchor: exercise-3-compare-three-chunking-methods}
+        zh-Hans: {heading: "练习 3：比较三种 Chunking 方法", anchor: 练习-3比较三种-chunking-方法}
+      exercise-4:
+        zh-TW: {heading: "練習 4：串起完整 RAG", anchor: 練習-4串起完整-rag}
+        en: {heading: "Exercise 4: Connect a complete RAG pipeline", anchor: exercise-4-connect-a-complete-rag-pipeline}
+        zh-Hans: {heading: "练习 4：串起完整 RAG", anchor: 练习-4串起完整-rag}
+      exercise-5:
+        zh-TW: {heading: "練習 5：記住一項偏好", anchor: 練習-5記住一項偏好}
+        en: {heading: "Exercise 5: Remember a preference", anchor: exercise-5-remember-a-preference}
+        zh-Hans: {heading: "练习 5：记住一项偏好", anchor: 练习-5记住一项偏好}
+      project:
+        zh-TW: {heading: "推薦小專案：會翻資料、也會記偏好的助理", anchor: 推薦小專案會翻資料也會記偏好的助理}
+        en: {heading: "Recommended mini-project: an assistant that retrieves and remembers", anchor: recommended-mini-project-an-assistant-that-retrieves-and-remembers}
+        zh-Hans: {heading: "推荐小项目：会查资料、也会记偏好的助理", anchor: 推荐小项目会查资料也会记偏好的助理}
+      projects:
+        zh-TW: {heading: "🎯 精選 Projects 與學習資源", anchor: -精選-projects-與學習資源}
+        en: {heading: "🎯 Curated projects and learning resources", anchor: -curated-projects-and-learning-resources}
+        zh-Hans: {heading: "🎯 精选项目与学习资源", anchor: -精选项目与学习资源}
+      completion:
+        zh-TW: {heading: "✅ 進入 Stage 7 前的自我檢查", anchor: -進入-stage-7-前的自我檢查}
+        en: {heading: "✅ Self-check before Stage 7", anchor: -self-check-before-stage-7}
+        zh-Hans: {heading: "✅ 进入 Stage 7 前的自我检查", anchor: -进入-stage-7-前的自我检查}
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 20
+      terms:
+        - id: retrieval
+          zh-TW: {term: Retrieval, label: "Retrieval（檢索）"}
+          en: {term: Retrieval, label: Retrieval}
+          zh-Hans: {term: Retrieval, label: "Retrieval（检索）"}
+        - id: rag
+          zh-TW: {term: RAG, label: "RAG（Retrieval-Augmented Generation）"}
+          en: {term: RAG, label: "RAG (Retrieval-Augmented Generation)"}
+          zh-Hans: {term: RAG, label: "RAG（Retrieval-Augmented Generation）"}
+        - id: embedding
+          zh-TW: {term: Embedding, label: "Embedding（嵌入向量）"}
+          en: {term: Embedding, label: Embedding}
+          zh-Hans: {term: Embedding, label: "Embedding（嵌入向量）"}
+        - id: vector-store
+          zh-TW: {term: Vector Store, label: "Vector Store／Vector Database"}
+          en: {term: Vector Store, label: "Vector Store / Vector Database"}
+          zh-Hans: {term: Vector Store, label: "Vector Store／Vector Database"}
+        - id: chunk
+          zh-TW: {term: Chunk, label: "Chunk（文字片段）"}
+          en: {term: Chunk, label: Chunk}
+          zh-Hans: {term: Chunk, label: "Chunk（文字片段）"}
+        - id: reranking
+          zh-TW: {term: Reranking, label: "Reranking（重新排序）"}
+          en: {term: Reranking, label: Reranking}
+          zh-Hans: {term: Reranking, label: "Reranking（重新排序）"}
+        - id: memory
+          zh-TW: {term: Memory, label: "Memory（記憶）"}
+          en: {term: Memory, label: Memory}
+          zh-Hans: {term: Memory, label: "Memory（记忆）"}
+    resource_group_rowspans: [4, 5, 4, 3, 2]
+
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
     mirrors:

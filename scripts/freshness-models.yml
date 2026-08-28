@@ -105,6 +105,29 @@ stage05_fact_pack:
     agent_sdk_migration: 'https://code.claude.com/docs/en/agent-sdk/migration-guide'
     agent_sdk_hosting: 'https://code.claude.com/docs/en/agent-sdk/hosting'
 
+stage06_fact_pack:
+  canonical: 'stages/06-memory-rag.md'
+  verified_on: '2026-08-28'
+  scope: ['rag', 'retrieval', 'embeddings', 'vector-stores', 'memory', 'evaluation', 'project-status']
+  official_sources:
+    langchain_retrieval: 'https://docs.langchain.com/oss/python/langchain/retrieval'
+    langgraph_agentic_rag: 'https://docs.langchain.com/oss/python/langgraph/agentic-rag'
+    llamaindex_concepts: 'https://developers.llamaindex.ai/python/framework/getting_started/concepts/'
+    anthropic_contextual_retrieval: 'https://www.anthropic.com/engineering/contextual-retrieval'
+    microsoft_graphrag: 'https://github.com/microsoft/graphrag'
+    microsoft_graphrag_docs: 'https://microsoft.github.io/graphrag/'
+    ragas: 'https://github.com/vibrantlabsai/ragas'
+    mem0: 'https://github.com/mem0ai/mem0'
+    letta_code: 'https://github.com/letta-ai/letta-code'
+    langmem: 'https://github.com/langchain-ai/langmem'
+    zep: 'https://github.com/getzep/zep'
+    graphiti: 'https://github.com/getzep/graphiti'
+    chroma: 'https://docs.trychroma.com/getting-started'
+    qdrant: 'https://qdrant.tech/documentation/'
+    pgvector: 'https://github.com/pgvector/pgvector'
+    weaviate: 'https://docs.weaviate.io/weaviate'
+    lancedb: 'https://lancedb.github.io/lancedb/'
+
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
     required_scopes: ['models', 'pricing', 'availability', 'deprecations']
@@ -117,6 +140,9 @@ verified_pages:
     max_age_days: 90
   - canonical: 'stages/05-claude-code-ecosystem.md'
     required_scopes: ['claude-code', 'mcp', 'skills', 'plugins', 'subagents', 'workflows', 'agent-sdk', 'security']
+    max_age_days: 90
+  - canonical: 'stages/06-memory-rag.md'
+    required_scopes: ['rag', 'retrieval', 'embeddings', 'vector-stores', 'memory', 'evaluation', 'project-status']
     max_age_days: 90
 
 current_frontier_models:
@@ -252,6 +278,38 @@ stale_patterns:
     include_files: ['stages/07.5-advanced-agentic-concepts.md']
     qualifier_terms: ['before v2.1.160', 'pre-v2.1.160', 'v2.1.160 之前', 'v2.1.160 以前', '舊版', '旧版', 'historical', 'history', 'legacy']
     note: 'Current Dynamic workflow opt-in uses an explicit natural-language request or `ultracode`; literal `workflow` was the trigger before Claude Code v2.1.160'
+
+  # Stage 06 fact and project status checks. Mirror locales inherit the
+  # canonical include path through check-2026-freshness.py.
+  - pattern: 'text-embedding-ada-002|OpenAI ada-002'
+    include_files: ['stages/06-memory-rag.md', 'resources/glossary.md']
+    qualifier_terms: ['historical', 'history', 'legacy', '舊版', '旧版', '歷史', '历史', '前身']
+    note: 'Stage 06 uses current embedding examples and must not recommend the legacy ada-002 model'
+
+  - pattern: 'explodinggradients/ragas'
+    include_files: ['stages/06-memory-rag.md']
+    qualifier_terms: ['former', 'previous', 'historical', '舊', '旧', '歷史', '历史', 'redirect']
+    note: 'The canonical Ragas repository moved to vibrantlabsai/ragas'
+
+  - pattern: 'Microsoft GraphRAG.{0,120}Apache-2\.0|Apache-2\.0.{0,120}Microsoft GraphRAG'
+    include_files: ['stages/06-memory-rag.md']
+    qualifier_terms: []
+    note: 'Microsoft GraphRAG is MIT licensed and currently largely in maintenance mode'
+
+  - pattern: 'github\.com/letta-ai/letta(?!-code)'
+    include_files: ['stages/06-memory-rag.md']
+    qualifier_terms: ['historical', 'history', 'retired', 'landing page', '舊', '旧', '歷史', '历史', '退役', '入口']
+    note: 'Current Letta development lives in letta-ai/letta-code; the letta repository is a landing and V1 history page'
+
+  - pattern: 'Zep Community Edition'
+    include_files: ['stages/06-memory-rag.md']
+    qualifier_terms: ['deprecated', 'legacy', 'historical', '歷史', '历史', '棄用', '弃用', '移到', 'moved']
+    note: 'Zep Community Edition is deprecated and retained under legacy/'
+
+  - pattern: '★\s*\d'
+    include_files: ['stages/06-memory-rag.md']
+    qualifier_terms: []
+    note: 'Keep editorial ratings but do not freeze volatile GitHub star counts in Stage 06'
 
   # --- MCP Python SDK (added 2026-08 after the v2 breakage) -------------------
   # The 2026-07-28 spec revision itself is invisible to a learner, but the SDK

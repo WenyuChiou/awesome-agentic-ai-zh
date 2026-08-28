@@ -3,6 +3,14 @@
 > 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 那 3 張概念圖的 ChatGPT prompt）。
 > 這份記錄的是 **2026-08-02 那批 5 張圖 × 3 語系** 是怎麼產出來的，以及過程中踩到的坑。
 
+## 2026-08-28：Stage 6 RAG 與 Memory 三路圖
+
+新增 `rag-memory-map.png`、`.en.png`、`.zh-Hans.png`。三張都使用 16:9 亮色白底卡片，固定畫出三條互不串線的路：文件切成 Chunk、轉成 Embedding 並寫進 Vector Database；問題取回相關片段、經 Reranking 後產生有來源的答案；重要狀態寫進 Memory，下一次再讀回來。每條箭頭只在自己的色框內由左往右，不暗示 Vector Database 會自動寫入 Memory。
+
+用 Codex 內建 image generation 產生三個語系，逐張檢查節點、箭頭、語言與安全提示。獨立 review 抓到第一版有跨色框箭頭，會讓讀者誤以為 RAG 的資料庫與 Memory 是同一條自動流程；最終版改成三個獨立色框，Memory 只保留「這次結果 → 選重要狀態 → 寫入 → 下次讀回」與重複圖示。簡中初稿另在「重要狀態／下次讀回」殘留兩個繁體字；最終版已修成「重要状态／下次读回」。圖片不放固定 chunk size、top-k、價格、benchmark、模型排名或 GitHub stars；底部只保留「只記必要資料」的資料最小化提醒。三語維持相同 icon、配色、節點與閱讀順序，各自使用在地化文字與 alt text。
+
+這組圖固定放在 Stage 6 七個可見核心詞之後。圖的目的不是取代定義，而是讓初學者一眼分清：RAG 是先找外部證據再回答，Memory 是把重要狀態留給下一次使用。
+
 ## 2026-08-27：Stage 3 Tool Use 六步圖
 
 新增 `tool-use-loop.png`、`.en.png`、`.zh-Hans.png`。三張都使用 16:9 亮色白底卡片，固定呈現 `模型 → Tool Call → 程式驗證 → 工具執行 → Tool Result → 模型答案`，並用盾牌框住程式驗證與工具執行。底部只保留三個安全提示：allowlist、敏感動作先問人、設定最大輪數。

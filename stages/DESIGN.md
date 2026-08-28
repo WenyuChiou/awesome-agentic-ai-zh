@@ -162,6 +162,14 @@ Stage 5 的概念圖只回答「遇到哪種問題先用哪個零件」，不把
 
 Stage 5 使用兩層 stacked PR：第一層定稿三語教材、官方事實包、圖、資源表與 reader-UX gate，也必須同步修正正文直接連到的 cookbook／glossary／Stage 7.5 術語矛盾，不能讓讀者點出去立刻看見舊說法；第二層才更新 `examples/stage-5/tool-calling-tutor/` 的可執行實作。兩層都保留 branch 與 upstream，未經使用者明確同意不合併、不清理。
 
+Stage 6 的固定主線是「七個可見核心詞 → RAG／Memory 選擇 → 五題累加式練習 → 一個同時檢索與記憶的小專案 → 精選資源 → Stage 7 檢查」。七個核心詞是 **Retrieval**、**RAG**、**Embedding**、**Vector Store／Vector Database**、**Chunk**、**Reranking** 與 **Memory**；BM25、Hybrid Search、GraphRAG、Contextual Retrieval、HyDE、Multi-Query、RAG Fusion、Self-RAG、CRAG、Adaptive RAG、RAPTOR、DSPy、episodic／semantic／procedural memory、CoALA、Generative Agents 與 Reflexion 仍要保留白話定義，但放在有明確 summary 的關閉區，不能在第一遍淹沒練習。
+
+Stage 6 的亮色三語圖固定畫成三條同構路徑：文件進入知識庫的 ingest path、問題取回證據再回答的 query path，以及重要狀態的 Memory write／read loop。圖片只整理正文已定義的關係，不把 vendor benchmark、固定 chunk size、top-k、成本倍數或模型排名畫成通則。五題 heading、anchor、成果、第一個可複製 PowerShell 動作與資料／預算提醒保持可見；時間、環境、完整閱讀、進階 RAG、Memory taxonomy、Chunking、Reflection、評測與完整資源表預設收合。
+
+Stage 6 的 18 筆資源固定分成 `4／5／4／3／2` 五組，每組使用獨立 `<tbody>` 與真正 HTML `rowspan`。保留五星編輯評分，移除 GitHub stars 數字；官方文件、paper 與 canonical repo 負責證明事實，知名或活躍專案只負責提供動手入口。GraphRAG 維護狀態、Ragas canonical owner、Letta 現行開發入口、Zep Community Edition 歷史狀態，以及 RAG／retrieval／embedding／vector store／memory／evaluation／project status 使用 90 天 freshness marker。
+
+Stage 6 同樣使用兩層 stacked PR：第一層定稿三語教材、官方事實包、圖、glossary 直接矛盾、資源表與 reader-UX gate；第二層才修正五個 `examples/stage-6/` 的 chunk 邊界、collection 隔離、真正 persistent memory、雙路徑與離線測試。兩層都保留 branch 與 upstream，未經使用者明確同意不合併、不清理。
+
 Stage 5 的練習不能只叫讀者「看文件」卻宣稱已建立元件。Hook 練習至少要給一份可直接複製的最小設定、離線 smoke test、`/hooks` 落腳檢查與不保存 prompt／secret 的邊界；設定引用 project path 時使用 `command` + `args` 的跨平台 exec form，不能把 PowerShell 無法展開的 shell 變數寫進單一 command 字串。Agent SDK snippet 必須依現行 message type 實際讀到文字內容，regression 也要餵入 fake async `query()` 並驗證真的印出 `TextBlock`，只 compile 或比對字串不算通過。
 
 Stage 5 的 installable Skill 範例使用 `${CLAUDE_SKILL_DIR}` 指向 bundled references，讓 personal、project 與翻譯版安裝後都能找到同一包檔案。README 先給 PowerShell 可複製安裝，再收合 POSIX；驗收先跑無網路 contract checker，再用 `/skill-name` 做產品內手動檢查。自訂 JSON 不能冒充 promptfoo config，結構測試也不能冒充 model-quality eval；要教 promptfoo 時，必須另給合法 provider／prompt／test 設定或明說只提供延伸入口。範例不能保存無來源成功率、原因比例、固定省時百分比或要求私人 Chain-of-Thought。

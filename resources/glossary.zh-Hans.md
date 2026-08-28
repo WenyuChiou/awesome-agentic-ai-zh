@@ -178,7 +178,7 @@ LLM 一次能“看”多少 token。**2026 frontier**：Claude Sonnet 5 / Opus 
 - **时效轴**：short-term（当前对话）vs long-term（跨 session 持久）
 - **内容轴**（CoALA framework）：**Working**（暂存）/ **Episodic**（过去经历）/ **Semantic**（事实知识）/ **Procedural**（怎么做）
 
-→ 两条轴并不冲突：long-term memory 里可以**同时**有 episodic（user 上次说了什么）+ semantic（公司知识库事实）+ procedural（用过的 tool sequence）。
+→ 两条轴并不冲突：long-term memory 可以保存 episodic（user 上次说了什么）、semantic（稳定的小型事实）与 procedural（用过的 tool sequence）。大型外部语料库通常放进 RAG 知识库，而不是全部塞进 agent memory。
 
 📍 详细：[Stage 6 Memory 是什么 + 如何设计](../stages/06-memory-rag.zh-Hans.md#-memory-是什么--怎么设计) + [Stage 6 CoALA Framework](../stages/06-memory-rag.zh-Hans.md#进阶coala-framework--agent-memory-的-4-层分类法)
 
@@ -189,16 +189,16 @@ LLM 一次能“看”多少 token。**2026 frontier**：Claude Sonnet 5 / Opus 
 1. **Ingest**（一次性 / 定期）：document → chunk → embed → 存进 vector store（建一个可检索的 KB）
 2. **Query**（每次 user 提问）：question embed → semantic search（或 hybrid + BM25）→ top-K chunks → 塞进 prompt → LLM 回答
 
-**解决的是 LLM 不知道你的私有 / 变动 / 过期资料**。Retrieval **不只限于 dense embedding**——production 默认配置通常是 hybrid（dense + BM25）+ reranker。
+**解决的是 LLM 不知道你的私有 / 变动 / 过期资料**。Retrieval 可以使用 dense vector、keyword、SQL、web search 或组合；是否加入 hybrid、BM25 或 reranker，必须用自己的数据与成功条件评测。
 
 📍 详细：[Stage 6](../stages/06-memory-rag.zh-Hans.md)
 📍 paper：[Lewis et al. 2020](https://arxiv.org/abs/2005.11401)
 
 ### Reflexion（完整版反思 / 带 episodic memory）
 
-跟 Self-Refine（2 Agent）不同：Reflexion **需要持久 episodic memory store**——agent 跑完一次 trial 后，会**写一段 reflection summary 进 memory**，下一次 trial 开始时再检索进 prompt。**跨 trial 累积教训**才是 Reflexion 的本质（不是 single-session loop）。
+跟 Self-Refine（2 Agent）不同：Reflexion 的 paper 使用 episodic memory 跨 trial 累积教训——agent 跑完一次 trial 后，会**写一段 reflection summary 进 memory**，下一次 trial 开始时再检索进 prompt。如果教训必须跨程序重启保存，才需要 process-persistent storage；持久化并不是 Reflexion 总是内建的条件。
 
-放在 3 而不是 2 Agent，是因为它**本质上是 memory pattern**——episodic memory store 是核心，不是 optional。
+放在 3 而不是 2 Agent，是因为它展示了用 episodic memory 跨 trial 学习的 pattern；是否使用持久存储取决于生命周期需求。
 
 代表 paper：[Reflexion (Shinn 2023)](https://arxiv.org/abs/2303.11366)。
 
@@ -206,19 +206,19 @@ LLM 一次能“看”多少 token。**2026 frontier**：Claude Sonnet 5 / Opus 
 
 ### Embedding（嵌入）
 
-把文字 / 图片转成 N 维**向量**，让“意思接近”的东西距离更近。本路线图默认指 **dense embedding**（稠密向量，由 sentence-transformers / OpenAI ada-002 等产生）；另外也有 **sparse embedding**（BM25 / SPLADE 等，按字面 token 匹配）——production RAG 往往两者一起用来做 hybrid search。
+把文字 / 图片转成 N 维**向量**，让“意思接近”的东西距离更近。**Dense embedding** 用连续向量表达语义；**sparse representation** 保留较少的非零 token 权重，擅长字面匹配（BM25、SPLADE 等）。两者可以组合，但要用自己的查询集评测。
 
 📍 详细：[Stage 6](../stages/06-memory-rag.zh-Hans.md)
 
 ### Vector DB（向量数据库）
 
-存储 + 高效查询 embedding 的存储层。**主要查询类型 = approximate nearest-neighbor (ANN)**——Vector DB 存在的意义就是 ANN 比直接做 cosine 全扫快几百倍。代表：Pinecone / Chroma / Qdrant / Weaviate / pgvector。
+保存并查询 embedding 的存储层。Vector store 与 vector database 在索引、metadata、过滤、持久化、备份与运维能力上各不相同；ANN 只是常见查询方式。代表：Pinecone / Chroma / Qdrant / Weaviate / pgvector。
 
 📍 详细：[Stage 6](../stages/06-memory-rag.zh-Hans.md)
 
 ### Semantic Search（语义搜索）
 
-用 embedding 比较“意思相似”而不是“字符串完全相同”。“电动车怎么充电”可以捞到“EV charging tutorial”。传统关键字搜索（BM25 等）做不到这个。
+用 embedding 比较“意思相似”而不是“字符串完全相同”。“电动车怎么充电”可以捞到“EV charging tutorial”。关键字搜索可能漏掉改写句，但擅长精确词与标识符，通常是互补方法。
 
 ### Chunking（切块）
 
