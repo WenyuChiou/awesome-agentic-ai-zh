@@ -56,7 +56,7 @@ Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "references") -De
 Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "evals") -Destination $skillTarget
 ```
 
-<details>
+<details markdown="1">
 <summary>macOS/Linux commands</summary>
 
 ```bash
@@ -154,7 +154,7 @@ This is an **offline contract check** for five cases: it does not ask a model; i
 - **Add your cases to references/**: open new sections in debug-flowchart for weird cases you've hit
 - **Fork it**: this skill is designed as a Stage 5 5.3 meta-example — forking welcome
 
-<details>
+<details markdown="1">
 <summary>Current sources</summary>
 
 Small, current references (checked 2026-08-28 UTC): [Claude Code skills](https://code.claude.com/docs/en/skills), [Agent Skills](https://agentskills.io), [Anthropic skills](https://github.com/anthropics/skills), and [promptfoo](https://github.com/promptfoo/promptfoo).

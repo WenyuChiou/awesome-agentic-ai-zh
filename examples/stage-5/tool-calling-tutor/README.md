@@ -56,7 +56,7 @@ Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "references") -De
 Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "evals") -Destination $skillTarget
 ```
 
-<details>
+<details markdown="1">
 <summary>macOS/Linux 指令</summary>
 
 ```bash
@@ -154,7 +154,7 @@ python evals/check_evals.py
 - **加你的 case 到 references/**：debug-flowchart 裡開新 Section、把你碰到的 weird case 記下來
 - **fork 成你的版本**：這個 skill 設計就是 Stage 5 5.3 的 meta-example、歡迎 fork
 
-<details>
+<details markdown="1">
 <summary>目前來源</summary>
 
 簡短的目前參考（檢查於 2026-08-28 UTC）：[Claude Code skills](https://code.claude.com/docs/en/skills)、[Agent Skills](https://agentskills.io)、[Anthropic skills](https://github.com/anthropics/skills) 與 [promptfoo](https://github.com/promptfoo/promptfoo)。

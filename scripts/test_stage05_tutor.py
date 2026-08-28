@@ -123,6 +123,8 @@ def test_readme_has_copy_ready_install_and_honest_eval(readme: Path) -> None:
     assert "/tool-calling-tutor" in text
     assert "promptfoo eval -c evals/evals.json" not in text
     assert not re.search(r"<details[^>]*\bopen\b", text)
+    openings = re.findall(r"^<details\b[^>]*>", text, flags=re.MULTILINE)
+    assert openings == ['<details markdown="1">'] * 2
 
 
 @pytest.mark.parametrize("readme", READMES)
