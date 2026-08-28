@@ -32,7 +32,6 @@ Every project entry uses this structure:
 | Field | Value |
 |---|---|
 | Language | Python |
-| Stars | ★ 12k+ |
 | License | MIT |
 | Recommendation | ⭐⭐⭐⭐ |
 
@@ -51,7 +50,6 @@ Every project entry uses this structure:
 ### Required fields (GitHub repo entry)
 For entries that are real GitHub repos:
 
-- `Stars` (`★ Xk+` format, no thousands separator)
 - `License` (SPDX ID or annotated exception, see 5)
 - `Recommendation` (⭐ × N, see 2)
 - `What it teaches`, `Best for`
@@ -62,9 +60,17 @@ Some entries are blogs, videos, official docs, or catalog hubs — not GitHub re
 - `Recommendation` (required)
 - `What it teaches`, `Best for` (required)
 - `Format` (required, e.g. `Article` / `Video` / `Course` / `Curated list` / `Specification`)
-- `Stars` / `License` may be omitted (no GitHub repo to attach)
 
-Example: an `Anthropic — Building Effective Agents` blog entry uses `Format = Article` + `Recommendation`, without `Stars` or `License`.
+Example: an `Anthropic — Building Effective Agents` blog entry uses `Format = Article` + `Recommendation` and needs no repository License field.
+
+### Project-wide resource-selection rule
+
+Recommendation is a required editorial judgment for every entry.
+
+- Use current official documentation, specifications, and model cards to verify facts.
+- Use well-known or widely used practical repositories to give readers a hands-on path.
+- Popularity is only a candidate-discovery signal; it never replaces checks for maintenance, license, safety, or relevance.
+- Every project entry must say what it teaches, who it is best for, and its status or limits.
 
 ### Optional fields
 - `Language` — primary programming language (Python / TypeScript / Chinese)
@@ -88,7 +94,7 @@ Example: an `Anthropic — Building Effective Agents` blog entry uses `Format = 
 | ⭐⭐ | Useful reference | Browse if interested |
 | ⭐ | Niche / advanced / for completeness | Most readers can skip |
 
-These are editorial ratings, not GitHub stars. When removing volatile popularity numbers such as `★ 140k+`, preserve the existing `⭐⭐⭐⭐⭐` rating; change the rating only when evidence about the resource’s purpose, quality, or maintenance changes.
+These are editorial ratings, not GitHub stars. Change a rating only when evidence about the resource’s purpose, quality, or maintenance changes.
 
 **Rules:**
 

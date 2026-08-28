@@ -824,6 +824,186 @@ pages:
           zh-Hans: {term: Human-in-the-loop, label: "Human-in-the-loop（HITL，人在循环中）"}
     resource_group_rowspans: [4, 6, 4, 3, 1]
 
+  - id: stage-05
+    canonical: stages/05-claude-code-ecosystem.md
+    mirrors:
+      en: stages/05-claude-code-ecosystem.en.md
+      zh-Hans: stages/05-claude-code-ecosystem.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 4930
+      en: 9201
+      zh-Hans: 4759
+    max_open_details: 0
+    required_details_count: 16
+    visible_section_order:
+      - learning-goals
+      - core-terms
+      - component-table
+      - entry-paths
+      - required-reading
+      - hands-on
+      - exercise-1
+      - exercise-2
+      - exercise-3
+      - exercise-4
+      - exercise-5
+      - section-5-1
+      - section-5-2
+      - section-5-3
+      - section-5-4
+      - section-5-5
+      - section-5-6
+      - section-5-7
+      - section-5-8
+      - projects
+      - completion
+    forbidden_terms:
+      zh-TW: [Task tool, Opus 4.8, A1-cli-agents-basics, ★]
+      en: [Task tool, Opus 4.8, A1-cli-agents-basics, ★]
+      zh-Hans: [Task tool, Opus 4.8, A1-cli-agents-basics, ★]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-28"
+        - "2026-07-28"
+        - "Plan"
+        - "general-purpose"
+        - "Research preview"
+        - "Experimental"
+        - "Dynamic workflows"
+        - "Bedrock"
+        - "Vertex AI"
+        - "Foundry"
+        - "claude-agent-sdk"
+    required_visible_sections:
+      learning-goals:
+        zh-TW: {heading: "📌 學習目標", anchor: -學習目標}
+        en: {heading: "📌 Learning goals", anchor: -learning-goals}
+        zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
+      core-terms:
+        zh-TW: {heading: "🧩 先認識核心詞", anchor: -先認識核心詞}
+        en: {heading: "🧩 Meet the core terms first", anchor: -meet-the-core-terms-first}
+        zh-Hans: {heading: "🧩 先认识核心术语", anchor: -先认识核心术语}
+      component-table:
+        zh-TW: {heading: "一張表先選對零件", anchor: 一張表先選對零件}
+        en: {heading: "Choose the right component with one table", anchor: choose-the-right-component-with-one-table}
+        zh-Hans: {heading: "一张表先选对组件", anchor: 一张表先选对组件}
+      entry-paths:
+        zh-TW: {heading: "🚪 進入條件與閱讀路線", anchor: -進入條件與閱讀路線}
+        en: {heading: "🚪 Entry requirements and reading paths", anchor: -entry-requirements-and-reading-paths}
+        zh-Hans: {heading: "🚪 进入条件与阅读路径", anchor: -进入条件与阅读路径}
+      required-reading:
+        zh-TW: {heading: "📚 必修閱讀", anchor: -必修閱讀}
+        en: {heading: "📚 Required reading", anchor: -required-reading}
+        zh-Hans: {heading: "📚 必修阅读", anchor: -必修阅读}
+      hands-on:
+        zh-TW: {heading: "🛠 動手練習", anchor: -動手練習}
+        en: {heading: "🛠 Hands-on exercises", anchor: -hands-on-exercises}
+        zh-Hans: {heading: "🛠 动手练习", anchor: -动手练习}
+      exercise-1:
+        zh-TW: {heading: "練習 1：寫一張最小專案守則", anchor: 練習-1寫一張最小專案守則}
+        en: {heading: "Exercise 1: Write a minimal project rulebook", anchor: exercise-1-write-a-minimal-project-rulebook}
+        zh-Hans: {heading: "练习 1：写一张最小项目守则", anchor: 练习-1写一张最小项目守则}
+      exercise-2:
+        zh-TW: {heading: "練習 2：把重複流程做成 Skill", anchor: 練習-2把重複流程做成-skill}
+        en: {heading: "Exercise 2: Turn a repeated workflow into a Skill", anchor: exercise-2-turn-a-repeated-workflow-into-a-skill}
+        zh-Hans: {heading: "练习 2：把重复流程做成 Skill", anchor: 练习-2把重复流程做成-skill}
+      exercise-3:
+        zh-TW: {heading: "練習 3：加一個只記錄、不阻擋的 Hook", anchor: 練習-3加一個只記錄不阻擋的-hook}
+        en: {heading: "Exercise 3: Add an observation-only, non-blocking Hook", anchor: exercise-3-add-an-observation-only-non-blocking-hook}
+        zh-Hans: {heading: "练习 3：添加一个只观察、不拦截的 Hook", anchor: 练习-3添加一个只观察不拦截的-hook}
+      exercise-4:
+        zh-TW: {heading: "練習 4：接一個受限 MCP server", anchor: 練習-4接一個受限-mcp-server}
+        en: {heading: "Exercise 4: Connect a restricted MCP server", anchor: exercise-4-connect-a-restricted-mcp-server}
+        zh-Hans: {heading: "练习 4：连接受限的 MCP server", anchor: 练习-4连接受限的-mcp-server}
+      exercise-5:
+        zh-TW: {heading: "練習 5：用一個 Subagent 做唯讀檢查", anchor: 練習-5用一個-subagent-做唯讀檢查}
+        en: {heading: "Exercise 5: Use a Subagent for a read-only check", anchor: exercise-5-use-a-subagent-for-a-read-only-check}
+        zh-Hans: {heading: "练习 5：用 Subagent 做只读检查", anchor: 练习-5用-subagent-做只读检查}
+      section-5-1:
+        zh-TW: {heading: "5.1 — Claude Code 基礎", anchor: 51--claude-code-基礎}
+        en: {heading: "5.1 — Claude Code fundamentals", anchor: 51--claude-code-fundamentals}
+        zh-Hans: {heading: "5.1 — Claude Code 基础", anchor: 51--claude-code-基础}
+      section-5-2:
+        zh-TW: {heading: "5.2 — MCP（Model Context Protocol）基礎", anchor: 52--mcpmodel-context-protocol基礎}
+        en: {heading: "5.2 — MCP (Model Context Protocol) fundamentals", anchor: 52--mcp-model-context-protocol-fundamentals}
+        zh-Hans: {heading: "5.2 — MCP（Model Context Protocol）基础", anchor: 52--mcpmodel-context-protocol基础}
+      section-5-3:
+        zh-TW: {heading: "5.3 — Skills：按需操作卡", anchor: 53--skills按需操作卡}
+        en: {heading: "5.3 — Skills: on-demand procedure cards", anchor: 53--skills-on-demand-procedure-cards}
+        zh-Hans: {heading: "5.3 — Skills：按需操作卡", anchor: 53--skills按需操作卡}
+      section-5-4:
+        zh-TW: {heading: "5.4 — Plugins 與 Marketplaces", anchor: 54--plugins-與-marketplaces}
+        en: {heading: "5.4 — Plugins and Marketplaces", anchor: 54--plugins-and-marketplaces}
+        zh-Hans: {heading: "5.4 — Plugins 与 Marketplaces", anchor: 54--plugins-与-marketplaces}
+      section-5-5:
+        zh-TW: {heading: "5.5 — Subagents：把大段工作隔離出去", anchor: 55--subagents把大段工作隔離出去}
+        en: {heading: "5.5 — Subagents: isolate the bulky work", anchor: 55--subagents-isolate-the-bulky-work}
+        zh-Hans: {heading: "5.5 — Subagents：隔离大段工作", anchor: 55--subagents隔离大段工作}
+      section-5-6:
+        zh-TW: {heading: "5.6 — 平行工作與 Worktree", anchor: 56--平行工作與-worktree}
+        en: {heading: "5.6 — Parallel work and Worktrees", anchor: 56--parallel-work-and-worktrees}
+        zh-Hans: {heading: "5.6 — 并行工作与 Worktree", anchor: 56--并行工作与-worktree}
+      section-5-7:
+        zh-TW: {heading: "5.7 — Agent loop 解剖", anchor: 57--agent-loop-解剖}
+        en: {heading: "5.7 — Dissecting the agent loop", anchor: 57--dissecting-the-agent-loop}
+        zh-Hans: {heading: "5.7 — 剖析 agent loop", anchor: 57--剖析-agent-loop}
+      section-5-8:
+        zh-TW: {heading: "5.8 — Claude Agent SDK（選修）", anchor: 58--claude-agent-sdk選修}
+        en: {heading: "5.8 — Claude Agent SDK (optional)", anchor: 58--claude-agent-sdk-optional}
+        zh-Hans: {heading: "5.8 — Claude Agent SDK（选修）", anchor: 58--claude-agent-sdk选修}
+      projects:
+        zh-TW: {heading: "🎯 精選 Projects 與學習資源", anchor: -精選-projects-與學習資源}
+        en: {heading: "🎯 Curated projects and learning resources", anchor: -curated-projects-and-learning-resources}
+        zh-Hans: {heading: "🎯 精选项目与学习资源", anchor: -精选项目与学习资源}
+      completion:
+        zh-TW: {heading: "✅ 進入 Stage 6 前的自我檢查", anchor: -進入-stage-6-前的自我檢查}
+        en: {heading: "✅ Self-check before Stage 6", anchor: -self-check-before-stage-6}
+        zh-Hans: {heading: "✅ 进入 Stage 6 前的自我检查", anchor: -进入-stage-6-前的自我检查}
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 20
+      terms:
+        - id: claude-code
+          zh-TW: {term: Claude Code, label: Claude Code}
+          en: {term: Claude Code, label: Claude Code}
+          zh-Hans: {term: Claude Code, label: Claude Code}
+        - id: claude-md
+          zh-TW: {term: CLAUDE.md, label: CLAUDE.md}
+          en: {term: CLAUDE.md, label: CLAUDE.md}
+          zh-Hans: {term: CLAUDE.md, label: CLAUDE.md}
+        - id: skill
+          zh-TW: {term: Skill, label: "Skill（`SKILL.md`）"}
+          en: {term: Skill, label: "Skill (`SKILL.md`)"}
+          zh-Hans: {term: Skill, label: "Skill（`SKILL.md`）"}
+        - id: mcp
+          zh-TW: {term: MCP, label: "MCP（Model Context Protocol）"}
+          en: {term: MCP, label: "MCP (Model Context Protocol)"}
+          zh-Hans: {term: MCP, label: "MCP（Model Context Protocol）"}
+        - id: hook
+          zh-TW: {term: Hook, label: Hook}
+          en: {term: Hook, label: Hook}
+          zh-Hans: {term: Hook, label: Hook}
+        - id: plugin
+          zh-TW: {term: Plugin, label: "Plugin 與 Marketplace"}
+          en: {term: Plugin, label: "Plugin and Marketplace"}
+          zh-Hans: {term: Plugin, label: "Plugin 与 Marketplace"}
+        - id: subagent
+          zh-TW: {term: Subagent, label: Subagent}
+          en: {term: Subagent, label: Subagent}
+          zh-Hans: {term: Subagent, label: Subagent}
+        - id: worktree
+          zh-TW: {term: Worktree, label: Worktree}
+          en: {term: Worktree, label: Worktree}
+          zh-Hans: {term: Worktree, label: Worktree}
+        - id: agent-sdk
+          zh-TW: {term: Claude Agent SDK, label: Claude Agent SDK}
+          en: {term: Claude Agent SDK, label: Claude Agent SDK}
+          zh-Hans: {term: Claude Agent SDK, label: Claude Agent SDK}
+    resource_group_rowspans: [4, 8, 8, 7, 4, 4]
+
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
     mirrors:

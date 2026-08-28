@@ -81,18 +81,22 @@ What learners do for Track A: follow each numbered exercise in the outline doc, 
 
 **Potential v2** (not committed): could ship `examples/track-a/` containing a sample project-instructions file, `skills/review-changes/SKILL.md`, and a sample GHA workflow yml. Low priority — current outline is self-contained.
 
-### Stage 5 — partial coverage
+### Stage 5 — reader path covered; meta-example hardening pending
 
-Stage 5 (`stages/05-claude-code-ecosystem.md`) has 4 sub-stages with hands-on exercises:
+Stage 5 (`stages/05-claude-code-ecosystem.md`) has five cumulative exercises and eight reference sections (5.1–5.8). The first reader-UX layer keeps every exercise outcome and first copyable action visible, while longer setup and troubleshooting stay closed by default.
 
-| Sub-stage | Status |
+| Area | Current evidence |
 |---|---|
-| 5.1 Claude Code 基礎 | Outline only (in `stages/05-...md` 動手練習) |
-| 5.2 MCP (Model Context Protocol) | Outline only; cookbook 2 covers building first MCP server |
-| 5.3 Skills | Outline + **1 shipped meta-example**: [`examples/stage-5/tool-calling-tutor/`](../examples/stage-5/tool-calling-tutor/) (full SKILL.md + 3 references + evals.json, used as the Stage 5.3 authoring exemplar) |
-| 5.4 Plugins & Marketplaces | Outline only |
+| 5.1 `CLAUDE.md` | Copyable minimal rule card and manual success check in the stage page |
+| 5.2 MCP | Restricted-directory exercise and explicit inside/outside-path success condition |
+| 5.3 Skills | Copyable Skill plus [`examples/stage-5/tool-calling-tutor/`](../examples/stage-5/tool-calling-tutor/); the example receives its own 05B hardening layer |
+| Hooks | Copyable observation-only `PreToolUse` logger, synthetic-event smoke test, `/hooks` landing check, and no-prompt/no-secret logging boundary |
+| 5.5 Subagents | Read-only review exercise with isolated output and a visible success condition |
+| 5.6–5.8 | Current Dynamic workflows／Worktree／Agent-loop／Agent SDK reference path; optional depth stays collapsed |
 
-For v2, sub-stages 5.1 / 5.2 / 5.4 could ship sample artifacts (sample `CLAUDE.md`, MCP server skeleton, plugin.json). Similar to Track A v2 — low priority.
+`scripts/test_stage05_content.py` permanently executes the Hook logger against a synthetic `PreToolUse` event, asserts that only timestamp／event／tool metadata is written, locks the three locale code blocks together, and compiles the current Python Agent SDK `AssistantMessage.content`／`TextBlock` example. It does not call a live model or claim live output quality.
+
+The next 05B layer validates the `tool-calling-tutor` frontmatter, relative links, translations, eval schema, model／SDK shape, and offline behavior. It remains separate so the reader rewrite and executable-example migration can be reviewed and rolled back independently.
 
 ## v2 path (deferred)
 

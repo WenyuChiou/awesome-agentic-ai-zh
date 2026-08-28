@@ -344,7 +344,7 @@ Claude Code 内以 `/` 开头的指令，例如 `/help`、`/compact`、`/plan`�
 
 主 Claude Code session 之外，spawn 出来跑特定任务的 agent。有自己的 context window。例如“给我一个 code-reviewer subagent 看看 diff”。
 
-写法：在 `.claude/agents/<name>.md` 放 frontmatter + system prompt + tool whitelist。主 session 用 Task tool invoke（自动 parallel / sequential）。**跟 framework-based multi-agent 对照**：subagent 不需要装 LangGraph / CrewAI 等 framework，直接写 markdown 即可；但绑定 Claude Code runtime。完整教学见 [Stage 5.5](../stages/05-claude-code-ecosystem.zh-Hans.md#55--subagentsclaude-code-原生-multi-agent-机制-2025-新功能)；**15 个复制粘贴即用的 dispatch recipe** → [`subagent-cookbook.zh-Hans.md`](./subagent-cookbook.zh-Hans.md)。
+写法：在 `.claude/agents/<name>.md` 放 frontmatter + system prompt + tool whitelist。主 session 用 **Agent tool** invoke（自动 parallel / sequential）。**跟 framework-based multi-agent 对照**：subagent 不需要装 LangGraph / CrewAI 等 framework，直接写 markdown 即可；但绑定 Claude Code runtime。完整教学见 [Stage 5.5](../stages/05-claude-code-ecosystem.zh-Hans.md#55--subagentsclaude-code-原生-multi-agent-机制-2025-新功能)；**15 个复制粘贴即用的 dispatch recipe** → [`subagent-cookbook.zh-Hans.md`](./subagent-cookbook.zh-Hans.md)。
 
 ---
 
