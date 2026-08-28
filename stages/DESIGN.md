@@ -184,6 +184,12 @@ Stage 5 的練習不能只叫讀者「看文件」卻宣稱已建立元件。Hoo
 
 Stage 5 的 installable Skill 範例使用 `${CLAUDE_SKILL_DIR}` 指向 bundled references，讓 personal、project 與翻譯版安裝後都能找到同一包檔案。README 先給 PowerShell 可複製安裝，再收合 POSIX；驗收先跑無網路 contract checker，再用 `/skill-name` 做產品內手動檢查。自訂 JSON 不能冒充 promptfoo config，結構測試也不能冒充 model-quality eval；要教 promptfoo 時，必須另給合法 provider／prompt／test 設定或明說只提供延伸入口。範例不能保存無來源成功率、原因比例、固定省時百分比或要求私人 Chain-of-Thought。
 
+Stage 7.5 是 reading-map，不是第六個實作章。固定可見主線是「四個學習目標 → 六個粗體核心詞 → 12 個概念按問題分四組 → 我卡在哪裡的選擇圖與短表 → 可直接複製的四行工作邊界卡 → 五筆優先閱讀 → 自我檢查」。六個核心詞是 **Work Boundary**、**Contract**、**Reflection**、**Autonomy**、**Budget Gate** 與 **Graceful Degradation**；Reflection 只要求可觀察的計畫、Action、Observation、測試與結果，不要求公開私人 Chain-of-Thought。12 個概念全部保留，但每次只選一組的一到兩個，不能把表格讀成全部都要安裝的清單。
+
+時間、先備詞、12 個概念的來源與限制、失敗案例、cross-vendor harness、coding harness、benchmark、Dynamic Workflows、Model–Harness Fit 與 24 筆完整資源表預設收合。資源固定分成 `5／5／5／5／4` 五組，使用獨立 `<tbody>` 與真正 HTML `rowspan`，三語 URL、順序與五星編輯評分一致。AutoGen 的 maintenance mode、Microsoft Agent Framework 的後繼定位、Sandbox Agents 的 Beta 狀態，以及 Dynamic Workflows 的版本、觸發、限制與供應環境使用 90 天 freshness marker；來源衝突時以現行官方產品文件優先。
+
+Stage 7.5 只保留兩組低文字密度三語圖：四問題群組的 12 概念卡，以及「症狀 → 先讀哪一組」決策樹。圖不放文章名稱、閱讀時間、產品版本或任意固定門檻，避免正文更新後圖片仍殘留舊事實。OpenAI `Types → Config → Repo → Service → Runtime → UI` 只能教成特定 codebase 案例，不能畫成通用 Agent stack；舊 `stack-4layer`、`failure-lifecycle` 與 `principle-dependency` 圖組完成引用掃描後移除。Stage 7.5 沒有 example-hardening 第二層，本層完成三語內容、圖、freshness、reader-UX 與 content tests 後即形成一個可回溯 commit；未經使用者明確同意仍不推送、合併或清理 branch。
+
 ```
 1. 1-2 句核心問題
 2. ## 📌 學習目標

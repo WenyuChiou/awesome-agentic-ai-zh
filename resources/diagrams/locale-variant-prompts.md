@@ -1,7 +1,26 @@
 # 語系變體圖 — 生成流程與教訓
 
-> 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 那 3 張概念圖的 ChatGPT prompt）。
+> 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 兩組三語概念圖的 Image 2.0 重產規格）。
 > 這份記錄的是 **2026-08-02 那批 5 張圖 × 3 語系** 是怎麼產出來的，以及過程中踩到的坑。
+
+## 2026-08-28：Stage 7.5 問題分組圖與閱讀決策樹
+
+重畫 `concept-cluster.{png,en.png,zh-Hans.png}` 與
+`reading-decision-tree.{png,en.png,zh-Hans.png}`。兩組都採 16:9 暖白底、亮色卡片、
+深藍大字與固定三語版面；每張圖都由 Codex 內建 Image 2.0 獨立生成後人工逐字檢查。
+
+概念圖不再把 12 個概念硬塞進 `Service／Repo／Config／Types` 矩陣。那組層級來自
+OpenAI 某個 codebase 的架構案例，不是通用 Agent stack。新版只按讀者會遇到的四種問題
+分組：邊界與契約、規劃與合作、檢查與學習、控制與復原；每組三張卡，中央提醒每次只選
+1–2 個。
+
+決策樹也不再把容易過期的文章名稱與閱讀時間畫進圖裡，只保留五個症狀與兩個入口群組。
+正文的官方來源和 24 筆資源可以更新，圖不必跟著每次重畫。舊的 `stack-4layer`、
+`failure-lifecycle`、`principle-dependency` 三組共九張圖已完成引用掃描後移除；它們仍可從
+Git 歷史復原。
+
+三語圖必須各自引用 locale 檔，並由 `scripts/test_stage075_content.py` 鎖住六張 PNG 的尺寸、
+不同 hash 與正文引用。完整文字表與重產限制在 [`concept-prompts.md`](concept-prompts.md)。
 
 ## 2026-08-28：Stage 6 RAG 與 Memory 三路圖
 
@@ -57,8 +76,9 @@
 3. brief 裡指定 repo 內的既有圖當**風格參考**（Codex 能直接讀圖檔），並附完整逐字文字表
 4. **委派者自己逐張開圖驗收**，不採信 `.result.json` 的 status
 
-風格基準檔：`stack-4layer.zh-Hans.png`、`agent-guardrail-patterns.zh-Hans.png`、
-`teacher-ai-use-cases-overview.png`（本批做得最好的一張，可當樣板）。
+風格基準檔：`agent-guardrail-patterns.zh-Hans.png` 與
+`teacher-ai-use-cases-overview.png`（本批做得最好的一張，可當樣板）。舊的
+`stack-4layer` 已在 Stage 7.5 漸進式重整時移除，不能再當通用 Agent stack 樣板。
 
 ## ⚠️ 驗收教訓（這批最值得記的部分）
 

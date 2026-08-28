@@ -994,7 +994,7 @@ Claude 不擅長 token-heavy 機械式工作（成本高、context 容易爆）�
 
 **教什麼**：Claude Code marketplace for multi-agent collaboration——task splitter、output reconciler、adversarial debate、shared memory、acceptance gate。跟 codex-delegate / gemini-delegate 組合用。
 **適合誰**：要跑 2+ delegate agent 在同一輪、想看 multi-agent coordination 怎麼包成 marketplace 的人。
-**備註**：experimental——別把它當生產級 framework，當作維護者把自己 setup 公開的 reference 看就好。要可上線部署的請看 Stage 7 的 LangGraph / AutoGen / CrewAI。
+**備註**：experimental——別把它當生產級 framework，當作維護者把自己 setup 公開的 reference 看就好。要可上線部署的請看 Stage 7 的 LangGraph / Microsoft Agent Framework / CrewAI。
 
 ---
 

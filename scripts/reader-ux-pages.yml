@@ -1294,6 +1294,107 @@ pages:
           zh-Hans: {term: Guardrail, label: Guardrail}
     resource_group_rowspans: [4, 6, 5, 5]
 
+  - id: stage-07.5
+    canonical: stages/07.5-advanced-agentic-concepts.md
+    mirrors:
+      en: stages/07.5-advanced-agentic-concepts.en.md
+      zh-Hans: stages/07.5-advanced-agentic-concepts.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 4824
+      en: 7768
+      zh-Hans: 4850
+    max_open_details: 0
+    required_details_count: 9
+    visible_section_order:
+      - learning-goals
+      - core-terms
+      - concept-map
+      - problem-map
+      - boundary-card
+      - topics
+      - resources
+      - completion
+    forbidden_terms:
+      zh-TW: ["Replit Agent 2024", "Voyager paper (Wang 2024)", "Context 200k", "< 500 行", "3.5 PR/day", "75% reward hacking", "2026-05 snapshot", '""', "“”"]
+      en: ["Replit Agent 2024", "Voyager paper (Wang 2024)", "Context 200k", "< 500 lines", "3.5 PR/day", "75% reward hacking", "2026-05 snapshot", '""', "“”"]
+      zh-Hans: ["Replit Agent 2024", "Voyager paper (Wang 2024)", "Context 200k", "< 500 行", "3.5 PR/day", "75% reward hacking", "2026-05 snapshot", '""', "“”"]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-28"
+        - "v2.1.154+"
+        - "v2.1.203+"
+        - "1,000"
+        - "Microsoft Agent Framework"
+        - "maintenance mode"
+        - "Sandbox Agents"
+        - "Beta"
+        - "Constitutional AI"
+    required_visible_sections:
+      learning-goals:
+        zh-TW: {heading: "📌 學習目標", anchor: -學習目標}
+        en: {heading: "📌 Learning goals", anchor: -learning-goals}
+        zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
+      core-terms:
+        zh-TW: {heading: "🔑 六個核心詞", anchor: -六個核心詞}
+        en: {heading: "🔑 Six core terms", anchor: -six-core-terms}
+        zh-Hans: {heading: "🔑 六个核心词", anchor: -六个核心词}
+      concept-map:
+        zh-TW: {heading: "🗺️ 12 個概念：先按問題分四組", anchor: -12-個概念先按問題分四組}
+        en: {heading: "🗺️ 12 concepts: four groups by problem", anchor: -12-concepts-four-groups-by-problem}
+        zh-Hans: {heading: "🗺️ 12 个概念：先按问题分四组", anchor: -12-个概念先按问题分四组}
+      problem-map:
+        zh-TW: {heading: "🧭 你現在卡在哪裡？", anchor: -你現在卡在哪裡}
+        en: {heading: "🧭 Where are you stuck?", anchor: -where-are-you-stuck}
+        zh-Hans: {heading: "🧭 你现在卡在哪里？", anchor: -你现在卡在哪里}
+      boundary-card:
+        zh-TW: {heading: "🛠 三分鐘工作邊界卡", anchor: -三分鐘工作邊界卡}
+        en: {heading: "🛠 Three-minute work-boundary card", anchor: -three-minute-work-boundary-card}
+        zh-Hans: {heading: "🛠 三分钟工作边界卡", anchor: -三分钟工作边界卡}
+      topics:
+        zh-TW: {heading: "🔬 遇到需要時才展開的專題", anchor: -遇到需要時才展開的專題}
+        en: {heading: "🔬 Topics to open when needed", anchor: -topics-to-open-when-needed}
+        zh-Hans: {heading: "🔬 遇到需要时才展开的专题", anchor: -遇到需要时才展开的专题}
+      resources:
+        zh-TW: {heading: "🎯 精選閱讀：先挑一條", anchor: -精選閱讀先挑一條}
+        en: {heading: "🎯 Curated reading: choose one path", anchor: -curated-reading-choose-one-path}
+        zh-Hans: {heading: "🎯 精选阅读：先挑一条", anchor: -精选阅读先挑一条}
+      completion:
+        zh-TW: {heading: "✅ 自我檢查", anchor: -自我檢查}
+        en: {heading: "✅ Self-check", anchor: -self-check}
+        zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: boundary-card
+      min_definition_chars: 20
+      terms:
+        - id: work-boundary
+          zh-TW: {term: Work Boundary, label: "Work Boundary（工作邊界）"}
+          en: {term: Work Boundary, label: "Work Boundary (scope)"}
+          zh-Hans: {term: Work Boundary, label: "Work Boundary（工作边界）"}
+        - id: contract
+          zh-TW: {term: Contract, label: "Contract（契約）"}
+          en: {term: Contract, label: Contract}
+          zh-Hans: {term: Contract, label: "Contract（契约）"}
+        - id: reflection
+          zh-TW: {term: Reflection, label: "Reflection（反思／回看）"}
+          en: {term: Reflection, label: "Reflection (look-back)"}
+          zh-Hans: {term: Reflection, label: "Reflection（反思／回看）"}
+        - id: autonomy
+          zh-TW: {term: Autonomy, label: "Autonomy（自主權）"}
+          en: {term: Autonomy, label: Autonomy}
+          zh-Hans: {term: Autonomy, label: "Autonomy（自主权）"}
+        - id: budget-gate
+          zh-TW: {term: Budget Gate, label: "Budget Gate（預算閘門）"}
+          en: {term: Budget Gate, label: Budget Gate}
+          zh-Hans: {term: Budget Gate, label: "Budget Gate（预算闸门）"}
+        - id: graceful-degradation
+          zh-TW: {term: Graceful Degradation, label: "Graceful Degradation（平穩降級）"}
+          en: {term: Graceful Degradation, label: Graceful Degradation}
+          zh-Hans: {term: Graceful Degradation, label: "Graceful Degradation（平稳降级）"}
+    resource_group_rowspans: [5, 5, 5, 5, 4]
+
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
     mirrors:

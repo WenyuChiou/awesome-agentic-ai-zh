@@ -128,6 +128,31 @@ stage06_fact_pack:
     weaviate: 'https://docs.weaviate.io/weaviate'
     lancedb: 'https://lancedb.github.io/lancedb/'
 
+stage075_fact_pack:
+  canonical: 'stages/07.5-advanced-agentic-concepts.md'
+  verified_on: '2026-08-28'
+  scope: ['agent-patterns', 'harnesses', 'evals', 'dynamic-workflows', 'framework-status', 'research']
+  official_sources:
+    anthropic_agent_patterns: 'https://www.anthropic.com/engineering/building-effective-agents'
+    anthropic_context_engineering: 'https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents'
+    anthropic_long_running_harnesses: 'https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents'
+    anthropic_long_running_apps: 'https://www.anthropic.com/engineering/harness-design-long-running-apps'
+    anthropic_multi_agent_research: 'https://www.anthropic.com/engineering/multi-agent-research-system'
+    anthropic_evals: 'https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents'
+    anthropic_eval_noise: 'https://www.anthropic.com/engineering/infrastructure-noise'
+    anthropic_claude_code_expertise: 'https://www.anthropic.com/research/claude-code-expertise'
+    openai_harness_engineering: 'https://openai.com/index/harness-engineering/'
+    openai_sandbox_agents: 'https://openai.github.io/openai-agents-python/sandbox/guide/'
+    claude_code_permissions: 'https://code.claude.com/docs/en/permissions'
+    claude_code_dynamic_workflows: 'https://code.claude.com/docs/en/workflows'
+    microsoft_agent_framework: 'https://github.com/microsoft/agent-framework'
+    autogen_status: 'https://github.com/microsoft/autogen'
+    dspy_signatures: 'https://dspy.ai/learn/programming/signatures/'
+    react: 'https://arxiv.org/abs/2210.03629'
+    reflexion: 'https://arxiv.org/abs/2303.11366'
+    constitutional_ai: 'https://arxiv.org/abs/2212.08073'
+    camel: 'https://arxiv.org/abs/2303.17760'
+
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
     required_scopes: ['models', 'pricing', 'availability', 'deprecations']
@@ -143,6 +168,9 @@ verified_pages:
     max_age_days: 90
   - canonical: 'stages/06-memory-rag.md'
     required_scopes: ['rag', 'retrieval', 'embeddings', 'vector-stores', 'memory', 'evaluation', 'project-status']
+    max_age_days: 90
+  - canonical: 'stages/07.5-advanced-agentic-concepts.md'
+    required_scopes: ['agent-patterns', 'harnesses', 'evals', 'dynamic-workflows', 'framework-status', 'research']
     max_age_days: 90
 
 current_frontier_models:
@@ -278,6 +306,26 @@ stale_patterns:
     include_files: ['stages/07.5-advanced-agentic-concepts.md']
     qualifier_terms: ['before v2.1.160', 'pre-v2.1.160', 'v2.1.160 之前', 'v2.1.160 以前', '舊版', '旧版', 'historical', 'history', 'legacy']
     note: 'Current Dynamic workflow opt-in uses an explicit natural-language request or `ultracode`; literal `workflow` was the trigger before Claude Code v2.1.160'
+
+  - pattern: 'Replit Agent 2024|Voyager paper \(Wang 2024\)|Context 200k|< 500 (?:行|lines)|3\.5 PR/day|75% reward hacking|2026-05 snapshot'
+    include_files: ['stages/07.5-advanced-agentic-concepts.md']
+    qualifier_terms: ['historical', 'history', 'legacy', '舊版', '旧版', '歷史', '历史']
+    note: 'Stage 07.5 must not preserve unsupported years, fixed context/code-size rules, frozen throughput, or unscoped benchmark percentages'
+
+  - pattern: 'AutoGen.{0,100}(?:current default|production-ready|推薦新專案|推荐新项目|新專案首選|新项目首选)'
+    include_files: ['stages/07.5-advanced-agentic-concepts.md']
+    qualifier_terms: ['maintenance mode', 'maintenance', 'historical', 'history', '維護', '维护']
+    note: 'AutoGen is community-managed and in maintenance mode; new Microsoft work should start with Agent Framework'
+
+  - pattern: '(?:production|生產級|生产级).{0,120}AutoGen'
+    include_files: ['stages/04-agent-frameworks.md', 'stages/07.5-advanced-agentic-concepts.md', 'resources/mcp-skills-catalog.md']
+    qualifier_terms: ['maintenance mode', 'maintenance', 'historical', 'history', 'legacy', 'existing', '既有', '现有', '維護', '维护']
+    note: 'AutoGen is not a production recommendation for new projects; use Microsoft Agent Framework and keep AutoGen for maintenance or migration context'
+
+  - pattern: 'Sandbox Agents.{0,100}(?:generally available|\bGA\b|正式可用|穩定介面|稳定接口)'
+    include_files: ['stages/07.5-advanced-agentic-concepts.md']
+    qualifier_terms: ['Beta', 'beta', 'preview', '預覽', '预览']
+    note: 'OpenAI Agents SDK Sandbox Agents are currently documented as Beta'
 
   # Stage 06 fact and project status checks. Mirror locales inherit the
   # canonical include path through check-2026-freshness.py.

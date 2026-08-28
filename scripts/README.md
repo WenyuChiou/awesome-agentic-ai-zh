@@ -76,6 +76,19 @@ python scripts/check-reader-ux.py
 python -m pytest scripts/test_stage07_examples.py -q
 ```
 
+## `test_stage075_content.py` — 鎖住進階概念 reading-map
+
+這個 gate 檢查 Stage 7.5 三語是否保留六個可見粗體核心詞、12 個概念、四個真正合併的
+概念群組、9 個預設關閉選單、24 筆資源與 `5／5／5／5／4` rowgroups。它也鎖住
+freshness marker、AutoGen／Agent Framework／Sandbox Agents／Dynamic Workflows 現行狀態、
+legacy 深連結，以及兩組共六張不同的 `1672×941` locale 圖。
+
+```powershell
+python -m pytest scripts/test_stage075_content.py -q
+python scripts/check-reader-ux.py
+python scripts/check-2026-freshness.py
+```
+
 ## 建議的維護節奏
 
 - **每週**：`weekly-catalog-refresh` 跑 GitHub repo 快速連結檢查

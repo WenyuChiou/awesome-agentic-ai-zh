@@ -119,6 +119,14 @@ The example-hardening layer keeps the five folders separate and adds `scripts/te
 
 All ten directly executable offline entrypoints pass in a clean `python:3.11-slim` container with the resolved current packages. Their 55 behavior tests cover empty and whitespace-only output rejection, exact Debate／Eval Judge contracts, sanitized exception categories that do not retain a secret-bearing raw message, provider usage recording, a cache demo deliberately above Haiku 4.5's 4,096-token minimum, FastAPI input bounds, secret-marker log regressions, and 200／422／429／502／503 behavior. Debate role separation is an example shape, not evidence that more agents reduce bias or improve correctness. The deploy image also builds from scratch, runs as UID `10001` (`appuser`), and returns `{"status":"ok"}` while mounted read-only with a temporary `/tmp` and a loopback-only host port. These checks do not call a live model, prove output quality, or turn the container into a sandbox.
 
+### Stage 7.5 — progressive reading map covered; no example layer
+
+Stage 7.5 keeps six bold core terms, all 12 advanced concepts grouped by problem, a five-branch choice map, a directly copyable four-line work-boundary card, five priority readings, and a short self-check visible. Nine closed disclosures hold prerequisites, source limits, failure cases, cross-vendor and coding harness detail, benchmark discipline, Dynamic Workflows, Model–Harness Fit, and the complete resource table.
+
+`scripts/test_stage075_content.py` locks the three locales to 12 concepts in the same order, four concept rowgroups (`3／3／3／3`), 24 resource URL/rating pairs, five resource rowgroups (`5／5／5／5／4`), one matching freshness marker, nine closed disclosures, and the legacy Dynamic Workflows anchors. It also rejects the old Replit/Voyager years, fixed context/code-size/throughput claims, empty-quote artifacts, untranslated English fragments, and current-status drift for AutoGen, Microsoft Agent Framework, Sandbox Agents, and Dynamic Workflows.
+
+Six newly generated `1672×941` PNGs cover the four problem groups and the five-branch reading decision. The test requires six distinct hashes and exact locale references; `scripts/check-image-locale.py` provides the whole-repository mirror check. `scripts/check-reader-ux.py` locks the collapsed mainline at `4,824／7,768／4,850` non-whitespace characters and all six core terms before the work-boundary card. Stage 7.5 is a reading-map, so there is deliberately no runnable example-hardening layer.
+
 ## v2 path (deferred)
 
 Per `docs/HOW_TO_USE.md` "給維護者：v2 path":
