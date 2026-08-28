@@ -250,10 +250,12 @@ content(stage5): clarify the Claude Code ecosystem
 
 ## Task 8：建立 05B 範例強化層
 
+**狀態：進行中。** 05B 已從 05A 最終 commit `62ebc84` 建立獨立 `codex/stage05-example-hardening` worktree。診斷確認 project-level `cp` 指令不可執行、翻譯 SKILL 安裝後的 `../references` 會失效、`evals.json` 不是 promptfoo config、skill discovery 不必一律重啟，以及 references 保存多組無來源比例／成功率／固定省時數字。修正後仍保留四種症狀、五步 schema 教學與三語深度，不用刪概念換取精簡。新增的 `anthropics/skills`／promptfoo 引用已觸發 294-repo GitHub API 全量重掃與 snapshot 重建；25 個既有 canonical／license 硬錯分屬後續章節，本層不跨章偷修。
+
 1. 從 05A commit 建 `codex/stage05-example-hardening` 與新 worktree。
-2. 逐項驗證 `tool-calling-tutor` 的 frontmatter、relative links、三語 references、eval schema、Path A／Path B 名稱與目前 Stage 03 範例。
+2. 逐項驗證 `tool-calling-tutor` 的 frontmatter、repository／installed reference paths、三語 references、eval schema、Path A／Path B 名稱與目前 Stage 03 範例。
 3. 修正過時模型、SDK shape、錯誤處理、硬編碼 stars、不能執行的 promptfoo 設定或無證據成功條件。
-4. 提供離線結構／行為測試；不把「人工看 JSON」當自動 eval。
+4. 提供離線結構／行為測試；不把「人工看 JSON」當自動 eval，也不把 contract checker 說成 live model-quality eval。
 5. 重跑完整 gates、獨立 review、commit、push，開第二個未合併 stacked PR。
 
 ## 停止條件

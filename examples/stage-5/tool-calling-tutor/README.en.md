@@ -4,7 +4,7 @@
 
 # tool-calling-tutor — Claude Code skill
 
-> What this skill does: when you're stuck on tool calling (LLM won't call, args wrong, ReAct loop runs forever, don't know how to write a schema), it auto-loads to walk you through a 4-symptom diagnostic + 5-step fix.
+> What this skill does: when you're stuck on tool calling (LLM won't call, args wrong, ReAct loop runs forever, or the schema is unclear), open it directly with `/tool-calling-tutor`. It may also load automatically in a relevant context and guide you through a four-symptom diagnostic and five-step fix.
 
 Pairs with [Stage 3 — Tool Use & Agent Intro](../../../stages/03-tool-use-and-hello-agent.en.md). Also serves as the **bundled skill example** for [Stage 5 — Claude Code Ecosystem](../../../stages/05-claude-code-ecosystem.en.md) 5.3.
 
@@ -23,38 +23,65 @@ This skill fills that gap:
 
 ## Dual purpose
 
-1. **For learners**: install as a personal debug assistant. When you prompt Claude Code with "why won't the LLM call my tool", the skill auto-loads and walks the 4-symptom diagnostic.
+1. **For learners**: install it as a personal debug assistant. Open it with `/tool-calling-tutor`; it may also load automatically when your request matches its description.
 2. **As a Stage 5 5.3 meta-example**: when learning to write SKILL.md, study this one directly. Includes full frontmatter (with trigger phrases + Do NOT use for), `references/` design, and `evals/evals.json` example.
 
-## Install (30 seconds)
+## Install
+
+Run every command below from the root of this repository.
 
 ### Option A: user-level (shared across all projects)
 
-```bash
-mkdir -p ~/.claude/skills/tool-calling-tutor
-cp SKILL.md ~/.claude/skills/tool-calling-tutor/
-cp -r references evals ~/.claude/skills/tool-calling-tutor/
+```powershell
+$repoRoot = Get-Location
+$skillSource = Join-Path $repoRoot "examples\stage-5\tool-calling-tutor"
+$skillTarget = Join-Path $env:USERPROFILE ".claude\skills\tool-calling-tutor"
+New-Item -ItemType Directory -Force -Path $skillTarget | Out-Null
+Copy-Item -Force -LiteralPath (Join-Path $skillSource "translations\SKILL.en.md") -Destination (Join-Path $skillTarget "SKILL.md")
+Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "references") -Destination $skillTarget
+Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "evals") -Destination $skillTarget
 ```
 
-English speakers: `cp translations/SKILL.en.md ~/.claude/skills/tool-calling-tutor/SKILL.md` (canonical is zh-TW).
-Simplified Chinese: `cp translations/SKILL.zh-Hans.md ~/.claude/skills/tool-calling-tutor/SKILL.md`
+For Traditional Chinese, copy `SKILL.md` instead. For Simplified Chinese, copy `translations/SKILL.zh-Hans.md` instead.
 
 ### Option B: project-level (only triggers in this repo)
 
-```bash
-mkdir -p .claude/skills/tool-calling-tutor
-cp SKILL.md references/ evals/ .claude/skills/tool-calling-tutor/
+```powershell
+$repoRoot = Get-Location
+$skillSource = Join-Path $repoRoot "examples\stage-5\tool-calling-tutor"
+$skillTarget = Join-Path $repoRoot ".claude\skills\tool-calling-tutor"
+New-Item -ItemType Directory -Force -Path $skillTarget | Out-Null
+Copy-Item -Force -LiteralPath (Join-Path $skillSource "translations\SKILL.en.md") -Destination (Join-Path $skillTarget "SKILL.md")
+Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "references") -Destination $skillTarget
+Copy-Item -Recurse -Force -LiteralPath (Join-Path $skillSource "evals") -Destination $skillTarget
 ```
+
+<details>
+<summary>macOS/Linux commands</summary>
+
+```bash
+skill_source="examples/stage-5/tool-calling-tutor"
+mkdir -p ~/.claude/skills/tool-calling-tutor
+cp "$skill_source/translations/SKILL.en.md" ~/.claude/skills/tool-calling-tutor/SKILL.md
+cp -R "$skill_source/references" "$skill_source/evals" ~/.claude/skills/tool-calling-tutor/
+
+mkdir -p .claude/skills/tool-calling-tutor
+cp "$skill_source/translations/SKILL.en.md" .claude/skills/tool-calling-tutor/SKILL.md
+cp -R "$skill_source/references" "$skill_source/evals" .claude/skills/tool-calling-tutor/
+```
+</details>
 
 ### Verify the install
 
-Restart Claude Code, then prompt:
+Enter this command in Claude Code:
 
 ```
-Why won't the LLM call my tool?
+/tool-calling-tutor
 ```
 
-Expected: Claude auto-loads the skill, first asks "are you on symptom (a)/(b)/(c)/(d)", then branches to the matching reference.
+Expected: the skill opens and asks for, or confirms, the matching symptom route. This is the deterministic installation check. Automatic loading is context-dependent, so do not use it as proof that installation worked.
+
+Claude Code detects changes in an existing personal or project skills directory during the session. Restart only when the top-level skills directory did not exist when the session started.
 
 ## What's inside
 
@@ -71,22 +98,17 @@ tool-calling-tutor/
 │ ├── SKILL.en.md # English version of SKILL.md
 │ └── SKILL.zh-Hans.md # Simplified Chinese version
 └── evals/
-    └── evals.json # 5 test cases (promptfoo or manual)
+    ├── evals.json # 5 offline contract cases
+    └── check_evals.py # checker that does not call a model
 ```
 
 ## Run evals (optional)
 
-```bash
-# Without promptfoo: just read evals/evals.json, paste each input into Claude, compare with expected_behavior
-cat evals/evals.json
+```powershell
+python evals/check_evals.py
 ```
 
-Batch with [promptfoo](https://github.com/promptfoo/promptfoo):
-
-```bash
-npm install -g promptfoo
-promptfoo eval -c evals/evals.json
-```
+This is an **offline contract check** for five cases: it does not ask a model; it checks that every written promise is complete and linked. `evals.json` is not a promptfoo configuration file. If you later want a model-graded evaluation, [promptfoo](https://github.com/promptfoo/promptfoo) is one well-known optional path. This example ships no provider configuration and no quality score.
 
 ## Relationship to other resources
 
@@ -131,6 +153,12 @@ promptfoo eval -c evals/evals.json
 - **Customize trigger phrases**: add your own catch phrases to SKILL.md frontmatter `description`
 - **Add your cases to references/**: open new sections in debug-flowchart for weird cases you've hit
 - **Fork it**: this skill is designed as a Stage 5 5.3 meta-example — forking welcome
+
+<details>
+<summary>Current sources</summary>
+
+Small, current references (checked 2026-08-28 UTC): [Claude Code skills](https://code.claude.com/docs/en/skills), [Agent Skills](https://agentskills.io), [Anthropic skills](https://github.com/anthropics/skills), and [promptfoo](https://github.com/promptfoo/promptfoo).
+</details>
 
 ## License
 

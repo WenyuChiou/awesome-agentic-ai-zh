@@ -1,133 +1,126 @@
-# SDK Diff: Anthropic vs OpenAI-compat (Ollama / OpenAI / Together / most open-source)
+# SDK Diff: Anthropic and OpenAI-compatible
 
 > [繁體中文](./sdk-diff.md) | [简体中文](./sdk-diff.zh-Hans.md) | **English**
 
+> The same tool loop has different wrappers. Identify the fields, then validate every arg supplied by the model.
 
-> Same ReAct loop, 3 key differences between SDKs. Pairs with SKILL.md Step 3.
+## The main differences
 
-## TL;DR comparison
-
-| Part | Anthropic SDK | OpenAI-compat SDK |
+| Part | Anthropic SDK | OpenAI-compatible SDK |
 |---|---|---|
-| **Tool schema wrap** | `tools=[{name, description, input_schema}]` | `tools=[{"type": "function", "function": {name, description, parameters}}]` |
-| **Schema field name** | `input_schema` | `parameters` |
-| **Reading tool call** | `[b for b in resp.content if b.type == "tool_use"]` | `resp.choices[0].message.tool_calls` |
-| **Args format** | `call.input` is already a dict | `call.function.arguments` is a JSON string — needs `json.loads(...)` |
-| **Stop detection** | `resp.stop_reason == "end_turn"` | `resp.choices[0].finish_reason == "stop"` |
-| **Assistant turn append** | `messages.append({"role": "assistant", "content": resp.content})` | `messages.append({"role": "assistant", "content": msg.content, "tool_calls": msg.tool_calls})` |
-| **Tool result append** | `messages.append({"role": "user", "content": [{"type": "tool_result", "tool_use_id": call.id, "content": obs}]})` | `messages.append({"role": "tool", "tool_call_id": tc.id, "content": obs})` |
-| **Exception class** | `anthropic.RateLimitError` / `anthropic.APIConnectionError` | `openai.RateLimitError` / `openai.APIConnectionError` |
+| Tool schema | `{name, description, input_schema}` | `{"type":"function","function":{name, description, parameters}}` |
+| Tool call | `tool_use` content block | `message.tool_calls` |
+| Args | `call.input` is a dict | `call.function.arguments` is a JSON string |
+| Tool result ID | `tool_use_id` | `tool_call_id` |
+| Common completion signal | `stop_reason == "end_turn"` | `finish_reason == "stop"` |
 
-## Side-by-side single-turn tool call
+Providers and versions can add other values. Check the current official documentation and keep the raw response for debugging.
 
-### Anthropic
+## Safety guards needed on both paths
 
-```python
-import anthropic
-
-client = anthropic.Anthropic()
-
-TOOLS = [{
-    "name": "get_weather",
-    "description": "Use this when the user asks about current weather.",
-    "input_schema": {
-        "type": "object",
-        "properties": {"city": {"type": "string"}},
-        "required": ["city"]
-    }
-}]
-
-resp = client.messages.create(
-    model="claude-haiku-4-5",
-    max_tokens=512,
-    tools=TOOLS,
-    messages=[{"role": "user", "content": "Is it raining in Taipei?"}]
-)
-
-# Read tool call
-calls = [b for b in resp.content if b.type == "tool_use"]
-city = calls[0].input["city"]   # already a dict
-```
-
-### OpenAI-compat (Ollama)
+A schema is a hint, not a firewall. Apply an **allowlist**—the short list of tools the app permits—and validate args before executing a tool.
 
 ```python
-from openai import OpenAI
 import json
 
-client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
+MAX_STEPS = 5
+ALLOWED_TOOLS = {"get_weather"}
 
-TOOLS = [{
-    "type": "function",
-    "function": {
-        "name": "get_weather",
-        "description": "Use this when the user asks about current weather.",
-        "parameters": {       # ← different name
-            "type": "object",
-            "properties": {"city": {"type": "string"}},
-            "required": ["city"]
-        }
-    }
-}]
+def validate_args(name, args):
+    if name not in ALLOWED_TOOLS:
+        raise ValueError(f"tool not allowed: {name}")
+    if not isinstance(args, dict):
+        raise ValueError("args must be an object")
+    city = args.get("city")
+    if not isinstance(city, str) or not city.strip():
+        raise ValueError("city must be a non-empty string")
+    return {"city": city.strip()}
 
-resp = client.chat.completions.create(
-    model="qwen2.5:3b",
-    tools=TOOLS,
-    messages=[{"role": "user", "content": "Is it raining in Taipei?"}]
-)
+def call_tool(name, args):
+    clean_args = validate_args(name, args)
+    return TOOL_IMPL[name](**clean_args)
 
-# Read tool call
-tc = resp.choices[0].message.tool_calls[0]
-args = json.loads(tc.function.arguments)   # ← needs json.loads
-city = args["city"]
+def expected_error(exc):
+    return json.dumps({"ok": False, "error": str(exc)})
 ```
 
-## Side-by-side ReAct loop (multi-turn)
+Convert only expected input errors into structured results. Log and surface unexpected exceptions; never swallow them silently.
 
-### Anthropic full loop
+## Anthropic: bounded loop
 
 ```python
-messages = [{"role": "user", "content": "..."}]
-for step in range(5):
-    resp = client.messages.create(model=MODEL, max_tokens=1024, tools=TOOLS, messages=messages)
-    messages.append({"role": "assistant", "content": resp.content})   # full content list appended
-    if resp.stop_reason == "end_turn":
+messages = [{"role": "user", "content": "Is it raining in Taipei?"}]
+
+for step in range(MAX_STEPS):
+    resp = client.messages.create(
+        model=MODEL, max_tokens=1024, tools=TOOLS, messages=messages
+    )
+    messages.append({"role": "assistant", "content": resp.content})
+
+    calls = [block for block in resp.content if block.type == "tool_use"]
+    if resp.stop_reason == "end_turn" and not calls:
         break
+
     tool_results = []
-    for call in [b for b in resp.content if b.type == "tool_use"]:
-        obs = TOOL_IMPL[call.name](call.input)
-        tool_results.append({"type": "tool_result", "tool_use_id": call.id, "content": obs})
-    messages.append({"role": "user", "content": tool_results})   # tool results wrapped in user message
+    for call in calls:
+        try:
+            result = call_tool(call.name, call.input)
+            content = json.dumps({"ok": True, "result": result})
+        except ValueError as exc:
+            content = expected_error(exc)
+        tool_results.append({
+            "type": "tool_result",
+            "tool_use_id": call.id,
+            "content": content,
+        })
+
+    if not tool_results:
+        raise RuntimeError(f"unexpected stop_reason: {resp.stop_reason}")
+    messages.append({"role": "user", "content": tool_results})
+else:
+    raise RuntimeError("tool loop reached MAX_STEPS")
 ```
 
-### OpenAI-compat full loop
+## OpenAI-compatible: bounded loop
 
 ```python
-messages = [{"role": "user", "content": "..."}]
-for step in range(5):
-    resp = client.chat.completions.create(model=MODEL, tools=TOOLS, messages=messages)
+messages = [{"role": "user", "content": "Is it raining in Taipei?"}]
+
+for step in range(MAX_STEPS):
+    resp = client.chat.completions.create(
+        model=MODEL, tools=TOOLS, messages=messages
+    )
     msg = resp.choices[0].message
-    messages.append({"role": "assistant", "content": msg.content, "tool_calls": msg.tool_calls})
+    messages.append(msg.model_dump(exclude_none=True))
+
     if not msg.tool_calls:
-        break
-    for tc in msg.tool_calls:
-        args = json.loads(tc.function.arguments)
-        obs = TOOL_IMPL[tc.function.name](args)
-        messages.append({"role": "tool", "tool_call_id": tc.id, "content": obs})   # dedicated role
+        if resp.choices[0].finish_reason == "stop":
+            break
+        raise RuntimeError(
+            f"unexpected finish_reason: {resp.choices[0].finish_reason}"
+        )
+
+    for call in msg.tool_calls:
+        try:
+            args = json.loads(call.function.arguments)
+            result = call_tool(call.function.name, args)
+            content = json.dumps({"ok": True, "result": result})
+        except (json.JSONDecodeError, ValueError) as exc:
+            content = expected_error(exc)
+        messages.append({
+            "role": "tool",
+            "tool_call_id": call.id,
+            "content": content,
+        })
+else:
+    raise RuntimeError("tool loop reached MAX_STEPS")
 ```
 
-## 4 easy-to-trip-on spots
+## Four easy mistakes
 
-1. **`parameters` vs `input_schema`**: most common copy-paste trap — pasting an Anthropic schema directly into OpenAI-compat silently fails (Ollama doesn't raise; it just doesn't call the tool).
-2. **`call.input` vs `json.loads(arguments)`**: forgetting `json.loads` on the OpenAI-compat side gives you a string instead of a dict — KeyError.
-3. **Different role for tool result**: Anthropic uses `role="user"` + `[{"type": "tool_result", ...}]`; OpenAI-compat uses `role="tool"` + plain string content.
-4. **`stop_reason` vs `finish_reason`**: both exist but with different field names and values. Anthropic `"end_turn"` / `"tool_use"`; OpenAI `"stop"` / `"tool_calls"`.
+1. `parameters` and `input_schema` are different wrappers.
+2. OpenAI-compatible arguments need `json.loads`; both paths still need validation.
+3. Every result must carry the matching `tool_call_id` or `tool_use_id`.
+4. The loop must preserve complete assistant history and enforce `MAX_STEPS`.
 
-## Full comparison examples
-
-Every Stage 3 exercise ships both starters:
-
-- `starter.py` = OpenAI-compat / Ollama
-- `starter_anthropic.py` = Anthropic
-
-Compare any of [`../../stage-3/02-multi-tool-selection/`](../../../stage-3/02-multi-tool-selection/) ~ [`../../stage-3/06-schema-design/`](../../../stage-3/06-schema-design/).
+Runnable comparisons: [Stage 3 multi-tool selection](https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/examples/stage-3/02-multi-tool-selection) through [schema design](https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/examples/stage-3/06-schema-design).

@@ -1,54 +1,64 @@
 {
-  "$schema": "https://json.schemastore.org/promptfoo-config.json",
-  "description": "tool-calling-tutor skill evals — 5 test cases covering each of the 4 triage branches + a routing-away case",
-  "evals": [
+  "schema_version": 1,
+  "description": "Offline behavior contracts for the tool-calling-tutor skill. These cases do not claim a model-quality score.",
+  "cases": [
     {
-      "name": "symptom_a_llm_not_calling",
-      "input": "我寫了一個 tool 叫 get_weather、tools=[get_weather] 也傳進去了、可是 Claude 直接回了一段文字、根本沒呼叫 tool。哪裡錯了？",
-      "expected_behavior": [
-        "Should first ask which of 4 symptoms (a/b/c/d) the user is hitting",
-        "After user confirms (a), should reference references/debug-flowchart.md Section A",
-        "Should mention the 5 common causes: description too generic, overlapping boundaries, query doesn't need tool, missing schema wrapper, model too small",
-        "Should ask user to inspect description before guessing"
+      "id": "symptom_a_llm_not_calling",
+      "locale": "zh-TW",
+      "input": "我寫了一個 get_weather tool，也把 tools 傳進去了，可是模型只回文字，沒有呼叫 tool。",
+      "expected_route": "a",
+      "reference": "references/debug-flowchart.md#section-a-symptom-allm-完全不觸發-toolcalls",
+      "must_cover": [
+        "先確認目前 SDK、model 與 tool-calling 支援",
+        "檢查 tool description、邊界、query 是否真的需要工具，以及 schema wrapper",
+        "不要捏造原因比例或保證換 model 就會成功"
       ]
     },
     {
-      "name": "symptom_b_wrong_args",
-      "input": "Tool 有被呼叫但 args 不對。user 說 'Convert 32 Celsius'、結果 value 傳成 '32 Celsius' 而不是 32。",
-      "expected_behavior": [
-        "Should identify this as symptom (b)",
-        "Should reference references/schema-evolution.md",
-        "Should suggest 3 fixes: change type to number, add required, add enum for unit",
-        "Should NOT just write a fixed schema for the user — should walk them through the 4 iterations"
+      "id": "symptom_b_wrong_args",
+      "locale": "en",
+      "input": "The tool was called, but value arrived as '32 Celsius' instead of the number 32.",
+      "expected_route": "b",
+      "reference": "references/schema-evolution.en.md#iteration-0-the-broken-schema",
+      "must_cover": [
+        "check type, required fields, enum, and application-side validation",
+        "walk through the four schema changes instead of claiming a fixed success rate",
+        "do not execute unvalidated model arguments"
       ]
     },
     {
-      "name": "symptom_c_loop_no_end",
-      "input": "ReAct loop 跑滿 max_iter=10 都沒收尾、LLM 一直叫同一個 tool。",
-      "expected_behavior": [
-        "Should identify this as symptom (c)",
-        "Should reference references/debug-flowchart.md Section C",
-        "Should check: (1) is assistant response appended to messages? (2) does tool message have tool_call_id? (3) does tool return self-contained result?",
-        "Should mention max_iter safety net is mandatory, not optional"
+      "id": "symptom_c_loop_no_end",
+      "locale": "zh-Hans",
+      "input": "ReAct loop 一直调用同一个 tool，跑到最大轮数也没有结束。",
+      "expected_route": "c",
+      "reference": "references/debug-flowchart.zh-Hans.md#section-c-symptom-creact-loop-跑不停",
+      "must_cover": [
+        "检查 assistant history、call ID、tool result 和停止条件",
+        "保留最大轮数并让失败清楚可见",
+        "只要求可检查的短计划，不索取隐藏推理"
       ]
     },
     {
-      "name": "symptom_d_design_from_scratch",
-      "input": "我想做一個 tool 讓 LLM 可以查 GitHub repo 的 star 數、但完全不知道 schema 怎麼寫。",
-      "expected_behavior": [
-        "Should identify this as symptom (d)",
-        "Should walk through the 5-step recipe (define, describe, type, constrain, error pattern)",
-        "Should point user to fork examples/stage-3/02-multi-tool-selection/starter.py as template",
-        "Should remind to ask 'which SDK are you using' before showing code"
+      "id": "symptom_d_design_from_scratch",
+      "locale": "zh-TW",
+      "input": "我想做一個查 GitHub repository 資料的 tool，但還沒有 schema。",
+      "expected_route": "d",
+      "reference": "references/schema-evolution.md#iteration-0原始壞-schema",
+      "must_cover": [
+        "依序做 define, describe, type, constrain, error handling",
+        "先問使用哪個 SDK，再選正確 schema 外形",
+        "加入 allowlist 與參數驗證"
       ]
     },
     {
-      "name": "route_away_langgraph",
-      "input": "我用 LangGraph 寫了一個 agent、StateGraph 的 add_edge 有點問題、能幫我看嗎？",
-      "expected_behavior": [
-        "Should NOT engage with LangGraph-specific debugging",
-        "Should route user to Stage 4 — Agent Frameworks",
-        "Should mention this skill handles tool-use mechanics, not framework-specific issues"
+      "id": "route_away_langgraph",
+      "locale": "en",
+      "input": "My LangGraph StateGraph edge is wrong. Can this tool-calling tutor fix it?",
+      "expected_route": "away",
+      "reference": "",
+      "must_cover": [
+        "route framework-specific debugging to Stage 4",
+        "keep MCP, production operations, and general prompting in their own stages"
       ]
     }
   ]

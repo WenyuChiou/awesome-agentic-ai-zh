@@ -164,6 +164,8 @@ Stage 5 使用兩層 stacked PR：第一層定稿三語教材、官方事實包�
 
 Stage 5 的練習不能只叫讀者「看文件」卻宣稱已建立元件。Hook 練習至少要給一份可直接複製的最小設定、離線 smoke test、`/hooks` 落腳檢查與不保存 prompt／secret 的邊界；設定引用 project path 時使用 `command` + `args` 的跨平台 exec form，不能把 PowerShell 無法展開的 shell 變數寫進單一 command 字串。Agent SDK snippet 必須依現行 message type 實際讀到文字內容，regression 也要餵入 fake async `query()` 並驗證真的印出 `TextBlock`，只 compile 或比對字串不算通過。
 
+Stage 5 的 installable Skill 範例使用 `${CLAUDE_SKILL_DIR}` 指向 bundled references，讓 personal、project 與翻譯版安裝後都能找到同一包檔案。README 先給 PowerShell 可複製安裝，再收合 POSIX；驗收先跑無網路 contract checker，再用 `/skill-name` 做產品內手動檢查。自訂 JSON 不能冒充 promptfoo config，結構測試也不能冒充 model-quality eval；要教 promptfoo 時，必須另給合法 provider／prompt／test 設定或明說只提供延伸入口。範例不能保存無來源成功率、原因比例、固定省時百分比或要求私人 Chain-of-Thought。
+
 ```
 1. 1-2 句核心問題
 2. ## 📌 學習目標

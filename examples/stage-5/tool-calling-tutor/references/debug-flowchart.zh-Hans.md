@@ -2,163 +2,89 @@
 
 > [繁體中文](./debug-flowchart.md) | **简体中文** | [English](./debug-flowchart.en.md)
 
-
-> 4-symptom 诊断流程。对应 SKILL.md Step 2。
+> 先看症状，再做最小检查。对应 `SKILL.md` Step 2。
 
 ## Section A — Symptom (a)：LLM 完全不触发 tool_calls
 
-最常见：LLM 看 `tools=[...]`、但回了纯文字、没选任何 tool。
+LLM 看到了 `tools=[...]`，却只返回文字。先逐项确认：
 
-### Quick check（30 秒）
-
-把这 4 个逐项勾一遍：
-
-```
-[ ] resp.choices[0].finish_reason == "tool_calls"？
-[ ] 还是 "stop"？        ← 如果是 stop、LLM 主动选择不调用 tool
-[ ] resp.choices[0].message.tool_calls 是 None / 空 list？
-[ ] resp.choices[0].message.content 是长文字？  ← LLM 用知识回答了
+```text
+[ ] finish_reason 是 "tool_calls" 还是 "stop"？
+[ ] message.tool_calls 是空的吗？
+[ ] user 的问题真的需要外部工具吗？
+[ ] 发出的 tool schema 符合当前 SDK 格式吗？
 ```
 
-### 5 个常见原因（按发生频率排序）
+### 先检查这 5 项
 
-#### 1. `description` 太笼统（70% 的 case）
+#### 1. `description` 太模糊
 
 ```python
-# ❌ LLM 看不出何时用
+# ❌ 看不出何时使用
 {"name": "get_data", "description": "Get data."}
 
-# ✅ LLM 一看就知道何时用
-{"name": "get_weather", "description": "Use this when the user asks about current weather, forecast, or temperature for a specific city."}
+# ✅ 说清楚使用时机
+{"name": "get_weather", "description": "Use this when the user asks about current weather, forecasts, or temperatures for a city."}
 ```
 
-**修法**：description 句首改成 "Use this when..."、列 2-3 种触发情境。
-
-#### 2. 多 tool 边界互相重叠（15%）
-
-两个 tool 的 description 都能套到同一个 query、LLM 选不出来、干脆都不选：
+#### 2. 多个 tool 的工作重叠
 
 ```python
-# ❌ 边界重叠
-tool_a = {"name": "search", "description": "Find information."}
-tool_b = {"name": "lookup", "description": "Look up data."}
-# user: "帮我查台北人口" → LLM 不知道哪个
+# ❌ search 和 lookup 看起来一样
+{"name": "search", "description": "Find information."}
+{"name": "lookup", "description": "Look up data."}
 
-# ✅ 边界互斥
-tool_a = {"name": "web_search", "description": "Use for current/external info not in knowledge: news, weather, prices."}
-tool_b = {"name": "fact_lookup", "description": "Use for static facts: populations, physical constants, capital cities."}
+# ✅ 各自说清楚能做和不能做的事
+{"name": "web_search", "description": "Use for current external information. Do not use for facts already provided by the user."}
+{"name": "fact_lookup", "description": "Use for stored facts. Do not use for live news or prices."}
 ```
 
-**修法**：每个 tool 加“Do NOT use for ...”明写负面边界。
+#### 3. 问题根本不需要 tool
 
-#### 3. user query 根本不需要 tool（10%）
+“什么是 Python？”通常不需要天气或计算工具。没有 tool call 不一定是 bug。
+
+#### 4. Schema 结构不符合 SDK
+
+OpenAI-compatible 格式需要 `{"type": "function", "function": {...}}`；Anthropic 格式使用 `input_schema`。不同 client 的验证与报错方式可能不同，所以要检查实际发出的 request、收到的 response 和应用程序 log。
+
+#### 5. 当前组合没有可用的 tool-calling 支持
+
+查看当前 SDK 与 model 的官方文档，再用一个**固定小测试（fixture）**确认。它像每次都考同一道题。比较时保持 model、设置和问题不变；不要只看 model 名称或大小猜结果。
+
+## Section B — Symptom (b)：tool 被调用，但 args 错
 
 ```python
-# user: "什么是 Python？"
-# tools: [calculator, weather_lookup]
-# 正确行为：LLM 用知识回答、不选 tool
+# 预期
+convert_temperature(value=32, unit="celsius")
+
+# 可能收到
+convert_temperature(value="32 Celsius", unit="")
 ```
 
-**这不是 bug**——验证一下 user query 是否真的需要 tool。
-
-#### 4. Tool schema 结构错误（3%）
-
-```python
-# ❌ OpenAI-compat 缺外包
-TOOLS = [{"name": "x", "description": "...", "parameters": {...}}]
-
-# ✅ OpenAI-compat 要包一层
-TOOLS = [{"type": "function", "function": {"name": "x", "description": "...", "parameters": {...}}}]
-```
-
-SDK 通常会 raise error；但用 Ollama 偶尔会吞掉、纯文字回答。
-
-#### 5. Model 太小（2%）
-
-`gemma4:e4b` / 1.5B 级 model 对 tool calling 支援不稳。**Stage 3+ 默认用 `qwen2.5:3b`** 或 `llama3.2:3b`。
-
-```bash
-ollama pull qwen2.5:3b
-MODEL=qwen2.5:3b python starter.py
-```
-
-## Section B — Symptom (b)：tool 被调用、但 args 错
-
-```python
-# user: "Convert 32 Celsius to Fahrenheit"
-# 预期：convert_temperature(value=32, unit="celsius")
-# 实际：convert_temperature(value="32 Celsius", unit="")   ← 不对
-```
-
-### 3 个原因 + 修法
-
-| 原因 | 观察 | 修法 |
+| 看到的问题 | Schema 修法 | 程序仍要做什么 |
 |---|---|---|
-| param 全 string | `value: "32"` 而非 `32` | `parameters.value.type = "number"` |
-| 缺 `required` | `unit` 没传 | `"required": ["value", "unit"]` |
-| enum 缺 | `unit: "C" / "Celsius" / "celsius"` 都出现 | `"enum": ["celsius", "fahrenheit"]` |
+| 数字变成文字 | `type: "number"` | 再检查类型和范围 |
+| 少了字段 | `required` | 缺值时返回清楚错误 |
+| 同一单位有多种写法 | `enum` | 只接受 allowlist 内的值 |
 
-详细 A/B 看 [`schema-evolution.zh-Hans.md`](schema-evolution.zh-Hans.md)。
+完整例子见 [`schema-evolution.zh-Hans.md`](schema-evolution.zh-Hans.md)。
 
 ## Section C — Symptom (c)：ReAct loop 跑不停
 
-```python
-# 跑满 max_iter=10、never end_turn
-```
+先检查三件事：
 
-### 3 个原因
+1. 把完整 assistant response 接回 `messages`。
+2. tool result 带回正确的 `tool_call_id` 或 `tool_use_id`。
+3. tool result 要自成一体，例如 `{"city":"Taipei","forecast":"rain"}`，不能只返回 `"ok"`。
 
-#### 1. 忘记把 assistant response 接回 messages
+Loop 一定要有 `MAX_STEPS`。到上限时停止并报告，不可无限重试。
 
-```python
-# ❌ 跑不停
-for step in range(5):
-    resp = client.chat.completions.create(...)
-    # 下面忘了 messages.append({"role": "assistant", ...})
-    if resp.tool_calls:
-        obs = run_tool(...)
-        messages.append({"role": "tool", "content": obs})
-# 下轮 LLM 看不到自己上轮的 thought、无限重复
+## Section D — Symptom (d)：多步任务漏了一步
 
-# ✅ 修
-messages.append({"role": "assistant", "content": msg.content, "tool_calls": msg.tool_calls})
-```
+例如算完比例后，忘了再转成百分比。可以这样检查：
 
-#### 2. tool message 没带 `tool_call_id`
+1. 用固定案例记录实际的 tool sequence。
+2. 在 description 写清楚顺序，例如 `Call this last after dividing.`。
+3. 要求一份短而可检查的工具计划，只列步骤和工具名称；不要要求、保存或公开模型的隐藏推理。
 
-```python
-# ❌ LLM 无法配对
-messages.append({"role": "tool", "content": obs})
-
-# ✅
-messages.append({"role": "tool", "tool_call_id": tc.id, "content": obs})
-```
-
-#### 3. tool 结果是 garbage、LLM 不知道什么是“完成”
-
-```python
-# user: "查台北天气"
-# tool 回传 "ok"  ← LLM 不知道这是答案还是 placeholder
-
-# ✅ tool 结果要 self-contained
-return {"city": "Taipei", "forecast": "rain", "temperature_c": 24}
-```
-
-## Section D — Symptom (c, sub)：ReAct loop 漏步
-
-多步任务中间少一个 tool call：
-
-```
-[step 0] lookup_population(city=Taipei)  → 2602000
-[step 1] lookup_population(city=NewYork) → 8336000
-[step 2] divide(2602000, 8336000)        → 0.3122
-[step 3] end_turn: "答案是 0.3122"       ← 漏了 to_percentage
-```
-
-### 修法
-
-1. **换大 model**：`qwen2.5:7b` 或 `claude-haiku-4-5`、多步稳定度显著提升
-2. **Description 明示顺序**：`{"name": "to_percentage", "description": "Convert a ratio to percentage. **Call this LAST after dividing.**"}`
-3. **加 chain-of-thought prompt**：user message 开头加“Plan the steps first, then execute one by one.”
-
-完整对照可跑范例 → [`../../stage-3/04-multi-step-reasoning/`](../../../stage-3/04-multi-step-reasoning/)
+可运行的多步范例：[Stage 3 multi-step reasoning](https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/examples/stage-3/04-multi-step-reasoning)。
