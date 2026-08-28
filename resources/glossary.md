@@ -471,37 +471,37 @@ LLM 「自信地說錯」——把不存在的 API 編出來、把錯的數字�
 
 ### Computer Use（螢幕級 agent）
 
-Agent 透過 **screenshot → vision → 算座標 → 模擬鍵鼠** 操作真實桌面 app——不靠 API、直接像人類用螢幕。代表：Anthropic Claude Computer Use（Opus 5 / Sonnet 5）/ OpenAI Codex desktop / Google Gemini in Chrome。**2024-10 Anthropic 公開 beta 開啟；OSWorld v1 2026-05 達 76.26% 後接近飽和，OSWorld 2.0（2026-06、long-horizon）把 SOTA 重設到 ~20%（Opus 4.8）**。
+模型讀 screenshot 並提出滑鼠或鍵盤動作；**harness 先檢查規則，executor 才真的執行**。只有工作跨桌面 app、又沒有更小的正式 API 或 typed tool 時，才需要這扇大門。OSWorld 2.0 的分數必須連同 108 個 long-horizon workflows、計分方式、step budget 與 harness 一起讀，不能當成永久模型排行。
 
-📍 完整解說 + 4 強對比：[Stage 8 Computer Use](../stages/08-agent-interfaces.md#-computer-use--螢幕級-agent)
+📍 完整 loop、現行工具與 benchmark 讀法：[Stage 8 Computer Use](../stages/08-agent-interfaces.md#-computer-use--螢幕級-agent)
 
 ### Browser Use（web 級 agent）
 
-Agent 操作網頁、主要用 **DOM-aware navigation**（直接 query CSS selector）+ 必要時 vision fallback。代表閉源：Comet / Dia / Gemini in Chrome（Atlas 2026-08 停運）。代表 OSS：[browser-use](https://github.com/browser-use/browser-use)（★ 105k+）。
+Agent 在網頁內讀資料、找元素、填表單或切換分頁。它可以一起使用 **DOM、Accessibility Tree 與 screenshot／pixel fallback**，不等於只查 CSS selector。代表開源入口：[browser-use](https://github.com/browser-use/browser-use)；Gemini in Chrome 仍採 gradual rollout，不是每個帳戶都能使用。
 
-📍 完整解說 + 5 強對比 + OSS 框架：[Stage 8 Browser Use](../stages/08-agent-interfaces.md#-browser-use--web-級-agent)
+📍 完整訊號比較與現行框架：[Stage 8 Browser Use](../stages/08-agent-interfaces.md#-browser-use--web-級-agent)
 
 ### Sandbox（程式碼隔離環境）
 
-讓 agent 寫的 code 在隔離環境跑、不在 host 機器——避免 agent `rm -rf /` / 連 internet 泄資料 / 偷 credentials 等災難。代表：E2B（Firecracker microVM）/ Daytona（Container）/ Modal（GPU sandbox）/ Vercel / Cloudflare。**OpenAI Agents SDK 2026-04 內建支援這些 provider**。
+讓 agent 寫的 code 在獨立 workspace 執行，只看見任務需要的檔案、網路與工具。Sandbox 會降低錯誤碰到 host、祕密或外部系統的機會，但仍要另外設定 filesystem、network、secret、lifecycle 與 log。E2B、Cloudflare、Modal、Vercel 等 provider 的隔離邊界不同；OpenAI Agents SDK 的 Sandbox Agents 目前仍是 Beta。
 
-📍 完整 9-row 術語小辭典（含 microVM / Container 差異）+ 7 強對比：[Stage 8 Code Sandbox](../stages/08-agent-interfaces.md#-code-execution-sandbox--隔離環境含術語小辭典)
+📍 完整 9-row 術語小辭典與 provider 選擇：[Stage 8 Code Sandbox](../stages/08-agent-interfaces.md#-code-execution-sandbox--隔離環境含術語小辭典)
 
 ### microVM（micro Virtual Machine）
 
-VM 的精簡版、極小 footprint、啟動 < 100ms 但仍**獨立 kernel**——介於 Docker container（快 + 弱隔離）跟 full VM（慢 + 強隔離）之間。**Agent sandbox 多半選 microVM**。代表實作：[Firecracker](#firecracker)（AWS、E2B 用）。
+把 VM 做得較小的隔離技術，仍有自己的 kernel。它通常比完整 VM 輕，但啟動時間、相容性與隔離強度都要看實作與量測方式；不是每個 agent sandbox 都使用 microVM。代表實作：[Firecracker](#firecracker)。
 
 📍 完整對比：[Stage 8 術語小辭典](../stages/08-agent-interfaces.md#-隔離技術術語小辭典)
 
 ### Firecracker
 
-AWS 開源的 microVM、Rust 寫、**AWS Lambda 底層** + E2B sandbox 用它做 isolation。強隔離 + 快啟動兼顧。
+AWS 開源、以 Rust 撰寫的 microVM 技術。它提供建立輕量 VM 的底層能力；真正的 sandbox 還要再加上網路、檔案、祕密、生命週期與稽核政策。
 
 📍 [Stage 8 術語小辭典](../stages/08-agent-interfaces.md#-隔離技術術語小辭典)
 
 ### gVisor
 
-Google 寫的「用戶空間 kernel」、攔截 syscall 自己模擬、**不用 hypervisor**——介於 container 跟 VM。
+Google 開源的使用者空間 application kernel，會攔截並處理系統呼叫，在程式與 host kernel 之間增加隔離層。它和 microVM 的做法不同，相容性與效能要依工作負載實測。
 
 📍 [Stage 8 術語小辭典](../stages/08-agent-interfaces.md#-隔離技術術語小辭典)
 

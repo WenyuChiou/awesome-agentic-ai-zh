@@ -471,35 +471,39 @@ What is actually worth learning lives in [Stage 4's multi-agent patterns](../sta
 
 ### Computer Use (screen-level agent)
 
-An agent operates real desktop apps via **screenshot → vision → coordinates → simulated mouse/keyboard** — no API needed, the agent uses the screen like a human. Representative: Anthropic Claude Computer Use (Opus 5 / Sonnet 5), OpenAI Codex desktop, Google Gemini in Chrome. **Anthropic public beta opened Oct 2024; OSWorld v1 hit 76.26% by May 2026 but then approached saturation — OSWorld 2.0 (2026-06, long-horizon) reset SOTA to ~20% (Opus 4.8)**.
+A model reads screenshots and proposes mouse or keyboard actions; **a harness checks policy before an executor performs them**. Use this large door only when work crosses desktop apps and no smaller formal API or typed tool can do the job. Read any OSWorld 2.0 score together with its 108 long-horizon workflows, scoring rule, step budget, and harness—not as a permanent model ranking.
 
-📍 Full coverage + 4-vendor comparison: [Stage 8 Computer Use](../stages/08-agent-interfaces.en.md)
+📍 Complete loop, current tools, and benchmark reading: [Stage 8 Computer Use](../stages/08-agent-interfaces.en.md#-computer-use--the-screen-level-agent)
 
 ### Browser Use (web-level agent)
 
-An agent operates web pages, primarily via **DOM-aware navigation** (direct CSS selector queries) with vision fallback. Closed-source: Comet / Dia / Gemini in Chrome (Atlas discontinued Aug 2026). OSS leader: [browser-use](https://github.com/browser-use/browser-use) (★ 105k+).
+An agent reads data, finds elements, fills forms, or changes tabs inside webpages. It can combine the **DOM, Accessibility Tree, and screenshot / pixel fallback**; Browser Use is not only CSS selectors. A representative open-source entry is [browser-use](https://github.com/browser-use/browser-use). Gemini in Chrome remains a gradual rollout, so access differs by account.
 
-📍 Full coverage + 5-vendor comparison + OSS frameworks: [Stage 8 Browser Use](../stages/08-agent-interfaces.en.md)
+📍 Complete signal comparison and current frameworks: [Stage 8 Browser Use](../stages/08-agent-interfaces.en.md#-browser-use--the-web-level-agent)
 
 ### Sandbox (code execution isolation)
 
-Runs agent-written code in an isolated environment instead of the host — avoids `rm -rf /`, internet data exfiltration, credential theft. Representatives: E2B (Firecracker microVM), Daytona (container), Modal (GPU sandbox), Vercel, Cloudflare. **OpenAI Agents SDK natively supports these as of April 2026**.
+Runs agent-written code in a separate workspace that sees only the files, network, and tools the task needs. A sandbox reduces the chance that mistakes reach the host, secrets, or outside systems, but filesystem, network, secret, lifecycle, and log policy still matter. E2B, Cloudflare, Modal, and Vercel have different boundaries; OpenAI Agents SDK Sandbox Agents remain Beta.
 
-📍 Full 9-row terminology glossary + 7-vendor comparison: [Stage 8 Code Sandbox](../stages/08-agent-interfaces.en.md)
+📍 Full nine-row terminology glossary and provider choice: [Stage 8 Code Sandbox](../stages/08-agent-interfaces.en.md#-code-execution-sandbox--the-isolated-environment-with-mini-glossary)
 
 ### microVM (micro Virtual Machine)
 
-A slimmed-down VM with minimal footprint, < 100ms startup, yet still has an **independent kernel** — sits between Docker containers (fast + weak isolation) and full VMs (slow + strong isolation). **Most agent sandboxes choose microVM**. Implementation example: Firecracker (AWS, used by E2B).
+A smaller kind of VM that still has its own kernel. It is often lighter than a full VM, but startup time, compatibility, and isolation strength depend on the implementation and measurement. Not every agent sandbox uses a microVM. Example: [Firecracker](#firecracker).
 
-📍 Full comparison: [Stage 8 terminology glossary](../stages/08-agent-interfaces.en.md)
+📍 Full comparison: [Stage 8 terminology glossary](../stages/08-agent-interfaces.en.md#-mini-glossary-of-isolation-technologies)
 
 ### Firecracker
 
-AWS's open-source microVM, written in Rust, **the underlying technology of AWS Lambda** and E2B sandbox isolation. Provides strong isolation + fast startup.
+AWS's open-source microVM technology, written in Rust. It provides a low-level way to create lightweight VMs; a complete sandbox must still add network, file, secret, lifecycle, and audit policy.
+
+📍 [Stage 8 terminology glossary](../stages/08-agent-interfaces.en.md#-mini-glossary-of-isolation-technologies)
 
 ### gVisor
 
-Google's "user-space kernel" — intercepts syscalls and emulates them itself, no hypervisor required. Sits between containers and VMs.
+Google's open-source userspace application kernel. It handles system calls between a program and the host kernel, adding an isolation layer. It takes a different approach from a microVM, so compatibility and performance must be tested for the workload.
+
+📍 [Stage 8 terminology glossary](../stages/08-agent-interfaces.en.md#-mini-glossary-of-isolation-technologies)
 
 ---
 

@@ -127,6 +127,32 @@ Stage 7.5 keeps six bold core terms, all 12 advanced concepts grouped by problem
 
 Six newly generated `1672×941` PNGs cover the four problem groups and the five-branch reading decision. The test requires six distinct hashes and exact locale references; `scripts/check-image-locale.py` provides the whole-repository mirror check. `scripts/check-reader-ux.py` locks the collapsed mainline at `4,824／7,768／4,850` non-whitespace characters and all six core terms before the work-boundary card. Stage 7.5 is a reading-map, so there is deliberately no runnable example-hardening layer.
 
+### Stage 8 — interface choice and safety map covered
+
+Stage 8 keeps eight bold core terms, the four parallel interface choices, four safety checks,
+two immediately copyable first actions, all four exercise titles and outcomes, and a short self-check visible. Ten closed disclosures
+hold current Computer Use contracts, OSWorld benchmark discipline, Browser Use signals, Sandbox
+terminology, Track A／B depth, security cases, 21 resources, and future interfaces. The four choice
+cards are alternatives chosen by task need; the test rejects wording that turns them into a ladder.
+
+`scripts/test_stage08_content.py` locks the three locales to the same eight terms, ten closed
+disclosures, 21 resource URL/rating pairs, five accessible rowgroups (`5／5／4／5／2`), one matching
+freshness marker, all legacy H2／H3 anchors, safe `example.com` exercises, current tool and license
+facts, and identical official-source order. It rejects the old Computer Use preview contract,
+unsupported model rankings, volatile GitHub stars, fixed line/startup claims, blanket Gemini
+availability, OmniParser Apache claims, unsafe credential tasks, and empty-quote artifacts. The test
+also executes the copyable policy example: only explicit low-impact actions over HTTPS to the exact
+allowlisted host pass; mixed-case high-impact actions ask, while unknown actions, userinfo, non-HTTPS
+schemes, and look-alike hosts fail closed. Resource checks require Cloudflare Sandbox SDK to remain
+labelled Beta with APIs that may change before v1.0, so a live repository cannot be mistaken for a stable product.
+
+Six locale-specific PNGs cover interface selection and the four safety checks. The test requires
+readable dimensions, six distinct hashes, and exact locale references; `scripts/check-image-locale.py`
+provides the whole-repository mirror check. `scripts/check-reader-ux.py` locks the collapsed mainline
+at `4,625／7,281／4,702` non-whitespace characters with only a 50-character allowance per locale,
+and requires all eight core terms before Exercise 1. The freshness gate separately enforces
+the 90-day fact pack for Computer Use, Browser Use, sandboxes, availability, benchmarks, and security.
+
 ## v2 path (deferred)
 
 Per `docs/HOW_TO_USE.md` "給維護者：v2 path":

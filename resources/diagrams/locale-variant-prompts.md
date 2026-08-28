@@ -3,6 +3,32 @@
 > 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 兩組三語概念圖的 Image 2.0 重產規格）。
 > 這份記錄的是 **2026-08-02 那批 5 張圖 × 3 語系** 是怎麼產出來的，以及過程中踩到的坑。
 
+## 2026-08-28：Stage 8 介面選擇圖與四道安全檢查
+
+新增 `interface-choice-map.{png,en.png,zh-Hans.png}`，並原檔名重畫
+`agent-guardrail-patterns.{png,en.png,zh-Hans.png}`。兩組都是 16:9 暖白底、亮色卡片、
+深藍大字與簡單 icon；每張由 Codex 內建 Image 2.0 生成，再以原尺寸逐字檢查。
+
+介面圖先問「你要做什麼」，再平行分成四張卡：
+
+- 只讀公開資料 → Search／Fetch
+- 只操作網頁 → Browser Use
+- 跨桌面 App → Computer Use
+- 執行程式／改檔 → Sandbox
+
+頂部固定提醒「正式 API／Typed Tool 優先」。四張卡不是 maturity ladder，也不是一定要
+由左到右升級；prompt 明確禁止線性階級意象。這讓正文可以用一張圖說清楚「選最小、可檢查
+的門」，又不會誤教 Sandbox 是 Computer Use 的下一層。
+
+安全圖把舊的巢狀護盾改成四張獨立卡：隔離、限制、先問、驗證與紀錄。第二張只處理網域、
+檔案與動作 allowlist；第四張才處理結果驗證與 log，不再把 destination allowlist 和 output
+verification 混成同一件事。箭頭表示每次 action 會依序接受檢查，不表示四種技術彼此包含。
+
+生成順序是繁中母版 → 英語／簡中各自以母版做 text-localization。每次都提供完整逐字文字表，
+只保留穩定概念，不放 model ID、版本、價格、stars、benchmark 或 provider 排名。
+`scripts/test_stage08_content.py` 鎖住六張 PNG 的最小尺寸、不同 hash 與三語正文引用；
+`scripts/check-image-locale.py` 再檢查全站 locale 圖不會串錯。
+
 ## 2026-08-28：Stage 7.5 問題分組圖與閱讀決策樹
 
 重畫 `concept-cluster.{png,en.png,zh-Hans.png}` 與

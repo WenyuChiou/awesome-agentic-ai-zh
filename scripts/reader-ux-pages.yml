@@ -1395,6 +1395,125 @@ pages:
           zh-Hans: {term: Graceful Degradation, label: "Graceful Degradation（平稳降级）"}
     resource_group_rowspans: [5, 5, 5, 5, 4]
 
+  - id: stage-08
+    canonical: stages/08-agent-interfaces.md
+    mirrors:
+      en: stages/08-agent-interfaces.en.md
+      zh-Hans: stages/08-agent-interfaces.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 4675
+      en: 7331
+      zh-Hans: 4752
+    max_open_details: 0
+    required_details_count: 10
+    visible_section_order:
+      - learning-goals
+      - entry
+      - required-reading
+      - core-terms
+      - selector
+      - safety
+      - hands-on
+      - resources
+      - completion
+    forbidden_terms:
+      zh-TW: [108k, 5 行 Python, 10 行內, < 90ms, 唯一 GPU sandbox, anthropics/anthropic-quickstarts, Stage 9, '""', "“”"]
+      en: [108k, 5 lines of Python, 10 lines, < 90ms, only GPU sandbox, Top 5, anthropics/anthropic-quickstarts, Stage 9, '""', "“”"]
+      zh-Hans: [108k, 5 行 Python, 10 行内, < 90ms, 唯一 GPU sandbox, anthropics/anthropic-quickstarts, Stage 9, '""', "“”"]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-28"
+        - "computer_toolset_20260801"
+        - "browser_toolset_20260801"
+        - '"computer"'
+        - "computer-use-preview"
+        - "computer_use_preview"
+        - "deprecated"
+        - "SandboxAgent"
+        - "Manifest"
+        - "SandboxRunConfig"
+        - "Beta"
+        - "gradual rollout"
+        - "CC-BY-4.0"
+        - "20.6%"
+    required_visible_sections:
+      learning-goals:
+        zh-TW: {heading: "📌 學習目標", anchor: -學習目標}
+        en: {heading: "📌 Learning goals", anchor: -learning-goals}
+        zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
+      entry:
+        zh-TW: {heading: "🚪 進入條件", anchor: -進入條件}
+        en: {heading: "🚪 Entry requirements", anchor: -entry-requirements}
+        zh-Hans: {heading: "🚪 进入条件", anchor: -进入条件}
+      required-reading:
+        zh-TW: {heading: "📚 必修閱讀", anchor: -必修閱讀}
+        en: {heading: "📚 Required reading", anchor: -required-reading}
+        zh-Hans: {heading: "📚 必读", anchor: -必读}
+      core-terms:
+        zh-TW: {heading: "🔑 八個核心詞", anchor: -八個核心詞}
+        en: {heading: "🔑 Eight core terms", anchor: -eight-core-terms}
+        zh-Hans: {heading: "🔑 八个核心词", anchor: -八个核心词}
+      selector:
+        zh-TW: {heading: "🧭 先選最小的介面", anchor: -先選最小的介面}
+        en: {heading: "🧭 Choose the smallest interface first", anchor: -choose-the-smallest-interface-first}
+        zh-Hans: {heading: "🧭 先选最小的界面", anchor: -先选最小的界面}
+      safety:
+        zh-TW: {heading: "🛡️ 四道安全檢查", anchor: -四道安全檢查}
+        en: {heading: "🛡️ Four safety checks", anchor: -four-safety-checks}
+        zh-Hans: {heading: "🛡️ 四道安全检查", anchor: -四道安全检查}
+      hands-on:
+        zh-TW: {heading: "🛠 動手練習", anchor: -動手練習}
+        en: {heading: "🛠 Hands-on exercises", anchor: -hands-on-exercises}
+        zh-Hans: {heading: "🛠 动手练习", anchor: -动手练习}
+      resources:
+        zh-TW: {heading: "🎯 精選 Projects 與學習資源", anchor: -精選-projects-與學習資源}
+        en: {heading: "🎯 Featured Projects and Learning Resources", anchor: -featured-projects-and-learning-resources}
+        zh-Hans: {heading: "🎯 精选 Projects 与学习资源", anchor: -精选-projects-与学习资源}
+      completion:
+        zh-TW: {heading: "✅ 自我檢查", anchor: -自我檢查}
+        en: {heading: "✅ Self-check", anchor: -self-check}
+        zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: hands-on
+      min_definition_chars: 20
+      terms:
+        - id: agent-interface
+          zh-TW: {term: Agent Interface, label: "Agent Interface（Agent 操作介面）"}
+          en: {term: Agent Interface, label: Agent Interface}
+          zh-Hans: {term: Agent Interface, label: "Agent Interface（Agent 操作界面）"}
+        - id: browser-use
+          zh-TW: {term: Browser Use, label: "Browser Use（瀏覽器操作）"}
+          en: {term: Browser Use, label: Browser Use}
+          zh-Hans: {term: Browser Use, label: "Browser Use（浏览器操作）"}
+        - id: computer-use
+          zh-TW: {term: Computer Use, label: "Computer Use（電腦操作）"}
+          en: {term: Computer Use, label: Computer Use}
+          zh-Hans: {term: Computer Use, label: "Computer Use（电脑操作）"}
+        - id: sandbox
+          zh-TW: {term: Sandbox, label: "Sandbox（沙箱）"}
+          en: {term: Sandbox, label: Sandbox}
+          zh-Hans: {term: Sandbox, label: "Sandbox（沙箱）"}
+        - id: accessibility-tree
+          zh-TW: {term: Accessibility Tree, label: "Accessibility Tree（無障礙樹）"}
+          en: {term: Accessibility Tree, label: Accessibility Tree}
+          zh-Hans: {term: Accessibility Tree, label: "Accessibility Tree（无障碍树）"}
+        - id: harness
+          zh-TW: {term: Harness, label: "Harness（執行框架）"}
+          en: {term: Harness, label: Harness}
+          zh-Hans: {term: Harness, label: "Harness（执行框架）"}
+        - id: approval-gate
+          zh-TW: {term: Approval Gate, label: "Approval Gate（批准閘門）"}
+          en: {term: Approval Gate, label: Approval Gate}
+          zh-Hans: {term: Approval Gate, label: "Approval Gate（批准闸门）"}
+        - id: prompt-injection
+          zh-TW: {term: Prompt Injection, label: "Prompt Injection（提示注入）"}
+          en: {term: Prompt Injection, label: Prompt Injection}
+          zh-Hans: {term: Prompt Injection, label: "Prompt Injection（提示注入）"}
+    resource_group_rowspans: [5, 5, 4, 5, 2]
+
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
     mirrors:

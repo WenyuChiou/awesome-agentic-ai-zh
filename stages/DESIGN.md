@@ -257,7 +257,7 @@ Stage 7.5 只保留兩組低文字密度三語圖：四問題群組的 12 概念
 - **Stage 5**：分 7 個核心 sub-stage（5.1-5.7）+ 5.8 SDK（選修、包成產品或服務才需要），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
 - **Stage 6 / 7**：直接跳過 進入條件 section（前面 stage 已隱含 prerequisite）
 - **Stage 7.5**：reading-map（進階概念 + reading path），沒有 動手練習、只有輕量 self-check——是 production 之後的 frontier 概念地圖，不寫 code
-- **Stage 8**：跟 Stage 5 一樣是兩軌共用 hub，分 3 層 interface（Computer Use / Browser Use / Code Sandbox）+ Safety / Security section，各層有自己的工具與練習
+- **Stage 8**：兩軌共用的 interface 選擇 hub。可見主線先定義 8 個粗體核心詞，再用平行選擇圖分清 Search／Fetch、Browser Use、Computer Use、Sandbox，接著保留四道安全檢查、兩題第一步與短版 self-check。Computer Use／benchmark、Browser Use、Sandbox、兩軌進階做法、安全案例、21 筆資源與未來介面放進 10 個預設關閉選單；四張介面卡不是固定升級順序，舊 heading 以空 anchor 保留深連結。
 
 每個 section 的功能：
 

@@ -153,6 +153,29 @@ stage075_fact_pack:
     constitutional_ai: 'https://arxiv.org/abs/2212.08073'
     camel: 'https://arxiv.org/abs/2303.17760'
 
+stage08_fact_pack:
+  canonical: 'stages/08-agent-interfaces.md'
+  verified_on: '2026-08-28'
+  scope: ['computer-use', 'browser-use', 'sandboxes', 'availability', 'benchmarks', 'security']
+  official_sources:
+    anthropic_computer_use: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool'
+    anthropic_browser_use: 'https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool'
+    openai_computer_use: 'https://developers.openai.com/api/docs/guides/tools-computer-use'
+    openai_sandbox_agents: 'https://openai.github.io/openai-agents-python/sandbox/guide/'
+    google_gemini_in_chrome: 'https://support.google.com/chrome/answer/16283624?hl=en'
+    osworld2: 'https://osworld-v2.xlang.ai/'
+    omniparser: 'https://github.com/microsoft/OmniParser'
+    playwright_mcp: 'https://github.com/microsoft/playwright-mcp'
+    browser_use: 'https://github.com/browser-use/browser-use'
+    e2b: 'https://github.com/e2b-dev/E2B'
+    cloudflare_sandbox_sdk: 'https://github.com/cloudflare/sandbox-sdk'
+    modal_sandboxes: 'https://modal.com/docs/guide/sandboxes'
+    vercel_sandbox: 'https://vercel.com/docs/sandbox'
+    brave_indirect_prompt_injection: 'https://brave.com/blog/comet-prompt-injection/'
+    perplexity_browsesafe: 'https://www.perplexity.ai/hub/blog/browsesafe-preventing-prompt-injection-attacks-in-web-browsing-agents'
+    ninth_circuit_opinion: 'https://cdn.ca9.uscourts.gov/datastore/opinions/2026/08/04/26-1444.pdf'
+    district_court_order: 'https://cases.justia.com/federal/district-courts/california/candce/3%3A2025cv09514/459191/81/0.pdf'
+
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
     required_scopes: ['models', 'pricing', 'availability', 'deprecations']
@@ -171,6 +194,9 @@ verified_pages:
     max_age_days: 90
   - canonical: 'stages/07.5-advanced-agentic-concepts.md'
     required_scopes: ['agent-patterns', 'harnesses', 'evals', 'dynamic-workflows', 'framework-status', 'research']
+    max_age_days: 90
+  - canonical: 'stages/08-agent-interfaces.md'
+    required_scopes: ['computer-use', 'browser-use', 'sandboxes', 'availability', 'benchmarks', 'security']
     max_age_days: 90
 
 current_frontier_models:
@@ -323,9 +349,51 @@ stale_patterns:
     note: 'AutoGen is not a production recommendation for new projects; use Microsoft Agent Framework and keep AutoGen for maintenance or migration context'
 
   - pattern: 'Sandbox Agents.{0,100}(?:generally available|\bGA\b|正式可用|穩定介面|稳定接口)'
-    include_files: ['stages/07.5-advanced-agentic-concepts.md']
+    include_files: ['stages/07.5-advanced-agentic-concepts.md', 'stages/08-agent-interfaces.md', 'resources/glossary.md']
     qualifier_terms: ['Beta', 'beta', 'preview', '預覽', '预览']
     note: 'OpenAI Agents SDK Sandbox Agents are currently documented as Beta'
+
+  # Stage 08 interface, availability, benchmark, and license checks. Mirror
+  # locales inherit each canonical include path through the freshness checker.
+  - pattern: 'computer-use-preview|computer_use_preview'
+    include_files: ['stages/08-agent-interfaces.md']
+    qualifier_terms: ['deprecated', 'deprecation', 'legacy', 'migration', '舊版', '旧版', '棄用', '弃用', '遷移', '迁移']
+    note: 'The current OpenAI Computer Use tool uses type=computer; preview names are legacy migration references only'
+
+  - pattern: 'OmniParser.{0,120}Apache-2\.0|Apache-2\.0.{0,120}OmniParser'
+    include_files: ['stages/08-agent-interfaces.md', 'resources/glossary.md']
+    qualifier_terms: []
+    note: 'The OmniParser repository is CC-BY-4.0; model weights have separate license boundaries'
+
+  - pattern: 'anthropics/anthropic-quickstarts'
+    include_files: ['stages/08-agent-interfaces.md']
+    qualifier_terms: ['former', 'previous', 'historical', 'redirect', '舊', '旧', '歷史', '历史']
+    note: 'Use the current anthropics/claude-quickstarts repository'
+
+  - pattern: '★\s*\d|<\s*90\s*ms|(?:只要|only)\s*(?:5|10)\s*(?:行|lines)|唯一.{0,30}GPU sandbox|only GPU sandbox|60%\s*latency'
+    include_files: ['stages/08-agent-interfaces.md', 'resources/glossary.md']
+    qualifier_terms: []
+    note: 'Stage 08 keeps editorial star ratings but rejects volatile stars, fixed line counts, universal startup records, exclusivity, and unscoped latency claims'
+
+  - pattern: 'OSWorld.{0,180}(?:76\.26%|SOTA)'
+    include_files: ['stages/08-agent-interfaces.md', 'resources/glossary.md']
+    qualifier_terms: []
+    note: 'Stage 08 teaches benchmark scope rather than freezing the old OSWorld v1 score or an unscoped SOTA label'
+
+  - pattern: 'Gemini in Chrome.{0,120}(?:available to everyone|available to all|everyone can use|所有(?:人|使用者|用户).{0,20}可用)'
+    include_files: ['stages/08-agent-interfaces.md', 'resources/glossary.md']
+    qualifier_terms: ['not', 'gradual rollout', '不是', '並非', '并非', '分批', '逐步']
+    note: 'Google documents Gemini in Chrome as a gradual rollout with account, platform, region, language, and administrator limits'
+
+  - pattern: 'OpenAI Agents SDK.{0,140}(?:natively supports|內建支援|内建支持).{0,100}(?:E2B|Daytona|Modal|Vercel)'
+    include_files: ['stages/08-agent-interfaces.md', 'resources/glossary.md']
+    qualifier_terms: []
+    note: 'Do not turn the Sandbox Agents abstraction into an unsupported blanket provider-integration claim'
+
+  - pattern: 'cloudflare/sandbox-sdk.{0,160}(?:generally available|\bGA\b|正式可用|穩定版|稳定版)'
+    include_files: ['stages/08-agent-interfaces.md', 'resources/glossary.md']
+    qualifier_terms: ['Beta', 'before v1.0', 'v1.0 前', '可能改變', '可能变化']
+    note: 'Cloudflare Sandbox SDK is Beta and its APIs may change before v1.0'
 
   # Stage 06 fact and project status checks. Mirror locales inherit the
   # canonical include path through check-2026-freshness.py.
