@@ -22,6 +22,8 @@
 - PR 04A branch：`codex/stage04-reader-ux`。
 - PR 04A base：`codex/stage02-prompt-map`（PR #150）。
 - PR 04B branch：完成 04A 後建立 `codex/stage04-example-hardening`，base 指向 04A。
+- 04B 候選已完成五個 current-major 範例與三語 README。每個資料夾都用獨立 Python 3.11 環境驗收；乾淨的 Exercise 2 環境實際抓出並修正 `crewai[anthropic]` extra 遺漏，五組 `pip check` 與 11 個直接執行的離線入口均通過。
+- CodeAct 的離線測試已驗 AST allowlist、JSON tool 邊界、loopback 控制埠與 Docker 資源限制；`network_mode="none"` 會切斷 Smolagents 的 host → Jupyter 控制通道，而 internal bridge 在現行 Docker 也不能可靠支援這條 published-port 路徑。因此範例使用一般 bridge、只把控制埠綁到 `127.0.0.1`，並明說容器仍可能連網、不是 production sandbox。另增 `test_docker_smoke.py` 實測 executor 與實際 port binding；本機 Docker client 存在但 daemon 未啟動，因此不宣稱 live 容器已跑過。
 - 主工作區有 Claude 的 `stages/01-llm-basics.md` 修改；本計畫只使用隔離 worktree，不切換、不覆蓋。
 - 本次不修改 Stage 05 正文。只允許修正 Stage 07／07.5／08 指向 Stage 04 的既有 anchor 或同源過時敘述；若能保留原 anchor，就不改後續章節結構。
 - 不合併 PR、不刪 branch、不清 worktree。只有使用者明確說可以合併時才執行安全合併流程。
@@ -248,6 +250,8 @@
 
 ## Task 6：建立 PR 04B 範例層
 
+**狀態：完成候選實作。** 保留五份原有深度閱讀與延伸段落，沒有再接受 delegate 的過度壓縮稿；requirements、雙路徑、行為測試、三語 PowerShell／macOS/Linux 指令、成本公式與安全邊界已同步。等待 Task 7 的全站 gate、獨立 review、commit 與未合併 stacked PR。
+
 **Files:**
 
 - Modify: `examples/stage-4/01-same-agent-two-frameworks/**`
@@ -284,9 +288,11 @@
 
 ## Task 7：PR 04B 驗證、review 與未合併 PR
 
+**狀態：進行中。** 五個獨立 clean-env installs、`pip check`、11 個離線入口、compileall、Stage 4 結構 gate、323 個 scripts tests、locale／Hans／mirror／freshness 檢查與三語 MkDocs build 已通過；只剩 staged fingerprint、獨立 reviewer、commit 與未合併 stacked PR。
+
 1. 執行 04A 全套內容 gate，再加：
    - clean Python 3.11 dependency installs
-   - 十個 Stage 04 offline mock entrypoints
+    - 十一個 Stage 04 offline mock entrypoints
    - starter `ast.parse`
    - `scripts/test_stage04_examples.py`
 2. 重新查 PyPI、Anthropic model ID 與價格；三語 README 同步。

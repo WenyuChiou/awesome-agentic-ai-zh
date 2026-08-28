@@ -249,11 +249,13 @@ r = client.messages.create(model="claude-haiku-4-5-20251001", ...)
 | 1 LLM 基礎 | 6 個 | inline 4 + folder 2（`examples/stage-1/`） |
 | 2 Prompt eng | 4 個 | inline 3 + folder 1（`examples/stage-2/`） |
 | **3 Tool use** | **6 個** | folder 6（`examples/stage-3/`） |
-| 4 Frameworks | 5 個 | 全 folder（`examples/stage-4/`） |
+| 4 Frameworks | 5 個 | 5 個雙路徑、離線可驗證的 folder（`examples/stage-4/`；Python 3.11） |
 | 5 Claude Code 生態 | 11 個 | inline 6 + folder 5（`examples/stage-5/`） |
 | 6 Memory/RAG | 5 個 | 全 folder（`examples/stage-6/`） |
 | 7 Multi-agent | 5 個 | inline 1 + folder 4（`examples/stage-7/`） |
 | Track A1-A3 | 12 個 | 12 個 inline 練習；沒有獨立的 `examples/track-a/` 資料夾 |
+
+> Stage 4 的五個 folder 使用不同 framework。請在**每個 folder 各建一個 Python 3.11 `.venv`**，不要合併五份 `requirements.txt`。
 
 → T1 完成範圍：**只有 Stage 3 全部 6 個**（剩餘 stage 按 plan 分批推進）。
 

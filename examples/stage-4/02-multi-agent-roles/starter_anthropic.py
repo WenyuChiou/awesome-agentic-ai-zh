@@ -1,13 +1,13 @@
-"""Stage 4 練習 2：多 agent 角色分配 — CrewAI + Anthropic（Path B）。
+r"""Stage 4 練習 2 Path B：用 Anthropic 跑同一個三角色 CrewAI 流程。
 
-CrewAI 用 LiteLLM 底層、改成 "anthropic/claude-haiku-4-5" 字串即可切 backend。
+CrewAI 用 provider-prefixed model string 選擇後端；
+``crewai[anthropic]`` 會安裝 Anthropic provider，這份範例再固定 model ID。
 
 跑法：
-    pip install -r requirements.txt
-    export ANTHROPIC_API_KEY=sk-ant-...
-    python starter_anthropic.py
+    $env:ANTHROPIC_API_KEY="sk-ant-..."
+    .\.venv\Scripts\python.exe starter_anthropic.py
 
-預算：3 agent × 短輸出 ≈ $0.005-0.01/run。Claude 對 multi-agent 互動穩很多。
+實際費用依 tokens、呼叫次數與重試而變；README 提供公式與 $0.10 支出上限。
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from starter import run
 
-MODEL = os.environ.get("MODEL", "anthropic/claude-haiku-4-5")  # LiteLLM 格式
+MODEL = os.environ.get("MODEL", "anthropic/claude-haiku-4-5-20251001")  # provider-prefixed format
 
 
 if __name__ == "__main__":
@@ -31,4 +31,5 @@ if __name__ == "__main__":
     result = run(topic, llm_model=MODEL)
     print(f"✅ Final (critic's verdict):\n{result['final']}")
     assert result["final"], "expected critic to produce a verdict"
-    print("\n✅ 練習 2 (Anthropic path) 通過 — Claude 跑 3-agent crew、≈$0.005-0.01/run")
+    assert "max_iter=4" in result["stop_condition"]
+    print("\n✅ 練習 2 (Anthropic path) 通過 — 3-agent crew 已走到有界停止條件")

@@ -23,7 +23,7 @@ from langchain_anthropic import ChatAnthropic
 
 from starter import run
 
-MODEL = os.environ.get("MODEL", "claude-haiku-4-5")
+MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
 
 
 if __name__ == "__main__":
@@ -35,4 +35,5 @@ if __name__ == "__main__":
     print(f"✅ Final: {result['final']}")
     print(f"   Steps: {result['steps']}")
     assert result["final"], "expected non-empty summary"
-    print("✅ 練習 1 (Anthropic path) 通過 — LangGraph + claude-haiku-4-5、≈$0.001/run")
+    assert result["steps"] >= 2, "expected a visible graph trace"
+    print("✅ 練習 1 (Anthropic path) 通過 — LangGraph + 固定 Anthropic model ID；費用依 tokens 計算")

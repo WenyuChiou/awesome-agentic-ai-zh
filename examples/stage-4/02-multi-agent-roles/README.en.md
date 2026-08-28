@@ -1,5 +1,5 @@
 <div align="right">
-  <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
+  <a href="./README.md">Traditional Chinese</a> | <a href="./README.zh-Hans.md">Simplified Chinese</a> | <strong>English</strong>
 </div>
 
 # Exercise 2: Multi-Agent Role Allocation (CrewAI)
@@ -22,39 +22,56 @@ Researcher → Writer → Critic
   (find facts)  (write)  (verify, PASS/ISSUES)
 ```
 
-Role-based pipelines are **CrewAI's sweet spot** — describe roles / goals / tasks, framework orchestrates.
+This is a **role-based pipeline**: describe each role, goal, and task, then CrewAI passes the result along in order.
 
 ## How to run — two paths
 
+> ⚠️ **Give each exercise its own Python 3.11 `.venv`.** Do not mix the five Stage 4 `requirements.txt` files.
+
 ### Path A (default, free, local)
 
-```bash
-pip install -r requirements.txt
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
-python starter.py
+.\.venv\Scripts\python.exe starter.py
 ```
 
-Budget: **$0**. Three agents sequential ≈ 30-90s on CPU with qwen2.5:3b.
+Budget: the model API costs **$0**. Runtime depends on your CPU, memory, model, and prompt, so measure it on your machine.
 
-### Path B (Anthropic, cloud-quality)
+### Path B (Anthropic, compare a cloud result)
+
+```powershell
+$env:ANTHROPIC_API_KEY="sk-ant-..."
+.\.venv\Scripts\python.exe starter_anthropic.py
+```
+
+Pinned default: `anthropic/claude-haiku-4-5-20251001`. One model request with 2,000 input + 1,000 output tokens costs `2,000 / 1,000,000 × $1 + 1,000 / 1,000,000 × $5 = $0.007`. Three roles may each call the model or retry, so set a provider spend limit of **$0.10**.
+
+<details markdown="1">
+<summary>macOS/Linux commands and verification information</summary>
 
 ```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+python3.11 -m venv .venv
+./.venv/bin/python -m pip install -r requirements.txt
+export ANTHROPIC_API_KEY="sk-ant-..."
+./.venv/bin/python test.py
 ```
 
-Budget: ~**$0.005-0.01** per run (3 agents × short outputs, claude-haiku-4-5).
+Official sources: [CrewAI docs](https://docs.crewai.com/) | [LiteLLM docs](https://docs.litellm.ai/) | [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+
+<small>Packages, model IDs, prices, and official links verified: 2026-08-28 UTC.</small>
+</details>
 
 ## Validate the logic
 
-```bash
-python test.py             # tool logic + crew structure
-python test_anthropic.py   # starter_anthropic loads
+```powershell
+.\.venv\Scripts\python.exe test.py # roles, tasks, handoff, and stop condition
+.\.venv\Scripts\python.exe test_anthropic.py # Anthropic-path behavior
 ```
 
-CrewAI's `kickoff()` is too opaque for pure mock testing. These tests cover structure (3 agents + 3 tasks + sequential process + context dependencies) and tool logic. For full validation, run starter.py against Ollama.
+The offline tests do not call a real model, but they check three agents, three tasks, sequential process, context dependencies, handoff output, and an observable stop condition. Test model quality separately.
 
 ## Core CrewAI multi-agent concepts
 
@@ -82,7 +99,7 @@ research_task = Task(
 )
 ```
 
-**Key**: `expected_output` is the "passing template" the LLM sees — be specific. "A 2-sentence intro paragraph" is 10× better than "Some text".
+**Key**: `expected_output` is the passing example the LLM sees. "A two-sentence intro in active voice" is clearer than "Some text"; measure the improvement on your own task.
 
 ### Context dependency
 
@@ -100,37 +117,38 @@ Crew(..., process=Process.sequential)    # linear walk-through
 Crew(..., process=Process.hierarchical)  # manager + workers, needs manager_llm
 ```
 
-We use sequential (simplest, deterministic). Hierarchical lets a manager agent dispatch — useful for more complex tasks.
+This exercise uses sequential because its order is easy to see. Hierarchical lets a manager dispatch work; use it when you need dynamic assignment and already have evaluations and stop conditions.
 
 ## Observation across both paths
 
 | Observation | Anthropic Claude haiku | Ollama qwen2.5:3b |
 |---|---|---|
-| Researcher actually calls tool | Stable | Sometimes skips tool, makes things up |
-| Writer cites researcher's output | Stable | May go off-memory, deviate from search result |
-| Critic catches hallucinations | Sharper | Looser, may PASS when it shouldn't |
-| Speed | 10-30s | 30-90s |
-| Cost | $0.005-0.01 | $0 |
+| Researcher calls the tool | Verify in logs and output | Verify in logs and output |
+| Writer uses the research | Check with the same test cases | Check with the same test cases |
+| Critic catches an error | Do not assume success | Do not assume success |
+| Speed | Measure on your network and task | Measure on your hardware and model |
+| Model API cost | Calculate from tokens and calls | $0 |
 
-**Punchline**: multi-agent is more model-quality-sensitive than single-agent — each agent can drop a step, errors compound by the time you reach the critic. Production multi-agent systems almost always use large models (or carefully fine-tuned small ones).
+**Punchline**: multi-agent adds handoff points. If one role drops information, the mistake can travel forward. Model size is not the only answer; evaluate role prompts, tool results, handoffs, and stop conditions.
 
 ## Common pitfalls
 
-- **`expected_output` too generic**: "Some output" gives the LLM no guide. "A 2-sentence blog intro paragraph in active voice" is 10× better
+- **`expected_output` too generic**: "Some output" has no clear success condition. Change it to "A two-sentence blog intro in active voice," then compare with test cases
 - **Missing `context`**: writer without `context=[research_task]` doesn't see researcher's output — it'll hallucinate
-- **Small model + 3 agents**: qwen2.5:3b on 3-agent crews can take 1+ minute. Switch to `qwen2.5:7b` or Claude
+- **Small model + 3 agents**: it may run slowly or miss a step. Inspect the log first, then compare `qwen2.5:7b` or Claude if needed
 - **`allow_delegation=True` use cautiously**: enables agents to call others, easy to loop. Default `False` for prototypes
 
 ## Want smarter answers?
 
-```bash
-MODEL=anthropic/claude-sonnet-5 python starter_anthropic.py  # higher quality
-MODEL=ollama/qwen2.5:7b python starter.py                       # larger local model
+```powershell
+$env:MODEL="anthropic/claude-sonnet-5"; .\.venv\Scripts\python.exe starter_anthropic.py
+$env:MODEL="ollama/qwen2.5:7b"; .\.venv\Scripts\python.exe starter.py
 ```
 
 ## Extensions
 
 - **Add a manager**: `process=Process.hierarchical` + `manager_llm=...` for dynamic delegation
 - **Add memory**: CrewAI has `memory=True` for cross-task context
-- **Streaming**: `crew.kickoff_for_each(...)` or `crew.kickoff_async(...)`
-- **Human-in-the-loop**: see Exercise 3 (LangGraph) — CrewAI's HITL is weaker
+- **Batch or async execution**: `crew.kickoff_for_each(...)` handles a list of inputs; `crew.kickoff_async(...)` runs asynchronously. Neither one means streaming
+- **Streaming**: construct `Crew(..., stream=True)`, then call `crew.kickoff()`
+- **Human-in-the-loop**: Exercise 3 demonstrates LangGraph; CrewAI also provides its own human-feedback triggers

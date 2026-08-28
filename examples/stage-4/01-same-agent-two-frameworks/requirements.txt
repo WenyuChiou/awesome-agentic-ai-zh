@@ -1,5 +1,5 @@
-langgraph>=0.2,<1.0
-langchain-openai>=0.2,<1.0
-langchain-anthropic>=0.2,<1.0
-langchain-core>=0.3,<1.0
-crewai>=0.80,<1.0
+langgraph>=1.2,<2.0
+langchain-openai>=1.6,<2.0
+langchain-anthropic>=1.7,<2.0
+langchain-core>=1.6,<2.0
+crewai>=1.15,<2.0

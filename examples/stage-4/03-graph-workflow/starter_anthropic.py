@@ -1,34 +1,29 @@
-"""Stage 4 練習 3：圖式 workflow — LangGraph（Path B、概念展示）。
+"""Stage 4 練習 3 Path B：把同一張 LangGraph 圖接到 ChatAnthropic。
 
-這個 starter 的 workflow 不打 LLM API（節點都是 deterministic 邏輯 / template）、
-所以 Path A 跟 Path B **跑出來一樣**。重點是「**圖結構 + checkpointing + HITL**
-邏輯本身**完全跨 backend**」。
-
-實際 production 把 `respond_node` 換成真的 LLM call 即可——`ChatAnthropic(model="claude-haiku-4-5")`
-或 `ChatOpenAI(base_url="...")` 都能塞進來。
-
-跑法：
-    pip install -r requirements.txt
-    python starter_anthropic.py
+流程、暫停點與人工核准規則都不變；只有負責寫草稿的模型不同。
 """
 
 from __future__ import annotations
 
+import os
 import sys
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
+from langchain_anthropic import ChatAnthropic
 from starter import run
 
+MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
+
+
+def make_anthropic_llm() -> ChatAnthropic:
+    """建立使用固定 model ID 的 Anthropic chat model。"""
+    return ChatAnthropic(model=MODEL, temperature=0)
+
+
 if __name__ == "__main__":
-    print("ℹ️ 這份 workflow 不打 LLM、純展示 LangGraph 圖結構 + HITL。")
-    print("   要在節點裡接 Anthropic Claude，把 respond_node 改成：")
-    print('     from langchain_anthropic import ChatAnthropic')
-    print('     llm = ChatAnthropic(model="claude-haiku-4-5")')
-    print('     draft = llm.invoke(state["query"]).content')
-    print("-" * 60)
-    r = run("台北人口", approve=True)
-    print(f"final: {r['final']}")
-    assert r["final"]
-    print("✅ 練習 3 (Anthropic concept) 通過 — 圖結構跨 backend 一致")
+    result = run("What is the Taipei population?", approve=True, llm=make_anthropic_llm())
+    print(result["final"])
+    assert result["final"].startswith("PUBLISHED:")
+    assert "Taipei" in result["final"]

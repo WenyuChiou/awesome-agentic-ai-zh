@@ -6,6 +6,12 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-08-28
+
+- **examples / Stage 4 / current SDK** · **五個 framework 範例升到查核日 current major，並改成每題自己的 Python 3.11 環境**：LangGraph／LangChain、CrewAI、Smolagents、LiteLLM 與 Pydantic AI requirements 不再鎖在舊 major；三語索引與 15 份 README 都先給可直接複製的 PowerShell `.venv` 指令，再用關閉的 `<details>` 放 macOS／Linux。乾淨的 Exercise 2 專用環境實際抓出共用環境曾遮住的缺件：CrewAI Anthropic Path B 必須安裝 `crewai[anthropic]`；修正後五個獨立環境都能 `pip check`，不再把不同 framework 的 requirements 混裝。
+- **fix / behavior / safety** · **雙路徑從「能 import」提升為可觀察的離線行為測試**：Exercise 1 限制 LangGraph recursion、驗證 tool name／參數並真正走 tool loop／Crew 結構；Exercise 2 鎖住三角色 handoff、`max_iter=4` 與停止條件；Exercise 3 改用現行 `interrupt()` + `Command(resume=...)`、checkpoint 與固定 `thread_id`，也把 node 內暫停和 caller 外部恢復分開教；Exercise 4 移除 `eval`，改用有節點／字數／數值上限的 AST 算術與 JSON allowlist。CodeAct 使用一般 Docker bridge 保留 host → Jupyter 控制通道，控制埠只綁 `127.0.0.1`，再 drop capabilities、禁止提權與限制資源；正文也明說容器仍可能連網、這不是 production sandbox。Exercise 5 遷移到 Pydantic AI 2.35 的 `OpenAIChatModel`／`AnthropicModel`／官方 `TestModel`，拒絕空答案、空 sources 與越界 confidence，並明說「格式通過不代表內容真實」。11 個直接執行的離線入口與 compileall 均通過；另附真正啟動 executor、核對實際 loopback port binding 的 `test_docker_smoke.py`，但本機 Docker daemon 未啟動，所以沒有把 live CodeAct 容器冒充為已驗收。
+- **docs / cost / acceptance** · **原有深度閱讀、延伸與五星編輯推薦不因現代化而被刪短**：五題三語保留原資源與教學段落，刪除固定成功率、固定秒數、沒有來源的「最穩／10 倍／production 必用」結論；CrewAI streaming 改成現行 `Crew(..., stream=True)`，Smolagents `HfApiModel` 改成 `InferenceClientModel`，HITL 比較改為中性事實。Ollama `$0` 限定為模型 API 費，Anthropic 改用 `$1／$5` 每百萬 token 公式、明示 2,000 input + 1,000 output 的 `$0.007` 假設與每題保守支出上限。新增 `scripts/test_stage04_examples.py` 鎖住五資料夾、current-major requirements、雙行為測試、固定 model ID、PowerShell-first、關閉 details、三語 URL／數字／安全語意、舊 API 與過期主張；DESIGN、三語 style guide 與執行計畫同步記錄獨立 `.venv` 和「import-only 不算通過」。本層只會開在 #152 上的 stacked PR，未經使用者明確同意不合併或清理。
+
 ## 2026-08-27
 
 - **content / reader UX** · **Stage 0、2、3、4 三語把易變資料的查核日期移出可見主線**：日期只留在預設關閉的資源／時間區與機器可讀 freshness marker；刪除「日期只表示……」一類沒有幫助讀者開始學習的固定提醒，並把同一規則寫回 DESIGN 與三語 style guide。另逐頁檢查「動手練習」標題的實際 Markdown 與 MkDocs HTML，確認標題沒有 `""`；Stage 2 的 `"""` 是 Python 多行字串，Stage 3 原本較容易誤讀的 `print("".join(...))` 改為直接以換行連接。

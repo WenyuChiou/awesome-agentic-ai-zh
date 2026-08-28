@@ -1,5 +1,5 @@
 <div align="right">
-  <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
+  <a href="./README.md">Traditional Chinese</a> | <a href="./README.zh-Hans.md">Simplified Chinese</a> | <strong>English</strong>
 </div>
 
 # Exercise 1: Same Agent, Two Frameworks (LangGraph + CrewAI)
@@ -25,35 +25,52 @@ Built once in **LangGraph** and once in **CrewAI** — compare styles.
 
 ## How to run — two paths + two frameworks
 
+> ⚠️ **Give each exercise its own Python 3.11 `.venv`.** Do not install all five `requirements.txt` files together. They demonstrate different frameworks whose dependency ranges can conflict.
+
 ### Path A (default, free, local)
 
-```bash
-pip install -r requirements.txt
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 
-python starter.py         # LangGraph + Ollama
-python starter_crewai.py  # CrewAI + Ollama (comparison)
+.\.venv\Scripts\python.exe starter.py # LangGraph + Ollama
+.\.venv\Scripts\python.exe starter_crewai.py # CrewAI + Ollama comparison
 ```
 
-Budget: **$0**.
+Budget: the model API costs **$0**. Your computer, memory, electricity, and download time are not free.
 
-### Path B (Anthropic, cloud-quality)
+### Path B (Anthropic, compare a cloud result)
+
+```powershell
+$env:ANTHROPIC_API_KEY="sk-ant-..."
+.\.venv\Scripts\python.exe starter_anthropic.py # LangGraph + Claude
+```
+
+Pinned default: `claude-haiku-4-5-20251001`. Haiku 4.5 costs **$1** per million input tokens and **$5** per million output tokens. A request with 2,000 input + 1,000 output tokens costs `2,000 / 1,000,000 × $1 + 1,000 / 1,000,000 × $5 = $0.007`. A framework may make more than one request, so set a provider spend limit of **$0.05** for this exercise. This is an estimate, not a billing promise.
+
+<details markdown="1">
+<summary>macOS/Linux commands and verification information</summary>
 
 ```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py   # LangGraph + Claude
+python3.11 -m venv .venv
+./.venv/bin/python -m pip install -r requirements.txt
+export ANTHROPIC_API_KEY="sk-ant-..."
+./.venv/bin/python test.py
 ```
 
-Budget: ~**$0.001** per run (claude-haiku-4-5).
+Official sources: [LangGraph overview](https://docs.langchain.com/oss/python/langgraph/overview) | [CrewAI docs](https://docs.crewai.com/) | [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+
+<small>Packages, model IDs, prices, and official links verified: 2026-08-28 UTC.</small>
+</details>
 
 ## Validate the logic (mock-based)
 
-```bash
-python test.py             # LangGraph + mock LLM
-python test_anthropic.py   # starter_anthropic loads + ChatAnthropic constructs
-python test_crewai.py      # CrewAI tool + module loads
+```powershell
+.\.venv\Scripts\python.exe test.py # LangGraph behavior
+.\.venv\Scripts\python.exe test_anthropic.py # Anthropic-path behavior
+.\.venv\Scripts\python.exe test_crewai.py # CrewAI behavior
 ```
 
 ## Side-by-side framework comparison
@@ -63,9 +80,8 @@ python test_crewai.py      # CrewAI tool + module loads
 | Core abstraction | `StateGraph` + node + edge | `Agent` + `Task` + `Crew` |
 | Mental model | "How does state flow?" | "Who plays what role?" |
 | Loop control | Explicit conditional edges | Hidden inside `Crew.kickoff()` |
-| Lines of code (this task) | ~50 | ~25 |
-| Debug path | Inspect graph state, time-travel | Verbose logs, hard to step |
-| Best for | Complex branching, production, audit | Multi-agent prototypes, role-based tasks |
+| Debug path | Inspect graph state and checkpoints | Inspect task output and verbose logs |
+| Useful when | You need explicit state and branches | You want to express role/task collaboration quickly |
 | Learning curve | Medium-high | Low |
 
 ### LangGraph style (condensed)
@@ -94,25 +110,25 @@ crew.kickoff()
 ## What to observe
 
 1. **Abstraction cost**: CrewAI hides more, writes less code; but stack depth grows when debugging
-2. **Small-model friendliness**: LangGraph is more stable with qwen2.5:3b; CrewAI's denser prompts can confuse small models
+2. **Small-model behavior**: test both paths; role descriptions, tool schemas, and task length can all change the result
 3. **Controllability**: LangGraph exposes state transitions; CrewAI is "result-oriented"
-4. **When to pick**: production / audit → LangGraph. Multi-agent prototypes / role-based → CrewAI
+4. **When to pick**: try LangGraph when you need to inspect each state transition; try CrewAI when roles are the clearest first description, then measure on your own task
 
 ## Common pitfalls
 
 - **LangGraph `bind_tools`**: must `llm.bind_tools([search])` to expose tool schema. Without it the model doesn't know the tool exists
-- **CrewAI model spec**: needs LiteLLM format (`"ollama/qwen2.5:3b"`, not `"qwen2.5:3b"`). Misspell and framework silently falls back to OpenAI default
+- **CrewAI model spec**: use LiteLLM format (`"ollama/qwen2.5:3b"`, not `"qwen2.5:3b"`). A wrong provider prefix can select a different backend, so print and verify the setting before a run
 - **CrewAI return type**: `crew.kickoff()` returns a `CrewOutput` object; `str(result)` to get text. Bare `print(result)` may show repr
 
 ## Want smarter answers?
 
-```bash
-MODEL=claude-sonnet-5 python starter_anthropic.py    # more stable
-MODEL=qwen2.5:7b python starter.py                      # larger local model
+```powershell
+$env:MODEL="claude-sonnet-5"; .\.venv\Scripts\python.exe starter_anthropic.py
+$env:MODEL="qwen2.5:7b"; .\.venv\Scripts\python.exe starter.py
 ```
 
 ## Extensions
 
-- **Streaming**: LangGraph `graph.stream(...)`, CrewAI `crew.kickoff(stream=True)`
+- **Streaming**: use LangGraph `graph.stream(...)`; for CrewAI, construct `Crew(..., stream=True)` and then call `crew.kickoff()`
 - **Checkpointing**: LangGraph + `MemorySaver` for time-travel debug
 - **Human-in-the-loop**: see Exercise 3
