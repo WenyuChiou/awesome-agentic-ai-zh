@@ -379,8 +379,8 @@ Chunk 太大時，一張卡會混進太多主題；太小時，答案需要的�
     <tr><td><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></td><td>⭐⭐⭐⭐⭐</td><td>要建立可重跑 eval 的團隊</td><td>datasets、metrics、experiments</td><td>Apache-2.0；metric 仍需人工校準</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">完整產品與教程</th><td><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></td><td>⭐⭐⭐⭐⭐</td><td>想讀完整 AI assistant 架構</td><td>ingest、retrieval、chat、admin</td><td>完整產品很大；當架構參考，不當 starter</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>想比較多種技巧的讀者</td><td>可執行 notebooks 與技術對照</td><td>社群教程；事實仍回到官方文件與論文核對</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">完整產品與教學</th><td><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></td><td>⭐⭐⭐⭐⭐</td><td>想讀完整 AI assistant 架構</td><td>ingest、retrieval、chat、admin</td><td>完整產品很大；當架構參考，不當 starter</td></tr>
+    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>想比較多種技巧的讀者</td><td>可執行 notebooks 與技術對照</td><td>社群教學資源；事實仍回到官方文件與論文核對</td></tr>
   </tbody>
 </table>
 
