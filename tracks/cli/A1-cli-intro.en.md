@@ -158,7 +158,8 @@ Editorial ratings are learning-map guidance, not GitHub stars or an overall rank
 <tr><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>⭐⭐⭐⭐⭐</td><td>People using one agent in terminal, desktop, or chat</td><td>Enable provider, Skill, and MCP permissions one at a time</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Router / local engine</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>⭐⭐⭐⭐</td><td>People switching providers through one API</td><td>It is a Router and still needs an agent</td></tr>
+<tr><th scope="rowgroup" rowspan="3">Router / local engine</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>⭐⭐⭐⭐</td><td>People switching providers through one API</td><td>It is a Router and still needs an agent</td></tr>
+<tr><td><a href="https://github.com/sandbaseai/cli">sandbaseai/cli</a></td><td>⭐⭐⭐⭐</td><td>People connecting multiple CLI clients to multiple providers</td><td>It is a local CLI/MCP bridge; start in a demo repo with least privilege and reversible settings</td></tr>
 <tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>People running models on their own computer</td><td>It is a local runtime and still needs an agent</td></tr>
 </tbody>
 </table>

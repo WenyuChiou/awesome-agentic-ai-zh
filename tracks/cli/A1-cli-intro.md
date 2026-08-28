@@ -167,7 +167,8 @@ A1 只教你安全開始，不在兩個頁面重複維護同一份易變資料�
 <tr><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>⭐⭐⭐⭐⭐</td><td>想在 terminal、desktop 或聊天平台使用同一 agent 的人</td><td>逐項開啟 provider、Skill 與 MCP 權限</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Router／本機引擎</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>⭐⭐⭐⭐</td><td>想用一個 API 入口切換 provider 的人</td><td>它是 Router，仍要搭配 agent</td></tr>
+<tr><th scope="rowgroup" rowspan="3">Router／本機引擎</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>⭐⭐⭐⭐</td><td>想用一個 API 入口切換 provider 的人</td><td>它是 Router，仍要搭配 agent</td></tr>
+<tr><td><a href="https://github.com/sandbaseai/cli">sandbaseai/cli</a></td><td>⭐⭐⭐⭐</td><td>想把多個 CLI client 接到多個 provider 的人</td><td>它是本機 CLI／MCP bridge；先用 demo repo、最小權限與可回復設定</td></tr>
 <tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>想在自己電腦跑模型的人</td><td>它是 local runtime，仍要搭配 agent</td></tr>
 </tbody>
 </table>
