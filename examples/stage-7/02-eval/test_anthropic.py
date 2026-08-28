@@ -22,6 +22,21 @@ def test_agent_answer_anthropic_mock():
     print("✅ test_agent_answer_anthropic_mock")
 
 
+def test_agent_answer_anthropic_rejects_empty_text():
+    client = MagicMock()
+    client.messages.create.return_value = SimpleNamespace(
+        content=[SimpleNamespace(type="text", text="")]
+    )
+    try:
+        agent_answer_anthropic("Capital of Japan?", client=client)
+    except ValueError as error:
+        assert "empty text" in str(error)
+    else:
+        raise AssertionError("empty model output must fail")
+    print("✅ test_agent_answer_anthropic_rejects_empty_text")
+
+
 if __name__ == "__main__":
     test_agent_answer_anthropic_mock()
+    test_agent_answer_anthropic_rejects_empty_text()
     print("\n🎉 通過")

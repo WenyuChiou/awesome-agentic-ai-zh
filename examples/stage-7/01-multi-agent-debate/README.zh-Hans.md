@@ -2,103 +2,122 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 1：Multi-Agent 辩论
+# 练习 1：让三个 Agent 一起辩论
 
-对应 [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 1。
-> 🎓 **学习模式**：这份 `starter.py` 是**完整解答**、不是 TODO skeleton。建议用**主动模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重写一份 `starter.py`、跑 `python test.py` 验证；卡 20 分钟再回去对照 reference。完整方法论看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+你会做出三个角色：PRO 说“赞成”、CON 说“反对”，Judge 看完两边再选一边。
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 两条 SDK path，不是进阶深度教材。深度教材推荐：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的 multi-agent collaboration / debate 章节**
-> - [Anthropic — Building Effective Agents debate](https://www.anthropic.com/engineering/building-effective-agents) + [Microsoft AutoGen multi-agent docs](https://microsoft.github.io/autogen/)
-> - 完整 references 见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)
+对应 [Stage 7 — Multi-Agent 与 Production](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 1。
 
-## 任务
+## 🎯 学习目标
 
-3 个 agent（PRO + CON + Judge）对同问题辩论：
+- 说清楚 **Multi-Agent**：多个 Agent 分工完成同一件事。
+- 让 PRO 与 CON 各自作答，避免一开始就互相带答案。
+- 用严格格式读 Judge 结果；格式错了就停止，不偷偷猜。
 
-![Multi-agent debate：PRO / CON / Judge](../../../resources/diagrams/multi-agent-debate-flow.zh-Hans.png)
+## 先跑不花模型费的测试
 
-PRO 跟 CON **独立** call、互不看到对方论点（避免 bias propagation）；Judge 看完两边再裁决。
+在这个文件夹打开 PowerShell，直接复制：
 
-## 为什么这个 pattern 重要
-
-- **降低 single-LLM bias**：单一 LLM 给的答案常带 stance、不主动指出反面
-- **强化 reasoning**：两个 LLM 强迫 articulate 各自立场、reasoning trace 更清楚
-- **可解释性**：production 高风险决策（policy / 医疗 / 法律 review）有 audit trail
-- **错误侦测**：两 agent 互不同意时、可能就是答案有歧义 / model 不确定
-
-## 怎么跑
-
-### Path A（默认、本机免费）
-
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
-ollama serve
-python starter.py
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
 ```
 
-预算：**$0**。3 个 LLM call × CPU ≈ 15-45 秒。
+看到两份 `🎉`，就代表三次调用、空回复检查和 Judge 格式都通过。测试使用假回复，不会连接到模型。
 
-### Path B（Anthropic）
+<details markdown="1">
+<summary>Path A：用 Ollama 实际辩论</summary>
 
-```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+1. 安装 [Ollama](https://ollama.com/) 后，先准备模型：
+
+   ```powershell
+   ollama pull qwen3.5:4b
+   ollama serve
+   ```
+
+2. 另开一个 PowerShell：
+
+   ```powershell
+   .\.venv\Scripts\python.exe starter.py
+   ```
+
+Ollama 不收模型 API 费，但下载时间、电力与电脑硬件仍有成本。模型较慢时，请等它完成，不要用固定秒数判断失败。
+
+</details>
+
+<details markdown="1">
+<summary>Path B：用 Anthropic 比较结果与预算</summary>
+
+```powershell
+$env:ANTHROPIC_API_KEY = "贴上你的金钥"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
-预算：每次 ≈ **$0.003**（3 LLM call × short prompt × claude-haiku-4-5）。
+这题会调用三次模型。Haiku 4.5 的单价是 input `$1 / 1M` tokens、output `$5 / 1M` tokens：
 
-## 不花钱验证程序逻辑
-
-```bash
-python test.py             # 3 个 test、mock 3 LLM call、验 judge 看到 pro+con
-python test_anthropic.py
+```text
+估算费用 = (input_tokens × $1 / 1M) + (output_tokens × $5 / 1M)
 ```
 
-## 重要设计细节
+这是估算公式，不是帐单保证。第一次练习前，可在 Anthropic Console 把供应商 spend limit 设成 `$1`；完成后移除 PowerShell 内的金钥。
 
-```python
-# pro / con 用同一个 model、不同 system prompt
-pro = llm_call(system="argue PRO position", user=question)
-con = llm_call(system="argue CON position", user=question)
+</details>
 
-# judge 看「question + pro + con」做裁决
-judge = llm_call(
-    system="neutral judge, output WINNER=PRO or WINNER=CON",
-    user=f"Question: {question}\n\nPRO: {pro}\n\nCON: {con}",
-)
+## 三个重要词
+
+- **PRO / CON**：同一题的赞成方与反对方。
+- **Judge**：读完两边答案，再选出较符合题目与证据的一边。
+- **Output contract**：模型必须照约定格式回答。这题只接受 `WINNER=PRO. 理由` 或 `WINNER=CON. 理由`。
+
+PRO 与 CON 都只看原题。Judge 才会看到原题和两份论点：
+
+```text
+题目 ─┬─> PRO ─┐
+      └─> CON ─┴─> Judge ─> WINNER + 理由
 ```
 
-**Key**：pro / con **独立 call**——不要把 pro 结果丢给 con。如果 con 看到 pro、会倾向反驳 pro 而非独立思考、bias 反而加强。
+这只能提供第二个视角，不保证答案正确。医疗、法律或高风险决策仍要交给合格的人检查。
 
-## Production-ready 变形
+## 只改一件事
 
-- **N-way debate**：3+ agent 各持不同立场（e.g. "engineer / PM / customer view"）
-- **Iterative debate**：pro 跟 con 互看 N 轮、看谁先放弃
-- **Different models**：pro 用 Claude、con 用 GPT、judge 用 Gemini——cross-model debate 找盲点
-- **Self-consistency check**：跑 3 次 debate、看 judge 结果稳定度
+把 `q` 换成你熟悉的问题，例如“小团队要不要先用 Agent framework？”再跑一次。看 Judge 的理由是否真的引用两边论点。
 
-## 两个 path 观察重点
+## 成功检查
 
-| 观察项 | Anthropic Claude | Ollama qwen2.5:3b |
-|---|---|---|
-| pro / con 持立场 | 稳 | 偶尔两边都讲“平衡 view”、立场不坚定 |
-| judge 给明确 WINNER | 稳 | 偶尔不给 WINNER= 格式 |
-| reasoning 质量 | 高 | 中 |
-| 成本 | $0.003 | $0 |
+- [ ] PRO 与 CON 都不是空白。
+- [ ] Judge 只输出一个 Winner，并附上理由。
+- [ ] 乱回 `Maybe WINNER=PRO` 时，测试会拒绝它。
+- [ ] 你知道多 Agent 是分工方法，不是正确答案保证。
 
-## 常见坑
+<details markdown="1">
+<summary>程序怎么走、常见问题与延伸</summary>
 
-- **PRO 跟 CON 用同一个 system prompt**：模型答案会同质、debate 意义消失
-- **Judge 看 pro/con 顺序固定**：可能 bias 第一个（recency / primacy effect）。production 可以随机 shuffle
-- **没 structured judge output**：不写 `WINNER=PRO or CON` 格式、后续 parsing 困难
-- **太短 prompt**：pro / con 各只给 1 句、judge 没材料
+1. `llm_call()` 先拒绝空字符串。
+2. `debate()` 分别取得 PRO、CON、Judge 三份文字。
+3. `parse_winner()` 用 `fullmatch()` 检查整份 Judge 回复，不做子字符串猜测。
 
-## 延伸
+常见问题：
 
-- **接 [LangGraph](https://langchain-ai.github.io/langgraph/)**：pro/con 变 parallel node、judge 变 join node
-- **接 [AutoGen](https://github.com/microsoft/autogen)**：AutoGen 对 multi-agent debate 有专门支援
-- **加 confidence**：judge 多 output confidence 0-1、low confidence 才把 case escalate 给人
-- **接 eval（练习 2）**：跑 debate 在 50 个 case、跟 single-agent baseline 比准确率
+- 两边说得太像：把角色、要保护的目标与限制写得更明确。
+- Judge 格式错误：保留错误并重试一次，不要默默选一边。
+- 想减少顺序偏差：正式评测时交换 PRO／CON 显示顺序，再比较结果。
+
+延伸方向：把两边改成“工程师／用户”、加入人工批准，或把多个题目交给 [promptfoo](https://github.com/promptfoo/promptfoo) 批次评测。
+
+</details>
+
+<details markdown="1">
+<summary>📚 深入学习资源与评分</summary>
+
+- ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：章节式中文 Agent 教材，适合补完整背景。
+- ⭐⭐⭐⭐⭐ [Anthropic：Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)：先判断单 Agent 是否已足够，再增加协作。
+- ⭐⭐⭐⭐ [Microsoft AutoGen](https://github.com/microsoft/autogen)：想看完整 multi-agent framework 时再进入。
+
+完整清单见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)。
+
+<small>模型、价格、套件与连结查核：2026-08-28 UTC。</small>
+
+</details>

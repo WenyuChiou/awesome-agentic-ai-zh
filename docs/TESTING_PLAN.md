@@ -1,10 +1,11 @@
 # Testing Plan — T3+ Verification Log
 
-> Updated 2026-08-27. Verification is **done**; this doc is now a historical log.
-> The branch `t3-stage-4-6-7-unverified` referenced in earlier versions has been
-> fully merged into `main` and deleted.
+> Updated 2026-08-28. The opening table is the historical T3+ baseline; later
+> sections record the current chapter-by-chapter modernization layers separately.
+> The old branch `t3-stage-4-6-7-unverified` was merged into `main` and deleted,
+> but a newer layer is not called shipped until its own branch reaches `main`.
 
-## ✅ Final state (everything on `main`)
+## Historical T3+ baseline (on `main`)
 
 | Batch | What | How verified | Bugs fixed |
 |---|---|---|---|
@@ -106,7 +107,7 @@ Stage 6 (`stages/06-memory-rag.md`) now keeps seven core terms, five cumulative 
 
 This reader layer does not claim that the five example folders are fully hardened. The next stacked layer will separately test the chunk-overlap boundary, isolate Chroma collections, replace ephemeral “long-term” memory with real persistence, preserve Ollama／Anthropic paths, and make the teaching tests offline and behavior-based.
 
-### Stage 7 — reader path covered; executable hardening stays in the next layer
+### Stage 7 — reader path and executable hardening covered in separate stacked layers
 
 Stage 7 (`stages/07-multi-agent-production.md`) keeps the single-Agent／Multi-Agent decision, seven bold core terms, five-layer map, eight-part Harness checklist, OpenRouter／Pi／OpenCode／Orca／QM role split, five real exercise headings and commands, execution-receipt mini-project, benchmark-reading discipline, and self-check visible. Seven closed disclosures hold setup, full reading, Loop／Graph depth, recovery／cost details, full exercise steps, benchmark links, and the resource catalog.
 
@@ -114,7 +115,9 @@ Stage 7 (`stages/07-multi-agent-production.md`) keeps the single-Agent／Multi-A
 
 `scripts/check-reader-ux.py` measures the collapsed mainline at `5,770／9,925／5,863` non-whitespace characters and locks all seven core-term definitions before Exercise 1. `scripts/check-image-locale.py` ensures the English and Simplified Chinese pages use their own bright image variants.
 
-This content layer does not claim that the five Stage 7 examples use current model names, current-major SDKs, or the final direct-run pedagogy. The next stacked layer will update those folders, remove the “rename and rewrite the solution” instruction, preserve offline tests, and verify Ollama／Anthropic behavior separately.
+The example-hardening layer keeps the five folders separate and adds `scripts/test_stage07_examples.py`. It locks 15 trilingual READMEs, each folder's rated `hello-agents` route to chapter-length material, five current-major requirements files, `qwen3.5:4b`, the pinned `claude-haiku-4-5-20251001` ID, PowerShell-first isolated setup, closed disclosures, ordered URL／price parity, and the absence of old fixed cost／latency／cache claims. The shared examples guide and three setup guides separately keep `qwen2.5:3b`／`llama3.2:3b` for Stage 3–6 function-calling exercises and `qwen3.5:4b` for Stage 7 production mechanics, so “Stage 3+” cannot silently choose two defaults or preserve `$0/run` wording outside the example folders.
+
+All ten directly executable offline entrypoints pass in a clean `python:3.11-slim` container with the resolved current packages. Their 55 behavior tests cover empty and whitespace-only output rejection, exact Debate／Eval Judge contracts, sanitized exception categories that do not retain a secret-bearing raw message, provider usage recording, a cache demo deliberately above Haiku 4.5's 4,096-token minimum, FastAPI input bounds, secret-marker log regressions, and 200／422／429／502／503 behavior. Debate role separation is an example shape, not evidence that more agents reduce bias or improve correctness. The deploy image also builds from scratch, runs as UID `10001` (`appuser`), and returns `{"status":"ok"}` while mounted read-only with a temporary `/tmp` and a loopback-only host port. These checks do not call a live model, prove output quality, or turn the container into a sandbox.
 
 ## v2 path (deferred)
 

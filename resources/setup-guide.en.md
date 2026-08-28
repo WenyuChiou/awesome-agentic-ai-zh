@@ -122,16 +122,16 @@ Want to script with Python, run batch jobs, integrate LLMs into your own app/aut
 - **GLM (ZhipuAI)**: https://open.bigmodel.cn/ (China) / https://z.ai/ (intl)
   Free web at https://chatglm.cn. Has GLM-4.5 and GLM-4-Plus. Free tier available; students can apply for extra credit.
 
-#### Local (zero API cost, fully offline)
+#### Local (no provider model API bill; offline after download)
 
 - **Ollama local models**: no API key needed. For the local path, see [Cookbook Recipe 6](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough).
-  This repo's "Path A" defaults to Ollama; all Stage 1-7 exercises run with `gemma4:e4b` (Stage 1-2) or `qwen2.5:3b` (Stage 3+) at $0/run.
+  This repo's "Path A" defaults to Ollama: Stage 1–2 use `gemma4:e4b`, Stage 3–6 tool-use/ReAct exercises use `qwen2.5:3b`, and Stage 7 debate/eval/observability/streaming/deploy mechanics use `qwen3.5:4b`. Local inference has no provider model API bill, but hardware, electricity, downloads, and waiting time still cost resources.
 
 > 💡 **How to pick your first**:
 > - Learning agents / production, **US-region account OK** → **Anthropic Claude** (the curriculum's canonical path)
 > - Learning agents / production, **China region** or want a Chinese-native model → **DeepSeek** (cheapest cloud option, OpenAI-compat, strong Chinese support)
 > - Want to try many models without a local GPU → **NVIDIA NIM** (1000 credits, 10+ hosted open models)
-> - Privacy-sensitive / fully free / mainland China without cloud access → **Ollama** (local, runs the entire curriculum at $0)
+> - Want local data handling / mainland China without cloud access → **Ollama** (still protect your device, files, logs, and access permissions; local data is not automatically safe)
 
 ---
 

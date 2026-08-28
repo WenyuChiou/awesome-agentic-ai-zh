@@ -1,7 +1,6 @@
-"""Stage 7 練習 3：Observability — Path B（Anthropic、含 token usage 詳細）。
+"""Stage 7 練習 3：Observability — Path B（Anthropic usage 欄位）。
 
-Anthropic SDK 的 resp.usage 欄位精確（input_tokens / output_tokens / cache_*）、
-比 Ollama 完整。Production 用 Claude 通常 token tracking 更精準。
+這條路記錄供應商回傳的 input_tokens 與 output_tokens，不自行猜 token 數。
 
 跑法：
     pip install -r requirements.txt
@@ -21,9 +20,9 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import anthropic
 
-from starter import TraceContext, trace_span
+from starter import TraceContext, require_text, trace_span
 
-MODEL = os.environ.get("MODEL", "claude-haiku-4-5")
+MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
 
 
 def observable_agent_anthropic(question: str, ctx: TraceContext, client: Any = None) -> str:
@@ -33,9 +32,10 @@ def observable_agent_anthropic(question: str, ctx: TraceContext, client: Any = N
             model=MODEL, max_tokens=300,
             messages=[{"role": "user", "content": question}],
         )
-    # Anthropic usage 是精確的
-    ctx.add_tokens(input_t=resp.usage.input_tokens, output_t=resp.usage.output_tokens)
-    return " ".join(b.text for b in resp.content if b.type == "text")
+        joined = " ".join(b.text for b in resp.content if b.type == "text")
+        answer = require_text(joined, "Anthropic")
+        ctx.add_tokens(input_t=resp.usage.input_tokens, output_t=resp.usage.output_tokens)
+    return answer
 
 
 if __name__ == "__main__":
@@ -43,5 +43,4 @@ if __name__ == "__main__":
     answer = observable_agent_anthropic("What's 2+2?", ctx)
     print(f"answer: {answer}")
     print(f"trace: {ctx.summary()}")
-    # Claude haiku ≈ $1/$5 per M tokens、簡單 query usage ≈ 10-30 token 雙向
-    print(f"\n✅ 練習 3 (Anthropic) 通過 — token usage 精確、≈$0.0001/run")
+    print(f"\n✅ 練習 3 (Anthropic) 通過 — {MODEL} 回傳的 usage 已寫入 trace")

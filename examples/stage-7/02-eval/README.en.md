@@ -2,134 +2,126 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 2: Eval Pipeline ("pytest for LLMs")
+# Exercise 2: Check an Agent with Evals
 
-Pairs with [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.en.md) Exercise 2.
-> 🎓 **How to use this**: `starter.py` is the **complete solution**, not a TODO skeleton. The active approach works better — `mv starter.py starter_reference.py`, read the signatures but not the bodies, write your own `starter.py` from scratch, then run `python test.py` to check it; if you are stuck for 20 minutes, go back and compare against the reference. Full methodology in [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md).
+An **Eval (evaluation)** is like a reusable test sheet: after changing a prompt, model, or program, run the same questions again.
 
-> 📚 **Want the chapter-length version?** The starter in this folder is an illustrative build focused on the core pattern plus two SDK paths — it is not in-depth teaching material. Recommended for depth:
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ the most complete Chinese-language resource — chapter-by-chapter, covering 16 production capabilities. **This exercise maps to hello-agents' eval / regression testing chapter**
-> - [promptfoo](https://github.com/promptfoo/promptfoo) + [Anthropic Workbench Evals](https://console.anthropic.com/workbench/evals) (the official eval UI)
-> - Full references in [Stage 7 Curated Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections)
+Pairs with Exercise 2 in [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.en.md).
 
-## Task
+## 🎯 Learning goals
 
-Write 5 eval cases for a production agent, run a baseline, track regression. **Without eval, you ship blind.**
+- Explain an **Eval case**: one input, an expected result, and a scoring method.
+- Separate fixed rules from **LLM-as-judge**; a Judge model is not always reliable.
+- Require an exact `PASS` or `FAIL`, so a sentence that merely contains `PASS` cannot slip through.
 
-The 5 cases cover:
-1-2. **Math** (deterministic answers)
-3-4. **Geography** (factual recall)
+## Run the model-free tests first
 
-5. **Grounding test** (fake word "flrgglemerk" — agent should say "don't know", not hallucinate)
+Open PowerShell in this folder and copy:
 
-Two evaluators:
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
+```
 
-| Method | When | Cost |
-|---|---|---|
-| **String match** | Deterministic substring expected | $0, instant |
-| **LLM-as-judge** | Open-ended answers (recommendation / explanation) | One extra LLM call |
+Two `🎉` messages mean the five-case dataset, score aggregation, empty-output checks, and Judge parser passed. This step uses only fake replies.
 
-## How to run
+<details markdown="1">
+<summary>Path A: Run five Eval cases with Ollama</summary>
 
-### Path A (default, free, local)
-
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
+```powershell
+ollama pull qwen3.5:4b
 ollama serve
-python starter.py
 ```
 
-### Path B (Anthropic)
+Open another PowerShell window:
 
-```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+```powershell
+.\.venv\Scripts\python.exe starter.py
 ```
 
-Budget: 5 cases × 1 call ≈ **$0.003** (Claude haiku).
+Ollama does not charge a provider model API fee. Electricity, hardware, downloads, waiting, and maintenance still cost something. These five teaching cases do not prove model quality on your work.
 
-## Validate the logic
+</details>
 
-```bash
-python test.py             # 7 tests: evaluators + run_eval aggregation
-python test_anthropic.py   # Anthropic agent mock
+<details markdown="1">
+<summary>Path B: Run the same test sheet with Anthropic</summary>
+
+```powershell
+$env:ANTHROPIC_API_KEY = "paste-your-key"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
-## Production value of eval
+Haiku 4.5 costs `$1 / 1M` input tokens and `$5 / 1M` output tokens:
 
-```
-Without eval:
-   PR merge → ship → user complains → only then you discover the regression
-
-With eval:
-   PR → run eval → pass_rate drops 95% → 70% → block merge
-   → find which cases regressed → fix prompt / model / retry → recover
+```text
+estimated cost = (input_tokens × $1 / 1M) + (output_tokens × $5 / 1M)
 ```
 
-**Pin a baseline**: capture the initial pass_rate (e.g., 80%) — every ship must not regress.
+Actual cost depends on every case's token use. Set a `$1` provider spend limit, then calculate from observed usage. Do not treat an example estimate as your bill.
 
-## Classic eval shape
+</details>
 
-```python
-eval_cases = [
-    {"id": ..., "input": ..., "expected_substring": ..., "instruction": ...},
-    ...
-]
+## Three important terms
 
-def run_eval(cases, agent_fn, eval_fn):
-    results = [...]
-    return {"pass_count": ..., "pass_rate": ...}
-```
+- **Eval case**: one input, the expected important point, and its scoring rule.
+- **Deterministic evaluator**: the same input always receives the same score, such as substring or regular-expression checks.
+- **LLM-as-judge**: another LLM assigns a score. It can handle open-ended answers, but can also be biased or break the required format.
 
-**Three keys**:
-
-1. **`id` required** — pinpoint which case regressed
-2. **`expected_substring` not full match** — LLM answers have variability
-3. **Eval function decoupled from agent** — swap evaluators against the same cases
-
-## When to use LLM-as-judge
-
-| Scenario | Substring | LLM-as-judge |
+| Shape of the task | Start with | Why |
 |---|---|---|
-| "2+2=?" | ✅ "4" | overkill |
-| "summarize this article" | ❌ no fixed substring | ✅ |
-| "is the tone professional?" | ❌ | ✅ |
-| "count tokens used" | ✅ regex | overkill |
+| The answer must contain `Tokyo` | substring | fast, inexpensive, and repeatable |
+| The answer must match a JSON schema | schema validator | checks the structure directly |
+| The tone should be clear | LLM-as-judge + human sampling | no single required substring |
 
-**Empirical rule**: 80% of cases use substring + heuristics; 20% use LLM-as-judge (more cost / latency).
+This exercise accepts a Judge reply only when the whole response is `PASS` or `FAIL`. If it says “PASS because...”, the program stops instead of guessing.
 
-## Production-ready tools
+## Change one thing
 
-- **[promptfoo](https://github.com/promptfoo/promptfoo)**: YAML config + CLI runner + diff reports
-- **[Anthropic Workbench eval](https://console.anthropic.com/workbench/evals)**: official UI, prompts as code
-- **[LangSmith](https://smith.langchain.com/)**: LangChain ecosystem eval + observability
-- **[Weights & Biases Weave](https://wandb.ai/site/weave)**: generic LLM eval framework
-- **[Braintrust](https://www.braintrust.dev/)**: cross-model / version A/B, dashboards built for production use
+Add one real question from your work to `EVAL_CASES`, then make the fake agent answer it incorrectly. Confirm that the report identifies the failing `id`.
 
-## Path observations
+## Success check
 
-| Observation | Anthropic Claude | Ollama qwen2.5:3b |
-|---|---|---|
-| Math pass rate | ~100% | ~80% |
-| Geography pass rate | ~100% | ~70-90% |
-| Grounding test (flrgglemerk) | Stays grounded, says don't know | Occasionally fabricates |
-| Overall pass_rate | 95-100% | 70-85% |
+- [ ] Every case has one stable, unique `id`.
+- [ ] You can explain why a case uses substring rather than an LLM Judge.
+- [ ] An empty answer cannot pass.
+- [ ] Model comparisons reuse the same cases.
 
-**Takeaway**: production should build a 50-200-case eval set against your specific use case to decide which model.
+<details markdown="1">
+<summary>Grow five cases into a real Eval suite</summary>
 
-## Common pitfalls
+The teaching loop is:
 
-- **Eval set too small (< 10)**: noise dominates, regressions invisible
-- **Eval set too close to training data**: model memorizes, real user queries fail
-- **No grounding test**: production hallucination is the deadliest bug — always test "should say I don't know"
-- **`expected_substring` too strict**: "The capital is Tokyo, Japan." as expected, "Tokyo" as answer = fail. Match only key tokens
-- **LLM-as-judge bias**: same model as agent + judge → self-preference. Use a different model for judge
+1. The agent answers.
+2. The evaluator applies only that case's rule.
+3. The runner saves each result and the overall pass rate.
+4. A failure points back to a specific case, not only one summary score.
 
-## Extensions
+A real project also needs production queries, edge cases, safety cases, and human labels. Set thresholds from your baseline and risk, not from someone else's fixed percentage.
 
-- **Track regression**: write `{"date": ..., "pass_rate": ...}` to sqlite, plot trend
-- **CI integration**: GitHub Actions runs eval, `pass_rate < 90%` blocks merge
-- **A/B model comparison**: same eval, run qwen / Claude / GPT, compare accuracy
-- **Connect to observability (Exercise 3)**: eval failures → alert
+Common problems:
+
+- Every case is easy: add questions that previously failed.
+- The expected value is a whole sentence: retain only the required condition so harmless paraphrases can pass.
+- One model answers and judges itself: include deterministic checks or human sampling to reduce self-preference.
+- Only the total score is saved: also save failed IDs, model ID, prompt version, and date.
+
+</details>
+
+<details markdown="1">
+<summary>📚 Deeper resources and ratings</summary>
+
+- ⭐⭐⭐⭐⭐ [promptfoo](https://github.com/promptfoo/promptfoo): version-control cases, providers, and assertions.
+- ⭐⭐⭐⭐⭐ [Anthropic Console Evals](https://console.anthropic.com/workbench/evals): build and compare test sets in Anthropic's interface.
+- ⭐⭐⭐⭐⭐ [datawhalechina/hello-agents](https://github.com/datawhalechina/hello-agents): Chapter-style Agent material for filling in the full background.
+- ⭐⭐⭐⭐ [LangSmith](https://smith.langchain.com/): useful for teams already using LangChain or LangGraph.
+- ⭐⭐⭐⭐ [Weights & Biases Weave](https://wandb.ai/site/weave): connect traces, data, and evaluation workflows.
+- ⭐⭐⭐⭐ [Braintrust](https://www.braintrust.dev/): track experiments across model and prompt versions.
+
+See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
+
+<small>Models, prices, packages, and links checked: 2026-08-28 UTC.</small>
+
+</details>

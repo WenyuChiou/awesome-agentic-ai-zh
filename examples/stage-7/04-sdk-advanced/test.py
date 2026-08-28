@@ -49,8 +49,32 @@ def test_stream_to_string_skips_empty_deltas():
     print("✅ test_stream_to_string_skips_empty_deltas")
 
 
+def test_stream_rejects_an_all_empty_response():
+    llm = fake_streaming_llm(["", None])
+    try:
+        list(stream_response("q", llm=llm))
+    except ValueError as error:
+        assert "empty text" in str(error)
+    else:
+        raise AssertionError("empty stream must fail")
+    print("✅ test_stream_rejects_an_all_empty_response")
+
+
+def test_stream_rejects_whitespace_only_chunks():
+    llm = fake_streaming_llm([" ", "\t"])
+    try:
+        list(stream_response("q", llm=llm))
+    except ValueError as error:
+        assert "empty text" in str(error)
+    else:
+        raise AssertionError("whitespace-only stream must fail")
+    print("✅ test_stream_rejects_whitespace_only_chunks")
+
+
 if __name__ == "__main__":
     test_stream_response_yields_chunks()
     test_stream_to_string_aggregates()
     test_stream_to_string_skips_empty_deltas()
+    test_stream_rejects_an_all_empty_response()
+    test_stream_rejects_whitespace_only_chunks()
     print("\n🎉 全部通過 — streaming 邏輯正確")

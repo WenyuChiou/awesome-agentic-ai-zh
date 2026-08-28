@@ -82,7 +82,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 ## 三條路徑 — **預設用 Ollama（成本考量）**
 
-> 💰 **為什麼默認 Ollama？** Ollama 的 API 成本是 $0，但不包含硬體與電費。Cloud LLM 以輸入／輸出 token 計費：Haiku 4.5 是每 1M input $1、每 1M output $5；預留 $0.05，再用 `（input_tokens × $1 + output_tokens × $5） / 1,000,000` 估算，並以 2026-08-27 的官方定價核對。**學習階段不該被 API 成本卡住**。
+> 💰 **為什麼默認 Ollama？** 本機執行不會產生供應商模型 API 帳單，但硬體、電力、下載與等待時間仍有成本。Cloud LLM 以輸入／輸出 token 計費：Haiku 4.5 是每 1M input $1、每 1M output $5；預留 $0.05，再用 `（input_tokens × $1 + output_tokens × $5） / 1,000,000` 估算，並以 2026-08-28 的官方定價核對。**學習階段不該被 API 成本卡住**。
 
 每個練習都同時提供 3 條路徑：
 
@@ -90,14 +90,15 @@ if hasattr(sys.stdout, "reconfigure"):
 - 預設 `starter.py` / 第一個 inline `<details markdown="1">` 用本機 LLM
 - 需 [Ollama](https://ollama.com)、按 stage pull 對應 model：
   - **Stage 1 + 2**（純 chat / prompt eng）：`ollama pull gemma4:e4b`（~7.5 GB、多模態、CPU 跑得動）
-  - **Stage 3+**（tool use / agent）：`ollama pull qwen2.5:3b`（1.9 GB；模型表現會變，請在自己的電腦上跑資料夾內的固定測試）
-- Ollama API 成本是 $0（不包含硬體與電費）、offline、隱私敏感資料 OK
+  - **Stage 3–6**（tool use / agent / ReAct）：`ollama pull qwen2.5:3b`（1.9 GB；模型表現會變，請跑資料夾內的固定測試）
+  - **Stage 7**（辯論、評測、觀測、串流與部署機制）：`ollama pull qwen3.5:4b`（3.4 GB；這五題不依賴 function calling）
+- 模型下載後可在本機推理，不會產生供應商模型 API 帳單；你仍要保護裝置、檔案、log 與存取權限
 - SDK 用 `openai` package（OpenAI-compatible API）、`base_url="http://localhost:11434/v1"`
 - 適合：所有讀者（默認推這條）
 
 ### Path B（選擇性）— Anthropic API（想看 cloud 高品質時）
 - 對照 `starter_anthropic.py`（folder）或第二個 inline `<details markdown="1">` 區塊
-- 需 `ANTHROPIC_API_KEY`；以 Haiku 4.5 每 1M input $1、每 1M output $5 的公式估算，預留 $0.05，並以 2026-08-27 的官方定價核對
+- 需 `ANTHROPIC_API_KEY`；以 Haiku 4.5 每 1M input $1、每 1M output $5 的公式估算，預留 $0.05，並以 2026-08-28 的官方定價核對
 - 行為會隨模型、提示與硬體而變；用固定 eval 實測
 - 適合：production 要求高品質、需要 long-context、Stage 7 production tier
 
@@ -109,13 +110,14 @@ if hasattr(sys.stdout, "reconfigure"):
 
 | 維度 | A Ollama（默認）| B Anthropic | C Mock |
 |---|---|---|---|
-| Cost / call | $0（不含硬體／電費） | $0.05 預留；依上方 token 公式 | $0 |
+| Cost / call | 無供應商模型 API 費；硬體／電力另計 | $0.05 預留；依上方 token 公式 | 無模型 API 費 |
 | 需要 | Ollama install | API key | 無 |
 | 答案品質 | 會變；請跑資料夾內的固定測試 | 會變；請用同一組固定測試比較 | 預設答案，看不出模型的真實表現 |
 | 速度 | 依硬體；用固定 eval 實測 | 依服務；用固定 eval 實測 | 依環境；用固定 eval 實測 |
 | Offline | ✅ | ❌ | ✅ |
-| 隱私敏感資料 | ✅ | ❌ | ✅ |
-| Stage 3+ tool use | ✅（qwen2.5 / llama3.2） | ✅ | ✅ |
+| 敏感資料 | 可在本機處理；仍要保護裝置、log 與權限 | 依供應商與組織政策 | 只放安全的假資料 |
+| Stage 3–6 tool use | ✅（qwen2.5 / llama3.2） | ✅ | ✅ |
+| Stage 7 production 機制 | ✅（qwen3.5:4b） | ✅ | ✅ |
 | 適合 | **默認、無預算壓力** | production 升級 | 程式邏輯驗證 |
 
 → **建議流程**：先 C 驗邏輯（不花錢）、再 A 本機跑看實際 model 行為、production 階段（Stage 7）再升 B 看 cloud 品質。
@@ -125,7 +127,7 @@ if hasattr(sys.stdout, "reconfigure"):
 > 本機 + cloud、user 視角。  
 > 💡 不是要你全裝、是讓你看到「練習用哪個」「production 升級到哪個」。**Claude 是 canonical / production 主軸；Ollama 是練習默認**。
 
-不知道怎麼選時：Stage 1–2 用 `gemma4:e4b`，Stage 3 起用 `qwen2.5:3b`；想做 cloud 對照再用 Haiku 4.5。
+不知道怎麼選時：Stage 1–2 用 `gemma4:e4b`，Stage 3–6 用 `qwen2.5:3b`，Stage 7 用 `qwen3.5:4b`；想做 cloud 對照再用 Haiku 4.5。
 
 <details markdown="1">
 <summary>📚 展開：模型詳表、價格與替代供應商</summary>
@@ -135,8 +137,9 @@ if hasattr(sys.stdout, "reconfigure"):
 | Model | 下載大小 | 建議 RAM | 對應 Stage | Tool-use | 速度（CPU/GPU） | 主用途 |
 |---|---|---|---|---|---|---|
 | **`gemma4:e4b`** ⭐ | 7.5 GB | 8 GB | 1+2 | 基本 | 慢 / 中 | Stage 1-2 純 chat / prompt eng（默認）|
-| **`qwen2.5:3b`** ⭐ | 1.9 GB | 4 GB | 3+ | 會變；請跑固定測試 | 依硬體實測 | Stage 3+ tool use / agent（默認）|
-| `llama3.2:3b` | 2.0 GB | 4 GB | 3+ | 會變；請跑固定測試 | 依硬體實測 | qwen2.5:3b 的替代 |
+| **`qwen2.5:3b`** ⭐ | 1.9 GB | 4 GB | 3–6 | 會變；請跑固定測試 | 依硬體實測 | Tool use / agent / ReAct（默認）|
+| **`qwen3.5:4b`** ⭐ | 3.4 GB | 依本機可用記憶體 | 7 | 本章不依賴 | 依硬體實測 | 辯論、評測、觀測、串流與部署機制 |
+| `llama3.2:3b` | 2.0 GB | 4 GB | 3–6 | 會變；請跑固定測試 | 依硬體實測 | qwen2.5:3b 的替代 |
 | `mistral-nemo:12b` | 7.1 GB | 16 GB | 3+ | 會變；請跑固定測試 | 依硬體實測 | 用固定 eval 比較 |
 | `qwen2.5:14b` | 9.0 GB | 16 GB | 進階 | 會變；請跑固定測試 | 依硬體實測 | 大 model 對照 |
 | `gemma4:e2b` | 4.0 GB | 4 GB | 1+2 | 基本 | 依硬體實測 | 4GB RAM 機器替代 |
@@ -152,7 +155,7 @@ if hasattr(sys.stdout, "reconfigure"):
 | **`claude-sonnet-5`** ⭐ | $2 | $10 | 1M | **production 默認**、Stage 5+ agent 開發 |
 | `claude-opus-5` | $5 | $25 | 1M | Opus 級旗艦（2026-07-24 推出、接替 Opus 4.8、同價）、複雜推理 / 長 context refactor |
 
-> 💰 API 價格已於 **2026-08-27** 對照 [Anthropic 官方定價頁](https://platform.claude.com/docs/en/about-claude/pricing)。價格會變；真正執行前請再看一次官方頁面。
+> 💰 API 價格已於 **2026-08-28** 對照 [Anthropic 官方定價頁](https://platform.claude.com/docs/en/about-claude/pricing)。價格會變；真正執行前請再看一次官方頁面。
 
 若你使用訂閱方案而不是 API 計費，請看官方方案頁；訂閱額度與 API 費用不是同一件事。工具選擇詳見 [resources/cli-agents-guide.md](../resources/cli-agents-guide.md)。
 

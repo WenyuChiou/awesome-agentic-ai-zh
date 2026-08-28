@@ -1,4 +1,4 @@
-"""Stage 7 練習 3：Observability — Path A（Ollama 默認、$0）。
+"""Stage 7 練習 3：Observability — Path A（Ollama）。
 
 Production agent 必備 4 個 telemetry：
 1. **Latency**：每個 LLM call 多久（追 p50/p95/p99）
@@ -8,7 +8,7 @@ Production agent 必備 4 個 telemetry：
 
 跑法：
     pip install -r requirements.txt
-    ollama pull qwen2.5:3b
+    ollama pull qwen3.5:4b
     ollama serve
     python starter.py
 """
@@ -28,8 +28,16 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from openai import OpenAI
 
-MODEL = os.environ.get("MODEL", "qwen2.5:3b")
+MODEL = os.environ.get("MODEL", "qwen3.5:4b")
 OLLAMA_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434/v1")
+
+
+def require_text(value: str | None, label: str) -> str:
+    """Reject a provider response that contains no usable text."""
+    text = (value or "").strip()
+    if not text:
+        raise ValueError(f"{label} returned empty text")
+    return text
 
 # Structured logger — production 應該寫去 cloud (Datadog / CloudWatch / Loki)
 logging.basicConfig(
@@ -77,18 +85,18 @@ class TraceContext:
 
 @contextmanager
 def trace_span(ctx: TraceContext, name: str, **extras):
-    """Context manager 計時 + 記 span。"""
+    """Context manager 計時 + 記 span；只保存安全的例外類別。"""
     t0 = time.perf_counter()
-    err = None
+    error_type = None
     try:
         yield
-    except Exception as e:
-        err = str(e)
-        ctx.add_error(f"{name}: {err}")
+    except Exception as exc:
+        error_type = type(exc).__name__
+        ctx.add_error(f"{name}: {error_type}")
         raise
     finally:
         latency_ms = (time.perf_counter() - t0) * 1000
-        ctx.add_span(name, latency_ms, error=err, **extras)
+        ctx.add_span(name, latency_ms, error=error_type, **extras)
 
 
 # === Instrumented agent ===
@@ -102,16 +110,16 @@ def observable_agent(question: str, ctx: TraceContext, llm: Any = None) -> str:
             model=MODEL,
             messages=[{"role": "user", "content": question}],
         )
+        answer = require_text(resp.choices[0].message.content, "Ollama")
+        # Usage comes from the provider response. Some Ollama versions omit it.
+        usage = getattr(resp, "usage", None)
+        if usage:
+            ctx.add_tokens(
+                input_t=getattr(usage, "prompt_tokens", 0),
+                output_t=getattr(usage, "completion_tokens", 0),
+            )
 
-    # Token usage（OpenAI / Ollama 都有 usage 欄位、不一定每個 Ollama 版本支援）
-    usage = getattr(resp, "usage", None)
-    if usage:
-        ctx.add_tokens(
-            input_t=getattr(usage, "prompt_tokens", 0),
-            output_t=getattr(usage, "completion_tokens", 0),
-        )
-
-    return resp.choices[0].message.content or ""
+    return answer
 
 
 def multi_step_agent(question: str, llm: Any = None) -> dict:
@@ -142,4 +150,4 @@ if __name__ == "__main__":
         print(f"   {s['name']}: {s['latency_ms']:.1f}ms")
 
     assert result["trace_summary"]["span_count"] >= 2  # search + llm_call
-    print(f"\n✅ 練習 3 通過 — 觀察 4 個 telemetry primitive、$0/run")
+    print("\n✅ 練習 3 通過 — request、span、latency、usage 與 error 都能被記錄")

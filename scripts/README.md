@@ -68,6 +68,14 @@ python scripts/check-reader-ux.py
 
 完成一章的三語內容與人工複查後，才把它加入設定檔。若要調高既有上限或刪除可見 heading，先解釋讀者體驗為什麼沒有倒退；不可只為了讓 gate 變綠而放寬。
 
+## `test_stage07_examples.py` — 鎖住五組可執行範例
+
+這個 gate 同時檢查五個資料夾的三語 README、current-major requirements、固定模型 ID、PowerShell-first 離線入口、預設關閉的補充內容、預算公式、嚴格 Judge parser、Prompt caching 最低長度、FastAPI 輸入上限與非 root Docker。它是結構與安全回歸，不取代十個直接執行的 behavior tests，也不會呼叫 live model。
+
+```powershell
+python -m pytest scripts/test_stage07_examples.py -q
+```
+
 ## 建議的維護節奏
 
 - **每週**：`weekly-catalog-refresh` 跑 GitHub repo 快速連結檢查

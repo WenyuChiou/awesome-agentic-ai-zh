@@ -1,6 +1,6 @@
-fastapi>=0.110,<1.0
-uvicorn[standard]>=0.27,<1.0
-pydantic>=2.6,<3.0
-httpx>=0.27,<1.0    # TestClient 需要
-openai>=1.50,<2.0
-anthropic>=0.40,<1.0
+fastapi>=0.141,<1
+uvicorn[standard]>=0.52,<1
+pydantic>=2.13,<3
+httpx>=0.28,<1
+openai>=3.5,<4
+anthropic>=1.2,<2

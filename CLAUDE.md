@@ -27,13 +27,14 @@
 - Main README + 3-lang mirror have the positioning statement near 🎯 Why this exists section
 - `tracks/cli/` is outline-only on purpose (CLI exercises are bash/markdown/config, not Python SDK; doesn't fit the dual-path frame — that's correct)
 
-## Canonical Ollama models (verified against user's `ollama list`)
+## Canonical Ollama models (verified against the user's `ollama list` and the official Ollama library)
 
 | Model tag | When to use | Notes |
 |---|---|---|
 | **`gemma4:e4b`** | Stage 1 + 2 (plain chat, prompt engineering) | Effective 4B params, ~7.5 GB download, CPU-friendly. **The `:e4b` tag matters** — NOT `gemma3n:e4b`, NOT `gemma3:4b`, NOT `gemma4:latest`. |
 | **`gemma4:e2b`** | Low-RAM-machine alternative for Stage 1+2 | ~4 GB, runs on 4 GB RAM machines |
-| **`qwen2.5:3b`** | Stage 3+ (tool use / agent / ReAct) | 1.9 GB, **reliable tool-use support** (OpenAI function-calling format), default for any agent / function-calling exercise |
+| **`qwen2.5:3b`** | Stages 3–6 (tool use / agent / ReAct) | 1.9 GB, **reliable tool-use support** (OpenAI function-calling format), default for the current function-calling exercises |
+| **`qwen3.5:4b`** | Stage 7 (debate / eval / observability / streaming / deploy mechanics) | 3.4 GB official Ollama tag. These exercises do not depend on function calling; this row does not replace the Stage 3–6 tool-use default. |
 | **`llama3.2:3b`** | `qwen2.5:3b` alternative for tool use | 2.0 GB, similar capability |
 | **`mistral-nemo:12b`** | Higher-quality local fallback | 7.1 GB, closer-to-cloud quality |
 

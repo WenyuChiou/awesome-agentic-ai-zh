@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 import time
 from types import SimpleNamespace
+from unittest import TestCase
 from unittest.mock import MagicMock
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -36,14 +37,19 @@ def test_trace_span_records_latency():
 
 def test_trace_span_records_error():
     ctx = TraceContext("req_3")
-    try:
-        with trace_span(ctx, "fail_span"):
-            raise ValueError("boom")
-    except ValueError:
-        pass
+    secret = "sk-ant-secret-marker"
+    with TestCase().assertLogs("agent.observability", level="INFO") as captured:
+        try:
+            with trace_span(ctx, "fail_span"):
+                raise ValueError(secret)
+        except ValueError:
+            pass
     assert len(ctx.errors) == 1
-    assert "boom" in ctx.errors[0]
-    assert ctx.spans[0].get("error") == "boom"
+    assert ctx.errors[0] == "fail_span: ValueError"
+    assert ctx.spans[0].get("error") == "ValueError"
+    assert secret not in repr(ctx.errors)
+    assert secret not in repr(ctx.spans)
+    assert secret not in "\n".join(captured.output)
     print("✅ test_trace_span_records_error")
 
 
@@ -65,6 +71,24 @@ def test_observable_agent_records_tokens():
     print("✅ test_observable_agent_records_tokens")
 
 
+def test_observable_agent_records_empty_output_as_error():
+    llm = MagicMock()
+    llm.chat.completions.create.return_value = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content=""))],
+        usage=None,
+    )
+    ctx = TraceContext("req_empty")
+    try:
+        observable_agent("hi?", ctx, llm=llm)
+    except ValueError as error:
+        assert "empty text" in str(error)
+    else:
+        raise AssertionError("empty model output must fail")
+    assert ctx.summary()["error_count"] == 1
+    assert ctx.spans[0]["error"]
+    print("✅ test_observable_agent_records_empty_output_as_error")
+
+
 def test_multi_step_agent_has_multiple_spans():
     llm = MagicMock()
     msg = SimpleNamespace(content="42")
@@ -84,5 +108,6 @@ if __name__ == "__main__":
     test_trace_span_records_latency()
     test_trace_span_records_error()
     test_observable_agent_records_tokens()
+    test_observable_agent_records_empty_output_as_error()
     test_multi_step_agent_has_multiple_spans()
     print("\n🎉 全部通過 — observability primitive 邏輯正確")

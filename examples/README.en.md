@@ -28,7 +28,7 @@ examples/
 │   │   ├── test_anthropic.py    # Anthropic-path self-check
 │   │   ├── README.md            # Three-language walkthrough (+.zh-Hans.md +.en.md)
 │   │   ├── README.en.md         # English walkthrough
-│   │   ├── README.zh-Hans.md    # 简体中文走查
+│   │   ├── README.zh-Hans.md    # Simplified Chinese walkthrough
 │   │   └── requirements.txt     # Bounded dependency versions
 │   ├── 03-react-from-scratch/   # Exercise 3: ReAct from scratch
 │   │   ├── starter.py           # Main program
@@ -82,7 +82,7 @@ Without it, Windows readers running in PowerShell / cmd hit `UnicodeEncodeError:
 
 ## Three paths — **default is Ollama (cost-driven)**
 
-> 💰 **Why default to Ollama?** Ollama API cost is $0, excluding hardware and electricity. Cloud LLMs charge by tokens: Haiku 4.5 is $1 per 1M input tokens and $5 per 1M output tokens; reserve $0.05, estimate with `(input_tokens × $1 + output_tokens × $5) / 1,000,000`, and verify against official pricing on 2026-08-27. **API cost should not block learning.**
+> 💰 **Why default to Ollama?** Local inference has no provider model API bill, but hardware, electricity, downloads, and waiting time still cost resources. Cloud LLMs charge by tokens: Haiku 4.5 is $1 per 1M input tokens and $5 per 1M output tokens; reserve $0.05, estimate with `(input_tokens × $1 + output_tokens × $5) / 1,000,000`, and verify against official pricing on 2026-08-28. **API cost should not block learning.**
 
 Every exercise ships with all three paths:
 
@@ -90,14 +90,15 @@ Every exercise ships with all three paths:
 - Default `starter.py` / first inline `<details markdown="1">` block uses a local model
 - Requires [Ollama](https://ollama.com); pull a model based on the stage:
   - **Stage 1 + 2** (plain chat / prompt eng): `ollama pull gemma4:e4b` (~7.5 GB; multimodal (text + image + audio); CPU-friendly)
-  - **Stage 3+** (tool use / agent): `ollama pull qwen2.5:3b` (1.9 GB; behavior varies; run the folder evals on your hardware)
-- Ollama API cost is $0 (excluding hardware and electricity), offline, fine for privacy-sensitive data
+  - **Stages 3–6** (tool use / agent / ReAct): `ollama pull qwen2.5:3b` (1.9 GB; behavior varies; run the folder evals on your hardware)
+  - **Stage 7** (debate, eval, observability, streaming, and deploy mechanics): `ollama pull qwen3.5:4b` (3.4 GB; these exercises do not depend on function calling)
+- Ollama has no provider model API bill, but hardware, electricity, downloads, and waiting time still cost resources; local inference is not automatically private, so protect devices, files, logs, and access permissions.
 - SDK uses the `openai` package (OpenAI-compatible API) with `base_url="http://localhost:11434/v1"`
 - Best for: all readers (this is the default recommendation)
 
 ### Path B (optional) — Anthropic API (when you want cloud quality)
 - Companion `starter_anthropic.py` (folder) or the second inline `<details markdown="1">` block
-- Requires `ANTHROPIC_API_KEY`; estimate with the Haiku 4.5 rate of $1 per 1M input tokens and $5 per 1M output tokens, reserve $0.05, and verify against official pricing on 2026-08-27
+- Requires `ANTHROPIC_API_KEY`; estimate with the Haiku 4.5 rate of $1 per 1M input tokens and $5 per 1M output tokens, reserve $0.05, and verify against official pricing on 2026-08-28
 - Behaviour varies by model, prompt, and hardware; measure with a fixed eval
 - Best for: production-quality demands, long-context work, the Stage 7 production tier
 
@@ -109,13 +110,14 @@ Every exercise ships with all three paths:
 
 | Dimension | A Ollama (default) | B Anthropic | C Mock |
 |---|---|---|---|
-| Cost per call | $0 (excluding hardware/electricity) | $0.05 reserve; use the token formula above | $0 |
+| Cost per call | No provider model API bill; hardware/electricity/download/wait costs remain | $0.05 reserve; use the token formula above | No model API fee |
 | Requires | Ollama install | API key | nothing |
 | Answer quality | behavior varies; run the folder evals on your hardware | behavior varies; run a fixed eval | canned, unrepresentative |
 | Speed | hardware-dependent; measure with a fixed eval | service-dependent; measure with a fixed eval | environment-dependent; measure with a fixed eval |
 | Offline | ✅ | ❌ | ✅ |
-| Privacy-sensitive data | ✅ | ❌ | ✅ |
-| Stage 3+ tool use | ✅ (qwen2.5 / llama3.2) | ✅ | ✅ |
+| Sensitive data | Can stay local; still secure devices, logs, and access | Follow provider and organization policy | Use safe fake data only |
+| Stage 3–6 tool use / ReAct | ✅ (qwen2.5 / llama3.2) | ✅ | ✅ |
+| Stage 7 mechanics | ✅ (qwen3.5:4b) | ✅ | ✅ |
 | Best for | **default, no budget pressure** | production upgrade | logic verification |
 
 → **Recommended flow**: C first (validate logic, no cost), then A (see real model behaviour locally), then B at the Stage 7 production stage if cloud quality is needed.
@@ -125,7 +127,7 @@ Every exercise ships with all three paths:
 > Local + cloud, user-perspective.  
 > 💡 You don't need to install every model — this table shows "which to use for practice" and "which to upgrade to for production". **Claude is the canonical / production reference; Ollama is the practice default.**
 
-If you are unsure: use `gemma4:e4b` for Stages 1–2, `qwen2.5:3b` from Stage 3 onward, and Haiku 4.5 only when you want a cloud comparison.
+If you are unsure: use `gemma4:e4b` for Stages 1–2, `qwen2.5:3b` for Stages 3–6, `qwen3.5:4b` for Stage 7, and Haiku 4.5 only when you want a cloud comparison.
 
 <details markdown="1">
 <summary>📚 Expand: model details, pricing, and alternative providers</summary>
@@ -135,8 +137,9 @@ If you are unsure: use `gemma4:e4b` for Stages 1–2, `qwen2.5:3b` from Stage 3 
 | Model | Download | Recommended RAM | Stage | Tool-use | Speed (CPU/GPU) | Primary use |
 |---|---|---|---|---|---|---|
 | **`gemma4:e4b`** ⭐ | 7.5 GB | 8 GB | 1+2 | basic | slow / med | Stage 1-2 plain chat / prompt eng (default) |
-| **`qwen2.5:3b`** ⭐ | 1.9 GB | 4 GB | 3+ | behavior varies; run the folder evals on your hardware | measure on your hardware | Stage 3+ tool use / agent (default) |
-| `llama3.2:3b` | 2.0 GB | 4 GB | 3+ | behavior varies; run the folder evals on your hardware | measure on your hardware | qwen2.5:3b alternative |
+| **`qwen2.5:3b`** ⭐ | 1.9 GB | 4 GB | 3–6 | behavior varies; run the folder evals on your hardware | measure on your hardware | Stage 3–6 tool use / agent (default) |
+| **`qwen3.5:4b`** ⭐ | 3.4 GB | hardware-dependent | 7 | no function calling required | measure on your hardware | debate, eval, observability, streaming, and deploy mechanics |
+| `llama3.2:3b` | 2.0 GB | 4 GB | 3–6 | behavior varies; run the folder evals on your hardware | measure on your hardware | qwen2.5:3b alternative |
 | `mistral-nemo:12b` | 7.1 GB | 16 GB | 3+ | behavior varies; run the folder evals on your hardware | measure on your hardware | Compare with a fixed eval |
 | `qwen2.5:14b` | 9.0 GB | 16 GB | advanced | behavior varies; run the folder evals on your hardware | measure on your hardware | Larger-model comparison |
 | `gemma4:e2b` | 4.0 GB | 4 GB | 1+2 | basic | measure on your hardware | 4 GB-RAM-machine alternative |
@@ -152,7 +155,7 @@ Install: `ollama pull <model>` + `ollama serve`. Hardware tuning details: [resou
 | **`claude-sonnet-5`** ⭐ | $2 | $10 | 1M | **Production default**; Stage 5+ agent development |
 | `claude-opus-5` | $5 | $25 | 1M | Opus-class flagship (launched 2026-07-24, succeeds Opus 4.8 at the same price); complex reasoning / long-context refactors |
 
-> 💰 API prices were checked against the [official Anthropic pricing page](https://platform.claude.com/docs/en/about-claude/pricing) on **2026-08-27**. Prices change; check the official page again before a real run.
+> 💰 API prices were checked against the [official Anthropic pricing page](https://platform.claude.com/docs/en/about-claude/pricing) on **2026-08-28**. Prices change; check the official page again before a real run.
 
 If you use a subscription instead of API billing, check the official plan page; subscription allowances and API charges are different. Tool-selection details: [resources/cli-agents-guide.en.md](../resources/cli-agents-guide.en.md).
 
@@ -257,7 +260,7 @@ Main differences: the message-creation method name, the response shape (`choices
 
 > The five Stage 4 folders use different frameworks. Create a **separate Python 3.11 `.venv` in each folder**; do not combine their five `requirements.txt` files.
 
-→ T1 scope: **Stage 3 全 6 exercises only** (remaining stages roll out per plan tiers).
+→ T1 scope: **all 6 Stage 3 exercises only** (remaining stages roll out per plan tiers).
 
 ## Contributing / reporting issues
 

@@ -2,135 +2,126 @@
   <strong>繁體中文</strong> | <a href="./README.zh-Hans.md">简体中文</a> | <a href="./README.en.md">English</a>
 </div>
 
-# 練習 2：Eval Pipeline（"pytest for LLMs"）
+# 練習 2：用 Eval 檢查 Agent
 
-對應 [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.md) 練習 2。
-> 🎓 **學習模式**：這份 `starter.py` 是**完整解答**、不是 TODO skeleton。建議用**主動模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重寫一份 `starter.py`、跑 `python test.py` 驗證；卡 20 分鐘再回去對照 reference。完整方法論看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+**Eval（評測）**像一張固定考卷：每次改 Prompt、模型或程式後，都用同一批題目再考一次。
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 兩條 SDK path，不是進階深度教材。深度教材推薦：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章節式 + 16 種 production 能力。**本練習對應 hello-agents 的 eval / regression testing 章節**
-> - [promptfoo](https://github.com/promptfoo/promptfoo) + [Anthropic Workbench Evals](https://console.anthropic.com/workbench/evals)（官方 eval UI）
-> - 完整 references 見 [Stage 7 精選 Projects](../../../stages/07-multi-agent-production.md#-精選-projects範本--sdk--工具-collection)
+對應 [Stage 7 — Multi-Agent 與 Production](../../../stages/07-multi-agent-production.md) 練習 2。
 
+## 🎯 學習目標
 
-## 任務
+- 說清楚 **Eval case**：一題輸入、預期結果和評分方法。
+- 分辨固定規則與 **LLM-as-judge**，不把 Judge 當成永遠可靠。
+- 用完全相符的 `PASS`／`FAIL` 格式，避免把一句話中的 `PASS` 誤判成通過。
 
-為 production agent 寫 5 個 eval case、跑 baseline、追 regression。**Production 沒 eval = 沒 confidence ship**。
+## 先跑不花模型費的測試
 
-5 個 case 涵蓋：
-1-2. **Math**（deterministic 答案）
-3-4. **Geography**（factual recall）
+在這個資料夾開 PowerShell，直接複製：
 
-5. **Grounding test**（fake word「flrgglemerk」、agent 應該說 "don't know"、不該 hallucinate）
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
+```
 
-兩種 evaluator：
+看到兩份 `🎉`，就代表五題資料、分數彙整、空回覆和 Judge parser 都通過。這一步只用假回覆。
 
-| 方式 | 何時用 | 成本 |
-|---|---|---|
-| **string match** | 答案有 deterministic substring（數字、專有名詞） | $0、極快 |
-| **LLM-as-judge** | 開放式答案（recommendation / explanation） | 多 1 個 LLM call |
+<details markdown="1">
+<summary>Path A：用 Ollama 跑五題 Eval</summary>
 
-## 怎麼跑
-
-### Path A（默認、本機免費）
-
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
+```powershell
+ollama pull qwen3.5:4b
 ollama serve
-python starter.py
 ```
 
-### Path B（Anthropic）
+另開 PowerShell：
 
-```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+```powershell
+.\.venv\Scripts\python.exe starter.py
 ```
 
-預算：5 cases × 1 call ≈ **$0.003**（Claude haiku）。
+Ollama 不收模型 API 費，但電力、硬體、下載與等待時間仍有成本。這五題只是教學樣本，不能代表模型在你工作上的品質。
 
-## 不花錢驗證程式邏輯
+</details>
 
-```bash
-python test.py # 7 個 test：evaluator + run_eval aggregation
-python test_anthropic.py # Anthropic agent mock
+<details markdown="1">
+<summary>Path B：用 Anthropic 跑同一份考卷</summary>
+
+```powershell
+$env:ANTHROPIC_API_KEY = "貼上你的金鑰"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
-## Eval 的 production 價值
+Haiku 4.5 的單價是 input `$1 / 1M` tokens、output `$5 / 1M` tokens：
 
-```
-Without eval：
-   PR merge → 上 prod → user 抱怨 → 你才知道 LLM 行為變了
-
-With eval：
-   PR → run eval → pass_rate 從 95% 掉到 70% → block merge
-   → 找出哪些 case regression → 改 prompt / model / retry → recover
+```text
+估算費用 = (input_tokens × $1 / 1M) + (output_tokens × $5 / 1M)
 ```
 
-**Eval pin baseline**：第一次跑、記住 pass_rate（譬如 80%）；每次 ship 前確認沒掉。
+實際費用取決於每題的 token。先在供應商 Console 設定 `$1` spend limit，再用實際 usage 計算；不要把範例估算當帳單。
 
-## 經典 eval 結構
+</details>
 
-```python
-eval_cases = [
-    {"id": ..., "input": ..., "expected_substring": ..., "instruction": ...},
-    ...
-]
+## 三個重要詞
 
-def run_eval(cases, agent_fn, eval_fn):
-    results = [...]
-    return {"pass_count": ..., "pass_rate": ...}
-```
+- **Eval case**：一筆輸入、預期重點和評分規則。
+- **Deterministic evaluator**：同樣輸入一定得到同樣分數，例如 substring 或正規表示式。
+- **LLM-as-judge**：請另一個 LLM 評分。它能處理開放式答案，也可能有偏差或格式錯誤。
 
-**3 個關鍵**：
-
-1. **`id` 必要**：方便定位是哪一題 regress
-2. **`expected_substring` 而非 full match**：LLM 答案有 variability、用 substring 才穩
-3. **Eval function 跟 agent 分離**：可以換不同 evaluator 對同一份 cases
-
-## LLM-as-judge 何時用
-
-| 情境 | 用 substring | 用 LLM-as-judge |
+| 題目形狀 | 先用什麼 | 為什麼 |
 |---|---|---|
-| 「2+2=?」答案 | ✅ "4" | overkill |
-| 「summarize this article」 | ❌ 沒固定 substring | ✅ |
-| 「is the tone professional?」 | ❌ | ✅ |
-| 「count tokens used」 | ✅ 用 regex | overkill |
+| 答案必須含 `Tokyo` | substring | 快、便宜、結果固定 |
+| 必須符合 JSON schema | schema validator | 直接檢查結構 |
+| 語氣是否清楚 | LLM-as-judge + 人工抽查 | 沒有單一固定字串 |
 
-**Production 經驗**：80% case 用 substring + heuristic、20% 用 LLM-as-judge（cost / latency 較高）。
+這份練習的 Judge 只接受整份回覆等於 `PASS` 或 `FAIL`。若它回「PASS because...」，程式會要求重試或停止。
 
-## Production-ready tools
+## 只改一件事
 
-- **[promptfoo](https://github.com/promptfoo/promptfoo)**：YAML config + CLI runner + diff report
-- **[Anthropic Workbench eval](https://console.anthropic.com/workbench/evals)**：官方 eval UI、prompts as code
-- **[LangSmith](https://smith.langchain.com/)**：LangChain ecosystem 的 eval + observability 一條龍
-- **[Weights & Biases Weave](https://wandb.ai/site/weave)**：generic LLM eval framework
-- **[Braintrust](https://www.braintrust.dev/)**：跨 model / version A/B、上線部署用的 dashboards
+在 `EVAL_CASES` 加一題你自己的真實問題，再故意讓假 Agent 答錯。確認報告能指出失敗的 `id`。
 
-## 兩個 path 觀察重點
+## 成功檢查
 
-| 觀察項 | Anthropic Claude | Ollama qwen2.5:3b |
-|---|---|---|
-| math case pass rate | ~100% | ~80% |
-| geo case pass rate | ~100% | ~70-90% |
-| grounding test (flrgglemerk) | 守規則說 don't know | 偶爾編答案 |
-| 整體 pass_rate | 95-100% | 70-85% |
+- [ ] 每一題都有穩定且唯一的 `id`。
+- [ ] 你能說明這題為什麼用 substring，而不是 LLM Judge。
+- [ ] 空答案不會被算成通過。
+- [ ] 換模型時仍使用同一份 cases，才能公平看變化。
 
-**結論**：production 應該針對「自家 use case」建 50-200 case 的 eval set、看自家任務上的 pass rate、決定該用哪個 model。
+<details markdown="1">
+<summary>從五題走向真正的 Eval suite</summary>
 
-## 常見坑
+教學流程是：
 
-- **Eval set 太小（< 10 cases）**：noise 高、看不出 regression
-- **Eval set 太靠近 training data**：model 死背、實際 user query 表現完全不同
-- **沒 grounding test**：production agent hallucination 是最致命的 bug、必須有「答不出來該說 unknown」case
-- **`expected_substring` 太嚴**：寫「The capital is Tokyo, Japan.」當 expected、LLM 寫「Tokyo」會 fail。應該只匹配關鍵字
-- **LLM-as-judge bias**：用同一個 model 既當 agent 又當 judge、容易 self-preferenced。Production 用不同 model 當 judge
+1. Agent 回答問題。
+2. Evaluator 只看該題規則並打分。
+3. Runner 保存每題結果與整體 pass rate。
+4. 失敗時回到具體 case，不只看一個總分。
 
-## 延伸
+正式專案還要加入真實使用者案例、邊界條件、安全案例與人工標註。門檻應由你的 baseline 與風險決定，不要照抄別人的固定百分比。
 
-- **加 regression 追蹤**：每次 ship 把 `{"date": ..., "pass_rate": ...}` 存進 sqlite、畫趨勢圖
-- **CI 整合**：GitHub Actions 自動跑 eval、`pass_rate < 90%` 就 block merge
-- **A/B model 對照**：同一份 eval、跑 qwen vs Claude vs GPT、看誰準
-- **接觀察 (練習 3)**：eval failure 串到 observability、自動 alert
+常見問題：
+
+- cases 都太簡單：加入過去真的答錯過的問題。
+- expected 寫整句：只保留必要條件，避免同義句被誤殺。
+- 同一模型回答又評分：至少加入固定規則或人工抽查，降低自我偏好。
+- 只保存總分：同時保存失敗 `id`、模型 ID、Prompt 版本與日期。
+
+</details>
+
+<details markdown="1">
+<summary>📚 深入學習資源與評分</summary>
+
+- ⭐⭐⭐⭐⭐ [promptfoo](https://github.com/promptfoo/promptfoo)：可把 cases、providers 和 assertions 放進版本控制。
+- ⭐⭐⭐⭐⭐ [Anthropic Console Evals](https://console.anthropic.com/workbench/evals)：用官方介面建立與比較測試集。
+- ⭐⭐⭐⭐⭐ [datawhalechina/hello-agents](https://github.com/datawhalechina/hello-agents)：章節式中文 Agent 教材，適合補完整背景。
+- ⭐⭐⭐⭐ [LangSmith](https://smith.langchain.com/)：適合已使用 LangChain／LangGraph 的團隊。
+- ⭐⭐⭐⭐ [Weights & Biases Weave](https://wandb.ai/site/weave)：把 traces、資料與評測放在同一套工作流。
+- ⭐⭐⭐⭐ [Braintrust](https://www.braintrust.dev/)：適合做多版本實驗與結果追蹤。
+
+完整清單見 [Stage 7 精選 Projects](../../../stages/07-multi-agent-production.md#-精選-projects範本--sdk--工具-collection)。
+
+<small>模型、價格、套件與連結查核：2026-08-28 UTC。</small>
+
+</details>

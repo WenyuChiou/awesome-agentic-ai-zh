@@ -1,4 +1,4 @@
-"""Stage 7 練習 2：Eval — Path A（Ollama 默認、$0）。
+"""Stage 7 練習 2：Eval — Path A（Ollama）。
 
 Eval pipeline = 「pytest for LLMs」。為 production agent 寫 5-10 個 eval case、跑 baseline、
 追蹤 regression。Production 沒 eval = 沒 confidence ship。
@@ -9,7 +9,7 @@ Eval pipeline = 「pytest for LLMs」。為 production agent 寫 5-10 個 eval c
 
 跑法：
     pip install -r requirements.txt
-    ollama pull qwen2.5:3b
+    ollama pull qwen3.5:4b
     ollama serve
     python starter.py
 """
@@ -17,6 +17,7 @@ Eval pipeline = 「pytest for LLMs」。為 production agent 寫 5-10 個 eval c
 from __future__ import annotations
 
 import os
+import re
 import sys
 from typing import Any, Callable
 
@@ -25,8 +26,24 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from openai import OpenAI
 
-MODEL = os.environ.get("MODEL", "qwen2.5:3b")
+MODEL = os.environ.get("MODEL", "qwen3.5:4b")
 OLLAMA_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434/v1")
+
+
+def require_text(value: str | None, label: str) -> str:
+    """Reject a provider response that contains no usable text."""
+    text = (value or "").strip()
+    if not text:
+        raise ValueError(f"{label} returned empty text")
+    return text
+
+
+def parse_verdict(verdict: str) -> bool:
+    """Map an exact PASS or FAIL Judge response to a boolean."""
+    match = re.fullmatch(r"(PASS|FAIL)", verdict.strip(), re.IGNORECASE)
+    if not match:
+        raise ValueError("Judge must reply with exactly PASS or FAIL")
+    return match.group(1).upper() == "PASS"
 
 
 # === Eval cases ===
@@ -50,7 +67,7 @@ def agent_answer(question: str, llm: Any = None, instruction: str = "") -> str:
         model=MODEL,
         messages=[{"role": "system", "content": system}, {"role": "user", "content": question}],
     )
-    return resp.choices[0].message.content or ""
+    return require_text(resp.choices[0].message.content, "Agent")
 
 
 # === Evaluators ===
@@ -73,8 +90,8 @@ Verdict:"""
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
     )
-    verdict = (resp.choices[0].message.content or "").upper()
-    return "PASS" in verdict and "FAIL" not in verdict.replace("FAIL?", "")
+    verdict = require_text(resp.choices[0].message.content, "Judge")
+    return parse_verdict(verdict)
 
 
 # === Eval runner ===
@@ -102,5 +119,5 @@ if __name__ == "__main__":
     print(f"   Pass: {out['pass_count']}/{out['total']} ({out['pass_rate']:.0%})")
 
     assert out["total"] == 5
-    print(f"\n✅ 練習 2 通過 — eval pipeline 跑通、$0/run")
+    print("\n✅ 練習 2 通過 — 五個案例都完成並產生可比較結果")
     print(f"   觀察：production 應該 pin baseline pass rate、每次 ship 前確認沒 regression")

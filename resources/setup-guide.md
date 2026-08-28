@@ -122,16 +122,16 @@
 - **智譜 GLM（ZhipuAI）**：https://open.bigmodel.cn/ (中國) / https://z.ai/ (海外)
   web 版 https://chatglm.cn 免費、有 GLM-4.5、GLM-4-Plus。API 有 free tier、學生申請可額外領 credit。
 
-#### 本機（不付 API 費、完全 offline）
+#### 本機（沒有供應商模型 API 帳單；下載後可離線推理）
 
 - **Ollama 本機模型**：不用 API key。走本機路線請看 [Cookbook Recipe 6](cookbook.md#6-本機-llm--cli-agent-快速-walkthrough)。
-  本 repo 的「Path A」預設就是 Ollama；所有 Stage 1-7 練習都能用 `gemma4:e4b`（Stage 1-2）或 `qwen2.5:3b`（Stage 3+）跑通、$0/run。
+  本 repo 的「Path A」預設就是 Ollama：Stage 1–2 用 `gemma4:e4b`，Stage 3–6 的 tool use／ReAct 題用 `qwen2.5:3b`，Stage 7 的辯論、評測、觀測、串流與部署機制用 `qwen3.5:4b`。本機推理不會產生供應商模型 API 帳單，但硬體、電力、下載與等待時間仍有成本。
 
 > 💡 **怎麼挑第一個**：
 > - 想學 agent / production、**美區帳號OK** → **Anthropic Claude**（curriculum canonical）
 > - 想學 agent / production、**中國地區**或想試中文模型 → **DeepSeek**（最便宜 cloud option、OpenAI-compat、中文很強）
 > - 想試多個 model 但沒 GPU → **NVIDIA NIM**（送 1000 credit、托管 10+ open model）
-> - 隱私敏感 / 完全免費 / 中國大陸無 cloud → **Ollama**（本機、curriculum 全套都能跑、$0）
+> - 想把資料留在本機 / 中國大陸無 cloud → **Ollama**（仍要保護裝置、檔案、log 與存取權限）
 
 ---
 

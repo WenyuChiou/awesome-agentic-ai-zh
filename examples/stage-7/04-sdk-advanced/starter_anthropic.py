@@ -1,9 +1,8 @@
 """Stage 7 練習 4：SDK 進階 — Path B（Anthropic streaming + prompt caching）。
 
-Anthropic 額外的兩個 production 殺手 feature：
-1. **Streaming**：跟 OpenAI 類似、但 content blocks 結構不同
-2. **Prompt caching**：cache_control={"type": "ephemeral"}、重複 long context（system / tools）
-   省 90% cost。第一次寫入有 25% premium、之後 5 分鐘內每次省 90%。
+這份小程式示範兩個 SDK 功能：
+1. **Streaming**：答案還在生成時，先顯示已到達的文字。
+2. **Prompt caching**：標記可重用的長前綴，再讀 usage 判斷是否建立或命中 cache。
 
 跑法：
     pip install -r requirements.txt
@@ -23,22 +22,44 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import anthropic
 
-MODEL = os.environ.get("MODEL", "claude-haiku-4-5")
+MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
+CACHE_MINIMUM_TOKENS = 4096
+CACHE_DEMO_REPEAT = 1200
+
+
+def require_text(value: str | None, label: str) -> str:
+    """Reject a provider response that contains no usable text."""
+    text = (value or "").strip()
+    if not text:
+        raise ValueError(f"{label} returned empty text")
+    return text
+
+
+def build_cache_demo_prompt() -> str:
+    """Build a long, repeated prefix deliberately above Haiku 4.5's cache minimum."""
+    rule = "Reference rule: verify every claim against the supplied source. "
+    return "You answer only from these reference rules.\n" + (rule * CACHE_DEMO_REPEAT)
 
 
 def stream_anthropic(prompt: str, client: Any = None) -> Iterator[str]:
     client = client or anthropic.Anthropic()
+    saw_non_whitespace = False
     with client.messages.stream(
         model=MODEL,
         max_tokens=300,
         messages=[{"role": "user", "content": prompt}],
     ) as stream:
         for text in stream.text_stream:
-            yield text
+            if text:
+                if text.strip():
+                    saw_non_whitespace = True
+                yield text
+    if not saw_non_whitespace:
+        raise ValueError("Anthropic stream returned empty text")
 
 
 def cached_query(question: str, large_system_prompt: str, client: Any = None) -> dict:
-    """示範 prompt caching：第一次 call 沒 cache、第二次 hit cache、看 usage 差異。"""
+    """Send a cacheable prefix and return the provider's observed usage fields."""
     client = client or anthropic.Anthropic()
 
     resp = client.messages.create(
@@ -55,8 +76,9 @@ def cached_query(question: str, large_system_prompt: str, client: Any = None) ->
     )
 
     usage = resp.usage
+    answer = require_text(" ".join(b.text for b in resp.content if b.type == "text"), "Anthropic")
     return {
-        "answer": " ".join(b.text for b in resp.content if b.type == "text"),
+        "answer": answer,
         "input_tokens": usage.input_tokens,
         "cache_creation_input_tokens": getattr(usage, "cache_creation_input_tokens", 0),
         "cache_read_input_tokens": getattr(usage, "cache_read_input_tokens", 0),
@@ -73,14 +95,19 @@ if __name__ == "__main__":
         print(delta, end="", flush=True)
     print(f"\n[took {time.perf_counter()-t0:.2f}s]\n")
 
-    # Demo 2: prompt caching（同 system prompt 2 次、第二次省 90% input cost）
+    # Demo 2: use the same long prefix twice, then inspect actual usage.
     print("=== Prompt caching demo ===")
-    big_system = "You are a helpful assistant. " + ("This is reference material. " * 200)  # ~2000 tokens
+    big_system = build_cache_demo_prompt()
+    print(f"The demo prefix uses {len(big_system.split())} words; documented minimum is {CACHE_MINIMUM_TOKENS} tokens.")
     r1 = cached_query("What's 2+2?", big_system)
-    print(f"Call 1 (cache miss): input={r1['input_tokens']}, cache_create={r1['cache_creation_input_tokens']}, cache_read={r1['cache_read_input_tokens']}")
+    print(f"Call 1: input={r1['input_tokens']}, cache_create={r1['cache_creation_input_tokens']}, cache_read={r1['cache_read_input_tokens']}")
     r2 = cached_query("What's 3+3?", big_system)
-    print(f"Call 2 (cache hit):  input={r2['input_tokens']}, cache_create={r2['cache_creation_input_tokens']}, cache_read={r2['cache_read_input_tokens']}")
+    print(f"Call 2: input={r2['input_tokens']}, cache_create={r2['cache_creation_input_tokens']}, cache_read={r2['cache_read_input_tokens']}")
 
     if r2["cache_read_input_tokens"] > 0:
-        print(f"\n✅ Cache 命中！第二次只算 {r2['input_tokens']} input + {r2['cache_read_input_tokens']} cache-read（cache-read 只算 10% 價）")
-    print(f"\n✅ 練習 4 (Anthropic) 通過 — streaming + prompt caching、Claude {MODEL}")
+        print("\n✅ Provider usage shows a cache read on the second call.")
+    elif r1["cache_creation_input_tokens"] > 0:
+        print("\nℹ️ Provider usage shows cache creation, but not a second-call cache read.")
+    else:
+        print("\nℹ️ Provider usage did not report cache creation or a cache read.")
+    print(f"\n✅ 練習 4 (Anthropic) 通過 — streaming + usage inspection、Claude {MODEL}")

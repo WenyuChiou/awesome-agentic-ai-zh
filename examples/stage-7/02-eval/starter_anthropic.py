@@ -21,7 +21,15 @@ import anthropic
 
 from starter import EVAL_CASES, eval_substring, run_eval
 
-MODEL = os.environ.get("MODEL", "claude-haiku-4-5")
+MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
+
+
+def require_text(value: str | None, label: str) -> str:
+    """Reject a provider response that contains no usable text."""
+    text = (value or "").strip()
+    if not text:
+        raise ValueError(f"{label} returned empty text")
+    return text
 
 
 def agent_answer_anthropic(question: str, instruction: str = "", client: Any = None) -> str:
@@ -31,7 +39,8 @@ def agent_answer_anthropic(question: str, instruction: str = "", client: Any = N
         model=MODEL, max_tokens=200, system=system,
         messages=[{"role": "user", "content": question}],
     )
-    return " ".join(b.text for b in resp.content if b.type == "text")
+    joined = " ".join(b.text for b in resp.content if b.type == "text")
+    return require_text(joined, "Anthropic agent")
 
 
 if __name__ == "__main__":
@@ -40,4 +49,4 @@ if __name__ == "__main__":
         mark = "✅" if r["passed"] else "❌"
         print(f"   {mark} [{r['id']}] {r['output']}")
     print(f"\nPass: {out['pass_count']}/{out['total']} ({out['pass_rate']:.0%})")
-    print(f"✅ 練習 2 (Anthropic) 通過 — {MODEL}、5 cases × ≈$0.0005 = ≈$0.003/run")
+    print(f"✅ 練習 2 (Anthropic) 通過 — {MODEL} 完成 {len(EVAL_CASES)} 個案例")

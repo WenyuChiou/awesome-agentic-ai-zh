@@ -2,139 +2,123 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 3：Observability（4 个 production telemetry）
+# 练习 3：看见 Agent 里面发生什么
 
-对应 [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 3。
-> 🎓 **学习模式**：这份 `starter.py` 是**完整解答**、不是 TODO skeleton。建议用**主动模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重写一份 `starter.py`、跑 `python test.py` 验证；卡 20 分钟再回去对照 reference。完整方法论看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+**Observability（可观测性）**像帮 Agent 装仪表板：它慢了、错了或花太多 token 时，你知道是哪一步。
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 两条 SDK path，不是进阶深度教材。深度教材推荐：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的 observability / tracing 章节（Extra Chapter）**
-> - [Langfuse](https://github.com/langfuse/langfuse) + [Arize Phoenix](https://github.com/Arize-ai/phoenix)（OpenTelemetry-native）
-> - 完整 references 见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)
+对应 [Stage 7 — Multi-Agent 与 Production](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 3。
 
-## 任务
+## 🎯 学习目标
 
-Production agent 必备 4 个 telemetry：
+- 认识 **Request ID、Span、Latency、Usage、Error** 五个核心信号。
+- 用同一个 request ID 串起一次工作里的多个步骤。
+- 记录供应商实际返回的 usage；没有数据时就显示缺少，不自行猜。
 
-1. **Latency**：每个 step 多久（p50/p95/p99）
-2. **Token usage**：input / output（追 cost）
-3. **Trace**：multi-step agent 每一步（debug + audit）
-4. **Errors**：exception + retry count
+## 先跑不花模型费的测试
 
-实作：`TraceContext` + `trace_span` context manager + 在 LLM call 之间 instrument。
+在这个文件夹打开 PowerShell，直接复制：
 
-## 怎么跑
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
+```
 
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
+看到两份 `🎉`，代表成功、错误、latency、span 与 usage 都有离线测试。测试不会连到模型。
+
+<details markdown="1">
+<summary>Path A：用 Ollama 产生一条真 Trace</summary>
+
+```powershell
+ollama pull qwen3.5:4b
 ollama serve
-python starter.py
 ```
 
-预算：**$0**（Path A）。Path B 用 Claude：~$0.0001/run。
+另开 PowerShell：
 
-```bash
-python test.py             # 5 个 test
-python test_anthropic.py
+```powershell
+.\.venv\Scripts\python.exe starter.py
 ```
 
-## 4 个 primitive
+Ollama 不收模型 API 费，但硬件、电力与时间仍有成本。某些版本可能没有返回 usage；程序会保留零值，不把估算冒充供应商数据。
 
-### Latency（用 contextmanager）
+</details>
 
-```python
-@contextmanager
-def trace_span(ctx, name, **extras):
-    t0 = time.perf_counter()
-    try:
-        yield
-    finally:
-        latency_ms = (time.perf_counter() - t0) * 1000
-        ctx.add_span(name, latency_ms, **extras)
+<details markdown="1">
+<summary>Path B：记录 Anthropic 返回的 Usage</summary>
 
-with trace_span(ctx, "search_step"):
-    result = expensive_search(query)
+```powershell
+$env:ANTHROPIC_API_KEY = "贴上你的金钥"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
-### Token usage
+Haiku 4.5 的单价是 input `$1 / 1M` tokens、output `$5 / 1M` tokens：
 
-```python
-resp = client.messages.create(...)
-ctx.add_tokens(input_t=resp.usage.input_tokens, output_t=resp.usage.output_tokens)
+```text
+估算费用 = (input_tokens × $1 / 1M) + (output_tokens × $5 / 1M)
 ```
 
-- **Anthropic**：`usage.input_tokens` / `usage.output_tokens` 精确
-- **OpenAI/Ollama**：`usage.prompt_tokens` / `usage.completion_tokens`、Ollama 偶尔不返回 usage
+先设 `$1` provider spend limit。usage 是供应商对该次回复的计数栏位；不同 API 的栏位名称与涵盖范围可能不同。
 
-### Trace
+</details>
 
-```python
-ctx = TraceContext("req_42")
-with trace_span(ctx, "search"): ...
-with trace_span(ctx, "llm_call"): ...
-print(ctx.summary())  # 看整个 request 的 timeline
+## 五个重要词
+
+- **Request ID**：一次请求的识别码，像包裹追踪号码。
+- **Span**：请求里的一小步，例如 search 或 llm_call。
+- **Latency**：这一步花了多久。
+- **Usage**：供应商返回的 input/output token 数。
+- **Error**：失败的步骤与安全的错误类别；记完仍要把 exception 往上抛。原始 exception 信息可能含有 secret，不能写进 log。
+
+```text
+request_id
+├─ span: search      → latency
+└─ span: llm_call    → latency + usage + error
 ```
 
-### Errors
+这份 starter 用小型 `TraceContext` 教原理。正式环境通常使用 OpenTelemetry，再把数据送到观测平台。
 
-```python
-@contextmanager
-def trace_span(ctx, name):
-    try:
-        yield
-    except Exception as e:
-        ctx.add_error(f"{name}: {e}")
-        raise   # 重要：raise 出去、不要吞 exception
-```
+## 只改一件事
 
-## Production tools（不要自己写）
+把假的 `search` 步骤改名成 `retrieve_context`，再跑测试。确认 summary 仍有两个 span，且两者使用同一个 request ID。
 
-实作 primitive 是学原理。Production 用 OpenTelemetry + 托管平台：
+## 成功检查
 
-- **[Langfuse](https://langfuse.com/)**：open-source、self-host、tracing + eval + prompt management 一条龙
-- **[LangSmith](https://smith.langchain.com/)**：LangChain ecosystem
-- **[Helicone](https://www.helicone.ai/)**：proxy mode、零 code change
-- **[Arize Phoenix](https://github.com/Arize-ai/phoenix)**：open-source、OpenTelemetry-native
-- **[Datadog LLM Observability](https://www.datadoghq.com/product/llm-observability/)**：integrate with general APM
-- **[Anthropic API Console](https://console.anthropic.com/)**：Claude usage / cost 内建 dashboard
+- [ ] 一次请求只有一个 request ID。
+- [ ] 每个步骤都有名称与 latency。
+- [ ] 空模型回复会留下 error，再抛出例外。
+- [ ] Log 不包含 API key、完整 Prompt 或原始 exception 信息。
 
-## Production checklist
+<details markdown="1">
+<summary>Production 要补什么、常见问题</summary>
 
-对每个 production agent 至少要回答：
+正式服务至少要能回答：哪一步慢、哪一种错误最多、一次用了多少 token，以及哪个版本开始变差。
 
-```
-[ ] p50 / p95 / p99 latency 多少？
-[ ] 每 request 平均花多少 token？($)
-[ ] 哪几个 step 最慢？
-[ ] 错误率多少？哪一类错最多？
-[ ] retry 后 success rate 多少？
-[ ] cost / request 趋势（每月）？
-[ ] 哪些 query 答错？(连到 eval、练习 2)
-```
+常见问题：
 
-回答不出来 = 没 observability。
+- 只记整体时间：看不出 search 还是模型慢。
+- 吞掉 exception：外层误以为成功。应该“记录后再 raise”。
+- 把 Prompt 或原始 exception 信息全写入 log：可能泄漏个人信息、文件或 secret。先记录安全的错误类别，再做 redaction 与访问控制。
+- 每笔 trace 永久保存：成本与隐私风险会增加。先定 sampling、retention 和删除规则。
+- 自行换算 token 却标成 provider usage：估算与供应商栏位要分开命名。
 
-## 两个 path 观察重点
+</details>
 
-| 观察项 | Anthropic Claude | Ollama qwen2.5:3b |
-|---|---|---|
-| `usage.tokens` 精确度 | ✅ 完整（含 cache_*） | ⚠ 偶尔没返回 |
-| Cost tracking | 直接 cost = token × pricing | $0、但 GPU 时间有成本 |
-| Latency 来源 | Network + queue + inference | 纯 inference |
-| Production deploy 观察 | 看 Anthropic console | 自己跑 prometheus / grafana |
+<details markdown="1">
+<summary>📚 深入学习资源与评分</summary>
 
-## 常见坑
+- ⭐⭐⭐⭐⭐ [Langfuse](https://github.com/langfuse/langfuse)：开源 traces、evals 与 prompt 管理。
+- ⭐⭐⭐⭐⭐ [Arize Phoenix](https://github.com/Arize-ai/phoenix)：OpenTelemetry 导向的开源观测工具。
+- ⭐⭐⭐⭐⭐ [datawhalechina/hello-agents](https://github.com/datawhalechina/hello-agents)：章节式中文 Agent 教材，适合补完整背景。
+- ⭐⭐⭐⭐ [LangSmith](https://smith.langchain.com/)：适合 LangChain／LangGraph 生态。
+- ⭐⭐⭐⭐ [Helicone](https://www.helicone.ai/)：可用 proxy 方式收集 LLM 请求数据。
+- ⭐⭐⭐⭐ [Datadog LLM Observability](https://www.datadoghq.com/product/llm-observability/)：适合已使用 Datadog APM 的团队。
+- ⭐⭐⭐⭐ [Anthropic Console](https://console.anthropic.com/)：查看 Claude API usage 与账务数据。
 
-- **Token usage 没记**：上线一个月才发现 cost 漏记、无法 forecast
-- **Span 不够细**：只记 "agent_call" 整体、没拆 "search" / "rerank" / "generate"、debug 时看不到瓶颈
-- **Error swallowed**：context manager 吃掉 exception、上层以为成功
-- **production 直接 print()**：应该用 structured logging（JSON / OpenTelemetry）、写去 cloud
-- **没 sample 机制**：高 QPS 全量 trace 会塞爆 backend、要 sampling（譬如 10% trace + 100% error）
+完整清单见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)。
 
-## 延伸
+<small>模型、价格、套件与连结查核：2026-08-28 UTC。</small>
 
-- **OpenTelemetry 整合**：把 `trace_span` 改成 `tracer.start_as_current_span(...)` 就能丢去 Jaeger / Datadog
-- **Langfuse SDK**：3 行接上 Anthropic Claude、自动 trace
-- **Prometheus metrics**：counter（request_count）、histogram（latency）、gauge（active_sessions）
-- **接 eval（练习 2）**：eval failure 自动 alert 到 Slack
+</details>

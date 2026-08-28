@@ -2,144 +2,122 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 4: Advanced SDK (streaming + prompt caching)
+# Exercise 4: Show the Answer While Checking the Cache
 
-Pairs with [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.en.md) Exercise 4.
-> 🎓 **How to use this**: `starter.py` is the **complete solution**, not a TODO skeleton. The active approach works better — `mv starter.py starter_reference.py`, read the signatures but not the bodies, write your own `starter.py` from scratch, then run `python test.py` to check it; if you are stuck for 20 minutes, go back and compare against the reference. Full methodology in [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md).
+**Streaming** displays an answer in pieces. **Prompt caching** may reuse a shared long prefix. They solve different problems.
 
-> 📚 **Want the chapter-length version?** The starter in this folder is an illustrative build focused on the core pattern plus two SDK paths — it is not in-depth teaching material. Recommended for depth:
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ the most complete Chinese-language resource — chapter-by-chapter, covering 16 production capabilities. **This exercise maps to hello-agents' advanced SDK features chapter**
-> - [Anthropic Prompt Caching docs](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) + [Anthropic Batch API](https://docs.anthropic.com/en/docs/build-with-claude/batch-processing)
-> - Full references in [Stage 7 Curated Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections)
+Pairs with Exercise 4 in [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.en.md).
 
-## Two SDK features production needs
+## 🎯 Learning goals
 
-1. **Streaming** — send tokens to UI as they're generated; user sees first token in 0.3-1s instead of waiting for full answer
-2. **Prompt caching** (Anthropic-only) — repeated long system prompts / tools / context save 90% cost
+- Measure your own first-token and total latency instead of copying a fixed number.
+- Skip empty chunks correctly and fail when the entire stream contains no text.
+- Use `cache_creation_input_tokens` and `cache_read_input_tokens` to describe what actually happened.
 
-## How to run
+## Run the model-free tests first
 
-### Path A (default, free, local, streaming demo)
+Open PowerShell in this folder and copy:
 
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
+```
+
+Two `🎉` messages mean the streaming, empty-output, and cache_control offline contracts passed.
+
+<details markdown="1">
+<summary>Path A: Watch streaming with Ollama</summary>
+
+```powershell
+ollama pull qwen3.5:4b
 ollama serve
-python starter.py
 ```
 
-### Path B (Anthropic, streaming + caching)
+Open another PowerShell window:
 
-```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+```powershell
+.\.venv\Scripts\python.exe starter.py
 ```
 
-Budget: streaming + caching demo ≈ **$0.005** (2 calls + cached ~2000 tokens).
+Ollama does not charge a provider model API fee. Hardware, electricity, and time still have costs. Record your own first visible text time and total time; model, hardware, prompt, and current load all change the result.
 
-## Validate the logic
+</details>
 
-```bash
-python test.py             # 3 tests, mock OpenAI streaming
-python test_anthropic.py   # mock Anthropic streaming + cache_control
+<details markdown="1">
+<summary>Path B: Inspect Anthropic streaming and Prompt caching</summary>
+
+```powershell
+$env:ANTHROPIC_API_KEY = "paste-your-key"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
-## Streaming
+Haiku 4.5 base input/output prices are `$1 / 1M` and `$5 / 1M` tokens. A five-minute cache write is 1.25 times base input, while a cache read is 0.1 times base input:
 
-### OpenAI / Ollama
-
-```python
-stream = client.chat.completions.create(
-    model=..., messages=[...],
-    stream=True,
-)
-for chunk in stream:
-    delta = chunk.choices[0].delta.content
-    if delta:
-        print(delta, end="", flush=True)
+```text
+estimated cost =
+  normal_input_tokens × $1 / 1M
+  + cache_creation_input_tokens × $1.25 / 1M
+  + cache_read_input_tokens × $0.10 / 1M
+  + output_tokens × $5 / 1M
 ```
 
-### Anthropic
+Set a `$1` provider spend limit first. Decide whether the cache was created or read only from usage fields, not from the fact that this was the second call.
 
-```python
-with client.messages.stream(
-    model=..., max_tokens=300, messages=[...]
-) as stream:
-    for text in stream.text_stream:
-        print(text, end="", flush=True)
-```
+</details>
 
-**UX impact**: non-streaming = 5s wait for the answer; streaming = first token in 0.5s. **Perception is dramatically different.**
+## Four important terms
 
-## Prompt caching (Anthropic-only)
+- **Chunk**: one small piece of text arriving through a stream; it is not necessarily one token.
+- **First-token latency**: time from sending the request to receiving the first displayable text.
+- **Total latency**: time until the complete answer finishes.
+- **Cache breakpoint**: the place where an API marks the preceding content as reusable.
 
-```python
-resp = client.messages.create(
-    model="claude-haiku-4-5",
-    system=[
-        {
-            "type": "text",
-            "text": "[2000-token reference material...]",
-            "cache_control": {"type": "ephemeral"},
-        }
-    ],
-    messages=[{"role": "user", "content": "..."}]
-)
-```
+This demo uses Haiku 4.5. Its documented minimum cacheable prompt length is **4,096 tokens**, so the program intentionally builds repeated reference text well above that threshold. It still does not promise a hit:
 
-First call: `cache_creation_input_tokens=2000` (25% write premium)
-Subsequent calls within 5 min: `cache_read_input_tokens=2000` (10% cost = 90% off)
+- `cache_creation_input_tokens > 0`: provider usage reports cache creation.
+- `cache_read_input_tokens > 0`: provider usage reports a cache read.
+- Both are 0: creation or a hit was not observed; check length, an identical prefix, and TTL.
 
-**When to use**:
+## Change one thing
 
-- Long system prompts called repeatedly (chatbots)
-- Tool schemas reused across calls (multi-tool agents)
-- Same document queried multiple times (RAG on a fixed doc)
+Change the second question while keeping `big_system` exactly the same. Then inspect whether the second usage record contains `cache_read_input_tokens`.
 
-**When not**:
+## Success check
 
-- Every prompt is unique
-- Fewer than 1 call per 5 min (cache expires)
+- [ ] Streaming prints text in pieces and skips `None`.
+- [ ] A stream with no text fails.
+- [ ] The cache demo clearly exceeds the 4,096-token minimum.
+- [ ] You describe creation, a hit, or no observed cache only from usage.
 
-## Production math
+<details markdown="1">
+<summary>When caching helps and common problems</summary>
 
-For an agent at 1000 req/min with 5000-token system prompt:
+Good fit: the same long system prompt, tool schema, or reference document is reused within a short period.
 
-| Mode | Input cost / req | Monthly (30 days) |
-|---|---|---|
-| No caching | 5000 × $1/M = $0.005 | $216,000 |
-| With caching | 500 × $1/M = $0.0005 | $21,600 |
+Poor fit: the prefix changes each time, content is short, or the next call usually arrives after the cache TTL.
 
-**90% savings** — this is why production agents universally use caching.
+Common problems:
 
-## Path observations
+- `cache_control` marks the wrong block: put the breakpoint at the end of the stable prefix.
+- The second prefix changed: whitespace, tool order, or model changes may create a different cache key.
+- Only the theoretical discount is counted: include write premium, read tokens, misses, and output tokens.
+- A stream stops halfway: the production UI must mark it incomplete instead of treating half an answer as success.
 
-| Observation | Anthropic Claude | Ollama qwen2.5:3b |
-|---|---|---|
-| Streaming | ✅ smooth | ✅ smooth |
-| First-token latency | 0.3-0.8s | 0.5-2s (CPU) |
-| Prompt caching | ✅ 90% off | ❌ no API |
-| Production fit | Full caching + streaming | Mostly for dev / local demo |
+</details>
 
-## Common pitfalls
+<details markdown="1">
+<summary>📚 Deeper resources and ratings</summary>
 
-### Streaming
-- **Forgetting `flush=True`**: buffered output, user still waits
-- **Not handling None deltas**: first/last chunks may have `delta.content is None` — skip them
-- **Mid-stream disconnection**: catch + restart
-- **Token counting**: streaming responses may not include `usage` — tokenize or sum chunks yourself
+- ⭐⭐⭐⭐⭐ [Anthropic Prompt caching documentation](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): the primary source for minimum length, TTL, breakpoints, and usage fields.
+- ⭐⭐⭐⭐⭐ [Anthropic Pricing](https://platform.claude.com/docs/en/about-claude/pricing): recalculate with current prices instead of preserving an old fixed bill.
+- ⭐⭐⭐⭐ [Anthropic Batch processing](https://platform.claude.com/docs/en/build-with-claude/batch-processing): explore batch jobs for non-interactive bulk work.
+- ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents): chapter-style background when you need more depth.
 
-### Prompt caching
-- **`cache_control` in the wrong place**: attach to the segment you want cached. Can cache system + tools + first few messages simultaneously
-- **Cache key includes model name**: switching haiku → sonnet invalidates
-- **5-minute TTL**: low-QPS scenarios expire often, pay 25% premium without saving
-- **Minimum 1024 tokens**: shorter content won't cache
+See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
-## Extensions
+<small>Models, prices, packages, cache conditions, and links checked: 2026-08-28 UTC.</small>
 
-- **Streaming + tool use**: tool_use blocks also stream; use `event_type` to dispatch
-- **Anthropic Batch API**: non-realtime work, batch costs 50% less, 24h turnaround (great for eval, bulk processing)
-- **Files API**: upload 100MB+ docs, combine with cache_control
-- **OpenAI Responses API**: OpenAI also has prompt caching (different API, automatic) — different rules
-- **Wire to observability (Exercise 3)**: log `cache_read_input_tokens` to track cache hit rate
+</details>

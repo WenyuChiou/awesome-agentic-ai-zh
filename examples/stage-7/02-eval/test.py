@@ -9,7 +9,7 @@ from unittest.mock import MagicMock
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-from starter import EVAL_CASES, eval_llm_as_judge, eval_substring, run_eval
+from starter import EVAL_CASES, eval_llm_as_judge, eval_substring, parse_verdict, run_eval
 
 
 def test_eval_substring_pass():
@@ -51,6 +51,19 @@ def test_eval_llm_as_judge_fail():
     print("✅ test_eval_llm_as_judge_fail")
 
 
+def test_judge_parser_rejects_extra_or_empty_text():
+    assert parse_verdict(" pass ") is True
+    assert parse_verdict("FAIL") is False
+    for invalid in ("PASS because it looks right", "NOT PASS", "", "PASS\nFAIL"):
+        try:
+            parse_verdict(invalid)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"invalid verdict accepted: {invalid!r}")
+    print("✅ test_judge_parser_rejects_extra_or_empty_text")
+
+
 def test_run_eval_aggregates_correctly():
     """Mock agent 答對 4/5、ground_1（fake word）故意 hallucinate fail、驗 aggregation。"""
     def fake_agent(question, instruction="", **kw):
@@ -86,6 +99,7 @@ if __name__ == "__main__":
     test_eval_substring_case_insensitive()
     test_eval_llm_as_judge_pass()
     test_eval_llm_as_judge_fail()
+    test_judge_parser_rejects_extra_or_empty_text()
     test_run_eval_aggregates_correctly()
     test_eval_cases_corpus_shape()
     print("\n🎉 全部通過 — eval pipeline 邏輯正確")

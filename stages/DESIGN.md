@@ -176,6 +176,10 @@ Stage 7 的時間、環境、費用、安全提醒、完整閱讀、Loop／Graph
 
 Stage 7 的 20 筆資源固定分成 `4／6／5／5` 四組，每組使用獨立 `<tbody>`、`scope="rowgroup"` 與真正 HTML `rowspan`。保留五星編輯評分，移除 GitHub stars；已封存、Preview、Alpha、best-effort 或維護紀錄不足的專案必須在限制欄明寫。Stage 7 同樣拆成 content 與 example-hardening 兩層 stacked PR：第一層定稿三語教材、來源、圖、資源與 reader-UX gate；第二層才更新五個 `examples/stage-7/` 的 SDK、模型、直接執行步驟、安全邊界與離線測試。未經使用者明確同意不合併、不清理 branch。
 
+五個 Stage 7 範例 README 的第一個可見動作固定是 PowerShell 建立該題自己的 Python 3.11 `.venv`，再直接跑 Ollama／Anthropic 兩份離線測試；不再要求讀者先改名完整解答或抄一份空白文字檔。實際模型路徑、macOS／Linux、程式走查、排錯與延伸資源預設收合，但學習目標、核心詞、「只改一件事」與成功檢查保持可見。共用模型選擇器必須按能力需求分段：目前 Stage 3–6 function-calling 題使用 `qwen2.5:3b`，Stage 7 的辯論、評測、觀測、串流與部署機制使用 `qwen3.5:4b`；不得用「Stage 3+」把兩者寫成同一個預設，也不得暗示換模型就一定更穩。Ollama 只能寫「沒有供應商模型 API 帳單」，仍要提醒硬體、電力、下載、時間以及裝置／log／權限安全；Anthropic 使用當期 input／output token 公式與保守 spend limit，不保存固定每次費用。
+
+Stage 7 範例程式必須拒絕空白模型輸出；streaming 只有看見非空白文字才算成功，first-token latency 也從第一段可見文字開始。PRO／CON Judge 與 LLM-as-judge 只接受完整 output contract，不得以 `PASS in text` 或 `WINNER in text` 猜測；角色變多不等於 bias 降低或答案變正確，重要結論仍要用固定 eval 與合格人員審查。Observability 只記安全的 exception 類別，不把可能含 secret、Prompt 或文件內容的原始 exception 訊息寫入 trace／log。Prompt caching 示範要跨過所選模型的官方最低長度，並只依 `cache_creation_input_tokens`／`cache_read_input_tokens` 說明建立或命中。Deploy 範例要限制 message 與 `max_tokens`、讓 liveness 不呼叫模型、區分 422／429／502／503，且 Docker 使用非 root user；README 以 loopback port、read-only filesystem 與必要環境變數教最小安全預設，同時明說不能把這些設定當成 sandbox。
+
 Stage 5 的練習不能只叫讀者「看文件」卻宣稱已建立元件。Hook 練習至少要給一份可直接複製的最小設定、離線 smoke test、`/hooks` 落腳檢查與不保存 prompt／secret 的邊界；設定引用 project path 時使用 `command` + `args` 的跨平台 exec form，不能把 PowerShell 無法展開的 shell 變數寫進單一 command 字串。Agent SDK snippet 必須依現行 message type 實際讀到文字內容，regression 也要餵入 fake async `query()` 並驗證真的印出 `TextBlock`，只 compile 或比對字串不算通過。
 
 Stage 5 的 installable Skill 範例使用 `${CLAUDE_SKILL_DIR}` 指向 bundled references，讓 personal、project 與翻譯版安裝後都能找到同一包檔案。README 先給 PowerShell 可複製安裝，再收合 POSIX；驗收先跑無網路 contract checker，再用 `/skill-name` 做產品內手動檢查。自訂 JSON 不能冒充 promptfoo config，結構測試也不能冒充 model-quality eval；要教 promptfoo 時，必須另給合法 provider／prompt／test 設定或明說只提供延伸入口。範例不能保存無來源成功率、原因比例、固定省時百分比或要求私人 Chain-of-Thought。

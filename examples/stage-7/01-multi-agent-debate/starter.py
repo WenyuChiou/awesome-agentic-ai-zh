@@ -1,12 +1,12 @@
-"""Stage 7 練習 1：Multi-Agent 辯論 — Path A（Ollama 默認、$0）。
+"""Stage 7 練習 1：Multi-Agent 辯論 — Path A（Ollama）。
 
 2 個 agent 對同一個問題持相反立場辯論、第 3 個 judge agent 評分。
-這個 pattern（debate / peer review）可以**降低單一 LLM 的 bias**——production
-高賭注決策（policy / 醫療 / 法律 review）常用。
+這個小例子只示範角色分工。多看一個觀點不代表答案更正確、bias 更低；
+請用固定 eval 驗證，醫療、法律或其他高風險工作仍要由合格的人員審查。
 
 跑法：
     pip install -r requirements.txt
-    ollama pull qwen2.5:3b
+    ollama pull qwen3.5:4b
     ollama serve
     python starter.py
 """
@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import os
+import re
 import sys
 from typing import Any
 
@@ -22,8 +23,24 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from openai import OpenAI
 
-MODEL = os.environ.get("MODEL", "qwen2.5:3b")
+MODEL = os.environ.get("MODEL", "qwen3.5:4b")
 OLLAMA_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434/v1")
+
+
+def require_text(value: str | None, label: str) -> str:
+    """Reject a provider response that contains no usable text."""
+    text = (value or "").strip()
+    if not text:
+        raise ValueError(f"{label} returned empty text")
+    return text
+
+
+def parse_winner(verdict: str) -> tuple[str, str]:
+    """Accept only ``WINNER=PRO|CON. reason`` as the Judge contract."""
+    match = re.fullmatch(r"WINNER=(PRO|CON)\s*[.:-]\s*(.+)", verdict.strip(), re.IGNORECASE)
+    if not match:
+        raise ValueError("Judge must reply with WINNER=PRO or WINNER=CON, followed by a reason")
+    return match.group(1).upper(), match.group(2).strip()
 
 
 def llm_call(system: str, user: str, llm: Any = None) -> str:
@@ -32,7 +49,7 @@ def llm_call(system: str, user: str, llm: Any = None) -> str:
         model=MODEL,
         messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
     )
-    return resp.choices[0].message.content or ""
+    return require_text(resp.choices[0].message.content, "LLM")
 
 
 def debate(question: str, llm: Any = None) -> dict:
@@ -51,7 +68,15 @@ def debate(question: str, llm: Any = None) -> dict:
         user=f"Question: {question}\n\nPRO: {pro_argument}\n\nCON: {con_argument}",
         llm=llm,
     )
-    return {"question": question, "pro": pro_argument, "con": con_argument, "judge": judge_verdict}
+    winner, reason = parse_winner(judge_verdict)
+    return {
+        "question": question,
+        "pro": pro_argument,
+        "con": con_argument,
+        "judge": judge_verdict,
+        "winner": winner,
+        "reason": reason,
+    }
 
 
 if __name__ == "__main__":
@@ -61,5 +86,6 @@ if __name__ == "__main__":
     print(f"PRO:    {result['pro']}\n")
     print(f"CON:    {result['con']}\n")
     print(f"Judge:  {result['judge']}")
-    assert "WINNER" in result["judge"].upper()
-    print("\n✅ 練習 1 通過 — 3-agent debate 跑通、$0/run")
+    assert result["winner"] in {"PRO", "CON"}
+    assert result["reason"]
+    print("\n✅ 練習 1 通過 — 三個角色都回覆，Judge 格式也正確")

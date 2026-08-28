@@ -2,131 +2,157 @@
   <strong>繁體中文</strong> | <a href="./README.zh-Hans.md">简体中文</a> | <a href="./README.en.md">English</a>
 </div>
 
-# 練習 5：Deploy（FastAPI + Docker）
+# 練習 5：把 Agent 放進 FastAPI 與 Docker
 
-對應 [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.md) 練習 5。
-> 🎓 **學習模式**：這份 `starter.py` 是**完整解答**、不是 TODO skeleton。建議用**主動模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重寫一份 `starter.py`、跑 `python test.py` 驗證；卡 20 分鐘再回去對照 reference。完整方法論看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+你會把一個模型呼叫包成兩個 HTTP endpoint：`/health` 說服務還活著，`/chat` 接收問題並回傳答案。
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 兩條 SDK path，不是進階深度教材。深度教材推薦：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章節式 + 16 種 production 能力。**本練習對應 hello-agents 的 production deploy / harness 章節**
-> - [FastAPI official tutorial](https://fastapi.tiangolo.com/tutorial/) + [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering)（harness pattern 全集）
-> - 完整 references 見 [Stage 7 精選 Projects](../../../stages/07-multi-agent-production.md#-精選-projects範本--sdk--工具-collection)
+對應 [Stage 7 — Multi-Agent 與 Production](../../../stages/07-multi-agent-production.md) 練習 5。
 
+## 🎯 學習目標
 
-## 任務
+- 用 **Pydantic** 擋住空白、過長文字與過大的 `max_tokens`。
+- 分辨 **liveness** 與真正的上游 readiness；健康檢查不呼叫模型。
+- 用非 root container、loopback port 與 read-only filesystem 縮小風險。
 
-把 agent 包進 production-style HTTP API：
+## 先跑不開 Server 的測試
 
-- FastAPI app with `/health` + `/chat` endpoints
-- Structured logging with request_id
-- Proper HTTP status codes (200 / 422 / 429 / 503 / 500)
-- Pydantic schema validation (FastAPI 自動驗）
-- Dockerfile（含 Ollama 跟 Anthropic 兩個 deploy 模式）
+在這個資料夾開 PowerShell，直接複製：
 
-## 怎麼跑
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
+```
 
-### Local Ollama
+看到兩份 `🎉`，代表 200、422、429、502、503 與輸入界線都有離線測試。TestClient 不會開真實網路 port。
 
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
+<details markdown="1">
+<summary>Path A：在本機啟動 Ollama API</summary>
+
+```powershell
+ollama pull qwen3.5:4b
 ollama serve
-
-uvicorn starter:app --reload --port 8000
-
-# 另一個 shell:
-curl -X POST http://localhost:8000/chat \
-  -H 'Content-Type: application/json' \
-  -d '{"message": "hi"}'
 ```
 
-### Local Anthropic
+另開 PowerShell：
 
-```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-uvicorn starter_anthropic:app --reload --port 8000
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn starter:app --host 127.0.0.1 --port 8000
 ```
 
-### Docker
+再開第三個 PowerShell：
 
-```bash
-docker build -t agent-api .
-
-# Ollama path（需 host 跑著 ollama）
-docker run -p 8000:8000 \
-  -e OLLAMA_API_BASE=http://host.docker.internal:11434/v1 \
-  agent-api
-
-# Anthropic path
-docker run -p 8000:8000 \
-  -e APP_MODULE=starter_anthropic:app \
-  -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY \
-  agent-api
+```powershell
+Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/chat `
+  -ContentType "application/json" `
+  -Body '{"message":"請用一句話解釋 Agent。","max_tokens":100}'
 ```
 
-## 不啟 server 驗證
+Ollama 不收模型 API 費，但硬體、電力和時間仍有成本。
 
-```bash
-python test.py # 5 個 test、用 fastapi.TestClient
-python test_anthropic.py # 3 個 test（含 429 rate limit）
+</details>
+
+<details markdown="1">
+<summary>Path B：在本機啟動 Anthropic API</summary>
+
+```powershell
+$env:ANTHROPIC_API_KEY = "貼上你的金鑰"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe -m uvicorn starter_anthropic:app --host 127.0.0.1 --port 8000
 ```
 
-`fastapi.TestClient` 用 in-process ASGI、不開真 port、不用 docker。
+Haiku 4.5 的單價是 input `$1 / 1M` tokens、output `$5 / 1M` tokens：
 
-## Production 必備
+```text
+估算費用 = (input_tokens × $1 / 1M) + (output_tokens × $5 / 1M)
+```
 
-| 元素 | 為什麼 | 在這份 starter |
-|---|---|---|
-| `/health` endpoint | K8s liveness / readiness probe | ✅ |
-| `request_id` per call | trace / debug 必備 | ✅ uuid4 |
-| Structured logging | ELK / Datadog / Loki 看得懂 | ✅ JSON-like format |
-| Pydantic schema validation | malformed JSON 自動 422 | ✅ FastAPI 內建 |
-| Specific exception → HTTP status | 503 ≠ 500，client 知道該不該 retry | ✅ APIConnectionError → 503 |
-| Token tracking response | cost / token usage 透明 | ✅ Path B 含 input_tokens / output_tokens |
+先在供應商 Console 設 `$1` spend limit。API 回覆裡的 input/output tokens 可用來估算，不要把短 Prompt 的固定金額寫成永久價格。
 
-## Status code 對照
+</details>
 
-| 情況 | HTTP code | client 該怎樣 |
-|---|---|---|
-| LLM 答了 | 200 | 用答案 |
-| user 沒傳 message field | 422 | 修 request、別 retry |
-| Anthropic rate limit (429) | 429 | exponential backoff retry |
-| LLM 服務斷線 (APIConnectionError) | 503 | retry（transient） |
-| 其他 unexpected | 500 | log + alert、別自動 retry |
+## 五個重要詞
 
-## Deploy targets
+- **Endpoint**：服務對外提供的一個入口，例如 `POST /chat`。
+- **Schema validation**：先檢查輸入形狀與範圍，不合規就回 422。
+- **Liveness**：程式還活著。這份 `/health` 只做便宜的程序檢查。
+- **Request ID**：一次請求的追蹤號碼；log 只記 ID，不記完整 Prompt。
+- **Non-root container**：container 內的程序不是系統管理員，能減少部分傷害。
 
-| Target | 適合 | 注意 |
-|---|---|---|
-| **Local uvicorn** | dev | 1 worker、不適 production |
-| **Docker + uvicorn** | small prod | 加 `--workers N`、reverse proxy（nginx）前面 |
-| **K8s** | scalable prod | liveness/readiness probe 用 `/health` |
-| **AWS Lambda + API Gateway** | sporadic traffic | cold start 慢、適合輕量 agent |
-| **Cloud Run / Fargate** | 中規模 prod | scale-to-zero、簡單 |
-| **Anthropic Computer Use / Skills** | very specific use cases | 看 Stage 5 |
+| 狀況 | HTTP code | 呼叫端怎麼做 |
+|---|---:|---|
+| 成功回答 | 200 | 使用答案 |
+| 輸入缺少或超出範圍 | 422 | 修正 request，不要重試原資料 |
+| 供應商限流 | 429 | 等候並依 `Retry-After`／backoff 重試 |
+| 模型回空答案 | 502 | 記錄並有限次重試或轉人工 |
+| 上游連線失敗 | 503 | 稍後有限次重試 |
+| 未預期的程式錯誤 | 500 | 告警並修程式 |
 
-## 常見坑
+## 只改一件事
 
-- **沒 health check**：load balancer 不知道 instance 死了、流量繼續送
-- **`/health` 太重**：去打 LLM 確認 = 耗 cost、且 cold start 慢就被踢
-- **`request_id` 沒記**：trace 散在各 log 裡找不到對應
-- **All errors → 500**：client 無法分辨 transient（retry）vs permanent（don't retry）。要分 status code
-- **synchronous LLM call**：FastAPI 用 `def` 而非 `async def`、會 block event loop。Production 應該用 `async def` + `await client.messages.create(...)` 或 thread pool
-- **No rate limiting**：被攻擊或 client bug 會打爆 LLM bill。前面加 `slowapi` / nginx rate limit
-- **Hard-coded secret**：API key 直接寫 code = git 流出。用 env var + secret manager
+把 `max_tokens` 改成 `1001` 送到 `/chat`。確認 FastAPI 回 422，而且模型完全沒有被呼叫。
 
-## 接前面 stages
+## 成功檢查
 
-- **練習 3 observability**：把 `TraceContext` 加進 endpoint、每 request 記 latency / tokens / errors
-- **練習 2 eval**：deploy 後跑 CI eval、`pass_rate < 90%` 就 rollback
-- **練習 4 caching**：把 system prompt 加 `cache_control`、production cost 立刻減 90%
-- **Stage 6 RAG**：endpoint 接 vector DB + memory store
+- [ ] `/health` 不會呼叫 Ollama 或 Anthropic。
+- [ ] 空白 message、4,001 字元和 `max_tokens=1001` 都被拒絕。
+- [ ] Log 有 request ID，但沒有完整使用者 Prompt 或 API key。
+- [ ] 你知道 Docker 設定只是縮小風險，不能把它當成 sandbox。
 
-## 延伸
+<details markdown="1">
+<summary>用較安全的預設值啟動 Docker</summary>
 
-- **加 streaming endpoint**：`@app.post("/chat/stream")` 配 `StreamingResponse` + SSE format
-- **加 auth**：FastAPI `Depends(verify_token)` + JWT / API key
-- **加 cost limit**：每 user / day 上限 X token、超過 reject
-- **接 OpenTelemetry**：`tracer.start_as_current_span("chat_endpoint")` 自動丟去 Datadog
-- **K8s manifests**：Deployment + Service + HPA + ConfigMap
+```powershell
+docker build -t stage7-agent-api .
+```
+
+Ollama Path A：
+
+```powershell
+docker run --rm --read-only --tmpfs /tmp `
+  -p 127.0.0.1:8000:8000 `
+  -e OLLAMA_API_BASE=http://host.docker.internal:11434/v1 `
+  stage7-agent-api
+```
+
+Anthropic Path B：
+
+```powershell
+docker run --rm --read-only --tmpfs /tmp `
+  -p 127.0.0.1:8000:8000 `
+  -e ANTHROPIC_API_KEY=$env:ANTHROPIC_API_KEY `
+  stage7-agent-api `
+  uvicorn starter_anthropic:app --host 0.0.0.0 --port 8000
+```
+
+這些設定提供非 root、loopback port 與 read-only filesystem。仍不能把它當成 sandbox，也沒有替你加入 TLS、authentication、authorization、rate limit、egress policy 或 secret manager。
+
+</details>
+
+<details markdown="1">
+<summary>Production 還要補什麼、常見問題</summary>
+
+- 對外服務先加 authentication、authorization、TLS 與 rate limit。
+- liveness 保持便宜；若需要 readiness，另做有 timeout 和快取的依賴檢查。
+- API key 放 secret manager 或受保護的環境變數，不寫進 image、程式或 README。
+- 設定 request body、併發、timeout、重試與每日 token 上限。
+- 需要 streaming 時，用 SSE／WebSocket 並處理中斷與取消。
+- 正式部署前掃描 image 與 Python dependencies，再鎖定可重現版本。
+
+</details>
+
+<details markdown="1">
+<summary>📚 深入學習資源與評分</summary>
+
+- ⭐⭐⭐⭐⭐ [FastAPI 官方教學](https://fastapi.tiangolo.com/tutorial/)：schema、errors、dependencies 與部署的第一手文件。
+- ⭐⭐⭐⭐⭐ [Dockerfile best practices](https://docs.docker.com/build/building/best-practices/)：建立較小、可更新且非 root 的 image。
+- ⭐⭐⭐⭐⭐ [Docker port publishing](https://docs.docker.com/engine/network/port-publishing/)：理解為什麼 `127.0.0.1:8000:8000` 比預設公開所有介面更保守。
+- ⭐⭐⭐⭐ [`awesome-harness-engineering`](https://github.com/ai-boost/awesome-harness-engineering)：需要更多 harness pattern 時使用。
+- ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：章節式 Agent production 背景。
+
+完整清單見 [Stage 7 精選 Projects](../../../stages/07-multi-agent-production.md#-精選-projects範本--sdk--工具-collection)。
+
+<small>模型、價格、套件、部署文件與連結查核：2026-08-28 UTC。</small>
+
+</details>

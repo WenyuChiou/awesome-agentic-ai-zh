@@ -9,7 +9,7 @@ from unittest.mock import MagicMock
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-from starter_anthropic import cached_query, stream_anthropic
+from starter_anthropic import build_cache_demo_prompt, cached_query, stream_anthropic
 
 
 def test_stream_anthropic_yields_text():
@@ -25,6 +25,23 @@ def test_stream_anthropic_yields_text():
     out = list(stream_anthropic("hi", client=client))
     assert out == ["Hello", " world"]
     print("✅ test_stream_anthropic_yields_text")
+
+
+def test_stream_anthropic_rejects_whitespace_only_chunks():
+    stream_obj = MagicMock()
+    stream_obj.text_stream = iter([" ", "\t"])
+    stream_obj.__enter__ = MagicMock(return_value=stream_obj)
+    stream_obj.__exit__ = MagicMock(return_value=False)
+    client = MagicMock()
+    client.messages.stream.return_value = stream_obj
+
+    try:
+        list(stream_anthropic("hi", client=client))
+    except ValueError as error:
+        assert "empty text" in str(error)
+    else:
+        raise AssertionError("whitespace-only stream must fail")
+    print("✅ test_stream_anthropic_rejects_whitespace_only_chunks")
 
 
 def test_cached_query_passes_cache_control():
@@ -46,7 +63,36 @@ def test_cached_query_passes_cache_control():
     print("✅ test_cached_query_passes_cache_control")
 
 
+def test_cache_demo_is_deliberately_long():
+    prompt = build_cache_demo_prompt()
+    assert len(prompt.split()) > 6000
+    print("✅ test_cache_demo_is_deliberately_long")
+
+
+def test_cached_query_rejects_empty_text():
+    client = MagicMock()
+    client.messages.create.return_value = SimpleNamespace(
+        content=[],
+        usage=SimpleNamespace(
+            input_tokens=10,
+            output_tokens=0,
+            cache_creation_input_tokens=0,
+            cache_read_input_tokens=0,
+        ),
+    )
+    try:
+        cached_query("Q?", build_cache_demo_prompt(), client=client)
+    except ValueError as error:
+        assert "empty text" in str(error)
+    else:
+        raise AssertionError("empty cached response must fail")
+    print("✅ test_cached_query_rejects_empty_text")
+
+
 if __name__ == "__main__":
     test_stream_anthropic_yields_text()
+    test_stream_anthropic_rejects_whitespace_only_chunks()
     test_cached_query_passes_cache_control()
+    test_cache_demo_is_deliberately_long()
+    test_cached_query_rejects_empty_text()
     print("\n🎉 通過 — streaming + caching API contract 正確")

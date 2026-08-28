@@ -1,12 +1,12 @@
-"""Stage 7 練習 4：SDK 進階 — Path A（Ollama 默認、$0、streaming）。
+"""Stage 7 練習 4：SDK 進階 — Path A（Ollama streaming）。
 
 Production agent 兩個必備 SDK 進階 feature：
-1. **Streaming**：邊產 token 邊回 UI（user perception 從 5 秒 → 0.5 秒就看到 token）
-2. **Prompt caching**：Anthropic-specific、重複 long context 省 90% cost（Path B 才有）
+1. **Streaming**：答案還在生成時，就把已到達的文字先顯示給使用者。
+2. **Prompt caching**：重用相同長前綴；實際是否命中要看供應商回傳的 usage。
 
 跑法：
     pip install -r requirements.txt
-    ollama pull qwen2.5:3b
+    ollama pull qwen3.5:4b
     ollama serve
     python starter.py
 """
@@ -23,8 +23,16 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from openai import OpenAI
 
-MODEL = os.environ.get("MODEL", "qwen2.5:3b")
+MODEL = os.environ.get("MODEL", "qwen3.5:4b")
 OLLAMA_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434/v1")
+
+
+def require_text(value: str | None, label: str) -> str:
+    """Reject a provider response that contains no usable text."""
+    text = (value or "").strip()
+    if not text:
+        raise ValueError(f"{label} returned empty text")
+    return text
 
 
 def stream_response(prompt: str, llm: Any = None) -> Iterator[str]:
@@ -35,10 +43,15 @@ def stream_response(prompt: str, llm: Any = None) -> Iterator[str]:
         messages=[{"role": "user", "content": prompt}],
         stream=True,
     )
+    saw_non_whitespace = False
     for chunk in stream:
         delta = chunk.choices[0].delta.content
         if delta:
+            if delta.strip():
+                saw_non_whitespace = True
             yield delta
+    if not saw_non_whitespace:
+        raise ValueError("Ollama stream returned empty text")
 
 
 def stream_to_string(prompt: str, llm: Any = None) -> dict:
@@ -47,12 +60,13 @@ def stream_to_string(prompt: str, llm: Any = None) -> dict:
     first_token_at = None
     chunks = []
     for delta in stream_response(prompt, llm=llm):
-        if first_token_at is None:
+        if first_token_at is None and delta.strip():
             first_token_at = time.perf_counter() - t0
         chunks.append(delta)
     total_latency = time.perf_counter() - t0
+    text = require_text("".join(chunks), "Ollama stream")
     return {
-        "text": "".join(chunks),
+        "text": text,
         "first_token_ms": (first_token_at or 0) * 1000,
         "total_latency_ms": total_latency * 1000,
         "chunk_count": len(chunks),
@@ -70,5 +84,5 @@ if __name__ == "__main__":
     total = time.perf_counter() - t0
 
     print(f"\n\n📊 Total: {total:.2f}s")
-    print(f"✅ 練習 4 通過 — streaming SDK 跑通、$0/run")
-    print("   UX 觀察：streaming 讓 user 早在 0.3-1 秒就看到第一個 token，不必等完整答案")
+    print("✅ 練習 4 通過 — streaming SDK 能逐段顯示答案")
+    print("   請在自己的電腦量 first-token 與 total latency；速度會隨模型和硬體改變")

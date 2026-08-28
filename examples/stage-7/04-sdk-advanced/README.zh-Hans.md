@@ -2,144 +2,122 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 4：SDK 进阶（streaming + prompt caching）
+# 练习 4：一边显示答案，一边确认 Cache
 
-对应 [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 4。
-> 🎓 **学习模式**：这份 `starter.py` 是**完整解答**、不是 TODO skeleton。建议用**主动模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重写一份 `starter.py`、跑 `python test.py` 验证；卡 20 分钟再回去对照 reference。完整方法论看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+**Streaming**让答案分段出现；**Prompt caching**让相同的长前缀有机会被重用。两者解决不同问题。
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 两条 SDK path，不是进阶深度教材。深度教材推荐：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的进阶 SDK feature 章节**
-> - [Anthropic Prompt Caching docs](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) + [Anthropic Batch API](https://docs.anthropic.com/en/docs/build-with-claude/batch-processing)
-> - 完整 references 见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)
+对应 [Stage 7 — Multi-Agent 与 Production](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 4。
 
-## Production 两个必备 SDK feature
+## 🎯 学习目标
 
-1. **Streaming** — 边产 token 边送 UI、user 0.3-1 秒就看到第一个字（不必等完整答案）
-2. **Prompt caching**（Anthropic-only）— 重复 long system prompt / tools / context 省 90% cost
+- 量自己的 first-token latency 与 total latency，不照抄固定秒数。
+- 正确略过空 chunk，并在整条 stream 都空白时报错。
+- 用 `cache_creation_input_tokens` 与 `cache_read_input_tokens` 判断实际结果。
 
-## 怎么跑
+## 先跑不花模型费的测试
 
-### Path A（默认、本机免费、streaming demo）
+在这个文件夹打开 PowerShell，直接复制：
 
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
+```
+
+看到两份 `🎉`，代表 streaming、空回复和 cache_control 的离线合约都通过。
+
+<details markdown="1">
+<summary>Path A：用 Ollama 看 Streaming</summary>
+
+```powershell
+ollama pull qwen3.5:4b
 ollama serve
-python starter.py
 ```
 
-### Path B（Anthropic、streaming + caching）
+另开 PowerShell：
 
-```bash
-pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-python starter_anthropic.py
+```powershell
+.\.venv\Scripts\python.exe starter.py
 ```
 
-预算：streaming demo + caching demo ≈ **$0.005**（2 call + cached ~2000 token）。
+Ollama 不收模型 API 费，但硬件、电力与时间仍有成本。记下你自己的第一段文字时间和总时间；模型、电脑、Prompt 与当下负载都会影响结果。
 
-## 不花钱验证程序逻辑
+</details>
 
-```bash
-python test.py             # 3 个 test、mock OpenAI streaming
-python test_anthropic.py   # mock Anthropic streaming + cache_control
+<details markdown="1">
+<summary>Path B：用 Anthropic 看 Streaming 与 Prompt caching</summary>
+
+```powershell
+$env:ANTHROPIC_API_KEY = "贴上你的金钥"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
-## Streaming 怎么用
+Haiku 4.5 的一般 input/output 单价是 `$1 / 1M` 与 `$5 / 1M` tokens。5 分钟 cache write 为一般 input 的 1.25 倍，cache read 为 0.1 倍：
 
-### OpenAI / Ollama
-
-```python
-stream = client.chat.completions.create(
-    model=..., messages=[...],
-    stream=True,
-)
-for chunk in stream:
-    delta = chunk.choices[0].delta.content
-    if delta:
-        print(delta, end="", flush=True)
+```text
+估算费用 =
+  normal_input_tokens × $1 / 1M
+  + cache_creation_input_tokens × $1.25 / 1M
+  + cache_read_input_tokens × $0.10 / 1M
+  + output_tokens × $5 / 1M
 ```
 
-### Anthropic
+先在供应商 Console 设置 `$1` spend limit。实际是否创建或读到 cache，以 usage 字段为准，不以“第二次调用”猜测。
 
-```python
-with client.messages.stream(
-    model=..., max_tokens=300, messages=[...]
-) as stream:
-    for text in stream.text_stream:
-        print(text, end="", flush=True)
-```
+</details>
 
-**UX 观察**：non-streaming 5 秒才看到答案 / streaming 0.5 秒看到第一个字。**user perception 差很大**。
+## 四个重要词
 
-## Prompt Caching 怎么用（Anthropic-only）
+- **Chunk**：stream 里一次到达的一小段文字，不一定刚好是一个 token。
+- **First-token latency**：从送出请求到第一段可显示文字的时间。
+- **Total latency**：整份回答完成的时间。
+- **Cache breakpoint**：告诉 API“前面这段可以重用”的位置。
 
-```python
-resp = client.messages.create(
-    model="claude-haiku-4-5",
-    system=[
-        {
-            "type": "text",
-            "text": "[2000-token reference material...]",
-            "cache_control": {"type": "ephemeral"},
-        }
-    ],
-    messages=[{"role": "user", "content": "..."}]
-)
-```
+这个示例使用 Haiku 4.5。官方最低可缓存长度是 **4,096 tokens**，所以程序故意创建远长于门槛的重复参考文字。程序仍不会宣称一定命中，而是显示：
 
-第一次写入：`cache_creation_input_tokens=2000`（25% premium）
-之后 5 分钟内：`cache_read_input_tokens=2000`（10% cost = 90% off）
+- `cache_creation_input_tokens > 0`：供应商 usage 显示已创建 cache。
+- `cache_read_input_tokens > 0`：供应商回报读到 cache。
+- 两者都是 0：没有观察到创建或命中，请检查长度、前缀是否完全相同与 TTL。
 
-**何时用**：
+## 只改一件事
 
-- Long system prompt 重复 call（聊天机器人）
-- Tool schema 重复（multi-tool agent）
-- Document context 重复问（RAG with same doc）
+把第二次问题改掉，但保持 `big_system` 完全相同。再看第二次 usage 是否出现 `cache_read_input_tokens`。
 
-**不用的时候**：
+## 成功检查
 
-- 每次 prompt 都不同
-- 5 分钟内 call 次数 < 1（cache 过期）
+- [ ] Streaming 时会逐段印字，不会把 `None` 当文字。
+- [ ] 整条 stream 没有文字时会失败。
+- [ ] Cache 示例内容明显跨过 4,096-token 门槛。
+- [ ] 你只根据 usage 说“创建／命中／未观察到”。
 
-## Production 算盘
+<details markdown="1">
+<summary>何时值得 Cache、常见问题</summary>
 
-对 1000 req/min 的 agent、prompt 含 5000 token system prompt：
+适合：相同的长 system prompt、tool schema 或参考文件会在短时间内重复使用。
 
-| 模式 | Input cost / req | 月 cost（30 天） |
-|---|---|---|
-| 无 caching | 5000 × $1/M = $0.005 | $216,000 |
-| 有 caching | 500 × $1/M = $0.0005 | $21,600 |
+不适合：前缀每次都变、内容太短，或下一次调用通常超过 cache TTL。
 
-**省 90%**——这就是为什么 production agent 一律用 caching。
+常见问题：
 
-## 两个 path 观察重点
+- `cache_control` 放错段落：把 breakpoint 放在稳定前缀的结尾。
+- 第二次改了前缀：空格、工具顺序或模型改变，都可能让它成为不同 cache。
+- 只看理论折扣：同时把 write premium、read tokens、未命中与 output tokens 算进去。
+- Streaming 中途断线：正式 UI 要标示未完成，不能把半份答案当成功。
 
-| 观察项 | Anthropic Claude | Ollama qwen2.5:3b |
-|---|---|---|
-| Streaming | ✅ smooth | ✅ smooth |
-| First token latency | 0.3-0.8s | 0.5-2s (CPU) |
-| Prompt caching | ✅ 90% off | ❌ 无此 API |
-| 适合 production 用法 | 全套 caching + streaming | 主要为 dev / 本机 demo |
+</details>
 
-## 常见坑
+<details markdown="1">
+<summary>📚 深入学习资源与评分</summary>
 
-### Streaming
-- **忘记 `flush=True`**：buffered output、user 还是要等
-- **没处理 None delta**：开头 / 结尾 chunk 可能 `delta.content is None`、要 skip
-- **错误处理**：streaming 中途断线、要 catch + restart
-- **Token counting**：streaming response 不一定有 `usage`、要自己 tokenize 或 sum chunks
+- ⭐⭐⭐⭐⭐ [Anthropic Prompt caching 官方文件](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)：最低长度、TTL、breakpoint 与 usage 栏位的权威来源。
+- ⭐⭐⭐⭐⭐ [Anthropic Pricing](https://platform.claude.com/docs/en/about-claude/pricing)：用当期单价重算，不保存旧的固定账单。
+- ⭐⭐⭐⭐ [Anthropic Batch processing](https://platform.claude.com/docs/en/build-with-claude/batch-processing)：非即时大量工作可再研究 batch。
+- ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：需要章节式背景时使用。
 
-### Prompt caching
-- **`cache_control` 放错位置**：要在“想 cache 的那段”、不是整个 system。可同时 cache system + tools + 前面几条 messages
-- **Cache key 含 model name**：换 model（haiku → sonnet）cache 失效
-- **5 分钟 TTL**：低 QPS 场景 cache 经常过期、白付 25% premium 没省到
-- **Minimum 1024 tokens**：太短的 content cache 不会生效
+完整清单见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)。
 
-## 延伸
+<small>模型、价格、套件、cache 条件与连结查核：2026-08-28 UTC。</small>
 
-- **Streaming + tool use**：tool_use block 也能 stream、用 `event_type` 判断
-- **Anthropic Batch API**：非实时任务丢 batch、省 50% cost、24 小时内回（适合 eval、bulk processing）
-- **Files API**：100MB+ 文件直接 upload、cache_control 一起用
-- **OpenAI Responses API**：OpenAI 也有 prompt caching（不同 API、自动 cache）、条件不同
-- **接 observability（练习 3）**：cache_read_input_tokens 记到 telemetry、追 cache hit rate
+</details>

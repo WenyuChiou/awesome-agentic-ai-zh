@@ -2,139 +2,123 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 3: Observability (4 production telemetry primitives)
+# Exercise 3: See What Happens Inside an Agent
 
-Pairs with [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.en.md) Exercise 3.
-> 🎓 **How to use this**: `starter.py` is the **complete solution**, not a TODO skeleton. The active approach works better — `mv starter.py starter_reference.py`, read the signatures but not the bodies, write your own `starter.py` from scratch, then run `python test.py` to check it; if you are stuck for 20 minutes, go back and compare against the reference. Full methodology in [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md).
+**Observability** is like adding an instrument panel to an agent: when it becomes slow, fails, or uses too many tokens, you can find the responsible step.
 
-> 📚 **Want the chapter-length version?** The starter in this folder is an illustrative build focused on the core pattern plus two SDK paths — it is not in-depth teaching material. Recommended for depth:
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ the most complete Chinese-language resource — chapter-by-chapter, covering 16 production capabilities. **This exercise maps to hello-agents' observability / tracing chapter (Extra Chapter)**
-> - [Langfuse](https://github.com/langfuse/langfuse) + [Arize Phoenix](https://github.com/Arize-ai/phoenix) (OpenTelemetry-native)
-> - Full references in [Stage 7 Curated Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections)
+Pairs with Exercise 3 in [Stage 7 — Multi-Agent & Production](../../../stages/07-multi-agent-production.en.md).
 
-## Task
+## 🎯 Learning goals
 
-Production agents need 4 telemetry primitives:
+- Learn five core signals: **Request ID, Span, Latency, Usage, and Error**.
+- Connect all steps in one job with the same request ID.
+- Record usage returned by the provider; if it is missing, show that it is missing instead of guessing.
 
-1. **Latency** — per-step timing (p50/p95/p99)
-2. **Token usage** — input/output (cost tracking)
-3. **Trace** — every step of a multi-step agent (debug + audit)
-4. **Errors** — exceptions + retry count
+## Run the model-free tests first
 
-Implementation: `TraceContext` + `trace_span` context manager wrapping LLM calls.
+Open PowerShell in this folder and copy:
 
-## How to run
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe test.py
+.\.venv\Scripts\python.exe test_anthropic.py
+```
 
-```bash
-pip install -r requirements.txt
-ollama pull qwen2.5:3b
+Two `🎉` messages mean success, failure, latency, span, and usage behavior all have passing offline tests. The tests never contact a model.
+
+<details markdown="1">
+<summary>Path A: Produce a real trace with Ollama</summary>
+
+```powershell
+ollama pull qwen3.5:4b
 ollama serve
-python starter.py
 ```
 
-Budget: **$0** (Path A). Path B with Claude: ~$0.0001/run.
+Open another PowerShell window:
 
-```bash
-python test.py             # 5 tests
-python test_anthropic.py
+```powershell
+.\.venv\Scripts\python.exe starter.py
 ```
 
-## The 4 primitives
+Ollama does not charge a provider model API fee. Hardware, electricity, and time still have costs. Some versions may omit usage; the program keeps a zero value and never presents an estimate as provider data.
 
-### Latency (via contextmanager)
+</details>
 
-```python
-@contextmanager
-def trace_span(ctx, name, **extras):
-    t0 = time.perf_counter()
-    try:
-        yield
-    finally:
-        latency_ms = (time.perf_counter() - t0) * 1000
-        ctx.add_span(name, latency_ms, **extras)
+<details markdown="1">
+<summary>Path B: Record the Usage returned by Anthropic</summary>
 
-with trace_span(ctx, "search_step"):
-    result = expensive_search(query)
+```powershell
+$env:ANTHROPIC_API_KEY = "paste-your-key"
+$env:MODEL = "claude-haiku-4-5-20251001"
+.\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
-### Token usage
+Haiku 4.5 costs `$1 / 1M` input tokens and `$5 / 1M` output tokens:
 
-```python
-resp = client.messages.create(...)
-ctx.add_tokens(input_t=resp.usage.input_tokens, output_t=resp.usage.output_tokens)
+```text
+estimated cost = (input_tokens × $1 / 1M) + (output_tokens × $5 / 1M)
 ```
 
-- **Anthropic**: `usage.input_tokens` / `usage.output_tokens` are precise
-- **OpenAI/Ollama**: `usage.prompt_tokens` / `usage.completion_tokens`; Ollama occasionally omits usage
+Set a `$1` provider spend limit first. Usage is the provider's count for that response. Field names and coverage can differ across APIs.
 
-### Trace
+</details>
 
-```python
-ctx = TraceContext("req_42")
-with trace_span(ctx, "search"): ...
-with trace_span(ctx, "llm_call"): ...
-print(ctx.summary())  # full request timeline
+## Five important terms
+
+- **Request ID**: a tracking number for one request.
+- **Span**: one smaller step inside the request, such as search or llm_call.
+- **Latency**: how long a step takes.
+- **Usage**: the input/output token counts returned by the provider.
+- **Error**: the failing step and a safe error category; after recording it, raise the exception again. Raw exception messages may contain secrets and must not be logged.
+
+```text
+request_id
+├─ span: search      → latency
+└─ span: llm_call    → latency + usage + error
 ```
 
-### Errors
+This starter uses a tiny `TraceContext` to teach the idea. Production systems commonly use OpenTelemetry and send the data to an observability platform.
 
-```python
-@contextmanager
-def trace_span(ctx, name):
-    try:
-        yield
-    except Exception as e:
-        ctx.add_error(f"{name}: {e}")
-        raise   # critical: re-raise, don't swallow
-```
+## Change one thing
 
-## Production tools (don't roll your own)
+Rename the fake `search` step to `retrieve_context`, then rerun the tests. Confirm that the summary still has two spans with the same request ID.
 
-These primitives are for learning. In production use OpenTelemetry + a managed platform:
+## Success check
 
-- **[Langfuse](https://langfuse.com/)** — open source, self-hostable, tracing + eval + prompt management
-- **[LangSmith](https://smith.langchain.com/)** — LangChain ecosystem
-- **[Helicone](https://www.helicone.ai/)** — proxy mode, zero code change
-- **[Arize Phoenix](https://github.com/Arize-ai/phoenix)** — open source, OpenTelemetry-native
-- **[Datadog LLM Observability](https://www.datadoghq.com/product/llm-observability/)** — integrates with APM
-- **[Anthropic API Console](https://console.anthropic.com/)** — built-in Claude cost dashboard
+- [ ] One request uses one request ID.
+- [ ] Every step has a name and latency.
+- [ ] An empty model reply records an error and raises an exception.
+- [ ] Logs contain neither an API key, the full prompt, nor a raw exception message.
 
-## Production checklist
+<details markdown="1">
+<summary>Production additions and common problems</summary>
 
-For every production agent you must be able to answer:
+A production service should answer: Which step is slow? Which errors are common? How many tokens did one request use? When did behavior change?
 
-```
-[ ] What's the p50 / p95 / p99 latency?
-[ ] Average tokens per request? ($)
-[ ] Which step is slowest?
-[ ] Error rate? Most common error?
-[ ] Retry success rate?
-[ ] Cost/request trend (monthly)?
-[ ] Which queries get wrong answers? (connects to eval, Exercise 2)
-```
+Common problems:
 
-Can't answer = no observability.
+- Only total time is recorded: you cannot tell whether search or the model was slow.
+- An exception is swallowed: callers mistakenly see success. Record it, then raise it again.
+- Full prompts or raw exception messages are logged: they may contain personal data, documents, or secrets. Log only safe error categories, then add redaction and access controls.
+- Every trace is stored forever: cost and privacy risk grow. Define sampling, retention, and deletion rules.
+- A local token estimate is labeled provider usage: name estimates and provider-returned fields separately.
 
-## Path observations
+</details>
 
-| Observation | Anthropic Claude | Ollama qwen2.5:3b |
-|---|---|---|
-| `usage.tokens` precision | ✅ Complete (incl. cache_*) | ⚠ Sometimes missing |
-| Cost tracking | Direct: tokens × pricing | $0 but GPU time has cost |
-| Latency source | Network + queue + inference | Pure inference |
-| Production observation | Anthropic console | Self-host prometheus/grafana |
+<details markdown="1">
+<summary>📚 Deeper resources and ratings</summary>
 
-## Common pitfalls
+- ⭐⭐⭐⭐⭐ [Langfuse](https://github.com/langfuse/langfuse): open-source traces, evals, and prompt management.
+- ⭐⭐⭐⭐⭐ [Arize Phoenix](https://github.com/Arize-ai/phoenix): open-source, OpenTelemetry-oriented observability.
+- ⭐⭐⭐⭐⭐ [datawhalechina/hello-agents](https://github.com/datawhalechina/hello-agents): Chapter-style Agent material for filling in the full background.
+- ⭐⭐⭐⭐ [LangSmith](https://smith.langchain.com/): useful in the LangChain and LangGraph ecosystem.
+- ⭐⭐⭐⭐ [Helicone](https://www.helicone.ai/): collect LLM request data through a proxy path.
+- ⭐⭐⭐⭐ [Datadog LLM Observability](https://www.datadoghq.com/product/llm-observability/): useful for teams already using Datadog APM.
+- ⭐⭐⭐⭐ [Anthropic Console](https://console.anthropic.com/): inspect Claude API usage and billing data.
 
-- **No token tracking**: a month into production you can't forecast cost
-- **Spans too coarse**: only logging "agent_call" hides the bottleneck (search vs rerank vs generate)
-- **Swallowed errors**: context manager eats exception, caller thinks success
-- **Production using `print()`**: use structured logging (JSON / OpenTelemetry), ship to cloud
-- **No sampling**: high QPS = trace backend overwhelmed; sample (e.g., 10% of traces, 100% of errors)
+See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
-## Extensions
+<small>Models, prices, packages, and links checked: 2026-08-28 UTC.</small>
 
-- **OpenTelemetry**: replace `trace_span` with `tracer.start_as_current_span(...)` — ship to Jaeger / Datadog
-- **Langfuse SDK**: 3-line integration with Anthropic Claude, automatic tracing
-- **Prometheus metrics**: counter (request_count), histogram (latency), gauge (active_sessions)
-- **Wire to eval (Exercise 2)**: eval failures auto-alert to Slack
+</details>
