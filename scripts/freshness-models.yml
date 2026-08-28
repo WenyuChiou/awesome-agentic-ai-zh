@@ -311,6 +311,43 @@ stale_patterns:
     qualifier_terms: []
     note: 'Keep editorial ratings but do not freeze volatile GitHub star counts in Stage 06'
 
+  # Stage 07 fact, redirect, and benchmark checks. The page teaches readers how
+  # to evaluate leaderboards; it must not become another frozen leaderboard.
+  - pattern: 'anthropics/anthropic-cookbook'
+    include_files: ['stages/07-multi-agent-production.md']
+    qualifier_terms: ['former', 'previous', 'historical', '舊', '旧', '歷史', '历史', 'redirect']
+    note: 'The canonical Anthropic cookbook repository moved to anthropics/claude-cookbooks'
+
+  - pattern: 'laude-institute/terminal-bench|princeton-nlp/SWE-agent|geekan/MetaGPT|hiyouga/LLaMA-Factory'
+    include_files: ['stages/07-multi-agent-production.md']
+    qualifier_terms: ['former', 'previous', 'historical', '舊', '旧', '歷史', '历史', 'redirect']
+    note: 'Use the current canonical owners for Terminal-Bench, SWE-agent, MetaGPT, and LlamaFactory'
+
+  - pattern: 'langchain-ai/langserve'
+    include_files: ['stages/07-multi-agent-production.md']
+    qualifier_terms: ['archived', 'historical', 'maintenance', '封存', '归档', '歷史', '历史', '維護', '维护']
+    note: 'LangServe is archived and must not be presented as a current default deployment path'
+
+  - pattern: 'Prompt caching.{0,80}(Anthropic-only|Anthropic only|僅 Anthropic|仅 Anthropic)|(?:90%|50-90%).{0,80}(prompt caching|Prompt caching)'
+    include_files: ['stages/07-multi-agent-production.md']
+    qualifier_terms: ['historical', 'history', '舊', '旧', '歷史', '历史']
+    note: 'Prompt caching is not Anthropic-only, and savings must be measured rather than promised as a fixed percentage'
+
+  - pattern: 'SOTA.{0,80}\d+(?:\.\d+)?%|\d+(?:\.\d+)?%.{0,80}SOTA'
+    include_files: ['stages/07-multi-agent-production.md']
+    qualifier_terms: []
+    note: 'Stage 07 must teach benchmark literacy without freezing a model score or ranking'
+
+  - pattern: 'Fable 5|Mythos 5|Opus 4\.8'
+    include_files: ['stages/07-multi-agent-production.md']
+    qualifier_terms: []
+    note: 'Do not duplicate fast-changing model availability or benchmark claims in the Stage 07 production chapter'
+
+  - pattern: '★\s*\d'
+    include_files: ['stages/07-multi-agent-production.md']
+    qualifier_terms: []
+    note: 'Keep editorial ratings but do not freeze volatile GitHub star counts in Stage 07'
+
   # --- MCP Python SDK (added 2026-08 after the v2 breakage) -------------------
   # The 2026-07-28 spec revision itself is invisible to a learner, but the SDK
   # released the same day was NOT: `pip install mcp` started resolving to 2.x,

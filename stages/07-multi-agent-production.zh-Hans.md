@@ -1,391 +1,321 @@
-# Stage 7 — 多 Agent 系统与稳定运作（Multi-Agent & Production）
+# Stage 7 — 多 Agent 系统与稳定运行（Multi-Agent & Production）
 
 > [繁體中文](./07-multi-agent-production.md) | **简体中文** | [English](./07-multi-agent-production.en.md)
 
-⏱ **时间估算**：2-4 周（约 15-30 小时）
+这一关要做的事很简单：让 Agent 不只“偶尔成功”，而是能被看见、被检查，出错时也能安全停下来。
 
-> 💡 用语密度高（multi-agent / handoff / eval / observability / guardrails⋯）→ 翻 [`resources/glossary.zh-Hans.md` 4 + 6](../resources/glossary.zh-Hans.md#4-multi-agent)。
+## 🎯 这一关在做什么（先定位）
 
-> 📋 **本章组成**：〔Multi-Agent · Production 化 是什么（先定位）+ 五层工程分工 + 何时用 multi-agent〕→ 学习目标 → 进入条件 → 必修阅读 → Harness Engineering（**8 个核心元件含 Cost/Latency**）→ 动手练习（含练习 6 Cost Optimization）→ **Agent Benchmark Landscape：怎么看，不要只看排行榜** → 常用工具推荐 → 精选 Projects → 自我检查
-> 🔑 **关键名词**：见 [`resources/glossary.zh-Hans.md` 4 + 6](../resources/glossary.zh-Hans.md#4-multi-agent)（multi-agent / orchestration / handoff / eval / observability / harness（模型外围的执行与控制层））
+**Multi-Agent（多 Agent）**就是让两个以上的 Agent 分工。像一起做报告：有人找资料、有人写、有人检查。
 
-最后一个阶段。你正从“我会做 agent”走向“我能让 agent **真的给人稳定用**——多个 agent 协作、有 eval、有 observability、能部署到可用环境”。范围怎么界定，看下面三句话。
+**Production（可供使用）**不是“一定要服务一百万人”。只要别人真的会用，你就要知道它做了什么、花了多少、失败后怎么办。
 
-## 🎯 Multi-Agent · Production 化 是什么（先定位）
+先记住一条规则：
 
-**本 stage = 多 agent 怎么协作 + 把 agent 从 prototype 推到能稳定给人用的程度**。三句话厘清范围：
+> **先用一个 Agent。只有工作真的能分开，或需要不同角色互相检查时，才增加 Agent。**
 
-- **不是只学 framework**——Stage 4 已教 framework 怎么挑
-- **不一定要 enterprise scale**——只要 agent 能让别人用，就算 Production 化
-- **核心是 harness engineering**——8 个核心元件 + eval + observability + cost / latency 控制
-
-**跟前后 stage 的分工**：
-
-- **Stage 4** = 单 agent framework 怎么挑、ReAct / Plan-Execute 等 pattern
-- **本 stage** = **多 agent 协作** + **harness engineering**（执行系统工程）+ **部署到可用环境 / observability / eval**
-
-### 五层工程分工：Prompt → Context → Harness → Loop → Graph
-
-> 📍 **这一节是这个 repo 讲“分层”的 canonical 出处**。其他章节提到分层时只会指回这里，不各自重述一遍——以前六个地方各讲一次，结果讲出三种版本。
-
-这五层**不是难度阶梯**，是“**你在管多大范围**”。而且它们不是并列的清单，是**一层撞墙、才生出下一层**（跟“call 一次 vs 多次”无关）：
-
-| 层级 | 概念 | 目的（要解决什么） | 撞到什么墙 → 所以有下一层 | 在哪一章讲 | 名称来源 |
-|---|---|---|---|---|---|
-| 1 | **Prompt Engineering** | 这一次问对 | 它不知道你手上的资料 | [Stage 2](02-prompt-engineering.zh-Hans.md) | 官方采用 |
-| 2 | **Context Engineering** | 让它读到该读的 | 知道了，也还动不了手 | [Stage 6](06-memory-rag.zh-Hans.md) | 官方采用 |
-| **3** | **Harness Engineering**<br>（**本 stage**） | 让它真的动手，出错不炸掉 | 一次跑不完一件大事 | **本 stage** | 官方采用 |
-| 4 | **Loop Engineering**<br>（长时间执行） | 让它自己做完，不用你盯 | 它自己跑，你就看不见它在干嘛 | [Stage 5.6](05-claude-code-ecosystem.zh-Hans.md) | ⚠️ 非官方名称 |
-| 5 | **Graph Engineering** | 看得到、管得住、能重来 | —（目前最外一层） | [Stage 4](04-agent-frameworks.zh-Hans.md) | ⚠️ 非官方名称 |
-
-![Agent 工程五层 Stack](../resources/diagrams/agent-engineering-5layer.zh-Hans.png)
-
-> ⚠️ **“在哪一章讲”不是阅读顺序**。第 4、5 层的主题刚好在比较前面的章节出现过（5.6 与 4），所以那一栏由上往下看会“倒退”。**照 Stage 0 → 8 的原顺序读就好**，这一栏只是告诉你想深入时翻哪里。
->
-> ⚠️ **第 4 层的 Loop 是“长时间”的意思**——跑数百步、跨 session 还能接下去、什么时候该停。它跟后面 harness 元件表里那个 `Agent loop`（单次执行内的机械循环）同名但不同层次，读到那里会再讲一次。
->
-> ⚠️ **“名称来源”那一栏要看一下**。前三个词厂商自己的文件在用（Anthropic 有 context engineering 专文、OpenAI 2026-02 用了 harness engineering）。**后两个没有**：Loop / Graph Engineering 是社群讲出来的名字，概念真的成立，但 Anthropic 官方叫 *dynamic workflows*、Google ADK 与 Microsoft Agent Framework 叫 *graph-based workflow(s)*。你去查官方文件查不到“graph engineering”这个词，不是你漏看。
-
-**白话差异**：
-
-- **Prompt** = 设计一个好的问法，让模型这次回答准
-- **Context** = 动态决定要放入哪些背景、记忆、文件、工具结果，让模型知道当前情境
-- **Harness** = 把 prompt、context、tools、state、流程控制、错误处理串成一套真的能跑的系统
-- **Loop** = 交代一个目标，让它自己重复做到够好为止，并且决定“什么时候该停”、下次开新 session 还接得下去（**不是** harness 里那个单次执行的机械循环）
-- **Graph** = 先把工作拆成几个格子、画出谁接谁，让过程看得到、能从中间接着跑
-
-### 循环跟图差在哪（这两个最容易混）
-
-**循环**＝你交代一个目标，它自己一直做到觉得可以为止。中间你看不到，只看到结果。像洗碗：拿起来、洗、看干不干净，不干净再洗一次。**路只有一条，转几圈它自己决定。**
-
-**图**＝先把工作拆成几个**格子**，用线画出谁接谁。像餐厅出菜：切、炒、摆盘，顺序先写好，而且两个炉可以同时开。
-
-最好记的一句：
-
-> **格子里面，是 agent 自己绕圈；格子跟格子之间，是你安排的顺序。**
-
-![一张“图”里面有什么](../resources/diagrams/inside-a-graph.zh-Hans.png)
-
-所以两者不是二选一——**图是把好几个循环装进格子、再排好顺序**。而且格子里放的不一定是 agent：**也可以是一个工具、一段检查、或是“这里要人按核准才能往下”**。
-
-**为什么要多这一层**：格子画出来，你才看得到它现在卡在哪一格、才能从中间接着跑、才能两格同时跑。反过来说，**全部塞回同一个格子，就退回原本的循环了**。
-
-**代价要讲清楚**：图逼你事先想清楚要拆成哪几格。如果事情就是“一直试到成功”、也没人要回头查，那先画图只是多做工——那种时候循环才是对的工具。**你越信得过它，格子画得越少。**
-
-**谱系**：ReAct（2022）→ AutoGPT（2023）→ Claude Code 的 `/goal`（2026，给一个可验证的完成条件、让 agent 自己 loop 到达成）。[Stage 5.6 Dynamic Workflows](05-claude-code-ecosystem.zh-Hans.md) 则是 agent 自己写出 loop 脚本；可以直接跑的图范例在 [`examples/stage-4/03-graph-workflow/`](../examples/stage-4/03-graph-workflow/README.zh-Hans.md)。
-
-**本 stage 三个核心问题**：
-
-1. **Multi-agent 协作** — debate / planner-executor / peer review / handoff / supervisor-worker pattern
-2. **Harness Engineering** — agent loop / tool registry（agent 可调用工具的清单 + 接口定义）/ context manager / safety / retry / telemetry / eval / cost（8 个核心元件、下面详述）
-3. **Production 化** — eval harness / observability / cost & latency 优化 / 部署到可用环境
-
-**跟 Stage 5 的分工**（避免混淆）：
-
-| 跟谁比 | 那边讲什么 | 本 stage 讲什么 |
+| 你的工作 | 建议 | 为什么 |
 |---|---|---|
-| **Stage 5.5 Subagents** | Claude Code 原生 subagent 机制（markdown-based、不写程序）| 通用 multi-agent framework（autogen / crewAI / langgraph、跨 vendor）|
-| **Stage 5.7 Claude Code source** | Claude Code source 解剖（reference implementation case study）| Harness engineering 通则（不绑特定 vendor）|
+| 一个人一次就能做完 | 单一 Agent | 最容易理解、测试和修理 |
+| 可以同时找很多互不依赖的资料 | 多 Agent 并行探索 | 能缩短等待时间，但会多花 token |
+| 需要“执行者”和“审查者”分开 | 多 Agent 分工 | 避免同一个 Agent 自己做、自己说没问题 |
+| 每一步有固定顺序或批准点 | Workflow／Graph | 让顺序、状态和人工批准看得见 |
 
-### ⚠ 但你真的需要 multi-agent 吗？
+<details markdown="1">
+<summary>⏱ 展开：时间、环境、费用与安全提醒</summary>
 
-**Multi-agent 不是 default，而是任务真的需要时才上的设计**。多数场景应先尝试 simple workflow 或 single agent；**只有在任务天然可分解、需要并行探索、单一 context 不够、或需要明确角色分工时，multi-agent 才值得引入**。硬上会增加 **token、延迟、调试与 context fragmentation（context 被切散在多个 Agent、彼此看不到全貌）成本**；倍数要用自己的任务测量。Anthropic Research 系统约使用普通 chat 的 `15×` tokens，但这只是一个特定系统的结果，不是通用规则。
+- 建议分成几次短练习，不必一次做完。
+- 需要 Python、Git；部署练习还需要 Docker。
+- 每个练习都先跑不需要 API 密钥的测试。要调用付费模型时，先设置小额预算。
+- Trace 可能包含提示、工具输入和模型回答。不要把密码、个人信息或客户数据直接发给追踪平台。
+- 多一个 Agent 通常就多一份模型调用、延迟和调试工作。不要假设多 Agent 一定更快或更准。
 
-> 📌 **决策框架的 canonical 在 Stage 4**：完整的 Anthropic / Cognition 立场对照 + 4 个"该上 multi-agent"信号 + 每个信号对应的 pattern，见 [Stage 4 §什么时候真的需要 multi-agent](04-agent-frameworks.zh-Hans.md#什么时候真的需要-multi-agent不要硬上)（设计阶段决策）。本节只做 production 前的最后回头检查——**4 个信号一个都不在？** → single agent + 好 prompt + tool use 就够，别硬上 multi-agent。**本 stage 的 harness engineering 部分（8 个元件 / eval / observability）即使你最后用 single agent 也都会用到**——所以即使你决定不走 multi-agent，本 stage 仍是必修。
+</details>
 
 ## 📌 学习目标
 
-- 设计 multi-agent orchestration 模式（debate、planner-executor、peer review）
-- 为 agent 架一套 evaluation harness
-- 加上 observability（tracing、logging、cost tracking）
-- 用 Anthropic SDK / OpenAI SDK 做 production deploy（进阶功能：streaming、prompt caching、batching）
-- 把 agent deploy 到 production（Docker、serverless、monitoring）
+完成本章后，你能：
+
+1. 说清楚什么时候该用单一 Agent，什么时候才需要 **Multi-Agent**。
+2. 用 **Orchestration** 安排 Agent 的顺序、分工和交接。
+3. 用 **Eval** 检查质量，不只靠“我看起来觉得可以”。
+4. 用 **Observability** 看见每一步、错误、延迟和 token 用量。
+5. 加上 **Guardrail**、人工批准和恢复方式，再把 Agent 交给别人使用。
+
+## 🧩 七个核心词
+
+| 核心词 | 五岁也能懂的说法 | 正确术语 |
+|---|---|---|
+| **Multi-Agent（多 Agent）** | 好几个小帮手一起做事 | 多个 Agent 以明确角色共同完成任务 |
+| **Orchestration** | 像指挥家，决定谁先做、谁后做 | 编排执行顺序、数据流、角色和停止条件 |
+| **Handoff** | 把接力棒交给下一个人 | 一个 Agent 把任务控制权和必要 context 交给另一个 Agent |
+| **Harness** | Agent 外面的安全游乐场 | 包住模型、工具、状态、权限、重试、追踪和评测的执行系统 |
+| **Eval** | 出一张小考卷，看它是不是真的会 | 用固定案例和评分规则测量行为 |
+| **Observability** | 装上透明窗，知道它做到哪里 | 用 trace、log、metrics 看见系统内部状态 |
+| **Guardrail** | 游戏场边的护栏 | 限制输入、输出、工具权限或高风险操作的规则 |
+
+**Prompt（提示）**仍然是你交给模型的指令和材料；本章不是把 Prompt 丢掉，而是替它加上能执行、检查和恢复的外围系统。
 
 ## 🚪 进入条件
 
-你应该已经：
+你至少应该完成：
 
-- 完成 Stage 4（用过至少一个 agent framework 跑 multi-agent demo）
-- 完成 Stage 5（懂 MCP / Skills / Plugins / Subagents 各自角色，并用 5.7 解剖过 harness 内部）
-- 完成 Stage 6（会基本 RAG，能讲出 memory pattern 差异）
-- 对 Docker / git / CI 基础熟悉（production deploy 会用到）
+- [Stage 4](04-agent-frameworks.zh-Hans.md)：知道 Agent、Tool 和 Workflow 是什么。
+- [Stage 5](05-claude-code-ecosystem.zh-Hans.md)：看过工具权限、Subagent 和开发流程。
+- [Stage 6](06-memory-rag.zh-Hans.md)：知道 Context、RAG 和 Memory 不一样。
 
-没到的话 → 补完前面几个 stage。本 stage 是“组合所有前面学到的东西 → 跑 production”，缺一块都会卡。
+Docker 还不熟也可以开始；先做练习 1–4，练习 5 再补。
 
-## 📚 必修阅读
+## 📚 必读内容
 
-1. [**Anthropic — Building Effective Agents**](https://www.anthropic.com/engineering/building-effective-agents) — 用 production 的角度再读一次
-2. [**Anthropic — Prompt Caching**](https://www.anthropic.com/news/prompt-caching) — 90% 成本下降的技巧
-3. [**Anthropic — Message Batches API**](https://docs.anthropic.com/en/docs/build-with-claude/batch-processing) — 异步 batch job
-4. [**anthropics/courses — Prompt Evaluations**](https://github.com/anthropics/courses) ⭐⭐⭐⭐⭐ ★ 22k+ — Anthropic 官方 5 course umbrella、**module 4“Prompt Evaluations”对应本 stage eval / observability 部分**。Jupyter notebook、教怎么系统化评估 prompt 跟 agent 行为。
-5. **任一 eval framework 的文件** — promptfoo 或 LangSmith 或 weave
-6. [**ai-boost/awesome-harness-engineering**](https://github.com/ai-boost/awesome-harness-engineering)（★ 3.4k+）— agent harness 的工具 / pattern / eval / memory / MCP / observability 全集合
-7. [**ZhangHanDong/harness-engineering-from-cc-to-ai-coding**](https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding)（★ 1.5k+）— 从 Claude Code 源码学 harness 设计（中文）
-8. [**stablyai/orca**](https://github.com/stablyai/orca)（★ 48k+、MIT）— 目前规模最大的“**多 agent 同时跑**”桌面环境：一个 prompt 可以同时发给多个 agent，每个跑在自己的 git worktree 里，跑完并排比较、挑一个 merge。它把 Codex / Claude Code / OpenCode / Pi 当成可替换的后端，所以真正的看点不是它支持谁，而是**当五个 agent 同时在改同一份 repo，界面要解决哪些问题**：隔离、比较、审查，以及“agent 做完了怎么通知你”。附 iOS app，可以在手机上盯进度。
-9. [**yc-software/qm**](https://github.com/yc-software/qm)（★ 13k+、MIT）— Y Combinator 自己开源的 **quartermaster**，跑在 Slack 与 web 上。跟 orca 的分工不同：orca 处理“一个人开很多 agent”，qm 处理“**一整间公司共用 agent**”。每个员工有自己隔离的 workspace（独立的 memory、文件、密钥视野、权限、定时任务、sandbox），同时又能在 channel 与 project 里协作；harness 与模型都可抽换（Pi / OpenCode / Codex / Claude Code 共用同一个核心），所以部署不会绑死单一厂商。想看“**组织层级的 agent 权限与治理**长什么样”，这是目前少数能直接打开来读的实现。
-10. [**cft0808/edict**](https://github.com/cft0808/edict)（★ 16k+、MIT）— 中文项目，拿**三省六部制**这个一千三百年前的官制来设计多 agent 分工：分拣 → 中书省规划 → 门下省审议 → 尚书省派发 → 六部并行执行 → 奏折回报。收它不是因为典故有趣，而是它把“**谁有权决定、谁负责审、谁只能执行**”写成了明确的角色与交接流程，正好对照本 stage 的 planner-executor 与 peer review 两个 pattern。附实时看板，看得到每个 agent 当下在做什么。属 OpenClaw 生态，另提供 docker 一行起 demo。
-11. **（选读，这一项还在 developer preview）** [**deepseek-ai/deepseek-harness**](https://github.com/deepseek-ai/deepseek-harness)（★ 188k+、MIT）— DeepSeek 2026-08-13 开源的 agent harness，主张是“**everything is a plugin**”：模型、工具、技能、会话、沙箱、存储、循环、调度、UI 全部由插件提供。**拿来读，不是拿来依赖**——官方 README 自己写着“currently in *developer preview* and is iterating rapidly. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**”，版本是 `0.1.0-rc.5`、GitHub 上还没有任何 release。收它的理由是：这是少数可以直接打开来看“**一个 harness 到底由哪些零件组成**”的完整实现，正好对照下面那八个核心元件——真要读就先看 [`docs/architecture.md`](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.md)（[中文版](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/architecture.zh.md)），不要一头栽进整个 monorepo。模型不绑 DeepSeek：[模型配置指南](https://deepseek-harness.github.io/deepseek-harness/guide/providers)写了 Anthropic / OpenAI / Bedrock / Vertex / Azure 以及自定义的 OpenAI-compatible endpoint。它不在 [`resources/cli-agents-guide.md`](../resources/cli-agents-guide.zh-Hans.md) 那张表里，因为**交互界面是 Web UI**（`npx @deepseek-ai/dsh web`）；随附的非 web 模式 `dsh --profile headless "job"` 是跑完一次就结束、不是交互式 terminal agent（`--profile tui` 指向的插件 repo 目前是 404）。
+先读这三份就够开始：
+
+1. [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)：先用简单组合，只有需要时才增加自主性。
+2. [OpenAI Agents SDK — Multi-agent orchestration](https://openai.github.io/openai-agents-python/multi_agent/)：比较“管理者调用其他 Agent”和 **Handoff**。
+3. [Microsoft Agent Framework — Orchestration](https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/)：看顺序、并行、交接、群聊和人工批准怎样放进 Workflow。
+
+<details markdown="1">
+<summary>📚 展开：完整阅读顺序与用途</summary>
+
+4. [Anthropic — Develop tests and evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)：先写可测量的成功标准，再选择评分方式。
+5. [OpenAI Agents SDK — Tracing](https://openai.github.io/openai-agents-python/tracing/)：理解 trace、span、tool、handoff 和 guardrail 事件。
+6. [OpenAI Agents SDK — Testing utilities](https://openai.github.io/openai-agents-python/testing/)：用可重复的假模型测试，不必每次花 API 费用。
+7. [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/)：看环境、反馈循环和机器规则怎样帮助 Agent 稳定工作。
+8. [OpenTelemetry — GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai)：认识可移植的追踪字段；规范仍在演进，不要假设所有平台都完整支持。
+
+</details>
+
+## 五层工程分工：Prompt → Context → Harness → Loop → Graph
+
+这五层不是五种产品，也不是一定要全部使用。它们只是帮你看清楚“问题出在哪一层”。
+
+| 层 | 大白话问题 | 正确名称 | 深入章节 |
+|---|---|---|---|
+| 1 | 我有没有把话说清楚？ | **Prompt Engineering** | [Stage 2](02-prompt-engineering.zh-Hans.md) |
+| 2 | 我有没有把该看的资料放进来？ | **Context Engineering** | [Stage 6](06-memory-rag.zh-Hans.md) |
+| 3 | 它能不能安全地使用工具、失败后再试？ | **Harness Engineering** | 本章 |
+| 4 | 长任务能不能停下、保存、下次接着做？ | **Loop Engineering**（本项目教学用语） | [Stage 5](05-claude-code-ecosystem.zh-Hans.md) |
+| 5 | 每一步和分支能不能被看见和控制？ | **Graph Engineering**（本项目教学用语） | [Stage 4](04-agent-frameworks.zh-Hans.md) |
+
+![Agent 工程五层 Stack](../resources/diagrams/agent-engineering-5layer.zh-Hans.png)
+
+前三个名称在行业文档中常见；后两个是本项目为了好教、好记所用的分层名称。官方文档更常写 long-running agent、dynamic workflow 或 graph-based workflow。
+
+### 循环和图有什么差别（这两个最容易混）
+
+**Loop（循环）**像洗盘子：洗、检查，不干净就再洗一次。<br>
+**Graph（图）**像餐厅出菜：切菜、煮、摆盘，每一格和先后顺序都画出来。
+
+> **格子里面可以有循环；格子之间由图安排顺序。**
+
+<details markdown="1">
+<summary>🧠 展开：什么时候选择 Loop、Graph 或 Multi-Agent</summary>
+
+- 任务只有一条路，但可能要重试很多次：先用 Loop。
+- 任务有分支、并行步骤、人工批准或需要从中间恢复：用 Graph／Workflow。
+- 不同部分真的能独立工作，或必须由不同角色互查：才加入 Multi-Agent。
+- 一个 Graph 节点可以是 Agent、工具、固定程序或“等人批准”；不是每个格子都要放一个 Agent。
+
+![一张“图”里面有什么](../resources/diagrams/inside-a-graph.zh-Hans.png)
+
+</details>
 
 ## 🏗 Harness Engineering — production agent runtime 的工程设计 ⭐ 本 stage 核心概念
 
-### 定位：模型外围的执行与控制层
-
-要把 LLM 变成可用的 agent，最先碰到的是**五层里的前三层**（完整阶梯见上面〈五层工程分工〉）。这三层对应的是不同工程位置，不是单纯用“一次 call”或“多次 call”来区分。
-
-> 💡 **Simon Willison 2025**：“coding agent = LLM + harness”；harness = 所有**不是 model 本身**的代码。
->
-> 💡 **OpenAI 2026 也使用 "Harness Engineering" 这个说法**（见 [OpenAI Harness Engineering article](https://openai.com/index/harness-engineering)、2026-02 发布）。
-
-| 层级 | 工程的对象 | 在哪学 |
-|---|---|---|
-| **1. Prompt Engineering** | 送进 LLM 的**字符串**（system prompt / few-shot / 格式） | [Stage 2](02-prompt-engineering.zh-Hans.md) |
-| **2. Context Engineering** | 窗口里装的**信息**（RAG / memory / tool defs / history 组装） | [Stage 6](06-memory-rag.zh-Hans.md) |
-| **3. Harness Engineering**<br>（**本节**） | 模型**外围的执行与控制层**（loop / retry / sandbox / observability / 部署） | 本 stage |
-
-**怎么分辨自己在做哪一层？问**：
-
-1. 我改的是**字符串本身**吗？→ Prompt engineering
-2. 我改的是**塞进窗口的信息**吗？→ Context engineering
-3. 我改的是**调用模型的外围程序**吗？→ Harness engineering
-
-→ 三层**正交**：1 次 call 的 RAG app 也在做 context engineering（重点是怎么组窗口）；50 次 call 但没做 retrieval 的 chatbot，仍然只是在做 prompt engineering。
+**Harness Engineering**就是设计模型外面的执行系统。模型负责想；Harness 负责它能用哪些工具、数据放在哪里、什么时候停止、失败怎么办，以及我们怎样知道它做了什么。
 
 ### Harness 的 8 个核心元件
 
-**Harness Engineering（Agent 执行系统设计）= 把 LLM、tools、memory、state、workflow control、错误处理、eval、observability 与 deployment 串成一套可执行、可观测、可维护的 agent 系统。**
+这八项是本项目的 production 检查表，不是全世界唯一的官方分类。
 
-→ 所有**不属于 model weights、也不只是 prompt string 本身**的工程元件都算 harness 范围。一个可部署的 agent runtime 包含这 8 个核心元件（前 6 个是 runtime 内建、第 7 个 eval 是外挂工具、第 8 个 cost / latency 是跨层议题）：
-
-| 元件 | 做什么 | 对应本 stage 练习 |
+| 元件 | 五岁也能懂的说法 | 上线前要问 |
 |---|---|---|
-| **Agent loop**<br>（单次执行内） | “LLM → tool → result → LLM”循环、稳定处理多轮。**这是一次执行里面的循环**，跟上面第 4 层 Loop Engineering 讲的“跨 session 长时间执行”不同层次 | 练习 1 multi-agent 辩论 |
-| **Tool registry** | 动态 tool dispatch、permission gate、sandboxing | （在每个 framework / SDK 都有）|
-| **Context manager** | message history 管理、context window 控制、auto-compact | Stage 6 + 本 stage 练习 4 SDK |
-| **Safety layer** | permission prompts、sandboxed exec、destructive op 拦截 | （Claude Code 内建、SDK 可自定义）|
-| **Retry / recovery** | tool fail 怎么处理（exception vs LLM 自己看 error 反思） | 练习 4 SDK 进阶 |
-| **Telemetry / Observability** | metrics、logging、token counting、trace export | **练习 3 Observability** |
-| **Eval harness** | regression test、quality gate、A/B test | **练习 2 Eval** |
-| **Cost / Latency optimization** ⭐ 2024-2026 必修 | prompt caching、model routing、thinking budget、batching、semantic cache | **练习 6 Cost optimization**（新加）|
+| **1. Orchestration／Run loop** | 决定下一步做什么 | 谁开始、谁停止、交接失败怎么办？ |
+| **2. Tool／Permission boundary** | 只给它需要的钥匙 | 哪些工具能读、能写、能删？ |
+| **3. Context／State／Checkpoint** | 保存它现在做到哪里 | 中断后能不能从正确位置继续？ |
+| **4. Retry／Recovery／Idempotency** | 跌倒能重来，又不会重复扣款 | 重试会不会重复发邮件、付款或写数据？ |
+| **5. Guardrail／Human approval** | 危险动作先问大人 | 哪些操作一定要人按批准？ |
+| **6. Telemetry／Observability** | 装上透明窗 | 能不能看到 trace、错误、延迟和 token？ |
+| **7. Eval harness** | 每次改动都重新考试 | 有固定案例、评分规则和失败门槛吗？ |
+| **8. Cost／Latency budget** | 先说可以花多少钱和时间 | 超过预算时要停止、降级还是排队？ |
 
-**Framework vs Harness 关键差别**：
+<details markdown="1">
+<summary>🔧 展开：反馈、恢复与成本的实现重点</summary>
 
-- **Framework**（[Stage 4](04-agent-frameworks.zh-Hans.md)）规范 **API** — 你调用的接口长什么样
-- **Harness**（本节）规范 **runtime** — 怎么跑、怎么 recovery、怎么观测
+- 工具错误要写成 Agent 看得懂的反馈，不只丢一大串 stack trace。
+- 评分者最好和执行者分开；不要只问 Agent“你自己做得好不好”。
+- 每个有外部副作用的动作都要设计 **idempotency（幂等）**，避免重试时重复付款、发邮件或新增数据。
+- Prompt caching、batching、model routing 和较小模型都可能节省成本，但效果随工作而变。先测 baseline，再改一项，再重新测试。
+- Anthropic prompt caching 可以自动使用，也可以明确设置 `cache_control`；缓存期限和读写价格随选项而变，请看[官方文档](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)。
+- Trace 可能收进敏感输入和输出。上线前设置遮盖、保留期限和访问权限。
 
-### 反馈循环：agent 进步靠的是反馈，不是更完美的提示
+</details>
 
-上面 8 个元件是 harness 的“骨架”。但让骨架真正运作的，是一件更基础的事：**agent 变强，靠的是“把反馈送回循环”，不是把开头那段提示写得更完美。**
+## 🧭 OpenRouter、Pi、OpenCode、Orca、QM 到底有什么差别？
 
-打个比方：一个学生不会因为作业题目写得更漂亮就变强，他变强是因为在对的时机收到反馈——交草稿、写到一半被老师提醒、完成后被批改、下次重做。agent 也一样，而反馈可以在四个时机进来：
+它们不是五个同类产品。把它们放到正确层，就不会混在一起：
 
-| 时机 | 白话 | 工程上长什么样 |
+| 名称 | 它是什么 | 一句话记法 |
 |---|---|---|
-| **1. 工具返回值** | 工具吐回来的那段话，本身就是写给 agent 看的反馈 | 把错误信息、提示、下一步建议“写清楚”，别只丢一个 stack trace |
-| **2. 执行中插话** | 在 agent 两次思考之间塞一句话调整方向 | 中途注入消息（steering），不用等它整轮跑完才修正 |
-| **3. 单轮结束的验收** | 一轮做完，由“另一个人”对着目标检查 | 用独立的验收者（evaluator）比对目标，而不是让 agent 自己打分 |
-| **4. 外层 loop** | 对着同一个目标反复叫 agent，直到完成 | 目标导向的重跑（像 OpenAI Codex 的 `/goal`、或 cron 定时重跑）|
+| [OpenRouter](https://openrouter.ai/docs/quickstart) | 模型 API 入口／Router | 帮程序连接不同模型，本身不是帮你改程序的 Agent |
+| [Pi](https://github.com/earendil-works/pi) | Agent toolkit 和 coding-agent CLI | 调用模型和工具，把任务做完 |
+| [OpenCode](https://github.com/anomalyco/opencode) | 开源 coding agent | 在代码项目里读取、修改、测试 |
+| [Orca](https://github.com/stablyai/orca) | 多 Agent 开发环境 | 让多个 coding agent 在隔离 worktree 中并行工作和比较 |
+| [QM](https://github.com/yc-software/qm) | 团队用的多 Agent harness | 管理多人、workspace、权限、计划任务和协作 |
 
-**为什么第 3 个（独立验收）特别重要**：Anthropic 自己的实验发现，叫 agent 检查自己的成品，它几乎都会“自我称赞”——就算质量明显普通。所以他们把“做东西的 agent”和“验收的 agent”拆开：一个负责做，一个用工具（像 Playwright）实际去点、去测，再把 bug 回报回去。把外部验收者“调得更挑剔”，比让同一个 agent“对自己更严格”容易得多。
+> **模型入口 → Agent runtime → 多 Agent 协作平台**。这三层可以互相搭配，但不能互相代替。
 
-> 📚 实际案例：Anthropic [Harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps)（2026-03）用 planner → generator → evaluator 三段，让 agent 连续跑好几小时做出一个完整的音乐制作 app，每轮都靠 evaluator 反馈修正。
+## 🛠 动手练习
 
-### 参考实现
-
-想看实际在 production 跑的 harness 长什么样？两个 reference：
-
-- **Claude Code 整个 runtime** — 是 reference harness 实现。**读 source 练习见 [Stage 5.7](05-claude-code-ecosystem.zh-Hans.md#57--claude-code-source-解剖reference-harness-implementation-track-b-必看)**（clone `claude-agent-sdk-python` 解剖 main loop + 上表前 6 个 runtime 元件位置；第 7 个 Eval harness 是外挂、第 8 个 Cost / Latency 是 cross-cutting、见下方深入段）
-- **`anthropics/claude-agent-sdk-python`** source — 上面练习用的具体 repo
-
-
-**可以直接打开来读的完整 harness**（都是 2026 年开源、量级够大，适合对照上面 8 个核心元件看）：
-
-| Project | ⭐ | 语言 / License | 它示范哪一块 |
-|---|---|---|---|
-| [xai-org/grok-build](https://github.com/xai-org/grok-build) | ★ 25k+ | Rust / Apache-2.0 | SpaceXAI 的 terminal coding agent。同一份 core 同时支持交互 TUI、headless（CI 用）与编辑器嵌入，是“**一个 harness 要服务几种执行模式**”的完整范例 |
-| [NVIDIA/NemoClaw](https://github.com/NVIDIA/NemoClaw) | ★ 22k+ | TypeScript / Apache-2.0 | 把别人的 agent（Hermes、LangChain Deep Agents、OpenClaw）跑在受管执行环境里的 reference stack。看点是 **harness 与 sandbox 的责任边界**：它自己不做 agent，只负责 inference 管理与生命周期。**⚠️ 官方自述是 alpha**，issue 与 PR 为 best-effort 回复 |
-
-→ 本 stage 剩下的 6 个练习（multi-agent / eval / observability / SDK / deploy / cost）每个都是 harness 的一个面向。学完整 stage = 拼出完整的 harness engineering mental model。
-
-### 第 8 个核心元件深入 — Cost / Latency Optimization（2024-2026 Production 化必修）
-
-Production agent 跑久了，**cost / latency 两条线会吃掉你大半预算与用户体验**。2024-2026 前沿模型都把这当 first-class API feature——**会用 = 省 50-90% cost / latency**。
-
-| 技巧 | 怎么省 | 2026 状态 |
-|---|---|---|
-| **Prompt caching** | 重复 prefix（system prompt、long context）一次计费、后续 cache hit 折扣 ~90% | Anthropic / OpenAI / Gemini 全支持、自动或手动标记 |
-| **Model routing / cascade** | 简单 query → 小 model、难 query → frontier model | [RouteLLM](https://github.com/lm-sys/RouteLLM) / [OpenRouter](https://openrouter.ai/) production 内建 |
-| **Thinking budget** | reasoning model 可控 thinking token 上限、trade latency / quality | Claude / Gemini API 参数、o-series 默认高 |
-| **Speculative decoding** | 小 model 预测 N token、大 model 一次验证、单 model 速度 ×2-3 | vLLM / TGI 内建、推理层自动 |
-| **Batching** | 多 query 并行处理、GPU 利用率高 | vLLM、production inference layer |
-| **Semantic caching** | 相似 query 共享回答（不只 exact match）| [GPTCache](https://github.com/zilliztech/GPTCache) / Helicone 内建 |
-
-**Track A 怎么用**（用 CLI agent 的人）：
-
-- 在 Claude Code / Cursor 设置 prompt caching，daily session 省 50-90% cost
-- 用 [RouteLLM](https://github.com/lm-sys/RouteLLM) / [OpenRouter](https://openrouter.ai/) 动态切换 model（简单问题用 Haiku / Flash，困难问题用 Opus / Pro）
-- Claude API 用 `thinking_budget` 参数控 reasoning model 的 token 上限
-
-**Track B 怎么 build**（自己写 agent 的人）：
-
-- 自架 cascade router，把 query embedding → classifier → model 对应起来
-- 在 agent loop 内监控 token cost，超 budget 自动降级
-- 在部署到可用环境时整合 semantic cache 层
-- [Helicone](https://github.com/Helicone/helicone) / [langfuse](https://github.com/langfuse/langfuse) 等 observability 平台都已内建这些能力，不用自己写
-
-## 🛠 动手练习（基础 illustrative 练习）
+每题都有完整示例。不要先把文件改名或重抄一份；先直接跑测试，再改一个小地方。
 
 ### 练习 1：Multi-Agent 辩论
-两个 agent 辩论一个题目（例如“该用 Python 还是 Rust 写 backend”），第三个 agent 当裁判。观察辩论收敛或分歧的 pattern。
+
+**成果：**两个 Agent 分别提出正反意见，第三个 Agent 按规则裁决。
+
+```bash
+cd examples/stage-7/01-multi-agent-debate
+python test.py
+```
 
 ### 练习 2：Eval
-替你前面的 agent 写一份 eval，跑 N 次量成功率。把“我用眼睛看一下”的习惯换掉。
+
+**成果：**用固定案例和规则检查 Agent，看到哪一题退步。
+
+```bash
+cd examples/stage-7/02-eval
+python test.py
+```
 
 ### 练习 3：Observability
-把 LangSmith、Helicone、或 weave 接上一个 agent，看完整 trace。理解“没 observability 的 agent debug = 黑盒”。
+
+**成果：**看到一次运行的步骤、延迟、token 和错误。
+
+```bash
+cd examples/stage-7/03-observability
+python test.py
+```
 
 ### 练习 4：SDK 进阶
-在同一次调用里用 streaming + prompt caching + tool use。看成本怎么降下来。
+
+**成果：**比较 streaming 和 prompt caching 的行为；成本效果必须自己测量。
+
+```bash
+cd examples/stage-7/04-sdk-advanced
+python test.py
+```
 
 ### 练习 5：Deploy
-把一个 agent 包进 Docker，deploy 到云端（任何 provider 都行）。学会把 prototype 变成可以给别人跑的东西。
 
-### 练习 6：Cost Optimization（新加）⭐
-量你前面任一个练习 agent 的 token cost、加上 prompt caching、再量一次。观察 cache hit rate 跟 cost 下降的对应关系。**Bonus**：接 [RouteLLM](https://github.com/lm-sys/RouteLLM) 或 [OpenRouter](https://openrouter.ai/)、做 cascade routing（简单 query → Haiku / 难 query → Opus），量平均 cost。
+**成果：**把 Agent 包成有 `/health` 和 `/chat` 的 API，再用测试确认错误状态。
+
+```bash
+cd examples/stage-7/05-deploy
+python test.py
+```
+
+<details markdown="1">
+<summary>🛠 展开：练习顺序、付费路径与观察重点</summary>
+
+1. 每题先跑 `python test.py`；这条路径使用 mock，不需要 API 密钥。
+2. 测试通过后，按该文件夹 README 选择本地 Ollama 或 Anthropic 路径。
+3. 只改一件事：角色提示、评分规则、trace 字段、cache 设置或 API 错误处理。
+4. 再跑测试，写下“改了什么、哪个结果变了、是否超过预算”。
+5. 练习 5 的 Docker 是加分项；先用 FastAPI 测试确认行为，再启动服务。
+
+</details>
+
+## 🧪 推荐小项目：有收据的研究小队
+
+做一个三角色小队：
+
+1. **Researcher** 找三个来源。
+2. **Writer** 只根据来源写短摘要。
+3. **Reviewer** 用固定 rubric 检查引用、遗漏和不确定描述。
+
+最后输出一张 **execution receipt（运行收据）**：任务 ID、每个步骤、使用工具、引用来源、耗时、token、错误和人工批准记录。先用 5 个固定题目做 Eval；任何一题退步，就先不要部署。
 
 ## 📊 Agent Benchmark Landscape：怎么看，不要只看排行榜 + ⚠ Reward-Hacking 警告
 
-挑 model / build agent 之前，你会想看 benchmark 数字——但 **2026-04 UC Berkeley 发现 8 个主流 agent benchmark 全部可被 reward-hack 到 ~100%**。下面是 2026 leaderboard 现况 + 怎么看不被骗。
+**Benchmark（基准测试）**像统一考卷。它能帮助比较，但不能保证你的真实工作也会一样好。
 
-### 主流 Agent Benchmark 2026-05 SOTA
+看任何分数前，先问五件事：
 
-| Benchmark | 领域 | 2026-05 SOTA | 领先 Model |
-|---|---|---|---|
-| [**SWE-bench Verified**](https://www.swebench.com/) | 软工 / code agent | **88.6%** | Claude Opus 4.8 |
-| [**Terminal-Bench**](https://github.com/laude-institute/terminal-bench) | terminal 任务 | 领先 | Claude Opus 4.8 |
-| **GAIA** | general assistant | **74.6%** | Claude Sonnet 4.5（Princeton HAL）|
-| [**WebArena**](https://github.com/web-arena-x/webarena) | web 导航 | **68.7%** | （领先 model 未公布）|
-| [**ClawBench**](https://github.com/TIGER-AI-Lab/ClawBench) | 真实网站上的 browser agent 任务 | **44.6%**（lenient）/**24.6%**（strict） | Claude Opus 4.7（V2 Hermes leaderboard history、2026-08 快照：58/130 通过）；283 个任务、144 个真实网站、Apache-2.0、[论文](https://arxiv.org/abs/2604.08523)；V2 两阶段 rubric 比 V1 更严格 |
-| [**OSWorld**](https://github.com/xlang-ai/OSWorld) | OS-level 桌面控制 | v1 **76.26%**（接近饱和）| OpenAI CUA 38%；[OSWorld 2.0](https://osworld-v2.xlang.ai/)（2026-06、long-horizon）已取代 v1、真实长任务 SOTA 仅 ~20%（Opus 4.8 20.6%），见 Stage 8 |
-| [**τ-bench**](https://github.com/sierra-research/tau-bench) | tool use 多轮对话 | （较难 hack）| Anthropic / OpenAI 领先 |
-| **RE-bench** | research engineering | （较难 hack、接近人类 baseline）| Frontier model |
-
-> **⚠ 上表是 Opus 4.8 世代的数字**：这些都是当时实测并归属到该 model 的结果，故原样保留。Claude Opus 5（`claude-opus-5`）已于 2026-07-24 发布、Anthropic 官方宣称有所提升，但那些宣称目前还没有第三方独立复现，因此本表刻意不拿它们来更新。
-
-> **Mythos-class 层级（Claude Fable 5 — 2026-06-09 发布）**：[**Claude Fable 5**](https://www.anthropic.com/news/claude-fable-5-mythos-5)（`claude-fable-5`，Mythos-class、定位在 Opus 之上）是对外开放的最高能力 Claude 层级，与姊妹版 Claude Mythos 5（`claude-mythos-5`，部分安全措施放宽、限定核准客户）同日发布。曾于 2026-06-12 因美国出口管制指令暂停，[2026-07-01 全球恢复](https://www.anthropic.com/news/redeploying-fable-5)（Mythos 5 仅对核准的美国组织恢复）。上表数字维持原本归属的 model；Fable 5 官方 benchmark 数字始终未公布，故未列入。**Fable 5 是最高阶的 Claude 层级；Opus-class 旗舰现为 Claude Opus 5（Opus 4.8 仍可使用，官方文档已归入 legacy）。**
-
-→ 详细排行 + 即时更新：[Agent Benchmark Leaderboard 2026](https://benchmarkingagents.com/agent-benchmarks/)、[Rapid Claw AI Agent Framework Scorecard 2026](https://rapidclaw.dev/blog/ai-agent-benchmarks-2026)
-
-### ⚠ Berkeley 2026-04 Reward-Hacking 警告
-
-[**UC Berkeley RDI 2026-04-12 报告**](https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont/)：用 automated scanning agent 系统性 audit **8 个主流 benchmark**（SWE-bench / WebArena / OSWorld / GAIA / Terminal-Bench / FieldWorkArena / CAR-bench 等）、**每个都能 reward-hack 到接近 100%、agent 一个 task 都不用真正解**。
-
-意思：leaderboard 上“Claude 87.6% / GPT 85.0%”这种数字、可能其中 X% 是 hack 出来的、不是真的解 task。
-
-### 怎么看 benchmark 不被骗
-
-| 看数字方式 | 推荐 |
+| 要看什么 | 大白话问题 |
 |---|---|
-| 只看 leaderboard top | ❌ 上面 8 个都被证实可 hack |
-| 看 task-level success rate breakdown | ✅ 多数 hack 集中少数 task |
-| 跑你自己的 hold-out test set | ✅✅ 最可靠、production agent 必做 |
-| 看 trajectory / log 是否真的解 task | ✅ 区分 reward hacking vs genuine solve |
-| 看多个 benchmark + 自己 use case | ✅ 不依赖单一指标 |
+| Task | 考题和我的工作像吗？ |
+| Environment | 模型拿到哪些工具、数据和权限？ |
+| Grader | 谁评分？规则有没有漏洞？ |
+| Trajectory | 它真的完成任务，还是只碰巧拿到分数？ |
+| Hold-out | 它有没有通过我自己没有拿来调整的测试？ |
 
-**哪些 benchmark 较难 hack（2026-05）**：
+**Reward hacking（奖励钻漏洞）**就是“拿到高分，却没有真的完成目的”。像小孩发现只要按一下铃就有糖，于是一直按铃，却没做原本的任务。
 
-- **τ-bench** — 多轮对话 + tool use、reward function 较密集
-- **RE-bench** — research engineering 真实任务
-- **你自己的 production eval set** ⭐ 永远是最可靠的
+<details markdown="1">
+<summary>📊 展开：可以参考的 Benchmark 与 production 评测方法</summary>
 
-> 💡 **production agent 的 eval 纪律**：
-> - 不要把外部 benchmark 数字当 ground truth、它告诉你“上限”不是“真实表现”
-> - 你自己的 eval set（内部 hold-out test）才是上线决策的依据
-> - 每次 model upgrade → 跑内部 eval set 验证、不只看厂商公布的 benchmark 提升
-> - 接 [langfuse](https://github.com/langfuse/langfuse) / [promptfoo](https://github.com/promptfoo/promptfoo) 把 eval 自动化、每次 deploy 都跑
+- [SWE-bench](https://www.swebench.com/)：真实软件问题。
+- [Terminal-Bench](https://github.com/harbor-framework/terminal-bench-1)：终端任务。
+- [OSWorld](https://github.com/xlang-ai/OSWorld)：桌面环境操作。
+- [τ²-bench](https://github.com/sierra-research/tau2-bench)：需要工具和多轮互动的任务。
+- [GAIA](https://huggingface.co/gaia-benchmark)：一般助理任务。
 
-> 📊 **observability 认一个可携标准 + 两个评估观念**：(1) **OpenTelemetry GenAI 惯例**（`gen_ai.*` semantic conventions）——langfuse / Arize Phoenix / Helicone 都吐 OTel-兼容 span，认这层才不被单一工具绑死；OTel-native 的 [Arize Phoenix](https://github.com/Arize-ai/phoenix)（★ 11k+）可看。(2) **pass^k**（同一题连对 k 次的概率 = 可靠度，不是只看过一次）+ [τ²-bench](https://github.com/sierra-research/tau2-bench)。(3) 多 agent 失败有现成词汇：**MAST**（[arXiv 2503.13657](https://arxiv.org/abs/2503.13657)、14 种失败模式分 3 类）。
+不要把页面上的某个 SOTA 分数抄成永久事实。上线判断应该以自己的案例、rubric、完整 trajectory、成本和延迟为主。每次更换模型、Prompt、Tool 或 Harness，都重新运行同一组 hold-out cases。
 
-## 🎯 常用 Multi-Agent / Production 工具推荐（按用途分类）
-
-不知道从哪挑工具？下面是 2025-2026 业界常用搭配——**挑入口看“场景”、想深入点链接看 repo**：
-
-| 场景 | 推荐工具 | 为什么 |
-|---|---|---|
-| **第一次写 multi-agent**（最快上手）| [crewAI](https://github.com/crewAIInc/crewAI) | role-based、几行 code 跑起来、production pattern 直接 |
-| **想要 group debate / brainstorm pattern** | [AutoGen](https://github.com/microsoft/autogen) | GroupChat 自由辩论、Microsoft 出品 |
-| **production 要 audit trail / checkpoint / human-in-loop** | [LangGraph](https://github.com/langchain-ai/langgraph) | state machine、控制最完整 |
-| **eval 标准化**（CI / regression 必装）| [promptfoo](https://github.com/promptfoo/promptfoo) ⭐ | YAML config、跨模型比较、★ 24k+ |
-| **eval + observability 同平台** | [langfuse](https://github.com/langfuse/langfuse) ⭐ | OSS、tracing + eval + prompt mgmt、★ 32k+ |
-| **不改程序、快速 instrumentation** | [Helicone](https://github.com/Helicone/helicone) | proxy 中介、不绑 framework |
-| **全 stack 在 LangChain** | [LangSmith](https://www.langchain.com/langsmith)（商业）| LangChain 官方 observability |
-| **打造 Claude agent**（programmatic）| [claude-agent-sdk-python](https://github.com/anthropics/claude-agent-sdk-python) ⭐ | Anthropic 官方 agent SDK、跟 Claude Code 同 runtime |
-| **Deploy agent 成 API service** | [BentoML](https://github.com/bentoml/BentoML) | 最完整、Docker + serving |
-| **自架开源 LLM**（取代付费 API）| [vLLM](https://github.com/vllm-project/vllm) | 高吞吐量、★ 87k+ |
-| **Fine-tune 开源 LLM** | [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | 100+ 模型统一 SFT/DPO/PPO/GRPO、Web UI 零 code、中文社群最广、★ 73k+ |
-
-**建议入手顺序**：
-
-1. 第一个 multi-agent：**crewAI**（role-based、最简单）
-2. 加 eval：**promptfoo**（YAML、CI 整合）
-3. 加 observability：**langfuse**（OSS、完整）
-4. Production 升级：换 **LangGraph**（control 强）+ **BentoML**（deploy）
-5. 进阶：自架 LLM 接 **vLLM**、fine-tune 用 **LLaMA-Factory**
+</details>
 
 ## 🎯 精选 Projects（范本 / SDK / 工具 collection）
 
-按用途分类、29 个项目一张表搞定。**挑入口看“适合谁”、想深入点链接看 repo**。
+先按用途选择一个，不要一次安装全部。评分是本项目的教学适合度，不是 GitHub stars。
 
-| 分类 | Project | ⭐ | 适合谁 | 为什么推荐 / 备注 |
-|---|---|---|---|---|
-| **Multi-Agent Orchestration** | [microsoft/autogen](https://github.com/microsoft/autogen) | ⭐⭐⭐⭐⭐ | 想要 GroupChat 自由 debate pattern | Stage 4 介绍过、production 场景再回头看 multi-agent 辩论 / brainstorming 模式 |
-| | [crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) | ⭐⭐⭐⭐⭐ | 想要 role-based 流水线 | 角色式 multi-agent（research → writer → reviewer），最简单 production pattern |
-| | [langchain-ai/langgraph](https://github.com/langchain-ai/langgraph) | ⭐⭐⭐⭐⭐ | 需要 audit trail / checkpoint / human-in-the-loop | state machine 路线、production 控制最强 |
-| | [open-multi-agent/open-multi-agent](https://github.com/open-multi-agent/open-multi-agent) | ⭐⭐⭐⭐ | 写 TypeScript、想在同一个 repo 里对照“动态规划”与“固定 pipeline” | 由 coordinator 在 runtime 把 goal 规划成 task DAG，再交给 scheduler 执行；`runTeam()` 从 goal 动态规划、`runTasks()` 跑写死的 pipeline，两种写法可以直接比。上面三个都是 Python 生态，这条补的是 TypeScript 路线。★ 6.8k+、MIT |
-| | [AMAP-ML/LongHorizon-Harness](https://github.com/AMAP-ML/LongHorizon-Harness) | ⭐⭐⭐ | 想看“验证那一格”在真实项目里长什么样 | 把长任务拆成 Manager / Executor / **Auditor** 三个角色，Executor 每轮用新 context，Auditor 独立检查后才写进持久 state——就是上面那张图里“检查对不对”那一格的实现。包在 Claude Code / Codex 外层，不用自己重写 agent loop。**很新**：2026-08-04 建立、2 位 contributor，还没有长期维护纪录。★ 1.1k+、MIT |
-| **Eval Frameworks** | [promptfoo](https://github.com/promptfoo/promptfoo) ⭐ | ⭐⭐⭐⭐⭐ | 把 eval 流程标准化、CI 整合 | YAML config、跨模型比较。★ 24k+、MIT |
-| | [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) | ⭐⭐⭐⭐ | 学术 benchmark 主张（MMLU / HellaSwag / GSM8K）| 学术等级。★ 13k+、MIT |
-| | [openai/evals](https://github.com/openai/evals) | ⭐⭐⭐⭐ | OpenAI 专属 eval / 想回馈上游 | ★ 19k+ |
-| **Observability** | [langfuse](https://github.com/langfuse/langfuse) ⭐ | ⭐⭐⭐⭐⭐ | 自架 production observability | OSS LangSmith 替代、traces + sessions + evals + prompt mgmt。★ 32k+、MIT |
-| | [LangSmith](https://www.langchain.com/langsmith)（商业）| ⭐⭐⭐⭐ | 全 stack 在 LangChain / LangGraph 上 | LangChain 官方、只有 hosted 版 |
-| | [Helicone](https://github.com/Helicone/helicone) | ⭐⭐⭐⭐ | 不想改程序、快速上 instrumentation | proxy 中介、顺便拿到 logging + caching。★ 6k+、Apache 2.0 |
-| | [weave (W&B)](https://github.com/wandb/weave) | ⭐⭐⭐⭐ | 团队已在用 W&B 做 ML 实验追踪 | W&B tracing + eval、跟 wandb 整合 |
-| | [comet-ml/opik](https://github.com/comet-ml/opik) | ⭐⭐⭐⭐ | eval + observability 同一个开源平台 | 追踪 LLM / agent 做了什么、追踪实验、跑质量检查（eval）。★ 21k+、Apache 2.0 |
-| | [pydantic/logfire](https://github.com/pydantic/logfire) | ⭐⭐⭐⭐ | 用 OpenTelemetry 标准追踪 agent / LLM 调用 | 看清楚并 debug 你的 agent / LLM 调用做了什么；Pydantic 团队出品、建在 OpenTelemetry 标准上。★ 4.4k+、MIT |
-| **Safety / Guardrails** | [NVIDIA-NeMo/Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) | ⭐⭐⭐⭐ | 想在 agent 的输入 / 输出加上安全规则 | 包在 LLM app 外的安全规则——让它不离题、挡 jailbreak、过滤不当输出。★ 6.6k+、Apache 2.0 |
-| **Anthropic SDK 进阶** | [anthropic-sdk-python](https://github.com/anthropics/anthropic-sdk-python) | ⭐⭐⭐⭐⭐ | 直接基于 Claude API 做应用 | 官方 Python SDK：streaming / async / tool use / prompt caching / batches / files |
-| | [anthropic-sdk-typescript](https://github.com/anthropics/anthropic-sdk-typescript) | ⭐⭐⭐⭐ | TypeScript / Node / web app | Python SDK 的 TS 版 |
-| | [claude-agent-sdk-python](https://github.com/anthropics/claude-agent-sdk-python) ⭐ | ⭐⭐⭐⭐⭐ | 打造 Claude-based agent 而非只 API | 内建 tool use loop / file access / sandbox / subagent 编排；跟 Claude Code 同 runtime、想看内部运作直接读 source。★ 7.6k+、MIT |
-| | [claude-agent-sdk-typescript](https://github.com/anthropics/claude-agent-sdk-typescript) | ⭐⭐⭐⭐ | Node / web app 环境 Claude agent | Claude Agent SDK TS 版。★ 1.7k+ |
-| | [Anthropic Cookbook（进阶）](https://github.com/anthropics/anthropic-cookbook) | ⭐⭐⭐⭐ | 想看官方进阶 SDK pattern | 特别是 `prompt_caching.ipynb` / `tool_use/` / `multimodal/` 三个 notebook |
-| **Structured Output** | [BoundaryML/baml](https://github.com/BoundaryML/baml) | ⭐⭐⭐⭐ | 想稳定拿到任何模型输出的可靠 JSON | 一个专用小语言、帮你从 LLM 稳定取得经过检查的 JSON；支持 Claude / OpenAI / 本地模型、7 种编程语言。★ 8.8k+、Apache 2.0 |
-| **Deployment** | [BentoML](https://github.com/bentoml/BentoML) | ⭐⭐⭐⭐ | 把 agent 包成 production API service | Docker + serving framework。★ 8.8k+、Apache 2.0 |
-| | [LangServe](https://github.com/langchain-ai/langserve) | ⭐⭐⭐（⚠️ 已封存）| LangChain agent 快速 deploy | 底层 FastAPI；⚠️ **repo 已封存 2026-05**、新部署改用 LangGraph Platform |
-| | [vLLM](https://github.com/vllm-project/vllm) | ⭐⭐⭐⭐ | 自架开源 LLM 取代付费 API | 高吞吐量 LLM serving、Llama / Qwen 等。★ 87k+、Apache 2.0 |
-| **中文 deploy / fine-tune** | [datawhalechina/self-llm](https://github.com/datawhalechina/self-llm) | ⭐⭐⭐⭐ | 中文团队要自架开源 LLM | training-to-deployment 完整中文指南、Qwen / Llama / GLM / 多模态。★ 31k+、Apache 2.0 |
-| | [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) | ⭐⭐⭐⭐⭐ | 要 fine-tune 开源 LLM（不只 prompt eng）| 100+ 模型统一 SFT/DPO/PPO/GRPO、Web UI 零 code、中文社群最广。★ 73k+、Apache 2.0 |
-| **Multi-Agent 案例研究** | [geekan/MetaGPT](https://github.com/geekan/MetaGPT) | ⭐⭐⭐⭐⭐ | 想看角色分工 + artifact 交接 pattern | SOP-based PM / Architect / Engineer multi-agent team、PRD → 设计 → code 一路产出。★ 67k+、MIT |
-| | [OpenBMB/ChatDev](https://github.com/OpenBMB/ChatDev) | ⭐⭐⭐⭐ | 想看 agent debate / peer-review pattern | 对话式软件开发、agents 在 design / code / test 互相辩论。★ 33k+、Apache 2.0、有 zh README |
-| | [princeton-nlp/SWE-agent](https://github.com/princeton-nlp/SWE-agent) | ⭐⭐⭐⭐ | 理解为什么 tool 设计 > prompt tuning | Agent-Computer Interface (ACI) 设计思路、Princeton paper-backed、SWE-Bench 领先方法。★ 20k+、MIT |
+<details markdown="1">
+<summary>📦 展开：20 个官方／优质资源、适合用途与限制</summary>
 
-> 🌳 **Claude 原生 subagent 机制**（不用 framework 也能 multi-agent）见 [Stage 5.5](05-claude-code-ecosystem.zh-Hans.md#55--subagentsclaude-code-原生-multi-agent-机制-2025-新功能)。本 stage 重 framework / production；Stage 5.5 重 markdown-based subagent 编排。
+<table>
+  <thead>
+    <tr><th scope="col">分类</th><th scope="col">Project／文档</th><th scope="col">教学适合度</th><th scope="col">适合做什么</th><th scope="col">先知道的限制</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4">Orchestration／Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>先学简单 workflow，再理解 Agent</td><td>是设计指南，不是可以直接部署的框架</td></tr>
+    <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td>⭐⭐⭐⭐⭐</td><td>比较 manager 和 handoff</td><td>示例以 OpenAI Agents SDK 为主</td></tr>
+    <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td>⭐⭐⭐⭐</td><td>顺序、并行、handoff、群聊和人工批准</td><td>先确认软件包版本和当前预览状态</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>⭐⭐⭐⭐⭐</td><td>需要 state、checkpoint 和 human-in-the-loop</td><td>抽象较多，第一个 Agent 不必从这里开始</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="6">Eval／Observability</th><td><a href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests">Anthropic — Develop tests and evaluations</a></td><td>⭐⭐⭐⭐⭐</td><td>建立成功标准和 grader</td><td>需要自己准备代表真实工作的案例</td></tr>
+    <tr><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>⭐⭐⭐⭐⭐</td><td>把 Eval 放进 CI</td><td>配置文件不能代替好的 rubric</td></tr>
+    <tr><td><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI conventions</a></td><td>⭐⭐⭐⭐</td><td>学习可移植的 trace 字段</td><td>规范仍在演进，各平台支持度不同</td></tr>
+    <tr><td><a href="https://github.com/langfuse/langfuse">Langfuse</a></td><td>⭐⭐⭐⭐⭐</td><td>trace、Eval 和 prompt 管理</td><td>自行托管仍需要运维和数据治理</td></tr>
+    <tr><td><a href="https://github.com/Arize-ai/phoenix">Arize Phoenix</a></td><td>⭐⭐⭐⭐</td><td>OpenTelemetry 和本地分析</td><td>先设计敏感数据遮盖</td></tr>
+    <tr><td><a href="https://github.com/comet-ml/opik">Opik</a></td><td>⭐⭐⭐⭐</td><td>在同一平台做 tracing 和 evaluation</td><td>功能多，先从一条 trace 开始</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="5">Harness／Sandbox／Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>阅读工具循环、权限和 subagent 实现</td><td>以 Claude runtime 为中心</td></tr>
+    <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>阅读 plugin-based harness 架构</td><td>Developer preview；可能有破坏性变更</td></tr>
+    <tr><td><a href="https://github.com/xai-org/grok-build">Grok Build</a></td><td>⭐⭐⭐</td><td>比较 coding-agent harness 的组成</td><td>先读 README 和安全边界，再决定是否试用</td></tr>
+    <tr><td><a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a></td><td>⭐⭐⭐</td><td>观察 sandbox 和企业部署方向</td><td>Alpha／best-effort；不适合作为稳定依赖</td></tr>
+    <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td>⭐⭐⭐⭐</td><td>把应用打包成服务和容器</td><td>部署框架不会自动补齐 Eval 和 Guardrail</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="5">Multi-Agent 案例</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>⭐⭐⭐⭐</td><td>理解角色式任务分工</td><td>角色多不等于答案一定更好</td></tr>
+    <tr><td><a href="https://github.com/stablyai/orca">Orca</a></td><td>⭐⭐⭐⭐</td><td>在隔离 worktree 中并行运行 coding agents</td><td>并行结果仍然需要人审查和选择</td></tr>
+    <tr><td><a href="https://github.com/yc-software/qm">QM</a></td><td>⭐⭐⭐⭐</td><td>观察团队 workspace、权限和计划任务</td><td>组织级部署比个人 CLI 复杂</td></tr>
+    <tr><td><a href="https://github.com/AMAP-ML/LongHorizon-Harness">LongHorizon-Harness</a></td><td>⭐⭐⭐</td><td>看 Manager／Executor／Auditor 分工</td><td>项目很新，长期维护记录仍有限</td></tr>
+    <tr><td><a href="https://github.com/cft0808/edict">Edict</a></td><td>⭐⭐⭐</td><td>用中文案例理解规划、审查和执行角色</td><td>特殊角色命名是案例设计，不是行业标准</td></tr>
+  </tbody>
+</table>
+
+<small>数据核查：2026-08-28 UTC</small>
+
+</details>
 
 ## ✅ Stage 7 之后的自我检查
 
-你能不能：
+- [ ] 我能用一句话分清 OpenRouter、Agent runtime 和多 Agent 平台。
+- [ ] 我能说明为什么单一 Agent 应该是默认选择。
+- [ ] 我有固定 Eval cases，不只看一次漂亮输出。
+- [ ] 我能找到一次运行的 trace、错误、延迟和 token。
+- [ ] 高风险工具有最小权限、人工批准和可以安全重试的设计。
+- [ ] 我能展示一张 execution receipt，说明 Agent 做了什么。
 
-- [ ] 设计一个 multi-agent 系统，协作协议讲得清楚
-- [ ] 在 CI 跑自动 eval pipeline
-- [ ] 把 observability（tracing）接到 production agent
-- [ ] 在真实 workload 上量测 prompt caching 前后的成本差异
-- [ ] 把 agent deploy 到云端（任何 provider）
-
-如果都可以 → 先进 [**Stage 7.5 — 进阶 Agentic 概念地图**](07.5-advanced-agentic-concepts.zh-Hans.md)（1 周、不写 code、建立 frontier 概念地图、定位业界还在讨论哪些进阶概念），再进 [**Stage 8 — Agent Interfaces**](08-agent-interfaces.zh-Hans.md)（**两 track 共用 hub**）学 agent 怎么跟非 API 世界互动（Computer Use / Browser Use / Sandbox）。或挑一个[特化分支](../README.zh-Hans.md#-学习地图两条学习路径)、或回头来贡献这份 repo。
-
-## 💡 接下来
-
-你已经有基础能力了。接下来 6-12 个月应该专注在：
-
-1. **挑一个 production 系统** 从 prototype 推到 production
-2. **回馈上游**（LangGraph、AutoGen、MCP servers、Anthropic cookbook）
-3. **读论文**——agent 研究进展很快
-4. **做出看得到的东西**——开源一个真的工具，不要再写教学了
+完成后，进入 [Stage 7.5 — 进阶 Agentic 概念地图](07.5-advanced-agentic-concepts.zh-Hans.md)，再到 [Stage 8 — Agent Interfaces](08-agent-interfaces.zh-Hans.md)。如果其中一项还说不清楚，回到对应练习，只改一件事再测试一次。

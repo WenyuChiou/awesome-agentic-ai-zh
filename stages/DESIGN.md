@@ -170,6 +170,12 @@ Stage 6 的 18 筆資源固定分成 `4／5／4／3／2` 五組，每組使用�
 
 Stage 6 同樣使用兩層 stacked PR：第一層定稿三語教材、官方事實包、圖、glossary 直接矛盾、資源表與 reader-UX gate；第二層才修正五個 `examples/stage-6/` 的 chunk 邊界、collection 隔離、真正 persistent memory、雙路徑與離線測試。兩層都保留 branch 與 upstream，未經使用者明確同意不合併、不清理。
 
+Stage 7 的固定主線是「單一 Agent／Multi-Agent 決策 → 七個可見核心詞 → Prompt／Context／Harness／Loop／Graph 五層分工 → Harness 八項 production 檢查 → 工具角色辨識 → 五題可執行練習 → execution receipt 小專案 → benchmark 閱讀紀律 → 精選資源 → 自我檢查」。七個核心詞是 **Multi-Agent**、**Orchestration**、**Handoff**、**Harness**、**Eval**、**Observability** 與 **Guardrail**；先用白話和生活比喻定義，再保留正確術語。OpenRouter 是模型 API 入口，Pi／OpenCode 是 Agent runtime／coding agent，Orca／QM 是多 Agent 協作層；不得把三層寫成可互換的同類產品。
+
+Stage 7 的時間、環境、費用、安全提醒、完整閱讀、Loop／Graph 補充、回饋與復原細節、練習步驟、benchmark 連結及完整資源表預設收合。五題 heading、anchor、成果與第一個可複製測試命令保持可見；成本／延遲仍是 Harness 第八項與 SDK 練習的必要觀念，但沒有對應資料夾時不得虛構第六題。外部排行榜只能教讀法，不能凍結 SOTA 分數、模型名次或第三方「最強」結論。
+
+Stage 7 的 20 筆資源固定分成 `4／6／5／5` 四組，每組使用獨立 `<tbody>`、`scope="rowgroup"` 與真正 HTML `rowspan`。保留五星編輯評分，移除 GitHub stars；已封存、Preview、Alpha、best-effort 或維護紀錄不足的專案必須在限制欄明寫。Stage 7 同樣拆成 content 與 example-hardening 兩層 stacked PR：第一層定稿三語教材、來源、圖、資源與 reader-UX gate；第二層才更新五個 `examples/stage-7/` 的 SDK、模型、直接執行步驟、安全邊界與離線測試。未經使用者明確同意不合併、不清理 branch。
+
 Stage 5 的練習不能只叫讀者「看文件」卻宣稱已建立元件。Hook 練習至少要給一份可直接複製的最小設定、離線 smoke test、`/hooks` 落腳檢查與不保存 prompt／secret 的邊界；設定引用 project path 時使用 `command` + `args` 的跨平台 exec form，不能把 PowerShell 無法展開的 shell 變數寫進單一 command 字串。Agent SDK snippet 必須依現行 message type 實際讀到文字內容，regression 也要餵入 fake async `query()` 並驗證真的印出 `TextBlock`，只 compile 或比對字串不算通過。
 
 Stage 5 的 installable Skill 範例使用 `${CLAUDE_SKILL_DIR}` 指向 bundled references，讓 personal、project 與翻譯版安裝後都能找到同一包檔案。README 先給 PowerShell 可複製安裝，再收合 POSIX；驗收先跑無網路 contract checker，再用 `/skill-name` 做產品內手動檢查。自訂 JSON 不能冒充 promptfoo config，結構測試也不能冒充 model-quality eval；要教 promptfoo 時，必須另給合法 provider／prompt／test 設定或明說只提供延伸入口。範例不能保存無來源成功率、原因比例、固定省時百分比或要求私人 Chain-of-Thought。

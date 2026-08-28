@@ -106,6 +106,16 @@ Stage 6 (`stages/06-memory-rag.md`) now keeps seven core terms, five cumulative 
 
 This reader layer does not claim that the five example folders are fully hardened. The next stacked layer will separately test the chunk-overlap boundary, isolate Chroma collections, replace ephemeral “long-term” memory with real persistence, preserve Ollama／Anthropic paths, and make the teaching tests offline and behavior-based.
 
+### Stage 7 — reader path covered; executable hardening stays in the next layer
+
+Stage 7 (`stages/07-multi-agent-production.md`) keeps the single-Agent／Multi-Agent decision, seven bold core terms, five-layer map, eight-part Harness checklist, OpenRouter／Pi／OpenCode／Orca／QM role split, five real exercise headings and commands, execution-receipt mini-project, benchmark-reading discipline, and self-check visible. Seven closed disclosures hold setup, full reading, Loop／Graph depth, recovery／cost details, full exercise steps, benchmark links, and the resource catalog.
+
+`scripts/test_stage07_content.py` locks the three locales to the same 20 external URLs, four accessible rowgroups (`4／6／5／5`), 20 editorial ratings, seven closed disclosures, five real example directories, direct `python test.py` entry commands, quiet `2026-08-28 UTC` verification date, current canonical project owners, and the absence of frozen SOTA scores, stale redirects, GitHub star counts, empty-quote artifacts, or a fake sixth exercise. It also verifies six distinct locale-specific PNGs at full educational-diagram size and rejects untranslated CJK in the English page.
+
+`scripts/check-reader-ux.py` measures the collapsed mainline at `5,770／9,925／5,863` non-whitespace characters and locks all seven core-term definitions before Exercise 1. `scripts/check-image-locale.py` ensures the English and Simplified Chinese pages use their own bright image variants.
+
+This content layer does not claim that the five Stage 7 examples use current model names, current-major SDKs, or the final direct-run pedagogy. The next stacked layer will update those folders, remove the “rename and rewrite the solution” instruction, preserve offline tests, and verify Ollama／Anthropic behavior separately.
+
 ## v2 path (deferred)
 
 Per `docs/HOW_TO_USE.md` "給維護者：v2 path":

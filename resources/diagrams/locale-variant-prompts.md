@@ -113,3 +113,32 @@ python scripts/check-image-locale.py
 該 gate 把「同語系變體已存在但頁面沒用」當錯誤直接擋，「變體還沒做」則記在它的
 `KNOWN_MISSING` 白名單裡——所以**新增一張缺變體的圖會讓 build 失敗**，不會默默累積。
 補完變體後記得把對應的 `KNOWN_MISSING` 條目一起移除。
+
+## 2026-08-28：Stage 7 亮色重繪
+
+`agent-engineering-5layer.{png,en.png,zh-Hans.png}` 與
+`inside-a-graph.{png,en.png,zh-Hans.png}` 保留原檔名重繪，因此 README、Stage 7.5、
+Stage 8 與 glossary 的既有深連結不用改。Stage 7 三語頁改成各自引用對應 locale 檔，
+不再讓英語／簡中讀者看到繁中圖。
+
+本批使用 Codex 內建 imagegen 的 edit／text-localization 路徑：
+
+1. 先讀原圖，鎖定 16:9、節點順序、箭頭、badge、圖例與全部事實。
+2. 只把深色霓虹改成暖白背景、亮色卡片、深藍文字與高對比線條。
+3. 以通過人工檢查的繁中亮色版為 reference，逐字提供英語與簡中文字表。
+4. 簡中五層圖副標題兩次殘留繁體 `層／牆`；最終移除副標題，不接受混合字形。
+5. 用 `python scripts/check-image-locale.py` 確認所有 mirror 實際引用自己的圖。
+
+共同 prompt 約束：
+
+> Preserve the exact five-layer／workflow order, icons, arrows, meaning, 16:9
+> composition, and hierarchy. Use a warm off-white background, soft pastel
+> cards, dark navy text, high contrast, and no watermark. Use only the supplied
+> verbatim locale text; do not add rankings, versions, prices, or new claims.
+
+人工驗收除了看文字，也逐一確認：
+
+- 五層仍是 Prompt → Context → Harness → Loop → Graph，前 3 層標示業界採用，
+  後 2 層標示社群／本專案教學用語。
+- Graph 圖仍保留平行草稿、獨立驗證、人工核准與失敗返回，沒有把每個節點都畫成 Agent。
+- 英語圖沒有中文；簡中圖沒有肉眼可見的繁體字；繁中圖沒有簡中用語。

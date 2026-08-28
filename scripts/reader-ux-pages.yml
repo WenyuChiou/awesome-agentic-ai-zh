@@ -1139,6 +1139,161 @@ pages:
           zh-Hans: {term: Memory, label: "Memory（记忆）"}
     resource_group_rowspans: [4, 5, 4, 3, 2]
 
+  - id: stage-07
+    canonical: stages/07-multi-agent-production.md
+    mirrors:
+      en: stages/07-multi-agent-production.en.md
+      zh-Hans: stages/07-multi-agent-production.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 5770
+      en: 9925
+      zh-Hans: 5863
+    max_open_details: 0
+    required_details_count: 7
+    visible_section_order:
+      - learning-goals
+      - core-terms
+      - entry-conditions
+      - required-reading
+      - five-layers
+      - harness
+      - harness-components
+      - tool-roles
+      - hands-on
+      - exercise-1
+      - exercise-2
+      - exercise-3
+      - exercise-4
+      - exercise-5
+      - mini-project
+      - benchmark
+      - projects
+      - completion
+    forbidden_terms:
+      zh-TW: ["2026-05", "★", '""', "“”", LangServe, "qwen2.5:3b", benchmarkingagents.com, rapidclaw.dev]
+      en: ["2026-05", "★", '""', "“”", LangServe, "qwen2.5:3b", benchmarkingagents.com, rapidclaw.dev]
+      zh-Hans: ["2026-05", "★", '""', "“”", LangServe, "qwen2.5:3b", benchmarkingagents.com, rapidclaw.dev]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-28"
+        - "OpenRouter"
+        - "Pi"
+        - "OpenCode"
+        - "Orca"
+        - "QM"
+        - "Developer preview"
+        - "Alpha"
+        - "best-effort"
+    required_visible_sections:
+      learning-goals:
+        zh-TW: {heading: "📌 學習目標", anchor: -學習目標}
+        en: {heading: "📌 Learning Goals", anchor: -learning-goals}
+        zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
+      core-terms:
+        zh-TW: {heading: "🧩 七個核心詞", anchor: -七個核心詞}
+        en: {heading: "🧩 Seven Core Terms", anchor: -seven-core-terms}
+        zh-Hans: {heading: "🧩 七个核心词", anchor: -七个核心词}
+      entry-conditions:
+        zh-TW: {heading: "🚪 進入條件", anchor: -進入條件}
+        en: {heading: "🚪 Entry Conditions", anchor: -entry-conditions}
+        zh-Hans: {heading: "🚪 进入条件", anchor: -进入条件}
+      required-reading:
+        zh-TW: {heading: "📚 必修閱讀", anchor: -必修閱讀}
+        en: {heading: "📚 Required Reading", anchor: -required-reading}
+        zh-Hans: {heading: "📚 必读内容", anchor: -必读内容}
+      five-layers:
+        zh-TW: {heading: "五層工程分工：Prompt → Context → Harness → Loop → Graph", anchor: 五層工程分工prompt--context--harness--loop--graph}
+        en: {heading: "The Five-Layer Engineering Split: Prompt → Context → Harness → Loop → Graph", anchor: the-five-layer-engineering-split-prompt--context--harness--loop--graph}
+        zh-Hans: {heading: "五层工程分工：Prompt → Context → Harness → Loop → Graph", anchor: 五层工程分工prompt--context--harness--loop--graph}
+      harness:
+        zh-TW: {heading: "🏗 Harness Engineering — production agent runtime 的工程設計 ⭐ 本 stage 核心概念", anchor: -harness-engineering--production-agent-runtime-的工程設計--本-stage-核心概念}
+        en: {heading: "🏗 Harness Engineering — Production Agent Runtime Design ⭐ Core Concept of This Stage", anchor: -harness-engineering--production-agent-runtime-design--core-concept-of-this-stage}
+        zh-Hans: {heading: "🏗 Harness Engineering — production agent runtime 的工程设计 ⭐ 本 stage 核心概念", anchor: -harness-engineering--production-agent-runtime-的工程设计--本-stage-核心概念}
+      harness-components:
+        zh-TW: {heading: "Harness 的 8 個核心元件", anchor: harness-的-8-個核心元件}
+        en: {heading: "The 8 Core Components of a Harness", anchor: the-8-core-components-of-a-harness}
+        zh-Hans: {heading: "Harness 的 8 个核心元件", anchor: harness-的-8-个核心元件}
+      tool-roles:
+        zh-TW: {heading: "🧭 OpenRouter、Pi、OpenCode、Orca、QM 到底差在哪？", anchor: -openrouterpiopencodeorcaqm-到底差在哪}
+        en: {heading: "🧭 What Is the Difference Between OpenRouter, Pi, OpenCode, Orca, and QM?", anchor: -what-is-the-difference-between-openrouter-pi-opencode-orca-and-qm}
+        zh-Hans: {heading: "🧭 OpenRouter、Pi、OpenCode、Orca、QM 到底有什么差别？", anchor: -openrouterpiopencodeorcaqm-到底有什么差别}
+      hands-on:
+        zh-TW: {heading: "🛠 動手練習", anchor: -動手練習}
+        en: {heading: "🛠 Hands-on Exercises", anchor: -hands-on-exercises}
+        zh-Hans: {heading: "🛠 动手练习", anchor: -动手练习}
+      exercise-1:
+        zh-TW: {heading: "練習 1：Multi-Agent 辯論", anchor: 練習-1multi-agent-辯論}
+        en: {heading: "Exercise 1: Multi-Agent Debate", anchor: exercise-1-multi-agent-debate}
+        zh-Hans: {heading: "练习 1：Multi-Agent 辩论", anchor: 练习-1multi-agent-辩论}
+      exercise-2:
+        zh-TW: {heading: "練習 2：Eval", anchor: 練習-2eval}
+        en: {heading: "Exercise 2: Eval", anchor: exercise-2-eval}
+        zh-Hans: {heading: "练习 2：Eval", anchor: 练习-2eval}
+      exercise-3:
+        zh-TW: {heading: "練習 3：Observability", anchor: 練習-3observability}
+        en: {heading: "Exercise 3: Observability", anchor: exercise-3-observability}
+        zh-Hans: {heading: "练习 3：Observability", anchor: 练习-3observability}
+      exercise-4:
+        zh-TW: {heading: "練習 4：SDK 進階", anchor: 練習-4sdk-進階}
+        en: {heading: "Exercise 4: Advanced SDK Features", anchor: exercise-4-advanced-sdk-features}
+        zh-Hans: {heading: "练习 4：SDK 进阶", anchor: 练习-4sdk-进阶}
+      exercise-5:
+        zh-TW: {heading: "練習 5：Deploy", anchor: 練習-5deploy}
+        en: {heading: "Exercise 5: Deploy", anchor: exercise-5-deploy}
+        zh-Hans: {heading: "练习 5：Deploy", anchor: 练习-5deploy}
+      mini-project:
+        zh-TW: {heading: "🧪 推薦小專案：有收據的研究小隊", anchor: -推薦小專案有收據的研究小隊}
+        en: {heading: "🧪 Recommended Mini-Project: A Research Team with a Receipt", anchor: -recommended-mini-project-a-research-team-with-a-receipt}
+        zh-Hans: {heading: "🧪 推荐小项目：有收据的研究小队", anchor: -推荐小项目有收据的研究小队}
+      benchmark:
+        zh-TW: {heading: "📊 Agent Benchmark Landscape：怎麼看，不要只看排行榜 + ⚠ Reward-Hacking 警告", anchor: -agent-benchmark-landscape怎麼看不要只看排行榜---reward-hacking-警告}
+        en: {heading: "📊 Agent Benchmark Landscape: How to read it, not just the leaderboard + ⚠ Reward-Hacking Warning", anchor: -agent-benchmark-landscape-how-to-read-it-not-just-the-leaderboard---reward-hacking-warning}
+        zh-Hans: {heading: "📊 Agent Benchmark Landscape：怎么看，不要只看排行榜 + ⚠ Reward-Hacking 警告", anchor: -agent-benchmark-landscape怎么看不要只看排行榜---reward-hacking-警告}
+      projects:
+        zh-TW: {heading: "🎯 精選 Projects（範本 / SDK / 工具 collection）", anchor: -精選-projects範本--sdk--工具-collection}
+        en: {heading: "🎯 Featured Projects (Templates / SDKs / Tool Collections)", anchor: -featured-projects-templates--sdks--tool-collections}
+        zh-Hans: {heading: "🎯 精选 Projects（范本 / SDK / 工具 collection）", anchor: -精选-projects范本--sdk--工具-collection}
+      completion:
+        zh-TW: {heading: "✅ Stage 7 之後的自我檢查", anchor: -stage-7-之後的自我檢查}
+        en: {heading: "✅ Self-Check After Stage 7", anchor: -self-check-after-stage-7}
+        zh-Hans: {heading: "✅ Stage 7 之后的自我检查", anchor: -stage-7-之后的自我检查}
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: exercise-1
+      min_definition_chars: 20
+      terms:
+        - id: multi-agent
+          zh-TW: {term: Multi-Agent, label: "Multi-Agent（多 Agent）"}
+          en: {term: Multi-Agent, label: Multi-Agent}
+          zh-Hans: {term: Multi-Agent, label: "Multi-Agent（多 Agent）"}
+        - id: orchestration
+          zh-TW: {term: Orchestration, label: Orchestration}
+          en: {term: Orchestration, label: Orchestration}
+          zh-Hans: {term: Orchestration, label: Orchestration}
+        - id: handoff
+          zh-TW: {term: Handoff, label: Handoff}
+          en: {term: Handoff, label: Handoff}
+          zh-Hans: {term: Handoff, label: Handoff}
+        - id: harness
+          zh-TW: {term: Harness, label: Harness}
+          en: {term: Harness, label: Harness}
+          zh-Hans: {term: Harness, label: Harness}
+        - id: eval
+          zh-TW: {term: Eval, label: Eval}
+          en: {term: Eval, label: Eval}
+          zh-Hans: {term: Eval, label: Eval}
+        - id: observability
+          zh-TW: {term: Observability, label: Observability}
+          en: {term: Observability, label: Observability}
+          zh-Hans: {term: Observability, label: Observability}
+        - id: guardrail
+          zh-TW: {term: Guardrail, label: Guardrail}
+          en: {term: Guardrail, label: Guardrail}
+          zh-Hans: {term: Guardrail, label: Guardrail}
+    resource_group_rowspans: [4, 6, 5, 5]
+
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
     mirrors:

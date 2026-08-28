@@ -115,6 +115,20 @@ def test_real_git_headers_still_skipped():
     assert pla.extract_new_repos(diff) == ["real/repo"]
 
 
+def test_get_git_diff_decodes_markdown_as_utf8_on_every_platform():
+    completed = mock.Mock(
+        returncode=0,
+        stdout="+++ b/stages/07.md\n@@ -0,0 +1 @@\n+繁體中文\n",
+        stderr="",
+    )
+    with mock.patch.object(pla.subprocess, "run", return_value=completed) as run:
+        output = pla.get_git_diff("base", "head")
+
+    assert "繁體中文" in output
+    assert run.call_args.kwargs["encoding"] == "utf-8"
+    assert run.call_args.kwargs["errors"] == "strict"
+
+
 # --- audit_repo (gh api boundary, fully mocked — no network) ------------------
 
 def test_audit_repo_success():

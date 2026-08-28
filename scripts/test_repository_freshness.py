@@ -72,6 +72,20 @@ def test_diff_ignores_non_markdown_files():
     assert rf.changed_occurrences(diff) == []
 
 
+def test_git_diff_decodes_markdown_as_utf8_on_every_platform(tmp_path):
+    completed = mock.Mock(
+        returncode=0,
+        stdout="+++ b/stages/07.md\n@@ -0,0 +1 @@\n+繁體中文\n",
+        stderr="",
+    )
+    with mock.patch.object(rf.subprocess, "run", return_value=completed) as run:
+        output = rf.git_diff(tmp_path, "base", "head")
+
+    assert "繁體中文" in output
+    assert run.call_args.kwargs["encoding"] == "utf-8"
+    assert run.call_args.kwargs["errors"] == "strict"
+
+
 def test_missing_is_hard_failure():
     findings = rf.findings_for({"requested": "owner/repo", "state": "missing"}, [occurrence()], NOW)
     assert findings == [{"severity": "error", "code": "missing", "repo": "owner/repo",

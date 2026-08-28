@@ -112,7 +112,8 @@ def get_git_diff(base: str, head: str) -> str:
     """`git diff --unified=0 base...head -- '*.md'` (three-dot = changes on head)."""
     result = subprocess.run(
         ["git", "diff", "--unified=0", f"{base}...{head}", "--", "*.md"],
-        capture_output=True, text=True, timeout=60,
+        capture_output=True, text=True, encoding="utf-8", errors="strict",
+        timeout=60,
     )
     if result.returncode != 0:
         raise RuntimeError(f"git diff failed: {result.stderr.strip()}")
