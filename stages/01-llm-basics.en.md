@@ -4,7 +4,6 @@
 
 > Purpose: follow a repeatable local-to-cloud path to call an LLM through an API (application programming interface), understand **Token**, **Context Window**, and **Temperature**, and explain model choices using cost and latency.
 
-Data checked: 2026-08-27 UTC
 <!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
 
 ## 📌 Learning Goals
@@ -458,7 +457,9 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 15-family table (official specification entries)</summary>
 
-The following fields were checked against official sources. “Not published by the official source” means no citable public number was found in this check; it does not mean the information can never exist. Prices are USD per 1M tokens when the provider uses that unit.
+<small>Data checked: 2026-08-27 UTC.</small>
+
+If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 
 | Family | Current recommended models | Status | Context | Price or license | Good for | Limitations | Official source |
 |---|---|---|---|---|---|---|---|
