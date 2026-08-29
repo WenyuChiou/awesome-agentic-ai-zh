@@ -122,7 +122,7 @@ stage06_fact_pack:
     langmem: 'https://github.com/langchain-ai/langmem'
     zep: 'https://github.com/getzep/zep'
     graphiti: 'https://github.com/getzep/graphiti'
-    chroma: 'https://docs.trychroma.com/getting-started'
+    chroma: 'https://docs.trychroma.com/docs/overview/getting-started'
     qdrant: 'https://qdrant.tech/documentation/'
     pgvector: 'https://github.com/pgvector/pgvector'
     weaviate: 'https://docs.weaviate.io/weaviate'

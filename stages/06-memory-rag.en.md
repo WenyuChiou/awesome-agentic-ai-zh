@@ -79,7 +79,7 @@ First see how the parts of RAG fit together, then start the first exercise.
 
 1. [LangChain Retrieval](https://docs.langchain.com/oss/python/langchain/retrieval) — See how loaders, splitters, embeddings, vector stores, and retrievers work together.
 2. [LlamaIndex concepts](https://developers.llamaindex.ai/python/framework/getting_started/concepts/) — Understand indexing and querying through a document-oriented approach.
-3. [Chroma getting started](https://docs.trychroma.com/getting-started) — See the minimal way to use a local vector database.
+3. [Chroma getting started](https://docs.trychroma.com/docs/overview/getting-started) — See the minimal way to use a local vector database.
 4. [LangGraph Agentic RAG](https://docs.langchain.com/oss/python/langgraph/agentic-rag) — After basic RAG, see how an agent decides whether to retrieve data.
 
 </details>

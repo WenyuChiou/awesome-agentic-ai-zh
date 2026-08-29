@@ -76,7 +76,7 @@
 
 1. [LangChain Retrieval](https://docs.langchain.com/oss/python/langchain/retrieval) — 看 loader、splitter、embedding、vector store 與 retriever 怎麼合作。
 2. [LlamaIndex concepts](https://developers.llamaindex.ai/python/framework/getting_started/concepts/) — 用文件導向的方式理解 indexing 與 querying。
-3. [Chroma getting started](https://docs.trychroma.com/getting-started) — 看本地 vector database 的最小使用方式。
+3. [Chroma getting started](https://docs.trychroma.com/docs/overview/getting-started) — 看本地 vector database 的最小使用方式。
 4. [LangGraph Agentic RAG](https://docs.langchain.com/oss/python/langgraph/agentic-rag) — 完成基礎 RAG 後，再看 agent 如何決定要不要查資料。
 
 </details>
