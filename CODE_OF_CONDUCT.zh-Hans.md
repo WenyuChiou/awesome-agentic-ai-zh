@@ -72,4 +72,4 @@
 本准则改编自 [Contributor Covenant](https://www.contributor-covenant.org) 2.1 版，原文：
 <https://www.contributor-covenant.org/version/2/1/code_of_conduct/>
 
-社区影响准则受 [Mozilla 的行为准则执行阶梯](https://github.com/mozilla/diversity) 启发。
+社区影响准则受 [Mozilla 的行为准则执行阶梯](https://github.com/mozilla/inclusion) 启发。

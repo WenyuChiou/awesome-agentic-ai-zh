@@ -203,7 +203,7 @@
 **Audience**: people who find the official docx/xlsx/pptx skills too coarse-grained.
 **Notes**: complements `anthropics/skills`, not a replacement.
 
-### [kreuzberg-dev/kreuzberg](https://github.com/kreuzberg-dev/kreuzberg) ⭐⭐⭐⭐
+### [xberg-io/xberg](https://github.com/xberg-io/xberg) ⭐⭐⭐⭐
 
 | Field | Value |
 |---|---|
@@ -359,7 +359,7 @@
 **Audience**: maintainers running OSS / community Discord servers.
 **Notes**: requires Discord bot token; watch rate limits.
 
-### [safishamsi/graphify](https://github.com/safishamsi/graphify) ⭐⭐⭐⭐⭐
+### [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) ⭐⭐⭐⭐⭐
 
 | Field | Value |
 |---|---|
@@ -423,7 +423,7 @@
 **Audience**: engineers who don't want the Google Cloud SDK and need cross-OSS-DB support.
 **Notes**: overlaps with `googleapis/mcp-toolbox` but lighter weight.
 
-### [supabase-community/supabase-mcp](https://github.com/supabase-community/supabase-mcp) ⭐⭐⭐⭐⭐
+### [supabase/mcp](https://github.com/supabase/mcp) ⭐⭐⭐⭐⭐
 
 | Field | Value |
 |---|---|

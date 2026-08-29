@@ -112,7 +112,7 @@ AI 可以幫忙準備和輔助，但不應該直接取代教師判斷。近期 A
 
 ### Prompt 素材庫
 
-#### [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) ⭐⭐⭐⭐
+#### [f/prompts.chat](https://github.com/f/prompts.chat) ⭐⭐⭐⭐
 
 | 欄位 | 內容 |
 |---|---|

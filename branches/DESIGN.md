@@ -67,7 +67,7 @@ audience 切太細會：
 同一個工具在不同場景下歸類不同。例如：
 
 - **Ollama**：給 everyday-users 是「隱私場景跑本地 LLM」（Tier 3），給 developer 是「開發 agent 的本地測試 backend」——但這份 catalog 把它放在 **Stage 1**（基礎設施層級），各 branch 從那裡引用。
-- **f/awesome-chatgpt-prompts**：放 for-teacher（給教師當教材參考）、也放 for-everyday-users（不寫 code 也能用的 prompt 庫）。
+- **f/prompts.chat**：放 for-teacher（給教師當教材參考）、也放 for-everyday-users（不寫 code 也能用的 prompt 庫）。
 
 ### 灰色地帶處理（同一 repo 出現在多 branch）
 

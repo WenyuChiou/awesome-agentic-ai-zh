@@ -203,7 +203,7 @@
 **适合谁**：觉得官方 docx/xlsx/pptx skill 不够细的人。
 **备注**：跟 anthropics/skills 是补充关系，不是替代。
 
-### [kreuzberg-dev/kreuzberg](https://github.com/kreuzberg-dev/kreuzberg) ⭐⭐⭐⭐
+### [xberg-io/xberg](https://github.com/xberg-io/xberg) ⭐⭐⭐⭐
 
 | 栏位 | 内容 |
 |---|---|
@@ -359,7 +359,7 @@
 **适合谁**：用 Discord 跑社群 / 开源项目的 maintainer。
 **备注**：要 Discord bot token；要小心 rate limit。
 
-### [safishamsi/graphify](https://github.com/safishamsi/graphify) ⭐⭐⭐⭐⭐
+### [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) ⭐⭐⭐⭐⭐
 
 | 栏位 | 内容 |
 |---|---|
@@ -423,7 +423,7 @@
 **适合谁**：不想装 Google Cloud SDK、要跨多种 OSS DB 的工程师。
 **备注**：跟 googleapis/mcp-toolbox 重叠，但更轻量。
 
-### [supabase-community/supabase-mcp](https://github.com/supabase-community/supabase-mcp) ⭐⭐⭐⭐⭐
+### [supabase/mcp](https://github.com/supabase/mcp) ⭐⭐⭐⭐⭐
 
 | 栏位 | 内容 |
 |---|---|

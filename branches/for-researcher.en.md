@@ -28,7 +28,7 @@ Research days break into stages, and AI plays a different role at each stage. Us
 
 ### Research Workflow Marketplaces
 
-#### [flonat/claude-research](https://github.com/flonat/claude-research) ⭐⭐⭐
+#### [flonat/flonat-research](https://github.com/flonat/flonat-research) ⭐⭐⭐
 
 Claude Code infrastructure for PhD researchers — skills, agents, hooks, rules for academic workflows. Strong LaTeX/bibliography focus.
 

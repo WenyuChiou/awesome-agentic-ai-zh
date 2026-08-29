@@ -128,7 +128,7 @@ ChatGPT 桌面版。可以对屏幕截图问问题、语音对话、跟其他 Ap
 
 ### Prompt 素材库
 
-#### [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) ⭐⭐⭐⭐
+#### [f/prompts.chat](https://github.com/f/prompts.chat) ⭐⭐⭐⭐
 ★ 161k+ — 社群维护的 prompt 大全。“act as 翻译家 / 履历顾问 / 厨师...”几百种角色。**不知道怎么开头时从这里找灵感**。
 
 ---

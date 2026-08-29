@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-08-29
+
+- **maintenance / repository freshness** · **修正全站 9 組已搬家的 GitHub repository 入口**：OpenHands、prompts.chat、flonat-research、Instructor、xberg、LobeHub、Mozilla inclusion、Graphify 與 Supabase MCP 的現行引用改用 canonical owner／repo，三語可見名稱同步更新；歷史 CHANGELOG 與規劃文件保留當時名稱。GitHub API 於 `2026-08-29T00:20:01Z` 完整重查目前 259 個 unique repo，結果為 0 個 hard error、154 個人工複查提醒；沒有 release、缺 SPDX metadata 或較久未 push 不會自動刪除仍有教學價值的穩定專案。
+
 ## 2026-08-28
 
 - **fix / Stage 6 / links** · **三語 Chroma 入門資源與 freshness fact pack 改指現行官方 Getting Started 頁**：舊的 `/getting-started` 已回傳 404；繁中、英語、簡中與機器檢查來源同步改用 `/docs/overview/getting-started`，不改動教材內容、資源評分或閱讀順序。

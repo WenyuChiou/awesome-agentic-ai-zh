@@ -65,7 +65,7 @@
 
 ---
 
-#### [lobehub/lobe-chat](https://github.com/lobehub/lobe-chat) ⭐⭐⭐⭐⭐
+#### [lobehub/lobehub](https://github.com/lobehub/lobehub) ⭐⭐⭐⭐⭐
 
 | 栏位 | 内容 |
 |---|---|

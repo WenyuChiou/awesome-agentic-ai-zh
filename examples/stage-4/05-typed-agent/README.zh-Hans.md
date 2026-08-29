@@ -9,7 +9,7 @@
 
 > 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 两条 SDK path，不是进阶深度教材。深度教材推荐：
 > - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的 structured output / type-safe 章节**
-> - [Pydantic AI 官方 docs](https://ai.pydantic.dev/) + [Instructor library](https://github.com/instructor-ai/instructor)（另一条 typed-output 路线）
+> - [Pydantic AI 官方 docs](https://ai.pydantic.dev/) + [Instructor library](https://github.com/567-labs/instructor)（另一条 typed-output 路线）
 > - 完整 references 见 [Stage 4 精选 Projects](../../../stages/04-agent-frameworks.zh-Hans.md#-精选-projects)
 
 

@@ -65,7 +65,7 @@ Brainstorming, planning, and decision-making skills.
 
 ---
 
-#### [lobehub/lobe-chat](https://github.com/lobehub/lobe-chat) ⭐⭐⭐⭐⭐
+#### [lobehub/lobehub](https://github.com/lobehub/lobehub) ⭐⭐⭐⭐⭐
 
 | Field | Value |
 |---|---|

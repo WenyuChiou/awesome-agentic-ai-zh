@@ -28,7 +28,7 @@
 
 ### 研究流程 Marketplace
 
-#### [flonat/claude-research](https://github.com/flonat/claude-research) ⭐⭐⭐
+#### [flonat/flonat-research](https://github.com/flonat/flonat-research) ⭐⭐⭐
 
 給博士研究者的 Claude Code 基礎建設——學術流程用的 skill、agent、hook、規則。LaTeX / 文獻管理為主。
 

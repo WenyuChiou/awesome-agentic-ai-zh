@@ -72,4 +72,4 @@
 本準則改編自 [Contributor Covenant](https://www.contributor-covenant.org) 2.1 版,原文:
 <https://www.contributor-covenant.org/version/2/1/code_of_conduct/>
 
-社群影響準則受 [Mozilla 的行為準則執行階梯](https://github.com/mozilla/diversity) 啟發。
+社群影響準則受 [Mozilla 的行為準則執行階梯](https://github.com/mozilla/inclusion) 啟發。

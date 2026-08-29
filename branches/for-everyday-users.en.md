@@ -126,7 +126,7 @@ Closed-source but the most beginner-friendly option — drag-and-drop UI, no com
 
 ### Prompt Library
 
-#### [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) ⭐⭐⭐⭐
+#### [f/prompts.chat](https://github.com/f/prompts.chat) ⭐⭐⭐⭐
 ★ 161k+ — Community-maintained prompt megacatalog. "Act as a translator / résumé consultant / chef..." in hundreds of roles. **When stuck on how to start, browse here.**
 
 ---

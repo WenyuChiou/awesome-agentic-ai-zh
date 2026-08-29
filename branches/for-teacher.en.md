@@ -112,7 +112,7 @@ General writing / brainstorming skills. Adaptable for lesson prep.
 
 ### Prompt Libraries
 
-#### [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts) ⭐⭐⭐⭐
+#### [f/prompts.chat](https://github.com/f/prompts.chat) ⭐⭐⭐⭐
 
 | Field | Value |
 |---|---|

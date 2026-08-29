@@ -47,7 +47,7 @@
 #### [continuedev/continue](https://github.com/continuedev/continue) ⭐⭐⭐⭐
 ★ 35k+ · Apache-2.0 — source-controlled AI checks，可以在 CI 强制执行。代表“**团队 / governance**”这条角度的 coding agent。
 
-#### [OpenHands (前身为 OpenDevin)](https://github.com/All-Hands-AI/OpenHands) ⭐⭐⭐⭐
+#### [OpenHands (前身为 OpenDevin)](https://github.com/OpenHands/OpenHands) ⭐⭐⭐⭐
 ★ 81k+ · MIT — open source 的自主软件开发 agent。设计上比 Aider / Claude Code 更激进——agent 自己跑 sandbox、自己 commit，适合“整个 issue 丢给它解”场景。
 
 #### [aaif-goose/goose](https://github.com/aaif-goose/goose) ⭐⭐⭐⭐
