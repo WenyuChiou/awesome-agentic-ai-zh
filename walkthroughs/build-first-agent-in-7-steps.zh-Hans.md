@@ -18,24 +18,24 @@
 
 要做的 agent：**Paper Summary Bot** — 给定一个 arXiv 论文 URL，输出 3 段摘要 + 5 个关键词 + 跟相关论文的比较。
 
-每个 stage 都会把同一个 agent **加一层能力**。最后它会是一个跨多 LLM、有 memory、能 deploy 的 agent。
+每个 Stage 都会给同一个 agent **加一层能力**。最后它会使用多个 LLM、记住需要的数据，也能部署成服务。
 
 ---
 
 ## 📋 全程概览
 
-| Stage | 你会加的能力 | 代码复杂度 |
+| Stage | 你会加的能力 | 这一步有多大 |
 |---|---|---|
-| 0 | 环境准备（Python、API key、git） | — |
-| 1 | 第一次调用 LLM API | ~10 行 |
-| 2 | 写一个专业的 prompt | ~20 行 |
-| 3 | Tool use：自动抓取 arXiv 论文 | ~80 行 |
-| 4 | 用 framework 重写，加上 reflection | ~40 行（framework 抽象掉细节）|
-| 5 | 包成 Claude Code Skill | SKILL.md + 30 行 |
-| 6 | 加 RAG memory：跟过去看过的论文比较 | ~60 行 |
-| 7 | 加 eval、observability、deploy | ~100 行 |
+| 0 | 环境准备（Python、API key、git） | 准备工作 |
+| 1 | 第一次调用 LLM API | 小 |
+| 2 | 写一个专业的 prompt | 小 |
+| 3 | Tool use：自动抓取 arXiv 论文 | 中 |
+| 4 | 用 framework 重写，加上反思检查（reflection） | 中；framework 会包住部分细节 |
+| 5 | 包成 Claude Code Skill | 一份配置文件 + 一个小程序 |
+| 6 | 加 RAG 和 Memory：找回旧论文，再做比较 | 中 |
+| 7 | 加 Eval（评测）、Observability（运行记录）和 Deploy（部署） | 较大 |
 
-**总计**：约 300 行 Python + 结构化配置 = 一个你看着它从零长到 production 的具体例子。
+**最后成果**：一个从最小 Python 程序一路长成可评测、可查看运行记录、可部署服务的具体例子。
 
 ---
 
@@ -580,10 +580,10 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ```bash
 docker build -t paper-summary-bot .
-docker run -p 8000:8000 
-  -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY 
-  -e LANGFUSE_PUBLIC_KEY=$LANGFUSE_PUBLIC_KEY 
-  -e LANGFUSE_SECRET_KEY=$LANGFUSE_SECRET_KEY 
+docker run -p 8000:8000 \
+  -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY \
+  -e LANGFUSE_PUBLIC_KEY=$LANGFUSE_PUBLIC_KEY \
+  -e LANGFUSE_SECRET_KEY=$LANGFUSE_SECRET_KEY \
   paper-summary-bot
 # 或 deploy 到 Cloud Run / Fly.io / Railway / 自家 K8s
 ```
@@ -600,7 +600,15 @@ docker run -p 8000:8000
 - [ ] 加 RAG memory 让 agent 变成有状态（Stage 6）
 - [ ] 写 eval + 接 observability + deploy（Stage 7）
 
-**这个范例的代码大约 300 行**——比一般的 framework example 多，但每一行都是真的会用到的。
+这份 walkthrough 比单一 framework 小练习长，因为它要让你看见同一个 agent 怎么一层一层长大；每一步仍应该能单独运行与检查。
+
+---
+
+## ➡️ 下一站：把这个 Agent 接回主路线
+
+1. 读 [Stage 7.5 — 进阶 Agentic 概念](../stages/07.5-advanced-agentic-concepts.zh-Hans.md)，给刚完成的系统选择真正需要的进阶做法。
+2. 再读 [Stage 8 — Agent 操作界面](../stages/08-agent-interfaces.zh-Hans.md)，决定它需要 Search、Browser Use、Computer Use 还是 Sandbox，并补上安全边界。
+3. 想改走另一条路时，回到[主路线 README](../README.zh-Hans.md)。
 
 ---
 
@@ -608,9 +616,9 @@ docker run -p 8000:8000
 
 如果你想再玩更深，这个 paper-summary-bot 可以延伸成：
 
-- **Multi-agent paper review**：两个 agent 分别当 supportive reviewer 跟 adversarial reviewer，第三个 agent 当 area chair → for-researcher branch
-- **Conference report generator**：给定一个 conference proceedings URL，产出每个 track 的高层摘要 → 知识工作者 branch
-- **同主题论文趋势追踪**：每周扫 arXiv，找新论文跟现有 memory 比较，产 weekly digest → 个人助理 branch
+- **Multi-agent paper review**：两个 agent 分别当 supportive reviewer 跟 adversarial reviewer，第三个 agent 当 area chair → [研究人员路径](../branches/for-researcher.zh-Hans.md)
+- **Conference report generator**：给定一个 conference proceedings URL，产出每个 track 的高层摘要 → [知识工作者路径](../branches/for-knowledge-worker.zh-Hans.md)
+- **同主题论文趋势追踪**：每周扫 arXiv，找新论文跟现有 Memory 比较，产出 weekly digest → [日常用户路径](../branches/for-everyday-users.zh-Hans.md)
 
 每条都对应一个 specialized branch。
 

@@ -22,7 +22,7 @@ This page answers two questions: **What is usable now, and what still needs work
 - Track A: `A1 → A2 → Stage 5 → A3 → Stage 8`
 - Track B: `Stage 3 → Stage 4 → Stage 5 → Stage 6 → Stage 7 → Stage 7.5 → Stage 8`
 
-Track A may start its Capstone after A3. Stage 8 is recommended, but it does not block entry. Text and tests are frozen before the homepage learning map is redrawn.
+Track A may start its Capstone after A3. Stage 8 is recommended, but it does not block entry. The homepage map, text, and tests now use the same route; any future order change must update all three together.
 
 ### 2. Improve the five role paths
 

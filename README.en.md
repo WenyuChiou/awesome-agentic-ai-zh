@@ -10,7 +10,7 @@
 
 <p><strong>🤖 AI Agent Learning Roadmap — from basic LLM concepts to building your own multi-agent systems</strong></p>
 
-<p><em><b>Learning roadmap + curated resources + simple illustrative cases</b><br/>Eight topic stages, plus the Stage 0 readiness check and the Stage 7.5 advanced reading stop; from "what is an LLM, how are tokens counted" to multi-agent orchestration, Computer Use / Browser Use / Sandbox</em></p>
+<p><em><b>Learning roadmap + curated resources + small runnable examples</b><br/>Eight topic stages, plus the Stage 0 readiness check and the Stage 7.5 advanced reading stop; from "what is an LLM, how are tokens counted" to multi-agent orchestration, Computer Use / Browser Use / Sandbox</em></p>
 
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat)](LICENSE)
 [![繁中](https://img.shields.io/badge/lang-繁體中文-red?style=flat)](README.md)
@@ -30,7 +30,7 @@
 
 ## 🎯 Why this exists
 
-**What this repo is**: **a learning roadmap + curated resources + simple illustrative cases** — three pillars helping AI / AI-agent learners go from "I don't know where to start" to "I can design multi-agent systems."
+**What this repo is**: **a learning roadmap + curated resources + small runnable examples** — three pillars helping AI / AI-agent learners go from "I don't know where to start" to "I can design multi-agent systems."
 
 Concretely:
 
@@ -38,7 +38,7 @@ Concretely:
 |---|---|---|
 | **Learning roadmap** | Organizes scattered high-quality projects, tutorials, and required reading into **8 topic stages + the Stage 0 readiness check + the Stage 7.5 advanced reading stop**, then branches into 2 tracks and 5 role paths | 10 learning stops, 2 tracks |
 | **Resource curation** | Each stage selects projects with official or canonical sources and explains the editorial rating, audience, lesson, limits, and how to run them; a task-based MCP / Skill catalog provides another entry point | Grouped by stage and task |
-| **Simple illustrative cases** | Each stage provides copyable **foundational exercises**, preserves Ollama / Anthropic paths when a model connection is needed, and checks important behavior with offline or mock-based tests | Organized by learning outcome |
+| **Small runnable examples** | Hands-on stages provide copyable **foundational exercises**, preserve Ollama / Anthropic paths when a model connection is needed, and check important behavior with offline or mock-based tests | Organized by learning outcome |
 
 After the main path, you go from "**LLM user**" to "**agent system builder**" — capable of designing multi-agent collaboration, writing your own MCP server, and shipping real agent systems.
 
@@ -82,8 +82,8 @@ cd awesome-agentic-ai-zh
 ### ✨ What you get
 
 - 📖 **Fully free** — MIT-licensed, all content open
-- 🗺️ **Two learning tracks** — Track A (CLI Power User) for "use existing CLIs"; Track B (Agent Builder) for "build your own". Shared Stages 0-2 foundation.
-- 🛠️ **Foundational hands-on exercises** — 1-5 illustrative exercises per stage (specs + dual-path SDK comparison + success criteria). Positioned as **foundational + roadmap verification** — for chapter-length depth exercises see the hello-agents / Anthropic Cookbook callout in each stage
+- 🗺️ **Two learning tracks** — Track A (CLI Power User) teaches you to use an existing CLI agent to finish work; Track B (Agent Builder) teaches you to build your own agent from code. Both share the Stage 0–2 foundation
+- 🛠️ **Foundational hands-on exercises** — Hands-on stages provide copyable exercises and a clear success check. When a model connection is needed, they also provide Ollama and Anthropic SDK paths. They help you start and confirm your route; for chapter-length practice, follow each Stage's hello-agents / Anthropic Cookbook links
 - 🎯 **Curated projects** — each with an editorial rating, audience, lesson, limits, and how to run it (including local LLM runners: Ollama, llama.cpp, LocalAI, MLX)
 - 🌏 **Trilingual, fully maintained** — zh-TW (canonical) / 简中 / English; the English edition is complete, not a thin mirror
 - 🎓 **Beyond frameworks: Claude Code ecosystem** — MCP / Skills / Plugins / SDK full stack
@@ -117,7 +117,7 @@ The two tracks are **not mutually exclusive** — most people start with A to ge
 |---|---|---|---|
 | **A1** | [CLI Agent Intro & Selection](tracks/cli/A1-cli-intro.en.md) | CLI agent selection · install · first run | Pick one tool and finish one real, small task |
 | **A2** | [CLI Workflow Patterns](tracks/cli/A2-cli-workflow.en.md) | Project instructions · Skill · task decomposition | Turn one successful run into a repeatable workflow |
-| **+5** | [Stage 5 — Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**) | MCP · Skills · Plugins · Subagents; Track A reads 5.1-5.4 (5.5-5.7 optional) | Give a CLI agent rules, tools, and delegated work |
+| **+5** | [Stage 5 — Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**) | MCP · Skills · Plugins · Subagents; Track A reads 5.1–5.4, with 5.5–5.8 optional | Give a CLI agent rules, tools, and delegated work |
 | **A3** | [Integration & Production](tracks/cli/A3-cli-production.en.md) | MCP-into-CLI · CI automation · cost / observability | Connect a real workflow and see what the agent did |
 | **+8** | [Stage 8 — Agent Interfaces](stages/08-agent-interfaces.en.md) (**Shared Hub**) | Computer Use · Browser Use · Code Sandbox | Decide whether a task needs a browser, computer control, or sandbox |
 
