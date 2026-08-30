@@ -2,7 +2,7 @@
 
 > [繁體中文](./cookbook.md) | [简体中文](./cookbook.zh-Hans.md) | **English**
 
-<!-- freshness: canonical=resources/cookbook.md; verified_on=2026-08-29; scope=skills,mcp,documents,gemini-notebook,zotero,local-runtime,cli-tools; max_age_days=90 -->
+<!-- freshness: canonical=resources/cookbook.md; verified_on=2026-08-30; scope=skills,mcp,documents,gemini-notebook,zotero,local-runtime,cli-tools; max_age_days=90 -->
 
 You do not need to read this Cookbook in one sitting. Pick one result you want, copy its first action, and open the details only when you need the remaining steps.
 
@@ -349,13 +349,13 @@ Let’s first distinguish what they are:
 | **Claude Code** | A Coding Agent built for Claude | Its official setup cannot replace Claude with an Ollama model |
 
 <details markdown="1">
-<summary>Expand the main path: OpenCode 2 beta＋Ollama</summary>
+<summary>Expand the main path: OpenCode＋Ollama</summary>
 
-OpenCode 2 is still in beta, and the binary is called `opencode2`, which will not overwrite the old version of `opencode`:
+OpenCode is the Coding Agent that reads files, edits them, and runs commands; Ollama is the runtime that runs a model locally. Install OpenCode, then start it with `opencode`:
 
 ```bash
-npm install -g @opencode-ai/cli@beta
-opencode2
+curl -fsSL https://opencode.ai/install | bash
+opencode
 ```
 
 OpenCode automatically looks for Ollama at `http://127.0.0.1:11434`. In the TUI, select `ollama/gemma4:e4b`, open a practice repo already managed by Git, and paste:
@@ -403,7 +403,7 @@ FAQ:
 
 These are the fact sources for the instructions above. You do not need to read them all: start with the row for your chosen recipe.
 
-<small>Data verification: 2026-08-29 UTC</small>
+<small>Data verification: 2026-08-30 UTC</small>
 
 | Source | What to see first | Editor's Rating |
 |---|---|---|
@@ -412,7 +412,7 @@ These are the fact sources for the instructions above. You do not need to read t
 | [Anthropic Skills](https://github.com/anthropics/skills) | Skill structure and file skill authorization | ⭐⭐⭐⭐⭐ |
 | [Google — NotebookLM is now Gemini Notebook](https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/) | The new product name and what remains available | ⭐⭐⭐⭐⭐ |
 | [Zotero Local API](https://www.zotero.org/support/dev/web_api/v3/local_api) | Local API, write authorization, and revocation | ⭐⭐⭐⭐⭐ |
-| [OpenCode 2](https://opencode.ai/v2/docs) | Beta status, `opencode2`, and local model discovery | ⭐⭐⭐⭐⭐ |
+| [OpenCode](https://opencode.ai/docs/) | Installation, the `opencode` command, and local model connection | ⭐⭐⭐⭐⭐ |
 | [Aider＋Ollama](https://aider.chat/docs/llms/ollama.html) | Correct installation with `ollama_chat/` prefix | ⭐⭐⭐⭐⭐ |
 | [Ollama — Gemma 4](https://ollama.com/library/gemma4) | `e2b`/`e4b` tag and hardware selection | ⭐⭐⭐⭐⭐ |
 
@@ -444,7 +444,7 @@ The rating measures teaching usefulness in this project. It is not a GitHub star
     <tr><td><a href="https://github.com/MuiseDestiny/zotero-gpt">zotero-gpt</a></td><td>Chat while reading inside Zotero</td><td>A Zotero plugin follows a different path from an external Agent</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">Local/CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>Change programs with local or cloud models</td><td>OpenCode 2 is still in beta</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">Local/CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>Change programs with local or cloud models</td><td>Check provider and permission settings first</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/earendil-works/pi">Pi</a></td><td>Extensible coding harness/CLI</td><td>No built-in permission isolation by default</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/Aider-AI/aider">Aider</a></td><td>Pair-program with a Git-centered workflow</td><td>Small local models may not code well enough</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>

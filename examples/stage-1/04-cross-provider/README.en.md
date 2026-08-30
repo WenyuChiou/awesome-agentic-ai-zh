@@ -81,7 +81,7 @@ All 4 tests replace the SDKs with `unittest.mock.patch`:
 
 ## Want more providers?
 
-OpenRouter / Mistral / Cohere / Groq all speak the OpenAI-compatible API, so changing `base_url` is enough:
+OpenRouter, Mistral, Cohere, Groq, and other services may expose OpenAI-compatible endpoints, but do not assume changing only `base_url` gives full compatibility. Also verify the model ID, authentication, supported parameters, tool schema, response/usage fields, rate limits, and error format:
 
 ```python
 client = OpenAI(
@@ -92,7 +92,7 @@ client = OpenAI(
 
 ## 🦙 Path B — add a local Ollama as a fourth point of comparison
 
-`call_openai` is already an OpenAI-compatible client, so swapping out `base_url` and `model` connects it to Ollama:
+`call_openai` already uses an OpenAI-compatible client. For Ollama, change `base_url` and `model`, then use this exercise's tests to verify response, usage, and tool support:
 
 ```python
 def call_ollama(prompt: str) -> Reply | None:
@@ -120,7 +120,7 @@ def call_ollama(prompt: str) -> Reply | None:
     )
 ```
 
-Add `call_ollama` to the caller list in `compare()` and you get a 4-way comparison, including a free $0 local model. In practice you will find gemma4:e4b on CPU is typically 5-10x slower than the cloud — but its cost is 0.
+Add `call_ollama` to the caller list in `compare()` to see a four-provider comparison. The local path has no provider model API bill, but downloads, hardware, electricity, and waiting still have costs. Measure latency and quality on your machine with the same fixed tests.
 
 ## Extensions
 

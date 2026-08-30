@@ -40,7 +40,7 @@ When it is done, you should see a repo summary, a test command, a plan waiting f
 | **LLM (Large Language Model)** | The model that generates text or code, like the brain that thinks of answers in a workbench | Claude, GPT, and Gemini are model families | It does not manage the repo, file permissions, or billing |
 | **Provider API (model-service entry point)** | The door that lets a tool send a request to one model service | Anthropic, OpenAI, and Gemini APIs handle authentication and billing | It is not a coding agent that edits files |
 | **Router** | A transfer station that sends the same request to different providers | [OpenRouter](https://openrouter.ai/docs/faq) can centralize API, routing, and usage | It is not an LLM and does not manage file permissions |
-| **Coding agent (coding workbench)** | A workbench that can read files, edit files, and run commands in the terminal | Claude Code, Codex, OpenCode V2, and Pi are in this group | Its model, provider, and sandbox still need separate checks |
+| **Coding agent (coding workbench)** | A workbench that can read files, edit files, and run commands in the terminal | Claude Code, Codex, OpenCode, and Pi are in this group | Its model, provider, and sandbox still need separate checks |
 | **Local runtime (local model engine)** | An engine that runs a model on your own computer, like a motor starting the model | [Ollama](https://github.com/ollama/ollama) lets compatible agents call a local model | It is not a coding agent and does not read a repo by itself |
 
 ## Choose an entry point from what you already have
@@ -53,7 +53,7 @@ When it is done, you should see a repo summary, a test command, a plan waiting f
 <tr><th scope="row">An Anthropic account or API</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>Sign-in and permission prompts</td></tr>
 <tr><th scope="row">ChatGPT or an OpenAI API</th><td><a href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a></td><td>Approval, sandbox, and working directory</td></tr>
 <tr><th scope="row">A Google account, API, or Vertex AI</th><td><a href="https://google-gemini.github.io/gemini-cli/">Gemini CLI</a></td><td>Authentication and sandbox</td></tr>
-<tr><th scope="row">You want to switch providers or use a local model</th><td><a href="https://opencode.ai/v2/docs">OpenCode V2</a>, <a href="https://block.github.io/goose/">goose</a>, <a href="https://aider.chat/docs/">Aider</a>, or <a href="https://pi.dev/docs/latest">Pi</a></td><td>Provider and permission boundaries</td></tr>
+<tr><th scope="row">You want to switch providers or use a local model</th><td><a href="https://opencode.ai/docs/">OpenCode</a>, <a href="https://block.github.io/goose/">goose</a>, <a href="https://aider.chat/docs/">Aider</a>, or <a href="https://pi.dev/docs/latest">Pi</a></td><td>Provider and permission boundaries</td></tr>
 <tr><th scope="row">You want a Router or local runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> or <a href="https://ollama.com/">Ollama</a></td><td>They must be paired with a coding agent</td></tr>
 </tbody>
 </table>
@@ -63,7 +63,7 @@ When it is done, you should see a repo summary, a test command, a plan waiting f
 - [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) and [permissions](https://code.claude.com/docs/en/permissions)
 - [Codex CLI](https://learn.chatgpt.com/docs/codex/cli)
 - [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) and [sandbox configuration](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
-- [OpenCode V2 docs](https://opencode.ai/v2/docs) and [goose docs](https://block.github.io/goose/)
+- [OpenCode docs](https://opencode.ai/docs/) and [goose docs](https://block.github.io/goose/)
 - [Aider docs](https://aider.chat/docs/), [Hermes Agent docs](https://hermes-agent.nousresearch.com/docs/), [Grok Build repo](https://github.com/xai-org/grok-build), and [Pi docs](https://pi.dev/docs/latest)
 - [OpenRouter FAQ](https://openrouter.ai/docs/faq) and [Ollama](https://ollama.com/)
 
@@ -95,7 +95,7 @@ If the tool does not have git, keep an original-file backup and compare line by 
 <summary>Expand project-rule locations and verification for each CLI</summary>
 
 - Claude Code reads the project’s `CLAUDE.md`; Codex uses `AGENTS.md`.
-- OpenCode V2 uses `AGENTS.md`; current V2 does not use the old `CLAUDE.md` fallback. Do not create `OPENCODE.md` as a general rules file.
+- OpenCode gives `AGENTS.md` priority; `CLAUDE.md` is a compatibility fallback when `AGENTS.md` is absent. Do not create `OPENCODE.md` as a general rules file.
 - Gemini CLI commonly uses `GEMINI.md`; goose, Aider, Hermes Agent, Pi, and Grok Build use filenames and loading scopes set by their respective official docs.
 - Keep rules limited to content that changes behavior: project purpose, things it must not do, the test command, and the delivery format. Do not put a long API reference into a rules file that loads every time.
 
@@ -128,7 +128,7 @@ Requests using valid credentials may incur charges; for the first exercise, you 
 
 ## 🎯 Curated Projects
 
-A1 teaches you how to start safely; it does not maintain the same fast-changing data in two pages. Sign-in, provider, sandbox, and official sources for the 9 tools are centralized in the [`CLI Agents reference guide`](../../resources/cli-agents-guide.en.md). Official data checked on: **2026-08-27 UTC**.
+A1 teaches you how to start safely; it does not maintain the same fast-changing data in two pages. Sign-in, provider, sandbox, and official sources for the 9 tools are centralized in the [`CLI Agents reference guide`](../../resources/cli-agents-guide.en.md). Official data checked on: **2026-08-30 UTC**.
 
 Editorial ratings are learning-map guidance, not GitHub stars or an overall ranking. `⭐⭐⭐⭐⭐` means read this first when you choose that tool path; it does not mean install every five-star tool.
 
@@ -143,7 +143,7 @@ Editorial ratings are learning-map guidance, not GitHub stars or an overall rank
 <tr><td><a href="https://github.com/xai-org/grok-build">xai-org/grok-build</a></td><td>⭐⭐⭐</td><td>People trying the xAI ecosystem or a new tool</td><td>Observe in a demo repo; do not make it your first production tool</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Provider-flexible</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>⭐⭐⭐⭐⭐</td><td>People switching providers or using a compatible endpoint</td><td>V2 uses <code>AGENTS.md</code>; check permission settings</td></tr>
+<tr><th scope="rowgroup" rowspan="5">Provider-flexible</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>⭐⭐⭐⭐⭐</td><td>People switching providers or using a compatible endpoint</td><td><code>AGENTS.md</code> has priority; check permission settings</td></tr>
 <tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>⭐⭐⭐⭐</td><td>People using CLI, desktop, and extensions</td><td>Start with low-privilege extensions</td></tr>
 <tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>⭐⭐⭐⭐⭐</td><td>People who value git diff and commit workflows</td><td>Understand its git auto-commit behavior</td></tr>
 <tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>⭐⭐⭐⭐</td><td>People extending a small core with extensions, skills, or RPC</td><td>No built-in sandbox; use a container or VM when isolation is needed</td></tr>

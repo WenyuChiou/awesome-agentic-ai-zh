@@ -202,7 +202,7 @@ developer_path_fact_pack:
     claude_code_permissions: 'https://code.claude.com/docs/en/permissions'
     claude_code_sandboxing: 'https://code.claude.com/docs/en/sandboxing'
     aider_git: 'https://aider.chat/docs/git.html'
-    opencode: 'https://opencode.ai/v2/docs'
+    opencode: 'https://opencode.ai/docs/'
     pi: 'https://pi.dev/docs/latest'
     cursor: 'https://cursor.com/docs'
     cline: 'https://github.com/cline/cline'
@@ -213,7 +213,7 @@ developer_path_fact_pack:
 
 cookbook_fact_pack:
   canonical: 'resources/cookbook.md'
-  verified_on: '2026-08-29'
+  verified_on: '2026-08-30'
   scope: ['skills', 'mcp', 'documents', 'gemini-notebook', 'zotero', 'local-runtime', 'cli-tools']
   official_sources:
     claude_code_skills: 'https://code.claude.com/docs/en/slash-commands'
@@ -222,8 +222,8 @@ cookbook_fact_pack:
     anthropic_skills: 'https://github.com/anthropics/skills'
     gemini_notebook_rename: 'https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/'
     zotero_local_api: 'https://www.zotero.org/support/dev/web_api/v3/local_api'
-    opencode_v2: 'https://opencode.ai/v2/docs'
-    opencode_local_models: 'https://opencode.ai/v2/docs/models'
+    opencode: 'https://opencode.ai/docs/'
+    opencode_local_models: 'https://opencode.ai/docs/models/'
     aider_ollama: 'https://aider.chat/docs/llms/ollama.html'
     ollama_gemma4: 'https://ollama.com/library/gemma4'
     openrouter: 'https://openrouter.ai/docs/quickstart'
@@ -232,6 +232,34 @@ cookbook_fact_pack:
     notebooklm_py: 'https://github.com/teng-lin/notebooklm-py'
     notebooklm_skill: 'https://github.com/PleasePrompto/notebooklm-skill'
     zotero_skills: 'https://github.com/WenyuChiou/zotero-skills'
+
+examples_index_fact_pack:
+  canonical: 'examples/README.md'
+  verified_on: '2026-08-30'
+  scope: ['example-inventory', 'local-model-tags', 'download-sizes', 'sdk-entry-points']
+  official_sources:
+    ollama_gemma4_e4b: 'https://ollama.com/library/gemma4:e4b'
+    ollama_qwen25_3b: 'https://ollama.com/library/qwen2.5:3b'
+    ollama_qwen35_4b: 'https://ollama.com/library/qwen3.5:4b'
+    ollama: 'https://github.com/ollama/ollama'
+    openai_python: 'https://github.com/openai/openai-python'
+    anthropic_python: 'https://github.com/anthropics/anthropic-sdk-python'
+
+agent_paradigms_fact_pack:
+  canonical: 'resources/agent-paradigms.md'
+  verified_on: '2026-08-30'
+  scope: ['tool-identity', 'surfaces', 'deployment', 'security', 'project-status']
+  official_sources:
+    opencode: 'https://opencode.ai/docs/'
+    pi: 'https://pi.dev/docs/latest/security'
+    openrouter: 'https://openrouter.ai/docs/faq'
+    ollama: 'https://github.com/ollama/ollama'
+    aider: 'https://aider.chat/docs/git.html'
+    goose: 'https://github.com/aaif-goose/goose'
+    hermes_agent: 'https://github.com/NousResearch/hermes-agent'
+    openclaw: 'https://github.com/openclaw/openclaw'
+    microsoft_agent_framework: 'https://github.com/microsoft/agent-framework'
+    project_status: 'scripts/repository-freshness-snapshot.json'
 
 courses_fact_pack:
   canonical: 'resources/courses.md'
@@ -332,6 +360,12 @@ verified_pages:
   - canonical: 'resources/cookbook.md'
     required_scopes: ['skills', 'mcp', 'documents', 'gemini-notebook', 'zotero', 'local-runtime', 'cli-tools']
     max_age_days: 90
+  - canonical: 'examples/README.md'
+    required_scopes: ['example-inventory', 'local-model-tags', 'download-sizes', 'sdk-entry-points']
+    max_age_days: 90
+  - canonical: 'resources/agent-paradigms.md'
+    required_scopes: ['tool-identity', 'surfaces', 'deployment', 'security', 'project-status']
+    max_age_days: 90
   - canonical: 'resources/courses.md'
     required_scopes: ['course-availability', 'cost', 'certificate', 'assessment', 'repository-status']
     max_age_days: 90
@@ -407,6 +441,16 @@ stale_patterns:
     include_files: ['resources/agent-paradigms.md']
     qualifier_terms: []
     note: 'Windsurf uses its current official editor entry point'
+
+  - pattern: '(?:54 exercises|54 個練習|54 个练习|gemma4:e4b.{0,60}7\.5 GB|gemma4:e2b.{0,60}4\.0 GB)'
+    include_files: ['examples/README.md']
+    qualifier_terms: []
+    note: 'The examples index must use the real folder inventory and current official Ollama tag sizes'
+
+  - pattern: '(?:\$5 VPS|200\+ provider|★\s*[0-9]+k|€549|0 data exposure|零資料外洩|零数据外泄|沒有任何 cloud API call|没有任何 cloud API call)'
+    include_files: ['resources/agent-paradigms.md']
+    qualifier_terms: []
+    note: 'Agent identity definitions must not freeze prices, stars, provider counts, hardware prices, or absolute privacy claims'
 
   # Glossary definitions must stay stable. Model rosters, prices, context sizes,
   # protocol version counts, and product event counts belong in their canonical
@@ -597,7 +641,12 @@ stale_patterns:
   - pattern: 'from mcp\.server\.mcpserver import MCPServer|npm install -g opencode-ai|opencode auth login|pip install aider-chat|aider --model ollama/'
     include_files: ['resources/cookbook.md']
     qualifier_terms: []
-    note: 'Cookbook commands must stay on MCP v2, OpenCode 2, and the current Aider Ollama path'
+    note: 'Cookbook commands must stay on MCP v2, current OpenCode, and the current Aider Ollama path'
+
+  - pattern: '(?i)(?:OpenCode V2|OpenCode 2 beta|opencode2|opencode\.ai/v2|v2\.opencode\.ai)'
+    include_files: ['branches/for-everyday-users.md', 'branches/for-developer.md', 'tracks/cli/A1-cli-intro.md', 'tracks/cli/A2-cli-workflow.md', 'resources/cli-agents-guide.md', 'resources/cookbook.md', 'stages/DESIGN.md']
+    qualifier_terms: []
+    note: 'Current learner pages must use the OpenCode name, opencode binary, and canonical docs'
 
   - pattern: 'anthropic\.skilljar\.com'
     include_files: ['resources/courses.md']

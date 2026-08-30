@@ -2467,13 +2467,13 @@ pages:
       ordered_external_urls: true
       resource_url_ratings: true
       literals:
-        - "2026-08-29"
+        - "2026-08-30"
         - "from mcp.server import MCPServer"
         - "Gemini Notebook"
         - "http://localhost:23119/api/"
         - "gemma4:e4b"
-        - "@opencode-ai/cli@beta"
-        - "opencode2"
+        - "curl -fsSL https://opencode.ai/install | bash"
+        - "opencode"
         - "ollama_chat/gemma4:e4b"
         - "OpenRouter"
         - "https://github.com/earendil-works/pi"

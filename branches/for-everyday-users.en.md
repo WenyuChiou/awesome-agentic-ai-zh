@@ -155,7 +155,7 @@ A safe CLI Agent start:
 Official boundaries:
 
 - [Gemini CLI tools](https://geminicli.com/docs/reference/tools/) show an action before a mutating tool runs; the [sandbox guide](https://geminicli.com/docs/cli/sandbox/) also says a sandbox is not a zero-risk guarantee.
-- [OpenCode permissions](https://opencode.ai/docs/agents/) can set ask／allow／deny for edit, bash, and external folders; its [provider guide](https://v2.opencode.ai/docs/providers/) shows that model access still needs the matching account, OAuth, API key, or environment setup.
+- [OpenCode permissions](https://opencode.ai/docs/agents/) can set ask／allow／deny for edit, bash, and external folders; its [provider guide](https://opencode.ai/docs/providers/) shows that model access still needs the matching account, OAuth, API key, or environment setup.
 - Ollama can enable [cloud models](https://docs.ollama.com/cloud). For local-only use, follow the FAQ and set `disable_ollama_cloud` or `OLLAMA_NO_CLOUD=1`.
 - LM Studio's [offline guide](https://lmstudio.ai/docs/app/offline) says downloaded models, chats, documents, and the local server can work offline; its [privacy guide](https://lmstudio.ai/app-privacy) separates local processing from cloud models and web search.
 

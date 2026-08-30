@@ -81,7 +81,7 @@ python test.py
 
 ## 想加更多家？
 
-OpenRouter / Mistral / Cohere / Groq 都是 OpenAI-compatible API、改 `base_url` 就接：
+OpenRouter、Mistral、Cohere、Groq 等服务可以提供 OpenAI-compatible endpoint，但不能假设只改 `base_url` 就完全兼容。至少还要确认 model ID、认证、支持的参数、tool schema、response／usage 字段、rate limit 和错误格式：
 
 ```python
 client = OpenAI(
@@ -92,7 +92,7 @@ client = OpenAI(
 
 ## 🦙 Path B — 加上本机 Ollama 当第 4 家对照
 
-`call_openai` 已经是 OpenAI-compatible client、把 `base_url` 跟 `model` 换掉就接 Ollama：
+`call_openai` 已经使用 OpenAI-compatible client。换成 Ollama 时要改 `base_url` 和 `model`，也要用本题测试确认 response、usage 和 tool support：
 
 ```python
 def call_ollama(prompt: str) -> Reply | None:
@@ -120,7 +120,7 @@ def call_ollama(prompt: str) -> Reply | None:
     )
 ```
 
-把 `call_ollama` 加进 `compare()` 的 caller list、就能看 4 家对照（包括本机 free $0 model）。实测你会发现 gemma4:e4b 在 CPU 上的 latency 通常比 cloud 慢 5-10 倍、但 cost = 0。
+把 `call_ollama` 加进 `compare()` 的 caller list，就能看 4 家对照。本地路径没有供应商模型 API 账单，但仍有下载、硬件、电力和等待成本；latency 与质量要用同一组固定测试在你的电脑上实测。
 
 ## 延伸
 

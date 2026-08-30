@@ -119,7 +119,7 @@ git diff -- README.md
 <tr><td><a href="https://cursor.com/docs">Cursor</a></td><td>coding agent + AI editor</td><td>IDE／CLI／cloud／SDK</td><td>比較 editor、background agent 與其他 Surface</td><td>商業；每個 Surface 的權限與資料邊界要分開確認</td><td>⭐⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">開源 Coding Agents／Harnesses</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>coding agent／harness</td><td>terminal／desktop</td><td>切換 Provider 或相容 endpoint</td><td>活躍；MIT；V2 專案規則使用 <code>AGENTS.md</code></td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="6">開源 Coding Agents／Harnesses</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>coding agent／harness</td><td>terminal／desktop</td><td>切換 Provider 或相容 endpoint</td><td>活躍；MIT；<code>AGENTS.md</code> 優先，缺少時才用 <code>CLAUDE.md</code></td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>coding agent／harness</td><td>terminal／SDK／RPC</td><td>從小核心加 extensions、skills 與自訂流程</td><td>活躍；MIT；沒有內建 sandbox，要自行隔離</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>coding agent／pair programmer</td><td>CLI</td><td>用 Git diff、commit 與 undo 管理小改</td><td>活躍；Apache-2.0；auto-commit 不代表可以跳過 hook</td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>coding／general agent</td><td>CLI／desktop／API</td><td>連接 Providers、MCP 與 extensions</td><td>活躍；Apache-2.0；先從低權限 extension 開始</td><td>⭐⭐⭐⭐</td></tr>
