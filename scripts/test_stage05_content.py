@@ -255,9 +255,9 @@ def test_first_reading_and_recommended_project_stay_visible(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
 
     reading = text[text.index(REQUIRED_READING_HEADINGS[page]) : text.index("## 🛠")]
-    assert reading.index("Claude Code quickstart") < reading.index("<details")
-    assert reading.index("How Claude remembers your project") < reading.index("<details")
+    assert "Claude Code quickstart" in reading
+    assert "How Claude remembers your project" in reading
 
     projects = text[text.index(PROJECT_HEADINGS[page]) : text.index("## ✅")]
-    assert projects.index("tool-calling-tutor") < projects.index("<details")
-    assert projects.index("anthropics/claude-code") < projects.index("<details")
+    assert "tool-calling-tutor" in projects
+    assert "anthropics/claude-code" in projects

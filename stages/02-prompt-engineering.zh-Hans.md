@@ -54,16 +54,11 @@
 
 先做练习。卡住时，再展开阅读顺序。
 
-<details markdown="1">
-<summary>展开 3 个起点和阅读顺序</summary>
-
 1. [Anthropic Prompt Engineering Tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial) — 跟着 notebook 做一次第一章。
 2. [OpenAI Prompt Engineering](https://developers.openai.com/api/docs/guides/prompt-engineering) — 阅读消息角色、范例和 eval。
 3. [Google Prompt Design Strategies](https://ai.google.dev/gemini-api/docs/prompting-strategies) — 阅读清晰指令、固定结构和反复测试。
 
 官方资料共同强调一件简单的事：先定义成功，再用固定案例测试。不要只凭一次漂亮答案下结论。
-
-</details>
 
 ## 🛠 动手练习
 
@@ -247,9 +242,6 @@ Path A 六题两轮的 API 费用为 `$0`。Path B 先设 `$0.05` 上限；如�
 
 先从上面的三个起点选一个。完整清单是工具箱，不是待办清单。
 
-<details markdown="1">
-<summary>展开 18 个课程、cookbook、范例和 eval 资源</summary>
-
 <small>资源核查：2026-08-27 UTC</small>
 
 > 推荐度是本 Stage 的阅读顺序，不是热门排名：`⭐⭐⭐⭐⭐`＝不做会卡住；`⭐⭐⭐⭐`＝建议优先；`⭐⭐⭐`＝有需要再看；`⭐⭐`＝历史或少数情境。本表是选修工具箱，所以没有硬标五星。
@@ -293,8 +285,6 @@ Path A 六题两轮的 API 费用为 `$0`。Path B 先设 `$0.05` 上限；如�
     <tr><th scope="rowgroup" rowspan="1">历史资料</th><td><a href="https://github.com/microsoft/prompt-engine">Microsoft Prompt Engine</a></td><td>只用来了解早期做法。</td><td>已封存；MIT；不要用于新项目</td><td>⭐⭐</td></tr>
   </tbody>
 </table>
-
-</details>
 
 ## 🔭 进阶：Prompt 之上还有哪些层？
 

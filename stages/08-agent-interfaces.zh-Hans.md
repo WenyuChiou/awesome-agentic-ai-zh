@@ -28,23 +28,23 @@
 <a id="必修阅读"></a>
 <a id="-必修阅读"></a>
 
-先读下面的八个词和选择表。要连接 API 或研究 benchmark 时，再展开完整阅读顺序。
+先看四个官方入口，再读下面的八个词和选择表。第一次只需知道每个入口负责什么，不必一次读完。
 
 <details markdown="1">
-<summary>时间、环境和完整阅读顺序</summary>
+<summary>时间和环境</summary>
 
 建议先用 45–90 分钟完成可见主线与练习 1。要实现 executor 或 sandbox，再多留半天。
-
-阅读顺序：
-
-1. [Anthropic Computer Use tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool)：看懂“模型提出动作，应用程序执行”。
-2. [Anthropic Browser Use tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool)：看网页元素与像素回退怎样合作。
-3. [OpenAI Computer Use guide](https://developers.openai.com/api/docs/guides/tools-computer-use)：看 GA tool 和安全边界。
-4. [OpenAI Agents SDK Sandbox guide](https://openai.github.io/openai-agents-python/sandbox/guide/)：只在要做可变工作区时读；Sandbox Agents 仍是 Beta。
 
 环境：练习 1 只需要一个隔离的浏览器 profile。练习 2 只需要 Python 3.10+，不联网、不需要 API key。
 
 </details>
+
+阅读顺序：
+
+1. [**Anthropic Computer Use tool**](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool)：看懂“模型提出动作，应用程序执行”。
+2. [**Anthropic Browser Use tool**](https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool)：看网页元素与像素回退怎样合作。
+3. [OpenAI Computer Use guide](https://developers.openai.com/api/docs/guides/tools-computer-use)：看 GA tool 和安全边界。
+4. [**OpenAI Agents SDK Sandbox guide**](https://openai.github.io/openai-agents-python/sandbox/guide/)：只在要做可变工作区时读；Sandbox Agents 仍是 Beta。
 
 ## 🔑 八个核心词
 

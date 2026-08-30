@@ -60,9 +60,6 @@
 
 ## 📚 必修閱讀
 
-<details markdown="1">
-<summary>展開官方閱讀、帳號與預算說明</summary>
-
 - [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) 與 [permissions](https://code.claude.com/docs/en/permissions)
 - [Codex CLI](https://learn.chatgpt.com/docs/codex/cli)
 - [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) 與 [sandbox 設定](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
@@ -71,8 +68,6 @@
 - [OpenRouter FAQ](https://openrouter.ai/docs/faq) 與 [Ollama](https://ollama.com/)
 
 每次 cloud 請求的單次費用與本章總費用都會因帳號、provider、模型、輸入輸出 token 與訂閱額度而變動；練習前查當日官方價格或 usage 頁面。只有當 agent 與 provider 都設定成只連本機 Ollama，而且沒有另外呼叫雲端服務時，才不會產生這次練習的模型 API 費用；檔案與命令權限仍要照常檢查。
-</details>
-
 ## 🛠 動手練習
 
 <a id="cli-1"></a>
@@ -144,9 +139,6 @@ A1 只教你安全開始，不在兩個頁面重複維護同一份易變資料�
 - 不確定時，只問三句：誰執行模型？誰轉送請求？誰能讀寫我的檔案？
 </details>
 
-<details markdown="1">
-<summary>展開 11 筆完整工具評分表</summary>
-
 推薦度是本學習地圖的編輯建議，不是 GitHub stars 或總排名。`⭐⭐⭐⭐⭐` 表示：如果你選這條工具路徑，這一列應先看；不是叫你把所有五星工具都裝起來。
 
 <table>
@@ -171,8 +163,6 @@ A1 只教你安全開始，不在兩個頁面重複維護同一份易變資料�
 <tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>想在自己電腦跑模型的人</td><td>它是 local runtime，仍要搭配 agent</td></tr>
 </tbody>
 </table>
-</details>
-
 ## ✅ 進 A2 前的自我檢查
 
 - [ ] 我能用自己的話分清五種身分，知道 OpenRouter 不是 LLM、Ollama 不是 coding agent。

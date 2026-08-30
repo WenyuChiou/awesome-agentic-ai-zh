@@ -35,14 +35,9 @@
 
 ## 📚 必修閱讀
 
-<details markdown="1">
-<summary>展開必修閱讀與建議順序</summary>
-
 1. 先看你主用工具的 project-instructions 官方文件：Codex 看 [`AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、Claude Code 看 [`CLAUDE.md`](https://code.claude.com/docs/en/memory)、Gemini CLI 看 [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/)、OpenCode V2 看 [`AGENTS.md`](https://opencode.ai/v2/docs/instructions)。
 2. 再看你主用工具的 Skill 文件：[Codex／ChatGPT](https://learn.chatgpt.com/docs/build-skills)、[Claude Code](https://code.claude.com/docs/en/skills)、[Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/)、[OpenCode V2](https://opencode.ai/v2/docs/skills)。
 3. 最後回看 [Stage 2 — Prompt 設計](../../stages/02-prompt-engineering.md)，把「任務、範圍、成功條件」補進單次 prompt。
-</details>
-
 <details markdown="1">
 <summary>展開四個 CLI 的規則檔與 Skill 位置</summary>
 
@@ -164,9 +159,6 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 
 推薦度是本學習地圖的編輯建議，不是 GitHub stars。`⭐⭐⭐⭐⭐` 表示：如果你選那個 CLI 路徑，這份官方文件或工具是必讀／必做；不是叫你讀完所有五星列。
 
-<details markdown="1">
-<summary>展開完整學習資源表（16 筆）</summary>
-
 下面按用途分成五組。同一組只顯示一次分類欄，避免重複文字把表格撐亂。
 
 <table>
@@ -200,8 +192,6 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 <tr><td><code>langchain-ai/openwiki</code></td><td>建立可持續更新的 repo wiki</td><td>大型 repo 需要按需查文件</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
 </tbody>
 </table>
-</details>
-
 <a id="-進-a3-前的自我檢查"></a>
 
 ## ✅ 進 Stage 5 前的自我檢查

@@ -1,24 +1,29 @@
 # Testing Plan — T3+ Verification Log
 
-> Updated 2026-08-29. The opening table is the historical T3+ baseline; later
+> Updated 2026-08-30. The opening table is the historical T3+ baseline; later
 > sections record the current chapter-by-chapter modernization layers separately.
 > The old branch `t3-stage-4-6-7-unverified` was merged into `main` and deleted,
 > but a newer layer is not called shipped until its own branch reaches `main`.
 
 ## Visible required-reading and resource contract
 
-Important reading, featured projects, and learning resources are part of the learner's path, so a
-closed `<details>` block cannot be their only landing place. A page may configure
+Important reading, featured projects, and complete rated learning-resource tables are part of the
+learner's path, so a closed `<details>` block cannot be their only landing place. The global
+`forbidden_closed_summary_terms` list blocks disclosure summaries such as “Required reading” or
+“Learning resources” in every enrolled locale. Each page also configures
 `visible_section_minimums` in `scripts/reader-ux-pages.yml` with `min_links` and `min_ratings` for
-any required visible section. The checker renders the visible Markdown, then counts real text links
+the relevant visible section. The checker renders the visible Markdown, then counts real text links
 and visible rating text. It accepts inline, reference-style, autolink, and HTML `<a href>` entries,
 but ignores closed disclosures, code examples, image-only links, image alt text, link destinations,
-fragment-only navigation, hidden HTML, and attributes that only look like entries. Long setup notes, alternatives, and
-troubleshooting may remain collapsed.
+fragment-only navigation, hidden HTML, and attributes that only look like entries. Long setup notes,
+alternatives, cost, and troubleshooting may remain collapsed. A dedicated very large catalog is the
+one deliberate exception: its category choices and safety boundaries remain visible while hundreds
+of individual entries may open by category on demand.
 
-The gate is optional until a chapter's content layer names the exact visible section and expected
-minimums. This tooling layer adds the reusable contract without silently changing existing pages;
-the following small stacked PRs activate it for Stage 1–2, Track A1–A3, and Stage 3–4.
+The closed-summary gate applies to all 25 enrolled pages. Exact section minimums protect the
+modernized chapter and role paths, including Stage 0–8, Stage 7.5, Track A1–A3, and the Researcher
+and Developer paths. This keeps the rule measurable: removing or re-hiding one rated row now fails
+before review instead of relying on memory.
 Install its pinned local dependencies with
 `pip install --require-hashes -r scripts/requirements-reader-ux.txt`.
 
@@ -111,7 +116,7 @@ Stage 4 keeps **Agent Frameworks** in the title and places **Workflow Graphs** f
 
 ### Stage 5 — reader path covered; meta-example hardening pending
 
-Stage 5 (`stages/05-claude-code-ecosystem.md`) has five cumulative exercises and eight reference sections (5.1–5.8). The first reader-UX layer keeps every exercise outcome and first copyable action visible, while longer setup and troubleshooting stay closed by default.
+Stage 5 (`stages/05-claude-code-ecosystem.md`) has five cumulative exercises and eight reference sections (5.1–5.8). It keeps every exercise outcome, first copyable action, the complete required-reading order, and all 35 rated learning resources visible. Fourteen disclosures hold setup, syntax, optional depth, and troubleshooting.
 
 | Area | Current evidence |
 |---|---|
@@ -122,7 +127,7 @@ Stage 5 (`stages/05-claude-code-ecosystem.md`) has five cumulative exercises and
 | 5.5 Subagents | Read-only review exercise with isolated output and a visible success condition |
 | 5.6–5.8 | Current Dynamic workflows／Worktree／Agent-loop／Agent SDK reference path; optional depth stays collapsed |
 
-`scripts/test_stage05_content.py` permanently executes the Hook logger against a synthetic `PreToolUse` event, asserts that only timestamp／event／tool metadata is written, locks the three locale code blocks together, and compiles the current Python Agent SDK `AssistantMessage.content`／`TextBlock` example. It also locks the three distinct `1672×941` 5.1–5.7 relationship diagrams, their visible position before 5.1, locale-correct references, and a linked first mention of the official `modelcontextprotocol/servers` repository. The diagrams keep context, action, event checks, context isolation, file-tree isolation, and packaging as separate roles; they do not turn Worktree into a complete sandbox, Plugin into a runtime step, or Plugin packaging into a connection with Worktree. These checks do not call a live model or claim live output quality.
+`scripts/test_stage05_content.py` permanently executes the Hook logger against a synthetic `PreToolUse` event, asserts that only timestamp／event／tool metadata is written, locks the three locale code blocks together, and compiles the current Python Agent SDK `AssistantMessage.content`／`TextBlock` example. It also requires the full reading and project sections to remain outside `<details>`, locks the three distinct `1672×941` 5.1–5.7 relationship diagrams, their visible position before 5.1, locale-correct references, and a linked first mention of the official `modelcontextprotocol/servers` repository. The diagrams keep context, action, event checks, context isolation, file-tree isolation, and packaging as separate roles; they do not turn Worktree into a complete sandbox, Plugin into a runtime step, or Plugin packaging into a connection with Worktree. These checks do not call a live model or claim live output quality.
 
 The 05B layer validates the `tool-calling-tutor` frontmatter, installed and repository-relative links, translations, eval contract, model／SDK wording, and offline behavior. It stays separate from 05A so the reader rewrite and executable-example migration can be reviewed and rolled back independently.
 

@@ -61,7 +61,7 @@ README、PROGRESS、CAPSTONE、章節頁首、章末下一站與路線圖必須�
 ### A1 的固定閱讀形狀
 
 - 第一遍先用五個可見核心詞分清 **LLM**、**Provider API**、**Router**、**Coding agent** 與 **Local runtime**。OpenRouter 放在 Router；OpenCode V2 與 Pi 放在 coding agent／harness；Ollama 放在 local runtime。
-- `📌`、`📚`、`🛠`、`🎯`、`✅` 路標保持可見。時間、帳號、費用、完整步驟與 11 筆工具表預設收合。
+- `📌`、`📚`、`🛠`、`🎯`、`✅` 路標、必修閱讀與 11 筆五星工具表保持可見。時間、帳號、費用與完整步驟預設收合。
 - CLI-1 的第一個請求使用可直接複製的完整 `text` block。CLI-1 至 CLI-4 的標題、anchor 與一句話成果保持可見。
 - 11 筆工具表固定為 `4／5／2` 三組，保留既有五星編輯評分並移除會變動的 GitHub stars 數字。評分是路徑建議，不是總排名。
 
@@ -70,13 +70,13 @@ README、PROGRESS、CAPSTONE、章節頁首、章末下一站與路線圖必須�
 - 第一遍只教三個可見核心詞：「Project instructions 像共同守則、Skill 像按需操作卡、One-off prompt 像臨時交代」，並保留 CLI-5 至 CLI-8 的標題、anchor、成果與 A3 入口。
 - CLI-5 用「用途／禁止事項／驗證指令／交付格式」四欄做最小規則卡；不把 persona 或行數門檻當成跨 CLI 通則。
 - CLI-6 教目前的 `SKILL.md`，只在相容說明提 `.claude/commands/`。核心內容可以共用，工具專屬的資料夾、frontmatter、permission 與 tool 名稱分開說。
-- 時間、先備條件、完整工具位置、CLI-7／CLI-8 步驟、multi-agent、疑難排解與完整資源表預設收合。
+- 必修閱讀與 16 筆五星資源表保持可見；時間、先備條件、完整工具位置、CLI-7／CLI-8 步驟、multi-agent 與疑難排解預設收合。
 - `📌`、`📚`、`🛠`、`🎯`、`✅` 路標保持可見。完整資源表按語意分組；每組一個 `<tbody>`，分類欄用真正 `rowspan` 合併。三語的 rowgroup、URL、評分、命令、日期與安全限制必須一致。
 
 ### A3 的固定閱讀形狀
 
 - 第一遍先用三個可見核心詞 **MCP**、**CI**、**Observability** 與一條安全階梯說清楚主線：唯讀 → 最小權限 → 示範 repo → 人工檢查 → 最後才考慮寫入。
-- CLI-9 至 CLI-12 的標題、anchor、一句話成果與最短路徑留在可見區；時間、閱讀、完整步驟、疑難排解與 playbook 放進預設關閉的 `<details>`。
+- CLI-9 至 CLI-12 的標題、anchor、一句話成果、最短路徑、必修閱讀與 18 筆五星資源留在可見區；時間、完整步驟、疑難排解與 playbook 放進預設關閉的 `<details>`。
 - Playbook 4 的標題與成果留在可見區，保護既有跨頁深連結；多 agent、fallback 與 failure injection 的理論導回 Stage 7.5，不在 A3 重寫一次。
 - `📌`、`📚`、`🛠`、`🎯`、`✅` 路標保持可見。完整資源表固定為 18 筆、五個語意群組，`rowspan` 為 `4／5／4／3／2`。同類型只顯示一次分類名稱；保留五星編輯評分，不放 GitHub stars、排行榜或會自然變舊的數量。
 - A3 的自動化預設只讀、最小權限、可留下 receipt，且必須有人檢查。不能把自動 merge、push、deploy 或未受限的 MCP 寫成初學者第一步。
@@ -162,7 +162,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 
 多數 stage 保留以下 section；**呈現順序採漸進式揭露**。Stage 1 是第一個完成遷移的 pilot，其他 stage 在各自內容更新時逐章遷移，不要求在同一個 PR 一次重寫：
 
-Stage 2 的固定主線是「目標／資料／規則／輸出 → Zero-Shot／One-Shot／Few-Shot → Chain-of-Thought 的正確邊界 → 六筆固定案例 → 一次只改一件事 → 比較分數」。三語概念圖固定放在可見核心詞之後：先由正文定義，再用同構圖整理關係；圖片不能取代定義，也不能畫入正文已撤掉的固定數字。程式碼、模型比較、安全補充與 18 筆完整資源表預設收合。CoT 必須先用白話解釋，但不當成要求模型公開完整內部推理的通用步驟。
+Stage 2 的固定主線是「目標／資料／規則／輸出 → Zero-Shot／One-Shot／Few-Shot → Chain-of-Thought 的正確邊界 → 六筆固定案例 → 一次只改一件事 → 比較分數」。三語概念圖固定放在可見核心詞之後：先由正文定義，再用同構圖整理關係；圖片不能取代定義，也不能畫入正文已撤掉的固定數字。必修閱讀與 18 筆五星資源表保持可見；程式碼、模型比較與安全補充預設收合。CoT 必須先用白話解釋，但不當成要求模型公開完整內部推理的通用步驟。
 
 Stage 3 的章名與固定主線都把 **Agent Loop** 當成入口：「八個可見核心詞 → Tool Use 六步亮色圖 → 一般回答／Structured Output／Function Calling 的選擇 → 五條安全底線 → schema → Tool Call → 程式執行 → Tool Result → final answer → 有界 Agent Loop」。正文必須直接寫出 `model → tool call → execute → tool result → model`，避免只看章名還不知道 loop 是什麼。三語同構圖要清楚畫出模型只提出請求、程式先驗證再執行，以及 allowlist、HITL、最大輪數三個安全邊界；圖片不取代正文定義。三份必修閱讀、六題的標題／成果／第一個可複製動作，以及完整 21 筆五星編輯評分資源表保持可見；先備條件、環境、時間、預算、完整程式、供應商差異、費用、排錯與 Reflection 路由預設收合。ReAct 使用可觀察的 action／observation loop 教學，不要求公開私人 Chain-of-Thought。
 
@@ -178,9 +178,9 @@ Stage 4 使用兩層 stacked PR：第一層只定稿三語教材、官方事實�
 
 Stage 4 的五個可執行資料夾必須各自建立 Python 3.11 `.venv`，不能把不同 framework 的 `requirements.txt` 合併安裝。每題的 Path A 與 Path B 測試都要實際走過核心行為；只確認 import 成功不算驗收。LangGraph 要測分支、checkpoint、`interrupt()` 與 `Command(resume=...)`；CrewAI 要測角色、handoff 與有界停止；CodeAct 只在受限 Docker executor 示範模型程式碼，Jupyter 控制埠只綁 loopback，並明說一般 bridge 仍可對外連線、不是 production sandbox；typed output 要明說格式正確不等於內容真實。
 
-Stage 5 的固定主線是「九個可見核心詞 → 依問題選最小零件 → Track A／B 閱讀路線 → 五題累加式練習 → 5.1–5.8 延伸入口」。九個核心詞是 **Claude Code**、**CLAUDE.md**、**Skill**、**MCP**、**Hook**、**Plugin／Marketplace**、**Subagent**、**Worktree** 與 **Claude Agent SDK**。5.1–5.8 heading、練習標題、成果、第一個可複製動作、第一題會用到的兩份官方資料與本章推薦專案保持可見；時間、認證、費用、完整閱讀順序、語法、prompt、排錯與完整資源表預設收合。不得用「精簡」刪掉 MCP 的 Tools／Resources／Prompts、Skill／Subagent 差異、Hook 阻擋邊界、Worktree 檔案隔離或 Agent SDK hosting 安全。
+Stage 5 的固定主線是「九個可見核心詞 → 依問題選最小零件 → Track A／B 閱讀路線 → 五題累加式練習 → 5.1–5.8 延伸入口」。九個核心詞是 **Claude Code**、**CLAUDE.md**、**Skill**、**MCP**、**Hook**、**Plugin／Marketplace**、**Subagent**、**Worktree** 與 **Claude Agent SDK**。5.1–5.8 heading、練習標題、成果、第一個可複製動作、完整必修閱讀、推薦專案與 35 筆五星資源保持可見；時間、認證、費用、語法、prompt、排錯與補充原理預設收合。不得用「精簡」刪掉 MCP 的 Tools／Resources／Prompts、Skill／Subagent 差異、Hook 阻擋邊界、Worktree 檔案隔離或 Agent SDK hosting 安全。
 
-Stage 5 的 35 筆學習資源固定分成 `4／8／8／7／4／4` 六組，使用真正 HTML `rowspan`；三語保留相同 URL、順序與五星編輯評分，移除會變動的 GitHub stars。Claude Code、MCP、Skills、Plugins、Subagents、Dynamic workflows、Agent SDK 與 security 使用 90 天 freshness marker；查核日期只在最相關的關閉資源區以小字呈現。
+Stage 5 的 35 筆學習資源固定分成 `4／8／8／7／4／4` 六組，使用真正 HTML `rowspan`；三語保留相同 URL、順序與五星編輯評分，移除會變動的 GitHub stars。Claude Code、MCP、Skills、Plugins、Subagents、Dynamic workflows、Agent SDK 與 security 使用 90 天 freshness marker；查核日期以小字放在對應可見資源區附近。
 
 Stage 5 的第一張概念圖只回答「遇到哪種問題先用哪個零件」，不把 maintainer 的任意分層畫成產品架構真理。第二張關係圖固定放在 5.1 前，回答 CLAUDE.md／Skill 如何提供 context、Agent loop 如何經 MCP 交換 request／result、Hook 如何依 event 檢查、Subagent／Worktree 如何分開隔離 context 與檔案，以及 Plugin 如何只負責打包。三語圖同構、亮色、低文字密度；選擇圖不加 1–8 編號，關係圖明寫不是安裝順序。Worktree 不能畫成完整 sandbox，Plugin 不能畫成 runtime 必經步驟，**Plugin 不連到 Worktree**；Worktree 是另外選用的檔案樹隔離方式。Hook 不能畫成每次都阻擋。Subagent、agent view、agent teams、Dynamic workflows、Worktree 與 `/batch` 的成熟度與責任邊界以官方現行文件為準。Dynamic workflows 要教成可讀、可重跑的 JavaScript 編排，不得綁成某個 Claude 型號專屬功能；現行觸發方式是明說要 use／run a workflow 或使用 `ultracode`，literal `workflow` 只可放在 v2.1.160 前的歷史說明。找不到官方正式來源的功能名稱或模型綁定不得當成一般可用功能教學。Repo 或規格第一次在正文被點名時就要有官方超連結；完整資源表再補狀態、授權、限制與五星編輯評分。
 
@@ -295,13 +295,13 @@ Stage 7.5 保留三組低文字密度三語圖：四問題群組的 12 概念卡
 ### 易變資訊與查核日期
 
 - 模型名稱、價格、context、授權、preview / GA / deprecated 狀態，只能引用供應商正式文件、release notes 或官方 model card。
-- 有易變資訊的頁面把 ISO 查核日期放進最相關的預設收合區，以小字顯示；頁首 `freshness` HTML comment 不顯示，但要寫繁中 canonical 路徑、`verified_on`、scope 與最大查核週期，且三語完全相同。
+- 有易變資訊的頁面把 ISO 查核日期用小字放在受影響的表格或段落附近；只有該內容本身是補充資料時才可跟著收合。頁首 `freshness` HTML comment 不顯示，但要寫繁中 canonical 路徑、`verified_on`、scope 與最大查核週期，且三語完全相同。
 - 可見日期只寫查核範圍與日期，不加通用的永久性提醒。超過建議週期由排程提出 warning；缺少 marker、格式錯誤、未來日期或三語不一致則由 gate 阻擋。
 - 後續每個 stage 使用獨立 PR 完成事實查核、繁中定稿、三語複查與 review，不建立跨全站的大型 freshness diff。
 
 **已知例外**：
 
-- **Stage 0**：prerequisite gateway，使用可見的跳過判斷、單一整合練習與短版完成檢查；時間、環境、補充練習、名詞與資源預設收合（見「Stage 0 為什麼可以 skip」）
+- **Stage 0**：prerequisite gateway，使用可見的跳過判斷、單一整合練習、18 筆五星學習資源與短版完成檢查；時間、環境、補充練習與名詞預設收合（見「Stage 0 為什麼可以 skip」）
 - **Stage 5**：分 7 個核心 sub-stage（5.1-5.7）+ 5.8 SDK（選修、包成產品或服務才需要），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
 - **Stage 6 / 7**：直接跳過 進入條件 section（前面 stage 已隱含 prerequisite）
 - **Stage 7.5**：reading-map（進階概念 + reading path），沒有 動手練習、只有輕量 self-check——是 production 之後的 frontier 概念地圖，不寫 code
@@ -460,7 +460,7 @@ Stage 0 不是 stage——它是 prerequisite gateway。
 - Python / git / CLI / JSON 已經會的人 → 直接 Stage 1
 - 不會的人 → 用一個不需帳號或 token 的小工具，同時練 Python、API、JSON、CLI 與 Git
 
-Stage 0 的可見主線固定為「skip 條件 → 4 個學習目標 → 1 個整合練習 → 短版完成檢查」。時間、環境、分項補充、名詞與 18 個學習資源放進預設收合的 `<details>`。它存在是為了**讓真的初學者不會在後面 stage 卡住**，但不把這個 repo 變成完整的 Python 或 Git 教科書。
+Stage 0 的可見主線固定為「skip 條件 → 4 個學習目標 → 1 個整合練習 → 18 筆五星學習資源 → 短版完成檢查」。時間、環境、分項補充與名詞放進預設收合的 `<details>`。它存在是為了**讓真的初學者不會在後面 stage 卡住**，但不把這個 repo 變成完整的 Python 或 Git 教科書。
 
 ---
 

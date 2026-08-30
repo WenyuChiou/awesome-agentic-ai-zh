@@ -35,14 +35,9 @@ If you have not completed A1, go back and run “read-only inspection → view t
 
 ## 📚 Required Reading
 
-<details markdown="1">
-<summary>Expand required reading and suggested order</summary>
-
 1. First read the official project-instructions documentation for your primary tool: Codex uses [`AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md), Claude Code uses [`CLAUDE.md`](https://code.claude.com/docs/en/memory), Gemini CLI uses [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/), and OpenCode V2 uses [`AGENTS.md`](https://opencode.ai/v2/docs/instructions).
 2. Then read your tool’s Skill documentation: [Codex/ChatGPT](https://learn.chatgpt.com/docs/build-skills), [Claude Code](https://code.claude.com/docs/en/skills), [Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/), and [OpenCode V2](https://opencode.ai/v2/docs/skills).
 3. Finally, revisit [Stage 2 — Prompt Engineering](../../stages/02-prompt-engineering.en.md) and add the “task, scope, and success conditions” to your one-off prompt.
-</details>
-
 <details markdown="1">
 <summary>Expand the project-instructions and Skill locations for four CLIs</summary>
 
@@ -162,9 +157,6 @@ The complete subagent, agent team, background-work, and review processes are in 
 
 ## 🎯 Curated Projects
 
-<details markdown="1">
-<summary>Expand the complete learning resource table (16 entries)</summary>
-
 The resources below are divided into five groups by purpose. Each group shows its category only once so repeated text does not stretch the table.
 
 <table>
@@ -198,8 +190,6 @@ The resources below are divided into five groups by purpose. Each group shows it
 <tr><td><code>langchain-ai/openwiki</code></td><td>Creating a continuously updated repo wiki</td><td>When a large repo needs on-demand document lookup</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
 </tbody>
 </table>
-</details>
-
 <a id="-self-check-before-a3"></a>
 
 ## ✅ Self-check before Stage 5
