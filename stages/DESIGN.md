@@ -313,6 +313,7 @@ README 的必讀入口、精選專案、相關資源與兩條 track 保持可見
 - 箭頭只走留白通道，不穿過文字、icon 或其他卡片；arrowhead、icon、標籤與框線不得互相重疊。所有同層卡片依共同格線、等高與一致內距對齊。
 - 型號、價格、數量與狀態等易變事實，必須和正文採用同一官方證據。沒有通則就不用看似精確的固定數字。
 - 產出後逐張以原尺寸人工檢查安全邊界、文字、繁簡字形、箭頭方向、共同格線與對比，再跑 image-locale gate 與三語網站 build。任何文字、icon、箭頭或框線重疊都視為失敗，不用「縮小看還可以」放行。
+- 發布站由 `mkdocs_hooks.py` 統一替非首屏教學圖加 lazy loading、async decoding 與可鍵盤操作的原圖入口；README 頂端 banner 保持 eager。不要在各章重複手寫 HTML。新增或替換圖片時必須通過 `check-image-delivery.py` 的單圖、單頁、總量與 rendered-HTML ratchet；若要放寬上限，PR 必須附瀏覽器量測與理由。人工另以 320／375／768／1440 px 檢查圖、caption、表格與觸控目標，不能把「沒有 overflow」當成圖中文字已可讀。
 
 ### Glossary 固定結構
 

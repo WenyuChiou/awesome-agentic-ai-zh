@@ -311,6 +311,7 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 - 圖裡的精確數字也要有官方依據。沒有固定通則時，寫「多個」「依模型而異」等誠實文字，不要為了好看造出範圍。
 - 箭頭只走留白通道，不穿過文字、icon 或其他卡片；arrowhead、icon、標籤與框線不得互相重疊。同層卡片使用共同格線、等高與一致內距。
 - 逐張以原尺寸檢查安全邊界、文字、繁簡字形、箭頭、共同格線與對比；任何文字、icon、箭頭或框線重疊都視為失敗。最後跑 image-locale gate 與三語 MkDocs build。
+- 文件站會自動替非首屏教學圖加入 lazy loading、async decoding 與可鍵盤操作的「開啟原圖」入口；README 頂端 banner 保持 eager，不要在各章重複手寫這些 HTML。新增或替換圖檔要通過 `scripts/check-image-delivery.py` 的單圖、單頁、總量與建置後 HTML ratchet，並以 320／375／768／1440 px 人工確認 caption、表格、觸控目標與圖中文字真的讀得到。
 
 ### Reader UX ratchet
 

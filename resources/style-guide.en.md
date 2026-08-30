@@ -313,6 +313,7 @@ This rule applies to the entire learning map. The goal is for a five-year-old to
 - Exact numbers inside a diagram need the same official evidence as prose. When no fixed rule exists, write “multiple” or “varies by model” instead of inventing a neat range.
 - Route arrows only through whitespace. They must not cross text, icons, or other cards; arrowheads, icons, labels, and borders must not overlap. Cards on the same level share a grid, equal height, and consistent padding.
 - Inspect every image at original size for safe margins, text, locale characters, arrow direction, shared-grid alignment, and contrast. Any overlap among text, icons, arrows, or borders fails review. Then run the image-locale gate and all three MkDocs builds.
+- The docs site automatically gives below-fold teaching diagrams lazy loading, async decoding, and a keyboard-accessible full-size link; the top README banner stays eager. Do not hand-code that HTML in each chapter. New or replaced images must pass `scripts/check-image-delivery.py` for single-image, per-page, total, and rendered-HTML budgets. Human review must also verify captions, tables, touch targets, and legible diagram text at 320, 375, 768, and 1440 px.
 
 ### Reader UX ratchet
 

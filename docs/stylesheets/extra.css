@@ -7,7 +7,10 @@
   --md-primary-fg-color:        #4f46e5;
   --md-primary-fg-color--light: #6366f1;
   --md-primary-fg-color--dark:  #4338ca;
-  --md-accent-fg-color:         #6366f1;
+  --md-accent-fg-color:         #4f46e5;
+}
+body[data-md-color-scheme="slate"] {
+  --md-accent-fg-color: #a5b4fc;
 }
 
 /* ---- Landing hero (index.md) ---- */
@@ -38,13 +41,51 @@
 .aaz-cta .md-button { border-radius: 24px; }
 .aaz-langs { display: flex; gap: .4rem; justify-content: center; flex-wrap: wrap; }
 .aaz-langs a {
+  align-items: center;
+  box-sizing: border-box;
+  display: inline-flex;
   font-size: .72rem;
+  min-height: 44px;
   color: var(--md-default-fg-color--light);
   border: 1px solid var(--md-default-fg-color--lighter);
   border-radius: 20px;
   padding: .15rem .7rem;
   text-decoration: none;
   transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+
+/* ---- Teaching diagrams: fast to load, easy to enlarge on a phone ---- */
+.md-typeset .aaz-diagram {
+  margin: 1.5rem auto;
+  text-align: center;
+  width: 100%;
+}
+.md-typeset .aaz-diagram__image-link {
+  border-radius: 10px;
+  display: block;
+}
+.md-typeset .aaz-diagram img {
+  aspect-ratio: 16 / 9;
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+  width: 100%;
+}
+.md-typeset .aaz-diagram__caption {
+  font-size: .75rem;
+  margin-top: .25rem;
+}
+.md-typeset .aaz-diagram__caption a {
+  align-items: center;
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0 .5rem;
+}
+.md-typeset details > summary {
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
 }
 .aaz-langs a:hover {
   color: var(--md-accent-fg-color);
