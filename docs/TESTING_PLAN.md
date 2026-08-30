@@ -42,6 +42,13 @@ Track B as 3 → 4 → Stage 5 → 6 → 7 → 7.5 → Stage 8 before the role p
 duration, price, version, year, and stars metrics. Human review still checks text rendering,
 alignment, and arrow／icon overlap.
 
+`scripts/test_main_readme_content.py` protects the README's progressive reading path. It requires
+the main route, role choices, important terms, required reading, and ten rated learning resources to
+stay visible. Only four secondary groups may start closed. The resource table must keep three real
+row groups (`3／3／4`), and the three locales must keep the same links, order, ratings, and meaning.
+The size limit prevents the entrance from slowly becoming crowded again. These checks protect the
+shape; final human review still confirms that simple wording has not removed an important idea.
+
 ## Historical T3+ baseline (on `main`)
 
 | Batch | What | How verified | Bugs fixed |

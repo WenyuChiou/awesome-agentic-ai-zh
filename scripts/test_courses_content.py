@@ -271,26 +271,21 @@ def test_freshness_config_enrolls_the_course_fact_pack_and_page() -> None:
 
 def test_readme_router_and_maintainer_docs_describe_the_new_course_shape() -> None:
     expected = {
-        "zh-TW": (
-            "12 條現行課程與學習路線，按目標分組",
-            "分清完成證書、技能徽章與認證考試",
-        ),
-        "en": (
-            "12 current courses and learning paths grouped by goal",
-            "separates completion certificates, skill badges, and certification exams",
-        ),
-        "zh-Hans": (
-            "12 条现行课程与学习路线，按目标分组",
-            "分清完成证书、技能徽章和认证考试",
-        ),
+        "zh-TW": "分清完成證書、技能徽章與認證考試",
+        "en": "separates completion certificates, skill badges, and certification exams",
+        "zh-Hans": "分清完成证书、技能徽章和认证考试",
     }
     for locale, page in READMES.items():
         text = page.read_text(encoding="utf-8")
-        assert "resources/courses" in text
-        assert all(marker in text for marker in expected[locale])
+        visible = _without_details(text)
+        assert "resources/courses" in visible
+        assert expected[locale].casefold() in visible.casefold()
         assert "10 門 credible" not in text
         assert "10 credible cert-granting" not in text
         assert "10 门 credible" not in text
+        assert "12 current courses" not in text
+        assert "12 條現行課程" not in text
+        assert "12 条现行课程" not in text
 
     design = (ROOT / "stages/DESIGN.md").read_text(encoding="utf-8")
     assert "### 課程地圖固定結構" in design

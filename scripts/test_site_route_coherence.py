@@ -602,21 +602,16 @@ def test_readme_names_all_learning_stops_and_hides_only_time_detail(
     assert "mv starter.py" not in text and "starter_" + "reference.py" not in text
     assert "### 🤖" not in text
     for term in (
-        "zero-shot",
-        "one-shot",
-        "few-shot",
+        "Zero-Shot",
+        "One-Shot",
+        "Few-Shot",
         "CoT",
-        "model comparison",
-        "Smolagents",
-        "long-term memory",
-        "contextual retrieval",
-        "advanced SDK",
-        "12 ",
-        "reading list",
-        "PAR loop",
-        "agent-as-judge",
+        "Workflow Graph",
+        "MCP",
+        "RAG",
+        "Human-in-the-loop",
     ):
-        assert term in text, (locale, term)
+        assert term.casefold() in text.casefold(), (locale, term)
 
 
 def test_active_public_and_export_surfaces_drop_the_old_stage_count_shorthand() -> None:
