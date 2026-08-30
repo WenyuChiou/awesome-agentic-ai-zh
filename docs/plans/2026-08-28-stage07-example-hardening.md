@@ -4,6 +4,10 @@
 - Release branch：`codex/stage07-examples-stack`
 - PR 基底：`codex/stage07-reader-ux-stack`（PR #162，head `bfdec26`）
 
+## 2026-08-30 閱讀體驗修正
+
+原計畫把五題共 25 筆「深入學習資源與評分」一起放進預設關閉選單，會讓讀者忘記最重要的下一步。依全站現行規則，依 `3／6／7／4／5` 分布的全部資源、星級、完整 Stage 7 清單入口與安靜查核日期改為直接可見；只把實際模型路徑、平台替代指令、程式走查、排錯與額外替代方案收合。三語 contract 會鎖住資源落在所有 `<details>` 外，避免日後退回舊形狀或被過度刪減。
+
 ## 目標
 
 讓讀者進入任一 Stage 07 範例資料夾後，可以先複製一組 PowerShell 指令，
@@ -58,8 +62,8 @@ Streaming、Prompt caching、FastAPI、Docker 等正確術語。
    不把估算寫成帳單保證。
 6. 「只改一件事」與短版成功檢查。
 
-macOS／Linux、完整程式走查、替代方案、production 深解、排錯與延伸資源
-放進預設關閉的 `<details markdown="1">`。不要求讀者抄空白模板、改檔名或
+macOS／Linux、完整程式走查、替代方案、production 深解與排錯
+放進預設關閉的 `<details markdown="1">`。五題依 `3／6／7／4／5` 保留全部 25 筆必讀／評分學習資源並直接可見。不要求讀者抄空白模板、改檔名或
 把程式另存到文字檔。
 
 ## 程式與安全修正

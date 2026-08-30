@@ -109,8 +109,7 @@ PRO 与 CON 都只看原题。Judge 才会看到原题和两份论点：
 
 </details>
 
-<details markdown="1">
-<summary>📚 深入学习资源与评分</summary>
+## 📚 必读与学习资源
 
 - ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：章节式中文 Agent 教材，适合补完整背景。
 - ⭐⭐⭐⭐⭐ [Anthropic：Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)：先判断单 Agent 是否已足够，再增加协作。
@@ -119,5 +118,3 @@ PRO 与 CON 都只看原题。Judge 才会看到原题和两份论点：
 完整清单见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)。
 
 <small>模型、价格、套件与连结查核：2026-08-28 UTC。</small>
-
-</details>

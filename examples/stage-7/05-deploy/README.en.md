@@ -142,8 +142,7 @@ These settings provide a non-root user, loopback port, and read-only filesystem.
 
 </details>
 
-<details markdown="1">
-<summary>📚 Deeper resources and ratings</summary>
+## 📚 Required reading and learning resources
 
 - ⭐⭐⭐⭐⭐ [FastAPI official tutorial](https://fastapi.tiangolo.com/tutorial/): primary documentation for schemas, errors, dependencies, and deployment.
 - ⭐⭐⭐⭐⭐ [Dockerfile best practices](https://docs.docker.com/build/building/best-practices/): build smaller, updateable, non-root images.
@@ -154,5 +153,3 @@ These settings provide a non-root user, loopback port, and read-only filesystem.
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
 <small>Models, prices, packages, deployment documents, and links checked: 2026-08-28 UTC.</small>
-
-</details>
