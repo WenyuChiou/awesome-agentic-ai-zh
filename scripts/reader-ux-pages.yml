@@ -1353,11 +1353,11 @@ pages:
       en: stages/07.5-advanced-agentic-concepts.en.md
       zh-Hans: stages/07.5-advanced-agentic-concepts.zh-Hans.md
     max_visible_chars:
-      zh-TW: 5488
-      en: 9107
-      zh-Hans: 5528
+      zh-TW: 10338
+      en: 14822
+      zh-Hans: 10378
     max_open_details: 0
-    required_details_count: 9
+    required_details_count: 8
     visible_section_order:
       - learning-goals
       - core-terms
