@@ -108,8 +108,7 @@ Haiku 4.5 的一般 input/output 单价是 `$1 / 1M` 与 `$5 / 1M` tokens。5 �
 
 </details>
 
-<details markdown="1">
-<summary>📚 深入学习资源与评分</summary>
+## 📚 必读与学习资源
 
 - ⭐⭐⭐⭐⭐ [Anthropic Prompt caching 官方文件](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)：最低长度、TTL、breakpoint 与 usage 栏位的权威来源。
 - ⭐⭐⭐⭐⭐ [Anthropic Pricing](https://platform.claude.com/docs/en/about-claude/pricing)：用当期单价重算，不保存旧的固定账单。
@@ -119,5 +118,3 @@ Haiku 4.5 的一般 input/output 单价是 `$1 / 1M` 与 `$5 / 1M` tokens。5 �
 完整清单见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)。
 
 <small>模型、价格、套件、cache 条件与连结查核：2026-08-28 UTC。</small>
-
-</details>

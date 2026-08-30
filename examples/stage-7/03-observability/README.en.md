@@ -106,8 +106,7 @@ Common problems:
 
 </details>
 
-<details markdown="1">
-<summary>📚 Deeper resources and ratings</summary>
+## 📚 Required reading and learning resources
 
 - ⭐⭐⭐⭐⭐ [Langfuse](https://github.com/langfuse/langfuse): open-source traces, evals, and prompt management.
 - ⭐⭐⭐⭐⭐ [Arize Phoenix](https://github.com/Arize-ai/phoenix): open-source, OpenTelemetry-oriented observability.
@@ -120,5 +119,3 @@ Common problems:
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
 <small>Models, prices, packages, and links checked: 2026-08-28 UTC.</small>
-
-</details>

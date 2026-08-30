@@ -109,8 +109,7 @@ Next, replace the roles with “engineer/user,” add human approval, or evaluat
 
 </details>
 
-<details markdown="1">
-<summary>📚 Deeper resources and ratings</summary>
+## 📚 Required reading and learning resources
 
 - ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents): chapter-style Chinese agent material for fuller background.
 - ⭐⭐⭐⭐⭐ [Anthropic: Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): decide whether one agent is enough before adding collaboration.
@@ -119,5 +118,3 @@ Next, replace the roles with “engineer/user,” add human approval, or evaluat
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
 <small>Models, prices, packages, and links checked: 2026-08-28 UTC.</small>
-
-</details>

@@ -106,8 +106,7 @@ request_id
 
 </details>
 
-<details markdown="1">
-<summary>📚 深入學習資源與評分</summary>
+## 📚 必讀與學習資源
 
 - ⭐⭐⭐⭐⭐ [Langfuse](https://github.com/langfuse/langfuse)：開源 traces、evals 與 prompt 管理。
 - ⭐⭐⭐⭐⭐ [Arize Phoenix](https://github.com/Arize-ai/phoenix)：OpenTelemetry 導向的開源觀測工具。
@@ -120,5 +119,3 @@ request_id
 完整清單見 [Stage 7 精選 Projects](../../../stages/07-multi-agent-production.md#-精選-projects範本--sdk--工具-collection)。
 
 <small>模型、價格、套件與連結查核：2026-08-28 UTC。</small>
-
-</details>

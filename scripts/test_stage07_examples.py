@@ -18,6 +18,24 @@ FOLDERS = (
     "05-deploy",
 )
 README_NAMES = ("README.md", "README.en.md", "README.zh-Hans.md")
+RESOURCE_HEADINGS = {
+    "README.md": "## 📚 必讀與學習資源",
+    "README.en.md": "## 📚 Required reading and learning resources",
+    "README.zh-Hans.md": "## 📚 必读与学习资源",
+}
+RESOURCE_COUNTS = {
+    "01-multi-agent-debate": 3,
+    "02-eval": 6,
+    "03-observability": 7,
+    "04-sdk-advanced": 4,
+    "05-deploy": 5,
+}
+RESOURCE_FOOTERS = {
+    "README.md": "完整清單見",
+    "README.en.md": "See the full list",
+    "README.zh-Hans.md": "完整清单见",
+}
+DETAIL_TAG = re.compile(r"<details\b[^>]*>|</details>")
 PYTHON_NAMES = ("starter.py", "starter_anthropic.py", "test.py", "test_anthropic.py")
 COMMON_REQUIREMENTS = ("openai>=3.5,<4", "anthropic>=1.2,<2")
 DEPLOY_REQUIREMENTS = (
@@ -63,6 +81,21 @@ def _lines(path: Path) -> tuple[str, ...]:
         for line in path.read_text(encoding="utf-8").splitlines()
         if line.split("#", 1)[0].strip()
     )
+
+
+def _detail_depth_at(text: str, offset: int) -> int:
+    """Return open `<details>` depth immediately before `offset`."""
+    depth = 0
+    for match in DETAIL_TAG.finditer(text, 0, offset):
+        depth += -1 if match.group().startswith("</details") else 1
+        assert depth >= 0, "closing </details> appears before an opening tag"
+    return depth
+
+
+def test_detail_depth_detects_a_resource_hidden_after_its_heading() -> None:
+    hidden = "## 📚 Required reading\n<details>\n- ⭐⭐⭐⭐⭐ Resource\n</details>\n"
+    assert _detail_depth_at(hidden, hidden.index("## 📚")) == 0
+    assert _detail_depth_at(hidden, hidden.index("- ⭐")) == 1
 
 
 def test_stage_shape_and_current_dependencies() -> None:
@@ -215,12 +248,30 @@ def test_readmes_are_power_shell_first_progressive_and_fact_aligned() -> None:
             first_detail = text.index('<details markdown="1">')
             install = text.index(r".\.venv\Scripts\python.exe -m pip install -r requirements.txt")
             offline = text.index(r".\.venv\Scripts\python.exe test.py")
+            resource_heading = RESOURCE_HEADINGS[name]
+            resource_index = text.index(resource_heading)
+            resource_section = text[resource_index:]
+            rated_resources = tuple(re.finditer(r"(?m)^- (?:⭐){3,5} ", resource_section))
+            footer_index = text.index(RESOURCE_FOOTERS[name], resource_index)
+            verified_date_index = text.index("<small>", resource_index)
             assert install < offline < first_detail, f"{folder_name}/{name}: quick start is hidden"
             assert r"py -3.11 -m venv .venv" in text
             assert r".\.venv\Scripts\python.exe test_anthropic.py" in text
-            assert text.count('<details markdown="1">') >= 2
+            expected_details = 4 if folder_name == "05-deploy" else 3
+            assert text.count('<details markdown="1">') == expected_details
             assert '<details markdown="1" open>' not in text
             assert "🎯" in text and "📚" in text
+            assert text.count(resource_heading) == 1
+            assert _detail_depth_at(text, resource_index) == 0
+            assert _detail_depth_at(text, footer_index) == 0
+            assert _detail_depth_at(text, verified_date_index) == 0
+            assert _detail_depth_at(text, len(text)) == 0
+            assert "<summary>📚" not in text
+            assert len(rated_resources) == RESOURCE_COUNTS[folder_name]
+            assert all(
+                _detail_depth_at(text, resource_index + match.start()) == 0
+                for match in rated_resources
+            ), f"{folder_name}/{name}: at least one required resource is hidden"
             assert OLLAMA_MODEL in text and ANTHROPIC_MODEL in text
             assert "$1 / 1M" in text and "$5 / 1M" in text
             assert "$1" in text and "2026-08-28 UTC" in text

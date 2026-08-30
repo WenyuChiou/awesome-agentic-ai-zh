@@ -142,8 +142,7 @@ docker run --rm --read-only --tmpfs /tmp `
 
 </details>
 
-<details markdown="1">
-<summary>📚 深入學習資源與評分</summary>
+## 📚 必讀與學習資源
 
 - ⭐⭐⭐⭐⭐ [FastAPI 官方教學](https://fastapi.tiangolo.com/tutorial/)：schema、errors、dependencies 與部署的第一手文件。
 - ⭐⭐⭐⭐⭐ [Dockerfile best practices](https://docs.docker.com/build/building/best-practices/)：建立較小、可更新且非 root 的 image。
@@ -154,5 +153,3 @@ docker run --rm --read-only --tmpfs /tmp `
 完整清單見 [Stage 7 精選 Projects](../../../stages/07-multi-agent-production.md#-精選-projects範本--sdk--工具-collection)。
 
 <small>模型、價格、套件、部署文件與連結查核：2026-08-28 UTC。</small>
-
-</details>

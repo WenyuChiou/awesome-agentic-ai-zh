@@ -110,8 +110,7 @@ Haiku 4.5 的單價是 input `$1 / 1M` tokens、output `$5 / 1M` tokens：
 
 </details>
 
-<details markdown="1">
-<summary>📚 深入學習資源與評分</summary>
+## 📚 必讀與學習資源
 
 - ⭐⭐⭐⭐⭐ [promptfoo](https://github.com/promptfoo/promptfoo)：可把 cases、providers 和 assertions 放進版本控制。
 - ⭐⭐⭐⭐⭐ [Anthropic Console Evals](https://console.anthropic.com/workbench/evals)：用官方介面建立與比較測試集。
@@ -123,5 +122,3 @@ Haiku 4.5 的單價是 input `$1 / 1M` tokens、output `$5 / 1M` tokens：
 完整清單見 [Stage 7 精選 Projects](../../../stages/07-multi-agent-production.md#-精選-projects範本--sdk--工具-collection)。
 
 <small>模型、價格、套件與連結查核：2026-08-28 UTC。</small>
-
-</details>

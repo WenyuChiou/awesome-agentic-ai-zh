@@ -108,8 +108,7 @@ Common problems:
 
 </details>
 
-<details markdown="1">
-<summary>📚 Deeper resources and ratings</summary>
+## 📚 Required reading and learning resources
 
 - ⭐⭐⭐⭐⭐ [Anthropic Prompt caching documentation](https://platform.claude.com/docs/en/build-with-claude/prompt-caching): the primary source for minimum length, TTL, breakpoints, and usage fields.
 - ⭐⭐⭐⭐⭐ [Anthropic Pricing](https://platform.claude.com/docs/en/about-claude/pricing): recalculate with current prices instead of preserving an old fixed bill.
@@ -119,5 +118,3 @@ Common problems:
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
 <small>Models, prices, packages, cache conditions, and links checked: 2026-08-28 UTC.</small>
-
-</details>

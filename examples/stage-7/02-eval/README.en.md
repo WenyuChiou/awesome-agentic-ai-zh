@@ -110,8 +110,7 @@ Common problems:
 
 </details>
 
-<details markdown="1">
-<summary>📚 Deeper resources and ratings</summary>
+## 📚 Required reading and learning resources
 
 - ⭐⭐⭐⭐⭐ [promptfoo](https://github.com/promptfoo/promptfoo): version-control cases, providers, and assertions.
 - ⭐⭐⭐⭐⭐ [Anthropic Console Evals](https://console.anthropic.com/workbench/evals): build and compare test sets in Anthropic's interface.
@@ -123,5 +122,3 @@ Common problems:
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
 <small>Models, prices, packages, and links checked: 2026-08-28 UTC.</small>
-
-</details>
