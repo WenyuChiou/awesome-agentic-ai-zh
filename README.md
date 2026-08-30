@@ -10,7 +10,7 @@
 
 <p><strong>🤖 AI Agent 學習地圖 — 從基本 LLM 概念到自己打造多 agent 系統</strong></p>
 
-<p><em><b>學習路線圖 + 精選資源 + 簡單 illustrative 案例</b><br/>8 個主題 Stage，加上 Stage 0 準備關與 Stage 7.5 進階閱讀站；從「LLM 是什麼、token 怎麼算」走到 multi-agent 編排、Computer Use / Browser Use / Sandbox</em></p>
+<p><em><b>學習路線圖 + 精選資源 + 可直接執行的小練習</b><br/>8 個主題 Stage，加上 Stage 0 準備關與 Stage 7.5 進階閱讀站；從「LLM 是什麼、token 怎麼算」走到 multi-agent 編排、Computer Use / Browser Use / Sandbox</em></p>
 
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat)](LICENSE)
 [![繁中](https://img.shields.io/badge/語言-繁體中文-red?style=flat)](README.md)
@@ -28,7 +28,7 @@
 
 ## 🎯 專案介紹
 
-**本 repo 角色定位**：**學習路線圖 + 精選資源 + 簡單 illustrative 案例**——三件事為核心、幫想學 AI / AI agent 的人從「不知道從哪開始」走到「能設計多 agent 系統」。
+**本 repo 角色定位**：**學習路線圖 + 精選資源 + 可直接執行的小練習**——三件事為核心，幫想學 AI／AI agent 的人從「不知道從哪開始」走到「能設計多 agent 系統」。
 
 具體做法：
 
@@ -36,7 +36,7 @@
 |---|---|---|
 | **學習路線圖** | 把網路散落的高品質專案、教材、必修閱讀，按**從零開始、循序漸進**整理成 **8 個主題 Stage + Stage 0 準備關 + Stage 7.5 進階閱讀站**，再分成 2 條學習路線與 5 條延伸路徑 | 10 個學習站、2 tracks |
 | **資源 curation** | 每階段精選有官方或 canonical 來源的 project，說清楚編輯評分、適合誰、教什麼、限制與怎麼跑；另有按工作找路的 MCP / Skill catalog | 按 Stage 與工作分類 |
-| **簡單 illustrative 案例** | 每階段提供可複製的**基礎練習**，需要連模型時保留 Ollama / Anthropic 對照，並用離線或 mock-based test 檢查關鍵行為 | 按學習成果安排 |
+| **可直接執行的小練習** | 需要動手的章節會提供可複製的**基礎練習**；需要連模型時保留 Ollama／Anthropic 兩條路，並用離線或 mock-based test 檢查關鍵行為 | 按學習成果安排 |
 
 走完整條路線，你會從「**LLM 使用者**」進階到「**agent 系統建構者**」——能看懂 framework 在做什麼、能設計多 agent 協作、能寫自己的 MCP server。
 
@@ -82,8 +82,8 @@ cd awesome-agentic-ai-zh
 ### ✨ 你會收穫什麼？
 
 - 📖 **完全免費** — MIT 授權，所有內容開放共學
-- 🗺️ **兩條學習路徑** — Track A（CLI Power User）給「想 USE 現成 CLI agent」的人；Track B（Agent Builder）給「想 BUILD 自己 agent」的人。共用 Stage 0-2 基礎
-- 🛠️ **基礎動手練習** — 每階段附 1-5 個 illustrative 練習（題目 + dual-path SDK 對照 + success criteria）。定位是**基礎入門 + 路線確認**——chapter-length 深度練習見對應 stage 的 hello-agents / Anthropic Cookbook callout
+- 🗺️ **兩條學習路徑** — Track A（CLI Power User）教你使用現成的 CLI agent 完成工作；Track B（Agent Builder）教你從程式碼開始打造自己的 agent。兩條路共用 Stage 0–2 基礎
+- 🛠️ **基礎動手練習** — 需要動手的章節都有可直接複製的練習與成功條件；需要連模型時，再提供 Ollama／Anthropic 兩條 SDK 路徑。這些練習幫你入門並確認路線；想做更完整的章節型練習，再讀各 Stage 連結的 hello-agents／Anthropic Cookbook
 - 🎯 **精選 Projects** — 每筆都附編輯評分、適合誰、教什麼、限制與怎麼跑（含本地 LLM 執行：Ollama、llama.cpp、LocalAI、MLX）
 - 🌏 **三語完整維護** — 繁中(canonical)/ 簡中 / English,三版皆完整維護、英文非薄翻譯
 - 🎓 **不只「框架」、還有「Claude Code 生態」** — MCP / Skills / Plugins / SDK 完整堆疊
@@ -117,7 +117,7 @@ cd awesome-agentic-ai-zh
 |---|---|---|---|
 | **A1** | [選一個 CLI Agent，開始用它做事（CLI Agent Intro & Selection）](tracks/cli/A1-cli-intro.md) | CLI agent 選擇 · 安裝 · 第一次跑 | 選一個工具，完成第一個真實小任務 |
 | **A2** | [建立可重複使用的 CLI 工作流程（CLI Workflow Patterns）](tracks/cli/A2-cli-workflow.md) | 專案規則 · Skill · 任務拆解 | 把一次成功的做法變成下次也能用的流程 |
-| **+5** | [Stage 5 — Claude Code 生態](stages/05-claude-code-ecosystem.md)（**共用 hub**） | MCP · Skills · Plugins · Subagents、Track A 必看 5.1-5.4 / 選讀 5.5-5.7 | 讓 CLI agent 讀到規則、接上工具並分派工作 |
+| **+5** | [Stage 5 — Claude Code 生態](stages/05-claude-code-ecosystem.md)（**共用 hub**） | MCP · Skills · Plugins · Subagents；Track A 必看 5.1–5.4，選讀 5.5–5.8 | 讓 CLI agent 讀到規則、接上工具並分派工作 |
 | **A3** | [把 CLI Agent 接進真實工作流程（Integration & Production）](tracks/cli/A3-cli-production.md) | MCP 接 CLI · CI 自動化 · cost / observability | 接進真實流程，並看得到它做了什麼 |
 | **+8** | [Stage 8 — Agent Interfaces](stages/08-agent-interfaces.md)（**共用 hub**）| Computer Use · Browser Use · Code Sandbox | 知道任務需要瀏覽器、電腦操作還是 sandbox |
 

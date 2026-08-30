@@ -143,12 +143,12 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 
 | Stage | 核心問題 | 回答方式 |
 |---|---|---|
-| **0** 基礎準備 | 「我的開發環境準備好了嗎？」 | 4 個 動手練習 self-test |
+| **0** 基礎準備 | 「我的開發環境準備好了嗎？」 | 1 個整合練習：公開 GitHub API → JSON → terminal → Git |
 | **1** LLM 入門 | 「LLM 是什麼、token 怎麼算、不同 LLM 的差別？」 | 從 API call 到本地 LLM，含 from-scratch 訓練 |
 | **2** Prompt 設計 | 「怎麼讓 LLM 照我的意思做事，而且知道修改有沒有用？」 | 四格 prompt / few-shot / 固定 eval / 一次只改一件事 |
 | **3** ⭐ 工具使用與第一個 Agent Loop | 「怎麼讓 LLM 呼叫外部工具，並重複做完一個有界 loop？」 | 完整 tool round trip + 有界 ReAct loop + 6 個動手練習 |
 | **4** Workflow Graph 與 Agent 框架 | 「怎麼選 framework，把多個步驟接成看得見的 graph？」 | LangGraph / AutoGen / CrewAI / Smolagents 對比 |
-| **5** ⭐⭐ Claude Code 生態 | 「Claude Code 生態系怎麼吃？」 | MCP / Skills / Plugins / Marketplace 4 個 sub-stage |
+| **5** ⭐⭐ Claude Code 生態 | 「Claude Code 生態系怎麼用？」 | 九個核心詞、五題累加練習、5.1–5.8 延伸入口 |
 | **6** Memory · RAG | 「怎麼讓 agent 記得事情？怎麼讓它能查自家文件？」 | embedding / vector DB / RAG / contextual retrieval |
 | **7** Agent Production Engineering | 「Harness、Loop、Graph 跟 production 怎麼一起？」 | Harness / Loop / Graph / orchestration / eval / observability |
 | **7.5** 進階概念地圖 | 「multi-agent 之後還有哪些進階 pattern 要認得？」 | 12 個進階概念 + reading path（不寫 code）|
@@ -388,7 +388,7 @@ agent 寫過 vs 沒寫過 ≠ 多讀一篇 paper vs 少讀一篇。寫過的人�
 - 多會 dilute（讀者覺得負擔大、跳過）
 - 少會 under-cover（譬如 Stage 1 只有 3 個 動手練習，但要涵蓋 API call / token / pricing / cross-provider / error handling / local LLM——所以該 stage 後來補到 6 個）
 - Stage 3 也是明確的 6 題例外：完整來回、多工具、ReAct loop、多步任務、錯誤處理與 schema eval 各自有不同成功條件；主線先要求 1–3，4–6 作為穩定性加固，避免一次造成負擔。
-- Stage 5 因為 4 個 sub-section，每個 sub-section 再有 2-3 個 動手練習
+- Stage 5 先用五題累加練習帶讀者動手，再以 5.1–5.8 作為分主題延伸入口；不要把每個延伸入口誤寫成各自都有 2–3 題
 
 ---
 

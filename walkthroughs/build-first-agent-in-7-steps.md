@@ -18,24 +18,24 @@
 
 要做的 agent：**Paper Summary Bot** — 給定一個 arXiv 論文 URL，輸出 3 段摘要 + 5 個關鍵詞 + 跟相關論文的比較。
 
-每個 stage 都會把同一個 agent **加一層能力**。最後它會是一個跨多 LLM、有 memory、能 deploy 的 agent。
+每個 Stage 都會替同一個 agent **加一層能力**。最後它會使用多個 LLM、記得需要的資料，也能部署成服務。
 
 ---
 
 ## 📋 全程概覽
 
-| Stage | 你會加的能力 | 程式碼複雜度 |
+| Stage | 你會加的能力 | 這一步有多大 |
 |---|---|---|
-| 0 | 環境準備（Python、API key、git） | — |
-| 1 | 第一次呼叫 LLM API | ~10 行 |
-| 2 | 寫一個專業的 prompt | ~20 行 |
-| 3 | Tool use：自動抓取 arXiv 論文 | ~80 行 |
-| 4 | 用 framework 重寫，加上 reflection | ~40 行（framework 抽象掉細節）|
-| 5 | 包成 Claude Code Skill | SKILL.md + 30 行 |
-| 6 | 加 RAG memory：跟過去看過的論文比較 | ~60 行 |
-| 7 | 加 eval、observability、deploy | ~100 行 |
+| 0 | 環境準備（Python、API key、git） | 準備工作 |
+| 1 | 第一次呼叫 LLM API | 小 |
+| 2 | 寫一個專業的 prompt | 小 |
+| 3 | Tool use：自動抓取 arXiv 論文 | 中 |
+| 4 | 用 framework 重寫，加上反思檢查（reflection） | 中；framework 會包住部分細節 |
+| 5 | 包成 Claude Code Skill | 一份設定檔 + 一個小程式 |
+| 6 | 加 RAG 與 Memory：找回舊論文，再做比較 | 中 |
+| 7 | 加 Eval（評測）、Observability（執行紀錄）與 Deploy（部署） | 較大 |
 
-**總計**：約 300 行 Python + 結構化設定 = 一個你看著它從零長到 production 的具體例子。
+**最後成果**：一個從最小 Python 程式一路長成可評測、可查看執行紀錄、可部署服務的具體例子。
 
 ---
 
@@ -598,7 +598,15 @@ docker run -p 8000:8000 \
 - [ ] 加 RAG memory 讓 agent 變成有狀態（Stage 6）
 - [ ] 寫 eval + 接 observability + deploy（Stage 7）
 
-**這個範例的程式碼大約 300 行**——比一般的 framework example 多，但每一行都是真的會用到的。
+這份 walkthrough 比單一 framework 小練習長，因為它要讓你看見同一個 agent 如何一層一層長大；每一步仍應該能單獨執行與檢查。
+
+---
+
+## ➡️ 下一站：把這個 Agent 接回主路線
+
+1. 讀 [Stage 7.5 — 進階 Agentic 概念](../stages/07.5-advanced-agentic-concepts.md)，替剛完成的系統選真正需要的進階做法。
+2. 再讀 [Stage 8 — Agent Interfaces](../stages/08-agent-interfaces.md)，決定它需要 Search、Browser Use、Computer Use 還是 Sandbox，並補上安全邊界。
+3. 想改走另一條路時，回到[主路線 README](../README.md)。
 
 ---
 
@@ -606,9 +614,9 @@ docker run -p 8000:8000 \
 
 如果你想再玩更深，這個 paper-summary-bot 可以延伸成：
 
-- **Multi-agent paper review**：兩個 agent 分別當 supportive reviewer 跟 adversarial reviewer，第三個 agent 當 area chair → for-researcher branch
-- **Conference report generator**：給定一個 conference proceedings URL，產出每個 track 的高層摘要 → 知識工作者 branch
-- **同主題論文趨勢追蹤**：每週掃 arXiv，找新論文跟現有 memory 比較，產 weekly digest → 個人助理 branch
+- **Multi-agent paper review**：兩個 agent 分別當 supportive reviewer 跟 adversarial reviewer，第三個 agent 當 area chair → [研究人員路徑](../branches/for-researcher.md)
+- **Conference report generator**：給定一個 conference proceedings URL，產出每個 track 的高層摘要 → [知識工作者路徑](../branches/for-knowledge-worker.md)
+- **同主題論文趨勢追蹤**：每週掃 arXiv，找新論文跟現有 Memory 比較，產出 weekly digest → [日常使用者路徑](../branches/for-everyday-users.md)
 
 每條都對應一個 specialized branch。
 

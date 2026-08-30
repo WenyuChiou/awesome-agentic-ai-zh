@@ -17,6 +17,16 @@ LOCALES = {
         "track_b": "### Track B",
         "optional": ("建議", "不擋"),
         "stage5_core": "5.1–5.4",
+        "stage5_optional": "5.5–5.8",
+        "readme_example_label": "可直接執行的小練習",
+        "readme_forbidden": ("illustrative", "1-5", "想 USE", "想 BUILD", "5.5-5.7", "5.5–5.7"),
+        "readme_sdk_condition": "需要連模型時",
+        "walkthrough_next": (
+            "../stages/07.5-advanced-agentic-concepts.md",
+            "../stages/08-agent-interfaces.md",
+            "../README.md",
+        ),
+        "walkthrough_stale": ("300 行", "for-researcher branch", "個人助理 branch"),
         "legacy_a2_anchor": "-進-a3-前的自我檢查",
         "legacy_stage5_anchor": "-進入-stage-6-前的自我檢查",
         "legacy_roadmap_anchors": (
@@ -35,6 +45,7 @@ LOCALES = {
             "2026-05 snapshot",
             "Stage 2 / Stage 3 2026 freshness 小修",
             "GitHub Pages,評估中",
+            "首頁學習地圖之後再重畫",
         ),
         "stage3_title": "Stage 3 — 工具使用與第一個 Agent Loop",
         "stage3_topic": "工具使用與第一個 Agent Loop",
@@ -50,6 +61,16 @@ LOCALES = {
         "track_b": "### Track B",
         "optional": ("recommended", "does not block"),
         "stage5_core": "5.1–5.4",
+        "stage5_optional": "5.5–5.8",
+        "readme_example_label": "small runnable examples",
+        "readme_forbidden": ("illustrative", "1-5", "5.5-5.7", "5.5–5.7"),
+        "readme_sdk_condition": "When a model connection is needed",
+        "walkthrough_next": (
+            "../stages/07.5-advanced-agentic-concepts.en.md",
+            "../stages/08-agent-interfaces.en.md",
+            "../README.en.md",
+        ),
+        "walkthrough_stale": ("300 lines", "for-researcher branch", "personal-assistant branch"),
         "legacy_a2_anchor": "-self-check-before-a3",
         "legacy_stage5_anchor": "-self-check-before-stage-6",
         "legacy_roadmap_anchors": (
@@ -68,6 +89,7 @@ LOCALES = {
             "2026-05 snapshot",
             "Stage 2 / Stage 3 2026 freshness",
             "GitHub Pages, under evaluation",
+            "homepage learning map is redrawn",
         ),
         "stage3_title": "Stage 3 — Tool Use & Your First Agent Loop",
         "stage3_topic": "Tool Use & Your First Agent Loop",
@@ -83,6 +105,16 @@ LOCALES = {
         "track_b": "### Track B",
         "optional": ("建议", "不影响"),
         "stage5_core": "5.1–5.4",
+        "stage5_optional": "5.5–5.8",
+        "readme_example_label": "可直接运行的小练习",
+        "readme_forbidden": ("illustrative", "1-5", "想 USE", "想 BUILD", "5.5-5.7", "5.5–5.7"),
+        "readme_sdk_condition": "需要连接模型时",
+        "walkthrough_next": (
+            "../stages/07.5-advanced-agentic-concepts.zh-Hans.md",
+            "../stages/08-agent-interfaces.zh-Hans.md",
+            "../README.zh-Hans.md",
+        ),
+        "walkthrough_stale": ("300 行", "for-researcher branch", "个人助理 branch"),
         "legacy_a2_anchor": "-进入-a3-前的自我检查",
         "legacy_stage5_anchor": "-进入-stage-6-前的自我检查",
         "legacy_roadmap_anchors": (
@@ -101,6 +133,7 @@ LOCALES = {
             "2026-05 snapshot",
             "Stage 2 / Stage 3 2026 freshness 小修",
             "GitHub Pages,评估中",
+            "首页学习地图之后再重画",
         ),
         "stage3_title": "Stage 3 — 工具使用与第一个 Agent Loop",
         "stage3_topic": "工具使用与第一个 Agent Loop",
@@ -249,6 +282,31 @@ def test_track_a_capstone_keeps_stage8_optional(
 
 
 @pytest.mark.parametrize("locale,config", LOCALES.items())
+def test_readme_keeps_stage5_core_and_every_optional_section(
+    locale: str, config: dict[str, object]
+) -> None:
+    suffix = str(config["suffix"])
+    readme = read(locale_path("README", suffix))
+    stage5 = read(locale_path("stages/05-claude-code-ecosystem", suffix))
+
+    assert str(config["stage5_core"]) in readme
+    assert str(config["stage5_optional"]) in readme
+    assert "## 5.8" in stage5
+
+
+@pytest.mark.parametrize("locale,config", LOCALES.items())
+def test_readme_uses_plain_runnable_example_copy(
+    locale: str, config: dict[str, object]
+) -> None:
+    text = read(locale_path("README", str(config["suffix"])))
+
+    assert str(config["readme_example_label"]).casefold() in text.casefold()
+    assert str(config["readme_sdk_condition"]) in text
+    for stale in config["readme_forbidden"]:
+        assert str(stale).casefold() not in text.casefold(), (locale, stale)
+
+
+@pytest.mark.parametrize("locale,config", LOCALES.items())
 def test_roadmap_states_the_exact_canonical_routes(
     locale: str, config: dict[str, object]
 ) -> None:
@@ -282,6 +340,36 @@ def test_roadmap_drops_completed_or_stale_gap_claims(
     text = read(locale_path("ROADMAP", str(config["suffix"])))
     for stale in config["roadmap_stale"]:
         assert stale not in text, (locale, stale)
+
+
+@pytest.mark.parametrize("locale,config", LOCALES.items())
+def test_walkthrough_returns_to_stage75_stage8_and_role_paths(
+    locale: str, config: dict[str, object]
+) -> None:
+    text = read(
+        locale_path("walkthroughs/build-first-agent-in-7-steps", str(config["suffix"]))
+    )
+
+    for target in config["walkthrough_next"]:
+        assert str(target) in text, (locale, target)
+    for target in (
+        "../branches/for-researcher",
+        "../branches/for-knowledge-worker",
+        "../branches/for-everyday-users",
+    ):
+        assert target in text, (locale, target)
+    for stale in config["walkthrough_stale"]:
+        assert str(stale) not in text, (locale, stale)
+    assert not re.search(r"~\d+\s*(?:行|lines)", text), locale
+
+
+def test_stage_design_matches_current_stage0_and_stage5_shapes() -> None:
+    text = read(ROOT / "stages/DESIGN.md")
+
+    assert "1 個整合練習：公開 GitHub API → JSON → terminal → Git" in text
+    assert "九個核心詞、五題累加練習、5.1–5.8 延伸入口" in text
+    assert "4 個 動手練習 self-test" not in text
+    assert "4 個 sub-stage" not in text
 
 
 @pytest.mark.parametrize("locale,config", LOCALES.items())

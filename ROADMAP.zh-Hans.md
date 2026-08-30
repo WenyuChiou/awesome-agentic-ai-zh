@@ -22,7 +22,7 @@
 - Track A：`A1 → A2 → Stage 5 → A3 → Stage 8`
 - Track B：`Stage 3 → Stage 4 → Stage 5 → Stage 6 → Stage 7 → Stage 7.5 → Stage 8`
 
-Track A 做完 A3 就能开始 Capstone；Stage 8 建议完成，但不影响入场。文字与测试先定稿，首页学习地图之后再重画。
+Track A 做完 A3 就能开始 Capstone；Stage 8 建议完成，但不影响入场。首页学习地图、文字和测试现在使用同一条路线；以后调整顺序时，三者要一起更新。
 
 ### 2. 整理五条角色路径
 
