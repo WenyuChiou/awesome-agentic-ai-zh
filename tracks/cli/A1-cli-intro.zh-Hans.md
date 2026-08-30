@@ -60,9 +60,6 @@
 
 ## 📚 必读
 
-<details markdown="1">
-<summary>展开官方阅读、账号和预算说明</summary>
-
 - [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) 和 [permissions](https://code.claude.com/docs/en/permissions)
 - [Codex CLI](https://learn.chatgpt.com/docs/codex/cli)
 - [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) 和 [sandbox 设置](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
@@ -71,8 +68,6 @@
 - [OpenRouter FAQ](https://openrouter.ai/docs/faq) 和 [Ollama](https://ollama.com/)
 
 每次 cloud 请求的单次费用和本章总费用，都会因账号、provider、模型、输入输出 token 和订阅额度而变化；练习前查看当天的官方价格或 usage 页面。只有 agent 和 provider 都设置为只连接本机 Ollama，且没有另外调用云端服务时，这次练习才不会产生模型 API 费用；文件和命令权限仍要照常检查。
-</details>
-
 ## 🛠 动手练习
 
 <a id="cli-1"></a>
@@ -135,9 +130,6 @@
 
 A1 只教你安全开始，不在两个页面重复维护同一份易变数据。9 个工具的登录、provider、sandbox 和官方来源集中放在 [`CLI Agents 参考指南`](../../resources/cli-agents-guide.zh-Hans.md)。官方资料查核日：**2026-08-27 UTC**。
 
-<details markdown="1">
-<summary>展开 11 条完整工具评分表</summary>
-
 推荐度是本学习地图的编辑建议，不是 GitHub stars 或总排名。`⭐⭐⭐⭐⭐` 表示：如果你选择这条工具路径，这一行应先看；不是让你安装所有五星工具。
 
 <table>
@@ -162,8 +154,6 @@ A1 只教你安全开始，不在两个页面重复维护同一份易变数据�
 <tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>想在自己电脑上运行模型的人</td><td>它是 local runtime，仍要搭配 agent</td></tr>
 </tbody>
 </table>
-</details>
-
 <details markdown="1">
 <summary>展开“工具、Router、local runtime”的最短辨识法</summary>
 

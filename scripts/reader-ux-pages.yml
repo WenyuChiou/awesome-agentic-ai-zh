@@ -11,6 +11,14 @@ forbidden_open_summary_terms:
   en: [time, prerequisite, environment, cost, budget, required reading, supplementary, optional, troubleshooting, resources]
   zh-Hans: [时间, 先备, 环境, 费用, 预算, 必读, 补充, 选修, 疑难排解, 排错, 资源]
 
+# Important learning-path content must not be hidden in a closed disclosure.
+# A dedicated full catalog may stay disclosed by category when it is not
+# enrolled as a chapter/track reader path in this manifest.
+forbidden_closed_summary_terms:
+  zh-TW: [必修閱讀, 必讀, 精選 Project, 學習資源]
+  en: [required reading, required resources, curated project, featured project, learning resource]
+  zh-Hans: [必修阅读, 必读, 精选 Project, 学习资源]
+
 pages:
   - id: stage-00
     canonical: stages/00-foundations.md
@@ -18,9 +26,9 @@ pages:
       en: stages/00-foundations.en.md
       zh-Hans: stages/00-foundations.zh-Hans.md
     max_visible_chars:
-      zh-TW: 2125
-      en: 3493
-      zh-Hans: 2165
+      zh-TW: 5238
+      en: 7715
+      zh-Hans: 5289
     max_open_details: 0
     required_visible_sections:
       skip-check:
@@ -53,6 +61,18 @@ pages:
         zh-Hans:
           heading: "✅ 完成检查"
           anchor: -完成检查
+      resources:
+        zh-TW:
+          heading: "🎯 精選學習資源"
+          anchor: -精選學習資源
+        en:
+          heading: "🎯 Curated Learning Resources"
+          anchor: -curated-learning-resources
+        zh-Hans:
+          heading: "🎯 精选学习资源"
+          anchor: -精选学习资源
+    visible_section_minimums:
+      resources: {min_links: 18, min_ratings: 18}
     resource_group_rowspans: [5, 4, 3, 3, 3]
     parity:
       ordered_external_urls: true
@@ -64,9 +84,9 @@ pages:
       en: stages/01-llm-basics.en.md
       zh-Hans: stages/01-llm-basics.zh-Hans.md
     max_visible_chars:
-      zh-TW: 6771
-      en: 10298
-      zh-Hans: 6764
+      zh-TW: 7162
+      en: 10785
+      zh-Hans: 7156
     max_open_details: 3
     required_visible_sections:
       core-terms:
@@ -79,6 +99,16 @@ pages:
         zh-Hans:
           heading: "三个核心词"
           anchor: 三个核心词
+      required-reading:
+        zh-TW:
+          heading: "📚 必修閱讀"
+          anchor: -必修閱讀
+        en:
+          heading: "📚 Required Reading"
+          anchor: -required-reading
+        zh-Hans:
+          heading: "📚 必修阅读"
+          anchor: -必修阅读
       exercise-1:
         zh-TW:
           heading: "練習 1：LLM API（hello world）"
@@ -119,6 +149,8 @@ pages:
         zh-Hans:
           heading: "练习 6：Local LLM"
           anchor: 练习-6local-llm
+    visible_section_minimums:
+      required-reading: {min_links: 5}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -147,9 +179,9 @@ pages:
       en: stages/02-prompt-engineering.en.md
       zh-Hans: stages/02-prompt-engineering.zh-Hans.md
     max_visible_chars:
-      zh-TW: 3370
-      en: 6709
-      zh-Hans: 3436
+      zh-TW: 7019
+      en: 11324
+      zh-Hans: 7110
     max_open_details: 0
     parity:
       ordered_external_urls: true
@@ -250,6 +282,9 @@ pages:
         zh-Hans:
           heading: "🎯 精选 Projects"
           anchor: -精选-projects
+    visible_section_minimums:
+      required-reading: {min_links: 3}
+      projects: {min_links: 18, min_ratings: 18}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -849,11 +884,11 @@ pages:
       en: stages/05-claude-code-ecosystem.en.md
       zh-Hans: stages/05-claude-code-ecosystem.zh-Hans.md
     max_visible_chars:
-      zh-TW: 5148
-      en: 9469
-      zh-Hans: 5017
+      zh-TW: 11792
+      en: 17625
+      zh-Hans: 11629
     max_open_details: 0
-    required_details_count: 16
+    required_details_count: 14
     visible_section_order:
       - learning-goals
       - core-terms
@@ -985,6 +1020,9 @@ pages:
         zh-TW: {heading: "✅ 進入下一站前的自我檢查", anchor: -進入下一站前的自我檢查}
         en: {heading: "✅ Self-check before your next stop", anchor: -self-check-before-your-next-stop}
         zh-Hans: {heading: "✅ 进入下一站前的自我检查", anchor: -进入下一站前的自我检查}
+    visible_section_minimums:
+      required-reading: {min_links: 12}
+      projects: {min_links: 35, min_ratings: 35}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -1367,6 +1405,7 @@ pages:
       - topics
       - model-harness-fit
       - resources
+      - complete-resources
       - completion
     forbidden_terms:
       zh-TW: ["Replit Agent 2024", "Voyager paper (Wang 2024)", "Context 200k", "< 500 行", "3.5 PR/day", "75% reward hacking", "2026-05 snapshot", '""', "“”"]
@@ -1418,10 +1457,17 @@ pages:
         zh-TW: {heading: "🎯 精選閱讀：先挑一條", anchor: -精選閱讀先挑一條}
         en: {heading: "🎯 Curated reading: choose one path", anchor: -curated-reading-choose-one-path}
         zh-Hans: {heading: "🎯 精选阅读：先挑一条", anchor: -精选阅读先挑一条}
+      complete-resources:
+        zh-TW: {heading: "📚 完整學習資源與限制", anchor: -完整學習資源與限制}
+        en: {heading: "📚 Complete learning resources and limits", anchor: -complete-learning-resources-and-limits}
+        zh-Hans: {heading: "📚 完整学习资源与限制", anchor: -完整学习资源与限制}
       completion:
         zh-TW: {heading: "✅ 自我檢查", anchor: -自我檢查}
         en: {heading: "✅ Self-check", anchor: -self-check}
         zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
+    visible_section_minimums:
+      resources: {min_links: 5, min_ratings: 5}
+      complete-resources: {min_links: 24, min_ratings: 24}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: boundary-card
@@ -1459,9 +1505,9 @@ pages:
       en: stages/08-agent-interfaces.en.md
       zh-Hans: stages/08-agent-interfaces.zh-Hans.md
     max_visible_chars:
-      zh-TW: 8981
-      en: 12521
-      zh-Hans: 9066
+      zh-TW: 9477
+      en: 13148
+      zh-Hans: 9561
     max_open_details: 0
     required_details_count: 9
     visible_section_order:
@@ -1473,6 +1519,7 @@ pages:
       - safety
       - hands-on
       - resources
+      - complete-resources
       - completion
     forbidden_terms:
       zh-TW: [108k, 5 行 Python, 10 行內, < 90ms, 唯一 GPU sandbox, anthropics/anthropic-quickstarts, Stage 9, '""', "“”"]
@@ -1529,10 +1576,17 @@ pages:
         zh-TW: {heading: "🎯 精選 Projects 與學習資源", anchor: -精選-projects-與學習資源}
         en: {heading: "🎯 Featured Projects and Learning Resources", anchor: -featured-projects-and-learning-resources}
         zh-Hans: {heading: "🎯 精选 Projects 与学习资源", anchor: -精选-projects-与学习资源}
+      complete-resources:
+        zh-TW: {heading: "📚 21 筆完整學習資源與限制", anchor: -21-筆完整學習資源與限制}
+        en: {heading: "📚 21 complete learning resources and limits", anchor: -21-complete-learning-resources-and-limits}
+        zh-Hans: {heading: "📚 21 项完整学习资源与限制", anchor: -21-项完整学习资源与限制}
       completion:
         zh-TW: {heading: "✅ 自我檢查", anchor: -自我檢查}
         en: {heading: "✅ Self-check", anchor: -self-check}
         zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
+    visible_section_minimums:
+      required-reading: {min_links: 4}
+      complete-resources: {min_links: 21, min_ratings: 21}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: hands-on
@@ -1578,9 +1632,9 @@ pages:
       en: tracks/cli/A1-cli-intro.en.md
       zh-Hans: tracks/cli/A1-cli-intro.zh-Hans.md
     max_visible_chars:
-      zh-TW: 3676
-      en: 6291
-      zh-Hans: 3740
+      zh-TW: 6636
+      en: 9961
+      zh-Hans: 6700
     max_open_details: 0
     visible_section_order: [learning-goals, core-terms, required-reading, hands-on, projects, completion]
     required_visible_sections:
@@ -1709,6 +1763,9 @@ pages:
           zh-TW: {term: Local runtime, label: "Local runtime（本機模型引擎）"}
           en: {term: Local runtime, label: "Local runtime (local model engine)"}
           zh-Hans: {term: Local runtime, label: "Local runtime（本地模型引擎）"}
+    visible_section_minimums:
+      required-reading: {min_links: 13}
+      projects: {min_links: 11, min_ratings: 11}
     resource_group_rowspans: [4, 5, 2]
     parity:
       ordered_external_urls: true
@@ -1720,9 +1777,9 @@ pages:
       en: tracks/cli/A2-cli-workflow.en.md
       zh-Hans: tracks/cli/A2-cli-workflow.zh-Hans.md
     max_visible_chars:
-      zh-TW: 2699
-      en: 4938
-      zh-Hans: 2682
+      zh-TW: 6768
+      en: 9937
+      zh-Hans: 6781
     max_open_details: 0
     visible_section_order: [core-terms, learning-goals, required-reading, hands-on, projects, completion]
     required_visible_sections:
@@ -1843,6 +1900,9 @@ pages:
           zh-TW: {term: One-off prompt, label: "One-off prompt（單次提示）"}
           en: {term: One-off prompt, label: "One-off prompt (single-task prompt)"}
           zh-Hans: {term: One-off prompt, label: "One-off prompt（单次提示）"}
+    visible_section_minimums:
+      required-reading: {min_links: 8}
+      projects: {min_links: 16, min_ratings: 16}
     resource_group_rowspans: [4, 4, 4, 2, 2]
     parity:
       ordered_external_urls: true
@@ -1854,11 +1914,11 @@ pages:
       en: tracks/cli/A3-cli-production.en.md
       zh-Hans: tracks/cli/A3-cli-production.zh-Hans.md
     max_visible_chars:
-      zh-TW: 3387
-      en: 5928
-      zh-Hans: 3438
+      zh-TW: 8016
+      en: 11567
+      zh-Hans: 8087
     max_open_details: 0
-    required_details_count: 8
+    required_details_count: 6
     visible_section_order: [learning-goals, core-terms, required-reading, hands-on, projects, completion]
     forbidden_terms:
       zh-TW: [plan.yml, max_cost_usd, CLAUDE.zh-Hans.md, ★, 1-2 分鐘, 1–2 分鐘]
@@ -2007,6 +2067,9 @@ pages:
           zh-TW: {term: Observability, label: "Observability（觀測與紀錄）"}
           en: {term: Observability, label: "Observability"}
           zh-Hans: {term: Observability, label: "Observability（观测与记录）"}
+    visible_section_minimums:
+      required-reading: {min_links: 4}
+      projects: {min_links: 18, min_ratings: 18}
     resource_group_rowspans: [4, 5, 4, 3, 2]
 
   - id: cli-agents-guide
@@ -2146,6 +2209,9 @@ pages:
           en: {term: Human Review, label: Human Review}
           zh-Hans: {term: Human Review, label: "Human Review（人工审查）"}
     resource_group_rowspans: [3, 4, 5, 2, 1]
+    visible_section_minimums:
+      required-reading: {min_links: 6}
+      resources: {min_links: 15, min_ratings: 15}
 
   - id: developer-path
     canonical: branches/for-developer.md
@@ -2251,6 +2317,9 @@ pages:
           en: {term: Eval／Observability, label: Eval／Observability}
           zh-Hans: {term: Eval／Observability, label: "Eval／Observability（评测／可观测性）"}
     resource_group_rowspans: [4, 6, 2, 2]
+    visible_section_minimums:
+      required-reading: {min_links: 6}
+      resources: {min_links: 14, min_ratings: 14}
 
   - id: teacher-path
     canonical: branches/for-teacher.md

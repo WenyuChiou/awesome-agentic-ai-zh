@@ -35,14 +35,9 @@
 
 ## 📚 必读
 
-<details markdown="1">
-<summary>展开必修阅读和建议顺序</summary>
-
 1. 先看你主要使用的工具的 project-instructions 官方文档：Codex 看 [`AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、Claude Code 看 [`CLAUDE.md`](https://code.claude.com/docs/en/memory)、Gemini CLI 看 [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/)、OpenCode V2 看 [`AGENTS.md`](https://opencode.ai/v2/docs/instructions)。
 2. 再看你所用工具的 Skill 文档：[Codex/ChatGPT](https://learn.chatgpt.com/docs/build-skills)、[Claude Code](https://code.claude.com/docs/en/skills)、[Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/)、[OpenCode V2](https://opencode.ai/v2/docs/skills)。
 3. 最后回看 [Stage 2 — Prompt 设计](../../stages/02-prompt-engineering.zh-Hans.md)，把“任务、范围、成功条件”补进单次 prompt。
-</details>
-
 <details markdown="1">
 <summary>展开四个 CLI 的项目规则文件和 Skill 位置</summary>
 
@@ -162,9 +157,6 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 
 ## 🎯 精选 Projects
 
-<details markdown="1">
-<summary>展开完整学习资源表（16 条）</summary>
-
 下面按用途分成五组。同一组只显示一次分类栏，避免重复文字把表格撑乱。
 
 <table>
@@ -198,8 +190,6 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 <tr><td><code>langchain-ai/openwiki</code></td><td>建立可持续更新的 repo wiki</td><td>大型 repo 需要按需查文档时</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/langchain-ai/openwiki">GitHub repo</a></td></tr>
 </tbody>
 </table>
-</details>
-
 <a id="-进入-a3-前的自我检查"></a>
 
 ## ✅ 进入 Stage 5 前的自我检查

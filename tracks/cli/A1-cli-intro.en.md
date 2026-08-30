@@ -60,9 +60,6 @@ When it is done, you should see a repo summary, a test command, a plan waiting f
 
 ## 📚 Required Reading
 
-<details markdown="1">
-<summary>Expand official reading, account, and budget notes</summary>
-
 - [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) and [permissions](https://code.claude.com/docs/en/permissions)
 - [Codex CLI](https://learn.chatgpt.com/docs/codex/cli)
 - [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) and [sandbox configuration](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
@@ -71,8 +68,6 @@ When it is done, you should see a repo summary, a test command, a plan waiting f
 - [OpenRouter FAQ](https://openrouter.ai/docs/faq) and [Ollama](https://ollama.com/)
 
 The per-request cost and total cost for this track’s cloud requests vary with your account, provider, model, input and output tokens, and subscription quota; check the day’s official pricing or usage page before practicing. Only when both the agent and provider are configured to connect solely to local Ollama, with no other cloud service called, will this exercise have no model API charge; file and command permissions still need the usual checks.
-</details>
-
 ## 🛠 Hands-on Exercises
 
 <a id="cli-1"></a>
@@ -135,9 +130,6 @@ Requests using valid credentials may incur charges; for the first exercise, you 
 
 A1 teaches you how to start safely; it does not maintain the same fast-changing data in two pages. Sign-in, provider, sandbox, and official sources for the 9 tools are centralized in the [`CLI Agents reference guide`](../../resources/cli-agents-guide.en.md). Official data checked on: **2026-08-27 UTC**.
 
-<details markdown="1">
-<summary>Expand the complete tool ratings table (11 entries)</summary>
-
 Editorial ratings are learning-map guidance, not GitHub stars or an overall ranking. `⭐⭐⭐⭐⭐` means read this first when you choose that tool path; it does not mean install every five-star tool.
 
 <table>
@@ -162,8 +154,6 @@ Editorial ratings are learning-map guidance, not GitHub stars or an overall rank
 <tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>People running models on their own computer</td><td>It is a local runtime and still needs an agent</td></tr>
 </tbody>
 </table>
-</details>
-
 <details markdown="1">
 <summary>Expand the shortest way to distinguish “tool, Router, and local runtime”</summary>
 

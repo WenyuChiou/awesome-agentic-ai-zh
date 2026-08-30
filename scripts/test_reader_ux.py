@@ -117,6 +117,10 @@ forbidden_open_summary_terms:
   zh-TW: [時間, 選修]
   en: [time, optional]
   zh-Hans: [时间, 选修]
+forbidden_closed_summary_terms:
+  zh-TW: [必修閱讀, 學習資源]
+  en: [required reading, learning resources]
+  zh-Hans: [必读, 学习资源]
 pages:
   - id: sample
     canonical: page.md
@@ -479,6 +483,43 @@ def test_open_optional_or_setup_content_is_forbidden() -> None:
     body = "<details open>\n<summary>選修：有時間再做</summary>\nok\n</details>\n"
     rc, out = _run(body, config=_config(opens=1))
     assert rc == 1 and "forbidden open summary" in out, out
+
+
+def test_required_learning_content_cannot_hide_in_closed_details() -> None:
+    body = (
+        "<details>\n"
+        "<summary>Required reading and learning resources</summary>\n"
+        "[Official guide](https://example.com)\n"
+        "</details>\n"
+    )
+    rc, out = _run(body)
+    assert rc == 1 and "forbidden closed summary" in out, out
+
+
+def test_open_required_reading_inside_closed_parent_is_still_hidden() -> None:
+    body = (
+        "<details>\n"
+        "<summary>More</summary>\n"
+        "<details open>\n"
+        "<summary>Required reading</summary>\n"
+        "[Official guide](https://example.com)\n"
+        "</details>\n"
+        "</details>\n"
+    )
+    rc, out = _run(body)
+    assert rc == 1 and "forbidden closed summary" in out, out
+
+
+def test_schema_v1_config_without_closed_summary_terms_remains_compatible() -> None:
+    config = _config().replace(
+        "forbidden_closed_summary_terms:\n"
+        "  zh-TW: [必修閱讀, 學習資源]\n"
+        "  en: [required reading, learning resources]\n"
+        "  zh-Hans: [必读, 学习资源]\n",
+        "",
+    )
+    rc, out = _run("<details>\n<summary>Required reading</summary>\n</details>\n", config=config)
+    assert rc == 0, out
 
 
 def test_required_heading_inside_closed_details_is_not_visible() -> None:
@@ -845,6 +886,10 @@ forbidden_open_summary_terms:
   zh-TW: [時間]
   en: [time]
   zh-Hans: [时间]
+forbidden_closed_summary_terms:
+  zh-TW: [必修閱讀]
+  en: [required reading]
+  zh-Hans: [必读]
 pages: [not-a-mapping]
 """
     rc, out = _run("ok", config=bad)

@@ -92,9 +92,6 @@
 
 開始前只看兩個入口：[Claude Code quickstart](https://code.claude.com/docs/en/quickstart) 幫你安裝並開啟第一個工作階段；[How Claude remembers your project](https://code.claude.com/docs/en/memory) 幫你寫第一題的 `CLAUDE.md`。其他文件遇到對應名詞時再查，不用一次讀完。
 
-<details markdown="1">
-<summary>展開官方閱讀順序</summary>
-
 1. [Claude Code quickstart](https://code.claude.com/docs/en/quickstart) — 安裝與第一個工作階段。
 2. [Extend Claude Code](https://code.claude.com/docs/en/features-overview) — 一張官方表分清 CLAUDE.md、Skill、MCP、Hook、Plugin 與 Subagent。
 3. [How Claude remembers your project](https://code.claude.com/docs/en/memory) — `CLAUDE.md`、Rules 和 auto memory 的邊界。
@@ -104,8 +101,6 @@
 7. [Plugins](https://code.claude.com/docs/en/plugins) — 打包與分享擴充元件。
 8. [Subagents](https://code.claude.com/docs/en/sub-agents)、[parallel agents](https://code.claude.com/docs/en/agents) 與 [Dynamic workflows](https://code.claude.com/docs/en/workflows) — 隔離、協作與大規模腳本編排。
 9. [Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview) — 只有要嵌進程式時再讀。
-
-</details>
 
 ## 🛠 動手練習
 
@@ -511,9 +506,6 @@ SDK 會執行命令並保存 session state，不能把它當成普通 stateless 
 
 **本章先做這個：** [`tool-calling-tutor`](../examples/stage-5/tool-calling-tutor/README.md) ⭐⭐⭐⭐⭐ — 它是 repo 內可直接照著做的 Skill 範例。要查 Claude Code 本身的版本與問題，再看 [`anthropics/claude-code`](https://github.com/anthropics/claude-code) ⭐⭐⭐⭐⭐。
 
-<details markdown="1">
-<summary>展開 35 筆分組資源與查核日期</summary>
-
 <small>資料查核：2026-08-29 UTC</small>
 
 <table>
@@ -568,8 +560,6 @@ SDK 會執行命令並保存 session state，不能把它當成普通 stateless 
 <tr><td><a href="https://github.com/wshobson/agents">wshobson/agents</a></td><td>⭐⭐⭐⭐</td><td>從實際 Agent 定義觀察 harness 的可讀性與權限表面。</td></tr>
 </tbody>
 </table>
-
-</details>
 
 <a id="-進入-stage-6-前的自我檢查"></a>
 

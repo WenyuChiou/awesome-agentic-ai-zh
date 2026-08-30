@@ -66,9 +66,6 @@ The local path costs $0 per call (though it uses electricity and time). For 3–
 
 Know where these five official entry points are; open them when needed instead of reading everything first.
 
-<details markdown="1">
-<summary>📚 Expand required reading and recommended order</summary>
-
 Read 1–3 before starting the exercises; consult 4–5 when you need tokenizer or local-runtime details:
 
 1. [Anthropic Claude model overview](https://platform.claude.com/docs/en/models/overview) — model names, context, and pricing entry point.
@@ -76,8 +73,6 @@ Read 1–3 before starting the exercises; consult 4–5 when you need tokenizer 
 3. [Google Gemini models](https://ai.google.dev/gemini-api/docs/models) — GA/Preview status and context.
 4. [Hugging Face LLM Course: Tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) — how tokenizers split text.
 5. [Ollama](https://ollama.com) — installing and serving local models.
-
-</details>
 
 ## 🛠 Hands-On Exercises
 

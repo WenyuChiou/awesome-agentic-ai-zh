@@ -69,6 +69,7 @@ class PageMetrics:
     details_count: int
     open_details_count: int
     open_summaries: list[str]
+    closed_summaries: list[str]
     visible_headings_outside_details: list[tuple[str, str]]
     visible_source: str
 
@@ -143,6 +144,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
     visible_lines: list[str] = []
     visible_measurement_lines: list[str] = []
     open_summaries: list[str] = []
+    closed_summaries: list[str] = []
     outside_headings: list[tuple[str, str]] = []
     errors: list[str] = []
     open_details_count = 0
@@ -197,8 +199,10 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
             # A summary is visible only when every ancestor disclosure is open.
             if all(stack[:-1]):
                 append_visible(line)
-            if stack[-1]:
+            if all(stack):
                 open_summaries.append(_plain(summary.group(1)))
+            else:
+                closed_summaries.append(_plain(summary.group(1)))
             continue
 
         heading = HEADING_RE.match(line)
@@ -224,6 +228,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
         details_count,
         open_details_count,
         open_summaries,
+        closed_summaries,
         outside_headings,
         visible_source,
     ), errors
@@ -641,16 +646,33 @@ def _load_config(path: Path) -> dict[str, Any]:
         raise ValueError("reader UX config must use schema_version: 1")
     if not isinstance(data.get("pages"), list) or not data["pages"]:
         raise ValueError("reader UX config needs a non-empty pages list")
-    terms = data.get("forbidden_open_summary_terms")
-    if not isinstance(terms, dict) or set(terms) != set(LOCALES):
-        raise ValueError("forbidden_open_summary_terms must define zh-TW, en, and zh-Hans")
-    for locale, values in terms.items():
-        if not isinstance(values, list) or not values or any(
-            not isinstance(value, str) or not value.strip() for value in values
-        ):
-            raise ValueError(
-                f"forbidden_open_summary_terms.{locale} must be a non-empty string list"
-            )
+    for key in ("forbidden_open_summary_terms",):
+        terms = data.get(key)
+        if not isinstance(terms, dict) or set(terms) != set(LOCALES):
+            raise ValueError(f"{key} must define zh-TW, en, and zh-Hans")
+        for locale, values in terms.items():
+            if not isinstance(values, list) or not values or any(
+                not isinstance(value, str) or not value.strip() for value in values
+            ):
+                raise ValueError(
+                    f"{key}.{locale} must be a non-empty string list"
+                )
+
+    closed_terms = data.get("forbidden_closed_summary_terms")
+    if closed_terms is None:
+        data["forbidden_closed_summary_terms"] = {locale: [] for locale in LOCALES}
+    elif not isinstance(closed_terms, dict) or set(closed_terms) != set(LOCALES):
+        raise ValueError(
+            "forbidden_closed_summary_terms must define zh-TW, en, and zh-Hans"
+        )
+    else:
+        for locale, values in closed_terms.items():
+            if not isinstance(values, list) or any(
+                not isinstance(value, str) or not value.strip() for value in values
+            ):
+                raise ValueError(
+                    f"forbidden_closed_summary_terms.{locale} must be a string list"
+                )
 
     page_ids: set[str] = set()
     page_paths: set[str] = set()
@@ -953,6 +975,15 @@ def check(config_path: Path) -> list[str]:
                 if hits:
                     failures.append(
                         f"{label}: forbidden open summary {summary!r} contains {', '.join(hits)}"
+                    )
+
+            terms = config["forbidden_closed_summary_terms"][locale]
+            for summary in metrics.closed_summaries:
+                lowered = summary.casefold()
+                hits = [str(term) for term in terms if str(term).casefold() in lowered]
+                if hits:
+                    failures.append(
+                        f"{label}: forbidden closed summary {summary!r} contains {', '.join(hits)}"
                     )
 
             for section_id, localized in sections.items():

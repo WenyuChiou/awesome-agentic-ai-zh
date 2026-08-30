@@ -46,8 +46,7 @@
 
 ## 📚 必读
 
-<details markdown="1">
-<summary>展开必读资料与阅读顺序（查核于 2026-08-27 UTC）</summary>
+<small>必读资料与学习资源核查：2026-08-27 UTC</small>
 
 1. 先看 [MCP Connect to local servers](https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers)，了解 server 只能拿到你交给它的路径。
 2. 再看 [GitHub Actions Security Hardening](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions)，先理解 least privilege 和不可信 PR。
@@ -55,9 +54,6 @@
    - Claude Code：[官方 GitHub Actions 文档](https://code.claude.com/docs/en/github-actions)
    - Codex：[官方 GitHub Action 文档](https://learn.chatgpt.com/docs/github-action)
 4. 需要 trace、eval 或完整 production 理论时，再进入 [Stage 7](../../stages/07-multi-agent-production.zh-Hans.md) 和 [Stage 7.5](../../stages/07.5-advanced-agentic-concepts.zh-Hans.md)。
-
-查核日期只代表上面的资料在当天已检查，不代表它们永远不会改变。
-</details>
 
 ## 🛠 动手练习
 
@@ -209,9 +205,6 @@ Skill 的核心意思可以共用，但文件夹、权限、frontmatter 和安�
 
 推荐度是本学习地图的编辑建议，不是 GitHub stars。`⭐⭐⭐⭐⭐` 表示这条学习路径的必读／必做入口；它不代表工具永远安全，也不代表 production 可以跳过自己的 threat model。
 
-<details markdown="1">
-<summary>展开完整学习资源表（18 项，查核于 2026-08-27 UTC）</summary>
-
 <table>
 <thead>
 <tr><th scope="col">类型</th><th scope="col">资源</th><th scope="col">先看什么</th><th scope="col">何时使用</th><th scope="col">推荐度</th><th scope="col">来源</th></tr>
@@ -247,8 +240,6 @@ Skill 的核心意思可以共用，但文件夹、权限、frontmatter 和安�
 </table>
 
 目录只帮你“找到候选项”，不替候选项保证安全。安装任何 MCP、Action、Skill 或 plugin 前，都要再查看 source、权限、最近维护状态和移除方法。
-</details>
-
 ## ✅ Track A 完成检查
 
 - [ ] MCP 只拿到 demo 文件夹或最小的 read-only toolset。

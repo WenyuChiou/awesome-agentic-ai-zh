@@ -330,7 +330,7 @@ This rule applies to the entire learning map. The goal is for a five-year-old to
 - Preserve the resource count, order, links, and three-locale correspondence, then verify the rendered result with MkDocs.
 - Keep short tables without repeated categories in Markdown to avoid needless maintenance cost.
 
-Pages containing models, prices, context limits, licenses, or lifecycle states place the visible verification date in the most relevant closed detail and render it as small text. Keep only the invisible machine marker near the page top:
+Pages containing models, prices, context limits, licenses, or lifecycle states render the verification date as small text beside the affected table or section. Let it follow a disclosure only when that content is itself supplemental. Keep only the invisible machine marker near the page top:
 
 ```markdown
 <small>Data checked: YYYY-MM-DD UTC</small>
@@ -340,7 +340,7 @@ Pages containing models, prices, context limits, licenses, or lifecycle states p
 
 State only the checked scope and date; do not repeat generic permanence disclaimers. All three locale markers must be identical; `canonical` always points to the Traditional Chinese source page. If an official source does not publish a field, write “not published by the official source” instead of inferring it from a third-party leaderboard. Third-party benchmarks may only teach readers how to run their own evaluation.
 
-**Stage 0 exception**: it may omit `Curated Projects` and `Entry Conditions` because it is a prerequisite gateway. The visible path keeps the skip check, four learning goals, one integrated practice, and a short completion check. Time, environment, extra practice, terms, and learning resources stay collapsed by default.
+**Stage 0 exception**: it may omit `Curated Projects` and `Entry Conditions` because it is a prerequisite gateway. The visible path keeps the skip check, four learning goals, one integrated practice, all 18 rated learning resources, and a short completion check. Time, environment, extra practice, and terms stay collapsed by default.
 
 ---
 
@@ -406,7 +406,7 @@ Branch entries can be more concise than stage entries (full schema table optiona
 
 A role page that has completed its retrospective and is enrolled in `scripts/reader-ux-pages.yml` keeps the visible path `📌 → 🎯 → 🧩 → 🛠 → 📚 → ✅` in every locale: explain the path, list learning goals, define bold core terms, give a copyable small task, offer entry points, and finish with a completion check. Define each term in plain language before keeping its exact technical name. Simplification must not delete a term used later.
 
-The first task must be small, testable, and reversible. When it changes files, state the read-only plan, human approval, diff, test, rollback, and the boundary that the agent must not push, merge, or deploy alone. Decide disclosure by whether the learner needs the item now, not by whether it is called reading or a project: keep the 1–3 sources, recommended entry points, and safety warnings needed for the first task visible; put the full reading order, long resource catalog, alternatives, cost, advanced workflows, and troubleshooting in closed `<details markdown="1">` blocks. Put each empty legacy anchor beside its semantic replacement heading or summary, and keep a visible link back to the main route.
+The first task must be small, testable, and reversible. When it changes files, state the read-only plan, human approval, diff, test, rollback, and the boundary that the agent must not push, merge, or deploy alone. Keep required reading, curated projects, the complete rated learning-resource table, and safety warnings visible. Put alternatives, cost, advanced workflows, and troubleshooting in closed `<details markdown="1">` blocks. A dedicated very large catalog may keep every category and safety boundary visible while revealing hundreds of entries by category on demand. Put each empty legacy anchor beside its semantic replacement heading or summary, and keep a visible link back to the main route.
 
 Separate core identity from surfaces. IDE, CLI, desktop, cloud, CI, and SDK may be multi-valued; they are not mutually exclusive categories. OpenRouter is a Provider／Router, Ollama is a Model／Runtime, and coding agent／harness is a separate identity axis.
 

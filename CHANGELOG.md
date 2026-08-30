@@ -8,6 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-30
 
+- **reader UX / site-wide learning contract** · **把必修閱讀、精選專案與完整五星學習資源正式列為三語可見主線**：Stage 0／1／2／5 與 Track A1–A3 移除包住重要內容的最外層選單，原有資源數量、URL、順序、分組與評分不變；Stage 8 另把四份必讀從時間／環境選單分出。共用 checker 新增關閉選單名稱阻擋，並以逐頁最少連結／評分鎖住 Stage 0–8、Stage 7.5、Track A1–A3 與研究人員／開發者路線。只有專門的大型 MCP／Skills catalog 維持「分類與安全邊界可見、分類內上百筆項目按需展開」；GitHub API UTC 日期於 `2026-08-30T07:33:14Z` 確認。本層疊在 Draft PR #200 上，未經使用者同意不合併或清理 branch／worktree。
 - **reader UX / Stage 8** · **21 筆完整五星 Projects／學習資源改為三語直接可見**：五筆精選入口與 `5／5／4／5／2` 五組完整資源表都留在主線，URL、順序、狀態／授權限制、編輯評分、安靜查核日期與真正 HTML `rowspan` 原樣保留；只移除包住完整表格的最外層選單。Computer Use／OSWorld、Browser Use、Sandbox、Track A／B 深解、安全案例與 Voice／VLA 仍放在 9 個預設關閉選單。Stage 8 contract 新增 details nesting-depth regression，逐筆證明資源沒有被後續選單重新藏起來；本層疊在 Draft PR #199 上，未經使用者同意不合併或清理 branch／worktree。
 - **reader UX / Stage 7.5** · **24 筆完整五星學習資源改為三語直接可見**：五筆精選閱讀與 `5／5／5／5／4` 的五組完整資源表都留在主線，URL、順序、限制、編輯評分與真正 HTML `rowspan` 原樣保留；只移除包住完整表格的最外層選單。時間、來源深解、失敗案例、cross-vendor／coding harness、benchmark、Dynamic Workflows 與 Model–Harness Fit 證據仍放在 8 個預設關閉選單。Stage 7.5 contract 新增 details nesting-depth regression，逐筆證明資源沒有被後續選單重新藏起來；本層疊在 Draft PR #198 上，未經使用者同意不合併或清理 branch／worktree。
 - **reader UX / Stage 7 examples** · **五組可執行範例的三語必讀與評分學習資源改為直接可見**：依 `3／6／7／4／5` 分布的全部 25 筆資源、星級、官方／章節式深入入口與安靜查核日期原樣保留，只移除最外層資源選單；實際模型路徑、平台替代指令、程式走查與排錯仍預設收合。Stage 7 example contract 同步鎖住 15 份 README 的資源 heading、逐題精確數量與選單外落腳，避免重要下一步再次被折回去或被過度刪減；本層疊在 Draft PR #197 上，未經使用者同意不合併或清理 branch／worktree。
