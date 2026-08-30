@@ -345,8 +345,7 @@ Amazon 案件也不能簡化成「某 browser 被全面禁止存取 Amazon」。
 <a id="-常用工具推薦按用途分類"></a>
 <a id="-精選-projects範本--sdk--工具-collection"></a>
 
-<details markdown="1">
-<summary>21 筆完整資源表（依用途合併分類）</summary>
+## 📚 21 筆完整學習資源與限制
 
 <small>資料查核：2026-08-28 UTC。星號是本專案的教學推薦度，不是 GitHub stars。</small>
 
@@ -388,8 +387,6 @@ Amazon 案件也不能簡化成「某 browser 被全面禁止存取 Amazon」。
 </table>
 
 OmniParser 的 weights 要逐版本讀：<code>icon_detect_v3</code> 採 MIT 授權的 YOLOv9 實作；較早的 Ultralytics detectors 保留 AGPL；caption models 採 MIT。它們都不是 repository CC-BY-4.0 授權的同義詞。
-
-</details>
 
 <a id="-下一個-frontier--voice-agents--vla-機器人"></a>
 <a id="voice-agents語音介面"></a>

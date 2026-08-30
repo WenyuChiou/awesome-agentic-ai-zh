@@ -348,8 +348,7 @@ Amazon 案件也不能简化成“某 browser 被全面禁止访问 Amazon”。
 <a id="-常用工具推荐按用途分类"></a>
 <a id="-精选项目模板--sdk--工具合集"></a>
 
-<details markdown="1">
-<summary>21 项完整资源表（按用途合并分类）</summary>
+## 📚 21 项完整学习资源与限制
 
 <small>资料核查：2026-08-28 UTC。星号是本项目的教学推荐度，不是 GitHub stars。</small>
 
@@ -391,8 +390,6 @@ Amazon 案件也不能简化成“某 browser 被全面禁止访问 Amazon”。
 </table>
 
 OmniParser 的 weights 要逐版本读：<code>icon_detect_v3</code> 使用 MIT 授权的 YOLOv9 实现；较早的 Ultralytics detectors 保留 AGPL；caption models 使用 MIT。它们都不是 repository CC-BY-4.0 授权的同义词。
-
-</details>
 
 <a id="-下一个前沿--voice-agents--vla-机器人"></a>
 <a id="voice-agents语音界面"></a>

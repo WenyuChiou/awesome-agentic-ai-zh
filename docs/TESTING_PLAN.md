@@ -163,13 +163,14 @@ Nine distinct locale PNGs cover the four problem groups, the five-branch reading
 ### Stage 8 — interface choice and safety map covered
 
 Stage 8 keeps eight bold core terms, the four parallel interface choices, four safety checks,
-two immediately copyable first actions, all four exercise titles and outcomes, and a short self-check visible. Ten closed disclosures
+two immediately copyable first actions, all four exercise titles and outcomes, five featured entries,
+the complete 21-entry rated resource table, and a short self-check visible. Nine closed disclosures
 hold current Computer Use contracts, OSWorld benchmark discipline, Browser Use signals, Sandbox
-terminology, Track A／B depth, security cases, 21 resources, and future interfaces. The four choice
+terminology, Track A／B depth, security cases, and future interfaces. The four choice
 cards are alternatives chosen by task need; the test rejects wording that turns them into a ladder.
 
-`scripts/test_stage08_content.py` locks the three locales to the same eight terms, ten closed
-disclosures, 21 resource URL/rating pairs, five accessible rowgroups (`5／5／4／5／2`), one matching
+`scripts/test_stage08_content.py` locks the three locales to the same eight terms, nine closed
+disclosures, 21 visible resource URL/rating pairs, five accessible rowgroups (`5／5／4／5／2`), one matching
 freshness marker, all legacy H2／H3 anchors, safe `example.com` exercises, current tool and license
 facts, and identical official-source order. It rejects the old Computer Use preview contract,
 unsupported model rankings, volatile GitHub stars, fixed line/startup claims, blanket Gemini
@@ -178,11 +179,14 @@ also executes the copyable policy example: only explicit low-impact actions over
 allowlisted host pass; mixed-case high-impact actions ask, while unknown actions, userinfo, non-HTTPS
 schemes, and look-alike hosts fail closed. Resource checks require Cloudflare Sandbox SDK to remain
 labelled Beta with APIs that may change before v1.0, so a live repository cannot be mistaken for a stable product.
+A nesting-depth regression requires the resource heading, check date, table, every URL, and document end
+to remain outside `<details>`.
 
 Six locale-specific PNGs cover interface selection and the four safety checks. The test requires
 readable dimensions, six distinct hashes, and exact locale references; `scripts/check-image-locale.py`
-provides the whole-repository mirror check. `scripts/check-reader-ux.py` locks the collapsed mainline
-at `4,625／7,281／4,702` non-whitespace characters with only a 50-character allowance per locale,
+provides the whole-repository mirror check. `scripts/check-reader-ux.py` locks the progressive mainline,
+including the visible resource table, at `8,931／12,471／9,016` non-whitespace characters with only a
+50-character allowance per locale,
 and requires all eight core terms before Exercise 1. The freshness gate separately enforces
 the 90-day fact pack for Computer Use, Browser Use, sandboxes, availability, benchmarks, and security.
 

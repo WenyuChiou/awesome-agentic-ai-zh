@@ -347,8 +347,7 @@ Choose only one to start:
 <a id="-recommended-tools-by-use-case"></a>
 <a id="-featured-projects-templates--sdks--tool-collections"></a>
 
-<details markdown="1">
-<summary>Full table of 21 resources, grouped by purpose</summary>
+## 📚 21 complete learning resources and limits
 
 <small>Checked 2026-08-28 UTC. Stars are this project's teaching ratings, not GitHub stars.</small>
 
@@ -390,8 +389,6 @@ Choose only one to start:
 </table>
 
 Read OmniParser weights by version: <code>icon_detect_v3</code> uses the MIT-licensed YOLOv9 implementation; earlier Ultralytics detectors retain AGPL; caption models use MIT. None of these is synonymous with the repository's CC-BY-4.0 license.
-
-</details>
 
 <a id="-the-next-frontier--voice-agents--vla-robots"></a>
 <a id="voice-agents"></a>

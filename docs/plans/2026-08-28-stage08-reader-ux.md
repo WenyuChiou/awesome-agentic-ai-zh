@@ -75,12 +75,12 @@
    - Track A：在新瀏覽器 profile／隔離環境只開 `example.com`，回報 title、final URL 與 screenshot；不登入、不下載、不離開 allowlist，遇到要求即停。
    - Track B：複製一個小型 policy／executor 練習，對 domain、action 與 high-impact 動作做 allowlist／approval 檢查，再以 assertions 驗證拒絕路徑。程式本身不連外、不碰真實帳戶。
    - 每題保留 `$0` 本地路徑與 API／受管環境可能另計費的預算提醒；不要求先建立空白文字檔。
-9. `🎯` 五筆可先選一筆的精選入口；完整 21 筆表放在關閉選單。
+9. `🎯` 五筆可先選一筆的精選入口，以及直接可見的完整 21 筆五星資源表。
 10. `✅` 短版自我檢查與專門路徑入口，不虛構尚不存在的 Stage 9。
 
 ## 預設收合
 
-預計 10 個 `<details markdown="1">`，全部預設關閉：
+共 9 個 `<details markdown="1">`，全部預設關閉：
 
 1. 時間、環境、進入條件與完整必修閱讀順序。
 2. Computer Use 的 screenshot → action → executor → result loop、Anthropic／OpenAI 現行 tool shape 與 legacy migration。
@@ -90,8 +90,7 @@
 6. Track A 的產品／操作路線與 availability 限制。
 7. Track B 的 canonical quickstarts、executor 與 sandbox 路線；不放未驗證或已過時的 SDK code。
 8. Comet／indirect prompt injection／Amazon case study；區分 Brave research、Perplexity response、法院命令與目前程序狀態。
-9. 21 筆完整學習資源表。
-10. Voice agents／VLA 作為未來介面方向；只給少量入口，不聲稱有 Stage 9。
+9. Voice agents／VLA 作為未來介面方向；只給少量入口，不聲稱有 Stage 9。
 
 所有舊 H2／H3 slug 先建立清單；被重新命名的 public deep link 以空 `<a id="...">` 落在對應的新可見標題或收合區前。glossary 現有四個 Stage 08 deep links 必須繼續有效，並同步改掉「4 強／5 強／7 強」等過期描述。
 
@@ -186,7 +185,7 @@
 1. 從現有三語 headings 產生並人工核對 legacy anchor oracle。
 2. 在新測試明列八個 core labels、21 組 URL／rating、五個 rowgroup、兩組三語圖、freshness marker 與禁止詞。
 3. 測試可見 section 順序、核心詞第一次可見使用粗體、兩個 copy-ready exercises、四題標題與成果、Stage 7.5 返回連結、四道 guardrail、Stage 9 不存在、不准空引號 `""`／`“”`；直接執行 policy 範例，確認 mixed case、前後空白、未知 action、非 HTTPS、userinfo 與非 allowlist host 都採 fail-closed。
-4. 測試 10 個 closed details、零個 `open`、舊 anchor 仍落地、三語 external URL／resource rating 一致。
+4. 測試 9 個 closed details、零個 `open`、完整資源表位於選單外、舊 anchor 仍落地、三語 external URL／resource rating 一致。
 5. 測試現行事實：Anthropic toolsets、OpenAI `computer`／deprecated preview、Sandbox Beta、Gemini rollout、OmniParser weights 的逐模型授權、Cloudflare Sandbox SDK Beta／v1.0 前可能變更、OSWorld 2.0 範圍。
 6. 在 `reader-ux-pages.yml` 加入 Stage 08 ratchet；先設定目標可見字元 `5,500／9,000／5,600`，完成正文後只可向下收緊。
 7. 執行 `python -m pytest scripts/test_stage08_content.py scripts/test_reader_ux.py -q`；預期 Stage 08 新契約因舊頁結構而 FAIL，reader checker 自身測試保持 PASS。
@@ -202,7 +201,7 @@
 
 1. 依可見主線重寫頁首、五個學習目標、八個核心詞與 selector；先白話、後術語。
 2. 建立兩個安全、可直接複製的練習與預算提醒；不操作真實 Slack／Excel／帳戶。
-3. 把完整 Computer Use、Browser Use、Sandbox、benchmark、產品 availability、安全案例、資源與 Voice／VLA 移入 10 個 closed details。
+3. 把完整 Computer Use、Browser Use、Sandbox、benchmark、產品 availability、安全案例與 Voice／VLA 移入 9 個 closed details；完整資源表保持可見。
 4. 寫 21 筆真正 rowgroup 的 HTML resource table；合併重複「推薦工具」與「精選 Projects」。
 5. 為舊 headings 加 explicit anchor aliases；同步更新 glossary 四個 Stage 08 link label／anchor。
 6. 執行繁中專屬 Stage 08 測試、strict anchors、`python scripts/check-reader-ux.py`；修到繁中主線能在不展開時完成 selector 與第一個練習。
@@ -220,7 +219,7 @@
 
 1. 以定稿繁中結構逐段建立 English，保留 exact product／API terms、數字、URL、ratings 與安全邊界。
 2. 以同一 canonical 結構建立简中，不做只換字的機械翻譯；修正語序與專業用語。
-3. 逐列比對 21 筆資源、五組 rowgroup、10 個 details、八個核心詞、兩個 exercises、legacy anchors 與 glossary links。
+3. 逐列比對 21 筆資源、五組 rowgroup、9 個 details、八個核心詞、兩個 exercises、legacy anchors 與 glossary links。
 4. 執行 mirror parity、locale links、Hans／OpenCC、English CJK residual、Stage 08 tests；任何三語事實差異都回到正文修正。
 
 ## Task 4：產生並驗收兩組三語圖
@@ -284,7 +283,7 @@
 - 不展開時，讀者能說出四種選路、完成 Track A 第一練習、知道四道安全檢查。
 - 八個核心詞第一次可見使用粗體、有足夠白話定義，且都在第一個練習前。
 - Computer Use、Browser Use、Sandbox、DOM、Accessibility Tree、Container、microVM、Firecracker、gVisor、Harness、Approval Gate、Prompt Injection 等重要名詞沒有因精簡而消失。
-- 三語各 10 個 closed details，沒有 `open`；可見字元不超過 `5,500／9,000／5,600`，最終 ratchet 依實測再收緊。
+- 三語各 9 個 closed details，沒有 `open`；包含完整資源表的可見字元依實測 ratchet 鎖定。
 - 21 筆資源、五組 `5／5／4／5／2`，`rowspan` 合計 21；URL、順序、限制與評分三語一致，無 volatile star count。
 - Anthropic Computer／Browser toolsets、OpenAI GA computer／deprecated preview、Sandbox Beta、Gemini rollout、OSWorld 2.0 metric 與 OmniParser license 全部正確且有官方來源。
 - 舊 Stage 08 headings／glossary deep links 仍落地；沒有虛構 Stage 9。
@@ -296,8 +295,9 @@
 
 ## 候選實作證據（review 前凍結）
 
-- 三語各 10 個 closed details、0 個 `open`；四題標題、成果與舊深連結都留在可見主線。
-  未展開實測為 `4,625／7,281／4,702`，對應 ratchet 為 `4,675／7,331／4,752`。
+- 後續依全站規則把完整資源表移出選單；三語各 9 個 closed details、0 個 `open`，
+  四題標題、成果與舊深連結都留在可見主線。包含 21 筆資源的可見字元實測為
+  `8,931／12,471／9,016`，對應 ratchet 為 `8,981／12,521／9,066`。
 - 21 筆 URL／評分依 `5／5／4／5／2` 五個真正 rowgroup 排列；三語來源順序一致。
 - `interface-choice-map` 與重畫的 `agent-guardrail-patterns` 共六張 `1672×941` PNG，
   六個 SHA-256 均不同，三語頁各自引用自己的 locale 圖。
