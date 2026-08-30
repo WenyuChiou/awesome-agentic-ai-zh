@@ -172,6 +172,20 @@ def test_real_config_space_form_r1_hole_closed():
     assert _scan("Hunyuan 可比 DeepSeek R1 推理 baseline、中文\n", _REAL_CFG) == []
 
 
+def test_real_config_blocks_volatile_credits_in_example_selector_mirrors():
+    text = "NVIDIA NIM free tier 1000 credits\n"
+    assert len(_scan(text, _REAL_CFG, rel="examples/README.md")) == 1
+    assert len(_scan(text, _REAL_CFG, rel="examples/README.en.md")) == 1
+    assert len(_scan(text, _REAL_CFG, rel="examples/README.zh-Hans.md")) == 1
+
+
+def test_real_config_blocks_legacy_windsurf_entry_in_paradigm_mirrors():
+    text = "https://codeium.com/windsurf\n"
+    assert len(_scan(text, _REAL_CFG, rel="resources/agent-paradigms.md")) == 1
+    assert len(_scan(text, _REAL_CFG, rel="resources/agent-paradigms.en.md")) == 1
+    assert len(_scan(text, _REAL_CFG, rel="resources/agent-paradigms.zh-Hans.md")) == 1
+
+
 # ── Machine-readable page freshness markers ──────────────────────────────────
 
 _PAGE_CFG = {

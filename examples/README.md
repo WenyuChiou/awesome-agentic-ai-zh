@@ -170,7 +170,7 @@ if hasattr(sys.stdout, "reconfigure"):
 | **Moonshot Kimi** | `kimi-k3` | 依階梯 | 依階梯 | ✅ | **1M token context**（賣點）、適合大檔案 / 長對話；價格依 context 階梯、見 platform。web 版 `kimi.com` 免費 |
 | **通義千問 Qwen** | `qwen-max` / `qwen-turbo` | $0.50-1.50 | $1.50-6 | ✅（DashScope）| 中文 native、**同 model 也能 Ollama 本機跑**（cloud + local 兩條路徑都通） |
 | **智譜 GLM** | `glm-4.5` / `glm-4-plus` | $0.30-2 | $1.50-9 | ✅ | 中國 native、有 free tier。web `chatglm.cn` 免費 |
-| **NVIDIA NIM** | Llama / Mistral / DeepSeek / Qwen 等 hosted | free tier 1000 credits | (同) | ✅ | **托管 10+ open model**、新帳號送 credits、不必本機 GPU。`build.nvidia.com` |
+| **NVIDIA NIM** | 託管的 Llama / Mistral / DeepSeek / Qwen 等模型 | 依官方方案 | 依官方方案 | ✅ | 用 NVIDIA-hosted NIM API 測試多種模型；可用性與限制看 [NIM for Developers](https://developer.nvidia.com/nim) |
 
 **API endpoints（OpenAI SDK 接法）**：
 

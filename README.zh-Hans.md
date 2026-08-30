@@ -66,7 +66,7 @@
 
 ### 🚀 第一次接触 AI agent / 没写过 code？
 
-先看 **[`resources/setup-guide.zh-Hans.md`](resources/setup-guide.zh-Hans.md)** — 30-45 分钟从零带你申请 API key、装好 Python、跑出第一个 LLM hello-world。
+先看 **[`resources/setup-guide.zh-Hans.md`](resources/setup-guide.zh-Hans.md)** — 先分清 Web、Desktop、IDE、CLI Agent 和 API；只要选一条路，不必把所有工具都装完。
 
 ### 在线阅读
 - **[学习地图（两条学习路径）](#-学习地图两条学习路径)** — 看完这节决定走 Track A 还 Track B
@@ -203,8 +203,8 @@ cd awesome-agentic-ai-zh
 
 | 你的状况 | 去哪 | 内容 |
 |---|---|---|
-| 完全没写过 code、第一次接触 AI agent | [`resources/setup-guide.zh-Hans.md`](resources/setup-guide.zh-Hans.md) | 30-45 分钟从零装好（API key、Python、第一个 hello-world） |
-| 不知道挑哪个 LLM provider | [`resources/setup-guide.zh-Hans.md` A](resources/setup-guide.zh-Hans.md#a--申请第一个-api-key约-10-分钟) | Anthropic / OpenAI / DeepSeek / Kimi / NVIDIA NIM 对照 |
+| 完全没写过 code、第一次接触 AI agent | [`resources/setup-guide.zh-Hans.md`](resources/setup-guide.zh-Hans.md) | 先选 Web、Desktop、IDE、CLI Agent 或 API；不必全装 |
+| 不知道工具种类或 LLM Provider 怎么区分 | [`resources/setup-guide.zh-Hans.md`](resources/setup-guide.zh-Hans.md) | 先分清工具身份，再看官方 Cloud API 与本地 Runtime 入口 |
 | 同主题 awesome list / 中文社群 | [`RESOURCES.zh-Hans.md` 同主题清单](RESOURCES.zh-Hans.md#同主题的清单型-awesome-lists) | 5-10 分钟逛一轮 |
 
 ### 📖 概念 / 用语

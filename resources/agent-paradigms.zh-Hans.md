@@ -29,7 +29,7 @@
 
 ## Type 1: IDE-coupled — “sidebar pair-programmer”
 
-**代表**:[Cursor](https://cursor.com) / [Windsurf](https://codeium.com/windsurf) / [Cline](https://cline.bot) / [Continue](https://continue.dev) / [Zed](https://zed.dev)
+**代表**:[Cursor](https://cursor.com) / [Windsurf](https://windsurf.com/editor) / [Cline](https://cline.bot) / [Continue](https://continue.dev) / [Zed](https://zed.dev)
 
 **Hero example**:
 你在 Cursor 写一个 React component。左边 editor、右边 Cursor sidebar 聊天。你选一段 code 按 `Cmd+K`、Cursor 就地改写。改完之后你看 inline diff、accept/reject。
