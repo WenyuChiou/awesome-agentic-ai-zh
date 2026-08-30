@@ -27,7 +27,7 @@ Add awesome-agentic-ai-zh — trilingual staged roadmap (LLM basics → multi-ag
 Adding **awesome-agentic-ai-zh** to the [learning/tutorials] section.
 
 What it is: a staged learning roadmap for agentic AI (not a flat list) —
-8 stages LLM-basics → multi-agent + Computer/Browser Use, 2 tracks
+10 learning stops: 8 topic stages + Stage 0 readiness + Stage 7.5 reading, 2 tracks
 (use CLI agents vs build your own), 5 audience branches, curated
 projects, runnable exercises. MIT.
 
@@ -47,7 +47,7 @@ Rendered site: https://wenyuchiou.github.io/awesome-agentic-ai-zh/
 ## Suggested one-line list entry (match each list's existing format)
 
 ```
-- [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh) — Trilingual staged roadmap: LLM basics → multi-agent, 8 stages + 2 tracks + curated projects. MIT.
+- [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh) — Trilingual staged roadmap: 10 learning stops (8 topic stages + Stage 0 readiness + Stage 7.5 reading) + 2 tracks + curated projects. MIT.
 ```
 
 ## Don'ts

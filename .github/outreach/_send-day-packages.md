@@ -64,7 +64,7 @@ Thanks for maintaining Awesome-LLM.
 ```markdown
 * awesome-agentic-ai-zh:
     * 地址:[https://github.com/WenyuChiou/awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
-    * 简介:三语(繁中 / English / 简中)agentic AI 学习地图,从 LLM 基础到多代理系统,8 个阶段 + 2 条学习路线 + 分组整理的 curated 资源,附可跑的范例。MIT。
+    * 简介:三语(繁中 / English / 简中)agentic AI 学习地图,共 10 个学习站（8 个主题 Stage + Stage 0 准备关 + Stage 7.5 阅读站）+ 2 条学习路线 + 分组整理的 curated 资源,附可跑的范例。MIT。
 ```
 
 **PR title**: `添加 awesome-agentic-ai-zh(三语 agentic AI 学习地图)到 7. LLM教程`
@@ -74,7 +74,7 @@ Thanks for maintaining Awesome-LLM.
 ```markdown
 你好,
 
-想把 awesome-agentic-ai-zh 加到「7. LLM教程」。这是一份 agentic AI 的三语学习地图(繁中 canonical / 简中 / English,三语手工维护),8 个阶段从 LLM 基础排到多代理编排,每阶段标了预估时程、入门条件、该读什么,目前提供分组整理的 curated 资源,MIT 协议。
+想把 awesome-agentic-ai-zh 加到「7. LLM教程」。这是一份 agentic AI 的三语学习地图(繁中 canonical / 简中 / English,三语手工维护),共 10 个学习站（8 个主题 Stage + Stage 0 准备关 + Stage 7.5 阅读站）,并提供分组整理的 curated 资源与可运行练习,MIT 协议。
 
 已按本项目格式提供链接与简介。觉得不合适直接关掉就好,谢谢维护这份清单。
 
@@ -91,7 +91,7 @@ Thanks for maintaining Awesome-LLM.
 
 ```diff
   - [LangChain Chinese Getting Started Guide](https://github.com/liaokongVFX/LangChain-Chinese-Getting-Started-Guide): Chinese LangChain Tutorial for Beginners ![GitHub Repo stars](https://img.shields.io/github/stars/liaokongVFX/LangChain-Chinese-Getting-Started-Guide?style=social)
-+ - [WenyuChiou/awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh): Trilingual (zh-TW / zh-Hans / en) 8-stage learning roadmap for agentic AI. Stage 4 walks through LangChain, LangGraph, AutoGen, CrewAI, and Smolagents with prerequisites, time estimates, and hands-on exercises ![GitHub Repo stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=social)
++ - [WenyuChiou/awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh): Trilingual (zh-TW / zh-Hans / en) 10-stop learning roadmap for agentic AI: 8 topic stages plus Stage 0 readiness and the Stage 7.5 reading stop. Stage 4 covers Workflow Graphs, LangGraph, AutoGen, CrewAI, and Smolagents with hands-on exercises ![GitHub Repo stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=social)
 ```
 
 **PR title**: `Add awesome-agentic-ai-zh (trilingual learning roadmap) to Learn → Notebooks`
@@ -161,7 +161,7 @@ If a different section works better, happy to redirect. Thanks for maintaining a
 ```markdown
 你好 Datawhale 团队,
 
-我在维护 [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh) —— 一份 agentic AI 的三语(繁中 canonical / 简中 / English)8 阶段学习地图,分组整理的 curated 资源,MIT。
+我在维护 [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh) —— 一份 agentic AI 的三语(繁中 canonical / 简中 / English)10 站学习地图（8 个主题 Stage + Stage 0 准备关 + Stage 7.5 阅读站）,分组整理的 curated 资源,MIT。
 
 我们这边已经把 Hello-Agents 放进了「走完前面阶段后的延伸阅读」(无条件,已经 ship)。读者主要是走完 Stage 4 之后想进 framework 跟 multi-agent 的人,Hello-Agents 正好是下一阶段最强的中文教材。
 
@@ -187,7 +187,7 @@ If a different section works better, happy to redirect. Thanks for maintaining a
 **Entry line** (matches their `*   [Name](URL) - desc ![stars]` format):
 
 ```markdown
-*   [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh) - Trilingual (Traditional Chinese / English / Simplified Chinese) 8-stage learning roadmap for agentic AI, from LLM basics to multi-agent systems, with curated resources and runnable examples. [![GitHub Repo stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=social)](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
+*   [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh) - Trilingual (Traditional Chinese / English / Simplified Chinese) 10-stop learning roadmap for agentic AI: 8 topic stages plus Stage 0 readiness and the Stage 7.5 reading stop, with curated resources and runnable examples. [![GitHub Repo stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=social)](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
 ```
 
 **PR title**: `Add awesome-agentic-ai-zh (trilingual agentic-AI learning roadmap) to Related`

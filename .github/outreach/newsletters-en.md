@@ -19,7 +19,7 @@
 ## Blurb A — generic one-liner (TLDR AI / Rundown style)
 
 ```
-A free, trilingual, staged roadmap for learning agentic AI — 8 stages
+A free, trilingual, staged roadmap for learning agentic AI — 10 learning stops
 from LLM basics to multi-agent + Computer/Browser Use, curated
 projects, runnable exercises, with entry conditions and a self-check per
 stage. MIT. Rendered site: https://wenyuchiou.github.io/awesome-agentic-ai-zh/

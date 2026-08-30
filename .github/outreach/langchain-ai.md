@@ -1,10 +1,10 @@
 # Outreach: LangChain ecosystem (langchain-ai / kyrolabs/awesome-langchain)
 
-> ⚠️ **Send content is now canonical in [`_send-day-packages.md`](_send-day-packages.md)** (package C — 8 stages / curated resources). This file is kept for positioning rationale; do not paste its older entry/stats blocks directly.
+> ⚠️ **Send content is now canonical in [`_send-day-packages.md`](_send-day-packages.md)** (package C — 10 learning stops / curated resources). This file is kept for positioning rationale; do not paste its older entry/stats blocks directly.
 
 > **Status**: not contacted · **Channel**: GitHub PR
 > **Primary lang**: en (with zh as bonus)
-> **Last updated**: 2026-05-26 (refreshed — stats, 8-stage structure, correct section target)
+> **Last updated**: 2026-08-30 (refreshed — 10-stop structure, correct section target)
 > **Repos**:
 > - https://github.com/langchain-ai/langchain (main repo)
 > - https://github.com/kyrolabs/awesome-langchain (community awesome list)
@@ -26,7 +26,7 @@
 ```
 LangChain learners often ask: "I have the docs, but where do I actually start?"
 
-Built an 8-stage trilingual learning roadmap (zh-TW · zh-Hans · en). Stage 4
+Built a 10-stop trilingual learning roadmap (8 topic stages + Stage 0 readiness + Stage 7.5 reading; zh-TW · zh-Hans · en). Stage 4
 walks through LangChain / LangGraph / AutoGen / CrewAI / Smolagents with
 prerequisites and time estimates. Curated projects · MIT.
 
@@ -41,7 +41,7 @@ prerequisites and time estimates. Curated projects · MIT.
 
 ```diff
   - [LangChain Chinese Getting Started Guide](https://github.com/liaokongVFX/LangChain-Chinese-Getting-Started-Guide): Chinese LangChain Tutorial for Beginners ![GitHub Repo stars](https://img.shields.io/github/stars/liaokongVFX/LangChain-Chinese-Getting-Started-Guide?style=social)
-+ - [WenyuChiou/awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh): Trilingual (zh-TW / zh-Hans / en) 8-stage learning roadmap for agentic AI — Stage 4 walks through LangChain, LangGraph, AutoGen, CrewAI, Smolagents with prerequisites, time estimates, and hands-on exercises ![GitHub Repo stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=social)
++ - [WenyuChiou/awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh): Trilingual (zh-TW / zh-Hans / en) 10-stop learning roadmap for agentic AI — Stage 4 covers Workflow Graphs, LangGraph, AutoGen, CrewAI, and Smolagents with hands-on exercises ![GitHub Repo stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=social)
 ```
 
 **PR description**:

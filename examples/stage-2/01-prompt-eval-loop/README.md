@@ -31,7 +31,7 @@ python test_anthropic.py
 
 兩個測試都不需要 API key，也不會連上模型。看到 `4/4 passed` 和 `2/2 passed` 就完成了。
 
-> 🎓 **學習模式**：`starter.py` 是完整解答。想真的學會，可以先把它改名成 `starter_reference.py`，只看函式名稱，自己重寫一份，再用測試檢查。完整方法看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+> 🎓 **學習模式**：先執行提供的 `starter.py`（`python starter.py`），再只改一個小地方，然後重新執行既有測試：`python test.py` 和 `python test_anthropic.py`。如果測試失敗，就撤銷或修正這一個改動，再試一次。不需要改名檔案，也不需要整份解答重寫。完整方法看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
 
 <details markdown="1">
 <summary>選擇性：用本機 Ollama 跑真模型（Path A）</summary>

@@ -15,7 +15,7 @@ top comments ("why another list" / "is the English LLM-translated").
 ## Title (pick one — no emoji, no hype, ≤ 80 chars)
 
 1. `Show HN: A trilingual, staged roadmap from LLM basics to multi-agent systems`
-2. `Show HN: Agentic-AI learning roadmap – 8 stages, curated projects`
+2. `Show HN: Agentic-AI learning roadmap – 10 learning stops, curated projects`
 3. `Show HN: An opinionated path to learn agentic AI (not an awesome-list dump)`
 
 Recommended: **#1** (says what it is + the trilingual angle, no adjectives).
@@ -28,7 +28,7 @@ I built a structured learning roadmap for agentic AI because every
 reference, useless as a path if you don't already know what you don't
 know.
 
-This is sequenced: 8 stages from "what's a token" to multi-agent
+This is sequenced as 10 learning stops: 8 topic stages plus Stage 0 readiness and a Stage 7.5 advanced reading stop, from basic terms to production agents
 orchestration + Computer/Browser Use, with explicit entry conditions and
 a self-check at the end of each stage, plus two tracks (use existing CLI
 agents vs. build your own) and 5 audience branches (researcher /

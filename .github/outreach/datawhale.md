@@ -1,6 +1,6 @@
 # Outreach: Datawhale (datawhalechina)
 
-> ⚠️ **Send content is now canonical in [`_send-day-packages.md`](_send-day-packages.md)** (package E — 8 stages / curated resources). This file is kept for positioning rationale; do not paste its older issue/stats blocks directly.
+> ⚠️ **Send content is now canonical in [`_send-day-packages.md`](_send-day-packages.md)** (package E — 10 learning stops / curated resources). This file is kept for positioning rationale; do not paste its older issue/stats blocks directly.
 
 > **Status**: not contacted · **Channel**: GitHub issue + (later) WeChat group
 > **Primary lang**: zh-Hans
@@ -19,7 +19,7 @@
 
 > 「想用 Hello-Agents 但不確定該從哪裡入手？」
 >
-> awesome-agentic-ai-zh 把 agentic AI 排成 8 個階段（Stage 0 基礎 → Stage 8 Agent Interfaces），每階段都標註預估時程跟入門條件。Stage 5/6 直接接到 @datawhalechina 的 Hello-Agents Extra05/08。
+> awesome-agentic-ai-zh 把 agentic AI 排成 10 個學習站（8 個主題 Stage + Stage 0 準備關 + Stage 7.5 閱讀站；最後到 Stage 8 Agent Interfaces）。Stage 5/6 直接接到 @datawhalechina 的 Hello-Agents Extra05/08。
 >
 > 三語（zh-TW / zh-Hans / en）· 分組整理的 curated projects · MIT
 > 👉 https://github.com/WenyuChiou/awesome-agentic-ai-zh

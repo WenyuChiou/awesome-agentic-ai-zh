@@ -25,7 +25,7 @@ I kept seeing "awesome-X" lists for agents — useful as references, but
 none gave an ORDER to actually learn in. So I built a sequenced roadmap
 and I'd like this sub to poke holes in the sequencing.
 
-- 8 stages: LLM basics → prompt design → tool use → frameworks →
+- 10 learning stops: 8 topic stages + Stage 0 readiness + Stage 7.5 reading →
   Claude Code ecosystem (MCP/Skills) → memory/RAG → multi-agent →
   Computer/Browser Use. Each stage has entry conditions + an end self-check.
 - 2 tracks: "use existing CLI agents" vs "build your own".
@@ -54,7 +54,7 @@ runner first (llama.cpp, LocalAI, MLX listed), with Claude/Anthropic as
 the production reference, so you can do the whole roadmap locally before
 spending an API cent.
 ```
-(then the same 8-stages / 2-tracks / link / "honest bias" / "feedback
+(then the same 10-stops / 2-tracks / link / "honest bias" / "feedback
 wanted" tail as r/AI_Agents)
 
 ## r/ClaudeAI (variant — lead with the ecosystem depth)

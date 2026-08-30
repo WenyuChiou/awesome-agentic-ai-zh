@@ -7,7 +7,7 @@
 
 **Why this target**: 智譜 (Zhipu) 是大陸頭部 AI lab 之一（GLM 系列模型）。我們的 §11 中文圈專用目前**沒有 Zhipu 的條目**——主要是因為他們官方的 agent SDK 沒有一個 active + Apache-licensed 的 canonical repo。
 
-**Pitch angle (邀請式，不是推銷式)**: 我們是中文 agentic AI 的 8 階段學習地圖；§11 已經收了 Qwen-Agent + Coze，缺 Zhipu。**邀請他們 PR 一個官方推薦的 Zhipu agent 教材 / SDK / cookbook**——他們在我們 catalog 站 §11 的位置，他們的開發者透過我們學 Zhipu 之外的整個 agentic 生態。
+**Pitch angle (邀請式，不是推銷式)**: 我們是中文 agentic AI 的 10 站學習地圖（8 個主題 Stage + Stage 0 準備關 + Stage 7.5 閱讀站）；§11 已經收了 Qwen-Agent + Coze，缺 Zhipu。**邀請他們 PR 一個官方推薦的 Zhipu agent 教材 / SDK / cookbook**——他們在我們 catalog 站 §11 的位置，他們的開發者透過我們學 Zhipu 之外的整個 agentic 生態。
 
 **Their counter-value**: 中文圈的 entrant developers 有結構化路線可學；GLM/AutoGLM 的曝光。
 
@@ -35,7 +35,7 @@
 你好智譜社群，
 
 我维护 [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
-——一份中文 agentic AI 的 8 阶段三语学习地图（zh-TW canonical / zh-Hans / en，分组整理的
+——一份中文 agentic AI 的 10 站三语学习地图（8 个主题 Stage + Stage 0 准备关 + Stage 7.5 阅读站；zh-TW canonical / zh-Hans / en，分组整理的
 projects，MIT）。
 
 **§11 中文圈专用** 已经收了：
@@ -64,7 +64,7 @@ projects，MIT）。
 ```
 你好智谱社群，
 
-我是 awesome-agentic-ai-zh 的维护者 Wenyu。这份是中文 agentic AI 的 8 阶段三语
+我是 awesome-agentic-ai-zh 的维护者 Wenyu。这份是中文 agentic AI 的 10 站三语
 学习地图（分组整理的 projects，三语齐全，MIT）。
 
 §11 中文圈专用 已经收阿里 Qwen-Agent + 字节 Coze，缺智谱的 entry。如果有官方推荐

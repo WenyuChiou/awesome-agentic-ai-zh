@@ -8,9 +8,9 @@
 
 # awesome-agentic-ai-zh
 
-### 🤖 AI Agent Learning Roadmap — from basic LLM concepts to building your own multi-agent systems
+<p><strong>🤖 AI Agent Learning Roadmap — from basic LLM concepts to building your own multi-agent systems</strong></p>
 
-<p><em><b>Learning roadmap + curated resources + simple illustrative cases</b><br/>A structured 8-stage path, from "what is an LLM, how are tokens counted" to multi-agent orchestration, Computer Use / Browser Use / Sandbox</em></p>
+<p><em><b>Learning roadmap + curated resources + simple illustrative cases</b><br/>Eight topic stages, plus the Stage 0 readiness check and the Stage 7.5 advanced reading stop; from "what is an LLM, how are tokens counted" to multi-agent orchestration, Computer Use / Browser Use / Sandbox</em></p>
 
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat)](LICENSE)
 [![繁中](https://img.shields.io/badge/lang-繁體中文-red?style=flat)](README.md)
@@ -36,7 +36,7 @@ Concretely:
 
 | Pillar | What it does | Scale |
 |---|---|---|
-| **Learning roadmap** | Organizes scattered high-quality projects, tutorials, and required reading into **8 stages** (including Stage 5 + Stage 8 as two shared hubs) + 2 tracks + 5 specialized branches, from zero to advanced | 8 stages, 2 tracks |
+| **Learning roadmap** | Organizes scattered high-quality projects, tutorials, and required reading into **8 topic stages + the Stage 0 readiness check + the Stage 7.5 advanced reading stop**, then branches into 2 tracks and 5 role paths | 10 learning stops, 2 tracks |
 | **Resource curation** | Each stage selects projects with official or canonical sources and explains the editorial rating, audience, lesson, limits, and how to run them; a task-based MCP / Skill catalog provides another entry point | Grouped by stage and task |
 | **Simple illustrative cases** | Each stage provides copyable **foundational exercises**, preserves Ollama / Anthropic paths when a model connection is needed, and checks important behavior with offline or mock-based tests | Organized by learning outcome |
 
@@ -88,7 +88,7 @@ cd awesome-agentic-ai-zh
 - 🌏 **Trilingual, fully maintained** — zh-TW (canonical) / 简中 / English; the English edition is complete, not a thin mirror
 - 🎓 **Beyond frameworks: Claude Code ecosystem** — MCP / Skills / Plugins / SDK full stack
 - 🔬 **5 specialized branches** — researcher / developer / teacher / knowledge worker / **everyday user**
-- ⏱️ **Time commitment, stated upfront** — Track A 8-10 weeks / Track B 16-22 weeks minimum, 5-7 months realistic (5-8 hr/week part-time)
+- 🧭 **One small result per stop** — first see what you will build; open the estimate below the route only when you need to plan your time
 
 ---
 
@@ -105,45 +105,54 @@ The two tracks are **not mutually exclusive** — most people start with A to ge
 
 ### Shared Foundations (Stages 0-2)
 
-| Stage | Topic | Key Content | Time |
+| Stage | Topic | Key Content | What you can do afterward |
 |---|---|---|---|
-| **0** | [Foundations](stages/00-foundations.en.md) | Python · CLI · git · API · JSON | 1-2 wks |
-| **1** | [LLM Fundamentals](stages/01-llm-basics.en.md) | tokens · API · model comparison · local LLM | 1 wk |
-| **2** | [Prompt Engineering](stages/02-prompt-engineering.en.md) | system prompts · few-shot · CoT | 1-2 wks |
+| **0** | [Foundations](stages/00-foundations.en.md) | Python · CLI · git · API · JSON | Run a small program and save the result with Git |
+| **1** | [LLM Fundamentals](stages/01-llm-basics.en.md) | tokens · context · API · model comparison · local LLM | Read basic model specs and choose a sensible starting point |
+| **2** | [Prompt Engineering](stages/02-prompt-engineering.en.md) | zero-shot · one-shot · few-shot · system prompt · CoT boundary | Write a prompt the model can understand and you can test again |
 
 ### Track A — CLI Power User (use CLIs to get work done)
 
-| Stage | Topic | Key Content | Time |
+| Stage | Topic | Key Content | What you can do afterward |
 |---|---|---|---|
-| **A1** | [CLI Agent Intro & Selection](tracks/cli/A1-cli-intro.en.md) | CLI agent selection · install · first run | 1 wk |
-| **A2** | [CLI Workflow Patterns](tracks/cli/A2-cli-workflow.en.md) | Project instructions · Skill · task decomposition | 1-2 wks |
-| **+5** | [Stage 5 — Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**) | MCP · Skills · Plugins · Subagents; Track A reads 5.1-5.4 (5.5-5.7 optional) | 1-2 wks (Track A view) |
-| **A3** | [Integration & Production](tracks/cli/A3-cli-production.en.md) | MCP-into-CLI · CI automation · cost / observability | 1-2 wks |
-| **+8** | [Stage 8 — Agent Interfaces](stages/08-agent-interfaces.en.md) (**Shared Hub**) | Computer Use · Browser Use · Code Sandbox; Track A reads Track A usage | 1-2 wks (Track A view) |
+| **A1** | [CLI Agent Intro & Selection](tracks/cli/A1-cli-intro.en.md) | CLI agent selection · install · first run | Pick one tool and finish one real, small task |
+| **A2** | [CLI Workflow Patterns](tracks/cli/A2-cli-workflow.en.md) | Project instructions · Skill · task decomposition | Turn one successful run into a repeatable workflow |
+| **+5** | [Stage 5 — Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**) | MCP · Skills · Plugins · Subagents; Track A reads 5.1-5.4 (5.5-5.7 optional) | Give a CLI agent rules, tools, and delegated work |
+| **A3** | [Integration & Production](tracks/cli/A3-cli-production.en.md) | MCP-into-CLI · CI automation · cost / observability | Connect a real workflow and see what the agent did |
+| **+8** | [Stage 8 — Agent Interfaces](stages/08-agent-interfaces.en.md) (**Shared Hub**) | Computer Use · Browser Use · Code Sandbox | Decide whether a task needs a browser, computer control, or sandbox |
 
-> **Track A total time**: includes Stages 0-2 (shared foundations) + A1-A3 + **Stage 5 + Stage 8 (two shared hubs) ≈ 8-10 weeks**. Core reference: [`resources/cli-agents-guide.en.md`](resources/cli-agents-guide.en.md).
->
 > **Capstone gate:** You can start the Track A Capstone after A3. Stage 8 is the recommended next stop, but it does not block Capstone entry.
 
 ### Track B — Agent Builder (build agents from scratch)
 
-| Stage | Topic | Key Content | Time |
+| Stage | Topic | Key Content | What you can do afterward |
 |---|---|---|---|
-| **3** ⭐ | [Tool Use & Your First Agent Loop](stages/03-tool-use-and-hello-agent.en.md) | function calling · ReAct · 6 hands-on exercises | 2-3 wks |
-| **4** | [Workflow Graphs & Agent Frameworks](stages/04-agent-frameworks.en.md) | LangGraph · AutoGen · CrewAI · Smolagents | 2-3 wks |
-| **5** ⭐⭐ | [Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**, Track A also studies) | MCP · Skills · Plugins · Subagents | 3-4 wks (Track B view) |
-| **6** | [Context Engineering: RAG and Memory](stages/06-memory-rag.en.md) | vector DB · long-term memory · contextual retrieval | 2 wks |
-| **7** | [Agent Production Engineering: Harness, Loops, and Graphs](stages/07-multi-agent-production.en.md) | multi-agent orchestration · eval · observability · advanced SDK | 2-4 wks |
-| **7.5** | [Advanced Agentic Workflow Concepts](stages/07.5-advanced-agentic-concepts.en.md) (reading map) | work boundary · PAR loop · agent-as-judge · 12 advanced concepts + reading list | 1 wk (no code) |
-| **8** ⭐⭐ | [Agent Interfaces](stages/08-agent-interfaces.en.md) (**Shared Hub**, Track A also studies) | Computer Use · Browser Use · Code Sandbox; 2024-2026 frontier | 2-3 wks (Track B view) |
+| **3** ⭐ | [Tool Use & Your First Agent Loop](stages/03-tool-use-and-hello-agent.en.md) | function calling · ReAct · 6 hands-on exercises | Build an Agent Loop that calls a tool, reads the result, and continues |
+| **4** | [Workflow Graphs & Agent Frameworks](stages/04-agent-frameworks.en.md) | Workflow Graph · LangGraph · AutoGen · CrewAI · Smolagents | Draw the workflow first, then choose a framework to build it |
+| **5** ⭐⭐ | [Claude Code Ecosystem](stages/05-claude-code-ecosystem.en.md) (**Shared Hub**, Track A also studies) | MCP · Skills · Plugins · Subagents | Connect tools, rules, and delegation into one runnable system |
+| **6** | [Context Engineering: RAG and Memory](stages/06-memory-rag.en.md) | retrieval · vector DB · long-term memory · contextual retrieval · evaluation | Help an agent find evidence and decide what is worth remembering |
+| **7** | [Agent Production Engineering: Harness, Loops, and Graphs](stages/07-multi-agent-production.en.md) | advanced SDK · harness · loop · graph · multi-agent · eval · observability | Make the system inspectable and recoverable when it fails |
+| **7.5** | [Advanced Agentic Workflow Concepts](stages/07.5-advanced-agentic-concepts.en.md) (reading map) | 12 advanced concepts + reading list · work boundary · PAR loop · agent-as-judge · graceful degradation | Decide whether the next advanced concept is actually needed |
+| **8** ⭐⭐ | [Agent Interfaces](stages/08-agent-interfaces.en.md) (**Shared Hub**, Track A also studies) | Computer Use · Browser Use · Code Sandbox | Choose a safe, observable interface for the task |
 
-> **Track B total time**: minimum **16-22 weeks**, realistic **5-7 months** (5-8 hr/week part-time)
+<details markdown="1">
+<summary>⏱️ View time estimates (planning aid, not a deadline)</summary>
+
+Everyone starts in a different place. Finish one small result first, then decide whether you need another week for the basics.
+
+- **Shared foundations:** Stage 0 takes about 1–2 weeks; Stage 1 about 1 week; Stage 2 about 1–2 weeks.
+- **Track A:** A1 takes about 1 week; A2, Stage 5, A3, and Stage 8 take about 1–2 weeks each. Including the shared foundations, the full route is about 8–10 weeks.
+- **Track B:** Stages 3, 4, and 8 take about 2–3 weeks each; Stage 5 about 3–4 weeks; Stage 6 about 2 weeks; Stage 7 about 2–4 weeks; Stage 7.5 about 1 week of reading. Including the shared foundations, the main route is about 16–22 weeks, often 5–7 months at 5–8 hours per week.
+
+For Track A operating patterns, see [`resources/cli-agents-guide.en.md`](resources/cli-agents-guide.en.md).
+
+</details>
 
 > **Two shared hubs (used by both Track A + Track B)**:
 > - **Stage 5** = Claude Code Ecosystem (MCP / Skills / Plugins / Subagents) — Track A learns MCP-into-CLI, Track B learns agent runtime structure
-> - **Stage 8** = Agent Interfaces (Computer Use / Browser / Sandbox, 2024-2026 frontier) — Track A learns "how to use" for task delegation, Track B learns "how to build" with embedded interfaces
+> - **Stage 8** = Agent Interfaces (Computer Use / Browser / Sandbox) — Track A learns "how to use" for task delegation, Track B learns "how to build" with embedded interfaces
 
-> 💡 **Want a concrete cross-stage example?** [Build Your First AI Agent in 7 Steps](walkthroughs/build-first-agent-in-7-steps.en.md) — same Paper Summary Bot traced from Stage 1 through Stage 7, ~300 lines of executable code (**Track B**)
+> 💡 **Want a concrete cross-stage example?** [Build Your First AI Agent in 7 Steps](walkthroughs/build-first-agent-in-7-steps.en.md) — watch the same Paper Summary Bot grow from Stage 1 through Stage 7, with runnable code at every step (**Track B**)
 
 After the main path, pick one of 5 specialized branches. **Not sure which?**
 
@@ -169,7 +178,7 @@ This roadmap balances concepts with hands-on work, helping you **transform from 
 
 - **Basic Python** — written functions, used APIs, can read JSON
 - **Basic git** — clone, commit, push
-- **Motivation to learn** — agents are the fastest-changing area in AI 2025+, and require sustained effort
+- **Willingness to build and check** — agent tools change quickly; when a new name appears, return to the official docs
 
 If anything's missing, do Stage 0; if not, **start at Stage 1**.
 
@@ -179,15 +188,15 @@ The main path has 5 parts:
 - **Part 2 (Stages 3-4): Build Your Agent** — Stage 3 builds your first **Agent Loop**; Stage 4 first explains the **Workflow Graph**, then uses a framework to build it
 - **Part 3 (Stage 5) Shared Hub** — Claude Code Ecosystem (MCP / Skills / Plugins / Subagents; used by both Track A + B)
 - **Part 4 (Stages 6-7): Advanced Integration** — Stage 6 deepens **Context Engineering** with RAG / memory; Stage 7 makes loops / graphs reliable in production
-- **Part 5 (Stage 8) Shared Hub** — Agent Interfaces (Computer Use / Browser Use / Code Sandbox, 2024-2026 frontier; used by both tracks)
+- **Part 5 (Stage 8) Shared Hub** — Agent Interfaces (Computer Use / Browser Use / Code Sandbox; used by both tracks)
 
 > 🔭 **The learning order and five control questions answer different things**: first write a good **Prompt** in Stage 2, build an **Agent Loop** in Stage 3, then understand the **Workflow Graph** in Stage 4 and use a framework to build it. Stage 5 shows how MCP, Skills, Plugins, and Subagents connect tools and rules; Stage 6 deepens **Context Engineering**; Stage 7 makes the Harness, Loop, and Graph reliable over long runs. `prompt → context → harness → loop → graph` is a checklist, not strict software layers or chapter numbers. A Harness may contain the Loop, while a Graph may connect Harnesses, deterministic code, and human approvals. See the [Stage 7 control questions](stages/07-multi-agent-production.en.md#five-control-questions-prompt--context--harness--loop--graph) and the [Stage 2 Prompt/Context boundary](stages/02-prompt-engineering.en.md).
 
-After the main path (16-22 weeks for Track B, 8-10 weeks for Track A), pick a branch.
+After the main path, pick a branch.
 
 The most important advice: **don't skip the hands-on exercises**. Each stage's exercises are "you can't learn this without doing it" — skim past them and you'll get stuck later.
 
-> 🎓 **How to actually use the exercises**: the `starter.py` in each exercise folder is a **complete solution**, not a TODO skeleton. If you clone, `cat starter.py`, and run `python test.py` to all-green, you'll think "I learned it" — but you haven't written a single line. **Correct learning loop**: `mv starter.py starter_reference.py`, look at signatures (not bodies), write your own, peek at the reference only after 20 min stuck. Full method + per-stage time budgets + escalation order in [`docs/HOW_TO_USE.md`](docs/HOW_TO_USE.md).
+> 🎓 **How to use the exercises**: `starter.py` is a copy-ready, runnable starting point. Run it once, change only one small thing, then run the tests and check whether the result changed as expected. You do not need to copy a blank file or rewrite the entire solution first. See [`docs/HOW_TO_USE.md`](docs/HOW_TO_USE.md) for the full method and what to do when you get stuck.
 
 Ready? [Start at Stage 0](stages/00-foundations.en.md).
 
@@ -311,7 +320,7 @@ If this learning roadmap helps your study or work, please cite:
   author = {Chiou, Wenyu},
   year = {2026},
   url = {https://github.com/WenyuChiou/awesome-agentic-ai-zh},
-  note = {8-stage learning path from prerequisites to Agent Interfaces (Computer Use / Browser Use / Code Sandbox), with curated projects + hello-X demos. Trilingual (zh-TW / 简中 / English).}
+  note = {10-stop learning path: 8 topic stages plus Stage 0 readiness and the Stage 7.5 reading stop, ending at Agent Interfaces (Computer Use / Browser Use / Code Sandbox), with curated projects + hello-X demos. Trilingual (zh-TW / 简中 / English).}
 }
 ```
 

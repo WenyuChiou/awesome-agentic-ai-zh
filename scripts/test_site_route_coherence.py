@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import hashlib
+import re
+import struct
 from pathlib import Path
 
 import pytest
@@ -453,3 +456,242 @@ def test_legacy_stage_titles_are_absent_repo_wide() -> None:
                 offenders.append((page.relative_to(ROOT), phrase))
 
     assert not offenders, offenders
+
+
+ENTRY_ROUTE = {
+    "zh-TW": {
+        "suffix": "",
+        "route_shape": "8 個主題 Stage + Stage 0 準備關 + Stage 7.5 進階閱讀站",
+        "count": "10 個學習站",
+        "summary": "⏱️ 查看時間估算（安排參考，不是截止日期）",
+        "stat": '<span class="aaz-num">10</span><span class="aaz-lbl">學習站</span>',
+        "heading": "## 從 Stage 0 到 Stage 8，另有 Stage 7.5 閱讀站",
+        "banner": "banner.png",
+    },
+    "en": {
+        "suffix": ".en",
+        "route_shape": (
+            "8 topic stages + the Stage 0 readiness check + the Stage 7.5 advanced reading stop"
+        ),
+        "count": "10 learning stops",
+        "summary": "⏱️ View time estimates (planning aid, not a deadline)",
+        "stat": '<span class="aaz-num">10</span><span class="aaz-lbl">learning stops</span>',
+        "heading": "## Stage 0 through Stage 8, plus the Stage 7.5 reading stop",
+        "banner": "banner.en.png",
+    },
+    "zh-Hans": {
+        "suffix": ".zh-Hans",
+        "route_shape": "8 个主题 Stage + Stage 0 准备关 + Stage 7.5 进阶阅读站",
+        "count": "10 个学习站",
+        "summary": "⏱️ 查看时间估算（安排参考，不是截止日期）",
+        "stat": '<span class="aaz-num">10</span><span class="aaz-lbl">学习站</span>',
+        "heading": "## 从 Stage 0 到 Stage 8，另有 Stage 7.5 阅读站",
+        "banner": "banner.zh-Hans.png",
+    },
+}
+
+
+@pytest.mark.parametrize("locale,config", ENTRY_ROUTE.items())
+def test_readme_names_all_learning_stops_and_hides_only_time_detail(
+    locale: str, config: dict[str, str]
+) -> None:
+    text = read(locale_path("README", config["suffix"]))
+    summary = f'<summary>{config["summary"]}</summary>'
+    start = text.index('<details markdown="1">', text.index(summary) - 40)
+    end = text.index("</details>", start) + len("</details>")
+    time_block = text[start:end]
+    visible = text[:start] + text[end:]
+
+    assert config["route_shape"] in text
+    assert config["count"] in text
+    assert summary in time_block
+    assert "<details" not in time_block.replace('<details markdown="1">', "", 1)
+    assert not re.search(r"<details[^>]*\sopen(?:\s|>)", time_block)
+    assert "8–10" in time_block and "16–22" in time_block and "5–7" in time_block
+    assert "8-10" not in visible and "16-22" not in visible and "5-7" not in visible
+    assert "2024-2026" not in text and "2024–2026" not in text
+    assert "~300" not in text
+    assert "mv starter.py" not in text and "starter_" + "reference.py" not in text
+    assert "### 🤖" not in text
+    for term in (
+        "zero-shot",
+        "one-shot",
+        "few-shot",
+        "CoT",
+        "model comparison",
+        "Smolagents",
+        "long-term memory",
+        "contextual retrieval",
+        "advanced SDK",
+        "12 ",
+        "reading list",
+        "PAR loop",
+        "agent-as-judge",
+    ):
+        assert term in text, (locale, term)
+
+
+def test_active_public_and_export_surfaces_drop_the_old_stage_count_shorthand() -> None:
+    paths = [
+        ROOT / "README.md",
+        ROOT / "README.en.md",
+        ROOT / "README.zh-Hans.md",
+        ROOT / "mkdocs.yml",
+        ROOT / "scripts/build-pdf.sh",
+        *sorted((ROOT / ".github/outreach").glob("*.md")),
+    ]
+    stale = re.compile(
+        r"\b8[- ]stages?\b|"
+        r"8\s*(?:(?:個|个)\s*(?:階段|阶段)|(?:階段|阶段))"
+    )
+    offenders = [path.relative_to(ROOT) for path in paths if stale.search(read(path))]
+    assert not offenders, offenders
+
+
+EXERCISE_CALLOUT_DIRS = (
+    "stage-1/04-cross-provider",
+    "stage-1/05-error-handling",
+    "stage-2/01-prompt-eval-loop",
+    "stage-3/02-multi-tool-selection",
+    "stage-3/03-react-from-scratch",
+    "stage-3/04-multi-step-reasoning",
+    "stage-3/05-error-handling",
+    "stage-3/06-schema-design",
+    "stage-4/01-same-agent-two-frameworks",
+    "stage-4/02-multi-agent-roles",
+    "stage-4/03-graph-workflow",
+    "stage-4/04-codeact-vs-json-tool",
+    "stage-4/05-typed-agent",
+)
+
+
+@pytest.mark.parametrize(
+    "suffix,required",
+    (
+        ("", ("先執行", "只改一個", "重新執行", "不需要改名", "不需要整份")),
+        (
+            ".en",
+            (
+                "First run",
+                "change exactly one",
+                "run the existing test",
+                "do not need to rename",
+                "rewrite the whole solution",
+            ),
+        ),
+        (".zh-Hans", ("先运行", "只改一个", "重新运行", "不需要重命名", "不需要重写整份")),
+    ),
+)
+def test_exercise_callouts_teach_run_change_one_thing_and_retest(
+    suffix: str, required: tuple[str, ...]
+) -> None:
+    pages = [ROOT / "examples" / folder / f"README{suffix}.md" for folder in EXERCISE_CALLOUT_DIRS]
+    assert len(pages) == 13
+    forbidden = (
+        "mv starter.py",
+        "starter_" + "reference.py",
+        "starter_template.py",
+        "write your own `starter.py` from scratch",
+        "自己重寫一份",
+        "自己重写一份",
+    )
+    for page in pages:
+        text = read(page)
+        callout = next(line for line in text.splitlines() if line.startswith("> 🎓"))
+        assert "docs/HOW_TO_USE.md" in callout, page
+        for marker in required:
+            assert marker in callout, (page, marker)
+        for marker in forbidden:
+            assert marker not in callout, (page, marker)
+
+    testing_plan = read(ROOT / "docs/TESTING_PLAN.md")
+    active_v2 = between(testing_plan, "## v2 path (deferred)", "## Historical:")
+    for marker in forbidden:
+        assert marker not in active_v2, marker
+        assert marker not in testing_plan, marker
+
+
+@pytest.mark.parametrize("locale,config", ENTRY_ROUTE.items())
+def test_landing_page_shows_all_ten_stops(
+    locale: str, config: dict[str, str]
+) -> None:
+    text = read(locale_path("index", config["suffix"]))
+    assert config["stat"] in text
+    assert config["heading"] in text
+    route_cards = text[text.index(config["heading"]) :]
+    assert len(re.findall(r"__Stage (?:0|1|2|3|4|5|6|7|7\.5|8)\b", route_cards)) == 10
+    assert_in_order(
+        route_cards,
+        tuple(
+            f"stages/{path}"
+            for path in (
+                "00-foundations",
+                "01-llm-basics",
+                "02-prompt-engineering",
+                "03-tool-use-and-hello-agent",
+                "04-agent-frameworks",
+                "05-claude-code-ecosystem",
+                "06-memory-rag",
+                "07-multi-agent-production",
+                "07.5-advanced-agentic-concepts",
+                "08-agent-interfaces",
+            )
+        ),
+    )
+
+
+def test_banner_trio_uses_one_wide_canvas_and_distinct_locale_assets() -> None:
+    hashes: set[str] = set()
+    for config in ENTRY_ROUTE.values():
+        path = ROOT / "resources" / "diagrams" / config["banner"]
+        data = path.read_bytes()
+        assert data.startswith(b"\x89PNG\r\n\x1a\n"), path
+        width, height = struct.unpack(">II", data[16:24])
+        assert (width, height) == (1672, 941), (path, width, height)
+        assert len(data) < 2_000_000, (path, len(data))
+        hashes.add(hashlib.sha256(data).hexdigest())
+
+    assert len(hashes) == 3
+
+
+def test_banner_regeneration_contract_avoids_mutable_metrics() -> None:
+    prompt = read(ROOT / "resources" / "diagrams" / "locale-variant-prompts.md")
+    section = prompt[prompt.index("## 2026-08-30：首頁學習路徑 Banner") :]
+    for marker in (
+        "Stage 0–1–2",
+        "A1 → A2 → Stage 5 → A3 → Stage 8",
+        "3 → 4 → Stage 5 → 6 → 7 → 7.5 → Stage 8",
+    ):
+        assert marker in section
+    for forbidden in ("週數", "月份", "每週時數", "價格", "版本", "年份", "stars"):
+        assert forbidden in section
+
+
+def test_how_to_use_teaches_run_change_one_thing_and_retest() -> None:
+    text = read(ROOT / "docs" / "HOW_TO_USE.md")
+    assert_in_order(
+        text,
+        (
+            "## 先認識 `starter.py`",
+            "## 六步學習循環",
+            "## 可以改什麼？",
+            "## 每題做完問自己三句話",
+            "## 章節怎麼接",
+            "## 如果卡住",
+        ),
+    )
+    for required in ("直接執行", "只改一個", "再跑測試", "git diff", "不要貼 API key"):
+        assert required in text
+    for stale in (
+        "mv starter.py",
+        "starter_" + "reference.py",
+        "學到 100%",
+        "學到 60%",
+        "自己重寫",
+        "默寫一遍",
+        "v2 規劃",
+    ):
+        assert stale not in text
+    time = text[text.index('<summary>⏱️ 查看練習時間安排</summary>') :]
+    assert "固定小時" in time
+    assert not re.search(r"<details[^>]*\sopen(?:\s|>)", text)

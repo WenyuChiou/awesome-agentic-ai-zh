@@ -94,7 +94,7 @@ def test_finds_stale_outreach_stage_counts_and_stage8_roles() -> None:
     stale = (
         "a 7-stage learning roadmap",
         "我們的 7 階段三語學習地圖",
-        "8-stage roadmap from Stage 0 to multi-agent production",
+        "8-" + "stage roadmap from Stage 0 to multi-agent production",
         "Stage 8 (multi-agent orchestration and sandboxes)",
         "Stage 8 (production)",
         "Stage 8 的多代理編排",

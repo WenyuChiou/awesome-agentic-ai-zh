@@ -8,9 +8,9 @@
 
 # awesome-agentic-ai-zh
 
-### 🤖 AI Agent 学习地图 — 从基础 LLM 概念到自己构建多 agent 系统
+<p><strong>🤖 AI Agent 学习地图 — 从基础 LLM 概念到自己构建多 agent 系统</strong></p>
 
-<p><em><b>学习路线图 + 精选资源 + 简单 illustrative 案例</b><br/>结构化 8 阶段、从“LLM 是什么、token 怎么算”走到 multi-agent 编排、Computer Use / Browser Use / Sandbox</em></p>
+<p><em><b>学习路线图 + 精选资源 + 简单 illustrative 案例</b><br/>8 个主题 Stage，加上 Stage 0 准备关与 Stage 7.5 进阶阅读站；从“LLM 是什么、token 怎么算”走到 multi-agent 编排、Computer Use / Browser Use / Sandbox</em></p>
 
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat)](LICENSE)
 [![繁中](https://img.shields.io/badge/语言-繁體中文-red?style=flat)](README.md)
@@ -34,7 +34,7 @@
 
 | 核心 | 做什么 | 规模 |
 |---|---|---|
-| **学习路线图** | 把网上散落的高质量项目、教材、必修阅读，按**从零开始、循序渐进**整理成 **8 个阶段**（含 Stage 5 + Stage 8 两个共用 hub）+ 2 条学习路线 + 5 条延伸路径 | 8 stages、2 tracks |
+| **学习路线图** | 把网上散落的高质量项目、教材、必修阅读，按**从零开始、循序渐进**整理成 **8 个主题 Stage + Stage 0 准备关 + Stage 7.5 进阶阅读站**，再分成 2 条学习路线与 5 条延伸路径 | 10 个学习站、2 tracks |
 | **资源 curation** | 每阶段精选有官方或 canonical 来源的 project，说明编辑评分、适合谁、教什么、限制与怎么跑；另有按工作找路的 MCP / Skill catalog | 按 Stage 与工作分类 |
 | **简单 illustrative 案例** | 每阶段提供可复制的**基础练习**，需要连接模型时保留 Ollama / Anthropic 对照，并用离线或 mock-based test 检查关键行为 | 按学习成果安排 |
 
@@ -88,7 +88,7 @@ cd awesome-agentic-ai-zh
 - 🌏 **三语完整维护** — 繁中(canonical)/ 简中 / English,三版皆完整维护、英文非薄翻译
 - 🎓 **不只“框架”、还有“Claude Code 生态”** — MCP / Skills / Plugins 完整堆叠
 - 🔬 **5 条依用户分流的延伸路线** — 研究员 / 开发者 / 老师 / 知识工作者 / 日常用户
-- ⏱️ **预估时程写清楚** — Track A 8-10 周 / Track B 主干最少 16-22 周、现实 5-7 个月（每周 5-8 hr）
+- 🧭 **一站一个小成果** — 先看这一站要做出什么；需要安排时间时，再展开路线图下方的估算
 
 ---
 
@@ -105,47 +105,56 @@ cd awesome-agentic-ai-zh
 
 ### 共用基础（Stage 0-2）
 
-| Stage | 主题 | 关键内容 | 预估时程 |
+| Stage | 主题 | 关键内容 | 做完会得到什么 |
 |---|---|---|---|
-| **0** | [基础准备（Foundations）](stages/00-foundations.zh-Hans.md) | Python · CLI · git · API · JSON | 1-2 周 |
-| **1** | [LLM 基础（LLM Basics）](stages/01-llm-basics.zh-Hans.md) | token · API · 各家 LLM 比较 · 本地 LLM | 1 周 |
-| **2** | [Prompt 设计（Prompt Engineering）](stages/02-prompt-engineering.zh-Hans.md) | 系统 prompt · few-shot · CoT | 1-2 周 |
+| **0** | [基础准备（Foundations）](stages/00-foundations.zh-Hans.md) | Python · CLI · git · API · JSON | 能运行一个小程序，并用 Git 保存成果 |
+| **1** | [LLM 基础（LLM Basics）](stages/01-llm-basics.zh-Hans.md) | token · context · API · 模型比较（model comparison）· 本地 LLM | 看懂模型的基本规格，选一个合适的入口 |
+| **2** | [Prompt 设计（Prompt Engineering）](stages/02-prompt-engineering.zh-Hans.md) | zero-shot · one-shot · few-shot · system prompt · CoT 边界 | 写出模型看得懂、可以重复测试的 prompt |
 
 ### Track A — CLI Power User（想用 CLI 把事情做完）
 
-| Stage | 主题 | 关键内容 | 预估时程 |
+| Stage | 主题 | 关键内容 | 做完会得到什么 |
 |---|---|---|---|
-| **A1** | [选一个 CLI Agent，开始用它做事（CLI Agent Intro & Selection）](tracks/cli/A1-cli-intro.zh-Hans.md) | CLI agent 选择 · 安装 · 第一次跑 | 1 周 |
-| **A2** | [建立可重复使用的 CLI 工作流程（CLI Workflow Patterns）](tracks/cli/A2-cli-workflow.zh-Hans.md) | 项目规则 · Skill · 任务拆解 | 1-2 周 |
-| **+5** | [Stage 5 — Claude Code 生态系（Claude Code Ecosystem）](stages/05-claude-code-ecosystem.zh-Hans.md)（**共用 hub**）| MCP · Skills · Plugins · Subagents、Track A 必看 5.1-5.4 / 选读 5.5-5.7 | 1-2 周（Track A 视角）|
-| **A3** | [把 CLI Agent 接进真实工作流程（Integration & Production）](tracks/cli/A3-cli-production.zh-Hans.md) | MCP 接 CLI · CI 自动化 · cost / observability | 1-2 周 |
-| **+8** | [Stage 8 — Agent 操作介面（Agent Interfaces）](stages/08-agent-interfaces.zh-Hans.md)（**共用 hub**）| Computer Use · Browser Use · Code Sandbox、Track A 视角看 Track A 怎么用 | 1-2 周（Track A 视角）|
+| **A1** | [选一个 CLI Agent，开始用它做事（CLI Agent Intro & Selection）](tracks/cli/A1-cli-intro.zh-Hans.md) | CLI agent 选择 · 安装 · 第一次跑 | 选一个工具，完成第一个真实小任务 |
+| **A2** | [建立可重复使用的 CLI 工作流程（CLI Workflow Patterns）](tracks/cli/A2-cli-workflow.zh-Hans.md) | 项目规则 · Skill · 任务拆解 | 把一次成功的做法变成下次也能用的流程 |
+| **+5** | [Stage 5 — Claude Code 生态系（Claude Code Ecosystem）](stages/05-claude-code-ecosystem.zh-Hans.md)（**共用 hub**）| MCP · Skills · Plugins · Subagents、Track A 必看 5.1-5.4 / 选读 5.5-5.7 | 让 CLI agent 读到规则、接上工具并分派工作 |
+| **A3** | [把 CLI Agent 接进真实工作流程（Integration & Production）](tracks/cli/A3-cli-production.zh-Hans.md) | MCP 接 CLI · CI 自动化 · cost / observability | 接进真实流程，并看得到它做了什么 |
+| **+8** | [Stage 8 — Agent 操作界面（Agent Interfaces）](stages/08-agent-interfaces.zh-Hans.md)（**共用 hub**）| Computer Use · Browser Use · Code Sandbox | 知道任务需要浏览器、电脑操作还是 sandbox |
 
-> **Track A 预估总时程**：含 Stage 0-2（共用基础）+ A1-A3 + **Stage 5 + Stage 8（两个共用 hub）= 约 8-10 周**。核心参考：[`resources/cli-agents-guide.zh-Hans.md`](resources/cli-agents-guide.zh-Hans.md)。
->
 > **Capstone 门槛**：做到 A3 就能开始 Track A Capstone。Stage 8 是建议的下一站，但不影响 Capstone 入场。
 
 ### Track B — Agent Builder（想从零构建 agent）
 
-| Stage | 主题 | 关键内容 | 预估时程 |
+| Stage | 主题 | 关键内容 | 做完会得到什么 |
 |---|---|---|---|
-| **3** ⭐ | [工具使用与第一个 Agent Loop](stages/03-tool-use-and-hello-agent.zh-Hans.md) | function calling · ReAct · 6 个动手练习 | 2-3 周 |
-| **4** | [Workflow Graph 与 Agent 框架](stages/04-agent-frameworks.zh-Hans.md) | LangGraph · AutoGen · CrewAI · Smolagents | 2-3 周 |
-| **5** ⭐⭐ | [Claude Code 生态系（Claude Code Ecosystem）](stages/05-claude-code-ecosystem.zh-Hans.md)（**共用 hub**、Track A 也学）| MCP · Skills · Plugins · Subagents | 3-4 周（Track B 视角）|
-| **6** | [上下文管理（Context Engineering）：RAG 与 Memory](stages/06-memory-rag.zh-Hans.md) | vector DB · long-term memory · contextual retrieval | 2 周 |
-| **7** | [Agent Production Engineering：Harness、Loop 与 Graph](stages/07-multi-agent-production.zh-Hans.md) | multi-agent orchestration · eval · observability · SDK 进阶 | 2-4 周 |
-| **7.5** | [进阶 Agentic Workflow 概念（Advanced Agentic Concepts）](stages/07.5-advanced-agentic-concepts.zh-Hans.md)（reading map）| 工作边界 · PAR loop · agent-as-judge · 12 个进阶概念 + reading list | 1 周（不写 code）|
-| **8** ⭐⭐ | [Agent 操作介面（Agent Interfaces）](stages/08-agent-interfaces.zh-Hans.md)（**共用 hub**、Track A 也学）| Computer Use · Browser Use · Code Sandbox、2024-2026 frontier | 2-3 周（Track B 视角）|
+| **3** ⭐ | [工具使用与第一个 Agent Loop](stages/03-tool-use-and-hello-agent.zh-Hans.md) | function calling · ReAct · 6 个动手练习 | 写出会调用工具、看结果再继续的 Agent Loop |
+| **4** | [Workflow Graph 与 Agent 框架](stages/04-agent-frameworks.zh-Hans.md) | Workflow Graph · LangGraph · AutoGen · CrewAI · Smolagents | 先画清流程，再选合适的框架实现 |
+| **5** ⭐⭐ | [Claude Code 生态系（Claude Code Ecosystem）](stages/05-claude-code-ecosystem.zh-Hans.md)（**共用 hub**、Track A 也学）| MCP · Skills · Plugins · Subagents | 把工具、规则与分工接成可运行系统 |
+| **6** | [上下文管理（Context Engineering）：RAG 与 Memory](stages/06-memory-rag.zh-Hans.md) | retrieval · vector DB · 长期记忆（long-term memory）· 情境检索（contextual retrieval）· evaluation | 让 agent 找到证据，也知道什么值得记住 |
+| **7** | [Agent Production Engineering：Harness、Loop 与 Graph](stages/07-multi-agent-production.zh-Hans.md) | 进阶 SDK（advanced SDK）· harness · loop · graph · multi-agent · eval · observability | 让系统可以被检查、失败后能恢复 |
+| **7.5** | [进阶 Agentic Workflow 概念（Advanced Agentic Concepts）](stages/07.5-advanced-agentic-concepts.zh-Hans.md)（reading map）| 12 个进阶概念 + reading list · 工作边界 · PAR loop · agent-as-judge · graceful degradation | 判断下一个进阶概念是否真的需要加入 |
+| **8** ⭐⭐ | [Agent 操作界面（Agent Interfaces）](stages/08-agent-interfaces.zh-Hans.md)（**共用 hub**、Track A 也学）| Computer Use · Browser Use · Code Sandbox | 为任务选择安全、可观察的操作界面 |
 
-> **Track B 预估总时程**：主干最少 **16-22 周**、现实 **5-7 个月**（每周 5-8 hr 兼职）
+<details markdown="1">
+<summary>⏱️ 查看时间估算（安排参考，不是截止日期）</summary>
+
+每个人起点不同。先完成一个小成果，再决定是否要多花一周补基础。
+
+- **共用基础**：Stage 0 约 1–2 周；Stage 1 约 1 周；Stage 2 约 1–2 周。
+- **Track A**：A1 约 1 周；A2、Stage 5、A3、Stage 8 各约 1–2 周。连同共用基础，整条约 8–10 周。
+- **Track B**：Stage 3、4、8 各约 2–3 周；Stage 5 约 3–4 周；Stage 6 约 2 周；Stage 7 约 2–4 周；Stage 7.5 约 1 周阅读。连同共用基础，主干约 16–22 周；每周投入 5–8 小时时，常见是 5–7 个月。
+
+Track A 的操作参考见 [`resources/cli-agents-guide.zh-Hans.md`](resources/cli-agents-guide.zh-Hans.md)。
+
+</details>
 
 > **两个共用 hub（Track A + Track B 都会用到）**：
 > - **Stage 5** = Claude Code 生态（MCP / Skills / Plugins / Subagents）—— Track A 学 MCP 接 CLI、Track B 学 agent runtime 结构
-> - **Stage 8** = Agent Interfaces（Computer Use / Browser / Sandbox、2024-2026 frontier）—— Track A 学“**怎么用**”委派任务、Track B 学“**怎么 build**”embed 进 agent
+> - **Stage 8** = Agent Interfaces（Computer Use / Browser / Sandbox）—— Track A 学“**怎么用**”委派任务、Track B 学“**怎么 build**”embed 进 agent
 >
 > 两个 hub 出现在两条 track 内、视角不同、学的深度也不同（内文有 Track A / Track B 分视角段）。
 
-> 💡 **想看跨 stage 的完整示例？** [7 步构建你的第一个 AI Agent](walkthroughs/build-first-agent-in-7-steps.zh-Hans.md) — 同一个 Paper Summary Bot 从 Stage 1 一路写到 Stage 7，~300 行真实代码（**Track B 适用**）
+> 💡 **想看跨 stage 的完整示例？** [7 步构建你的第一个 AI Agent](walkthroughs/build-first-agent-in-7-steps.zh-Hans.md) — 看同一个 Paper Summary Bot 从 Stage 1 一步步长到 Stage 7，每一步都有可运行程序（**Track B 适用**）
 
 走完主干后，依你的身份挑一条延伸路线继续走。**不确定挑哪条？**
 
@@ -169,7 +178,7 @@ cd awesome-agentic-ai-zh
 
 - 基本 Python — 写过 function、用过 API、看得懂 JSON
 - 基本 git — clone、commit、push
-- 想学的动机 — agent 是 2025 年之后变化最快的领域，需要持续投入
+- 愿意边做边查 — agent 工具变化很快；遇到新名称时，回到官方文档确认即可
 
 上面有缺的就从 Stage 0 补齐；都会了就直接跳 Stage 1。
 
@@ -179,15 +188,15 @@ cd awesome-agentic-ai-zh
 - **Part 2（Stage 3-4）：构建你的 Agent** — Stage 3 写出第一个 **Agent Loop**；Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来
 - **Part 3（Stage 5） 共用 hub** — Claude Code 生态系（MCP / Skills / Plugins / Subagents、Track A + B 都会用到）
 - **Part 4（Stage 6-7）：进阶集成** — Stage 6 用 RAG / memory 深入 **Context Engineering**；Stage 7 让 loop / graph 在 production 稳定运行
-- **Part 5（Stage 8） 共用 hub** — Agent Interfaces（Computer Use / Browser Use / Code Sandbox、2024-2026 frontier、两条 track 都会用到）
+- **Part 5（Stage 8） 共用 hub** — Agent Interfaces（Computer Use / Browser Use / Code Sandbox、两条 track 都会用到）
 
 > 🔭 **学习顺序和五个控制问题回答不同事情**：学习时先在 Stage 2 写好 **Prompt**，Stage 3 写出 **Agent Loop**，Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来；Stage 5 学会用 MCP、Skills、Plugins 和 Subagents 接上工具与规则，Stage 6 再深入 **Context Engineering**，Stage 7 最后把 Harness、Loop 和 Graph 做到能长时间稳定运行。`prompt → context → harness → loop → graph` 是五个检查问题，不是严格的软件层或章节编号；Harness 可以包含 Loop，Graph 也可以连接 Harness、固定程序和人工批准。完整定义见 [Stage 7 五个控制问题](stages/07-multi-agent-production.zh-Hans.md#五个控制问题prompt--context--harness--loop--graph)，Prompt 与 Context 的边界见 [Stage 2](stages/02-prompt-engineering.zh-Hans.md)。
 
-走完主干（Track B 16-22 周 / Track A 8-10 周）后，依你的身份挑一条延伸路线继续走。
+走完主干后，依你的身份挑一条延伸路线继续走。
 
 最重要的说一句话：**不要跳过动手练习**。每个 stage 的动手练习都是“不动手就学不会”的东西，光读过去后面会卡住。
 
-> 🎓 **动手练习怎么用才对**：每个练习 folder 里的 `starter.py` 是**完整解答**、不是 TODO skeleton。如果你 clone 下来直接 `cat starter.py` + `python test.py` pass、会误以为“我学会了”、其实没写一行 code。**正确学习法**：`mv starter.py starter_reference.py`、看 signature 不看 body、自己重写、卡住才回去对照。完整方法论 + 每个 stage 的时间预算 + 卡住处理流程看 [`docs/HOW_TO_USE.md`](docs/HOW_TO_USE.md)。
+> 🎓 **动手练习怎么用才对**：`starter.py` 是可直接复制与运行的起点。先跑一次，接着只改一件小事，再跑测试看结果是否按你的想法改变；不用先抄空白文件，也不用把整份答案重写一遍。完整方法与卡住时的处理流程见 [`docs/HOW_TO_USE.md`](docs/HOW_TO_USE.md)。
 
 准备好了吗？[从 Stage 0 开始](stages/00-foundations.zh-Hans.md)。
 
@@ -313,7 +322,7 @@ PR 流程跟 style 规范请看 [CONTRIBUTING.zh-Hans.md](CONTRIBUTING.zh-Hans.m
   author = {Chiou, Wenyu},
   year = {2026},
   url = {https://github.com/WenyuChiou/awesome-agentic-ai-zh},
-  note = {8-stage learning path from prerequisites to Agent Interfaces (Computer Use / Browser Use / Code Sandbox), with curated projects + hello-X demos. Trilingual (zh-TW / 简中 / English).}
+  note = {10-stop learning path: 8 topic stages plus Stage 0 readiness and the Stage 7.5 reading stop, ending at Agent Interfaces (Computer Use / Browser Use / Code Sandbox), with curated projects + hello-X demos. Trilingual (zh-TW / 简中 / English).}
 }
 ```
 

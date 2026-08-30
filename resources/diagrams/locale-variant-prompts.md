@@ -252,3 +252,30 @@ python scripts/check-image-locale.py
 > verbatim locale text. AI drafts; the teacher checks privacy, facts, and bias;
 > the teacher observes and revises. No autonomous grading, diagnosis, learner
 > score, product logo, badge, extra caption, mixed language, or watermark.
+
+## 2026-08-30：首頁學習路徑 Banner
+
+`banner.png`、`.en.png`、`.zh-Hans.png` 以 Image 2.0 重新產生，取代含固定週數的舊版。
+三語共用 `1672×941` 橫式母版、奶油白背景、深藍字、亮藍／橘兩條路、紫色共用 hub、
+圓角卡與大留白。路徑固定為：
+
+- 共用基礎 `Stage 0–1–2` 後分流。
+- Track A：`A1 → A2 → Stage 5 → A3 → Stage 8`。
+- Track B：`3 → 4 → Stage 5 → 6 → 7 → 7.5 → Stage 8`。
+- Stage 5 後用上下兩條不交叉的路分開畫 A3 與 6／7／7.5，再於 Stage 8 匯合。
+- Stage 8 後才分到研究人員、開發者、教師、知識工作者與日常使用者。
+
+底部只保留三個不會因時間改變的提示：「使用現成 CLI Agent」、「打造自己的 Agent」、
+「一站一個小成果」與 repository URL。不得放週數、月份、每週時數、價格、版本、年份、
+GitHub stars 或其他容易漂移的指標。箭頭只能落在卡片／節點邊緣；不得穿過文字、icon、
+框線或其他箭頭。三語必須使用同一節點、同一方向、同一色彩角色與同一欄位位置。
+
+共同重產 prompt 核心：
+
+> Preserve the wide 1672×941 cream-white README infographic, exact route,
+> bright blue/orange paths, purple shared hubs, rounded cards, generous whitespace,
+> and locale-specific text. Show Stage 0–1–2, A1–A2, 3–4, Stage 5,
+> then separate Stage 5–A3–Stage 8 and Stage 5–6–7–7.5–Stage 8 lanes before
+> the five role paths. Replace mutable duration metrics with
+> stable Track A, Track B, and one-result-per-stop guidance. Every arrow must land
+> on a card or node edge. No text, icon, border, node, or arrow may overlap.
