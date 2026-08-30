@@ -29,7 +29,7 @@ Once you understand the paradigm, moving a use case from Type 2 to Type 4 isn't 
 
 ## Type 1: IDE-coupled — "sidebar pair-programmer"
 
-**Examples**: [Cursor](https://cursor.com) / [Windsurf](https://codeium.com/windsurf) / [Cline](https://cline.bot) / [Continue](https://continue.dev) / [Zed](https://zed.dev)
+**Examples**: [Cursor](https://cursor.com) / [Windsurf](https://windsurf.com/editor) / [Cline](https://cline.bot) / [Continue](https://continue.dev) / [Zed](https://zed.dev)
 
 **Hero example**:
 You're writing a React component in Cursor. Editor on the left, Cursor sidebar on the right. You select a chunk of code, hit `Cmd+K`, and Cursor rewrites it in place. You see the inline diff and accept/reject.

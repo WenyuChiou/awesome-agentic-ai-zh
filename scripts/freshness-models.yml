@@ -280,6 +280,27 @@ glossary_fact_pack:
     ibm_loop_engineering: 'https://www.ibm.com/think/topics/loop-engineering'
     anthropic_context_engineering: 'https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents'
 
+setup_guide_fact_pack:
+  canonical: 'resources/setup-guide.md'
+  verified_on: '2026-08-30'
+  scope: ['install-paths', 'api-keys', 'authentication', 'provider-entrypoints', 'project-status']
+  official_sources:
+    claude_api_quickstart: 'https://platform.claude.com/docs/en/get-started'
+    claude_python_sdk: 'https://platform.claude.com/docs/en/api/sdks/python'
+    claude_code_installation: 'https://code.claude.com/docs/en/installation'
+    claude_code_authentication: 'https://code.claude.com/docs/en/authentication'
+    claude_code_terminal_guide: 'https://code.claude.com/docs/en/terminal-guide'
+    uv_installation: 'https://docs.astral.sh/uv/getting-started/installation/'
+    uv_python_policy: 'https://docs.astral.sh/uv/reference/policies/python/'
+    openai_quickstart: 'https://platform.openai.com/docs/quickstart'
+    gemini_openai_compatibility: 'https://ai.google.dev/gemini-api/docs/openai'
+    nvidia_nim_llm_api: 'https://docs.api.nvidia.com/nim/re/reference/llm-apis'
+    deepseek_api: 'https://api-docs.deepseek.com/'
+    kimi_api: 'https://platform.kimi.com/docs/api/overview'
+    alibaba_model_studio: 'https://help.aliyun.com/en/model-studio/base-url'
+    zai_api: 'https://docs.z.ai/api-reference/introduction'
+    ollama_openai_compatibility: 'https://docs.ollama.com/api/openai-compatibility'
+
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
     required_scopes: ['models', 'pricing', 'availability', 'deprecations']
@@ -316,6 +337,9 @@ verified_pages:
     max_age_days: 90
   - canonical: 'resources/glossary.md'
     required_scopes: ['protocols', 'product-identities', 'terminology', 'official-links']
+    max_age_days: 90
+  - canonical: 'resources/setup-guide.md'
+    required_scopes: ['install-paths', 'api-keys', 'authentication', 'provider-entrypoints', 'project-status']
     max_age_days: 90
 
 current_frontier_models:
@@ -367,6 +391,23 @@ current_frontier_models:
 # scanned — a qualifier written as "baseline" in zh-TW/en often becomes "基线" in
 # the zh-Hans mirror, and the gate must recognize all three (2026-07 gap).
 stale_patterns:
+  # The setup guide is a copy/run entry point. It must use current native
+  # installation paths and avoid freezing account-specific prices or credits.
+  - pattern: 'npm install -g @anthropic-ai/claude-code|Node\.js\s*(?:v?18|18\+)'
+    include_files: ['resources/setup-guide.md']
+    qualifier_terms: []
+    note: 'Claude Code now recommends native installers; npm is optional and no longer a Node 18 path'
+
+  - pattern: '1000 credits?|free (?:for )?(?:one|a) week|免費一週|免费一周|暫無原生 desktop app|暂无原生 desktop app|no native desktop app'
+    include_files: ['resources/setup-guide.md', 'examples/README.md']
+    qualifier_terms: []
+    note: 'Beginner entry pages must not freeze volatile account grants or stale desktop availability'
+
+  - pattern: 'https://codeium\.com/windsurf'
+    include_files: ['resources/agent-paradigms.md']
+    qualifier_terms: []
+    note: 'Windsurf uses its current official editor entry point'
+
   # Glossary definitions must stay stable. Model rosters, prices, context sizes,
   # protocol version counts, and product event counts belong in their canonical
   # current-fact pages rather than in a long-lived definition.

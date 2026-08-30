@@ -1,180 +1,210 @@
 > [繁體中文](./setup-guide.md) | [简体中文](./setup-guide.zh-Hans.md) | **English**
 
-# 🚀 From Zero — Setup Guide for People Without a Dev Background
+# 🚀 From Zero — Setup Guide for People Without a Development Background
 
-> [← Back to main README](../README.en.md)
+> [← Back to the main roadmap README](../README.en.md)
 
-> Expected time: 30-45 minutes. You will get your first API key, install Python / uv, and run your first LLM hello world.
-> This guide is for people who want to learn AI agents but have not written code before. If you already know Python, git, and the CLI, you can skip to [Stage 1](../stages/01-llm-basics.en.md).
+<!-- freshness: canonical=resources/setup-guide.md; verified_on=2026-08-30; scope=install-paths,api-keys,authentication,provider-entrypoints,project-status; max_age_days=90 -->
 
-## Pick Your On-Ramp First
+This page does not ask you to install every tool. Just choose one door first and complete one small result.
 
-Ordered shallow → deep by setup effort. **Never touched an LLM? Just start with 1️⃣**.
+Already comfortable with Python, Git, and the terminal, and know how to protect an **API Key**? Go straight to [Stage 1](../stages/01-llm-basics.en.md).
 
-### 1️⃣ Web (easiest, free tier, zero setup)
+## 📌 What This Guide Will Help You Complete
 
-Open a browser, type the URL — done. **Best place to start if it's your first time**. Free tier usually covers a week of experimentation.
+- Distinguish Web Chat, Desktop, IDE, **CLI Agent**, and **API** so you no longer treat them as the same kind of tool.
+- Understand why an **API Key** is like a password and where it must not be placed.
+- Use `uv` to prepare Python 3.12 without first learning a pile of package-management details.
+- Copy a Python program and actually receive a model response.
+- Know when to go to Stage 1 and when to go to Stage 5.
 
-| Service | URL | Notes |
+<details markdown="1">
+<summary>View time, device, and prerequisites</summary>
+
+- Web Chat only: you can start in a few minutes.
+- Complete the API quick start: usually about 20–40 minutes; account review, payment setup, and network conditions may make it longer.
+- You need: a Windows, macOS, or Linux computer where you can install software, plus an account that can open the provider Console.
+- You do not need: prior programming experience, knowledge of Git branches, or a full IDE installed.
+
+Company or school computers may prohibit installing programs or creating API keys. If that happens, ask an administrator; do not bypass the restriction.
+
+</details>
+
+## 🚪 Choose One Door First
+
+The five doors are parallel choices, not five levels that must be completed in order.
+
+| What you want to do | What this door is | First action |
 |---|---|---|
-| **Claude** | https://claude.ai | Anthropic. Free tier has daily limits; Pro is $20/mo |
-| **ChatGPT** | https://chatgpt.com | OpenAI. Free GPT-5.5 Instant (rate-limited); Plus $20/mo unlocks Thinking/Pro |
-| **Gemini** | https://gemini.google.com | Google. Generous free tier, integrates Google apps |
-| **Le Chat** | https://chat.mistral.ai | Mistral (EU open-source LLM lab). Free, privacy-focused |
+| Chat with a model first | **Web Chat**: conversation in a browser | Open [Claude](https://claude.ai), [ChatGPT](https://chatgpt.com), [Gemini](https://gemini.google.com), or [Le Chat](https://chat.mistral.ai) |
+| Chat or handle files in a computer app | **Desktop App**: a chat interface installed on your computer | Install it from the product's official download page |
+| Have AI assist while you write code | **IDE Assistant**: lives inside the editor | Start with the [developer branch](../branches/for-developer.en.md) |
+| Let an Agent read and edit files and run commands in a specified folder | **CLI Agent**: works in the terminal | Start with the [CLI Agents guide](cli-agents-guide.en.md) |
+| Write your own program to call a model | **API**: the entry point where a program talks to a model service | Continue with A → B → C below |
 
-### 2️⃣ Desktop app (free, better cross-app integration)
+<details markdown="1">
+<summary>View the complete official entry points for Web, Desktop, IDE, and CLI</summary>
 
-Native apps for macOS / Windows — adds system shortcut, clipboard / screenshot integration, drag-and-drop files.
+The table below is an entry-point list, not a ranking. The recommendation rating means “how suitable is it as a starting point for this learning roadmap.”
 
-| App | Download | Platform |
-|---|---|---|
-| **Claude Desktop** | https://claude.ai/download | macOS / Windows |
-| **ChatGPT Desktop** | https://openai.com/chatgpt/download | macOS / Windows |
-| **Gemini** | No native desktop app yet | (use web) |
-| **LM Studio** | https://lmstudio.ai | macOS / Windows / Linux — runs local LLMs as a desktop app; $0 but needs GPU/RAM |
+<table>
+<thead><tr><th scope="col">Type</th><th scope="col">Official entry point / project</th><th scope="col">Know this first</th><th scope="col">Recommendation</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Web Chat</th><td><a href="https://claude.ai">Claude</a></td><td>Cloud chat interface; plans and features vary by account and region</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>Cloud chat interface; a ChatGPT subscription is not OpenAI API credit</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google.com">Gemini</a></td><td>Cloud chat interface; check data permissions before connecting services</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chat.mistral.ai">Le Chat</a></td><td>Mistral's cloud chat interface</td><td>⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Desktop</th><td><a href="https://claude.com/download">Claude Desktop</a></td><td>Use the official page for the current Windows, macOS, and Linux entry points</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chatgpt.com/download">ChatGPT Desktop</a></td><td>Use the official download page for platform requirements</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google.com/mac">Gemini for macOS</a></td><td>Currently a macOS app; use the Web version on other systems</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://lmstudio.ai/download">LM Studio</a></td><td>Local-model runtime and graphical interface; you still manage models, hardware, and file permissions</td><td>⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">IDE／Editor</th><td><a href="https://cursor.com">Cursor</a></td><td>AI editor; confirm every modification and terminal action</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://windsurf.com/editor">Windsurf</a></td><td>AI editor; use the official documentation for plans and permissions</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://cline.bot">Cline</a></td><td>VS Code coding agent; start with low permissions</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://zed.dev/ai">Zed AI</a></td><td>AI features in the Zed editor</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/features/copilot">GitHub Copilot</a></td><td>Available in GitHub, IDEs, and other interfaces; permissions differ by interface</td><td>⭐⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="7">CLI Agent</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>Keep the permission prompt enabled first; begin with a small folder</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/openai/codex">OpenAI Codex</a></td><td>Coding agent; confirm its sandbox, approval, and diff</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a></td><td>Gemini's open-source terminal agent</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>Multi-provider coding agent / harness, not a model router</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>Connects to providers and extensions; narrow tool permissions first</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://aider.chat/docs/">Aider</a></td><td>Git-first pair programmer; auto-commit does not mean you can skip review</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a></td><td>General-purpose agent; try small tasks in an isolated environment first</td><td>⭐⭐⭐⭐</td></tr>
+</tbody>
+</table>
 
-### 3️⃣ IDE with built-in AI (write code with an AI sidekick)
+</details>
 
-Lives inside a code editor — you write code normally, AI suggests / edits / answers questions alongside. **Best fit if you already write code and want an AI-native IDE**.
+## 🧩 Seven Core Terms to Distinguish
 
-| Tool | Download | Shape |
-|---|---|---|
-| **Cursor** | https://cursor.com | Standalone IDE (VS Code fork) |
-| **Windsurf** | https://codeium.com/windsurf | Standalone IDE (by Codeium) |
-| **Cline** | https://cline.bot | VS Code extension (agentic style) |
-| **Continue** | https://continue.dev | VS Code / JetBrains extension (open-source) |
-| **Roo Code** | https://github.com/RooCodeInc/Roo-Code | VS Code extension (Cline fork); ⚠️ **repo archived 2026-05 (read-only)** |
-| **Zed** | https://zed.dev | Standalone editor with built-in AI assistant |
-| **GitHub Copilot** | https://github.com/features/copilot | Multi-IDE extension (VS Code / JetBrains / etc.) |
+- **Chat Surface**: the screen where you type, paste files, and read replies, such as Claude.ai. It is not a model API.
+- **API**: the entry point where a program sends a request and receives a result. People usually do not chat directly on an API screen.
+- **API Key**: a secret string that tells a service which account this program may use. Whoever obtains it may spend your credit.
+- **Environment Variable**: a small drawer for handing settings to a program. The program can read it without the secret being written in source code.
+- **Runtime**: what actually runs a program; Python is a runtime, and Ollama is a local-model runtime.
+- **Package Manager**: helps install and run packages written by others. This guide uses `uv`.
+- **CLI Agent**: an Agent that reads files, edits files, and runs tools in the terminal. It is not an API Provider or a single model.
 
-→ Detailed comparison → [`branches/for-developer.en.md`](../branches/for-developer.en.md)
+## 📚 Required Reading and Official Starting Points
 
-### 4️⃣ CLI agent (terminal, can read/write files, run shell, manage git)
+These five entry points stay visible; when versions differ, use the official page as the authority.
 
-Agents that live in your terminal — you give one prompt (e.g. "refactor this module"), the agent reads files, edits them, runs commands, commits. **More autonomous than the IDE mode and handles multi-step tasks**, but setup is heavier (requires Node.js or Python; see B / D below).
+<table>
+<thead><tr><th scope="col">Category</th><th scope="col">Official resource</th><th scope="col">What it helps you do</th><th scope="col">Recommendation</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Claude API</th><td><a href="https://platform.claude.com/docs/en/get-started">Claude API Quickstart</a></td><td>Create a key and send the first request</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.claude.com/docs/en/api/sdks/python">Anthropic Python SDK</a></td><td>Confirm Python requirements, environment variables, and the current code shape</td><td>⭐⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1">Python tools</th><td><a href="https://docs.astral.sh/uv/getting-started/installation/">uv Installation</a></td><td>Install or update uv for your operating system</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1">CLI basics</th><td><a href="https://code.claude.com/docs/en/terminal-guide">Claude Code Terminal Guide</a></td><td>Open a terminal for the first time, change folders, and run commands</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1">Secret security</th><td><a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning">GitHub Secret Scanning</a></td><td>Understand why secrets must not enter Git history</td><td>⭐⭐⭐⭐</td></tr></tbody>
+</table>
 
-| CLI Agent | Install / Docs | Primary LLM |
-|---|---|---|
-| **Claude Code** | https://code.claude.com/docs/en/quickstart | Claude |
-| **Codex CLI** | https://github.com/openai/codex | GPT family |
-| **Gemini CLI** | https://github.com/google-gemini/gemini-cli | Gemini |
-| **OpenCode** | https://github.com/anomalyco/opencode | Any (multi-provider) |
-| **goose** | https://block.github.io/goose | Any |
-| **Aider** | https://aider.chat | Any (git-native) |
-| **Hermes Agent** | https://github.com/NousResearch/hermes-agent | 200+ (model-neutral) |
+<a id="a--get-your-first-api-key-about-10-minutes"></a>
 
-→ CLI agent identity & selection guide → [`cli-agents-guide.en.md`](cli-agents-guide.en.md)
-→ Detailed Claude Code first install → [D](#d--install-claude-code-for-the-first-time-about-10-minutes-needed-for-stage-5--for-developer) below
+## 🛠 A — Get Your First API Key
 
-> 💡 **IDE vs CLI — how to pick?** Want AI alongside you while you code → IDE. Want to give one prompt and let the agent run a multi-step task → CLI. Many people use both.
+This quick start uses Anthropic Claude because Stage 1's canonical API path uses it too. A Claude.ai subscription and a Claude API bill are separate things.
 
-### 5️⃣ API + write your own code (most advanced)
+1. Open the [Claude Console](https://platform.claude.com/).
+2. Go to **API Keys** and create a key for this exercise only.
+3. If the screen lets you choose an owner, workspace, or expiration, use the narrowest scope and shortest reasonable duration.
+4. Copy the key and put it in a password manager first; do not paste it into a chat window.
+5. Check billing / usage in the Console first; if your account offers a spend limit or alert, set it to a small amount you can accept before calling the API.
 
-Want to script with Python, run batch jobs, integrate LLMs into your own app/automation? A-C below are for you.
+**Three API Key rules:**
 
-> 💡 **What's an API key?** A password that lets a program call a model. Treat it like payment information.
+- **Do not paste** it into chat, group chats, email, issues, or screenshots.
+- **Do not write** it into Python source code or Git history.
+- **Do not share** one key across many projects; revoke it when you no longer need it.
 
----
+<details markdown="1">
+<summary>View other Cloud APIs and the local Runtime</summary>
 
-## A — Get Your First API Key (About 10 Minutes)
+The table below lists only current official entry points. Click the official pages for prices, free quotas, and available models; this getting-started guide does not freeze them.
 
-### Anthropic Claude (Recommended First)
+<table>
+<thead><tr><th scope="col">Type</th><th scope="col">Official entry point</th><th scope="col">Compatibility / limits</th><th scope="col">Recommendation</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="7">Cloud API</th><td><a href="https://platform.openai.com/docs/quickstart">OpenAI API</a></td><td>Official SDK and API; a ChatGPT subscription is not API billing</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://ai.google.dev/gemini-api/docs/openai">Gemini API</a></td><td>Google officially documents compatibility with OpenAI libraries</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://docs.api.nvidia.com/nim/re/reference/llm-apis">NVIDIA NIM</a></td><td>Check the endpoint for its supported API shape and models</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://api-docs.deepseek.com/">DeepSeek API</a></td><td>Official documentation provides an OpenAI-compatible way to use it</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.kimi.com/docs/api/overview">Kimi API</a></td><td>Use the official Console for the region, endpoint, and models</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://help.aliyun.com/en/model-studio/base-url">Alibaba Model Studio／Qwen</a></td><td>Use the corresponding base URL for your region; the official service provides an OpenAI-compatible endpoint</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://docs.z.ai/api-reference/introduction">Z.ai／GLM API</a></td><td>Use the current endpoint in the official reference</td><td>⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1">Local Runtime</th><td><a href="https://docs.ollama.com/api/openai-compatibility">Ollama</a></td><td>Compatible with only part of the OpenAI API; you must download local models separately</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
+</table>
 
-1. Open https://console.anthropic.com/
-2. Sign up with Google, GitHub, or email.
-3. After login, find **API Keys**, then choose **Create Key**.
-4. **Copy the key immediately**. Most platforms show it only once.
-5. Put it in a local password manager, or briefly in a local text file; the next section moves it into `.env`.
+Local inference has no provider model API bill, but you remain responsible for hardware, electricity, download time, device security, files, and logs. For the complete path, see the [Cookbook local LLM walkthrough](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough).
 
-> ⚠️ **Three API-key rules**
-> - **Do not paste it** into chat windows, group chats, email, or screenshots.
-> - **Do not upload it** to git; GitHub may detect and revoke it.
-> - **Do not store it** as a plain text cloud-drive file; syncing creates more exposure.
+This repo currently uses these practice tags: `gemma4:e4b` for Stages 1–2, `qwen2.5:3b` for Tool Use／ReAct in Stages 3–6, and `qwen3.5:4b` for Eval／Observability／Streaming／Deploy in Stage 7. These are curriculum defaults, not a universal model ranking.
 
-### Other LLM Options
+</details>
 
-#### Western cloud (US-friendly, English-first)
+<a id="b--install-your-local-environment-about-10-minutes"></a>
 
-- **OpenAI**: https://platform.openai.com/api-keys
-  ChatGPT Plus and API access are separate; Plus subscribers still need an API key.
+## 🛠 B — Set Up the Python Runtime
 
-- **Google AI Studio**: https://aistudio.google.com/
-  Useful for trying the Gemini API. Free quota depends on region and account state.
+Here `uv` manages both Python and packages. Install `uv` first:
 
-- **NVIDIA NIM**: https://build.nvidia.com/
-  **Hosts many open-source models (Llama / Mistral / DeepSeek / Qwen / Gemma etc.), OpenAI-compatible API, new accounts get 1000 free credits**. Great when you want to try several open models without local GPU. `base_url=https://integrate.api.nvidia.com/v1`.
-
-#### Chinese / Chinese-language cloud (region-friendly, very cheap)
-
-> If you're in mainland China and Anthropic / OpenAI are inaccessible, or you want to test Chinese-native models, start here. **All these APIs are OpenAI-compatible** — just change `base_url` and model name to run the same exercises.
-
-- **DeepSeek**: https://platform.deepseek.com/
-  Free web at https://chat.deepseek.com (with a deep-thinking mode). API is extremely cheap (**$0.14 input / $0.28 output per 1M tokens — about 7× cheaper than haiku**). Strong code and reasoning.
-  `base_url=https://api.deepseek.com/v1`, `model=deepseek-v4-flash` or `deepseek-v4-pro`.
-
-- **Moonshot Kimi**: https://platform.moonshot.cn/ (China) / https://platform.moonshot.ai/ (international)
-  Free web at https://kimi.com. Selling point: **1M-token context window** (great for large files / long conversations). API ~$5-15 per 1M input, tiered by context size.
-  `base_url=https://api.moonshot.cn/v1` (CN) / `https://api.moonshot.ai/v1` (intl), e.g. `model=kimi-k3`.
-
-- **Qwen (Alibaba)**: https://dashscope.console.aliyun.com/
-  Free web at https://chat.qwen.ai. API via Alibaba Cloud DashScope with an **OpenAI-compatible endpoint** ([docs](https://help.aliyun.com/zh/dashscope/developer-reference/compatibility-of-openai-with-dashscope/)). **The same Qwen models also run locally via Ollama** (`ollama pull qwen2.5:3b`) — cloud and local paths both work.
-
-- **GLM (ZhipuAI)**: https://open.bigmodel.cn/ (China) / https://z.ai/ (intl)
-  Free web at https://chatglm.cn. Has GLM-4.5 and GLM-4-Plus. Free tier available; students can apply for extra credit.
-
-#### Local (no provider model API bill; offline after download)
-
-- **Ollama local models**: no API key needed. For the local path, see [Cookbook Recipe 6](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough).
-  This repo's "Path A" defaults to Ollama: Stage 1–2 use `gemma4:e4b`, Stage 3–6 tool-use/ReAct exercises use `qwen2.5:3b`, and Stage 7 debate/eval/observability/streaming/deploy mechanics use `qwen3.5:4b`. Local inference has no provider model API bill, but hardware, electricity, downloads, and waiting time still cost resources.
-
-> 💡 **How to pick your first**:
-> - Learning agents / production, **US-region account OK** → **Anthropic Claude** (the curriculum's canonical path)
-> - Learning agents / production, **China region** or want a Chinese-native model → **DeepSeek** (cheapest cloud option, OpenAI-compat, strong Chinese support)
-> - Want to try many models without a local GPU → **NVIDIA NIM** (1000 credits, 10+ hosted open models)
-> - Want local data handling / mainland China without cloud access → **Ollama** (still protect your device, files, logs, and access permissions; local data is not automatically safe)
-
----
-
-## B — Install Your Local Environment (About 10 Minutes)
-
-### Install Python 3.10+
-
-- **macOS**: open Terminal and run `brew install python@3.12`. If Homebrew is not installed, start at https://brew.sh.
-- **Windows**: download the installer from https://www.python.org/downloads/ and make sure **Add Python to PATH** is checked.
-- **Linux**: on Ubuntu, run `sudo apt install python3 python3-venv`; on Fedora, run `sudo dnf install python3`.
-- **Verify**: macOS / Linux: `python3 --version`; Windows: `py --version`. You want `Python 3.10` or newer.
-
-### Install uv
-
-uv is a Python package tool. For this guide, think of it as "install the packages I need, then run this script."
+macOS, Linux, or WSL:
 
 ```bash
-# macOS / Linux
 curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Windows PowerShell
-irm https://astral.sh/uv/install.ps1 | iex
 ```
 
-Verify:
+Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Close and reopen the terminal, then copy these in order:
 
 ```bash
 uv --version
+uv python install 3.12
+uv run --python 3.12 python --version
 ```
 
-### Create Your First `.env` File
+When the last line shows `Python 3.12`, B is complete. `uv` also supports other Python versions; this tutorial fixes 3.12 to reduce package-compatibility problems for beginners.
 
-In the folder where you want to run the script, create a file named `.env`:
+<details markdown="1">
+<summary>View operating-system alternatives if installation fails</summary>
+
+- On Windows, you can use `winget install --id=astral-sh.uv -e`.
+- On macOS, you can use `brew install uv`.
+- You can also download a release binary from the [official uv installation page](https://docs.astral.sh/uv/getting-started/installation/).
+- If your company blocks installation scripts, stop and ask an administrator for an approved method; do not force your way past security software.
+
+Already having Python 3.10–3.14 is fine; `uv` will find an available Python. The commands above simply prepare a consistent 3.12 for this tutorial.
+
+</details>
+
+<a id="c--run-your-first-hello-claudepy-about-5-minutes"></a>
+
+## 🛠 C — Run Your First `hello-claude.py`
+
+### 1. Create an Exercise Folder
+
+PowerShell, macOS, and Linux terminals can all use:
 
 ```bash
-ANTHROPIC_API_KEY=sk-ant-...paste the key you copied
+mkdir my-first-llm
+cd my-first-llm
 ```
 
-`.env` is where local secrets live. Your program can read it, but you should not upload it to GitHub.
+### 2. Create `.gitignore` First
 
-### Add `.gitignore`
-
-In the same folder, create `.gitignore`:
+Create a file named `.gitignore` and paste in:
 
 ```gitignore
 .env
@@ -182,11 +212,17 @@ __pycache__/
 *.pyc
 ```
 
-This keeps git from recording your `.env` file.
+Exclude `.env` first, before creating the secret file, to reduce the chance of accidentally adding it to Git.
 
----
+### 3. Create `.env` Next
 
-## C — Run Your First `hello-claude.py` (About 5 Minutes)
+Create a file named `.env`. Replace the placeholder with your own key; do not paste a real key into this document or commit it:
+
+```dotenv
+ANTHROPIC_API_KEY=PASTE_YOUR_KEY_HERE
+```
+
+### 4. Copy the Python Program
 
 Create `hello-claude.py`:
 
@@ -195,117 +231,141 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 
 load_dotenv()
-client = Anthropic() # Automatically reads ANTHROPIC_API_KEY
+client = Anthropic()  # Read the key from ANTHROPIC_API_KEY
 
-msg = client.messages.create(
+message = client.messages.create(
     model="claude-sonnet-5",
-    max_tokens=100,
-    messages=[{"role": "user", "content": "Hello, who are you?"}],
+    max_tokens=120,
+    messages=[{"role": "user", "content": "Introduce yourself in one sentence."}],
 )
 
-print(msg.content[0].text)
+for block in message.content:
+    if block.type == "text":
+        print(block.text)
 ```
 
-Run it:
+### 5. Run It Directly
 
 ```bash
-uv run --with anthropic --with python-dotenv python hello-claude.py
+uv run --python 3.12 --with anthropic --with python-dotenv python hello-claude.py
 ```
 
-If Claude introduces itself, your API key, Python, and packages are working.
+When the model prints an introduction, Python, the packages, the API key, and the network are all connected.
 
-### Common Errors
+<details markdown="1">
+<summary>View common errors and safe recovery</summary>
 
-| Error | Likely Cause | Fix |
+| What you see | What it usually means | Do this first |
 |---|---|---|
-| `401 Unauthorized` | API key is missing or mistyped | Copy it again from A and check the `.env` filename and value |
-| `429 Rate limit` | Too many requests too quickly | Wait a few seconds or minutes, then retry |
-| `connection refused` | Network or firewall issue | Check your network, company firewall, or school firewall |
-| `ModuleNotFoundError` | A package was not installed | Make sure you ran the exact `uv run --with ...` command above |
+| `401`／`authentication_error` | The key was not read, has expired, or was pasted incorrectly | Revoke any questionable key; confirm the filename is `.env`, then create a new key |
+| `429`／`rate_limit_error` | A usage, rate, or account-credit limit | Stop retrying, return to the Console to check usage / billing, then wait as the error message says |
+| `ModuleNotFoundError` | You did not use the environment from this `uv run --with ...` command | Copy the full run command; do not run only `python hello-claude.py` |
+| `uv` not found | The post-install terminal has not read the new PATH | Close and reopen the terminal; then check the official uv installation page |
+| Connection error | A network, proxy, firewall, or service-status problem | Check the provider status page first; ask your company / school administrator about managed networks |
 
----
+If a key has appeared in Git, chat, a screenshot, or a public log, deleting the text is not enough; revoke it in the Console immediately and create a new key.
 
-## D — Install Claude Code for the First Time (About 10 Minutes; Needed for Stage 5 / for-developer)
+</details>
 
-### Install Node.js First
+<a id="d--install-claude-code-for-the-first-time-about-10-minutes-needed-for-stage-5--for-developer"></a>
 
-> 💡 **What is Node.js?** A runtime for running JavaScript, similar to a Python interpreter but for JS. **`npm`** is its bundled package manager, which plays the same role as Python's `pip`: installing tools other people wrote, including Claude Code below. `npm install -g X` means install X globally so you can use it from any folder.
+## 🛠 D — Open Claude Code for the First Time
 
-- **macOS / Linux**: run `brew install node`, or download from https://nodejs.org.
-- **Windows**: download the installer from https://nodejs.org.
-- **Verify**: run `node --version`; v18 or newer is enough.
+This is the entry point for Stage 5, not a requirement for completing the API quick start. Claude Code now prefers the native installer; you do not need to install Node.js first.
 
-### Install Claude Code
-
-```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-### First Authentication
+macOS, Linux, or WSL:
 
 ```bash
-claude
+curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-On first launch, you will usually choose between:
+Windows PowerShell:
 
-- **Claude subscription**: sign in with your Claude.ai account. This is the simplest path for beginners.
-- **API key**: paste the key you created in A.
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
 
-### Create Your First `CLAUDE.md`
+After installation, run `claude --version` first, then run `claude` in a small exercise folder. See [Claude Code Installation](https://code.claude.com/docs/en/installation) for complete requirements and other installation methods.
 
-Create `CLAUDE.md` at the root of your project. Claude Code reads it on startup so it understands how you want help.
+<details markdown="1">
+<summary>View login, system requirements, and your first CLAUDE.md</summary>
+
+Claude Code currently requires one of the Claude plans, a Console account, or a supported cloud provider listed by the official documentation; the free Claude.ai plan does not include Claude Code. After running `claude`, follow the browser login prompt; see [Authentication](https://code.claude.com/docs/en/authentication) for identity details.
+
+The current basic requirements include a supported Windows, macOS, or Linux system, at least 4 GB RAM, an internet connection, and an available shell. Windows can use PowerShell natively; consider WSL 2 when you need a Linux toolchain or sandbox.
+
+You can create `CLAUDE.md` in the project root:
 
 ```markdown
-# Who you are
-I am [your name], a [your field, such as teacher / researcher / writer].
+# What this project does
+This is a small learning project.
 
-# Code style
-- Write comments in Traditional Chinese, and code in English
-- Prefer type hints when writing functions
-- Do not commit automatically; let me run git add myself
+# Working rules
+- Say which files you plan to change before editing them.
+- Do not read or modify `.env`.
+- Do not commit automatically; let me review the diff first.
+- Ask before deleting files, installing packages, or using the network.
 
-# Do not do these
-- Do not browse the web unless I explicitly allow it
-- Do not modify `.env` or `.gitignore`
-- Do not delete folders, including subfolders
+# Done when
+- Run the smallest relevant test.
+- Explain what changed, what you tested, and what risks remain.
 ```
 
----
+`CLAUDE.md` is project instructions, not a security sandbox. Tool permissions, approval, version control, and human review still need to remain in place.
 
-## E — Your First Skill Example (About 5 Minutes; Needed for Stage 5.3)
+</details>
 
-A Skill is a reusable prompt package for Claude Code. When your message matches the description, Claude Code loads that instruction automatically.
+<a id="e--your-first-skill-example-about-5-minutes-needed-for-stage-53"></a>
 
-Create `.claude/skills/hello-skill/SKILL.md`:
+## 🛠 E — Create Your First Skill
+
+This is an extension for Stage 5.3. A **Skill** is a reusable folder with a name, description, and operating instructions; it does not automatically become a security permission.
+
+First action: create `.claude/skills/hello-skill/SKILL.md`.
+
+<details markdown="1">
+<summary>View a directly copyable SKILL.md</summary>
 
 ```markdown
 ---
 name: hello-skill
-description: First hello skill. Trigger when the user says "請打招呼" or "say hi".
+description: When the user explicitly asks for a greeting, reply in two languages.
 ---
 
-When the user asks you to greet them, return three things:
+When the user asks for a greeting:
 
-1. Say hello once in Traditional Chinese and once in English
-2. Mention today's date using system time
-3. Give one small daily reminder, randomly chosen from health / learning / mood
+1. Say hello once in Traditional Chinese.
+2. Say hello once in English.
+3. Do not read files, use the network, or run other tools.
 ```
 
-Run `claude`, then type `say hi`. If Claude returns the three items, the Skill loaded.
+Open `claude` in that project and enter “Please say hello.” Seeing both languages, with no extra actions, means you are done.
 
-> For deeper Skill design, see [Stage 5.3 — Skills](../stages/05-claude-code-ecosystem.en.md#53--skills-claude-codes-behavior-layer--the-most-critical-layer-of-the-claude-code-ecosystem).
-> For copy-and-run examples, see the [Cookbook](cookbook.en.md).
+For fuller responsibility boundaries, see [Stage 5.3 — Skills](../stages/05-claude-code-ecosystem.en.md#53--skills-on-demand-procedure-cards); for more examples, see the [Cookbook](cookbook.en.md).
 
----
+</details>
+
+## ✅ Completion Check
+
+Once any one of the following is true, you can leave this guide; you do not need to install every entry point:
+
+- I can complete one conversation in Web Chat and know that it is not an API.
+- I completed A → B → C and saw `hello-claude.py` print a model response.
+- I chose the CLI path and can state the CLI Agent's working folder and permission scope.
+
+Also confirm:
+
+- A real API key has not appeared in source code, Git, chat, screenshots, or logs.
+- I know how to revoke a key and know that API billing and chat subscriptions are separate.
+- I did not skip diffs, tests, or human confirmation just because a tool can execute automatically.
 
 ## Where to Go Next
 
-| Your Current State | Next Step |
+| What you want to do now | Next stop |
 |---|---|
-| You want to understand LLMs, APIs, and tokens | [Stage 1 — LLM Basics](../stages/01-llm-basics.en.md) |
-| You want to pick a role-based branch | [Everyday users](../branches/for-everyday-users.en.md) / [Teachers](../branches/for-teacher.en.md) / [Knowledge workers](../branches/for-knowledge-worker.en.md) / [Researchers](../branches/for-researcher.en.md) / [Developers](../branches/for-developer.en.md) |
-| You want the full Claude Code ecosystem | [Stage 5 — Claude Code Ecosystem](../stages/05-claude-code-ecosystem.en.md) |
-| You want local LLMs without a cloud key | [Cookbook Recipe 6](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough) |
-| You want to compare CLI agents | [CLI Agents Comparison Guide](cli-agents-guide.en.md) |
-| A term is unclear | [Glossary](glossary.en.md) |
+| Understand models, Tokens, Context Windows, and APIs | [Stage 1 — LLM Basics](../stages/01-llm-basics.en.md) |
+| Learn Prompt directly | [Stage 2 — Prompt Engineering](../stages/02-prompt-engineering.en.md) |
+| Work with a CLI Agent | [Track A1 — CLI Basics](../tracks/cli/A1-cli-intro.en.md) |
+| Understand Claude Code, MCP, Skills, Plugins, and Subagents | [Stage 5 — Claude Code Ecosystem](../stages/05-claude-code-ecosystem.en.md) |
+| Use local models | [Cookbook: local LLM walkthrough](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough) |
+| Still cannot distinguish OpenRouter, Ollama, OpenCode, or Pi | [Glossary: distinguish five tool identities](glossary.en.md#-separate-five-tool-identities-first) |

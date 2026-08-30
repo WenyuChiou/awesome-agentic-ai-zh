@@ -66,7 +66,7 @@ After the main path, you go from "**LLM user**" to "**agent system builder**" �
 
 ### 🚀 First time with AI agents / never written code before?
 
-Start here: **[`resources/setup-guide.en.md`](resources/setup-guide.en.md)** — 30-45 minutes from zero, walks you through getting an API key, installing Python, and running your first LLM hello-world.
+Start here: **[`resources/setup-guide.en.md`](resources/setup-guide.en.md)** — distinguish Web, Desktop, IDE, CLI Agent, and API first; choose one path, and do not install every tool.
 
 ### Read online
 - **[Learning Map (Two Tracks)](#-learning-map-two-tracks)** — read this section to decide Track A or Track B
@@ -203,8 +203,8 @@ Common quick links, grouped by **scenario**:
 
 | Your situation | Where | What's there |
 |---|---|---|
-| Never written code, first time with AI agents | [`resources/setup-guide.en.md`](resources/setup-guide.en.md) | 30-45 min from zero (API key, Python, first hello-world) |
-| Not sure which LLM provider to pick | [`resources/setup-guide.en.md` A](resources/setup-guide.en.md#a--get-your-first-api-key-about-10-minutes) | Anthropic / OpenAI / DeepSeek / Kimi / NVIDIA NIM comparison |
+| Never written code, first time with AI agents | [`resources/setup-guide.en.md`](resources/setup-guide.en.md) | Choose Web, Desktop, IDE, CLI Agent, or API; you do not need to install everything |
+| Not sure about tool types or how to separate LLM Providers | [`resources/setup-guide.en.md`](resources/setup-guide.en.md) | Distinguish tool identities first, then see the official Cloud API and local Runtime entry points |
 | Topic-based awesome lists / Chinese community | [`RESOURCES.en.md` topic-based](RESOURCES.en.md#topic-based-awesome-lists) | 5-10 min skim |
 
 ### 📖 Concepts / Terminology

@@ -170,7 +170,7 @@ If you use a subscription instead of API billing, check the official plan page; 
 | **Moonshot Kimi** | `kimi-k3` | tiered | tiered | ✅ | **1M-token context** (key selling point); good for large files / long conversations; price is context-tiered — see platform. Free web at `kimi.com` |
 | **Qwen (Alibaba)** | `qwen-max` / `qwen-turbo` | $0.50-1.50 | $1.50-6 | ✅ (DashScope) | Native Chinese; **same models also run locally via Ollama** (cloud + local both work) |
 | **GLM (ZhipuAI)** | `glm-4.5` / `glm-4-plus` | $0.30-2 | $1.50-9 | ✅ | China-native, has free tier. Free web `chatglm.cn` |
-| **NVIDIA NIM** | Llama / Mistral / DeepSeek / Qwen etc. hosted | free tier 1000 credits | (same) | ✅ | **Hosts 10+ open models**; new accounts get credits; no local GPU needed. `build.nvidia.com` |
+| **NVIDIA NIM** | Hosted Llama / Mistral / DeepSeek / Qwen models | See official offering | See official offering | ✅ | Try multiple models through NVIDIA-hosted NIM APIs; check current access and limits on [NIM for Developers](https://developer.nvidia.com/nim) |
 
 **API endpoints (OpenAI SDK usage)**:
 

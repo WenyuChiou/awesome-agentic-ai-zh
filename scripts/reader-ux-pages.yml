@@ -3078,6 +3078,122 @@ pages:
           zh-Hans: {term: Certification Exam, label: "Certification Exam（认证考试）"}
     resource_group_rowspans: [3, 5, 2, 2]
 
+  - id: setup-guide
+    canonical: resources/setup-guide.md
+    mirrors:
+      en: resources/setup-guide.en.md
+      zh-Hans: resources/setup-guide.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 5640
+      en: 8615
+      zh-Hans: 5737
+    max_open_details: 0
+    required_details_count: 7
+    visible_section_order:
+      - goals
+      - chooser
+      - core-terms
+      - required-reading
+      - api-key
+      - python-runtime
+      - hello-world
+      - claude-code
+      - skill
+      - completion
+      - next
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "claude-sonnet-5"
+        - "uv python install 3.12"
+        - ".claude/skills/hello-skill/SKILL.md"
+        - "gemma4:e4b"
+        - "qwen2.5:3b"
+        - "qwen3.5:4b"
+    required_visible_sections:
+      goals:
+        zh-TW: {heading: "📌 這份指南會帶你完成什麼", anchor: -這份指南會帶你完成什麼}
+        en: {heading: "📌 What This Guide Will Help You Complete", anchor: -what-this-guide-will-help-you-complete}
+        zh-Hans: {heading: "📌 这份指南会带你完成什么", anchor: -这份指南会带你完成什么}
+      chooser:
+        zh-TW: {heading: "🚪 先選一扇門", anchor: -先選一扇門}
+        en: {heading: "🚪 Choose One Door First", anchor: -choose-one-door-first}
+        zh-Hans: {heading: "🚪 先选一扇门", anchor: -先选一扇门}
+      core-terms:
+        zh-TW: {heading: "🧩 先分清七個核心詞", anchor: -先分清七個核心詞}
+        en: {heading: "🧩 Seven Core Terms to Distinguish", anchor: -seven-core-terms-to-distinguish}
+        zh-Hans: {heading: "🧩 先分清七个核心词", anchor: -先分清七个核心词}
+      required-reading:
+        zh-TW: {heading: "📚 必讀與官方起點", anchor: -必讀與官方起點}
+        en: {heading: "📚 Required Reading and Official Starting Points", anchor: -required-reading-and-official-starting-points}
+        zh-Hans: {heading: "📚 必读与官方起点", anchor: -必读与官方起点}
+      api-key:
+        zh-TW: {heading: "🛠 A — 拿到第一把 API Key", anchor: -a--拿到第一把-api-key}
+        en: {heading: "🛠 A — Get Your First API Key", anchor: -a--get-your-first-api-key}
+        zh-Hans: {heading: "🛠 A — 拿到第一把 API Key", anchor: -a--拿到第一把-api-key}
+      python-runtime:
+        zh-TW: {heading: "🛠 B — 裝好 Python 執行環境", anchor: -b--裝好-python-執行環境}
+        en: {heading: "🛠 B — Set Up the Python Runtime", anchor: -b--set-up-the-python-runtime}
+        zh-Hans: {heading: "🛠 B — 装好 Python 运行环境", anchor: -b--装好-python-运行环境}
+      hello-world:
+        zh-TW: {heading: "🛠 C — 跑第一個 `hello-claude.py`", anchor: -c--跑第一個-hello-claudepy}
+        en: {heading: "🛠 C — Run Your First `hello-claude.py`", anchor: -c--run-your-first-hello-claudepy}
+        zh-Hans: {heading: "🛠 C — 跑第一个 `hello-claude.py`", anchor: -c--跑第一个-hello-claudepy}
+      claude-code:
+        zh-TW: {heading: "🛠 D — 第一次開 Claude Code", anchor: -d--第一次開-claude-code}
+        en: {heading: "🛠 D — Open Claude Code for the First Time", anchor: -d--open-claude-code-for-the-first-time}
+        zh-Hans: {heading: "🛠 D — 第一次打开 Claude Code", anchor: -d--第一次打开-claude-code}
+      skill:
+        zh-TW: {heading: "🛠 E — 建立第一個 Skill", anchor: -e--建立第一個-skill}
+        en: {heading: "🛠 E — Create Your First Skill", anchor: -e--create-your-first-skill}
+        zh-Hans: {heading: "🛠 E — 建立第一个 Skill", anchor: -e--建立第一个-skill}
+      completion:
+        zh-TW: {heading: "✅ 完成檢查", anchor: -完成檢查}
+        en: {heading: "✅ Completion Check", anchor: -completion-check}
+        zh-Hans: {heading: "✅ 完成检查", anchor: -完成检查}
+      next:
+        zh-TW: {heading: "接下來去哪", anchor: 接下來去哪}
+        en: {heading: "Where to Go Next", anchor: where-to-go-next}
+        zh-Hans: {heading: "接下来去哪", anchor: 接下来去哪}
+    visible_section_minimums:
+      chooser: {min_links: 6}
+      required-reading: {min_links: 5, min_ratings: 5}
+    core_terms:
+      section_id: core-terms
+      first_exercise_section_id: api-key
+      min_definition_chars: 20
+      terms:
+        - id: chat-surface
+          zh-TW: {term: Chat Surface, label: "Chat Surface（聊天介面）"}
+          en: {term: Chat Surface, label: Chat Surface}
+          zh-Hans: {term: Chat Surface, label: "Chat Surface（聊天界面）"}
+        - id: api
+          zh-TW: {term: API, label: "API（應用程式介面）"}
+          en: {term: API, label: API}
+          zh-Hans: {term: API, label: "API（应用程序接口）"}
+        - id: api-key
+          zh-TW: {term: API Key, label: "API Key（API 金鑰）"}
+          en: {term: API Key, label: API Key}
+          zh-Hans: {term: API Key, label: "API Key（API 密钥）"}
+        - id: environment-variable
+          zh-TW: {term: Environment Variable, label: "Environment Variable（環境變數）"}
+          en: {term: Environment Variable, label: Environment Variable}
+          zh-Hans: {term: Environment Variable, label: "Environment Variable（环境变量）"}
+        - id: runtime
+          zh-TW: {term: Runtime, label: "Runtime（執行環境）"}
+          en: {term: Runtime, label: Runtime}
+          zh-Hans: {term: Runtime, label: "Runtime（运行环境）"}
+        - id: package-manager
+          zh-TW: {term: Package Manager, label: "Package Manager（套件管理器）"}
+          en: {term: Package Manager, label: Package Manager}
+          zh-Hans: {term: Package Manager, label: "Package Manager（包管理器）"}
+        - id: cli-agent
+          zh-TW: {term: CLI Agent, label: "CLI Agent（命令列代理）"}
+          en: {term: CLI Agent, label: CLI Agent}
+          zh-Hans: {term: CLI Agent, label: "CLI Agent（命令行代理）"}
+    resource_group_rowspans: [4, 4, 5, 7]
+
   - id: mcp-skills-catalog
     canonical: resources/mcp-skills-catalog.md
     mirrors:
