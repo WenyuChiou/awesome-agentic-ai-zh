@@ -1459,11 +1459,11 @@ pages:
       en: stages/08-agent-interfaces.en.md
       zh-Hans: stages/08-agent-interfaces.zh-Hans.md
     max_visible_chars:
-      zh-TW: 4675
-      en: 7331
-      zh-Hans: 4752
+      zh-TW: 8981
+      en: 12521
+      zh-Hans: 9066
     max_open_details: 0
-    required_details_count: 10
+    required_details_count: 9
     visible_section_order:
       - learning-goals
       - entry

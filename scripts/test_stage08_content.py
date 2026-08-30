@@ -100,6 +100,12 @@ RESOURCE_PAIRS = (
     ("https://brave.com/blog/indirect-prompt-injection/", "⭐⭐⭐⭐"),
     ("https://research.perplexity.ai/articles/browsesafe", "⭐⭐⭐"),
 )
+RESOURCE_HEADINGS = {
+    "zh-TW": "## 📚 21 筆完整學習資源與限制",
+    "en": "## 📚 21 complete learning resources and limits",
+    "zh-Hans": "## 📚 21 项完整学习资源与限制",
+}
+DETAIL_TAG = re.compile(r"<details\b[^>]*>|</details>")
 
 # These were all public headings before the progressive rewrite. A renamed
 # heading must keep the old slug as an explicit alias near its new landing spot.
@@ -268,6 +274,21 @@ def _html_tables(text: str) -> list[str]:
     return re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
 
 
+def _detail_depth_at(text: str, offset: int) -> int:
+    """Return open `<details>` depth immediately before `offset`."""
+    depth = 0
+    for match in DETAIL_TAG.finditer(text, 0, offset):
+        depth += -1 if match.group().startswith("</details") else 1
+        assert depth >= 0, "closing </details> appears before an opening tag"
+    return depth
+
+
+def test_detail_depth_detects_a_resource_hidden_after_its_heading() -> None:
+    hidden = "## 📚 Learning resources\n<details>\n<table></table>\n</details>\n"
+    assert _detail_depth_at(hidden, hidden.index("## 📚")) == 0
+    assert _detail_depth_at(hidden, hidden.index("<table>")) == 1
+
+
 def _policy_snippet(text: str) -> str:
     snippets = re.findall(r"~~~python\n(.*?)\n~~~", text, flags=re.DOTALL)
     matches = [snippet for snippet in snippets if "def check_action" in snippet]
@@ -337,19 +358,27 @@ def test_previous_stage_and_all_exercise_landings_stay_visible(
 
 
 @pytest.mark.parametrize("page", PAGES.values())
-def test_all_ten_disclosures_are_closed_and_render_markdown(page: Path) -> None:
+def test_all_nine_disclosures_are_closed_and_render_markdown(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     openings = re.findall(r"^<details\b[^>]*>", text, flags=re.MULTILINE)
-    assert openings == ['<details markdown="1">'] * 10
+    assert openings == ['<details markdown="1">'] * 9
     assert "<details open" not in text
 
 
 def test_resources_keep_ordered_urls_ratings_and_real_rowgroups() -> None:
-    for page in PAGES.values():
+    for locale, page in PAGES.items():
         text = page.read_text(encoding="utf-8")
         tables = [table for table in _html_tables(text) if RESOURCE_PAIRS[0][0] in table]
         assert len(tables) == 1
         table = tables[0]
+        heading_index = text.index(RESOURCE_HEADINGS[locale])
+        table_index = text.index(table)
+        checked_index = text.index("<small>", heading_index)
+        assert heading_index < checked_index < table_index
+        assert _detail_depth_at(text, heading_index) == 0
+        assert _detail_depth_at(text, checked_index) == 0
+        assert _detail_depth_at(text, table_index) == 0
+        assert _detail_depth_at(text, len(text)) == 0
         groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
         assert len(groups) == 5
         for group, rows in zip(groups, (5, 5, 4, 5, 2)):
@@ -361,6 +390,10 @@ def test_resources_keep_ordered_urls_ratings_and_real_rowgroups() -> None:
             flags=re.DOTALL,
         )
         assert tuple(pairs) == RESOURCE_PAIRS
+        assert all(
+            _detail_depth_at(text, text.index(url, table_index)) == 0
+            for url, _rating in RESOURCE_PAIRS
+        ), f"{locale}: at least one learning resource is hidden"
 
 
 def test_three_locales_share_sources_and_freshness_marker() -> None:
