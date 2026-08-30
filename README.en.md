@@ -276,7 +276,13 @@ PR process and style rules: [CONTRIBUTING.en.md](CONTRIBUTING.en.md) + [resource
 
 A free, open (MIT) learning edition — use it freely.
 
-Currently focused on advisory work: teams or companies needing **prompt review / audit** or **AI agent workflow consulting** are welcome to reach out (PhD student, limited availability): 📧 [wenyuchiou12@gmail.com](mailto:wenyuchiou12@gmail.com)
+There is currently one paid service, and it has a fixed scope: the **Agent Workflow Audit**. It suits teams that already have a prototype or a manual process and want to first pin down the success criteria, the common failures, where human approval belongs, and the cost risks.
+
+1. [Check whether this service fits you](services/agent-workflow-audit.en.md).
+2. Copy the inquiry template on that page; do not include an API key, a password, or real customer data.
+3. Send the filled-in template privately to [wenyuchiou12@gmail.com](mailto:wenyuchiou12@gmail.com?subject=Agent%20Workflow%20Audit%20Inquiry).
+
+The first version uses a fixed scope with a private, individual quote; company or customer data is not discussed in a public GitHub Issue.
 
 ---
 

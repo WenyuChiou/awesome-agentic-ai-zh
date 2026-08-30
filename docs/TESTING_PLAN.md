@@ -362,6 +362,22 @@ list the Track A core of Stage 5 as a prerequisite. It also keeps Stage 8 recomm
 without making it a Capstone entry requirement, and rejects completed or stale ROADMAP gap claims
 in any locale.
 
+### Agent Workflow Audit — private, fixed-scope service entrance
+
+`services/agent-workflow-audit*` is a project-level service page, not a new learning Stage. It keeps
+the fit check, six requested information groups, five deliverables, four exclusions, private quote,
+three-step inquiry route, and four privacy／case-study rules visible in all three locales. Company or
+customer information must go through private email, never a public GitHub Issue.
+
+`scripts/test_service_offer_content.py` locks the 20-case Eval starter, six-group copyable intake,
+fixed-scope wording, no-validation claim, written-consent rule, locale-correct README routes, service
+directory staging, MkDocs placement under Project overview, and the six-week `5／3／1` validation
+gate in `docs/plans/2026-08-30-agent-workflow-audit-demand-validation.md`. Negative mutations prove
+that opposite consent／validation claims and wrong-locale README routes fail. Structural counts are
+only the first check; final review must try to refute trilingual semantic parity with quoted
+contradictions and must inspect the rendered service page. The build hook removes raw `.md` language
+switchers from service-page HTML because Material already provides the working locale selector.
+
 ## v2 path (deferred)
 
 The project-wide learner workflow is: run the provided starter first, change exactly one small thing, rerun the existing test command(s), and undo or fix that one change if the tests fail. Learner-facing exercise READMEs must not instruct renaming files or rewriting the whole solution. Keep the current runnable starter and test files as the maintained examples.

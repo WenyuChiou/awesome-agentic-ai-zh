@@ -74,6 +74,7 @@ plugins:
           nav_translations:
             首頁: Home
             專案說明: Project overview
+            專案介紹: About the project
             怎麼用: How to use
             進度: Progress
             結業專題: Capstone
@@ -92,6 +93,7 @@ plugins:
           nav_translations:
             首頁: 首页
             專案說明: 项目说明
+            專案介紹: 项目介绍
             怎麼用: 怎么用
             進度: 进度
             結業專題: 结业专题
@@ -152,7 +154,9 @@ hooks:
 
 nav:
   - 首頁: index.md
-  - 專案說明: about.md
+  - 專案說明:
+      - 專案介紹: about.md
+      - Agent Workflow Audit: services/agent-workflow-audit.md
   - 怎麼用: docs/HOW_TO_USE.md
   - 進度: PROGRESS.md
   - 結業專題: CAPSTONE.md

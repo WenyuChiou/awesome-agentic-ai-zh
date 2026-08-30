@@ -1,7 +1,7 @@
 """mkdocs build hooks for the awesome-agentic-ai-zh docs site.
 
-Strips the hand-written GitHub-style language switcher from the
-README pages when rendered by mkdocs.
+Strips hand-written GitHub-style language switchers from README and
+other mirrored pages when rendered by mkdocs.
 
 Why: README.md / README.en.md / README.zh-Hans.md open with a
 ``<div align="right"> 繁體中文 | 简体中文 | English </div>`` block
@@ -15,9 +15,8 @@ in the Material header (populated by mkdocs-static-i18n's
 broken there.
 
 This hook removes ONLY the first ``<div align="right">…</div>``
-block, and ONLY on the three README pages — so the GitHub-rendered
-README is completely untouched (hooks run at mkdocs build time
-only), and no tri-locale content edit is needed.
+block, and ONLY on an explicit basename allowlist. GitHub-rendered
+Markdown is untouched because hooks run only at mkdocs build time.
 """
 from __future__ import annotations
 
@@ -37,9 +36,17 @@ from urllib.parse import urlsplit
 # stop at the inner </div> / not match — update it then. Failure mode
 # is benign: the old (broken-on-site) switcher reappears, no build break.
 _SWITCHER = re.compile(r'<div align="right">.*?</div>\s*', re.DOTALL)
-# The root README is staged as `about.md` (see build-docs-tree.py), so the
-# switcher-strip now targets the renamed page.
-_ABOUT_BASENAMES = {"about.md", "about.en.md", "about.zh-Hans.md"}
+# The root README is staged as `about.md` (see build-docs-tree.py). Service
+# pages keep raw sibling `.md` links for GitHub, so they need the same build-time
+# stripping; Material's header supplies the real locale switcher on the site.
+_INLINE_SWITCHER_BASENAMES = {
+    "about.md",
+    "about.en.md",
+    "about.zh-Hans.md",
+    "agent-workflow-audit.md",
+    "agent-workflow-audit.en.md",
+    "agent-workflow-audit.zh-Hans.md",
+}
 
 # Rewrite in-content links to the root README (now `about.md`) -> about, so
 # they resolve on the site. A leading `examples/` breaks the `(?:\.\./)*`
@@ -155,7 +162,7 @@ def on_page_markdown(markdown: str, *, page, config, files) -> str:
     src = (getattr(page.file, "src_path", "") or "").replace("\\", "/")
     basename = src.rsplit("/", 1)[-1]
     markdown = _README_LINK.sub(r"\1about\2", markdown)
-    if basename in _ABOUT_BASENAMES:
+    if basename in _INLINE_SWITCHER_BASENAMES:
         markdown = _SWITCHER.sub("", markdown, count=1)
     return markdown
 

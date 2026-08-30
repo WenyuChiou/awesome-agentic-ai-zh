@@ -2,7 +2,7 @@
 """Stage the curriculum content into _build/docs/ for the mkdocs site.
 
 Why this exists: the learning content lives at the REPO ROOT
-(`stages/`, `tracks/`, `branches/`, `resources/`, root `*.md`), not in
+(`stages/`, `tracks/`, `branches/`, `services/`, `resources/`, root `*.md`), not in
 a `docs/` subfolder. mkdocs 1.6 hard-errors if `docs_dir` is the parent
 of `mkdocs.yml` (i.e. you cannot point docs_dir at the repo root). The
 standard fix is a build-staging copy: this script mirrors the
@@ -32,6 +32,7 @@ CONTENT_DIRS = [
     "stages",
     "tracks",
     "branches",
+    "services",
     "resources",
     "walkthroughs",
     "examples",

@@ -276,7 +276,13 @@ PR 流程跟 style 規範請看 [CONTRIBUTING.md](CONTRIBUTING.md) 跟 [resource
 
 公開學習版（MIT），歡迎自由取用。
 
-目前以顧問為主：團隊或公司若需 **prompt review / audit** 或 **AI agent workflow 諮詢**，歡迎來信（博士生、時間有限）：📧 [wenyuchiou12@gmail.com](mailto:wenyuchiou12@gmail.com)
+目前只提供一項固定範圍的付費服務：**Agent Workflow Audit（Agent 工作流程健檢）**。它適合已經有 prototype 或人工流程，想先找出成功標準、常見失敗、人工批准位置與成本風險的團隊。
+
+1. [先確認這項服務是否適合](services/agent-workflow-audit.md)。
+2. 複製頁面中的詢問模板，不要放 API key、密碼或真實客戶資料。
+3. 將模板私下寄到 [wenyuchiou12@gmail.com](mailto:wenyuchiou12@gmail.com?subject=Agent%20Workflow%20Audit%20%E8%A9%A2%E5%95%8F)。
+
+第一版採固定範圍、個別報價；不在公開 GitHub Issue 討論公司或客戶資料。
 
 ---
 
