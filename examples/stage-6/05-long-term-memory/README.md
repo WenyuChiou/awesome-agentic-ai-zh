@@ -2,124 +2,110 @@
   <strong>繁體中文</strong> | <a href="./README.zh-Hans.md">简体中文</a> | <a href="./README.en.md">English</a>
 </div>
 
-# 練習 5：Long-term Memory（跨輪對話記得事情）
+# 練習 5：讓 Agent 下次還記得
 
-對應 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.md) 練習 5。
-> 🎓 **學習模式**：這份 `starter.py` 是**完整解答**、不是 TODO skeleton。建議用**主動模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重寫一份 `starter.py`、跑 `python test.py` 驗證；卡 20 分鐘再回去對照 reference。完整方法論看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+← 回到 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.md#練習-5long-term-memory)
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 兩條 SDK path，不是進階深度教材。深度教材推薦：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章節式 + 16 種 production 能力。**本練習對應 hello-agents 的 long-term memory 章節**
-> - [mem0](https://github.com/mem0ai/mem0)（auto fact extraction + forgetting）+ [Letta / MemGPT](https://github.com/letta-ai/letta)（兩級 memory pattern）
-> - 完整 references 見 [Stage 6 精選 Projects](../../../stages/06-memory-rag.md#-精選-projects範本--spec--範例-collection)
+普通聊天紀錄像寫在白板上：程式關掉，白板可能就擦掉了。**Long-term memory（長期記憶）**會把值得保留的事寫進磁碟，下次開程式還能找回來。
 
+## 📌 學習目標
 
-## 任務
+- 分清楚 **chat history**、**working memory**、**long-term memory**。
+- 把一條使用者事實寫入 Chroma `PersistentClient`。
+- 重新開啟同一個資料庫後找回記憶。
+- 把相關記憶放進 system prompt，而不是把全部歷史都塞進去。
 
-Agent 跨多輪對話記得 user 說過的事情。實作方式：
+## 🔑 核心詞
 
-```
-Turn 1: user: "I live in Taipei and prefer Python."
-        → maybe_remember_fact() 抓到「I + ...」格式、存進 vector store
-Turn 2: user: "What's 2+2?" → recall 拿不到 relevant memory、純算術
-Turn 3: user: "Recommend a language for me."
-        → recall 拿到「prefer Python」、塞進 system prompt → LLM 知道推薦 Python
-```
+| 核心詞 | 白話意思 |
+|---|---|
+| **Working memory** | 這次任務眼前正在用的少量資訊 |
+| **Long-term memory** | 跨程式重開或跨 session 仍保留的資訊 |
+| **Recall** | 用現在的問題找回相關記憶 |
+| **Memory policy** | 決定什麼能記、要更新、要忘記、誰能讀 |
 
-這是 **RAG 的另一面**——retrieve 對象從外部文件變成「對話歷史」。
+## 📚 必讀與學習資源
 
-## 怎麼跑 — 兩條路徑
+- ★★★★★ [Chroma `PersistentClient` 官方文件](https://docs.trychroma.com/reference/python/client)：本練習真正保存到磁碟的基礎。
+- ★★★★★ [LangGraph Memory 官方概念頁](https://docs.langchain.com/oss/python/concepts/memory)：分清楚 thread 與跨 thread 記憶。
+- ★★★★☆ [Mem0](https://github.com/mem0ai/mem0)：fact extraction、更新與刪除的成熟專案。
+- ★★★★☆ [Letta Code](https://github.com/letta-ai/letta-code)：現行 stateful agent 與 working／archival memory 的完整實作。
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：較完整的 Agent memory 教材。
 
-### Path A（默認、本機免費）
+<sub>資料查核：2026-08-30 UTC。</sub>
 
-```bash
+## ▶️ Path A（Ollama、本機免費）
+
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-預算：**$0**。
+程式會把 Chroma 資料放在 `.stage06-memory`。再次執行時，之前寫入的記憶仍在。API 費用是 **$0**。
 
-### Path B（Anthropic）
+<details markdown="1">
+<summary>Path B（Anthropic）</summary>
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = Read-Host "Anthropic API key"
 python starter_anthropic.py
 ```
 
-預算：每次 ≈ **$0.001**。
+預設 `claude-haiku-4-5` 的費用按 token 計算：每百萬輸入 token **$1**、輸出 token **$5**。執行前請核對 [Anthropic 官方價格頁](https://platform.claude.com/docs/en/about-claude/pricing)並設定小額上限。
 
-## 不花錢驗證程式邏輯
+</details>
 
-```bash
-python test.py # 5 個 test、mock LLM
-python test_anthropic.py # Anthropic mock
+**Stage 06 總預算**：五個 Path A 全部跑完，API 費用仍是 **$0**（不含下載、磁碟與電費）。選跑雲端 Path 時，費用依 embedding／輸入／輸出 token 實際用量計算；先設小額帳戶上限，成功跑一次就停。
+
+## ✅ 不寫入專案資料夾、不連 API 的檢查
+
+```powershell
+python test.py
+python test_anthropic.py
 ```
 
-## MemoryStore + chat 流程
+大多數測試注入小型記憶庫與假 LLM；持久化檢查會在系統暫存資料夾建立真正的 `PersistentClient`，讓兩個全新的 Python process 一寫一讀，完成後自動刪除。
+
+## 記憶流程
+
+```text
+使用者說話
+  → 判斷值不值得記
+  → remember() 寫入磁碟
+  → 下次問題先 recall()
+  → 只把相關記憶放進 prompt
+```
 
 ```python
-class MemoryStore:
-    def remember(self, fact: str) -> str: # add to vector store
-    def recall(self, query: str) -> list: # top-k semantic search
-
-def chat(user_msg, memory):
-    memories = memory.recall(user_msg, top_k=3) # 1. 撈相關 memory
-    system = f"Relevant memories: {memories}" # 2. 塞進 system prompt
-    return llm.invoke(system + user_msg) # 3. LLM 看 memory 回答
+memory = MemoryStore(path=".stage06-memory")
+memory.remember("User prefers Python.")
+recalled = memory.recall("Which language should I learn?")
 ```
 
-**核心**：memory 不是當「context window history」存（會爆），而是當「semantic search index」存——LLM 只看到相關的幾條。
+## Chat history 和長期記憶不是同一件事
 
-## 跟普通 chat history 的差別
-
-| 維度 | Chat history (in-context) | Vector memory store |
+| 比較 | Chat history | Long-term memory |
 |---|---|---|
-| 存放位置 | messages array | ChromaDB |
-| 容量 | context window 限制（200k-2M token） | 不限（millions of facts） |
-| 跨 session | ❌ session 結束就沒 | ✅ persistent |
-| 撈出方式 | 所有 history 都進 prompt（吃 token） | top-k semantic search（精準） |
-| 適合 | 短對話、單 session | 長 user 關係、多 session、persona |
+| 用途 | 保持眼前對話連續 | 下次還記得重要事實 |
+| 放哪裡 | 當前 messages | 磁碟或外部資料庫 |
+| 怎麼讀 | 最近幾輪直接放進 prompt | 先搜尋，再取少量相關內容 |
+| 風險 | prompt 變太長 | 記錯人、記過期資料、刪不乾淨 |
 
-**Production 用法**：兩個都用——recent N 輪當 in-context、超過 N 輪 + 跨 session 用 vector memory。
+本練習用簡單規則找 `I am`、`I like`、`I prefer` 等句子，只是為了看懂流程。正式系統要有清楚的 **memory policy**：使用者同意、user ID 隔離、更新、刪除、期限與稽核。
 
-## 什麼是「memory-worthy fact」
+<details>
+<summary>常見問題與 production 下一步</summary>
 
-這份用 heuristic：user 說「I + verb...」就存。Production 通常更複雜：
+- 不要每句都存；先判斷是否真的值得長期保留。
+- 同一事實重複出現時，要去重或更新，不要一直新增。
+- 使用者搬家或改偏好時，要讓新記憶取代舊記憶。
+- 每位使用者必須有獨立 namespace，不能互相看到資料。
+- 使用者要求刪除時，要能找到所有副本並確實刪除。
+- 需要完整生命週期時，再評估 Mem0、Letta 或 LangGraph persistence。
 
-1. **Explicit trigger**：user 說「remember that...」
-2. **Profile facts**：location / language / role / preferences
-3. **Past decisions**：上次 agent 怎麼處理某情境
-4. **Negative feedback**：「don't suggest X」要存
-5. **LLM-extracted**：每輪結束、用 LLM 自己抓 facts（mem0 / Letta / MemGPT 都這麼做）
+</details>
 
-## 兩個 path 觀察重點
-
-| 觀察項 | Anthropic Claude haiku | Ollama qwen2.5:3b |
-|---|---|---|
-| 把 memory 融進回答 | 自然（cite memory） | 偶爾 ignore memory、用通用答案 |
-| 「無相關 memory」時不強用 | 守規則 | 較鬆 |
-| 多 memory 整合 | 好 | 中 |
-
-## 常見坑
-
-- **每輪都 add to memory**：vector store 會爆。要有「fact extraction」過濾、只存值得記的
-- **沒 dedup**：使用者多輪重複講「I live in Taipei」、會存 5 條一樣的。要加 dedup 邏輯（similarity > 0.95 視為重複）
-- **Forget / update 機制缺失**：使用者搬家了「I now live in Tokyo」、舊 memory「Taipei」要怎麼處理？production 要支援「supersede」概念
-- **沒 context size 控制**：recall top-k 太大、context 爆，LLM 也分心
-- **隱私 / GDPR**：使用者要求刪除個人資訊、要有 `forget(user_id)` API
-
-## Production-ready 工具
-
-- **[mem0](https://github.com/mem0ai/mem0)**：full memory pipeline、auto-fact-extraction、forgetting、user-scoped namespace
-- **[Letta (formerly MemGPT)](https://github.com/letta-ai/letta)**：兩級 memory（working memory + archival storage）、把 OS 的 paging 觀念搬到 LLM
-- **CrewAI memory**：framework 內建 short / long term memory
-- **LangGraph checkpointer + persistent storage**：自帶 thread-level memory
-
-## 延伸
-
-- **加 dedup**：`if similarity(new, existing) > 0.95: skip`
-- **加 LLM-based fact extraction**：每輪結束用小 LLM 抓 facts、不靠 heuristic
-- **加 user_id scoping**：MemoryStore 加 `user_id` filter、不同 user 互不污染
-- **接 [mem0](https://github.com/mem0ai/mem0)**：production 不要自己寫 memory pipeline、用成熟 lib
+完成後，回到 [Stage 6](../../../stages/06-memory-rag.md)做成功檢查，再前往 Stage 7。

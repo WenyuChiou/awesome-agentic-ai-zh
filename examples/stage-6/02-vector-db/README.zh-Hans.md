@@ -2,104 +2,110 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 2：Vector DB（ChromaDB）+ semantic vs keyword
+# 练习 2：Vector DB 与两种搜索
 
-对应 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.zh-Hans.md) 练习 2。
-> 🎓 **学习模式**：这份 `starter.py` 是**完整解答**、不是 TODO skeleton。建议用**主动模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重写一份 `starter.py`、跑 `python test.py` 验证；卡 20 分钟再回去对照 reference。完整方法论看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+← 回到 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.zh-Hans.md#练习-2vector-db)
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 两条 SDK path，不是进阶深度教材。深度教材推荐：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的 vector store 章节**
-> - [ChromaDB official tutorial](https://docs.trychroma.com/) + [Qdrant / Weaviate / Pinecone 对照](https://github.com/zilliztech/VectorDBBench)（production scale benchmark）
-> - 完整 references 见 [Stage 6 精选 Projects](../../../stages/06-memory-rag.zh-Hans.md#-精选-projects模板--规范--示例合集)
+**Vector DB（向量数据库）**像一个会按“意思”找东西的抽屉。你先把文档与向量放进去，再用问题找出最接近的文档。
 
-## 任务
+## 📌 学习目标
 
-把 8 个 doc 存进 Chroma、用同一个 query 比较 semantic（vector）跟 keyword（substring）两种 retrieval。
+- 说出 **vector database**、**semantic search**、**keyword search** 的差别。
+- 把 8 份文档存进 Chroma collection。
+- 用同一个问题比较语义搜索和字面搜索。
+- 知道 `EphemeralClient` 与 `PersistentClient` 何时使用。
 
-## 怎么跑
+## 🔑 核心词
 
-```bash
+| 核心词 | 白话意思 |
+|---|---|
+| **Collection** | 装文档、向量和 metadata 的一个抽屉 |
+| **Semantic search** | 比较意思，不要求文字一模一样 |
+| **Keyword search** | 寻找相同字词，专有名词很准，但同义词容易漏 |
+| **Metadata filter** | 先用标签缩小范围，例如只找 `category=tech` |
+
+## 📚 必读与学习资源
+
+- ★★★★★ [Chroma Clients 官方文档](https://docs.trychroma.com/reference/python/client)：分清楚内存与磁盘存储。
+- ★★★★★ [Chroma Embedding Functions 官方文档](https://docs.trychroma.com/docs/embeddings/embedding-functions)：看 collection 如何建立向量。
+- ★★★★☆ [VectorDBBench](https://github.com/zilliztech/VectorDBBench)：需要比较大型部署时，再用自己的负载做 benchmark。
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：较完整的 vector store 教材。
+
+<sub>资料查核：2026-08-30 UTC。</sub>
+
+## ▶️ 先直接跑 Path A（本机、与厂商无关、免费）
+
+```powershell
 pip install -r requirements.txt
-python starter.py   # 第一次自动下载 embedding model
+python starter.py
 ```
 
-预算：**$0**。Chroma in-memory mode、跑完就 release。
+本练习使用本机 Chroma，API 费用是 **$0**。第一次执行可能会下载本机 embedding 模型。
 
-```bash
-python test.py             # 5 个 test、验 index/query/ranking
-python test_anthropic.py   # Path B concept demo（同 starter）
+<details markdown="1">
+<summary>Path B（预览：这一步之后怎么接到 Claude）</summary>
+
+Vector DB 这一步只负责“存数据、找数据”，跟之后用哪一家模型生成答案无关。这里跑一次 `starter_anthropic.py`，只是先让你看到同一套存储与搜索程序，之后会原封不动接到[练习 4](../04-full-rag-pipeline/README.zh-Hans.md)的 Claude 生成步骤前面。这一步没有调用任何 API，费用是 **$0**。
+
+```powershell
+python starter_anthropic.py
 ```
 
-## Vector DB 为什么 vs 为什么不
+</details>
 
-| 情境 | List comprehension + cosine | ChromaDB |
+**Stage 06 总预算**：五个 Path A 全部跑完，API 费用仍是 **$0**（不含下载、磁盘与电费）。选跑云端 Path 时，费用依 embedding／输入／输出 token 实际用量计算；先设小额账户上限，成功跑一次就停。
+
+```powershell
+python test.py
+python test_anthropic.py
+```
+
+测试不下载模型。Vector DB 不绑定 Claude、OpenAI 或 Ollama，所以 Path B 重用同一套存储与搜索程序。
+
+## 两种搜索怎么选
+
+| 需求 | Keyword search | Semantic search |
 |---|---|---|
-| < 100 doc | ✅ 简单够用 | overkill |
-| 100-10K doc | 慢（每次 query 都 re-embed all） | ✅ 持久 + index |
-| 10K+ doc | 不行 | ✅（或考虑 production 用的 Qdrant / Weaviate） |
-| Persistence | ❌ 每次重 embed | ✅ SQLite 后端 |
-| Filter / metadata | 自己写 | ✅ where clause |
-| Hybrid search | 自己写 | ✅ 有 BM25 + vector |
+| 找完全相同的编号或名称 | 很适合 | 可能混淆 |
+| 找换句话说的内容 | 容易漏 | 很适合 |
+| 要简单、快速 | 很适合 | 要先做 embedding |
+| 实际 RAG | 常和 BM25 搭配 | 常和 keyword 结果合并 |
 
-**经验法则**：练习用 in-memory（`EphemeralClient`）、production 用 `PersistentClient(path=...)`。
+把 keyword 与 vector 结果合并，叫做 **hybrid search（混合搜索）**。这份练习先把两者分开，让差别看得清楚；Stage 6 主章再连到 Qdrant 与 Weaviate 的正式 hybrid search 文档。
 
-## Semantic vs Keyword 对照
-
-```
-Query: "where to drink good coffee in Asian cities"
-
-📝 Keyword (substring) → 漏 doc 3
-    因为 query 没有「coffee」精确字串
-
-🔍 Semantic (vector) → 抓到 doc 3
-    "Coffee shops in Taipei often serve pour-over..."
-    语意对齐、不靠字面
-```
-
-| 维度 | Keyword search | Semantic search (vector) |
-|---|---|---|
-| 同义词 | 漏（"car" 跟 "auto" 不同） | 抓得到 |
-| 换字面 | 漏 | 抓得到 |
-| 拼字错 | 漏 | 抓得到（小错） |
-| 精确专有名词 | 强 | 偶尔混淆 |
-| 否定（NOT） | 简单 | 困难（embedding 不擅长） |
-| 速度 | 快 | 中（要 embed query） |
-| Production 用法 | BM25 + vector **hybrid** | 同左 |
-
-**Production 结论**：两条路都要、**hybrid search** 是 best practice。Chroma 0.4+ 内建 BM25 + vector hybrid。
-
-## Chroma 核心 API
+## Chroma 的两种存储方式
 
 ```python
-client = chromadb.EphemeralClient()    # in-memory；PersistentClient(path=...) 用磁盘
-embed_fn = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="...")
-collection = client.get_or_create_collection(name="demo", embedding_function=embed_fn)
+# 练习与测试：关掉程序后数据消失
+client = chromadb.EphemeralClient()
 
-collection.add(ids=[...], documents=[...], metadatas=[{"category": "..."}, ...])
-collection.query(query_texts=[query], n_results=3, where={"category": "tech"})
-collection.upsert(...)
-collection.delete(ids=[...])
+# 本机需要留下数据：重新开程序还读得到
+client = chromadb.PersistentClient(path="./chroma_db")
 ```
 
-## 常见坑
+官方文档把 `PersistentClient` 定位为本机开发与测试用；正式大型服务通常改用 server-backed Chroma 或其他受管服务。
 
-- **重复 id `.add()`**：Chroma raise；用 `.upsert()` 或先检查 `.get()["ids"]`
-- **每次 query 重 build collection**：别这样！`PersistentClient` 持久化、只 index 一次
-- **`n_results` 太大**：Chroma 没返回 reranker、k 太大就会吃到 noise。经验值 3-10
-- **Filter 用错**：`where={"category": "tech"}` 是 metadata filter、`where_document={"$contains": "..."}` 是 doc 内容 filter
-- **embedding function 一致性**：index 时用 model A、query 时用 model B、retrieval 会错。Chroma 把 embedding_function 绑在 collection 上避免
+## 程序流程
 
-## 想看实际在 production 跑的选择？
-
-```bash
-collection = build_collection(path="./chroma_db")   # 持久化
-# 或 cloud embedding：
-embed_fn = embedding_functions.OpenAIEmbeddingFunction(api_key=..., model_name="text-embedding-3-small")
+```python
+collection = build_collection()
+index_docs(collection, DOCS)
+results = semantic_query(collection, "where to drink coffee", top_k=3)
 ```
 
-## 延伸
+1. 创建 collection。
+2. 写入 `id`、文档与 metadata。
+3. 查询并取回距离最近的 `top-k` 笔。
 
-- **加 metadata filter**：`collection.query(query_texts=[q], where={"category": "food"})`
-- **Hybrid search**：BM25 + vector
-- **Swap to Qdrant / Weaviate**：production scale
-- **接练习 4**：完整 RAG pipeline 用同一个 collection
+<details>
+<summary>常见问题与进阶做法</summary>
+
+- `.add()` 遇到重复 `id` 会失败；要更新数据时用 `.upsert()`。
+- 创建与查询必须使用相同 embedding function。
+- `top_k` 太大会带回噪声；先用真实问题测 `3`、`5`、`10`。
+- 需要磁盘保存时，把 `build_collection(path="./chroma_db")` 传入清楚的文件夹。
+- 需要真正的 BM25 + vector hybrid search 时，参考 Stage 6 的 Qdrant 或 Weaviate 路径。
+
+</details>
+
+下一步：先在 [练习 3：Chunking](../03-chunking-comparison/README.zh-Hans.md)学会怎么切文档，再组成完整 RAG。

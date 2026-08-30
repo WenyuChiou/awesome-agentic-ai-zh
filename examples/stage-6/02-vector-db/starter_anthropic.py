@@ -21,6 +21,10 @@ if __name__ == "__main__":
     print("   Cloud embedding 替換在 build_collection() 註解、不必跑 LLM。\n")
     collection = build_collection()
     index_docs(collection, DOCS)
-    for r in semantic_query(collection, "coffee in Asian cities", top_k=2):
+    results = semantic_query(collection, "coffee in Asian cities", top_k=2)
+    for r in results:
         print(f"   {r}")
+    # === 自我驗證 ===
+    assert collection.count() == len(DOCS), "全部文件都應寫入 collection"
+    assert len(results) == 2, "top_k=2 應回傳兩筆"
     print("✅ 練習 2 (concept demo) 通過")

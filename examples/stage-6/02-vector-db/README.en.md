@@ -2,106 +2,110 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 2: Vector DB (ChromaDB) + semantic vs keyword
+# Exercise 2: Vector DB and Two Kinds of Search
 
-Pairs with [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.en.md) Exercise 2.
-> 🎓 **How to use this**: `starter.py` is the **complete solution**, not a TODO skeleton. The active approach works better — `mv starter.py starter_reference.py`, read the signatures but not the bodies, write your own `starter.py` from scratch, then run `python test.py` to check it; if you are stuck for 20 minutes, go back and compare against the reference. Full methodology in [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md).
+← Back to [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.en.md#exercise-2-vector-db)
 
-> 📚 **Want the chapter-length version?** The starter in this folder is an illustrative build focused on the core pattern plus two SDK paths — it is not in-depth teaching material. Recommended for depth:
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ The most complete chapter-based course in Chinese — 16 production capabilities. **This exercise maps to hello-agents' vector store chapter**
-> - [ChromaDB official tutorial](https://docs.trychroma.com/) + [Qdrant / Weaviate / Pinecone comparison](https://github.com/zilliztech/VectorDBBench) (production-scale benchmark)
-> - Full references in [Stage 6 Curated Projects](../../../stages/06-memory-rag.en.md#-featured-projects-templates--specs--example-collections)
+A **vector database** is like a drawer that finds things by "meaning." You put documents and their vectors in, then use a question to pull out the closest documents.
 
-## Task
+## 📌 Learning goals
 
-Index 8 docs into Chroma; compare semantic (vector) vs keyword (substring) retrieval on the same query.
+- Say what tells **vector database**, **semantic search**, and **keyword search** apart.
+- Store 8 documents in a Chroma collection.
+- Compare semantic search against keyword search on the same question.
+- Know when to use `EphemeralClient` versus `PersistentClient`.
 
-## How to run
+## 🔑 Core terms
 
-```bash
+| Core term | Plain meaning |
+|---|---|
+| **Collection** | A drawer holding documents, vectors, and metadata |
+| **Semantic search** | Compares meaning; the wording doesn't need to match exactly |
+| **Keyword search** | Looks for the same words; precise on proper nouns, but easy to miss synonyms |
+| **Metadata filter** | Narrows the search with tags first, e.g. only `category=tech` |
+
+## 📚 Required reading and learning resources
+
+- ★★★★★ [Chroma Clients official docs](https://docs.trychroma.com/reference/python/client): tells in-memory and on-disk storage apart.
+- ★★★★★ [Chroma Embedding Functions official docs](https://docs.trychroma.com/docs/embeddings/embedding-functions): see how a collection builds its vectors.
+- ★★★★☆ [VectorDBBench](https://github.com/zilliztech/VectorDBBench): once you need to compare larger deployments, benchmark them with your own workload.
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents): a fuller course on vector stores.
+
+<sub>Data verified: 2026-08-30 UTC.</sub>
+
+## ▶️ Run Path A first (local, provider-independent, free)
+
+```powershell
 pip install -r requirements.txt
-python starter.py   # auto-downloads embedding model on first run
+python starter.py
 ```
 
-Budget: **$0**. In-memory mode; released after process exits.
+This exercise uses local Chroma, so the API cost is **$0**. The first run may download a local embedding model.
 
-```bash
-python test.py             # 5 tests for index/query/ranking
-python test_anthropic.py   # Path B concept demo (same as starter)
+<details markdown="1">
+<summary>Path B (preview: how this step feeds into Claude later)</summary>
+
+The vector DB step only stores and searches data — it doesn't care which model generates the final answer later. Running `starter_anthropic.py` here just shows you the same storage and search code that will plug in, unchanged, right before the Claude generation step in [Exercise 4](../04-full-rag-pipeline/README.en.md). This step makes no API call, so the cost is **$0**.
+
+```powershell
+python starter_anthropic.py
 ```
 
-## When to use a vector DB
+</details>
 
-| Scenario | List + cosine | ChromaDB |
+**Total Stage 06 budget**: Running all five Path A exercises keeps API fees at **$0** (downloads, disk space, and electricity excluded). Optional cloud paths are billed from actual embedding, input, and output token usage; set a small account cap and stop after one successful run.
+
+```powershell
+python test.py
+python test_anthropic.py
+```
+
+The tests don't download a model. The vector DB isn't tied to Claude, OpenAI, or Ollama, so Path B reuses the same storage and search code.
+
+## Choosing between the two kinds of search
+
+| Need | Keyword search | Semantic search |
 |---|---|---|
-| < 100 docs | ✅ enough | overkill |
-| 100-10K docs | Slow (re-embed each query) | ✅ persistent + indexed |
-| 10K+ docs | No | ✅ (consider Qdrant / Weaviate at huge scale) |
-| Persistence | Re-embed | ✅ SQLite backend |
-| Filter / metadata | DIY | ✅ where clause |
-| Hybrid search | DIY | ✅ built-in BM25 + vector |
+| Find an exact ID or name | A great fit | Can get confused |
+| Find content phrased differently | Easy to miss | A great fit |
+| Simple and fast | A great fit | Needs embedding first |
+| Real-world RAG | Often paired with BM25 | Often merged with keyword results |
 
-**Rule of thumb**: experimentation = `EphemeralClient`; production = `PersistentClient(path=...)`.
+Merging keyword and vector results is called **hybrid search**. This exercise keeps the two separate first so the difference is clear; the Stage 6 main chapter links out to Qdrant's and Weaviate's official hybrid search docs.
 
-## Semantic vs keyword
-
-```
-Query: "where to drink good coffee in Asian cities"
-
-📝 Keyword (substring) → misses doc 3
-    Query doesn't have the exact word "coffee"
-
-🔍 Semantic (vector) → hits doc 3
-    "Coffee shops in Taipei often serve pour-over..."
-    Semantic alignment, not literal match
-```
-
-| Dimension | Keyword | Semantic |
-|---|---|---|
-| Synonyms ("car" vs "auto") | Miss | Catch |
-| Rephrasings | Miss | Catch |
-| Typos | Miss | Catch (small) |
-| Exact proper nouns | Strong | Occasionally confused |
-| Negation (NOT) | Easy | Hard (embeddings don't grok negation) |
-| Speed | Fast | Medium (need to embed the query) |
-| Production | BM25 + vector **hybrid** | Same |
-
-**Production takeaway**: use both — hybrid search is best practice. Chroma 0.4+ has BM25 + vector built in.
-
-## Chroma API
+## Chroma's two storage modes
 
 ```python
-client = chromadb.EphemeralClient()    # in-memory; PersistentClient(path=...) for disk
-embed_fn = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="...")
-collection = client.get_or_create_collection(name="demo", embedding_function=embed_fn)
+# Exercises and tests: data disappears when the program closes
+client = chromadb.EphemeralClient()
 
-collection.add(ids=[...], documents=[...], metadatas=[{"category": "..."}, ...])
-collection.query(query_texts=[query], n_results=3, where={"category": "tech"})
-collection.upsert(...)
-collection.delete(ids=[...])
+# Local use where you need data to persist: still readable after restarting
+client = chromadb.PersistentClient(path="./chroma_db")
 ```
 
-## Common pitfalls
+The official docs position `PersistentClient` for local development and testing; real large-scale services usually move to server-backed Chroma or another managed service.
 
-- **Duplicate ids in `.add()`**: raises. Use `.upsert()` or check `.get()["ids"]` first
-- **Rebuilding the collection each query**: don't! `PersistentClient` indexes once
-- **`n_results` too high**: no reranker — large k pulls in noise. 3-10 typically
-- **Filter confusion**: `where={"category": "tech"}` is metadata; `where_document={"$contains": "..."}` is content
-- **Inconsistent embedding function**: indexing with model A and querying with model B breaks retrieval. Chroma binds embedding_function to the collection to prevent this
+## Program flow
 
-## Production-ready alternatives
-
-```bash
-# Persistent
-collection = build_collection(path="./chroma_db")
-
-# Cloud embeddings (higher quality)
-embed_fn = embedding_functions.OpenAIEmbeddingFunction(api_key=..., model_name="text-embedding-3-small")
+```python
+collection = build_collection()
+index_docs(collection, DOCS)
+results = semantic_query(collection, "where to drink coffee", top_k=3)
 ```
 
-## Extensions
+1. Create a collection.
+2. Write in `id`, documents, and metadata.
+3. Query and get back the closest `top-k` entries.
 
-- **Metadata filter**: `collection.query(query_texts=[q], where={"category": "food"})`
-- **Hybrid search**: BM25 + vector via Chroma 0.4+ or external `rank_bm25`
-- **Swap to Qdrant / Weaviate** at production scale
-- **Plug into Exercise 4**: full RAG pipeline reuses this collection
+<details>
+<summary>Common pitfalls and advanced practice</summary>
+
+- `.add()` fails on a duplicate `id`; use `.upsert()` when updating data.
+- Indexing and querying must use the same embedding function.
+- Too large a `top_k` brings back noise; test `3`, `5`, and `10` with real questions first.
+- When you need the data to persist on disk, pass `build_collection(path="./chroma_db")` a clear folder.
+- When you need real BM25 + vector hybrid search, see Stage 6's Qdrant or Weaviate path.
+
+</details>
+
+Next: learn how to split documents in [Exercise 3: Chunking](../03-chunking-comparison/README.en.md) before assembling a complete RAG pipeline.

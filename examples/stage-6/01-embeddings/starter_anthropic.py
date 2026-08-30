@@ -58,5 +58,8 @@ if __name__ == "__main__":
     results = find_nearest_openai(query, SENTENCES, top_k=5)
     for r in results:
         print(f"   #{r['rank']} sim={r['similarity']:.3f}: {r['sentence']}")
-    print("\n✅ 練習 1 (Path B cloud) 通過 — OpenAI embeddings ≈$0.00002/run")
+    # === 自我驗證 ===
+    assert len(results) == 5, f"預期 5 筆結果、得到 {len(results)}"
+    assert results[0]["similarity"] >= results[-1]["similarity"], "結果應由相似到不相似排序"
+    print("\n✅ 練習 1 (Path B cloud) 通過 — OpenAI embeddings 回傳正常")
     print("   對照本機版本（starter.py）、看 ranking 差異")

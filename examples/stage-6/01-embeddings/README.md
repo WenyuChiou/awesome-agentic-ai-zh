@@ -2,101 +2,99 @@
   <strong>繁體中文</strong> | <a href="./README.zh-Hans.md">简体中文</a> | <a href="./README.en.md">English</a>
 </div>
 
-# 練習 1：Embeddings + nearest neighbors
+# 練習 1：Embeddings 與相似內容搜尋
 
-對應 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.md) 練習 1。
-> 🎓 **學習模式**：這份 `starter.py` 是**完整解答**、不是 TODO skeleton。建議用**主動模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重寫一份 `starter.py`、跑 `python test.py` 驗證；卡 20 分鐘再回去對照 reference。完整方法論看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+← 回到 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.md#練習-1embeddings)
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 兩條 SDK path，不是進階深度教材。深度教材推薦：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章節式 + 16 種 production 能力。**本練習對應 hello-agents 的 embedding 章節**
-> - [sentence-transformers official docs](https://www.sbert.net/) + [MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard)（embedding model 評分排行）
-> - 完整 references 見 [Stage 6 精選 Projects](../../../stages/06-memory-rag.md#-精選-projects範本--spec--範例-collection)
+想像你把每句話放到一張大地圖上。意思接近的句子會站得比較近。**Embedding（嵌入向量）**，就是每句話在這張地圖上的數字座標。
 
+## 📌 學習目標
 
-## 任務
+- 說出 **embedding**、**vector（向量）**、**cosine similarity（餘弦相似度）** 是什麼。
+- 把 100 個句子轉成向量。
+- 找出最接近問題的前 `top-k` 個句子。
+- 分清楚本機模型和雲端 embedding 的差別。
 
-把 100 個句子做 embedding、給一個 query、找出 top-k 最相近的句子。觀察 cosine similarity 排序意義。
+## 🔑 先懂三個核心詞
 
-## 怎麼跑 — 兩條路徑
+| 核心詞 | 白話意思 | 程式裡看到什麼 |
+|---|---|---|
+| **Embedding** | 把文字變成一排數字，方便電腦比較意思 | `model.encode(...)` |
+| **Vector** | 那一排數字 | `[0.12, -0.04, ...]` |
+| **Cosine similarity** | 看兩個向量的方向有多像；越接近 `1`，意思通常越近 | `sent_vecs @ q_vec` |
 
-### Path A（默認、本機免費）
+## 📚 必讀與學習資源
 
-```bash
+- ★★★★★ [Sentence Transformers 官方文件](https://www.sbert.net/)：本機 embedding 的第一手說明與範例。
+- ★★★★★ [OpenAI `text-embedding-3-small` 官方模型頁](https://developers.openai.com/api/docs/models/text-embedding-3-small)：雲端模型、用途與現行價格。
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：適合讀完本練習後，再看較完整的 embedding 與 RAG 章節。
+
+<sub>資料查核：2026-08-30 UTC。</sub>
+
+## ▶️ 先直接跑 Path A（本機、免費）
+
+```powershell
 pip install -r requirements.txt
-python starter.py # 第一次自動下載 model (~80 MB)
+python starter.py
 ```
 
-預算：**$0**。`sentence-transformers/all-MiniLM-L6-v2` 模型在 CPU 跑、約 100 句 < 1 秒。
+第一次執行會下載 `sentence-transformers/all-MiniLM-L6-v2`。模型在你的電腦執行，API 費用是 **$0**。
 
-### Path B（cloud embedding，對照、極便宜）
+<details markdown="1">
+<summary>Path B（雲端 embedding，OpenAI）</summary>
 
-```bash
+```powershell
 pip install -r requirements.txt
-export OPENAI_API_KEY=sk-...
+$env:OPENAI_API_KEY = Read-Host "OpenAI API key"
 python starter_anthropic.py
 ```
 
-預算：每次 ≈ **$0.00002**（text-embedding-3-small、100 句）。
+Anthropic 目前沒有自家的 embedding API；[Anthropic 官方 embedding 指南](https://platform.claude.com/docs/en/build-with-claude/embeddings)以 Voyage AI 為主要示例。這份入門程式用 OpenAI，讓你能跟本機結果做簡單對照。
 
-> 💡 **Anthropic 沒提供 embedding API**——官方推薦 [Voyage AI](https://www.voyageai.com/)。這份用 OpenAI 示範（最常見），改 Voyage 只需換 client。
+`text-embedding-3-small` 的費用按輸入 token 計算：
 
-## 不花錢驗證程式邏輯
-
-```bash
-python test.py # mock SentenceTransformer、不下載 model
-python test_anthropic.py # mock OpenAI client、驗 normalize 邏輯
+```text
+費用 = 輸入 token 數 ÷ 1,000,000 × 每百萬 token 價格
 ```
 
-## 核心觀念
+執行前先到官方模型頁確認價格，並為 API 帳戶設定小額使用上限。
+
+</details>
+
+**Stage 06 總預算**：五個 Path A 全部跑完，API 費用仍是 **$0**（不含下載、磁碟與電費）。選跑雲端 Path 時，費用依 embedding／輸入／輸出 token 實際用量計算；先設小額帳戶上限，成功跑一次就停。
+
+## ✅ 不下載模型也能驗證
+
+```powershell
+python test.py
+python test_anthropic.py
+```
+
+測試使用假的向量與假的 API 回覆，所以不會連外、不會扣款。
+
+## 程式只做三件事
 
 ```python
-# 1. Encode → vector
-sent_vecs = model.encode(sentences, normalize_embeddings=True) # 100 × 384 vec
-q_vec = model.encode([query], normalize_embeddings=True)[0] # 384 vec
-
-# 2. Cosine similarity = dot product (因為 normalized)
-sims = sent_vecs @ q_vec # 100 個 similarity score
-
-# 3. Top-k
+sent_vecs = model.encode(sentences, normalize_embeddings=True)
+q_vec = model.encode([query], normalize_embeddings=True)[0]
+sims = sent_vecs @ q_vec
 top_idx = np.argsort(-sims)[:top_k]
 ```
 
-**為什麼 normalize**：normalized vector 的 dot product 直接等於 cosine similarity（範圍 [-1, 1]）、不用每次重算 norm。是 vector DB 通用技巧。
+1. 把句子和問題都變成向量。
+2. 比較向量方向。
+3. 把分數最高的 `top-k` 筆放到前面。
 
-## 本機 vs cloud embedding 對照
+**Normalize（正規化）**會把向量調成相同長度。完成後，dot product 就能直接當 cosine similarity 使用。
 
-| 維度 | sentence-transformers (本機) | OpenAI text-embedding-3-small (cloud) |
-|---|---|---|
-| 維度 | 384 | 1536 |
-| 速度（100 句、CPU） | < 1 秒 | 1-2 秒（含網路） |
-| 成本 | $0 | $0.00002 / 100 sentences |
-| Multilingual | OK（多語版見 `paraphrase-multilingual-MiniLM-L12-v2`） | 強 |
-| Long context（>512 token） | 截斷 | 強 |
-| 一致性（同 input 同 output） | 100% | 99%（API 偶爾微擾） |
+<details>
+<summary>常見問題與下一步</summary>
 
-**結論**：個人 / 小資料 / 本機實驗、用 sentence-transformers 完全夠。大量 multilingual / 長文檔 / SaaS、用 cloud。
+- **不同模型的向量不能混用**：它們像兩張不同的地圖，座標不能直接比較。
+- **查詢太短**：只有一兩個字時，意思不夠清楚，搜尋結果容易飄。
+- **`top_k` 不是越大越好**：拿太多內容會把雜訊一起帶回來。
+- 想比較模型時，可看 [MTEB](https://huggingface.co/spaces/mteb/leaderboard)，但要用自己的語言與資料再測一次。
 
-## 常見坑
+</details>
 
-- **沒 normalize**：cosine similarity ≠ dot product、要 `sim = dot(a,b) / (|a||b|)` 自己算
-- **Mixed precision**：sentence-transformers 預設 fp32、若用 fp16 量化（省記憶體）相似度會差 1-2%
-- **不同模型 vector 不能比**：MiniLM 跟 OpenAI 是兩個語意空間、不要把 cosine sim 直接比
-- **太短 query**：1-2 字 query embedding 不穩、結果可能跳很遠。query 至少要句子
-
-## 想看更好的 embedding？
-
-```bash
-# 本機更大 model（精度更好、速度較慢）
-# 把 starter.py 的 MODEL_NAME 改成：
-# "sentence-transformers/all-mpnet-base-v2" # 768 維、accuracy↑
-# "sentence-transformers/paraphrase-multilingual-..." # 多語
-
-# Cloud 高精度
-EMBED_MODEL=text-embedding-3-large python starter_anthropic.py # 3072 維、$$
-```
-
-## 延伸
-
-- **改成 BM25 + embedding hybrid**：keyword 跟 semantic 各取優、production 常用
-- **加 reranker**：top-k 拿來丟 cross-encoder（`cross-encoder/ms-marco-MiniLM-L-6-v2`）做 reranking、精度大躍進
-- **接練習 2 vector DB**：放到 Chroma 裡能跑萬筆規模、不必每次重 embedding
+下一步：把向量放進 [練習 2：Vector DB](../02-vector-db/README.md)，不必每次從頭比較全部句子。

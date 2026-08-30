@@ -19,12 +19,12 @@ from __future__ import annotations
 
 import re
 import sys
+from typing import Any
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -54,6 +54,10 @@ Taipei summer is hot and humid, often 32-35°C with afternoon thunderstorms. Win
 
 def chunk_fixed(text: str, chunk_size: int = 200, overlap: int = 40) -> list[str]:
     """固定長度切（with overlap）。簡單但會切壞句子 / 段落。"""
+    if chunk_size < 1:
+        raise ValueError("chunk_size 必須至少是 1")
+    if overlap < 0 or overlap >= chunk_size:
+        raise ValueError("overlap 必須介於 0 和 chunk_size - 1 之間")
     chunks = []
     i = 0
     while i < len(text):
@@ -75,21 +79,23 @@ def chunk_headings(text: str) -> list[str]:
 
 # === Retrieval comparison ===
 
-def embed_chunks(chunks: list[str], model: SentenceTransformer) -> np.ndarray:
+def embed_chunks(chunks: list[str], model: Any) -> np.ndarray:
     return model.encode(chunks, normalize_embeddings=True, convert_to_numpy=True)
 
 
 def top_k_for_query(query: str, chunks: list[str], chunk_vecs: np.ndarray,
-                    model: SentenceTransformer, k: int = 2) -> list[dict]:
+                    model: Any, k: int = 2) -> list[dict]:
     q_vec = model.encode([query], normalize_embeddings=True, convert_to_numpy=True)[0]
     sims = chunk_vecs @ q_vec
     top_idx = np.argsort(-sims)[:k]
     return [{"chunk": chunks[i], "similarity": float(sims[i])} for i in top_idx]
 
 
-def compare_strategies(doc: str, queries: list[str], k: int = 2) -> dict:
+def compare_strategies(doc: str, queries: list[str], k: int = 2, model: Any = None) -> dict:
     """3 種 chunking、跑同樣 query、回傳對比結果。"""
-    model = SentenceTransformer(EMBED_MODEL)
+    if model is None:
+        from sentence_transformers import SentenceTransformer
+        model = SentenceTransformer(EMBED_MODEL)
 
     strategies = {
         "fixed_200_overlap_40": chunk_fixed(doc, chunk_size=200, overlap=40),
@@ -127,7 +133,8 @@ if __name__ == "__main__":
             print(f"   → sim={best['similarity']:.3f}: {best['chunk'][:80]}...")
         print()
 
-    # Sanity: heading-aware 通常 chunk 數 = 4（title + 3 section）、最少 noise
+    # === 自我驗證 ===
     assert out["headings"]["chunk_count"] <= 5, "heading chunks 應該少而 self-contained"
+    assert set(out) == {"fixed_200_overlap_40", "paragraphs", "headings"}
     print("✅ 練習 3 通過 — 3 種 chunking 對照、$0/run")
     print("   觀察：heading-aware 對 sectional query 最準；fixed-length 容易切壞句子")

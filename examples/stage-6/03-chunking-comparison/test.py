@@ -19,6 +19,16 @@ def test_fixed_length_chunks():
     print("✅ test_fixed_length_chunks")
 
 
+def test_fixed_length_rejects_unsafe_overlap():
+    for chunk_size, overlap in [(0, 0), (10, -1), (10, 10), (10, 11)]:
+        try:
+            chunk_fixed("abcdef", chunk_size=chunk_size, overlap=overlap)
+        except ValueError:
+            continue
+        raise AssertionError(f"chunk_size={chunk_size}, overlap={overlap} 應該被拒絕")
+    print("✅ test_fixed_length_rejects_unsafe_overlap")
+
+
 def test_paragraphs_split_on_double_newline():
     text = "Para one.\n\nPara two.\n\nPara three."
     chunks = chunk_paragraphs(text)
@@ -51,6 +61,7 @@ def test_chunk_count_difference():
 
 if __name__ == "__main__":
     test_fixed_length_chunks()
+    test_fixed_length_rejects_unsafe_overlap()
     test_paragraphs_split_on_double_newline()
     test_headings_keep_section_together()
     test_chunk_count_difference()

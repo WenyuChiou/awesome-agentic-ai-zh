@@ -18,13 +18,12 @@ from __future__ import annotations
 import os
 import sys
 import uuid
+from pathlib import Path
 from typing import Any
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-import chromadb
-from chromadb.utils import embedding_functions
 from openai import OpenAI
 
 MODEL = os.environ.get("MODEL", "qwen2.5:3b")
@@ -36,17 +35,34 @@ OLLAMA_BASE = os.environ.get("OLLAMA_API_BASE", "http://localhost:11434/v1")
 class MemoryStore:
     """Long-term memory backed by ChromaDB vector search."""
 
-    def __init__(self, collection_name: str = "memory"):
-        client = chromadb.EphemeralClient()
-        embed_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name="sentence-transformers/all-MiniLM-L6-v2",
-        )
+    def __init__(
+        self,
+        path: str | Path = ".stage06-memory",
+        collection_name: str = "memory",
+        *,
+        client: Any = None,
+        embedding_function: Any = None,
+    ):
+        """Open a disk-backed memory store; inject a client in unit tests."""
+        self.path = Path(path)
+        if client is None:
+            import chromadb
+            client = chromadb.PersistentClient(path=str(self.path))
+        if embedding_function is None:
+            from chromadb.utils import embedding_functions
+            embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
+                model_name="sentence-transformers/all-MiniLM-L6-v2",
+            )
         self.collection = client.get_or_create_collection(
-            name=collection_name, embedding_function=embed_fn,
+            name=collection_name, embedding_function=embedding_function,
         )
 
     def remember(self, fact: str) -> str:
         """Add a fact to memory. Returns the memory id."""
+        existing = self.collection.get()
+        for memory_id, document in zip(existing.get("ids", []), existing.get("documents", [])):
+            if document == fact:
+                return memory_id
         mid = str(uuid.uuid4())
         self.collection.add(ids=[mid], documents=[fact])
         return mid
@@ -122,7 +138,8 @@ if __name__ == "__main__":
     print(f"   recalled: {r3['recalled']}")
     print(f"   answer: {r3['answer']}")
 
-    # Sanity: turn 3 應該 recall 到「prefer Python」這條 memory
+    # === 自我驗證 ===
     assert any("Python" in m for m in r3["recalled"]), \
         f"預期 recall 到 Python preference、得到 {r3['recalled']}"
+    assert memory.collection.count() >= 1, "記憶應已寫進磁碟資料庫"
     print("\n✅ 練習 5 通過 — long-term memory 跨輪 retrieve 成功、$0/run")

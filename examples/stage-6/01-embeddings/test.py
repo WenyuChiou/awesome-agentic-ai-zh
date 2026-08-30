@@ -63,6 +63,17 @@ def test_top_k_respected():
     print("✅ test_top_k_respected")
 
 
+def test_top_k_must_be_positive():
+    model = make_fake_model({"a": np.array([1, 0]), "q": np.array([1, 0])})
+    try:
+        find_nearest("q", ["a"], top_k=0, model=model)
+    except ValueError as exc:
+        assert "top_k" in str(exc)
+    else:
+        raise AssertionError("top_k=0 應該被拒絕")
+    print("✅ test_top_k_must_be_positive")
+
+
 def test_similarity_in_minus_one_to_one():
     """L2-normalized → cosine sim ∈ [-1, 1]。"""
     sentences = ["a", "b"]
@@ -87,6 +98,7 @@ def test_corpus_size():
 if __name__ == "__main__":
     test_top_1_is_most_similar()
     test_top_k_respected()
+    test_top_k_must_be_positive()
     test_similarity_in_minus_one_to_one()
     test_corpus_size()
     print("\n🎉 全部通過 — embedding 邏輯正確（無需下載 model）")

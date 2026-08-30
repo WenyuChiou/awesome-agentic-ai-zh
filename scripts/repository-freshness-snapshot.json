@@ -3271,11 +3271,8 @@
         "tag": "0.16.8",
         "published_at": "2026-05-14T17:14:24Z"
       },
-      "reference_count": 9,
+      "reference_count": 3,
       "sources": [
-        "examples/stage-6/05-long-term-memory/README.en.md",
-        "examples/stage-6/05-long-term-memory/README.md",
-        "examples/stage-6/05-long-term-memory/README.zh-Hans.md",
         "stages/04-agent-frameworks.en.md",
         "stages/04-agent-frameworks.md",
         "stages/04-agent-frameworks.zh-Hans.md"
@@ -3299,8 +3296,11 @@
         "tag": "v0.31.6",
         "published_at": "2026-08-28T23:18:59Z"
       },
-      "reference_count": 6,
+      "reference_count": 9,
       "sources": [
+        "examples/stage-6/05-long-term-memory/README.en.md",
+        "examples/stage-6/05-long-term-memory/README.md",
+        "examples/stage-6/05-long-term-memory/README.zh-Hans.md",
         "stages/06-memory-rag.en.md",
         "stages/06-memory-rag.md",
         "stages/06-memory-rag.zh-Hans.md"
@@ -3521,7 +3521,7 @@
         "tag": "deepseek-plugin-v0.1.1",
         "published_at": "2026-08-27T08:22:06Z"
       },
-      "reference_count": 15,
+      "reference_count": 9,
       "sources": [
         "examples/stage-6/05-long-term-memory/README.en.md",
         "examples/stage-6/05-long-term-memory/README.md",

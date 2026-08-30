@@ -2,109 +2,108 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 3：Chunking 对照（fixed / paragraph / heading-aware）
+# 练习 3：比较三种 Chunking
 
-对应 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.zh-Hans.md) 练习 3。
-> 🎓 **学习模式**：这份 `starter.py` 是**完整解答**、不是 TODO skeleton。建议用**主动模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重写一份 `starter.py`、跑 `python test.py` 验证；卡 20 分钟再回去对照 reference。完整方法论看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+← 回到 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.zh-Hans.md#练习-3chunking-对照)
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 两条 SDK path，不是进阶深度教材。深度教材推荐：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的 RAG chunking 章节**
-> - [LangChain RecursiveCharacterTextSplitter docs](https://python.langchain.com/docs/how_to/recursive_text_splitter/) + [LlamaIndex SemanticSplitter](https://docs.llamaindex.ai/en/stable/api_reference/node_parsers/semantic_splitter/)
-> - 完整 references 见 [Stage 6 精选 Projects](../../../stages/06-memory-rag.zh-Hans.md#-精选-projects模板--规范--示例合集)
+**Chunking（切块）**就是把一份长文档切成几个小盒子。盒子太大，细节会被埋住；盒子太小，意思会被切断。
 
-## 任务
+## 📌 学习目标
 
-同一份文档 → 3 种切法、跑 5 个 query、看哪种切法 retrieval 最准。
+- 说出 **fixed-length**、**paragraph-based**、**heading-aware** 三种切法。
+- 知道 **chunk size** 与 **overlap** 会改变搜索结果。
+- 用同一份文档和同一组问题公平比较三种策略。
+- 阻挡会让程序卡住的错误 overlap。
 
-| 策略 | 怎么切 | 适合 |
-|---|---|---|
-| **fixed-length** | 每 N 字一段、有 overlap | 纯文字（log / chat history） |
-| **paragraph** | 双 newline 为界 | 散文 / 文章 |
-| **heading-aware** | 看 `# / ##` 切 | structured doc（README / wiki / spec） |
+## 🔑 核心词
 
-## 怎么跑
+| 核心词 | 白话意思 |
+|---|---|
+| **Chunk** | 长文档切出来的一小段 |
+| **Chunk size** | 每一段最多多大 |
+| **Overlap** | 前后两段重复保留的文字，避免句子刚好被切断 |
+| **Retrieval** | 用问题找回最有用的段落 |
 
-```bash
+## 📚 必读与学习资源
+
+- ★★★★★ [LangChain text splitters 官方概念页](https://docs.langchain.com/oss/python/integrations/splitters)：从简单切法开始。
+- ★★★★★ [LlamaIndex Semantic Splitter 官方 API](https://docs.llamaindex.ai/en/stable/api_reference/node_parsers/semantic_splitter/)：需要语义断点时再进阶。
+- ★★★★☆ [Unstructured 官方文档](https://docs.unstructured.io/)：PDF、DOCX、HTML 等复杂格式的解析入口。
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：较完整的 RAG chunking 教材。
+
+<sub>资料查核：2026-08-30 UTC。</sub>
+
+## ▶️ 先直接跑 Path A（本机、与厂商无关、免费）
+
+```powershell
 pip install -r requirements.txt
-python starter.py   # 第一次自动下载 embedding model
+python starter.py
 ```
 
-预算：**$0**（纯本机）。
+第一次执行可能下载本机 embedding 模型，API 费用是 **$0**。
 
-```bash
-python test.py             # 4 个 test、验 chunking 逻辑
-python test_anthropic.py   # Path B concept demo
+<details markdown="1">
+<summary>Path B（预览：这一步之后怎么接到 Claude）</summary>
+
+Chunking 这一步只负责“怎么切文档”，跟之后用哪一家模型生成答案无关。这里跑一次 `starter_anthropic.py`，只是先让你看到同一套切块程序，之后会原封不动接到[练习 4](../04-full-rag-pipeline/README.zh-Hans.md)的 Claude 生成步骤前面。这一步没有调用任何 API，费用是 **$0**。
+
+```powershell
+python starter_anthropic.py
 ```
 
-## 3 种策略对照
+</details>
 
-### Fixed-length
+**Stage 06 总预算**：五个 Path A 全部跑完，API 费用仍是 **$0**（不含下载、磁盘与电费）。选跑云端 Path 时，费用依 embedding／输入／输出 token 实际用量计算；先设小额账户上限，成功跑一次就停。
+
+```powershell
+python test.py
+python test_anthropic.py
+```
+
+测试只验切块逻辑，不下载模型。
+
+## 三种切法
+
+| 策略 | 怎么切 | 适合什么 |
+|---|---|---|
+| **Fixed-length** | 每 N 个字切一段 | 没有清楚格式的 log 或聊天记录 |
+| **Paragraph-based** | 遇到空白行就切 | 段落整齐的文章 |
+| **Heading-aware** | 遇到 `#`、`##` 标题就切 | README、wiki、spec |
 
 ```python
-def chunk_fixed(text, chunk_size=200, overlap=40):
-    # 每 200 字一块、40 字重叠
+fixed = chunk_fixed(text, chunk_size=200, overlap=40)
+paragraphs = chunk_paragraphs(text)
+headings = chunk_headings(text)
 ```
 
-**优点**：实作 1 行、适用所有文字；**缺点**：切到一半句子、语意被打断
+`overlap` 必须满足：
 
-### Paragraph-based
-
-```python
-def chunk_paragraphs(text):
-    return text.split("\n\n")
+```text
+0 <= overlap < chunk_size
 ```
 
-**优点**：保语意完整；**缺点**：段落长度不一（10 字 vs 500 字、embedding 不准）
+如果 `overlap` 等于或大于 `chunk_size`，下一段就不会往前走。程序现在会直接抛出 `ValueError`，不让它变成无限循环。
 
-### Heading-aware
+## 怎么判断哪种比较好
 
-```python
-def chunk_headings(text):
-    return re.split(r"\n(?=#{1,3} )", text)
-```
+不要只数 chunk，也不要只看一个漂亮例子。准备真实问题，确认正确答案所在的段落有没有进入 top-k。
 
-**优点**：每个 chunk 含 heading、structure 清楚；**缺点**：要 markdown / structured doc
+| 要看什么 | 问自己 |
+|---|---|
+| **Recall** | 正确段落有没有被找回来？ |
+| **Precision** | 找回来的段落里，有多少真的有用？ |
+| **完整性** | 答案需要的句子有没有被切到两边？ |
+| **成本** | chunk 变多后，embedding 与存储量增加多少？ |
 
-## 观察重点
+<details>
+<summary>常见问题与进阶做法</summary>
 
-对 query“How much does the MRT cost?”：
+- Chunk 太大：一段塞太多主题，向量会变得模糊。
+- Chunk 太小：答案需要的前后文可能分散在不同段。
+- PDF 不等于纯文本：先处理栏位、表格、页眉页脚，再切块。
+- CJK 文字不要用 byte 数硬切；用 Python 字符串、tokenizer 或结构化 parser。
+- 进阶做法：先按 heading 切大段，再在段内用固定长度切小段。
 
-- **fixed-length**：可能切到“...EasyCard is the universal payment. A single ride...”（MRT cost 跟前后 chunk 切开了）
-- **paragraph**：抓到完整 Transit 段、含 NT$20-65
-- **heading-aware**：抓到完整 ## Transit section、含 heading“Transit”（embedding 对“MRT cost”的相似度更高）
+</details>
 
-对 query“What food can I try?”：
-
-- **fixed-length**：抓到含 Food section 的 chunk、但可能 boundary 不对
-- **paragraph**：抓到 Food 内某个段落
-- **heading-aware**：抓到 `## Food` 整段、含 Shilin / dan bing / coffee 信息一次到位
-
-**punchline**：**chunking 策略决定 RAG 上限**——retrieval 抓不到的内容、再强的 LLM 也答不出。
-
-## Production 额外考量
-
-- **Chunk size**：经验 200-1000 字（取决于 embedding model 的 token limit）
-- **Overlap**：fixed-length 用 10-20% overlap、避免句子被切坏
-- **Reranker**：捞 top-20、丢 cross-encoder rerank 留 top-5、精度大跃进
-- **Metadata**：每个 chunk 加 `{"section": "Transit"}` 等 metadata、query 时可 filter
-- **混合策略**：先 heading 切大块、每块内再 fixed-length 切小块（两层 hierarchy）
-
-## 常见坑
-
-- **Chunk 太大**：embedding 平均掉细节、retrieval 抓不到精准段落
-- **Chunk 太小**：context 不足、LLM 看不到 holistic 答案
-- **没测过真实 query**：开发时用 toy query 验、production query 完全不同
-- **PDF chunking 直接套 markdown 逻辑**：PDF 有 column / footnote / table、要用 `pdfplumber` 或 `unstructured`
-- **CJK 文本切到一半字符**：UTF-8 byte slice 会切坏 multi-byte char
-
-## 想看更聪明的 chunking？
-
-- **`LangChain RecursiveCharacterTextSplitter`**：自动 fallback
-- **`LlamaIndex SemanticSplitter`**：用 embedding 找语意断点切
-- **`unstructured`**：对 PDF / DOCX / HTML 全套处理
-
-## 延伸
-
-- **改变 chunk_size 跑 grid search**：对 5 个 query、看哪个 size 平均 sim 最高
-- **加 metadata filter**：每个 chunk 标 section、query 时可指定“只在 Food section 搜”
-- **接练习 4 完整 RAG**：选好 chunking 策略后、丢给 LLM 生答案
+下一步：把切块、embedding、搜索与回答接成 [练习 4：完整 RAG](../04-full-rag-pipeline/README.zh-Hans.md)。

@@ -21,7 +21,6 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -42,13 +41,19 @@ SENTENCES = [
 
 def embed(texts: list[str], model: Any = None) -> np.ndarray:
     """Encode a list of strings to vectors (L2-normalized)."""
-    model = model or SentenceTransformer(MODEL_NAME)
+    if model is None:
+        from sentence_transformers import SentenceTransformer
+        model = SentenceTransformer(MODEL_NAME)
     return model.encode(texts, normalize_embeddings=True, convert_to_numpy=True)
 
 
 def find_nearest(query: str, sentences: list[str], top_k: int = 3, model: Any = None) -> list[dict]:
     """Returns top-k nearest sentences with cosine similarity scores."""
-    model = model or SentenceTransformer(MODEL_NAME)
+    if top_k < 1:
+        raise ValueError("top_k 必須至少是 1")
+    if model is None:
+        from sentence_transformers import SentenceTransformer
+        model = SentenceTransformer(MODEL_NAME)
     sent_vecs = embed(sentences, model=model)
     q_vec = embed([query], model=model)[0]
     # cosine similarity = dot product (because normalized)
@@ -70,8 +75,9 @@ if __name__ == "__main__":
     for r in results:
         print(f"   #{r['rank']} sim={r['similarity']:.3f}: {r['sentence']}")
 
-    # Validate top-1 is semantically related
+    # === 自我驗證 ===
     assert "Python" in results[0]["sentence"] or "programming" in results[0]["sentence"].lower(), \
         f"預期 top-1 跟 programming 相關、得到 {results[0]['sentence']}"
+    assert len(results) == 5, f"預期 5 筆結果、得到 {len(results)}"
     print("\n✅ 練習 1 通過 — sentence-transformers 在本機跑通、$0/run")
     print("   觀察：cosine similarity 越高、語意越近")

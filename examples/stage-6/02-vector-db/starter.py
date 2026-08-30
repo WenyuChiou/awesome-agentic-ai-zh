@@ -14,15 +14,12 @@
 
 from __future__ import annotations
 
-import os
 import sys
+import uuid
 from typing import Any
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-
-import chromadb
-from chromadb.utils import embedding_functions
 
 DOCS = [
     {"id": "1", "text": "Taipei is the capital of Taiwan, known for night markets and tech.", "category": "city"},
@@ -36,17 +33,34 @@ DOCS = [
 ]
 
 
-def build_collection(path: str = ":memory:") -> Any:
+def build_collection(
+    path: str = ":memory:",
+    collection_name: str | None = None,
+    *,
+    client: Any = None,
+    embedding_function: Any = None,
+) -> Any:
     """建立 / 取回 chroma collection。path=':memory:' 表 in-memory。"""
-    if path == ":memory:":
-        client = chromadb.EphemeralClient()
-    else:
-        client = chromadb.PersistentClient(path=path)
-    embed_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-    )
+    if client is None:
+        import chromadb
+        client = (
+            chromadb.EphemeralClient()
+            if path == ":memory:"
+            else chromadb.PersistentClient(path=path)
+        )
+    if embedding_function is None:
+        from chromadb.utils import embedding_functions
+        embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
+            model_name="sentence-transformers/all-MiniLM-L6-v2",
+        )
+    if collection_name is None:
+        collection_name = (
+            f"stage06_demo_{uuid.uuid4().hex[:8]}"
+            if path == ":memory:"
+            else "stage06_demo"
+        )
     collection = client.get_or_create_collection(
-        name="demo", embedding_function=embed_fn,
+        name=collection_name, embedding_function=embedding_function,
     )
     return collection
 
@@ -103,8 +117,9 @@ if __name__ == "__main__":
     for r in keyword_query(DOCS, query, top_k=3):
         print(f"   [{r['id']}] {r['text']}")
 
-    # Semantic 應該抓到 doc 3 (coffee shops Taipei)、keyword 因為 query 無「coffee」精確匹配可能 miss
+    # === 自我驗證 ===
     sem_top = semantic_query(collection, query, top_k=1)
     assert sem_top[0]["id"] in {"3", "1"}, f"預期 coffee 或 Taipei 句、得到 {sem_top[0]}"
+    assert collection.count() == len(DOCS), "每份文件應只存一次"
     print("\n✅ 練習 2 通過 — Chroma vector DB 跑通、$0/run")
     print("   觀察：query 沒「coffee」字眼、keyword 漏；semantic 抓得到")

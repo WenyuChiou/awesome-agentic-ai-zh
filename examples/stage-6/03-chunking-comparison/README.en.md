@@ -2,110 +2,108 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 3: Chunking Comparison (fixed / paragraph / heading-aware)
+# Exercise 3: Comparing Three Chunking Methods
 
-Pairs with [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.en.md) Exercise 3.
-> 🎓 **How to use this**: `starter.py` is the **complete solution**, not a TODO skeleton. The active approach works better — `mv starter.py starter_reference.py`, read the signatures but not the bodies, write your own `starter.py` from scratch, then run `python test.py` to check it; if you are stuck for 20 minutes, go back and compare against the reference. Full methodology in [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md).
+← Back to [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.en.md#exercise-3-chunking-comparison)
 
-> 📚 **Want the chapter-length version?** The starter in this folder is an illustrative build focused on the core pattern plus two SDK paths — it is not in-depth teaching material. Recommended for depth:
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ The most complete chapter-based course in Chinese — 16 production capabilities. **This exercise maps to hello-agents' RAG chunking chapter**
-> - [LangChain RecursiveCharacterTextSplitter docs](https://python.langchain.com/docs/how_to/recursive_text_splitter/) + [LlamaIndex SemanticSplitter](https://docs.llamaindex.ai/en/stable/api_reference/node_parsers/semantic_splitter/)
-> - Full references in [Stage 6 Curated Projects](../../../stages/06-memory-rag.en.md#-featured-projects-templates--specs--example-collections)
+**Chunking** means cutting a long document into a few small boxes. Boxes that are too big bury the detail; boxes that are too small cut the meaning in half.
 
-## Task
+## 📌 Learning goals
 
-Same document → 3 chunking strategies → 5 queries → see which yields the best retrieval.
+- Name the three cutting methods: **fixed-length**, **paragraph-based**, and **heading-aware**.
+- Know that **chunk size** and **overlap** change search results.
+- Fairly compare all three strategies on the same document and the same set of questions.
+- Block a bad `overlap` value that would hang the program.
 
-| Strategy | How | Good for |
-|---|---|---|
-| **fixed-length** | N chars per chunk + overlap | Plain text (logs, chat history) |
-| **paragraph** | Split on double newline | Prose / articles |
-| **heading-aware** | Split on `# / ##` | Structured docs (README, wiki, specs) |
+## 🔑 Core terms
 
-## How to run
+| Core term | Plain meaning |
+|---|---|
+| **Chunk** | A small piece cut out of a long document |
+| **Chunk size** | The maximum size of each piece |
+| **Overlap** | Text repeated between two adjacent chunks, so a sentence doesn't get cut right in half |
+| **Retrieval** | Using a question to pull back the most useful passages |
 
-```bash
+## 📚 Required reading and learning resources
+
+- ★★★★★ [LangChain text splitters official concepts page](https://docs.langchain.com/oss/python/integrations/splitters): start with the simple cutting methods.
+- ★★★★★ [LlamaIndex Semantic Splitter official API](https://docs.llamaindex.ai/en/stable/api_reference/node_parsers/semantic_splitter/): go deeper once you need semantic breakpoints.
+- ★★★★☆ [Unstructured official docs](https://docs.unstructured.io/): an entry point for parsing complex formats like PDF, DOCX, and HTML.
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents): a fuller course on RAG chunking.
+
+<sub>Data verified: 2026-08-30 UTC.</sub>
+
+## ▶️ Run Path A first (local, provider-independent, free)
+
+```powershell
 pip install -r requirements.txt
-python starter.py   # first run downloads embedding model
+python starter.py
 ```
 
-Budget: **$0** (fully local).
+The first run may download a local embedding model; the API cost is **$0**.
 
-```bash
-python test.py             # 4 tests for chunking logic
-python test_anthropic.py   # Path B concept demo
+<details markdown="1">
+<summary>Path B (preview: how this step feeds into Claude later)</summary>
+
+The chunking step only decides how to split a document — it doesn't care which model generates the final answer later. Running `starter_anthropic.py` here just shows you the same chunking code that will plug in, unchanged, right before the Claude generation step in [Exercise 4](../04-full-rag-pipeline/README.en.md). This step makes no API call, so the cost is **$0**.
+
+```powershell
+python starter_anthropic.py
 ```
 
-## Strategy comparison
+</details>
 
-### Fixed-length
+**Total Stage 06 budget**: Running all five Path A exercises keeps API fees at **$0** (downloads, disk space, and electricity excluded). Optional cloud paths are billed from actual embedding, input, and output token usage; set a small account cap and stop after one successful run.
+
+```powershell
+python test.py
+python test_anthropic.py
+```
+
+The tests only check the chunking logic — no model download.
+
+## Three cutting methods
+
+| Strategy | How it cuts | Good for |
+|---|---|---|
+| **Fixed-length** | Cuts every N characters | Logs or chat transcripts with no clear format |
+| **Paragraph-based** | Cuts on blank lines | Articles with tidy paragraphs |
+| **Heading-aware** | Cuts on `#`, `##` headings | READMEs, wikis, specs |
 
 ```python
-def chunk_fixed(text, chunk_size=200, overlap=40):
-    # 200 chars per chunk, 40-char overlap
-    # Simple but splits sentences
+fixed = chunk_fixed(text, chunk_size=200, overlap=40)
+paragraphs = chunk_paragraphs(text)
+headings = chunk_headings(text)
 ```
 
-Pros: 1-line implementation, works on any text. Cons: breaks sentences mid-flow.
+`overlap` must satisfy:
 
-### Paragraph-based
-
-```python
-def chunk_paragraphs(text):
-    return text.split("\n\n")
+```text
+0 <= overlap < chunk_size
 ```
 
-Pros: preserves semantic units. Cons: paragraphs vary in length (10 chars vs 500 chars), throws off embeddings.
+If `overlap` is equal to or greater than `chunk_size`, the next chunk never moves forward. The program now raises `ValueError` right away instead of letting it become an infinite loop.
 
-### Heading-aware
+## How to judge which is better
 
-```python
-def chunk_headings(text):
-    return re.split(r"\n(?=#{1,3} )", text)
-```
+Don't just count chunks, and don't judge from one pretty example. Prepare real questions and check whether the passage holding the correct answer actually made it into the top-k.
 
-Pros: each chunk includes its heading (extra retrieval signal), structure preserved. Cons: requires markdown / structured docs — won't work on plain text or PDFs without headings.
+| What to check | Ask yourself |
+|---|---|
+| **Recall** | Was the correct passage retrieved at all? |
+| **Precision** | Of what was retrieved, how much is actually useful? |
+| **Completeness** | Did the sentences the answer needs get split across two chunks? |
+| **Cost** | How much do embedding and storage grow as chunks multiply? |
 
-## Observations
+<details>
+<summary>Common pitfalls and advanced practice</summary>
 
-For query "How much does the MRT cost?":
+- Chunks too big: too many topics crammed into one piece, so the vector gets blurry.
+- Chunks too small: the context an answer needs may end up scattered across different pieces.
+- A PDF isn't plain text: handle columns, tables, headers, and footers before chunking.
+- Don't hard-cut CJK text by byte count; use Python strings, a tokenizer, or a structured parser.
+- Advanced approach: cut into large sections by heading first, then cut those sections into smaller fixed-length pieces.
 
-- **fixed-length** may cut "EasyCard is the universal payment. A single ride..." across chunks (MRT cost detached from context)
-- **paragraph** retrieves the full Transit paragraph including NT$20-65
-- **heading-aware** retrieves the entire `## Transit` section — embedding for "MRT cost" lands closer to the heading
+</details>
 
-For "What food can I try?":
-
-- **fixed-length** hits a chunk containing Food info but with bad boundaries
-- **paragraph** hits one of the Food paragraphs
-- **heading-aware** returns the whole `## Food` section — Shilin / dan bing / coffee info in one shot
-
-**Punchline**: **chunking strategy caps RAG quality** — content the retriever misses, no LLM can answer.
-
-## Production considerations
-
-- **Chunk size**: empirically 200-1000 chars (depends on embedding model's token limit; MiniLM is 512)
-- **Overlap**: 10-20% on fixed-length to avoid splitting sentences
-- **Reranker**: retrieve top-20, rerank with a cross-encoder, keep top-5 — big precision boost
-- **Metadata**: tag each chunk `{"section": "Transit"}` for filter queries
-- **Hybrid hierarchy**: split by heading first, then sub-split each section by fixed-length
-
-## Common pitfalls
-
-- **Chunks too large**: embedding averages out details, retrieval misses precise paragraphs
-- **Chunks too small**: insufficient context, LLM can't form holistic answers — need more top-k
-- **Testing on toy queries**: production queries are different. **Always validate chunking with real queries**
-- **PDF chunking with markdown logic**: PDFs have columns / footnotes / tables — use `pdfplumber` or `unstructured`
-- **CJK text byte-sliced mid-character**: UTF-8 byte slice breaks multi-byte chars. Use character-level slicing
-
-## Smarter chunking options
-
-- **`LangChain RecursiveCharacterTextSplitter`**: tries `\n\n`, then `\n`, then `.`, then char — auto-fallback
-- **`LlamaIndex SemanticSplitter`**: uses embeddings to find semantic boundaries (most accurate, slowest)
-- **`unstructured`**: full pipeline for PDF / DOCX / HTML
-
-## Extensions
-
-- **Grid-search chunk_size**: across 5 queries, find the size with highest mean similarity
-- **Metadata filter**: tag chunks by section, query "only in Food section"
-- **Plug into Exercise 4**: feed retrieval results to an LLM for full RAG
+Next: connect chunking, embedding, search, and answering into [Exercise 4: Full RAG](../04-full-rag-pipeline/README.en.md).
