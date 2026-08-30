@@ -242,6 +242,14 @@ Stage 7.5 保留三組低文字密度三語圖：四問題群組的 12 概念卡
 - 時間、先備條件、環境、費用、預算、選修、補充資料、疑難排解與完整 catalog 可預設收合。必修閱讀、精選 Projects 與精選學習資源直接可見。
 - Gate 只證明可量測的結構沒有倒退。第一次讀者能不能用自己的話說出下一步，仍要在人工審查確認。
 
+### Setup guide 固定結構
+
+`resources/setup-guide*` 是零背景讀者的入口，不是工具安裝百科。固定可見順序為「這頁能幫什麼 → Web／Desktop／IDE／CLI Agent／API 五選一 → 七個核心詞 → 五個必讀官方起點 → A–E 的成果與第一個動作 → 完成檢查 → 下一站」。讀者選一條路即可，不把五種入口寫成由簡到難、也不要求全部安裝。
+
+必讀官方起點、五星編輯推薦、API Key 三不規則、`.gitignore` 先於 `.env`、可直接複製的 hello world 與 A–E 深連結保持可見。完整 Web／Desktop／IDE／CLI catalog、其他 Provider、替代安裝、系統條件、排錯、`CLAUDE.md` 與 Skill 完整範例可以收合；7 個 `<details markdown="1">` 全部預設關閉。完整入口表用 `4／4／5／7`、必讀表用 `2／1／1／1`、Provider 表用 `7／1` 的真正 rowgroup 合併分類。
+
+安裝命令、驗證方式、API Key／authentication、Provider 入口與專案狀態使用 90 天 freshness marker。固定價格、免費週期、促銷 credits、沒有來源的「最便宜／最強」與 Node-first 舊安裝路徑不得寫回。這頁的五門選擇表比裝飾性概念圖更直接，所以不為了版面齊全而新增圖片。
+
 ### Resource hub 固定結構
 
 `resources/README*` 是工具櫃入口，不是第十二份教材。固定可見順序為「我現在卡在哪裡 → 五個資源類型核心詞 → 11 份完整參考資料 → 回主線的位置 → 30 秒完成檢查」。全部 11 份入口保持可見；只有「為什麼分檔」與 maintainer 規則放進兩個預設關閉的 `<details markdown="1">`。

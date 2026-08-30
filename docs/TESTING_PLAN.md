@@ -265,6 +265,21 @@ block; missing release metadata or older activity remains a human-review warning
 entry automatically. The ordinary URL checker continues to cover non-GitHub documentation and hosted
 service links.
 
+### Setup guide — choose one door and finish one result
+
+`resources/setup-guide*` keeps the five parallel entry choices, seven bold core terms, five rated
+required starting points, A–E headings, first actions, safety rules, completion check, and locale-correct
+next routes visible. Seven closed disclosures hold time and prerequisites, the full product catalog,
+Provider alternatives, platform-specific installation fallbacks, troubleshooting, `CLAUDE.md`, and the
+complete Skill example. The three HTML tables use accessible rowgroups `4／4／5／7`, `2／1／1／1`, and
+`7／1`; required reading remains visible even though the complete catalogs are secondary.
+
+`scripts/test_setup_guide_content.py` locks the exact freshness marker, external URL order, native Claude
+Code installers, Python 3.12／`uv`, `claude-sonnet-5`, copyable secret setup, real rowgroups, editorial
+ratings, and README routing. It rejects the old Node 18／npm-first path, fixed setup times, frozen prices,
+promotional credits, stale desktop availability, volatile GitHub stars, and empty-quote artifacts.
+Reader UX, strict anchors, mirror／locale checks, freshness, and the trilingual site build run beside it.
+
 ### Resource hub index — task-first navigation covered
 
 `resources/README*` is a router, not another long catalog. Its visible path now asks what the

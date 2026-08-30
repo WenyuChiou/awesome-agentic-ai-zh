@@ -66,7 +66,7 @@
 
 ### 🚀 第一次接觸 AI agent / 沒寫過 code？
 
-先看 **[`resources/setup-guide.md`](resources/setup-guide.md)** — 30-45 分鐘從零帶你申請 API key、裝好 Python、跑出第一個 LLM hello-world。
+先看 **[`resources/setup-guide.md`](resources/setup-guide.md)** — 先分清 Web、Desktop、IDE、CLI Agent 與 API；你只要選一條路，不必把所有工具都裝完。
 
 ### 線上閱讀
 - **[學習地圖（兩條學習路徑）](#-學習地圖兩條學習路徑)** — 看完這節決定走 Track A 還 Track B
@@ -203,8 +203,8 @@ cd awesome-agentic-ai-zh
 
 | 你的狀況 | 去哪 | 內容 |
 |---|---|---|
-| 完全沒寫過 code、第一次接觸 AI agent | [`resources/setup-guide.md`](resources/setup-guide.md) | 30-45 分鐘從零裝好（API key、Python、第一個 hello-world） |
-| 不知道挑哪個 LLM provider | [`resources/setup-guide.md` A](resources/setup-guide.md#a--申請第一個-api-key約-10-分鐘) | Anthropic / OpenAI / DeepSeek / Kimi / NVIDIA NIM 對照 |
+| 完全沒寫過 code、第一次接觸 AI agent | [`resources/setup-guide.md`](resources/setup-guide.md) | 先選 Web、Desktop、IDE、CLI Agent 或 API；不必全裝 |
+| 不知道工具種類或 LLM Provider 怎麼分 | [`resources/setup-guide.md`](resources/setup-guide.md) | 先分清工具身分，再看官方 Cloud API 與本機 Runtime 入口 |
 | 同主題 awesome list / 中文社群 | [`RESOURCES.md` 同主題清單](RESOURCES.md#同主題的清單型-awesome-lists) | 5-10 分鐘逛一輪 |
 
 ### 📖 概念 / 用語
