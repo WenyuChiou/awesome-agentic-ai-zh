@@ -11,12 +11,13 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
-def test_module_loadable():
+def test_path_b_reuses_vector_db_code():
     import starter_anthropic
     assert hasattr(starter_anthropic, "build_collection")
-    print("✅ test_module_loadable")
+    assert hasattr(starter_anthropic, "semantic_query")
+    print("✅ test_path_b_reuses_vector_db_code")
 
 
 if __name__ == "__main__":
-    test_module_loadable()
+    test_path_b_reuses_vector_db_code()
     print("\n🎉 通過 — Path B concept demo 可載入")

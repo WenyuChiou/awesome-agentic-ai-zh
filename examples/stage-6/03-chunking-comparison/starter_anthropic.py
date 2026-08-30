@@ -18,4 +18,7 @@ if __name__ == "__main__":
     out = compare_strategies(SAMPLE_DOC, ["food at night markets"], k=1)
     for name, data in out.items():
         print(f"   {name}: {data['chunk_count']} chunks")
+    # === 自我驗證 ===
+    assert set(out) == {"fixed_200_overlap_40", "paragraphs", "headings"}
+    assert all(data["queries"] for data in out.values()), "每種切法都要跑查詢"
     print("✅ 練習 3 (concept demo) 通過")

@@ -63,4 +63,7 @@ if __name__ == "__main__":
         print(f"\n❓ {q}")
         result = rag_anthropic(q)
         print(f"   answer: {result['answer']}")
-    print(f"\n✅ 練習 4 (Anthropic) 通過 — Claude {MODEL}、≈$0.001/run")
+    # === 自我驗證 ===
+    assert result["contexts"], "RAG 應找回至少一段 context"
+    assert result["answer"], "Claude 應回傳文字答案"
+    print(f"\n✅ 練習 4 (Anthropic) 通過 — Claude {MODEL}")

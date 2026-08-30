@@ -52,4 +52,7 @@ if __name__ == "__main__":
     r = chat_anthropic("Recommend a programming language for me to learn.", memory)
     print(f"recalled: {r['recalled']}")
     print(f"answer: {r['answer']}")
-    print(f"\n✅ 練習 5 (Anthropic path) 通過 — Claude {MODEL}、≈$0.001/run")
+    # === 自我驗證 ===
+    assert any("Python" in fact for fact in r["recalled"]), "應找回 Python 偏好"
+    assert r["answer"], "Claude 應回傳文字答案"
+    print(f"\n✅ 練習 5 (Anthropic path) 通過 — Claude {MODEL}")

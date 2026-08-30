@@ -2,126 +2,115 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 4：完整 RAG 流水线
+# 练习 4：把完整 RAG 接起来
 
-对应 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.zh-Hans.md) 练习 4。
-> 🎓 **学习模式**：这份 `starter.py` 是**完整解答**、不是 TODO skeleton。建议用**主动模式**——`mv starter.py starter_reference.py`、看 signature 不看 body、自己重写一份 `starter.py`、跑 `python test.py` 验证；卡 20 分钟再回去对照 reference。完整方法论看 [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md)。
+← 回到 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.zh-Hans.md#练习-4完整-rag-流水线)
 
-> 📚 **想要 chapter-length 深入版？** 本 folder 的 starter 是 illustrative 版、聚焦核心 pattern + 两条 SDK path，不是进阶深度教材。深度教材推荐：
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ 中文圈最完整、章节式 + 16 种 production 能力。**本练习对应 hello-agents 的完整 RAG 流水线章节**
-> - [LlamaIndex RAG tutorial](https://docs.llamaindex.ai/en/stable/understanding/rag/) + [LangChain RAG cookbook](https://python.langchain.com/docs/tutorials/rag/)
-> - 完整 references 见 [Stage 6 精选 Projects](../../../stages/06-memory-rag.zh-Hans.md#-精选-projects模板--规范--示例合集)
+**RAG（Retrieval-Augmented Generation，检索增强生成）**会先找数据，再让模型看着数据回答。它像开卷考试：先翻到对的页，再作答。
 
-## 任务
+## 📌 学习目标
 
-把练习 1-3 串起来：
+- 把 **chunk → embed → retrieve → generate** 四步接起来。
+- 看懂 **grounding（依据数据回答）**与 `top_k`。
+- 用假的 LLM 回复离线测完整流程。
+- 分清楚“找错数据”和“看对数据却答错”两种故障。
 
-```
-doc → chunk_doc → embed → ChromaDB → top_k retrieve → LLM 生答案
-```
+## 🔑 核心词
 
-范例 KB 是公司 onboarding 文档、4 个 section（vacation / remote / expenses / tech stack）。
+| 核心词 | 白话意思 |
+|---|---|
+| **Retrieval** | 先找回可能有答案的段落 |
+| **Generation** | 模型读段落后组成答案 |
+| **Grounding** | 答案要能在提供的数据中找到依据 |
+| **Top-k** | 最多拿几段数据给模型看 |
 
-## 怎么跑 — 两条路径
+## 📚 必读与学习资源
 
-### Path A（默认、本机免费）
+- ★★★★★ [OpenAI Retrieval 官方指南](https://developers.openai.com/api/docs/guides/retrieval)：受管 vector store 与搜索的第一手做法。
+- ★★★★★ [LlamaIndex RAG 官方教程](https://docs.llamaindex.ai/en/stable/understanding/rag/)：拆解 ingestion、index、query。
+- ★★★★★ [LangChain RAG 官方教程](https://docs.langchain.com/oss/python/langchain/rag)：比较 two-step 与 agentic RAG。
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：较完整的 RAG 流水线教材。
 
-```bash
+<sub>资料查核：2026-08-30 UTC。</sub>
+
+## ▶️ Path A（Ollama、本机免费）
+
+```powershell
 pip install -r requirements.txt
 ollama pull qwen2.5:3b
 ollama serve
 python starter.py
 ```
 
-预算：**$0**。
+模型在本机执行，API 费用是 **$0**。
 
-### Path B（Anthropic、想看 cloud 答案质量）
+<details markdown="1">
+<summary>Path B（Anthropic）</summary>
 
-```bash
+```powershell
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
+$env:ANTHROPIC_API_KEY = Read-Host "Anthropic API key"
 python starter_anthropic.py
 ```
 
-预算：每次 ≈ **$0.001**。
+默认模型是 `claude-haiku-4-5`。现行标准价格为每百万输入 token **$1**、输出 token **$5**；实际费用依 token 用量计算：
 
-## 不花钱验证程序逻辑
-
-```bash
-python test.py             # 5 个 test、mock LLM 验整条 pipeline
-python test_anthropic.py   # Anthropic mock
+```text
+费用 = 输入 token ÷ 1,000,000 × 1
+     + 输出 token ÷ 1,000,000 × 5
 ```
 
-## RAG 4 个步骤
+执行前请再看 [Anthropic 官方价格页](https://platform.claude.com/docs/en/about-claude/pricing)，并设定小额使用上限。
+
+</details>
+
+**Stage 06 总预算**：五个 Path A 全部跑完，API 费用仍是 **$0**（不含下载、磁盘与电费）。选跑云端 Path 时，费用依 embedding／输入／输出 token 实际用量计算；先设小额账户上限，成功跑一次就停。
+
+## ✅ 不连 API 的完整检查
+
+```powershell
+python test.py
+python test_anthropic.py
+```
+
+测试会替换 LLM 与 embedding，不下载模型、不扣款，但仍会确认 context 真的进入 prompt。
+
+## RAG 四步
+
+```text
+文档 → 1. chunk → 2. embed/index → 3. retrieve top-k → 4. generate
+```
 
 ```python
-def rag(query, doc):
-    collection = build_kb(doc)           # 1. chunk + embed + index（一次性）
-    contexts = retrieve(collection, q)    # 2. top-k 语意搜
-    answer = generate(q, contexts)        # 3. LLM 看 context 回答
-    return {"contexts": contexts, "answer": answer}
+collection = build_kb(doc)
+contexts = retrieve(collection, query, top_k=2)
+answer = generate(query, contexts)
 ```
 
-每一步都有独立 trade-off：
-
-| 步骤 | 主要 knob | 影响 |
+| 步骤 | 主要设定 | 出错时会看到什么 |
 |---|---|---|
-| chunk | size / overlap / strategy | retrieval 上限 |
-| embed | model 大小 / multilingual | retrieval 精度 |
-| retrieve | top_k / metadata filter / reranker | recall vs precision |
-| generate | prompt 写法 / model / temperature | 答案质量 |
+| **Chunk** | size、overlap、文档结构 | 正确句子被切断 |
+| **Embed / index** | embedding model、数据更新 | 新数据找不到 |
+| **Retrieve** | `top_k`、filter、reranker | 拿回错段落或漏段落 |
+| **Generate** | prompt、模型、输出限制 | context 对，答案仍乱猜 |
 
-## Generate prompt 经典 pattern
+## 最小 grounding 规则
 
-```python
-prompt = f"""Answer the user's question based ONLY on the context below.
-If the context doesn't contain the answer, say "I don't have that information".
-
-Context:
-{context_text}
-
-Question: {query}
-
-Answer:"""
+```text
+只根据提供的 context 回答。
+如果 context 没有答案，就清楚说不知道。
 ```
 
-**3 个关键 instruction**：
+这能降低乱答，但不能保证零 hallucination。正式系统还需要无答案测试、引用、输出验证与人工抽查。
 
-1. `based ONLY on context` — 防 hallucinate
-2. `if doesn't contain → say so` — 给 LLM 退路、不强答
-3. Context + Question 顺序固定 — 模型训练偏好这个 layout
+<details>
+<summary>常见问题与下一步</summary>
 
-## 两个 path 观察重点
+- `top_k` 太小会漏数据；太大会把噪声和 token 成本一起放大。
+- 每次问题都重建 index 很浪费；数据没变时应重用持久化 collection。
+- 只测“答得出来”不够，也要测“数据没有答案时会拒答”。
+- 进阶可加入 query rewriting、reranker、citation 与 evaluation；先一次只改一个零件。
 
-| 观察项 | Anthropic Claude haiku | Ollama qwen2.5:3b |
-|---|---|---|
-| 答案 grounding | 稳（紧扣 context） | 偶尔发散、用知识补答 |
-| "I don't have that info" 机率 | 高（守规则） | 低（强答） |
-| 答案 fluency | 高 | 中 |
-| 多 context 整合 | 好 | 偶尔只看第一个 |
-| 速度 | 1-3 秒 | 5-15 秒（CPU） |
-| 成本 | $0.001 | $0 |
+</details>
 
-**production 观察**：RAG 质量 = retrieval quality × generation quality。**retrieval 漏 = LLM 无中生有；retrieval 对但 LLM 弱 = 答案不准**。Stage 7 production 通常 retrieval 走本机 / 中模型、generation 用 Claude / GPT。
-
-## 常见坑
-
-- **prompt 没讲“only based on context”**：LLM 会自由发挥、用训练数据补答、不可控
-- **`top_k` 设太大**：context 太长、LLM 注意力分散、可能答错
-- **`top_k` 设太小**：context 漏关键段、LLM 无法答
-- **prompt 把 context 放后面**：LLM 较重视 prompt 开头、context 应该在 question 之前
-- **没验证“答错就 say I don't know”**：production 加 5-10 个“答不出来该说 unknown”的 eval case
-
-## 想看实际在 production 跑的 RAG？
-
-- **Persistent ChromaDB**：`chromadb.PersistentClient(path=...)` 不重新 index
-- **Reranker**：retrieve top-20、cross-encoder rerank、留 top-3
-- **Citation**：prompt 改成“cite which context section you used”、LLM 标 [chunk_0]
-- **Streaming**：`client.chat.completions.create(stream=True)` 边跑边印
-- **接 LangGraph**：把 retrieve → generate 变 graph node、加 fallback path
-
-## 延伸
-
-- **加 query rewriting**：先让 LLM 把 user query 改写成更适合 retrieval 的版本（HyDE pattern）
-- **Multi-hop RAG**：第一轮 retrieve 拿到部分答案、用部分答案再 retrieve 补完整
-- **接练习 5 long-term memory**：对话 history 也丢进 vector store、跨轮对话记住事情
+下一步：把外部文档换成用户过去说过的事，完成 [练习 5：Long-term Memory](../05-long-term-memory/README.zh-Hans.md)。

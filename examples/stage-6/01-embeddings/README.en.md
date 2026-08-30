@@ -2,100 +2,99 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 1: Embeddings + Nearest Neighbors
+# Exercise 1: Embeddings and Similarity Search
 
-Pairs with [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.en.md) Exercise 1.
-> 🎓 **How to use this**: `starter.py` is the **complete solution**, not a TODO skeleton. The active approach works better — `mv starter.py starter_reference.py`, read the signatures but not the bodies, write your own `starter.py` from scratch, then run `python test.py` to check it; if you are stuck for 20 minutes, go back and compare against the reference. Full methodology in [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md).
+← Back to [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.en.md#exercise-1-embeddings)
 
-> 📚 **Want the chapter-length version?** The starter in this folder is an illustrative build focused on the core pattern plus two SDK paths — it is not in-depth teaching material. Recommended for depth:
-> - [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents) ⭐ The most complete chapter-based course in Chinese — 16 production capabilities. **This exercise maps to hello-agents' embedding chapter**
-> - [sentence-transformers official docs](https://www.sbert.net/) + [MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard) (embedding model rankings)
-> - Full references in [Stage 6 Curated Projects](../../../stages/06-memory-rag.en.md#-featured-projects-templates--specs--example-collections)
+Imagine placing every sentence on a big map. Sentences that mean similar things end up standing close together. An **embedding** is just the numeric coordinates of a sentence on that map.
 
-## Task
+## 📌 Learning goals
 
-Embed 100 sentences, then for a query find the top-k most similar. Observe what cosine similarity ranking means.
+- Say what **embedding**, **vector**, and **cosine similarity** are.
+- Turn 100 sentences into vectors.
+- Find the `top-k` sentences closest to a question.
+- Tell local models and cloud embeddings apart.
 
-## How to run — two paths
+## 🔑 Three core terms first
 
-### Path A (default, free, local)
+| Core term | Plain meaning | What you see in code |
+|---|---|---|
+| **Embedding** | Turning text into a row of numbers so a computer can compare meaning | `model.encode(...)` |
+| **Vector** | That row of numbers | `[0.12, -0.04, ...]` |
+| **Cosine similarity** | How alike two vectors' directions are; closer to `1` usually means closer in meaning | `sent_vecs @ q_vec` |
 
-```bash
+## 📚 Required reading and learning resources
+
+- ★★★★★ [Sentence Transformers official docs](https://www.sbert.net/): first-party explanation and examples for local embeddings.
+- ★★★★★ [OpenAI `text-embedding-3-small` official model page](https://developers.openai.com/api/docs/models/text-embedding-3-small): cloud model, use cases, and current pricing.
+- ★★★★☆ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents): a good next read for a fuller chapter on embeddings and RAG after this exercise.
+
+<sub>Data verified: 2026-08-30 UTC.</sub>
+
+## ▶️ Run Path A first (local, free)
+
+```powershell
 pip install -r requirements.txt
-python starter.py   # downloads ~80 MB on first run
+python starter.py
 ```
 
-Budget: **$0**. `sentence-transformers/all-MiniLM-L6-v2` runs on CPU, ~100 sentences in < 1 second.
+The first run downloads `sentence-transformers/all-MiniLM-L6-v2`. The model runs on your own machine, so the API cost is **$0**.
 
-### Path B (cloud embedding, comparison, very cheap)
+<details markdown="1">
+<summary>Path B (cloud embedding, OpenAI)</summary>
 
-```bash
+```powershell
 pip install -r requirements.txt
-export OPENAI_API_KEY=sk-...
+$env:OPENAI_API_KEY = Read-Host "OpenAI API key"
 python starter_anthropic.py
 ```
 
-Budget: ~**$0.00002** per run (text-embedding-3-small, 100 sentences).
+Anthropic doesn't currently offer its own embedding API; the [official Anthropic embeddings guide](https://platform.claude.com/docs/en/build-with-claude/embeddings) uses Voyage AI as its main example. This starter uses OpenAI so you can do a simple side-by-side with the local result.
 
-> 💡 **Anthropic doesn't provide an embedding API** — they officially recommend [Voyage AI](https://www.voyageai.com/). This demo uses OpenAI (most common); swapping to Voyage is a client swap.
+`text-embedding-3-small` is billed by input tokens:
 
-## Validate the logic
-
-```bash
-python test.py             # mock SentenceTransformer, no download
-python test_anthropic.py   # mock OpenAI client, validate normalize
+```text
+cost = input tokens ÷ 1,000,000 × price per million tokens
 ```
 
-## Core concepts
+Check the official model page for current pricing before you run it, and set a small usage cap on your API account.
+
+</details>
+
+**Total Stage 06 budget**: Running all five Path A exercises keeps API fees at **$0** (downloads, disk space, and electricity excluded). Optional cloud paths are billed from actual embedding, input, and output token usage; set a small account cap and stop after one successful run.
+
+## ✅ Verify without downloading a model
+
+```powershell
+python test.py
+python test_anthropic.py
+```
+
+The tests use fake vectors and a fake API reply, so nothing reaches the network and nothing gets billed.
+
+## The program only does three things
 
 ```python
-# 1. Encode → vector
-sent_vecs = model.encode(sentences, normalize_embeddings=True)  # 100 × 384 vec
-q_vec = model.encode([query], normalize_embeddings=True)[0]      # 384 vec
-
-# 2. Cosine similarity = dot product (because normalized)
-sims = sent_vecs @ q_vec        # 100 similarity scores
-
-# 3. Top-k
+sent_vecs = model.encode(sentences, normalize_embeddings=True)
+q_vec = model.encode([query], normalize_embeddings=True)[0]
+sims = sent_vecs @ q_vec
 top_idx = np.argsort(-sims)[:top_k]
 ```
 
-**Why normalize**: normalized vectors' dot product equals cosine similarity directly (range [-1, 1]) — no need to recompute norms. Standard vector DB trick.
+1. Turn both the sentences and the question into vectors.
+2. Compare the vectors' directions.
+3. Put the `top-k` highest-scoring entries first.
 
-## Local vs cloud embedding
+**Normalize** scales every vector to the same length. Once that's done, a dot product can be used directly as cosine similarity.
 
-| Dimension | sentence-transformers (local) | OpenAI text-embedding-3-small (cloud) |
-|---|---|---|
-| Dims | 384 | 1536 |
-| Speed (100 sents, CPU) | < 1s | 1-2s (incl. network) |
-| Cost | $0 | $0.00002 / 100 sentences |
-| Multilingual | OK (`paraphrase-multilingual-MiniLM-L12-v2`) | Strong |
-| Long context (>512 tokens) | Truncated | Strong |
-| Determinism | 100% | 99% (API has minor noise) |
+<details>
+<summary>Common pitfalls and next steps</summary>
 
-**Bottom line**: personal / small data / local experimentation — sentence-transformers is plenty. Heavy multilingual / long docs / SaaS — go cloud.
+- **Don't mix vectors from different models**: they're like two different maps — the coordinates aren't directly comparable.
+- **Too-short queries**: one or two words isn't enough meaning, so search results tend to drift.
+- **`top_k` isn't "bigger is better"**: pulling in too much content drags noise along with it.
+- To compare models, see the [MTEB leaderboard](https://huggingface.co/spaces/mteb/leaderboard), but re-test with your own language and data.
 
-## Common pitfalls
+</details>
 
-- **No normalization**: cosine ≠ dot product; compute `sim = dot(a,b) / (|a||b|)` yourself
-- **Mixed precision**: sentence-transformers defaults to fp32; fp16 quantization (memory savings) shifts similarities 1-2%
-- **Don't compare vectors across models**: MiniLM and OpenAI are different semantic spaces; cosines aren't comparable
-- **Tiny queries**: 1-2 word queries embed poorly; use full sentences
-
-## Want better embeddings?
-
-```bash
-# Larger local model (better accuracy, slower)
-# In starter.py change MODEL_NAME to:
-#   "sentence-transformers/all-mpnet-base-v2"           # 768 dims, ↑ accuracy
-#   "sentence-transformers/paraphrase-multilingual-..." # multilingual
-
-# Higher-quality cloud
-EMBED_MODEL=text-embedding-3-large python starter_anthropic.py   # 3072 dims, $$
-```
-
-## Extensions
-
-- **BM25 + embedding hybrid**: combine keyword and semantic — common in production
-- **Add a reranker**: feed top-k to a cross-encoder (`cross-encoder/ms-marco-MiniLM-L-6-v2`) — big precision lift
-- **Plug into Exercise 2 vector DB**: store in Chroma so you don't re-embed each run
+Next: plug these vectors into [Exercise 2: Vector DB](../02-vector-db/README.en.md) so you don't have to compare against every sentence from scratch each time.

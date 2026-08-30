@@ -11,11 +11,12 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 from starter import MemoryStore
+from test import FakeClient
 from starter_anthropic import chat_anthropic
 
 
 def test_chat_anthropic_uses_memory_in_system_prompt():
-    mem = MemoryStore()
+    mem = MemoryStore(client=FakeClient(), embedding_function=lambda rows: rows)
     mem.remember("User prefers Python.")
 
     client = MagicMock()

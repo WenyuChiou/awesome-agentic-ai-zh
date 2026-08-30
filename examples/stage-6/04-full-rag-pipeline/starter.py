@@ -18,13 +18,12 @@ from __future__ import annotations
 
 import os
 import sys
+import uuid
 from typing import Any
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-import chromadb
-from chromadb.utils import embedding_functions
 from openai import OpenAI
 
 MODEL = os.environ.get("MODEL", "qwen2.5:3b")
@@ -60,10 +59,26 @@ def chunk_doc(text: str) -> list[str]:
     return [s.strip() for s in sections if s.strip()]
 
 
-def build_kb(doc: str) -> Any:
-    client = chromadb.EphemeralClient()
-    embed_fn = embedding_functions.SentenceTransformerEmbeddingFunction(model_name=EMBED_MODEL)
-    collection = client.get_or_create_collection(name="knowledge_base", embedding_function=embed_fn)
+def build_kb(
+    doc: str,
+    *,
+    client: Any = None,
+    embedding_function: Any = None,
+    collection_name: str | None = None,
+) -> Any:
+    if client is None:
+        import chromadb
+        client = chromadb.EphemeralClient()
+    if embedding_function is None:
+        from chromadb.utils import embedding_functions
+        embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
+            model_name=EMBED_MODEL,
+        )
+    collection_name = collection_name or f"knowledge_base_{uuid.uuid4().hex[:8]}"
+    collection = client.get_or_create_collection(
+        name=collection_name,
+        embedding_function=embedding_function,
+    )
     chunks = chunk_doc(doc)
     collection.add(
         ids=[f"chunk_{i}" for i in range(len(chunks))],
@@ -96,9 +111,15 @@ Answer:"""
     return resp.choices[0].message.content or ""
 
 
-def rag(query: str, doc: str = KB_DOC, llm: Any = None, top_k: int = 2) -> dict:
+def rag(
+    query: str,
+    doc: str = KB_DOC,
+    llm: Any = None,
+    top_k: int = 2,
+    collection: Any = None,
+) -> dict:
     """Full RAG pipeline."""
-    collection = build_kb(doc)
+    collection = collection or build_kb(doc)
     contexts = retrieve(collection, query, top_k=top_k)
     answer = generate(query, contexts, llm=llm)
     return {"query": query, "contexts": contexts, "answer": answer}
@@ -116,8 +137,9 @@ if __name__ == "__main__":
         print(f"   contexts retrieved: {len(result['contexts'])}")
         print(f"   answer: {result['answer']}")
 
-    # Sanity: vacation query should retrieve the vacation section
+    # === 自我驗證 ===
     result = rag("How many vacation days do I get?")
     assert any("15 days" in c for c in result["contexts"]), \
         f"預期 retrieve 到含 15 days 的 chunk、得到 {result['contexts']}"
+    assert result["answer"], "模型應回傳文字答案"
     print("\n✅ 練習 4 通過 — 完整 RAG pipeline 跑通、$0/run（using Ollama {MODEL})")
