@@ -118,7 +118,7 @@
         "tag": "v1.48.0",
         "published_at": "2026-08-27T19:12:05Z"
       },
-      "reference_count": 12,
+      "reference_count": 15,
       "sources": [
         "branches/for-developer.en.md",
         "branches/for-developer.md",
@@ -126,6 +126,9 @@
         "resources/cli-agents-guide.en.md",
         "resources/cli-agents-guide.md",
         "resources/cli-agents-guide.zh-Hans.md",
+        "resources/setup-guide.en.md",
+        "resources/setup-guide.md",
+        "resources/setup-guide.zh-Hans.md",
         "tracks/cli/A1-cli-intro.en.md",
         "tracks/cli/A1-cli-intro.md",
         "tracks/cli/A1-cli-intro.zh-Hans.md"
@@ -5032,14 +5035,11 @@
         "tag": "v3.54.0",
         "published_at": "2026-05-15T17:52:24Z"
       },
-      "reference_count": 6,
+      "reference_count": 3,
       "sources": [
         "branches/for-developer.en.md",
         "branches/for-developer.md",
-        "branches/for-developer.zh-Hans.md",
-        "resources/setup-guide.en.md",
-        "resources/setup-guide.md",
-        "resources/setup-guide.zh-Hans.md"
+        "branches/for-developer.zh-Hans.md"
       ]
     },
     "run-llama/llama_index": {
