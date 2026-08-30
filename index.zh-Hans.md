@@ -21,7 +21,7 @@ hide:
 </div>
 
 <div class="aaz-stats" markdown>
-<div class="aaz-stat"><span class="aaz-num">8</span><span class="aaz-lbl">阶段</span></div>
+<div class="aaz-stat"><span class="aaz-num">10</span><span class="aaz-lbl">学习站</span></div>
 <div class="aaz-stat"><span class="aaz-num">精选</span><span class="aaz-lbl">项目</span></div>
 <div class="aaz-stat"><span class="aaz-num">动手</span><span class="aaz-lbl">练习</span></div>
 <div class="aaz-stat"><span class="aaz-num">3</span><span class="aaz-lbl">语言</span></div>
@@ -49,9 +49,17 @@ hide:
 
 </div>
 
-## 8 个阶段,循序渐进
+## 从 Stage 0 到 Stage 8，另有 Stage 7.5 阅读站
 
 <div class="grid cards" markdown>
+
+-   :material-school-outline:{ .lg .middle } __Stage 0 — 基础准备__
+
+    ---
+
+    先确认 Python、Git、API 是否准备好；会了就跳过。
+
+    [:octicons-arrow-right-24: 进入](stages/00-foundations.zh-Hans.md)
 
 -   :material-message-text:{ .lg .middle } __Stage 1 — LLM 基础__
 
@@ -108,6 +116,14 @@ hide:
     把 loop、workflow graph、harness 与多 agent 协作做得稳定。
 
     [:octicons-arrow-right-24: 进入](stages/07-multi-agent-production.zh-Hans.md)
+
+-   :material-book-open-page-variant:{ .lg .middle } __Stage 7.5 — 进阶概念阅读站__
+
+    ---
+
+    一次挑一个进阶概念，判断系统是否真的需要。
+
+    [:octicons-arrow-right-24: 进入](stages/07.5-advanced-agentic-concepts.zh-Hans.md)
 
 -   :material-power-plug:{ .lg .middle } __Stage 8 — Agent 界面__
 

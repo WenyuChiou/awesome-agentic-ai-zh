@@ -27,6 +27,21 @@ before review instead of relying on memory.
 Install its pinned local dependencies with
 `pip install --require-hashes -r scripts/requirements-reader-ux.txt`.
 
+## Public entry-route contract
+
+`scripts/test_site_route_coherence.py` now treats the README and docs landing page as part of the
+curriculum, not decoration. The trilingual README must name eight topic stages plus the Stage 0
+readiness check and Stage 7.5 reading stop, show outcome-first route tables, and keep all duration
+figures inside one closed time-estimate disclosure. The test blocks the old stage-count shorthand,
+fixed frontier year windows, approximate code-line claims, and the old blank-file rewrite exercise.
+
+Each landing page must show ten cards in order from Stage 0 through Stage 8, including Stage 7.5.
+The banner trio must be three distinct PNG files on the same `1672×941` canvas and remain under
+2 MB each. The reproducibility contract records Track A as A1 → A2 → Stage 5 → A3 → Stage 8 and
+Track B as 3 → 4 → Stage 5 → 6 → 7 → 7.5 → Stage 8 before the role paths. It forbids mutable
+duration, price, version, year, and stars metrics. Human review still checks text rendering,
+alignment, and arrow／icon overlap.
+
 ## Historical T3+ baseline (on `main`)
 
 | Batch | What | How verified | Bugs fixed |
@@ -59,7 +74,7 @@ Recognized late in the session: every `starter.py` is a **complete solution**, n
 v1 fix (doc-only, no code rename):
 
 - `docs/HOW_TO_USE.md` — full active-vs-passive learning method (~200 lines, zh-TW)
-- 22 exercise READMEs — 🎓 callout pointing to `mv starter.py starter_reference.py` shortcut + link to HOW_TO_USE
+- 22 exercise READMEs — 🎓 callout once taught a rename-and-rewrite shortcut and linked to HOW_TO_USE; the 2026-08-30 reader-UX layer replaced that shortcut with run → change one thing → retest
 - Main README × 3 langs — surface the meta-instruction at the top-level
 
 Shipped in commits [`d598e37`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/d598e37) + [`2cf99fe`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2cf99fe).
@@ -73,7 +88,7 @@ Shipped in commits [`d598e37`](https://github.com/WenyuChiou/awesome-agentic-ai-
 3. ~~**Walkthrough Python never executed**~~ — **RESOLVED 2026-08-10**. All 9 python blocks (304 lines) of `walkthroughs/build-first-agent-in-7-steps.md` were extracted to the filenames the doc names and executed in a clean venv on Python 3.14, with `Anthropic` and `requests` mocked (no API key, no spend): Stage 1-6 (6 blocks) plus all of Stage 7 (7.1 `eval_provider`, 7.2 `step7_observability`, 7.3 `main.py`). **Four** real defects were found and fixed in all three locales, plus two zh-Hans blocks that did not even parse (`
 ` expanded into real newlines, so Stage 1 and `reflect` raised `unterminated f-string literal` — a Simplified-Chinese reader's very first script crashed): Stage 6's vector memory stored nothing at all (empty-DB early return meant `store_paper` was never reached, compounded by a hardcoded `"..."` id that `collection.add()` silently ignores); `compare_with_memory`'s `comparison` was dropped because `State` never declared it; and `import step2_paper_summary` issued a billed API call at module level, which every later stage inherited. Post-fix, measured: memory count goes 1→2→3, `comparison` survives in state, and the four imported modules make 0 API calls; and Stage 6 now stores each paper's own summary rather than three byte-identical `[Reviewer verdict: PASS]` strings — the `compare` node read `messages[-1]`, which is `reflect`'s verdict, not the summary. Completed 2026-08-10: 7.2's import path was corrected (`observe` moved to the top-level package in langfuse **3.0**, not 4.x — verified by installing 2.60.10, 3.0.0 and 4.14.2; only 2.x has `langfuse.decorators`. `@observe(name=…)` itself is unchanged across all four, signature checked) and 7.3 was run with fastapi 0.141.1 — `TestClient` gets HTTP 200 and a `{'summary': …}` body from `POST /summarize`, and HTTP 422 on a missing field. **Still open**: end-to-end output quality against a live API key is untested — every run so far has mocked the model.
 
-4. **starter.py = complete solution pedagogy gap** — flagged in `docs/HOW_TO_USE.md`. v2 would split into `starter_template.py` (TODO) + `starter_reference.py` (solution); v1 is doc-only meta-instruction.
+4. ~~**Complete-solution pedagogy gap**~~ — **RESOLVED 2026-08-30**. `docs/HOW_TO_USE.md` and 39 trilingual Stage 1–4 exercise READMEs now teach one small loop: run the provided starter, change exactly one thing, rerun the existing tests, then fix or undo that one change if it fails. The maintained examples stay directly runnable; learners are not asked to rename files or rebuild the whole solution before they can start.
 
 5. ~~**Trilingual mirror of 🎓 callout incomplete**~~ — **RESOLVED 2026-08-02**. The 🎓 callout and the 📚 deeper-material block are now in the `.en.md` + `.zh-Hans.md` mirrors of **21 of the 22** exercise READMEs (202 blockquote lines). The 22nd, `examples/stage-1/04-cross-provider`, is **not a callout gap** — it is the only example folder with **no mirror files at all**, so it needs a full trilingual translation first, not a callout port. A blocking CI gate (`scripts/check-mirror-parity.py`) now stops this class of gap reappearing.
 
@@ -349,12 +364,7 @@ in any locale.
 
 ## v2 path (deferred)
 
-Per `docs/HOW_TO_USE.md` "給維護者：v2 path":
-
-- Split each `starter.py` → `starter_template.py` (TODO skeleton) + `starter_reference.py` (solution)
-- Make `test.py` behavioral (input → output contract) instead of implementation-bound
-- ~20 folders × 3 file changes = ~60 file changes
-- Probably needs its own session
+The project-wide learner workflow is: run the provided starter first, change exactly one small thing, rerun the existing test command(s), and undo or fix that one change if the tests fail. Learner-facing exercise READMEs must not instruct renaming files or rewriting the whole solution. Keep the current runnable starter and test files as the maintained examples.
 
 ## Historical: what was on the unverified branch
 

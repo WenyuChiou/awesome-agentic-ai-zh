@@ -29,13 +29,13 @@ MIT
 ## Variant 2 — GitHub PR (200-300 words)
 
 **Target file**: `README.md` — `## Tutorials` section
-**PR title**: Add awesome-agentic-ai-zh to Tutorials — trilingual 8-stage learning roadmap
+**PR title**: Add awesome-agentic-ai-zh to Tutorials — trilingual 10-stop learning roadmap
 
 **Diff** (insert in alphabetical or chronological position within `## Tutorials`):
 
 ```diff
 + - [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
-+   — Trilingual (zh-TW · zh-Hans · en) 8-stage learning roadmap. Stage 5.2 is
++   — Trilingual (zh-TW · zh-Hans · en) 10-stop learning roadmap. Stage 5.2 is
 +   a dedicated walkthrough of MCP (concept → first install → writing your
 +   own server), with prerequisites and safe first steps. The catalog groups
 +   official and community integrations by reader task, status, and permissions.
@@ -72,7 +72,7 @@ Popularity and traffic totals are intentionally omitted because they drift. CI r
 
 ```
 @punkpeye — your awesome-mcp-servers list is already in our README's
-"Related projects". I run awesome-agentic-ai-zh: a trilingual 8-stage
+"Related projects". I run awesome-agentic-ai-zh: a trilingual 10-stop
 learning roadmap with Stage 5.2 dedicated to MCP (walkthrough → install →
 writing your own server, with cost/time estimates).
 

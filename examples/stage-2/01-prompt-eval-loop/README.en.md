@@ -31,7 +31,7 @@ python test_anthropic.py
 
 Neither test needs an API key or connects to a model. Seeing `4/4 passed` and `2/2 passed` means you are done.
 
-> 🎓 **Learning mode**: `starter.py` is the complete answer. To really learn it, rename it to `starter_reference.py`, look only at the function names, rewrite your own version, and use the tests to check it. See [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md) for the full method.
+> 🎓 **Learning mode**: First run the provided `starter.py` (`python starter.py`), then change exactly one small thing and run the existing tests again: `python test.py` and `python test_anthropic.py`. If a test fails, undo or fix that one change and try again. You do not need to rename the file or rewrite the whole solution. See [`docs/HOW_TO_USE.md`](../../../docs/HOW_TO_USE.md) for the full method.
 
 <details markdown="1">
 <summary>Optional: run a real model with local Ollama (Path A)</summary>

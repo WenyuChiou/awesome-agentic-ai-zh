@@ -1,158 +1,89 @@
-# How to use this curriculum — 主動 vs 被動學習
+# How to use this curriculum — 每次只改一件事
 
-> 給每個動手練習 folder 的 meta-instruction。如果你跳過這一頁、會把這套教材當 reference book 讀完、學到大概 60%。讀完這一頁、用對方法、學到 100%。
+這份學習地圖不是考試。你不用先抄一份空白檔案，也不用把完整程式重新默寫一次。
+最簡單的學法是：**先跑起來，再改一件小事，最後用測試看差別。**
 
-## 真實問題
+## 先認識 `starter.py`
 
-每個練習 folder（譬如 `examples/stage-3/03-react-from-scratch/`）裡都有一個 **`starter.py`**——它**長得像 starter、其實是完整解答**。
+每個練習 folder 裡的 **`starter.py`** 是一份可以直接執行的起點。它不是空白作業紙，
+也不是只能偷看的答案。它的工作是先給你一個「真的會動」的小系統，讓你有東西可以改。
 
-如果你：
+你第一次打開一題時，只做這些事：
 
-```bash
-git clone ... && cd examples/stage-3/03-react-from-scratch
-cat starter.py             # 看完整解答
-python starter.py          # 跑通
-python test.py             # 全 pass
-```
-
-你會以為「學會了」、其實**沒寫過一行 code**。
-
-這是這份教材的最大設計缺陷。下面講怎麼繞過它。
-
-## 兩種學習模式
-
-### 🟢 主動模式（推薦、學到 100%）
-
-**步驟**：
-
-```bash
-cd examples/stage-3/03-react-from-scratch/
-
-# 1. 讀 README、了解這題在做什麼、預期 input / output
-cat README.md
-
-# 2. 把 starter.py 改名（藏起來、等下對照用）
-mv starter.py starter_reference.py
-
-# 3. 看 starter_reference.py 的「imports + function signatures」、不看 function body
-head -50 starter_reference.py
-
-# 4. 自己寫一個新的 starter.py、function body 自己想
-$EDITOR starter.py
-
-# 5. 跑 test.py、看自己寫的能不能 pass
+```powershell
+cd examples/stage-3/03-react-from-scratch
 python test.py
-
-# 6. 卡住超過 20 分鐘？才打開 starter_reference.py 對照
-diff starter.py starter_reference.py
-
-# 7. 寫完一輪後、看 README 的 punchline + common pitfalls、跟你的 trial 對照
+python starter.py
 ```
 
-**重點**：
+如果這題另有 `test_anthropic.py` 或 README 指定的離線測試，也照 README 的第一個動作執行。
+先確認原版能跑，再開始改；這樣出錯時，你知道問題來自剛剛那個小改動。
 
-- **看 signature、不看 body**。imports / TOOLS_SPEC / function names + arg types 可以看；裡面怎麼實作要自己想。
-- **卡 20 分鐘是健康的**。卡 1 小時也健康。卡 3 小時就回去看 reference、然後**默寫一遍**。
-- **test 通過 ≠ 學會**。test 通過代表 logic 對；學會代表你**講得出**為什麼這 13 行 ReAct loop 必要、為什麼 `tool_call_id` 要配對、為什麼要 `max_iter`。
+## 六步學習循環
 
-### 🟡 被動模式（reference book、學到 60%）
+1. **看成果**：先讀 README 的「你會做出什麼」和成功條件。
+2. **直接執行**：複製第一組命令，讓原版測試通過。
+3. **選一個小改動**：只改一個輸入、規則、工具或停止條件。
+4. **先猜結果**：用一句話寫下「我覺得會發生什麼」。
+5. **再跑測試**：看實際結果是否和猜的一樣；不一樣就讀錯誤訊息。
+6. **說出原因**：用自己的話解釋這一行為什麼會改變系統。
 
-**步驟**：
+這個循環可以一直重複。一次只改一件事，像一次只換一塊積木；倒了時才知道是哪一塊造成的。
 
-```bash
-cd examples/stage-3/03-react-from-scratch/
-cat README.md
-cat starter.py        # 讀完整解答、理解每一行
-python test.py        # 確認跑得起來
-```
+## 可以改什麼？
 
-**何時用**：
+先選最小、可回復的變化：
 
-- 你**之前寫過 ReAct loop**、現在只是想看本 curriculum 是怎麼寫的、做 cross-reference
-- 你在**找 pitfall reference**（譬如 production 出 bug、想看 curriculum 提過沒）
-- 你是**講課老師**、要快速看完整套教材然後挑題目給學生
+- 把一個測試輸入換成空字串、很長的文字或未知值。
+- 新增一個工具參數，然後補一個會失敗的測試。
+- 把 `max_iter` 調小，看看 Agent Loop 怎麼停止。
+- 暫時拿掉一個欄位，觀察 schema 驗證會回報什麼。
+- 改一條 prompt 規則，再用同一組案例比較前後結果。
 
-被動模式適合**已經會了**的人複習、不適合**沒寫過**的人入門。
+不要一次換模型、改 prompt、加工具又改測試。四件事一起動，失敗時很難知道原因。
 
-## 為什麼這份教材的 starter.py 是完整解答（不是 TODO skeleton）
+## 每題做完問自己三句話
 
-短答：**v1 階段、為了快速 ship 完整可跑版本**。
+1. **為什麼要這樣寫？** 例如 Agent Loop 為什麼要把 tool result 放回 messages？
+2. **拿掉它會怎樣？** 例如沒有 `max_iter`、schema 或 approval gate 會發生什麼？
+3. **真實環境還缺什麼？** 通常要再補 auth、eval、observability、retry 或人工核准。
 
-長答：完整 starter.py 有 3 個好處（給維護者）：
+測試通過只表示目前檢查的行為正確。你能回答這三題，才表示你知道系統為什麼會動。
 
-1. **test 直接 pass**——確認 framework 整合沒漏東西
-2. **不會 outdated**——隨 framework 升級可以馬上 fix（不必同步維護 template）
-3. **新手 onboard 快**——把 repo clone 下來就能跑、降低裝環境 friction
+## 章節怎麼接
 
-但對學習者來講有 1 個大缺點：**容易被誤用成抄答案**。所以這份 HOW_TO_USE 文件存在、提醒你**自己改名、自己重寫**。
+- **Stage 3** 先學 Agent Loop：模型叫工具、工具回結果、模型再決定下一步。
+- **Stage 4（Workflow Graph／Agent Framework）**：把多個步驟、分支與人工核准接起來。
+- **Stage 6** 學 RAG 與 Memory：讓系統找到證據，並保存真的需要保留的狀態。
+- **Stage 7** 學 production control：用 Harness、Eval、觀測與復原讓長任務更可靠。
 
-**v2 規劃**（未開始）：把 starter.py 分裂成 `starter_template.py`（TODO skeleton）+ `starter_reference.py`（完整解答）、test 預設打 template、學生 fill in、卡住才看 reference。這需要重做 ~20 個 folder、預計 v2 在 [`docs/TESTING_PLAN.md`](TESTING_PLAN.md) 之後排期。
+不用等到每題都完美才往下走。如果下一章的第一個核心詞看不懂，就回上一章挑一題再做一次。
 
-## 每個 stage 怎麼用這份教材
+<details markdown="1">
+<summary>⏱️ 查看練習時間安排</summary>
 
-| Stage | 主動模式時間預算 | 被動模式時間預算 |
-|---|---|---|
-| Stage 3（Agent Loop） | 5-8 hr（每練習 1-1.5 hr） | 1-2 hr（讀過去） |
-| Stage 4（Workflow Graph／Agent Framework） | 8-12 hr（每練習 2 hr） | 2-3 hr |
-| Stage 6（RAG + memory） | 8-12 hr | 2-3 hr |
-| Stage 7（production） | 10-15 hr | 3-4 hr |
+不要用固定小時判斷自己學得好不好。先留一個不被打斷的小時，完成一輪「執行 → 小改動 →
+測試 → 解釋」。如果一題太大，就只做第一個成功條件；下次再接著做。
 
-**主動模式時間是被動的 4-5 倍**——這就是「卡住 + 修通」的時間成本、也是真學會的成本。如果你只有 1 週時間、選 1-2 個你覺得最重要的練習走**主動模式**、其他**被動模式**過。
+時間很少時，每個 Stage 先選一題完整走完，其餘題目先看成果與成功條件。完整做完一題，
+通常比匆忙讀過五題更有用。
 
-## 我自己（curriculum 作者）跑驗證踩到的 bug
+</details>
 
-跑 verification（2026-05-13）發現我寫的 starter / test **本身有 6 個 bug**：
+## 如果卡住
 
-1. **operator precedence** in test (`and` 比 `or` 緊)
-2. **ChromaDB collection name length** (Chroma 1.0 break、'kb' 太短)
-3. **EphemeralClient state leak** 跨 test fixture
-4. **i18n key mismatch**（test 用中文 query、starter db 用英文 key）
-5. **Smolagents `@tool` 要求 Google-style docstring `Args:`** 區塊
-6. **Python 3.14 + tiktoken/regex 無 wheel**（CrewAI 在 3.14 裝不起來）
+依序做：
 
-**這對你的意義**：當你做主動模式、卡住時，**有可能不是你錯、是教材有 bug**。提 issue 上來、我會修。Bug 修在 commit [50c3bf8](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/50c3bf8)。
+1. 看終端機最上面第一個真正的錯誤，不要只看最後一行。
+2. 用 `git diff` 看自己剛改了什麼；先手動還原最後一個小改動，再跑一次測試。
+3. 讀 README 的成功條件、常見問題與該題測試名稱。
+4. Tool calling 問題可看 `examples/stage-5/tool-calling-tutor/`。
+5. 還是不懂就開 issue，附上使用的命令、錯誤訊息、環境版本與最小 diff；不要貼 API key。
 
-## 練習 checkpoint（每練習做完問自己這 3 題）
+卡住不表示你不會。它只表示「預期」和「實際結果」不同；把差別縮小到一個改動，就能繼續查。
 
-不要光看 starter.py 過去、問自己：
+## 給維護者
 
-1. **「為什麼」**：這份 code 為什麼這樣寫、不那樣寫？（譬如 ReAct loop 為什麼必須把 assistant response 接回 messages？沒接會怎樣？）
-2. **「拿掉 X 會怎樣」**：拿掉 `max_iter`、拿掉 `tool_call_id`、拿掉 `cache_control`，runtime 會出什麼問題？
-3. **「production 怎麼改」**：這份 demo code 上 production 還缺什麼？（提示：observability / eval / retry / auth 通常都缺）
-
-回答得出來 = 真學會了。回答不出來 = 只是讀過。
-
-## 進入條件：每個 Stage 開始前自我檢查
-
-不要直接從 Stage 4 開始。Stage 3 先教你 loop 怎麼轉；Stage 4 才用 framework 把多個步驟接成 workflow graph。除非 Stage 3 的 6 個練習你**每個都用主動模式寫過 1 次**。
-
-- **Stage 4** 前：必須能不查文件寫出 13 行 ReAct loop（Stage 3 練習 3）
-- **Stage 6** 前：必須能講出為什麼 schema 要寫 enum + required（Stage 3 練習 6）
-- **Stage 7** 前：必須會用 mock 寫 LLM unit test（Stage 3 練習 5 + 任何 Stage 4）
-
-沒過 checkpoint 直接跳級、後面會卡住、回頭重做更慢。
-
-## 如果你卡住
-
-順序：
-
-1. **再讀一次 README 的 pitfall + punchline** — 80% 的卡住來自漏看某個關鍵設計
-2. **打開 `examples/stage-5/tool-calling-tutor/` skill**（裝進 Claude Code）— tool calling 相關的卡住、4-symptom triage 帶你診斷
-3. **看 `starter_reference.py`**（你改名藏起來的那個）— 對照你寫的差別、找出哪裡邏輯漏
-4. **看 GitHub issue** 有沒有人問過
-5. **開 issue** — 帶上你的 code + 你看到的錯誤、我會回
-
-絕對不要：抄 `starter_reference.py` 就走。沒寫過 = 沒學會。
-
----
-
-## 給維護者：v2 path
-
-v2 把 starter.py 拆成 template + reference 的計畫：
-
-- 每個 folder 多 2 個檔案：`starter_template.py`（TODO skeleton）+ `starter_reference.py`（answer）
-- `test.py` 預設打 `starter_template.py`、有 env var 切到 reference 對照
-- README 多 1 段 "Learning mode" 解釋
-- 約 20 個 folder × 3 file changes = 60 個檔案
-
-如果有人想接 v2、歡迎 PR。對應 issue / branch 等決定後開出來。
+每個練習的可見入口要提供可直接複製的第一個動作、成功條件與「只改一件事」。不要再要求
+讀者建立空白文字檔、改名藏起完整範例或整份重寫。若未來新增 TODO template，它必須是
+額外選項；現有可執行 starter 與離線測試仍要保留。

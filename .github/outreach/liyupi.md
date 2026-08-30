@@ -1,6 +1,6 @@
 # Outreach: liyupi/ai-guide
 
-> ⚠️ **Send content is now canonical in [`_send-day-packages.md`](_send-day-packages.md)** (package D — 8 stages / curated resources). This file is kept for positioning rationale; do not paste its older entry/stats blocks directly.
+> ⚠️ **Send content is now canonical in [`_send-day-packages.md`](_send-day-packages.md)** (package D — 10 learning stops / curated resources). This file is kept for positioning rationale; do not paste its older entry/stats blocks directly.
 
 > **Status**: not contacted · **Channel**: GitHub PR
 > **Primary lang**: zh-Hans
@@ -33,7 +33,7 @@
 
 ```diff
 + - [`WenyuChiou/awesome-agentic-ai-zh`](https://github.com/WenyuChiou/awesome-agentic-ai-zh)
-+   — 8 阶段三语学习地图（zh-TW canonical / zh-Hans / en）；从 Stage 0 基础到
++   — 10 站三语学习地图（8 个主题 Stage + Stage 0 准备关 + Stage 7.5 阅读站；zh-TW canonical / zh-Hans / en）；从 Stage 0 基础到
 +     Stage 8 Agent Interfaces，每阶段附预估时程 + 入门条件 + 分组整理的 curated
 +     projects。MIT，跟 ai-guide 互补：ai-guide 找 project、awesome-agentic-ai-zh
 +     找学习顺序。

@@ -21,7 +21,7 @@ hide:
 </div>
 
 <div class="aaz-stats" markdown>
-<div class="aaz-stat"><span class="aaz-num">8</span><span class="aaz-lbl">stages</span></div>
+<div class="aaz-stat"><span class="aaz-num">10</span><span class="aaz-lbl">learning stops</span></div>
 <div class="aaz-stat"><span class="aaz-num">curated</span><span class="aaz-lbl">projects</span></div>
 <div class="aaz-stat"><span class="aaz-num">hands-on</span><span class="aaz-lbl">exercises</span></div>
 <div class="aaz-stat"><span class="aaz-num">3</span><span class="aaz-lbl">languages</span></div>
@@ -49,9 +49,17 @@ hide:
 
 </div>
 
-## Eight stages, step by step
+## Stage 0 through Stage 8, plus the Stage 7.5 reading stop
 
 <div class="grid cards" markdown>
+
+-   :material-school-outline:{ .lg .middle } __Stage 0 — Foundations__
+
+    ---
+
+    Check Python, Git, and API basics first; skip this stop if you are ready.
+
+    [:octicons-arrow-right-24: Open](stages/00-foundations.en.md)
 
 -   :material-message-text:{ .lg .middle } __Stage 1 — LLM basics__
 
@@ -108,6 +116,14 @@ hide:
     Make loops, workflow graphs, harnesses, and multi-agent work reliable.
 
     [:octicons-arrow-right-24: Open](stages/07-multi-agent-production.en.md)
+
+-   :material-book-open-page-variant:{ .lg .middle } __Stage 7.5 — Advanced reading stop__
+
+    ---
+
+    Pick one advanced idea at a time and decide whether your system needs it.
+
+    [:octicons-arrow-right-24: Open](stages/07.5-advanced-agentic-concepts.en.md)
 
 -   :material-power-plug:{ .lg .middle } __Stage 8 — Agent interfaces__
 

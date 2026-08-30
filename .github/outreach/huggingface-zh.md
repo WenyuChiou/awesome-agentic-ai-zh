@@ -71,7 +71,7 @@ and HF model cards).
 ```
 Hi <name>,
 
-I built awesome-agentic-ai-zh, a trilingual (zh-TW / zh-Hans / en) 8-stage
+I built awesome-agentic-ai-zh, a trilingual (zh-TW / zh-Hans / en) 10-stop
 learning roadmap for agentic AI — covers foundations through Stage 7
 multi-agent production and Stage 8 Agent Interfaces, with curated projects
 and cost/time estimates per stage. Popularity metrics are intentionally omitted.
