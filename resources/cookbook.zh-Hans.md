@@ -2,7 +2,7 @@
 
 > [繁體中文](./cookbook.md) | **简体中文** | [English](./cookbook.en.md)
 
-<!-- freshness: canonical=resources/cookbook.md; verified_on=2026-08-29; scope=skills,mcp,documents,gemini-notebook,zotero,local-runtime,cli-tools; max_age_days=90 -->
+<!-- freshness: canonical=resources/cookbook.md; verified_on=2026-08-30; scope=skills,mcp,documents,gemini-notebook,zotero,local-runtime,cli-tools; max_age_days=90 -->
 
 这份 Cookbook 不要求你一次读完。先选一个想做的成果，复制它的第一个动作；需要更多步骤时，再打开选单。
 
@@ -349,13 +349,13 @@ ollama pull gemma4:e4b
 | **Claude Code** | 使用 Claude 的 Coding Agent | 官方路径不能直接把模型切成 Ollama |
 
 <details markdown="1">
-<summary>展开主要路径：OpenCode 2 beta＋Ollama</summary>
+<summary>展开主要路径：OpenCode＋Ollama</summary>
 
-OpenCode 2 目前仍是 beta，binary 叫 `opencode2`，不会覆盖旧版 `opencode`：
+OpenCode 是会读文件、改文件和跑指令的 Coding Agent；Ollama 是在本地运行模型的 runtime。先安装 OpenCode，再用 `opencode` 启动：
 
 ```bash
-npm install -g @opencode-ai/cli@beta
-opencode2
+curl -fsSL https://opencode.ai/install | bash
+opencode
 ```
 
 OpenCode 会自动寻找 `http://127.0.0.1:11434` 的 Ollama。进入 TUI 后选 `ollama/gemma4:e4b`，再到一个已经用 Git 管理的练习 repo，贴上：
@@ -403,7 +403,7 @@ aider --model ollama_chat/gemma4:e4b
 
 这些是上面指令的事实来源，不需要一次读完；做哪份 recipe，就先读那一列。
 
-<small>资料核查：2026-08-29 UTC</small>
+<small>资料核查：2026-08-30 UTC</small>
 
 | 来源 | 先看什么 | 编辑评分 |
 |---|---|---|
@@ -412,7 +412,7 @@ aider --model ollama_chat/gemma4:e4b
 | [Anthropic Skills](https://github.com/anthropics/skills) | Skill 结构与文件 skill 的授权 | ⭐⭐⭐⭐⭐ |
 | [Google — NotebookLM is now Gemini Notebook](https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/) | 产品新名称与延续关系 | ⭐⭐⭐⭐⭐ |
 | [Zotero Local API](https://www.zotero.org/support/dev/web_api/v3/local_api) | 本地 API、写入授权与撤销 | ⭐⭐⭐⭐⭐ |
-| [OpenCode 2](https://opencode.ai/v2/docs) | beta 状态、`opencode2` 与本地模型 discovery | ⭐⭐⭐⭐⭐ |
+| [OpenCode](https://opencode.ai/docs/) | 安装、`opencode` 指令与本地模型连接 | ⭐⭐⭐⭐⭐ |
 | [Aider＋Ollama](https://aider.chat/docs/llms/ollama.html) | 正确安装与 `ollama_chat/` prefix | ⭐⭐⭐⭐⭐ |
 | [Ollama — Gemma 4](https://ollama.com/library/gemma4) | `e2b`／`e4b` tag 与硬体选择 | ⭐⭐⭐⭐⭐ |
 
@@ -444,7 +444,7 @@ aider --model ollama_chat/gemma4:e4b
     <tr><td><a href="https://github.com/MuiseDestiny/zotero-gpt">zotero-gpt</a></td><td>在 Zotero 内阅读时对话</td><td>plugin 路径和外部 Agent 不同</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">本地／CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>连接本地或云端模型修改程序</td><td>OpenCode 2 仍是 beta</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">本地／CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>连接本地或云端模型修改程序</td><td>先检查 provider 和 permission 设置</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/earendil-works/pi">Pi</a></td><td>可扩展的 coding harness／CLI</td><td>默认没有内置权限隔离</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/Aider-AI/aider">Aider</a></td><td>以 Git 为中心结对编程</td><td>小模型的编码质量可能不足</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>

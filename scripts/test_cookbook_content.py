@@ -46,13 +46,13 @@ CORE_DEFINITION_LABELS = {
 
 RECIPE_PREFIXES = tuple(f"## {number}." for number in range(1, 7))
 REQUIRED_LITERALS = (
-    "2026-08-29",
+    "2026-08-30",
     "from mcp.server import MCPServer",
     "Gemini Notebook",
     "http://localhost:23119/api/",
     "gemma4:e4b",
-    "@opencode-ai/cli@beta",
-    "opencode2",
+    "curl -fsSL https://opencode.ai/install | bash",
+    "opencode",
     "ollama_chat/gemma4:e4b",
     "OpenRouter",
     "Pi",
@@ -151,7 +151,7 @@ def test_visible_required_reading_and_project_ratings() -> None:
 def test_freshness_marker_is_trilingual_and_canonical() -> None:
     marker = (
         "<!-- freshness: canonical=resources/cookbook.md; "
-        "verified_on=2026-08-29; "
+            "verified_on=2026-08-30; "
         "scope=skills,mcp,documents,gemini-notebook,zotero,local-runtime,cli-tools; "
         "max_age_days=90 -->"
     )

@@ -166,7 +166,9 @@ def test_example_indexes_use_progressive_and_measurable_estimates() -> None:
         text = path.read_text(encoding="utf-8")
         assert text.count('<details markdown="1">') >= 2
         assert '<details markdown="1" open>' not in text
-        assert re.search(r"claude-sonnet-5.*\| \$2 \| \$10 \|", text)
+        assert "9.6 GB" in text
+        assert "3.4 GB" in text
+        assert "claude-sonnet-5" not in text
         assert all(value not in text for value in unsupported_totals), path
 
     for path in (EXAMPLE_INDEXES[0], EXAMPLE_INDEXES[2]):

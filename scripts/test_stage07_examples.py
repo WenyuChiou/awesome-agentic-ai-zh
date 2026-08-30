@@ -131,7 +131,7 @@ def test_shared_model_guide_separates_stage7_from_function_calling() -> None:
     for path, guide in zip(guide_paths, guides):
         assert "qwen2.5:3b" in guide, path
         assert OLLAMA_MODEL in guide, path
-        assert "2026-08-28" in guide, path
+        assert "2026-08-30" in guide, path
         assert not re.search(r"Stage\s*3\+", guide), path
         assert "API cost is $0" not in guide
         assert "API 成本是 $0" not in guide
@@ -139,8 +139,10 @@ def test_shared_model_guide_separates_stage7_from_function_calling() -> None:
         assert "隐私敏感资料 OK" not in guide
     assert all(guide.count(OLLAMA_MODEL) == guides[0].count(OLLAMA_MODEL) for guide in guides[1:])
     for path, guide in zip(guide_paths, guides):
-        llama_row = next(line for line in guide.splitlines() if "`llama3.2:3b`" in line)
-        assert "| 3–6 |" in llama_row, path
+        qwen25_row = next(line for line in guide.splitlines() if "`qwen2.5:3b`" in line and "1.9 GB" in line)
+        qwen35_row = next(line for line in guide.splitlines() if "`qwen3.5:4b`" in line and "3.4 GB" in line)
+        assert "3–6" in qwen25_row, path
+        assert "Stage 7" in qwen35_row, path
 
     repo_contract = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
     assert "Stages 3–6" in repo_contract

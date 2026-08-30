@@ -60,7 +60,7 @@ README、PROGRESS、CAPSTONE、章節頁首、章末下一站與路線圖必須�
 
 ### A1 的固定閱讀形狀
 
-- 第一遍先用五個可見核心詞分清 **LLM**、**Provider API**、**Router**、**Coding agent** 與 **Local runtime**。OpenRouter 放在 Router；OpenCode V2 與 Pi 放在 coding agent／harness；Ollama 放在 local runtime。
+- 第一遍先用五個可見核心詞分清 **LLM**、**Provider API**、**Router**、**Coding agent** 與 **Local runtime**。OpenRouter 放在 Router；OpenCode 與 Pi 放在 coding agent／harness；Ollama 放在 local runtime。
 - `📌`、`📚`、`🛠`、`🎯`、`✅` 路標、必修閱讀與 11 筆五星工具表保持可見。時間、帳號、費用與完整步驟預設收合。
 - CLI-1 的第一個請求使用可直接複製的完整 `text` block。CLI-1 至 CLI-4 的標題、anchor 與一句話成果保持可見。
 - 11 筆工具表固定為 `4／5／2` 三組，保留既有五星編輯評分並移除會變動的 GitHub stars 數字。評分是路徑建議，不是總排名。
@@ -264,6 +264,12 @@ README 的必讀入口、精選專案、相關資源與兩條 track 保持可見
 必讀官方起點、五星編輯推薦、API Key 三不規則、`.gitignore` 先於 `.env`、可直接複製的 hello world 與 A–E 深連結保持可見。完整 Web／Desktop／IDE／CLI catalog、其他 Provider、替代安裝、系統條件、排錯、`CLAUDE.md` 與 Skill 完整範例可以收合；7 個 `<details markdown="1">` 全部預設關閉。完整入口表用 `4／4／5／7`、必讀表用 `2／1／1／1`、Provider 表用 `7／1` 的真正 rowgroup 合併分類。
 
 安裝命令、驗證方式、API Key／authentication、Provider 入口與專案狀態使用 90 天 freshness marker。固定價格、免費週期、促銷 credits、沒有來源的「最便宜／最強」與 Node-first 舊安裝路徑不得寫回。這頁的五門選擇表比裝飾性概念圖更直接，所以不為了版面齊全而新增圖片。
+
+### Examples index 與 Agent 工具分類固定結構
+
+`examples/README*` 是可執行範例的入口，不再複製 Stage 1 的完整模型與價格 catalog。固定可見順序為「五個核心詞 → 四個學習目標 → 三份必讀 → 第一個 Mock 命令 → Path A／B／C → 實際資料夾索引 → 三個本機預設 tag → 資料夾契約 → 六筆評分資源 → 完成檢查」。實際資料夾數、Ollama tag 與下載大小由 fact pack 和測試鎖定；環境、費用、Windows 編碼、貢獻與排錯預設收合。必讀、Stage 索引與完整 `2／2／2` 資源表保持可見。
+
+`resources/agent-paradigms*` 用三條獨立軸教工具分類：**Identity** 說工作、**Surface** 說入口、**Deployment** 說位置；不再把 IDE、Terminal、Provider 選擇、Cloud 與 Edge 寫成五個互斥產品型態。OpenCode／Pi 是 Coding Agent／Harness，OpenRouter 是 Router，Ollama 是 Local Runtime；Subagent 是工作分派方式。必讀、Subagent 定義與完整 `5／2／2／3` 評分資源表保持可見；生活情境與部署安全細節可收合。不得凍結 stars、provider 數、VPS／硬體價格、推理上限或「零資料外洩」等絕對承諾。
 
 ### Resource hub 固定結構
 

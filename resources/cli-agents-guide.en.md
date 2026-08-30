@@ -16,7 +16,7 @@ This reference doc organizes 9 terminal CLIs around “what do you want to do no
 <tr><th scope="row">LLM</th><td>Generates text, code, or tool calls</td><td>Claude, GPT, Gemini</td><td>The model does not automatically have access to files on your computer</td></tr>
 <tr><th scope="row">Provider API</th><td>Provides requests, authentication, and billing for one model provider</td><td>Anthropic API, OpenAI API, Gemini API</td><td>An API is not a terminal workbench</td></tr>
 <tr><th scope="row">Router</th><td>Forwards requests to multiple providers</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>A Router does not manage files or command permissions on an agent’s behalf</td></tr>
-<tr><th scope="row">Coding agent / harness</th><td>Reads files, edits, runs commands, and reports results in the terminal</td><td>Claude Code, Codex, OpenCode V2, Pi</td><td>Its approval, sandbox, and project trust settings need separate checking</td></tr>
+<tr><th scope="row">Coding agent / harness</th><td>Reads files, edits, runs commands, and reports results in the terminal</td><td>Claude Code, Codex, OpenCode, Pi</td><td>Its approval, sandbox, and project trust settings need separate checking</td></tr>
 <tr><th scope="row">Local runtime</th><td>Loads and runs a model locally</td><td><a href="https://ollama.com/">Ollama</a></td><td>It can be called by an agent, but it is not a coding agent</td></tr>
 </tbody>
 </table>
@@ -29,7 +29,7 @@ This reference doc organizes 9 terminal CLIs around “what do you want to do no
 </thead>
 <tbody>
 <tr><th scope="row">You already have an account with a model service</th><td>A CLI from that ecosystem, such as Claude Code, Codex, or Gemini CLI</td><td>Sign-in flow, approval, sandbox, and usage page</td></tr>
-<tr><th scope="row">You need to switch providers</th><td>OpenCode V2, goose, Aider, Hermes Agent, or Pi</td><td>Supported endpoints, model IDs, and where API keys are stored</td></tr>
+<tr><th scope="row">You need to switch providers</th><td>OpenCode, goose, Aider, Hermes Agent, or Pi</td><td>Supported endpoints, model IDs, and where API keys are stored</td></tr>
 <tr><th scope="row">You want to route multiple providers through one place</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> paired with an agent</td><td>The actual provider route, data policy, usage, and billing</td></tr>
 <tr><th scope="row">You want to practice locally</th><td><a href="https://ollama.com/">Ollama</a> paired with an agent that supports a compatible API</td><td>Whether the model is local, and whether the agent can still run shell commands / write files</td></tr>
 </tbody>
@@ -37,7 +37,7 @@ This reference doc organizes 9 terminal CLIs around “what do you want to do no
 
 ## 9 CLI tools
 
-The full table is collapsed by default; after expanding it, record the “checked on” date alongside your installed version. Official data checked on: **2026-08-27 UTC**.
+The full table is collapsed by default; after expanding it, record the “checked on” date alongside your installed version. Official data checked on: **2026-08-30 UTC**.
 
 <details markdown="1">
 <summary>Expand installation, authentication, provider, and safety facts for the 9 CLIs</summary>
@@ -53,7 +53,7 @@ The full table is collapsed by default; after expanding it, record the “checke
 <tr><td>Grok Build</td><td>People who want to try xAI’s Grok terminal TUI</td><td>Grok; xAI sign-in or API key</td><td>Interactive browser sign-in on first launch; CI can use `XAI_API_KEY`</td><td>Start in a demo repo; do not copy `~/.grok/auth.json`</td><td>xAI’s official open-source TUI coding agent</td><td><a href="https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-pager/docs/user-guide/02-authentication.md">authentication</a> · <a href="https://github.com/xai-org/grok-build">repo</a></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Provider-flexible</th><td>OpenCode V2</td><td>People who need to switch among multiple providers</td><td>Multiple providers; can connect to OpenRouter or a compatible endpoint</td><td>Configure an API key, OAuth, or environment variable for the provider</td><td>Check permission settings first; test outside directories only in a demo repo</td><td>Open-source terminal coding agent; V2 project rules use `AGENTS.md` and do not use the old `CLAUDE.md` fallback</td><td><a href="https://opencode.ai/v2/docs/providers">provider</a> · <a href="https://github.com/anomalyco/opencode">repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="5">Provider-flexible</th><td>OpenCode</td><td>People who need to switch among multiple providers</td><td>Multiple providers; can connect to OpenRouter or a compatible endpoint</td><td>Configure an API key, OAuth, or environment variable for the provider</td><td>Check permission settings first; test outside directories only in a demo repo</td><td>Open-source terminal coding agent; `AGENTS.md` has priority, with `CLAUDE.md` as a compatibility fallback when absent</td><td><a href="https://opencode.ai/docs/providers/">provider</a> · <a href="https://github.com/anomalyco/opencode">repo</a></td></tr>
 <tr><td>goose</td><td>People who need a CLI, desktop app, or API and want to connect tools and data sources</td><td>15+ providers, including Anthropic, OpenAI, Google, Ollama, and OpenRouter</td><td>Provider API key, or ACP sign-in through some existing subscriptions</td><td>Start with low-privilege extensions and a sandbox; do not connect production data</td><td>AAIF’s open-source local agent, with CLI, desktop, and API</td><td><a href="https://block.github.io/goose/">docs</a> · <a href="https://github.com/aaif-goose/goose">repo</a></td></tr>
 <tr><td>Aider</td><td>People who want to manage code changes with git diff / commit</td><td>Multiple cloud APIs, OpenRouter, OpenAI-compatible endpoints, and local models</td><td>Provider API key, config file, or environment variable</td><td>Start in a clean demo repo; note Aider’s git auto-commit behavior</td><td>Open-source terminal pair-programming tool; official docs specify its git integration</td><td><a href="https://aider.chat/docs/">docs</a> · <a href="https://github.com/Aider-AI/aider">repo</a></td></tr>
 <tr><td>Pi</td><td>People who want to start from a small core and extend it with extensions, skills, or RPC</td><td>Subscription providers, API-key providers, custom providers; can connect to a local endpoint</td><td>`/login` or a provider API key</td><td>Pi has no built-in sandbox; use a disposable repo or container and review commands manually</td><td>An extensible minimal terminal coding harness</td><td><a href="https://pi.dev/docs/latest/providers">provider</a> · <a href="https://github.com/earendil-works/pi">repo</a></td></tr>
@@ -63,7 +63,7 @@ The full table is collapsed by default; after expanding it, record the “checke
 
 ### Where do OpenRouter and Ollama fit?
 
-OpenRouter is a Router, so it is not one of the 9 coding CLIs above; it provides a unified API, provider routing, and centralized usage. Ollama is a local runtime, not an agent; it can provide a compatible API at `http://localhost:11434/v1` for OpenCode V2, goose, Aider, or another client. Neither replaces an agent’s file permissions and sandbox design.
+OpenRouter is a Router, so it is not one of the 9 coding CLIs above; it provides a unified API, provider routing, and centralized usage. Ollama is a local runtime, not an agent; it can provide a compatible API at `http://localhost:11434/v1` for OpenCode, goose, Aider, or another client. Neither replaces an agent’s file permissions and sandbox design.
 </details>
 
 ## Keep four things when moving a prompt between CLIs
@@ -76,18 +76,18 @@ OpenRouter is a Router, so it is not one of the 9 coding CLIs above; it provides
 <details markdown="1">
 <summary>Expand rules files, sandbox, and common questions</summary>
 
-- Claude Code’s project rules are in `CLAUDE.md`; Codex uses `AGENTS.md`. OpenCode V2 also uses `AGENTS.md` and does not use the old `CLAUDE.md` fallback; do not treat a nonexistent `OPENCODE.md` as a common format.
+- Claude Code’s project rules are in `CLAUDE.md`; Codex uses `AGENTS.md`. OpenCode gives `AGENTS.md` priority and uses `CLAUDE.md` as a compatibility fallback when it is absent; do not treat a nonexistent `OPENCODE.md` as a common format.
 - Gemini CLI’s project context and `.gemini/` settings follow its official docs; `--sandbox`, approval mode, and `--yolo` have different risks, so do not skip confirmation on your first try.
 - Pi’s project trust is not a sandbox. Its official safety docs explicitly warn that it runs with the permissions of the user who starts it; use a container or another OS-level boundary when isolation is needed.
 - Aider’s official docs explain git integration and auto-commit after editing; start in a clean demo repo, inspect the commit, then bring it into a working repo.
 - For goose, Hermes Agent, and other agents that can connect MCP / extensions, start with a low-privilege, read-only integration; do not use Gmail, Slack, or a production DB as your first external connection.
 - Put API keys only in an officially supported credential store or environment variable; never put them in a repo, prompt, screenshot, or issue. Calculate cost from the day’s official price and actual usage, not from the model name.
 
-#### Official verification entry points (2026-08-27 UTC)
+#### Official verification entry points (2026-08-30 UTC)
 
 - [Claude Code overview](https://code.claude.com/docs/en/overview) · [permissions](https://code.claude.com/docs/en/permissions)
 - [OpenAI Codex CLI](https://learn.chatgpt.com/docs/codex/cli)
-- [OpenCode V2](https://opencode.ai/v2/docs) · [canonical repository](https://github.com/anomalyco/opencode)
+- [OpenCode](https://opencode.ai/docs/) · [canonical repository](https://github.com/anomalyco/opencode)
 - [Gemini CLI](https://google-gemini.github.io/gemini-cli/)
 - [goose](https://block.github.io/goose/) · [canonical repository](https://github.com/aaif-goose/goose)
 - [Aider](https://aider.chat/docs/)

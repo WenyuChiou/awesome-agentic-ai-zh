@@ -35,13 +35,13 @@
 
 ## 📚 必读
 
-1. 先看你主要使用的工具的 project-instructions 官方文档：Codex 看 [`AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、Claude Code 看 [`CLAUDE.md`](https://code.claude.com/docs/en/memory)、Gemini CLI 看 [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/)、OpenCode V2 看 [`AGENTS.md`](https://opencode.ai/v2/docs/instructions)。
-2. 再看你所用工具的 Skill 文档：[Codex/ChatGPT](https://learn.chatgpt.com/docs/build-skills)、[Claude Code](https://code.claude.com/docs/en/skills)、[Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/)、[OpenCode V2](https://opencode.ai/v2/docs/skills)。
+1. 先看你主要使用的工具的 project-instructions 官方文档：Codex 看 [`AGENTS.md`](https://learn.chatgpt.com/docs/agent-configuration/agents-md)、Claude Code 看 [`CLAUDE.md`](https://code.claude.com/docs/en/memory)、Gemini CLI 看 [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/)、OpenCode 看 [`AGENTS.md`](https://opencode.ai/docs/rules)。
+2. 再看你所用工具的 Skill 文档：[Codex/ChatGPT](https://learn.chatgpt.com/docs/build-skills)、[Claude Code](https://code.claude.com/docs/en/skills)、[Gemini CLI](https://geminicli.com/docs/cli/using-agent-skills/)、[OpenCode](https://opencode.ai/docs/skills/)。
 3. 最后回看 [Stage 2 — Prompt 设计](../../stages/02-prompt-engineering.zh-Hans.md)，把“任务、范围、成功条件”补进单次 prompt。
 <details markdown="1">
 <summary>展开四个 CLI 的项目规则文件和 Skill 位置</summary>
 
-官方资料查核日：**2026-08-27 UTC**。
+官方资料查核日：**2026-08-30 UTC**。
 
 <table>
 <thead>
@@ -51,7 +51,7 @@
 <tr><th scope="row">Codex</th><td><code>AGENTS.md</code></td><td><code>.agents/skills/&lt;name&gt;/SKILL.md</code></td><td>规则会按目录分层；较近的规则较晚加载</td></tr>
 <tr><th scope="row">Claude Code</th><td><code>CLAUDE.md</code></td><td><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td><td>旧的 <code>.claude/commands/</code> 仍兼容，但新流程优先使用 Skill</td></tr>
 <tr><th scope="row">Gemini CLI</th><td><code>GEMINI.md</code></td><td><code>.agents/skills/&lt;name&gt;/SKILL.md</code> 或 <code>.gemini/skills/…</code></td><td>启用 Skill 时会要求同意；不要把秘密放进 Skill</td></tr>
-<tr><th scope="row">OpenCode V2</th><td><code>AGENTS.md</code></td><td><code>.agents/skills/&lt;name&gt;/SKILL.md</code> 或 <code>.opencode/skills/…</code></td><td>V2 不使用旧文档所写的 <code>CLAUDE.md</code> fallback</td></tr>
+<tr><th scope="row">OpenCode</th><td><code>AGENTS.md</code> 优先；无此文件时用 <code>CLAUDE.md</code></td><td><code>.opencode/skills/…</code>、<code>.agents/skills/…</code> 或 <code>.claude/skills/…</code></td><td>先查 rules、skills 与 permission 设置</td></tr>
 </tbody>
 </table>
 
@@ -167,13 +167,13 @@ Claude Code 的 `.claude/commands/<name>.md` 目前仍能建立同名 `/name`，
 <tr><th scope="rowgroup" rowspan="4">官方项目规则</th><td>Codex <code>AGENTS.md</code></td><td>分层加载和优先顺序</td><td>为 Codex 编写 repo 规则</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md">官方文档</a></td></tr>
 <tr><td>Claude Code <code>CLAUDE.md</code></td><td>什么时候放规则、什么时候移到 Skill</td><td>为 Claude Code 编写持续规则</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/memory">官方文档</a></td></tr>
 <tr><td>Gemini CLI <code>GEMINI.md</code></td><td>目录范围和加载方式</td><td>为 Gemini CLI 放项目 context</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://geminicli.com/docs/cli/gemini-md/">官方文档</a></td></tr>
-<tr><td>OpenCode V2 <code>AGENTS.md</code></td><td>V2 的合并和 nested discovery</td><td>为 OpenCode V2 编写规则</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/v2/docs/instructions">官方文档</a></td></tr>
+<tr><td>OpenCode <code>AGENTS.md</code></td><td>rules 加载、合并与 fallback</td><td>为 OpenCode 编写规则</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/docs/rules">官方文档</a></td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="4">官方 Skill 文档</th><td>Codex/ChatGPT Build skills</td><td><code>SKILL.md</code> 结构和加载位置</td><td>制作 Codex 可复用流程</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/build-skills">官方文档</a></td></tr>
 <tr><td>Claude Code Skills</td><td>按需加载、legacy commands、权限</td><td>制作 Claude Code Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/skills">官方文档</a></td></tr>
 <tr><td>Gemini CLI Agent Skills</td><td>discovery、安装同意和启用同意</td><td>管理 Gemini CLI Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://geminicli.com/docs/cli/using-agent-skills/">官方文档</a></td></tr>
-<tr><td>OpenCode V2 Agent Skills</td><td>支持位置、frontmatter、permission</td><td>制作 OpenCode Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/v2/docs/skills">官方文档</a></td></tr>
+<tr><td>OpenCode Agent Skills</td><td>支持位置、frontmatter、permission</td><td>制作 OpenCode Skill</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://opencode.ai/docs/skills/">官方文档</a></td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="4">标准和易读范例</th><td>Agent Skills specification</td><td>共用格式的最低要求</td><td>让核心内容更容易跨工具使用</td><td>⭐⭐⭐⭐</td><td><a href="https://agentskills.io/specification">标准</a></td></tr>

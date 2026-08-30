@@ -31,8 +31,8 @@
 
 | Model tag | When to use | Notes |
 |---|---|---|
-| **`gemma4:e4b`** | Stage 1 + 2 (plain chat, prompt engineering) | Effective 4B params, ~7.5 GB download, CPU-friendly. **The `:e4b` tag matters** — NOT `gemma3n:e4b`, NOT `gemma3:4b`, NOT `gemma4:latest`. |
-| **`gemma4:e2b`** | Low-RAM-machine alternative for Stage 1+2 | ~4 GB, runs on 4 GB RAM machines |
+| **`gemma4:e4b`** | Stage 1 + 2 (plain chat, prompt engineering) | Effective 4B params; the official Ollama tag page showed a 9.6 GB download on 2026-08-30. **The `:e4b` tag matters** — NOT `gemma3n:e4b`, NOT `gemma3:4b`, NOT `gemma4:latest`. |
+| **`gemma4:e2b`** | Smaller Stage 1+2 alternative | The official Ollama tag page showed a 7.2 GB download on 2026-08-30; actual memory needs vary by runtime and hardware, so do not promise it runs on every 4 GB machine. |
 | **`qwen2.5:3b`** | Stages 3–6 (tool use / agent / ReAct) | 1.9 GB, **reliable tool-use support** (OpenAI function-calling format), default for the current function-calling exercises |
 | **`qwen3.5:4b`** | Stage 7 (debate / eval / observability / streaming / deploy mechanics) | 3.4 GB official Ollama tag. These exercises do not depend on function calling; this row does not replace the Stage 3–6 tool-use default. |
 | **`llama3.2:3b`** | `qwen2.5:3b` alternative for tool use | 2.0 GB, similar capability |

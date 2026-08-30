@@ -1,207 +1,138 @@
 > [繁體中文](./agent-paradigms.md) | **简体中文** | [English](./agent-paradigms.en.md)
 
-# Agent 5 种型态 — 你的 agent 跑在哪、为谁服务？
+# Agent 工具怎么分：身份、操作界面、部署位置
 
 > [← 回主路线 README](../README.zh-Hans.md)
 
-> 📌 **这份是 mental model reference**。看完之后你会知道：“同样叫 agent、为什么 Claude Code、Hermes Agent、OpenClaw 用起来完全不同感受？”
-> 已经知道想用哪个 → [`resources/cli-agents-guide.zh-Hans.md`](cli-agents-guide.zh-Hans.md)（CLI agent 身份与选择指南）或 [`resources/cookbook.zh-Hans.md`](cookbook.zh-Hans.md)（step-by-step 部署）。
+<!-- freshness: canonical=resources/agent-paradigms.md; verified_on=2026-08-30; scope=tool-identity,surfaces,deployment,security,project-status; max_age_days=90 -->
 
-“Agent”一词被用得很泛。Cursor 是 agent、Claude Code 是 agent、Telegram 上跟你聊天的 Hermes 也是 agent、家里 Jetson 板子跑的 OpenClaw 也是 agent。但这 4 个东西用起来完全不同感受 —— 因为它们属于**不同 paradigm**。差别不在 LLM 是哪家、而在 **agent 跑在哪、你用什么界面跟它互动、需不需要联网**。
+同一个工具可以出现在终端、IDE 和桌面应用中，也可以连接本地或云端模型。所以不要硬把工具塞进五个互斥“类型”。先问三个问题，会比较不容易混乱。
 
-理解 paradigm 之后你才知道:搬一个 use case 从 Type 2 到 Type 4 不是“换工具”、是**换思考方式**。
+![Agent 工具的 Identity、Surface 和 Deployment 三条轴](diagrams/agent-tool-axes.zh-Hans.png)
 
----
+## 📌 先分清三条轴
 
-## 一张表先建立认知
+| 轴 | 五岁也能懂的说法 | 正确问题 |
+|---|---|---|
+| **Identity（身份）** | 这个东西的工作是什么？ | 它是 Coding Agent、Router、Local Runtime、Framework，还是 Chat Gateway？ |
+| **Surface（操作界面）** | 你从哪扇门跟它说话？ | 终端、IDE、桌面、Web、Chat app 还是 API？ |
+| **Deployment（部署位置）** | 它的身体放在哪里？ | 你的电脑、云端主机、边缘设备，还是托管服务？ |
 
-| Type | 代表 | Agent 跑在哪 | 你用什么界面 | LLM | 离线 OK? | 月成本（粗估）|
-|---|---|---|---|---|---|---|
-| **1. IDE-coupled** | Cursor / Cline / Continue | 你 IDE 内 | IDE sidebar | 多 provider | ❌ | $0-20 |
-| **2. Terminal pair-programmer** | Claude Code / Codex / Gemini CLI | 你 terminal | terminal REPL | 绑特定家 | ❌ | $20 订阅 或 API 用量 |
-| **3. BYO-LLM CLI** | Aider / OpenCode / goose | 你 terminal | terminal REPL | 自带 API key | ❌ | API 用量 |
-| **4. Cloud-deployed** | **Hermes Agent** | $5 VPS / Modal | **Telegram / Slack / 任一 chat app** | 200+ provider routing | ❌ | $5 server + API |
-| **5. Edge-deployed** | **OpenClaw / ClawBox** | Jetson 板子 / Raspberry Pi | local chat / SSH | **本机 Ollama**（Qwen / Llama / Mistral）| **✅** | 一次硬件 €549、之后 0 |
+一个产品可以同时有很多 **Surface**，也可以更换 **Deployment**。这不会改变它的主要 **Identity**。
 
-→ 4 跟 5 都是“**deployed autonomous agent**”（agent **不在你 laptop 前**、跑在外面 24×7 serve 你）。4 在 cloud、5 在 edge。剩下的 1-3 是“**co-located agent**”（agent 跟你一起在 laptop 上、你走它停）。
+## 🎯 你会学会什么
 
----
+- 分清 OpenCode、Pi、OpenRouter 和 Ollama，不再把它们当作同一类。
+- 先选择工作身份，再选择界面和部署位置。
+- 知道“本地”“开源”“有 permission prompt”都不等于安全保证。
+- 把 **Subagent** 当作执行方式，不当作第六种产品。
 
-## Type 1: IDE-coupled — “sidebar pair-programmer”
+## 🧩 身份：它到底负责什么
 
-**代表**:[Cursor](https://cursor.com) / [Windsurf](https://windsurf.com/editor) / [Cline](https://cline.bot) / [Continue](https://continue.dev) / [Zed](https://zed.dev)
+| 核心词 | 白话定义 | 例子 | 它不自动负责什么 |
+|---|---|---|---|
+| **Coding Agent／Harness（程序代理／工作台）** | 能在允许范围内读文件、改文件、跑命令，再回来报告 | Claude Code、Codex、OpenCode、Pi、Aider、goose | 不一定包含模型、Router 或 Sandbox |
+| **Router（路由器）** | 把模型请求转发给不同 Provider | OpenRouter | 不会自己修改 repo，也不管理文件权限 |
+| **Local Runtime（本地模型引擎）** | 在自己的电脑加载并运行模型 | Ollama、vLLM | 不会自己理解任务或操作工作目录 |
+| **Agent Framework（代理框架）** | 给开发者编写状态、步骤、Handoff 和 Workflow 的工具箱 | LangGraph、CrewAI、Microsoft Agent Framework | 不是安装后就能替你完成工作的成品 Agent |
+| **Chat Gateway（聊天入口）** | 把 Agent 连接到 Telegram、Slack 等消息入口 | Hermes Agent 的 gateway／messaging 模式 | 不代表底层模型、权限和部署已经安全 |
 
-**Hero example**:
-你在 Cursor 写一个 React component。左边 editor、右边 Cursor sidebar 聊天。你选一段 code 按 `Cmd+K`、Cursor 就地改写。改完之后你看 inline diff、accept/reject。
+最短识别法：**谁运行模型？谁转发请求？谁能碰文件？谁安排多个步骤？你从哪里说话？**
 
-**为什么这型存在**:写 code 的时候你**眼睛要看 code**、不能去 terminal 对话。IDE-coupled agent 把 LLM 放在你视线旁边、保留视觉 context。
+## 🧭 常见工具放在哪里
 
-**适合**:edit 多、explore 少;side-by-side coding;需要 visual diff。
-**不适合**:需要 agent 自己跑多步骤（agent 在 sidebar 不太自由）;non-coding task。
+| 工具 | 主要 Identity | 常见 Surface | 可用 Deployment | 初学者最容易搞错的地方 |
+|---|---|---|---|---|
+| [OpenCode](https://opencode.ai/docs/) | Coding Agent／Harness | 终端、桌面、IDE | OpenCode 程序在本地运行 | 连接云端 Provider 只会发出模型请求，不会把 OpenCode 程序搬到云端；仍要选择模型和 permission |
+| [Pi](https://pi.dev/docs/latest) | Coding Agent／Harness | 终端、SDK、RPC | 本地 | 这里的 Pi 不是 Raspberry Pi；它没有内置 Sandbox |
+| [OpenRouter](https://openrouter.ai/docs/faq) | Router | API | 托管云端服务 | 它不会自己读文件或执行命令 |
+| [Ollama](https://ollama.com/) | Local Runtime | CLI、API | 本地或自己的服务器 | 它不是 Coding Agent；要由 Client／Agent 调用 |
+| [Aider](https://aider.chat/docs/) | Coding Agent／pair programmer | 终端 | 本地 | 先看清 Git auto-commit／`--no-verify` 行为 |
+| [goose](https://block.github.io/goose/) | Coding／general Agent | CLI、桌面、API | 本地 | Extension 权限要单独审查 |
+| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | Agent runtime＋Chat Gateway | CLI、消息平台 | 本地或自己的主机 | Chat 入口不等于 24/7、安全或零维护 |
+| [OpenClaw](https://github.com/openclaw/openclaw) | 可自建的 Agent／assistant 平台 | Web、Chat、CLI，取决于部署 | 本地、云端或 edge | 在 edge 运行不代表没有网络、工具或数据外泄风险 |
 
----
+## 📚 必读阅读
 
-## Type 2: Terminal pair-programmer — “Claude Code paradigm”
+1. [CLI Agents 指南](cli-agents-guide.zh-Hans.md)：比较登录、Provider、Sandbox、项目规则和权限。
+2. [Stage 4：Workflow Graph 与 Agent 框架](../stages/04-agent-frameworks.zh-Hans.md)：学习 Framework 和 Workflow Graph。
+3. [Stage 5：Claude Code 生态](../stages/05-claude-code-ecosystem.zh-Hans.md)：学习 Skills、MCP、Hooks 和 Subagents。
+4. [Stage 7：Agent Production Engineering](../stages/07-multi-agent-production.zh-Hans.md)：学习 Harness、Loop、Graph 和上线边界。
 
-**代表**:[Claude Code](https://github.com/anthropics/claude-code) / [Codex](https://github.com/openai/codex) / [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+## 🪜 三步选择法
 
-**Hero example**:
-你在 terminal 开 Claude Code、输入“refactor 整个 auth module、把 callback 改成 async/await、跑 tests”。Claude Code 自己读档、改档、跑 pytest、报告结果。整个过程 5-10 分钟、你看 streaming output。
+1. **先选 Identity**：要修改 repo 就选 Coding Agent；只想转接模型就选 Router；要在本地运行模型就选 Local Runtime；要自己编写 Workflow 才选 Framework。
+2. **再选 Surface**：眼睛一直看程序就偏 IDE；需要命令、Git 和长任务就偏终端；需要手机消息入口才考虑 Chat Gateway。
+3. **最后选 Deployment**：先从可恢复的 demo repo 和最小权限开始，再决定本地、云端或 edge。部署位置不会自动消除风险。
 
-**为什么这型存在**:Claude Code / Codex 把整个 terminal 变成 agent 的 workspace。agent 有 file system / shell / git 完整 access、可以自主完成多步骤 task。比 Type 1 更 autonomous。
+<details markdown="1">
+<summary>展开四个生活场景和安全边界</summary>
 
-**特色**:订阅制（$20/月可用整月、不算 token）;绑定特定 LLM 家族（Claude Code = Claude only）。
+### 编写一个小功能
 
-**适合**:agentic task;长 refactor;paper writing;任何 1-2 step 之上的工作。
-**不适合**:跨多家 LLM 比较成本;非 coding/writing 场景;offline。
+选择一个 Coding Agent／Harness，在 demo branch 中要求它先说明计划、再修改一个文件、运行测试并显示 diff。模型可以来自 Provider API，也可以由 Ollama 在本地运行。
 
----
+### 用一个 API key 尝试不同 Provider
 
-## Type 3: BYO-LLM CLI — “multi-provider 同 mental model”
+Coding Agent 仍负责文件和命令；OpenRouter 只负责转发模型请求。两者的账单、数据政策和权限要分开看。
 
-**代表**:[Aider](https://aider.chat) / [OpenCode](https://github.com/anomalyco/opencode) / [goose](https://block.github.io/goose) / [Hermes Agent](https://github.com/NousResearch/hermes-agent)*
+### 手机接收例行整理
 
-**Hero example**:
-你想用 DeepSeek-V4-Pro（前身 R1 reasoning lineage 已并入主线）写 code（比 Claude Opus 便宜约 10×）。Aider 设 `--model deepseek/deepseek-v4-pro` + `OPENROUTER_API_KEY` 就能跑、git-aware、commit message 自动写。
+Hermes Agent 这类工具可以连接 Messaging Gateway。你仍要处理主机更新、密钥、允许的工具、失败重试和消息平台权限。
 
-**跟 Type 2 的差别**:Type 2 绑特定家、Type 3 你带 API key、任何 OpenAI-compatible endpoint 都行。
+### 在 edge 设备处理敏感数据
 
-**特色**:cost-sensitive;多 provider 比较;自架 LLM（Ollama / vLLM）也能用。
+本地模型可以减少把 Prompt 发送给外部 Provider 的需要，但 Agent 如果能联网、调用工具或读取其他文件夹，仍可能把数据带出去。要使用防火墙、容器／VM、最小权限、假数据测试和人工审核。
 
-**适合**:实验多家 LLM;省 cost;本机 LLM;不想被一家绑。
-**不适合**:怕 setup 复杂（要管 API key、provider config）。
-
-*Hermes Agent 既属于 Type 3（CLI mode）也属于 Type 4（cloud mode）—— 取决于你怎么部署。下面细讲。
-
----
-
-## Type 4: Cloud-deployed — 例:Hermes Agent
-
-**代表**:[Hermes Agent](https://github.com/NousResearch/hermes-agent)（Nous Research、★ 224k+、MIT）
-
-**Hero example**:
-你坐在地铁、手机开 Telegram、对 Hermes bot 说“整理今天 arXiv ML 新 paper、给我 3 个 highlights、传回 Telegram”。Hermes agent 在你 $5 DigitalOcean VPS 上跑、收讯息、决定该用 GPT-5（找 paper）+ Claude Opus（写 summary）+ Gemini Flash（压缩成 3 条）、执行完传结果回 Telegram。整个过程你没碰 laptop。
-
-**5 个 distinctive feature**:
-
-1. **Multi-platform chat interface**:Telegram / Discord / Slack / WhatsApp / Signal 都能当入口。你在哪个平台 ping、agent 就在哪回。
-2. **Multi-LLM routing（200+ model neutral）**:OpenRouter + NVIDIA NIM + 智谱 GLM + Kimi + 小米 MiMo + MiniMax + HF + OpenAI + Anthropic + Google。**同一 conversation 内可跨 LLM**。
-3. **24/7 在线**:agent 不依赖你 laptop、cloud VPS host、任何时刻可用。
-4. **Built-in cron**:“每天 9am 抓 X 给我 Y”这种 routine 直接内建。
-5. **自我学习技能**（实验中、尚未独立审计）:agent 跟你互动久了、会自动归纳出可复用的 skill、跨 session 累积演化。
-
-**为什么这型存在**:当 agent 是“**个人助理**”而不是“pair programmer”时、它不该绑你 laptop。Type 4 把 agent 变成 24×7 service。
-
-**特色**:deployment cost ~$5/月 VPS + API;中国圈 LLM 支持（GLM / Kimi）—— 国际服务中断时可以改用这些接力。
-
-**Trade-off**:
-
-- ⚠️ 自我学习技能是新功能、还没经过独立安全检验；用在会造成严重后果的任务（医疗 / 法律 / 金流）前先别开
-- 失去 IDE / terminal 的 file system 直接读写便利、变成 chat-first workflow
-- 需要会 self-host VPS（Linux / docker / systemd 基础）
-
-**适合**:跨平台通知;24/7 routine（每天抓 paper / 看股票 / 提醒）;中国圈 LLM;多 LLM cost optimization;非 laptop-bound 工作流。
-**不适合**:纯写 code（Type 2 native）;不想 self-host;对 production reliability 要求高。
-
----
-
-## Type 5: Edge-deployed — 例:OpenClaw / ClawBox
-
-**代表**:[OpenClaw](https://www.jetson-ai-lab.com/tutorials/openclaw/)（社群、Jetson 生态） / [ClawBox](https://openclawhardware.dev/)（€549 预装 Jetson 套件、67 TOPS）
-
-**Hero example**:
-你是法律事务所、要 AI 帮你整理当事人病历 + 医疗记录 + 医师证词、产出时序表。**但这些资料绝对不能上 cloud**。你买一台 ClawBox（NVIDIA Jetson Orin Nano + 预装 OpenClaw + Ollama + Qwen 3.5 7B）、放在事务所网络内、SSH 进去跟它工作。所有资料只在这台 €549 的盒子里、无 telemetry、无 API call、完全可审计。
-
-**5 个 distinctive feature**:
-
-1. **Hardware-specific**:NVIDIA Jetson 系列（Orin Nano 8 GB、Thor 128 GB）或 Raspberry Pi。GPU 加速、边缘推论。
-2. **本机 LLM only**:Ollama backend、跑 Qwen 3.5 2B-7B / Llama / Mistral / Gemma 等 open-weight。**没有任何 cloud API call**。
-3. **零云端依赖 / 完全可审计**:localhost-bound、network-isolated 可用、无 telemetry。
-4. **Edge-optimized memory**:semantic search memory file < 10 MB、跨 session 记忆（例:[openclaw-memory-enhancer](https://github.com/henryfcb/openclaw-memory-enhancer)）。
-5. **Physical AI bridge**:可控物理 device（robot / sensor / smart home）—— agent 跨 physical + digital 环境。
-
-**为什么这型存在**:当资料**不能离开本机**时（医疗 / 法律 / 军工 / 隐私敏感）、cloud-deployed 不是选项。Type 5 把 agent 完全 on-device、用 €549 换 0 cloud cost + 0 data exposure。
-
-**特色**:一次硬件投资、之后 API 0 元;对应 NVIDIA 边缘硬件生态;Jetson Thor 跑 30B model 也 OK。
-
-**Trade-off**:
-
-- 模型受边缘 hardware 限制（Orin Nano 跑 7B 上限、Thor 才到 30B）
-- Setup 比 cloud 复杂（要会 NVIDIA Jetson 环境、JetPack、Docker、Ollama）
-- 没有 cloud-deployed 的 24/7 跨平台便利
-
-**适合**:隐私敏感资料;offline-first;家用 AI box（smart home）;physical AI（robot）;长期持有、不想付 API recurring cost。
-**不适合**:不会 Linux / NVIDIA 环境;需要前沿 model（GPT-5 / Claude Opus）;不想花 €549。
-
----
+</details>
 
 ## Subagent — “在 agent runtime 里再 spawn agent”
 
-上面 5 个 type 讲的是 **agent 跑在哪里**（IDE / Terminal / 任意 CLI / Cloud / Edge）。**Subagent** 是另一个维度：**一个 agent 在执行任务时，spawn 出另一个 agent 跑子任务**。
+**Subagent（子代理）** 是主 Agent 把一小块任务交给另一个隔离工作者。它回答的是“工作怎么分”，不是“产品运行在哪里”。
 
-主要两种实作路径：
-
-| 路径 | 怎么启动 | 代表 |
+| 路径 | 谁负责建立子代理 | 适合什么 |
 |---|---|---|
-| **Framework-based**（Stage 4） | `pip install langgraph / crewai / autogen` + Python orchestration code | LangGraph / CrewAI / AutoGen / Swarm / Strands |
-| **Claude Code 原生**（Stage 5.5） | 写 `.claude/agents/<name>.md`，主 session 用 **Agent tool** invoke | Claude Code subagent + Claude Agent SDK |
+| **Framework-based** | 你的 Python／TypeScript orchestration 程序 | 要自己控制状态、Provider、Handoff 和 Workflow |
+| **Coding-Agent native** | Claude Code、Codex 等 Agent runtime | 在同一个 repo 中拆分研究、实现或审查任务 |
 
-**差别在 runtime ownership**：
+不论哪条路径，都要给子代理明确范围、输出格式、预算、停止条件和验证方式。主代理仍要读取结果；“使用了多个 Agent”不是正确性的证明。
 
-- Framework path：你用 Python 写一支主程序（orchestrator）来调度，每个 sub-agent 都是这支程序里的对象
-- Claude path：Claude Code 自动建立新的子 agent，主 agent 只拿到子 agent 的最终结果、不用管它的内部过程（context 自动隔离、互不干扰）
+继续阅读 [Stage 5 的 Subagents](../stages/05-claude-code-ecosystem.zh-Hans.md) 和[可直接复制的 Subagent Cookbook](subagent-cookbook.zh-Hans.md)。
 
-**选哪个**：要跨 LLM provider（GPT + Claude + Gemini 混用）或要把 multi-agent 包进别的应用程序 → framework path。已 commit Claude Code、只在 Claude 生态 → subagent path（少很多 boilerplate）。
+## 🎯 精选 Projects 与学习资源
 
-完整对照表见 [Stage 5.5 开头](../stages/05-claude-code-ecosystem.zh-Hans.md#55--subagentsclaude-code-原生-multi-agent-机制-2025-新功能)；**想直接看 15 个 daily dispatch recipe** → [`subagent-cookbook.zh-Hans.md`](./subagent-cookbook.zh-Hans.md)（每个含场景 + 用哪个 subagent + 复制即用的 prompt 模板）。
+星星是本学习地图的阅读优先级，不是 GitHub stars，也不是工具总排名。
 
----
+<table>
+<thead><tr><th>分类</th><th>Project／资源</th><th>用它学什么</th><th>限制</th><th>评分</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="5">Coding Agent／Harness</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>Provider 切换、rules、Skills 和 permission</td><td>模型和 Sandbox 仍要另外选择</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>小核心、extensions、SDK 和 RPC</td><td>没有内置 Sandbox</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>Git diff、commit 和 undo 工作流</td><td>先确认 auto-commit 和 hook 设置</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>CLI、桌面、Provider 和 extensions</td><td>先开放最小 extension 权限</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/continuedev/continue">continuedev/continue</a></td><td>IDE／CLI Surface 和 Agent mode</td><td>不同 Surface 的权限要分开看</td><td>⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Router／Runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter 官方文档</a></td><td>Router、Provider routing 和 usage</td><td>不是 Coding Agent</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>本地模型下载和兼容 API</td><td>不是 Coding Agent</td><td>⭐⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Messaging／自建</th><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>Agent runtime、Messaging Gateway 和调度</td><td>自建仍要维护并收窄工具权限</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/openclaw/openclaw">openclaw/openclaw</a></td><td>本地／edge／自建 assistant 的部署取舍</td><td>本地不等于零数据风险</td><td>⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">Framework／Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langchain-ai/langgraph</a></td><td>状态、节点、边、Checkpoint 和 Human-in-the-loop</td><td>需要自己编写和测试 Workflow</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/crewAIInc/crewAI">crewAIInc/crewAI</a></td><td>角色、Task 和 Crew orchestration</td><td>角色描述不能替代验证</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/microsoft/agent-framework">microsoft/agent-framework</a></td><td>Microsoft 当前 Agent／Workflow 开发路径</td><td>旧 AutoGen／Swarm 教材只作历史背景</td><td>⭐⭐⭐⭐</td></tr>
+</tbody>
+</table>
 
-## 跨型态组合（power user pattern）
+## ✅ 完成检查
 
-真实 user 常常**同时用 2-3 个 type**、各做擅长的事:
+- [ ] 我能用一句话说明 Coding Agent、Router、Local Runtime 和 Framework 的差别。
+- [ ] 我不会把 OpenRouter 当成 Agent，也不会把 Ollama 当成修改文件的工具。
+- [ ] 我知道 OpenCode／Pi 的 Provider、模型、Surface 和 Sandbox 要分开确认。
+- [ ] 我选择工具时先看 Identity，再看 Surface 和 Deployment。
+- [ ] 我知道本地、edge、开源和 permission prompt 都不是安全保证。
 
-![个人 power-user 多 type workflow](../resources/diagrams/power-user-multi-type-workflow.zh-Hans.png)
-
-**为什么这样搭**:
-
-- Type 2 处理 code（terminal 界面最自然）
-- Type 4 处理 routine + 跨平台（laptop 没开时也工作）
-- Type 5 处理隐私（不可上 cloud）
-
----
-
-## Decision tree（简化文字版）
-
-![选哪个 agent type 决策树](../resources/diagrams/agent-paradigm-decision-tree.zh-Hans.png)
-
----
-
-## 跟既有 stage / branch 的连结
-
-- **想学 Type 2 上手** → [Stage 5: Claude Code 生态](../stages/05-claude-code-ecosystem.zh-Hans.md)
-- **想选择适合的 CLI agent**（Type 2 + Type 3）→ [`resources/cli-agents-guide.zh-Hans.md`](cli-agents-guide.zh-Hans.md)
-- **想看 IDE-coupled 对比**（Type 1）→ [`branches/for-developer.zh-Hans.md`](../branches/for-developer.zh-Hans.md)
-- **想 step-by-step 部署 Hermes** → [`resources/cookbook.zh-Hans.md` Recipe 6](cookbook.zh-Hans.md)（含 Hermes + Ollama walkthrough）
-- **想搞 Jetson + OpenClaw** → [Jetson AI Lab tutorial](https://www.jetson-ai-lab.com/tutorials/openclaw/) + [Seeed Studio wiki](https://wiki.seeedstudio.com/local_openclaw_on_recomputer_jetson/)
-
----
-
-## 我自己怎么用
-
-- **每天主开发**:Type 2（Claude Code、订阅制）
-- **paper monitoring**:暂时手动（每周手动扫 arXiv）—— 之后想试 Type 4 Hermes 自动化
-- **research vault**:Claude Code 在 laptop 内调用 [research-hub](https://github.com/WenyuChiou/research-hub) pipeline（Type 2 模式）
-- **没接触 Type 5**:目前资料没到“不能上 cloud”的敏感程度
-
-Type 4 / Type 5 你之后玩了、可以再回来补这份 reference 自己的 use case。
-
----
-
-## References
-
-- [Jetson AI Lab: OpenClaw tutorial](https://www.jetson-ai-lab.com/tutorials/openclaw/)
-- [ClawBox hardware](https://openclawhardware.dev/)
-- [NVIDIA: Jetson Generative AI at the Edge](https://blogs.nvidia.com/blog/jetson-generative-ai-edge-oss/)
-- [Hermes Agent (NousResearch)](https://github.com/NousResearch/hermes-agent)
-- [claw-spark: One-click setup for Jetson / DGX Spark / RTX](https://github.com/theshiphq/claw-spark)
+<small>工具身份、官方入口、项目状态和许可证核查：2026-08-30 UTC。</small>

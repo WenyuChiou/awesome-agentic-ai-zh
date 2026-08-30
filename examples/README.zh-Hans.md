@@ -2,276 +2,156 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# `examples/` — 动手练习可跑范例
+# `examples/` — 可以直接运行的小练习
 
 > [← 回主路线 README](../README.zh-Hans.md)
 
-学习地图每个 stage 都有“动手练习”section、讲“该做什么”。这个资料夹补上**真的可以跑的范例 code**——复制 → 装依赖 → `python starter.py` 看到预期输出。
+<!-- freshness: canonical=examples/README.md; verified_on=2026-08-30; scope=example-inventory,local-model-tags,download-sizes,sdk-entry-points; max_age_days=90 -->
 
-## 目录结构
+Stage 章节先告诉你“这个概念是什么”；这个文件夹让你真的运行一次。第一次不用把所有模型都装好，也不用先读完整份程序。
 
-```
-examples/
-├── stage-2/                     # Prompt 设计
-│   ├── 01-prompt-eval-loop/     # 练习：改一件事，再看分数
-│   │   ├── starter.py           # 主程序（固定答案 + --live）
-│   │   ├── starter_anthropic.py # Anthropic 对照版本
-│   │   ├── test.py              # Ollama 路径自我验证
-│   │   ├── test_anthropic.py    # Anthropic 路径自我验证
-│   │   ├── README.md            # 三语走查（+.zh-Hans.md +.en.md）
-│   │   └── requirements.txt     # 有上下限的依赖版本
-├── stage-3/                     # 工具使用与第一个 Agent Loop
-│   ├── 01-function-calling/     # 练习 1：一个工具、一次调用
-│   │   ├── starter.py           # Ollama 路径
-│   │   ├── starter_anthropic.py # Anthropic 路径
-│   │   ├── test.py              # Ollama 路径自我验证
-│   │   ├── test_anthropic.py    # Anthropic 路径自我验证
-│   │   ├── README.md            # 三语走查（+.zh-Hans.md +.en.md）
-│   │   ├── README.en.md         # English walkthrough
-│   │   ├── README.zh-Hans.md    # 简体中文走查
-│   │   └── requirements.txt     # 有上下限的依赖版本
-│   ├── 03-react-from-scratch/   # 练习 3：从零实现 ReAct
-│   │   ├── starter.py           # 主程序
-│   │   ├── test.py              # 自我验证（pure assert、无 pytest）
-│   │   ├── README.md            # 200-400 字走查（+.zh-Hans.md +.en.md）
-│   │   └── requirements.txt     # 依赖钉版本
-│   └── ...
-├── stage-1/
-└── ...
-```
+## 📌 先分清五个词
 
-短的练习（≤30 LOC）直接以 `<details markdown="1">` 收折塞在 stage 档内、不开资料夹。长的（>30 LOC）才开资料夹——避免 stage 档被 code block 撑爆。
+| 核心词 | 五岁也能懂的说法 | 正确意思 |
+|---|---|---|
+| **Example（范例）** | 已经拼好的小积木 | 可以直接运行、观察结果的示范程序 |
+| **Starter（起始程序）** | 留几块给你自己拼 | 练习用的最小程序入口，通常是 `starter.py` |
+| **Path（路径）** | 到同一个终点的不同道路 | 本项目用 Path A／B／C 表示不同运行方式 |
+| **Mock（模拟答案）** | 先用玩具电话练习 | 不连接真实模型，先检查程序逻辑 |
+| **Live call（真实调用）** | 真的把电话打出去 | 连接本地或云端模型，结果、时间和费用都可能变化 |
 
-## 怎么跑任一个范例
+## 🎯 你会学会什么
+
+- 先用 **Mock** 找程序错误，再做 **Live call** 看模型行为。
+- 知道 Ollama、Anthropic API 和测试各自负责什么。
+- 从 Stage 索引找到正确文件夹，不用猜文件名。
+- 看懂测试结果、diff 和限制，不把“有输出”误认为“已经正确”。
+
+## 📚 必读阅读
+
+1. [安装与环境设置](../resources/setup-guide.zh-Hans.md)：先让 Python、Git 和所选模型路径能工作。
+2. [Stage 1：LLM 基础](../stages/01-llm-basics.zh-Hans.md)：选择模型、看费用并理解 Context。
+3. [CLI Agents 指南](../resources/cli-agents-guide.zh-Hans.md)：分清 Coding Agent、Router 和 Local Runtime。
+
+## 🛠 第一次运行：先跑不花模型费用的测试
+
+下面这个范例有完整的 `test.py`。先复制这三行：
 
 ```powershell
 cd examples/stage-3/01-function-calling
 python -m pip install -r requirements.txt
+python test.py
+```
+
+看到通过信息，表示程序的固定逻辑能工作；它还没有证明任何模型一定会答对。接着再选一条真实模型路径。
+
+| 路径 | 谁真的生成答案 | 先做什么 | 适合什么时候 |
+|---|---|---|---|
+| **Path C：Mock** | 固定的假答案 | `python test.py` | 第一步；先找程序错误 |
+| **Path A：Ollama** | 你电脑上的模型 | 安装 Ollama、pull 题目指定的模型 | 练习真实模型行为，不产生供应商模型 API 账单 |
+| **Path B：Anthropic** | Anthropic 云端模型 | 设置 `ANTHROPIC_API_KEY` | 想用同一道题比较云端质量时 |
+
+<details markdown="1">
+<summary>展开 Path A／B 的完整命令、环境和费用提醒</summary>
+
+### Path A：Ollama
+
+```powershell
 ollama pull qwen2.5:3b
 ollama serve
-python starter.py                     # Ollama 路径
+python starter.py
+```
+
+本地运行不会产生供应商模型 API 账单，但仍会使用下载空间、内存、电力和时间。文件、log 和工具权限仍要保护。
+
+### Path B：Anthropic API
+
+```powershell
 $env:ANTHROPIC_API_KEY = "your-key"
-python starter_anthropic.py           # Anthropic 路径
-python test.py                        # 跑验证（用 mock、不花钱）
+python starter_anthropic.py
 ```
 
-## 设计原则
-
-| 维度 | 规则 |
-|---|---|
-| 程序长度 | starter ≤80 LOC、超过拆档 |
-| 依赖 | stdlib + 最多 2 个 pip 套件、钉版本 |
-| 测试 | 纯 `assert`、不用 pytest、reader 跑 `python test.py` 看 ✅ |
-| 注解 | 中文（zh-Hans 为主）、变数 / 函数名英文 |
-| 自我验证 | 每个 starter.py 结尾必有 `# === 自我验证 ===` 区块 |
-| 环境变数 | 顶端注解写清楚需要哪些 key |
-| Free-tier 友善 | 用最便宜 model（claude-haiku / Ollama）、注解写怎么换 Sonnet |
-| **Windows 编码** | **每个 .py 顶端必须有 UTF-8 reconfigure**（见下） |
-
-### Windows cp950 编码 fix（每个 starter.py / test.py 必加）
-
-Windows 预设 console 是 cp950（Big5）、印不出 emoji 跟非 Big5 中文。每个 `.py` 档顶端 import 区后立刻加：
-
-```python
-import sys
-if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-```
-
-否则 Windows reader 在 PowerShell / cmd 跑会炸 `UnicodeEncodeError: 'cp950' codec can't encode character '✅'`。
-
-## 三条路径 — **默认用 Ollama（成本考量）**
-
-> 💰 **为什么默认 Ollama？** 本地推理没有供应商模型 API 账单，但硬件、电力、下载和等待时间仍有成本。Cloud LLM 按 token 计费：Haiku 4.5 每 1M input $1、每 1M output $5；预留 $0.05，用 `（input_tokens × $1 + output_tokens × $5） / 1,000,000` 估算，并以 2026-08-28 的官方定价核对。**学习阶段不该被 API 成本卡住**。
-
-每个练习都同时提供 3 条路径：
-
-### Path A（**默认、推荐**）— Ollama 本机
-- 预设 `starter.py` / 第一个 inline `<details markdown="1">` 用本机 LLM
-- 需 [Ollama](https://ollama.com)、按 stage pull 对应 model：
-  - **Stage 1 + 2**（纯 chat / prompt eng）：`ollama pull gemma4:e4b`（~7.5 GB、多模态、CPU 跑得动）
-  - **Stage 3–6**（tool use / agent / ReAct）：`ollama pull qwen2.5:3b`（1.9 GB；模型表现会变化，请在自己的电脑上运行文件夹内的固定测试）
-  - **Stage 7**（辩论、评测、观测、串流与部署机制）：`ollama pull qwen3.5:4b`（3.4 GB；这五题不依赖 function calling）
-- Ollama 不产生供应商模型 API 账单，但硬件、电力、下载和等待时间仍有成本；本地推理不会自动保证隐私，请保护设备、文件、日志和访问权限。
-- SDK 用 `openai` package（OpenAI 兼容 API）、`base_url="http://localhost:11434/v1"`
-- 适合：所有读者（默认推这条）
-
-### Path B（选择性）— Anthropic API（想看 cloud 高质量时）
-- 对照 `starter_anthropic.py`（folder）或第二个 inline `<details markdown="1">` 区块
-- 需 `ANTHROPIC_API_KEY`；按 Haiku 4.5 每 1M input $1、每 1M output $5 的公式估算，预留 $0.05，并以 2026-08-28 的官方定价核对
-- 行为会随模型、提示和硬件而变；用固定 eval 实测
-- 适合：production 要求高质量、需要 long-context、Stage 7 production tier
-
-### Path C（验逻辑、不打 API）
-- 所有 `test.py` 都用 `unittest.mock`、`python test.py` 看程序逻辑有没有写对
-- 跟 Path A / B 互补：先 mock 验逻辑、再 real call 确认
-
-### 三条路的 Trade-off
-
-| 维度 | A Ollama（默认）| B Anthropic | C Mock |
-|---|---|---|---|
-| Cost / call | 没有供应商模型 API 账单；仍有硬件／电力／下载／等待成本 | $0.05 预留；按上方 token 公式 | 没有模型 API 费用 |
-| 需要 | Ollama install | API key | 无 |
-| 答案质量 | 会变化；请运行文件夹内的固定测试 | 会变化；请用同一组固定测试比较 | 预设答案，看不出模型的真实表现 |
-| 速度 | 依硬件；用固定 eval 实测 | 依服务；用固定 eval 实测 | 依环境；用固定 eval 实测 |
-| Offline | ✅ | ❌ | ✅ |
-| 敏感数据 | 可在本地处理；仍要保护设备、日志和权限 | 按供应商和组织政策处理 | 只使用安全的假数据 |
-| Stage 3–6 tool use / ReAct | ✅（qwen2.5 / llama3.2） | ✅ | ✅ |
-| Stage 7 机制 | ✅（qwen3.5:4b） | ✅ | ✅ |
-| 适合 | **默认、无预算压力** | production 升级 | 程序逻辑验证 |
-
-→ **建议流程**：先 C 验逻辑（不花钱）、再 A 本机跑看实际 model 行为、production 阶段（Stage 7）再升 B 看 cloud 质量。
-
-## 推荐 LLM 清单
-
-> 本机 + cloud、user 视角。  
-> 💡 不是要你全装、是让你看到“练习用哪个”“production 升级到哪个”。**Claude 是 canonical / production 主轴；Ollama 是练习默认**。
-
-不知道怎么选时：Stage 1–2 用 `gemma4:e4b`，Stage 3–6 用 `qwen2.5:3b`，Stage 7 用 `qwen3.5:4b`；想做 cloud 对照再用 Haiku 4.5。
-
-<details markdown="1">
-<summary>📚 展开：模型详表、价格和替代供应商</summary>
-
-### 本机 LLM（练习默认、用 Ollama）
-
-| Model | 下载大小 | 建议 RAM | 对应 Stage | Tool-use | 速度（CPU/GPU） | 主用途 |
-|---|---|---|---|---|---|---|
-| **`gemma4:e4b`** ⭐ | 7.5 GB | 8 GB | 1+2 | 基本 | 慢 / 中 | Stage 1-2 纯 chat / prompt eng（默认）|
-| **`qwen2.5:3b`** ⭐ | 1.9 GB | 4 GB | 3–6 | 会变化；请运行固定测试 | 依硬件实测 | Stage 3–6 tool use / agent（默认）|
-| **`qwen3.5:4b`** ⭐ | 3.4 GB | 依本机可用内存 | 7 | 本章不依赖 function calling | 依硬件实测 | 辩论、评测、观测、串流与部署机制 |
-| `llama3.2:3b` | 2.0 GB | 4 GB | 3–6 | 会变化；请运行固定测试 | 依硬件实测 | qwen2.5:3b 的替代 |
-| `mistral-nemo:12b` | 7.1 GB | 16 GB | 3+ | 会变化；请运行固定测试 | 依硬件实测 | 用固定 eval 比较 |
-| `qwen2.5:14b` | 9.0 GB | 16 GB | 进阶 | 会变化；请运行固定测试 | 依硬件实测 | 大 model 对照 |
-| `gemma4:e2b` | 4.0 GB | 4 GB | 1+2 | 基本 | 依硬件实测 | 4GB RAM 机器替代 |
-
-安装：`ollama pull <model>` + `ollama serve`。详细硬件配置看 [resources/cli-agents-guide.zh-Hans.md](../resources/cli-agents-guide.zh-Hans.md)。
-
-### Cloud LLM（canonical / production 主轴、用 Anthropic）
-
-| Model | 每 1M input | 每 1M output | Context | 主用途 |
-|---|---|---|---|---|
-| `claude-fable-5` | $10 | $50 | 1M | Mythos 级（位阶在 Opus 之上）；2026-06-12 暂停、**2026-07-01 恢复**（出口管制解除）——目前最高阶的 Claude 层级 |
-| **`claude-haiku-4-5-20251001`** ⭐ | $1 | $5 | 200k | Stage 1-7 练习 cloud 对照 |
-| **`claude-sonnet-5`** ⭐ | $2 | $10 | 1M | **production 默认**、Stage 5+ agent 开发 |
-| `claude-opus-5` | $5 | $25 | 1M | Opus 级旗舰（2026-07-24 推出、接替 Opus 4.8、同价）、复杂推理 / 长 context refactor |
-
-> 💰 API 价格已于 **2026-08-28** 对照 [Anthropic 官方定价页](https://platform.claude.com/docs/en/about-claude/pricing)。价格会变化；真正运行前请再看一次官方页面。
-
-如果你使用订阅方案而不是 API 计费，请看官方方案页面；订阅额度和 API 费用不是一回事。工具选择详见 [resources/cli-agents-guide.zh-Hans.md](../resources/cli-agents-guide.zh-Hans.md)。
-
-### Cloud LLM 中国 / 开源 alternatives（地区限制 / 预算敏感 / 中文场景）
-
-> 不能 / 不想用 Anthropic？这些 API **都 OpenAI-compatible**、改 `base_url` 跟 model name 就能跑本 repo 同一份练习。
-
-| Provider | 主 model | 每 1M input | 每 1M output | OpenAI-compat? | 主卖点 |
-|---|---|---|---|---|---|
-| **DeepSeek** ⭐ | `deepseek-v4-flash` | $0.14 | $0.28 | ✅ | 最便宜 cloud（比 haiku $1/$5 便宜约 7 倍）、中英文俱佳、含免费 web `chat.deepseek.com` |
-| DeepSeek V4-Pro | `deepseek-v4-pro` | $0.44 | $0.87 | ✅ | 更强推理、价格仍远低于同级 |
-| **Moonshot Kimi** | `kimi-k3` | 依阶梯 | 依阶梯 | ✅ | **1M token context**（卖点）、适合大文件 / 长对话；价格依 context 阶梯、见 platform。web 版 `kimi.com` 免费 |
-| **通义千问 Qwen** | `qwen-max` / `qwen-turbo` | $0.50-1.50 | $1.50-6 | ✅（DashScope）| 中文 native、**同 model 也能 Ollama 本机跑**（cloud + local 两条路径都通） |
-| **智谱 GLM** | `glm-4.5` / `glm-4-plus` | $0.30-2 | $1.50-9 | ✅ | 中国 native、有 free tier。web `chatglm.cn` 免费 |
-| **NVIDIA NIM** | 托管的 Llama / Mistral / DeepSeek / Qwen 等模型 | 依官方方案 | 依官方方案 | ✅ | 通过 NVIDIA-hosted NIM API 测试多种模型；可用性与限制见 [NIM for Developers](https://developer.nvidia.com/nim) |
-
-**API endpoints（OpenAI SDK 接法）**：
-
-```python
-# DeepSeek
-client = OpenAI(api_key=os.environ["DEEPSEEK_API_KEY"], base_url="https://api.deepseek.com/v1")
-r = client.chat.completions.create(model="deepseek-v4-flash", messages=[...])
-
-# Moonshot Kimi（中国 endpoint；海外用 .ai 结尾）
-client = OpenAI(api_key=os.environ["MOONSHOT_API_KEY"], base_url="https://api.moonshot.cn/v1")
-r = client.chat.completions.create(model="kimi-k3", messages=[...])
-
-# 通义千问 Qwen（Alibaba DashScope）
-client = OpenAI(api_key=os.environ["DASHSCOPE_API_KEY"],
-                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1")
-r = client.chat.completions.create(model="qwen-turbo", messages=[...])
-
-# 智谱 GLM
-client = OpenAI(api_key=os.environ["ZHIPUAI_API_KEY"], base_url="https://open.bigmodel.cn/api/paas/v4")
-r = client.chat.completions.create(model="glm-4.5-flash", messages=[...])
-
-# NVIDIA NIM（hosted open-source）
-client = OpenAI(api_key=os.environ["NVIDIA_API_KEY"], base_url="https://integrate.api.nvidia.com/v1")
-r = client.chat.completions.create(model="meta/llama-3.3-70b-instruct", messages=[...])
-```
-
-**怎么挑**：
-
-| 情境 | 选 | 理由 |
-|---|---|---|
-| 中国大陆、无 cloud 访问 | Ollama 本机 / DeepSeek API | 本机免费；DeepSeek 在中国有 endpoint |
-| 预算极敏感（< $1/月） | DeepSeek API | 列示 token 价格较低；用固定 eval 核对行为 |
-| 大文件 / 长文档 RAG | Moonshot Kimi | 1M token context 卖点 |
-| 中文 native task（古文、中文搜索）| Qwen / GLM | 训练语料中文占比高 |
-| 想试 10+ open model 没 GPU | NVIDIA NIM | 一个 key 玩 Llama / Mixtral / Qwen / DeepSeek |
-| Production agent（agent / tool use）| Anthropic Claude（canonical）| 本 repo Path B 默认；用固定 eval 核对 tool calling 行为 |
+云端调用可能使用额度或产生费用。运行前查看当天官方 pricing／usage 页面，设置自己能接受的上限；不要把 key 写进程序或 commit。
 
 </details>
 
-### 预算和时间怎么估（Stage 1–7 共 54 个练习）
+## 🧭 根据 Stage 找范例
+
+这里只列实际存在的文件夹；短练习仍会直接放在 Stage 章节中。
+
+| Stage | 这一关在学什么 | 可运行文件夹 |
+|---|---|---|
+| [Stage 1](../stages/01-llm-basics.zh-Hans.md) | LLM 基础和错误处理 | `stage-1/`：2 个 |
+| [Stage 2](../stages/02-prompt-engineering.zh-Hans.md) | Prompt 设计和小型评测循环 | `stage-2/`：1 个 |
+| [Stage 3](../stages/03-tool-use-and-hello-agent.zh-Hans.md) | **工具使用与第一个 Agent Loop** | `stage-3/`：6 个 |
+| [Stage 4](../stages/04-agent-frameworks.zh-Hans.md) | **Workflow Graph 与 Agent 框架** | `stage-4/`：5 个；各自使用独立的 Python 3.11 环境 |
+| [Stage 5](../stages/05-claude-code-ecosystem.zh-Hans.md) | Claude Code 生态和 Skill | `stage-5/`：1 个；其余是章节内练习 |
+| [Stage 6](../stages/06-memory-rag.zh-Hans.md) | Embedding、RAG 和 Memory | `stage-6/`：5 个 |
+| [Stage 7](../stages/07-multi-agent-production.zh-Hans.md) | **Agent Production Engineering** | `stage-7/`：5 个 |
+| [Track A1–A3](../tracks/cli/A1-cli-intro.zh-Hans.md) | CLI 工作流 | 章节内练习；没有 `examples/track-a/` |
+
+## 🧠 本地模型怎么选
+
+模型不是“越新就一定越适合”。先用题目指定的 tag，再跑固定测试。下载大小以 Ollama 官方 tag 页面在 **2026-08-30 UTC** 的显示为准。
+
+| 范围 | 默认 tag | 官方显示下载大小 | 为什么 |
+|---|---|---:|---|
+| Stage 1–2 | [`gemma4:e4b`](https://ollama.com/library/gemma4:e4b) | 9.6 GB | 纯对话和 Prompt 练习 |
+| Stage 3–6 | [`qwen2.5:3b`](https://ollama.com/library/qwen2.5:3b) | 1.9 GB | 当前范例的工具调用练习默认值 |
+| Stage 7 | [`qwen3.5:4b`](https://ollama.com/library/qwen3.5:4b) | 3.4 GB | 观察评测、监控和部署流程 |
+
+完整的现行模型、价格、Context 和替代方案只在 [Stage 1](../stages/01-llm-basics.zh-Hans.md) 维护，避免两个页面讲成不同版本。
+
+## ✅ 文件夹并不都长得一样
+
+先打开这道题的 `README`。文件名会跟着要学的内容改变，不要因为没看到普通的 `starter.py` 就以为文件坏了。
+
+| 形状 | 实际文件夹 | 你会看到什么 |
+|---|---|---|
+| 标准双路径 | 大多数 Python 练习 | `starter.py`、`starter_anthropic.py`、两个离线测试、三语 README、`requirements.txt` |
+| Provider 切换 | `stage-1/04-cross-provider/` | 只用 OpenAI-compatible client 比较 endpoint，所以只有 `starter.py` 和 `test.py` |
+| Schema 好坏比较 | `stage-3/06-schema-design/` | `starter_bad*` 和 `starter_good*`，不是普通 starter 文件名 |
+| Framework／部署加项 | `stage-4/01-same-agent-two-frameworks/`<br>`stage-4/04-codeact-vs-json-tool/`<br>`stage-7/05-deploy/` | 在标准双路径外，再加入 CrewAI、Docker smoke test 或 `Dockerfile` |
+| Skill 包 | `stage-5/tool-calling-tutor/` | `SKILL.md`、references、translations 和三语 README；它不是 Python starter 项目 |
+
+设计底线：每个 Python 练习都要能用离线测试检查固定逻辑；Skill 包由 repository 结构测试检查。starter 保持小；环境变量只放假 key 范例；真实模型行为用固定 eval 核对；不要关闭必要 hook 或 approval。
 
 <details markdown="1">
-<summary>💰 展开：按自己的电脑和 token 用量计算</summary>
+<summary>展开 Windows 编码、贡献规则和故障排查</summary>
 
-| 学习路径 | 时间怎么估 | 成本怎么估 | 适合谁 |
-|---|---|---|---|
-| **全本机 Ollama** | 用一个练习实测，再乘预计练习数 | API $0；不含硬件和电费 | 预算敏感、隐私需求、中国大陆无 cloud 访问 |
-| **混合：本机练 + Haiku 终验** ⭐ | 本机实测时间 + cloud 调用次数 | 本机 API $0；cloud 按 Haiku token 公式 | **推荐默认**：先本机练，最后用同一组固定测试核对 cloud 行为 |
-| **全 Haiku** | 按服务速度和调用次数实测 | `（input × $1 + output × $5）/ 1,000,000` | 想看完整 cloud 体验 |
-| **全 Sonnet** | 按服务速度和调用次数实测 | `（input × $2 + output × $10）/ 1,000,000` | 深度练习和 production 对照 |
-| **Sonnet 为主 + Opus 难题** | 按两种模型的调用次数实测 | 分别用官方 token 单价计算后相加 | 已是 production agent 开发者 |
-
-> 🎯 **新手默认**：先在本机运行。要用 cloud 前，先用公式估算，再在供应商账户设置你能接受的费用上限。**Stage 7 production tier 才考虑 Sonnet 升级**。
+- Windows 的 `starter.py`／`test.py` 需要把 stdout 设置为 UTF-8，避免 cp950 无法输出中文或 emoji。
+- 一个 starter 原则上不超过 80 LOC；更深入的完整教学改为链接官方文档或 canonical tutorial。
+- 无法运行时，先记录文件夹、Python 版本、完整错误、运行命令和使用的 Path，再开 issue。
+- 不要上传真实 API key、`.env`、私人数据或模型回复 log。
 
 </details>
 
-### 怎么从 Ollama 换到 Anthropic？
+## 🎯 精选 Projects 与学习资源
 
-每个练习都有 `<details markdown="1">` Path B 区块或 `starter_anthropic.py`，改 3 行：
+星星是本学习地图的阅读优先级，不是 GitHub stars，也不是工具总排名。
 
-```python
-# 从这个（Path A 默认）：
-from openai import OpenAI
-client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
-r = client.chat.completions.create(model="gemma4:e4b", ...)
+<table>
+<thead><tr><th>分类</th><th>资源</th><th>先学什么</th><th>评分</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">模型运行</th><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>先在本地运行一个模型，再让 starter 调用它</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/vllm-project/vllm">vllm-project/vllm</a></td><td>需要服务器级吞吐量时再学</td><td>⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">Python SDK</th><td><a href="https://github.com/openai/openai-python">openai/openai-python</a></td><td>理解 OpenAI-compatible client 和 response shape</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/anthropics/anthropic-sdk-python">anthropics/anthropic-sdk-python</a></td><td>比较 Anthropic messages 和 tool schema</td><td>⭐⭐⭐⭐⭐</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="2">验证与数据</th><td><a href="https://github.com/pytest-dev/pytest">pytest-dev/pytest</a></td><td>从小型 assert 走向可重复的测试</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/pydantic/pydantic">pydantic/pydantic</a></td><td>验证工具输入、结构化输出和错误</td><td>⭐⭐⭐⭐</td></tr>
+</tbody>
+</table>
 
-# 换成这个（Path B、若有 ANTHROPIC_API_KEY）：
-import anthropic
-client = anthropic.Anthropic()
-r = client.messages.create(model="claude-haiku-4-5-20251001", ...)
-```
+## ✅ 完成检查
 
-主要差异：messages create 方法名、response shape（`choices[0].message.content` vs `content[0].text`）、tool spec wrap（OpenAI 多一层 `{"type": "function", "function": {...}}`）。详细对照表见 [`resources/cli-agents-guide.zh-Hans.md`](../resources/cli-agents-guide.zh-Hans.md)。
+- [ ] 我能从 Stage 索引找到一个实际存在的文件夹。
+- [ ] 我先跑 Mock，再决定要不要做 Live call。
+- [ ] 我知道 OpenRouter 是 Router、Ollama 是 Local Runtime、OpenCode／Pi 是 Coding Agent。
+- [ ] 我没有把 key 或私人数据写进 repo。
+- [ ] 我用测试和 diff 判断结果，不只看“程序有输出”。
 
-## 对应 stage 索引
-
-| Stage | 练习 | 范例位置 |
-|---|---|---|
-| 1 LLM 基础 | 6 个 | inline 4 + folder 2（`examples/stage-1/`） |
-| 2 Prompt eng | 4 个 | inline 3 + folder 1（`examples/stage-2/`） |
-| **3 工具使用与第一个 Agent Loop** | **6 个** | folder 6（`examples/stage-3/`） |
-| 4 Workflow Graph 与 Agent 框架 | 5 个 | 5 个双路径、离线可验证的 folder（`examples/stage-4/`；Python 3.11） |
-| 5 Claude Code 生态 | 11 个 | inline 6 + folder 5（`examples/stage-5/`） |
-| 6 Memory/RAG | 5 个 | 全 folder（`examples/stage-6/`） |
-| 7 Agent Production Engineering | 5 个 | inline 1 + folder 4（`examples/stage-7/`） |
-| Track A1-A3 | 12 个 | 12 个 inline 练习；没有独立的 `examples/track-a/` 文件夹 |
-
-> Stage 4 的五个文件夹使用不同 framework。请在**每个文件夹各建一个 Python 3.11 `.venv`**，不要合并五份 `requirements.txt`。
-
-→ T1 完成范围：**只有 Stage 3 全部 6 个**（剩余 stage 按 plan 分批推进）。
-
-## 贡献 / 报错
-
-跑不过、结果跟预期输出对不上、或想补一个新练习：
-
-- 开 issue 标 `examples` label
-- 或直接 PR、follow 本资料夹“设计原则”表格的规则
-
-## 为什么这样分（不直接全塞 stage 档）
-
-1. **Stage 档保持 readable**：学习地图读者不一定要看 code、只想理解 concept；长 code block 干扰阅读流
-2. **范例可独立演进**：API SDK 升版、model name 改、范例需要单独 commit、不污染学习地图 git log
-3. **Reader 可以 clone 单一 example**：`svn export` 或 `git clone --filter=tree:0` 只抓一个资料夹
-4. **未来 CI**：example 失败不应 block mdbook deploy；分开可让 CI 有条件性检查
+<small>范例目录、模型 tag 与官方入口核查：2026-08-30 UTC。</small>

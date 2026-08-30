@@ -155,7 +155,7 @@ CLI Agent 的安全起手式：
 官方边界：
 
 - [Gemini CLI tools](https://geminicli.com/docs/reference/tools/) 会在修改工具前显示 action；[sandbox 文件](https://geminicli.com/docs/cli/sandbox/) 也提醒 sandbox 不是零风险保证。
-- [OpenCode permissions](https://opencode.ai/docs/agents/) 可对 edit、bash 与外部文件夹设置 ask／allow／deny；[provider 文件](https://v2.opencode.ai/docs/providers/) 显示模型连接仍需要对应账号、OAuth、API key 或环境设置。
+- [OpenCode permissions](https://opencode.ai/docs/agents/) 可对 edit、bash 与外部文件夹设置 ask／allow／deny；[provider 文件](https://opencode.ai/docs/providers/) 显示模型连接仍需要对应账号、OAuth、API key 或环境设置。
 - Ollama 可以启用 [cloud models](https://docs.ollama.com/cloud)。只要纯本机模式时，依 FAQ 设置 `disable_ollama_cloud` 或 `OLLAMA_NO_CLOUD=1`。
 - LM Studio 的[离线说明](https://lmstudio.ai/docs/app/offline)指出，已下载模型、chat、文件与 local server 可以离线使用；[隐私说明](https://lmstudio.ai/app-privacy)区分本地处理与 cloud models／web search。
 

@@ -40,7 +40,7 @@
 | **LLM（大型語言模型）** | 產生文字或程式碼的模型，像工作台裡負責想答案的大腦 | Claude、GPT、Gemini 都是模型家族 | 不會自己管理 repo、檔案權限或帳單 |
 | **Provider API（模型服務入口）** | 讓工具向一家模型服務送出請求的門 | Anthropic API、OpenAI API、Gemini API 會處理認證與計費 | 不是會改檔的 coding agent |
 | **Router（路由器）** | 把同一個請求轉給不同 provider 的轉運站 | [OpenRouter](https://openrouter.ai/docs/faq) 可集中 API、routing 與 usage | 不是 LLM，也不管理你的檔案權限 |
-| **Coding agent（程式工作台）** | 能在終端機讀檔、改檔與執行命令的工作台 | Claude Code、Codex、OpenCode V2、Pi 都屬於這一類 | 裡面用的模型、provider 與 sandbox 要另外確認 |
+| **Coding agent（程式工作台）** | 能在終端機讀檔、改檔與執行命令的工作台 | Claude Code、Codex、OpenCode、Pi 都屬於這一類 | 裡面用的模型、provider 與 sandbox 要另外確認 |
 | **Local runtime（本機模型引擎）** | 在自己的電腦跑模型的引擎，像把模型發動起來的馬達 | [Ollama](https://github.com/ollama/ollama) 可讓支援它的 agent 呼叫本機模型 | 不是 coding agent，不會自己讀 repo |
 
 ## 依現有條件選入口
@@ -53,7 +53,7 @@
 <tr><th scope="row">Anthropic 帳號或 API</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>登入與 permission prompt</td></tr>
 <tr><th scope="row">ChatGPT 或 OpenAI API</th><td><a href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a></td><td>approval、sandbox、工作目錄</td></tr>
 <tr><th scope="row">Google 帳號、API 或 Vertex AI</th><td><a href="https://google-gemini.github.io/gemini-cli/">Gemini CLI</a></td><td>認證與 sandbox</td></tr>
-<tr><th scope="row">想換 provider 或用本機模型</th><td><a href="https://opencode.ai/v2/docs">OpenCode V2</a>、<a href="https://block.github.io/goose/">goose</a>、<a href="https://aider.chat/docs/">Aider</a>、<a href="https://pi.dev/docs/latest">Pi</a></td><td>provider 與權限邊界</td></tr>
+<tr><th scope="row">想換 provider 或用本機模型</th><td><a href="https://opencode.ai/docs/">OpenCode</a>、<a href="https://block.github.io/goose/">goose</a>、<a href="https://aider.chat/docs/">Aider</a>、<a href="https://pi.dev/docs/latest">Pi</a></td><td>provider 與權限邊界</td></tr>
 <tr><th scope="row">想用 Router 或本機 runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a> 或 <a href="https://ollama.com/">Ollama</a></td><td>它們需搭配 coding agent</td></tr>
 </tbody>
 </table>
@@ -63,7 +63,7 @@
 - [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) 與 [permissions](https://code.claude.com/docs/en/permissions)
 - [Codex CLI](https://learn.chatgpt.com/docs/codex/cli)
 - [Gemini CLI authentication](https://google-gemini.github.io/gemini-cli/docs/get-started/authentication.html) 與 [sandbox 設定](https://google-gemini.github.io/gemini-cli/docs/get-started/configuration.html)
-- [OpenCode V2 文件](https://opencode.ai/v2/docs) 與 [goose 文件](https://block.github.io/goose/)
+- [OpenCode 文件](https://opencode.ai/docs/) 與 [goose 文件](https://block.github.io/goose/)
 - [Aider 文件](https://aider.chat/docs/)、[Hermes Agent 文件](https://hermes-agent.nousresearch.com/docs/)、[Grok Build repo](https://github.com/xai-org/grok-build)、[Pi 文件](https://pi.dev/docs/latest)
 - [OpenRouter FAQ](https://openrouter.ai/docs/faq) 與 [Ollama](https://ollama.com/)
 
@@ -95,7 +95,7 @@
 <summary>展開各 CLI 的專案規則位置與驗證方式</summary>
 
 - Claude Code 讀取專案的 `CLAUDE.md`；Codex 使用 `AGENTS.md`。
-- OpenCode V2 使用 `AGENTS.md`；現行 V2 不使用舊文件寫的 `CLAUDE.md` fallback。不要建立 `OPENCODE.md` 當作通用規則檔。
+- OpenCode 以 `AGENTS.md` 優先；沒有 `AGENTS.md` 時，`CLAUDE.md` 是相容 fallback。不要建立 `OPENCODE.md` 當作通用規則檔。
 - Gemini CLI 常用 `GEMINI.md`；goose、Aider、Hermes Agent、Pi 與 Grok Build 的檔名和載入範圍依各自官方文件設定。
 - 規則只留下會改變行為的內容：專案用途、不能做的事、測試指令、交付格式。不要把長篇 API 參考資料塞進每次都載入的規則檔。
 
@@ -128,12 +128,12 @@
 
 ## 🎯 精選 Projects
 
-A1 只教你安全開始，不在兩個頁面重複維護同一份易變資料。9 個工具的登入、provider、sandbox 與官方來源集中放在 [`CLI Agents 參考指南`](../../resources/cli-agents-guide.md)。官方資料查核日：**2026-08-27 UTC**。
+A1 只教你安全開始，不在兩個頁面重複維護同一份易變資料。9 個工具的登入、provider、sandbox 與官方來源集中放在 [`CLI Agents 參考指南`](../../resources/cli-agents-guide.md)。官方資料查核日：**2026-08-30 UTC**。
 
 <details markdown="1">
 <summary>展開「工具、Router、local runtime」的最短辨識法</summary>
 
-- Claude Code、Codex、Gemini CLI、OpenCode V2、goose、Aider、Hermes Agent、Grok Build、Pi：會接收任務並操作工作目錄的 CLI agent／harness。
+- Claude Code、Codex、Gemini CLI、OpenCode、goose、Aider、Hermes Agent、Grok Build、Pi：會接收任務並操作工作目錄的 CLI agent／harness。
 - OpenRouter：替 agent 把請求送到 provider 的 Router，不會替你管理檔案權限。
 - Ollama：在本機跑模型的 runtime，不會自己讀 repo；要由支援它的 agent 呼叫。
 - 不確定時，只問三句：誰執行模型？誰轉送請求？誰能讀寫我的檔案？
@@ -152,7 +152,7 @@ A1 只教你安全開始，不在兩個頁面重複維護同一份易變資料�
 <tr><td><a href="https://github.com/xai-org/grok-build">xai-org/grok-build</a></td><td>⭐⭐⭐</td><td>已在使用 xAI 生態、想比較新工具的人</td><td>先在 demo repo 觀察，不作第一個 production 工具</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">可換 provider</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>⭐⭐⭐⭐⭐</td><td>想切換 provider 或接相容 endpoint 的人</td><td>V2 使用 <code>AGENTS.md</code>；另查 permission 設定</td></tr>
+<tr><th scope="rowgroup" rowspan="5">可換 provider</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>⭐⭐⭐⭐⭐</td><td>想切換 provider 或接相容 endpoint 的人</td><td><code>AGENTS.md</code> 優先；另查 permission 設定</td></tr>
 <tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>⭐⭐⭐⭐</td><td>想同時使用 CLI、desktop 與 extensions 的人</td><td>先只開低權限 extension</td></tr>
 <tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>⭐⭐⭐⭐⭐</td><td>重視 git diff 與 commit 流程的人</td><td>先理解它的 git auto-commit 行為</td></tr>
 <tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>⭐⭐⭐⭐</td><td>想從小核心加 extensions、skills 或 RPC 的人</td><td>沒有內建 sandbox；需要隔離時用容器或 VM</td></tr>
