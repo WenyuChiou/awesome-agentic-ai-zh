@@ -64,7 +64,8 @@ Harness、Eval、Dynamic Workflows、Model–Harness Fit 或重要 research 名�
 7. 五種常見卡關的選擇表：越界、交接漏資料、反覆失敗、成本失控、服務壞掉。
 8. `🛠` 三分鐘工作邊界卡：直接複製四行，填入 `可以做／不能做／完成證據／停止條件`。
 9. `🎯` 五筆精選閱讀入口。
-10. `✅` 短版自我檢查與 Stage 08 入口。
+10. `📚` 24 筆完整學習資源、限制與五星編輯評分。
+11. `✅` 短版自我檢查與 Stage 08 入口。
 
 ## 12 個概念全部保留
 
@@ -89,7 +90,6 @@ Model–Harness Fit 仍保留正確名稱與來源；不把它們全部拉進頁
 - OpenAI Harness Engineering codebase case study，包括該專案的 layer 架構。
 - Coding-agent harness、Eval rigor、Dynamic Workflows、Model–Harness Fit、分工研究。
 - 完整 reading decision tree。
-- 24 筆完整學習資源表。
 
 所有 `<details markdown="1">` 預設關閉。Dynamic Workflows 的標題、既有 legacy anchor、
 一句話定位與查核日期留在 `<details>` 外，確保既有深連結落在可見位置。
@@ -124,7 +124,7 @@ Model–Harness Fit 仍保留正確名稱與來源；不把它們全部拉進頁
 
 ## 學習資源表
 
-24 筆、五組，放在預設關閉區：
+24 筆、五組，直接放在可見主線：
 
 - 基礎設計與 context：5。
 - Orchestration／Contracts：5。
@@ -211,8 +211,9 @@ branch、不清理 worktree。
 ### 讀者體驗
 
 - 三語頁都由 `638／636／636` 行整理為 299 行，12 個概念仍完整保留。
-- 每頁有 9 個預設關閉的 `<details markdown="1">`，沒有 `open`；未展開主線實測為
-  `4,824／7,768／4,850` 個非空白字元。
+- 後續依全站規則把完整資源表移出選單；每頁現有 8 個預設關閉的
+  `<details markdown="1">`，沒有 `open`。包含 24 筆資源的可見主線實測為
+  `10,288／14,772／10,328` 個非空白字元。
 - 六個核心詞、四行工作邊界卡、12 概念四組 `3／3／3／3`、24 筆資源五組
   `5／5／5／5／4`、Dynamic Workflows legacy anchors 與 Stage 08 入口都通過專屬測試。
 - 所有分類欄使用真正的 HTML `rowspan`；三語 URL、評分與順序由測試鎖定，限制欄則由
