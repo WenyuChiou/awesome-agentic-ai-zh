@@ -62,6 +62,9 @@ jobs:
       - name: Build mkdocs site (→ _build/site, the Pages root)
         run: python -m mkdocs build
 
+      - name: Verify rendered image delivery
+        run: python scripts/check-image-delivery.py --site _build/site
+
       - name: Install mdBook
         run: |
           MDBOOK_VERSION="0.4.52"

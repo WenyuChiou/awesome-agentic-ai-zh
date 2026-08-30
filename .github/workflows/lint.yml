@@ -248,6 +248,12 @@ jobs:
       - name: check-image-locale.py detection unit tests
         run: python3 scripts/test_image_locale.py
 
+      - name: Check teaching-image delivery budget (blocking)
+        run: python3 scripts/check-image-delivery.py
+
+      - name: Image delivery hook and budget unit tests
+        run: python3 scripts/test_image_delivery.py
+
       - name: Check MCP catalog counts are consistent (blocking)
         run: |
           # Blocking gate: the catalog's Index per-section counts and the
