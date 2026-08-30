@@ -53,8 +53,8 @@
 ## 🚪 進入條件與閱讀路線
 
 - **第一次學：**先讀七個核心詞，完成練習 1–4，再做短版自我檢查。
-- **要做長期助理：**接著完成練習 5，再展開 Memory 設計。
-- **要研究或上線：**最後展開進階 RAG、Chunking、評測與研究入口。
+- **要做長期助理：**接著完成練習 5，再閱讀 Memory 設計。
+- **要研究或上線：**最後進入進階 RAG、Chunking、評測與研究入口。
 
 <details markdown="1">
 <summary>時間、環境、費用與資料安全</summary>
@@ -150,10 +150,10 @@ python starter_anthropic.py
 
 選三到五份你有權使用的小文件。讓助理回答問題時列出來源，再只記住一項無敏感性的偏好，例如「回答先給短版」。成功條件是：找不到證據時會說不知道；重新啟動後仍能讀回偏好；你可以刪掉這項記憶。
 
+## 🌐 RAG 基礎流水線
+
 <details markdown="1">
 <summary>RAG 基礎流水線：資料怎麼進去，答案怎麼出來</summary>
-
-## 🌐 RAG 基礎流水線
 
 RAG 有兩條路：一條先整理資料，一條在問題來時找資料。
 
@@ -176,173 +176,40 @@ RAG 有兩條路：一條先整理資料，一條在問題來時找資料。
 
 </details>
 
-<details markdown="1">
-<summary>進階 RAG 名詞：什麼問題出現時才需要加</summary>
-
 <a id="-rag-進階技巧縱覽--2025-2026-三條主軸"></a>
-## 🚀 進階 RAG 技巧（跑完基本 RAG 之後再看）
-
-先建立基線，再一次只加一個元件。否則即使分數變好，你也不知道是哪一步造成的。
-
-### 🔗 GraphRAG — 知識圖譜 + RAG
-
-**GraphRAG** 會先找出 entity（人、地點、產品等）與 relationship，再用圖的連線幫助跨文件或整體主題的查詢。它需要額外 indexing 成本，不是每個小型問答都需要。
-
-- [Microsoft GraphRAG](https://github.com/microsoft/graphrag) — MIT 授權的研究參考實作；官方目前標示為維護模式，適合研究方法與既有部署，不應寫成快速演進的一般產品。
-- [GraphRAG paper](https://arxiv.org/abs/2404.16130) — 原始方法與 query-focused summarization。
-- [LightRAG](https://github.com/HKUDS/LightRAG) — 另一個活躍的 graph-based RAG 實作；架構、資料模型與 Microsoft GraphRAG 不相同。
-
 <a id="-contextual-retrieval--anthropic-的-prompt-caching-解法"></a>
-### 🪶 Contextual Retrieval — 先替 chunk 補上背景
-
-**Contextual Retrieval** 在建立索引時，先替每個 chunk 加上它在整份文件裡的背景，再做 embedding 與 BM25。Anthropic 的實驗中，contextual embedding、contextual BM25 與 reranking 把其測試的 top-20 chunk retrieval failure rate 從 5.7% 降到 1.9%；這是特定資料與設定的結果，不是所有 RAG 的保證。
-
-- [Anthropic Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval)
-- [Anthropic cookbook](https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide)
-
 <a id="-hybrid-search--reranking--production-rag-的兩個常見強化元件"></a>
 <a id="-常用-memory--rag-工具推薦按用途分類"></a>
-## 🎯 Hybrid Search 與 Reranking
-
-**BM25** 擅長找完全相同或接近的字；vector search 擅長找意思相近的句子。**Hybrid Search** 把兩種候選合在一起；**Reranking** 再看問題與候選片段的配對，把更有用的排前面。
-
-可從 [Qdrant hybrid queries](https://qdrant.tech/documentation/search/hybrid-queries/)、[Weaviate hybrid search](https://docs.weaviate.io/weaviate/concepts/search/hybrid-search) 或 PostgreSQL full-text search + [pgvector](https://github.com/pgvector/pgvector) 開始。效果與延遲必須用自己的查詢集測量。
-
 <a id="query-transformations--hyde--multi-query--rag-fusion"></a>
-### Query Transformations — HyDE、Multi-Query、RAG Fusion
-
-- **HyDE**：先產生一段假想答案，再用它找資料。適合使用者問題太短，但假想答案也可能帶偏搜尋。
-- **Multi-Query**：把同一問題改寫成數個角度，各自搜尋後合併結果。
-- **RAG Fusion**：對多個查詢結果做 rank fusion，降低只靠一次查詢措辭的風險。
-
-### 🔁 Self-RAG、CRAG、Adaptive RAG 與 Agentic RAG
-
-- **Self-RAG**：模型學習判斷何時檢索，並對證據與回答做反思。
-- **CRAG（Corrective RAG）**：先判斷取回內容是否夠好，不夠時改查詢或改來源。
-- **Adaptive RAG**：依問題難度選不同 retrieval 流程。
-- **Agentic RAG**：把 retrieval 做成工具，讓 agent 決定何時與如何使用；自由度增加，也增加延遲、成本與除錯難度。
-
-原始入口：[Self-RAG](https://arxiv.org/abs/2310.11511)、[CRAG](https://arxiv.org/abs/2401.15884)、[Adaptive-RAG](https://arxiv.org/abs/2403.14403)、[LangGraph Agentic RAG tutorial](https://docs.langchain.com/oss/python/langgraph/agentic-rag)。
-
 <a id="-raptor--階層式遞迴-retrievaliclr-2024"></a>
-### 🌳 RAPTOR — 用摘要樹找不同層次的內容
-
-**RAPTOR** 反覆群聚並摘要文字，形成由細到粗的樹。細節問題可以找葉節點，主題問題可以找較高層摘要。它和用 entity relationship 建圖的 GraphRAG 不同。[RAPTOR paper](https://arxiv.org/abs/2401.18059)。
-
 <a id="-dspy--不寫-prompt用-program-自動-optimizepath-3-paradigm"></a>
-### 🧬 DSPy — 用資料與指標調整 LLM program
-
-**DSPy** 把 prompt 與模組組成可最佳化的 program，再用 examples 與 metric 搜尋較好的設定。它不是「不用描述任務」，也不會替你自動修好壞資料。[stanfordnlp/dspy](https://github.com/stanfordnlp/dspy)。
-
-</details>
-
-<details markdown="1">
-<summary>Memory 設計：要記什麼、何時寫、何時忘</summary>
-
 <a id="stage-6--上下文管理context-engineeringrag-與-memory"></a>
 <a id="先把名詞切開retrieval--rag--vector-store--memory-不是同一件事"></a>
 <a id="-5-個可上線使用的-memory-layer按-use-case-挑"></a>
 <a id="2024-2026-最新-memory-作品--三條主軸"></a>
-## 🌉 從 RAG 到 Memory — 為什麼 RAG 還不夠
-
-RAG 通常從外部知識找資料；Memory 保存 agent 自己之後還需要的狀態。產品手冊適合放知識庫，使用者允許保存的偏好才適合放 memory。不要把整段聊天不加選擇地永久保存。
-
-## 🧠 Memory 是什麼 + 怎麼設計
-
-設計 Memory 時先回答四題：**寫什麼、何時寫、怎麼找、何時改或刪**。
-
-### Working memory vs Long-term memory — 兩種時間尺度
-
-- **Working memory**：目前任務正在使用的短期狀態，例如現在做到哪一步。
-- **Long-term memory**：跨 session 還需要的資訊，例如經使用者同意保存的偏好。
-
-### Episodic / Semantic / Procedural memory — 三種內容類型
-
-- **Episodic memory**：發生過什麼，例如上次部署失敗的原因。
-- **Semantic memory**：較穩定的事實，例如專案使用 Python 3.13。
-- **Procedural memory**：怎麼做，例如發版前的檢查步驟。
-
-### 3 種設計 pattern（什麼時候用什麼）⭐ Track B 必看
-
-1. **直接狀態表**：欄位清楚、容易查看與刪除，先從這裡開始。
-2. **可搜尋的文字 memory**：內容較自由，寫入時要保存來源、時間與擁有者。
-3. **時間知識圖譜**：關係會變、需要追蹤「何時有效」時才考慮，成本與治理最複雜。
-
-### ⭐ 現行 Memory 專案怎麼選
-
-- [Mem0](https://github.com/mem0ai/mem0)：Apache-2.0，可自架 library／server，也有託管服務；適合練習 add、search、update、delete 的記憶生命週期。
-- [Letta Code](https://github.com/letta-ai/letta-code)：Letta 現行開發入口，強調 stateful agent 與 memory；舊 `letta-ai/letta` V1 server 只作歷史參考。
-- [Graphiti](https://github.com/getzep/graphiti)：Apache-2.0 的 temporal context graph engine，適合研究會隨時間改變的關係。
-- [LangMem](https://github.com/langchain-ai/langmem)：MIT，與 LangGraph store 整合；適合已採用 LangGraph 的專案。
-- [Zep](https://github.com/getzep/zep)：現行產品以 Zep Cloud 與 examples／integrations 為主；Community Edition 已 deprecated 並移到 `legacy/`。
-
-### 進階：CoALA framework — agent memory 的 4 層 taxonomy
-
-**CoALA** 把 language agent memory 分成 working、episodic、semantic 與 procedural 等部分，並關注 memory 如何被寫入、讀取與更新。它是分析框架，不是必裝的資料庫。[CoALA paper](https://arxiv.org/abs/2309.02427)。
-
-### 進階：Generative Agents — 三分數打分（經典案例）
-
-Generative Agents 以 recency、importance、relevance 選擇要取回的記憶，再用 reflection 產生較高層摘要。這是研究設計，不代表每個 production system 都使用同一公式。[Generative Agents paper](https://arxiv.org/abs/2304.03442)。
-
-</details>
-
-<details markdown="1">
-<summary>Chunking、Reflexion 與評測：怎麼知道真的變好</summary>
-
-## 🧩 Chunking 細節（技術深入）
-
-Chunk 太大時，一張卡會混進太多主題；太小時，答案需要的上下文可能被切散。可先從文件本身的標題與段落切，再用測試調整。
-
-常見方法：
-
-- **Fixed-size**：容易重現，但可能在句子中間切開。
-- **Recursive／structure-aware**：先依標題、段落、句子切，通常較符合文件結構。
-- **Sentence window**：用小句子搜尋，取回時帶前後文。
-- **Parent-child／small-to-big**：小 chunk 負責搜尋，較大的 parent 負責回答。
-- **Semantic chunking**：依意思轉折切分，計算較多，也需要更仔細評測。
-
-每筆 chunk 至少保留來源文件、位置或頁碼、版本與存取權限。Overlap 不是越大越好；它會增加索引量與重複內容。
-
-## 🪞 進階：帶持久記憶的 Reflexion 完整版 ⭐ Track B 選讀
-
-**Reflexion** 讓 agent 在嘗試後寫下回饋，下一次再讀取。要成為真正的 persistent memory，回饋必須存到 process 結束後仍存在的儲存層，並且可以查看、修改與刪除。[Reflexion paper](https://arxiv.org/abs/2303.11366)。
-
-### 📚 想動手 / 想深入
-
-- 先替一個失敗案例寫一條短 reflection，再重跑同一題。
-- 比較「沒有 reflection」與「有 reflection」是否改善明確成功條件。
-- 不要保存模型臆測、秘密或無期限的使用者資料。
-
 <a id="-進階-reasoning--reflection--2024-2026-思潮--兩個-track-都看"></a>
 <a id="path-1prompt-based-reflection--reasoning傳統做法"></a>
 <a id="path-2trained-in-reasoning--reflection2024-2026-大轉折"></a>
 <a id="兩條路怎麼選"></a>
-## 🤔 進階 Reasoning / Reflection — 兩條路
+## 🧭 想深入？把 RAG 與 Memory 分開學
 
-- **Prompt-based reflection**：執行後用 prompt 檢查錯誤、產生改進建議；容易試驗，但可能重複同樣錯誤。
-- **Trained-in reasoning**：模型在訓練中學到更強的推理行為；使用者仍要檢查答案與證據，不能把隱藏推理當成可靠來源。
+這兩條是 Stage 6 的進階支線，不是新的先備條件。先完成上面的基本練習，再依問題選一條。
 
-## 📏 RAG / Memory Eval — 跑得起來 ≠ 跑得準
+### [進階 RAG：先找出哪一步壞了，再加新技巧](../resources/advanced-rag.md)
 
-至少分開量三件事：
+適合已經做出最小 RAG、但遇到「找不到、排序錯、跨文件關係難找」的人。頁面會完整解釋 **Hybrid Search**、**Reranking**、**HyDE**、**Multi-Query**、**RAG Fusion**、**Contextual Retrieval**、**GraphRAG**、**Self-RAG**、**CRAG**、**Adaptive RAG**、**Agentic RAG**、**RAPTOR** 與 **DSPy**，並保留必讀與五星資源表。
 
-1. **Retrieval**：正確證據有沒有被找回來？
-2. **Answer**：回答是否被證據支持、是否真的回答問題？
-3. **Memory**：該記的能否讀回、不該記的是否被拒絕或刪除？
+### [Agent Memory：只記值得記、允許記、能刪掉的事](../resources/agent-memory.md)
 
-建立一小組有人檢查過的問題、答案與來源。記錄每次變更前後的結果；不要只看一個總分。
+適合要做跨 session 助理、個人化或長期任務的人。頁面會完整解釋短期／長期，以及 **Semantic**、**Episodic**、**Procedural Memory**，再走過寫入、搜尋、更新、刪除、過期與使用者隔離；Mem0、Letta Code、LangMem、Graphiti 與研究資源都直接列在頁面上。
 
-- [Ragas](https://github.com/vibrantlabsai/ragas) — Apache-2.0 的 LLM application evaluation toolkit；現行 canonical owner 是 Vibrant Labs。
-- [TruLens](https://github.com/truera/trulens) — evaluation 與 observability 工具。
-- [LangSmith evaluation](https://docs.langchain.com/langsmith/evaluation) — LangChain 的託管 evaluation／tracing 服務。
-
-</details>
+**怎麼選：**答案需要更好的外部證據，走進階 RAG；助理下次還要讀回自身狀態，走 Agent Memory。兩者都需要時，分開測試，最後再接起來。
 
 <a id="-精選-projects範本--spec--範例-collection"></a>
 
 ## 🎯 精選 Projects 與學習資源
 
-先從 **LlamaIndex 或 LangChain + Chroma** 理解最小流水線；已有 PostgreSQL 才優先看 pgvector。不要一次安裝整張表。
+這裡只保留做出 Stage 6 基線需要的工具。進階技巧與 Memory 專案已移到上方兩個獨立頁面，避免一張表混在一起。
 
 <small>資料查核：2026-08-30 UTC</small>
 
@@ -351,32 +218,19 @@ Chunk 太大時，一張卡會混進太多主題；太小時，答案需要的�
     <tr><th scope="col">分類</th><th scope="col">專案</th><th scope="col">編輯評分</th><th scope="col">適合誰</th><th scope="col">能學什麼</th><th scope="col">狀態／限制</th></tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">RAG framework</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></td><td>⭐⭐⭐⭐⭐</td><td>文件型應用初學者</td><td>Index、retriever、query engine</td><td>MIT；套件多，先用官方 starter</td></tr>
-    <tr><td><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></td><td>⭐⭐⭐⭐⭐</td><td>想看完整 Web 產品的團隊</td><td>文件解析、hybrid retrieval、UI</td><td>Apache-2.0；部署比教學範例重</td></tr>
-    <tr><td><a href="https://github.com/HKUDS/LightRAG">LightRAG</a></td><td>⭐⭐⭐⭐</td><td>研究 graph-based RAG 的讀者</td><td>graph + vector retrieval</td><td>MIT；研究導向，不等同 Microsoft GraphRAG</td></tr>
-    <tr><td><a href="https://github.com/deepset-ai/haystack">Haystack</a></td><td>⭐⭐⭐⭐</td><td>想比較另一套 pipeline framework</td><td>components、pipelines、evaluation</td><td>Apache-2.0；先選一套 framework 練習</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">RAG framework</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></td><td>⭐⭐⭐⭐⭐</td><td>文件型應用初學者</td><td>Index、retriever、query engine</td><td>MIT；套件多，先用官方 starter</td></tr>
+    <tr><td><a href="https://github.com/deepset-ai/haystack">Haystack</a></td><td>⭐⭐⭐⭐</td><td>想比較模組化 pipeline</td><td>components、pipelines、routing</td><td>Apache-2.0；先選一套 framework 練習</td></tr>
+    <tr><td><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></td><td>⭐⭐⭐⭐</td><td>想看完整 Web 產品的團隊</td><td>文件解析、retrieval、UI</td><td>Apache-2.0；部署比教學範例重</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Vector data</th><td><a href="https://github.com/chroma-core/chroma">Chroma</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次在本機做向量搜尋</td><td>collection、add、query</td><td>Apache-2.0；練習與 production 設定不同</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Vector data</th><td><a href="https://github.com/chroma-core/chroma">Chroma</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次在本機做向量搜尋</td><td>collection、add、query</td><td>Apache-2.0；練習與 production 設定不同</td></tr>
     <tr><td><a href="https://github.com/qdrant/qdrant">Qdrant</a></td><td>⭐⭐⭐⭐⭐</td><td>需要自架或託管服務的團隊</td><td>dense、sparse、hybrid query</td><td>Apache-2.0；需規劃服務與備份</td></tr>
     <tr><td><a href="https://github.com/weaviate/weaviate">Weaviate</a></td><td>⭐⭐⭐⭐</td><td>需要 schema 與 hybrid search</td><td>BM25 + vector search</td><td>BSD-3-Clause；功能多，先做小型基線</td></tr>
     <tr><td><a href="https://github.com/pgvector/pgvector">pgvector</a></td><td>⭐⭐⭐⭐</td><td>已使用 PostgreSQL 的團隊</td><td>SQL 與 vector 同庫</td><td>PostgreSQL extension；仍需索引與查詢調校</td></tr>
-    <tr><td><a href="https://github.com/lancedb/lancedb">LanceDB</a></td><td>⭐⭐⭐⭐</td><td>想把 vector data 放進 app 的開發者</td><td>embedded／serverless vector workflows</td><td>Apache-2.0；依部署模式確認能力</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Agent memory</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>要做跨 session 偏好記憶</td><td>add、search、update、delete</td><td>Apache-2.0；OSS 與託管平台分開評估</td></tr>
-    <tr><td><a href="https://github.com/letta-ai/letta-code">Letta Code</a></td><td>⭐⭐⭐⭐</td><td>研究 stateful agent</td><td>memory-first agent runtime</td><td>Apache-2.0；舊 Letta V1 server 已退役</td></tr>
-    <tr><td><a href="https://github.com/getzep/graphiti">Graphiti</a></td><td>⭐⭐⭐⭐</td><td>需要時間關係圖的開發者</td><td>temporal context graph</td><td>Apache-2.0；需要圖資料庫與治理</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/langmem">LangMem</a></td><td>⭐⭐⭐⭐</td><td>已使用 LangGraph 的團隊</td><td>hot-path／background memory</td><td>MIT；依賴 LangGraph store 概念</td></tr>
-  </tbody>
-  <tbody>
-    <tr><th scope="rowgroup" rowspan="3">進階與評測</th><td><a href="https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide">Anthropic Contextual Retrieval cookbook</a></td><td>⭐⭐⭐⭐⭐</td><td>完成基礎 RAG 的讀者</td><td>contextual chunks 與評測</td><td>供應商範例；數字只適用其測試設定</td></tr>
-    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>⭐⭐⭐⭐⭐</td><td>已有 dataset 與 metric 的開發者</td><td>最佳化 LLM programs</td><td>MIT；不是初學 RAG 的第一步</td></tr>
-    <tr><td><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></td><td>⭐⭐⭐⭐⭐</td><td>要建立可重跑 eval 的團隊</td><td>datasets、metrics、experiments</td><td>Apache-2.0；metric 仍需人工校準</td></tr>
-  </tbody>
-  <tbody>
-    <tr><th scope="rowgroup" rowspan="2">完整產品與教學</th><td><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></td><td>⭐⭐⭐⭐⭐</td><td>想讀完整 AI assistant 架構</td><td>ingest、retrieval、chat、admin</td><td>完整產品很大；當架構參考，不當 starter</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>想比較多種技巧的讀者</td><td>可執行 notebooks 與技術對照</td><td>社群教學資源；事實仍回到官方文件與論文核對</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">評測與完整產品</th><td><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></td><td>⭐⭐⭐⭐⭐</td><td>要建立可重跑 eval 的團隊</td><td>datasets、metrics、experiments</td><td>Apache-2.0；metric 仍需人工校準</td></tr>
+    <tr><td><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></td><td>⭐⭐⭐⭐</td><td>想讀完整 AI assistant 架構</td><td>ingest、retrieval、chat、admin</td><td>完整產品很大；當架構參考，不當 starter</td></tr>
   </tbody>
 </table>
 

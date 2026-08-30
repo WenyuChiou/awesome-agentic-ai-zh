@@ -1072,11 +1072,11 @@ pages:
       en: stages/06-memory-rag.en.md
       zh-Hans: stages/06-memory-rag.zh-Hans.md
     max_visible_chars:
-      zh-TW: 7532
-      en: 11596
-      zh-Hans: 7580
+      zh-TW: 6300
+      en: 9900
+      zh-Hans: 6300
     max_open_details: 0
-    required_details_count: 5
+    required_details_count: 2
     visible_section_order:
       - learning-goals
       - core-terms
@@ -1090,6 +1090,7 @@ pages:
       - exercise-4
       - exercise-5
       - project
+      - deep-dives
       - projects
       - completion
     forbidden_terms:
@@ -1101,13 +1102,8 @@ pages:
       resource_url_ratings: true
       literals:
         - "2026-08-30"
-        - "5.7%"
-        - "1.9%"
-        - "top-20"
         - "MIT"
         - "Apache-2.0"
-        - "Zep Cloud"
-        - "letta-ai/letta-code"
         - "vibrantlabsai/ragas"
     required_visible_sections:
       learning-goals:
@@ -1158,6 +1154,10 @@ pages:
         zh-TW: {heading: "推薦小專案：會翻資料、也會記偏好的助理", anchor: 推薦小專案會翻資料也會記偏好的助理}
         en: {heading: "Recommended mini-project: an assistant that retrieves and remembers", anchor: recommended-mini-project-an-assistant-that-retrieves-and-remembers}
         zh-Hans: {heading: "推荐小项目：会查资料、也会记偏好的助理", anchor: 推荐小项目会查资料也会记偏好的助理}
+      deep-dives:
+        zh-TW: {heading: "🧭 想深入？把 RAG 與 Memory 分開學", anchor: -想深入把-rag-與-memory-分開學}
+        en: {heading: "🧭 Want to go deeper? Learn RAG and Memory separately", anchor: -want-to-go-deeper-learn-rag-and-memory-separately}
+        zh-Hans: {heading: "🧭 想深入？把 RAG 与 Memory 分开学", anchor: -想深入把-rag-与-memory-分开学}
       projects:
         zh-TW: {heading: "🎯 精選 Projects 與學習資源", anchor: -精選-projects-與學習資源}
         en: {heading: "🎯 Curated projects and learning resources", anchor: -curated-projects-and-learning-resources}
@@ -1168,7 +1168,7 @@ pages:
         zh-Hans: {heading: "✅ 进入 Stage 7 前的自我检查", anchor: -进入-stage-7-前的自我检查}
     visible_section_minimums:
       required-reading: {min_links: 4}
-      projects: {min_links: 18, min_ratings: 18}
+      projects: {min_links: 9, min_ratings: 9}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -1202,7 +1202,152 @@ pages:
           zh-TW: {term: Memory, label: "Memory（記憶）"}
           en: {term: Memory, label: Memory}
           zh-Hans: {term: Memory, label: "Memory（记忆）"}
-    resource_group_rowspans: [4, 5, 4, 3, 2]
+    resource_group_rowspans: [3, 4, 2]
+
+  - id: advanced-rag
+    canonical: resources/advanced-rag.md
+    mirrors:
+      en: resources/advanced-rag.en.md
+      zh-Hans: resources/advanced-rag.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 6600
+      en: 10900
+      zh-Hans: 6600
+    max_open_details: 0
+    required_details_count: 2
+    visible_section_order:
+      - learning-goals
+      - core-terms
+      - diagnosis
+      - required-reading
+      - learning-ladder
+      - experiment
+      - projects
+      - completion
+    forbidden_terms:
+      zh-TW: [explodinggradients/ragas, "★", '""', "“”"]
+      en: [explodinggradients/ragas, "★", '""', "“”"]
+      zh-Hans: [explodinggradients/ragas, "★", '""', "“”"]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+    required_visible_sections:
+      learning-goals:
+        zh-TW: {heading: "📌 學習目標", anchor: -學習目標}
+        en: {heading: "📌 Learning goals", anchor: -learning-goals}
+        zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
+      core-terms:
+        zh-TW: {heading: "🧩 先認識八個核心詞", anchor: -先認識八個核心詞}
+        en: {heading: "🧩 Eight core terms first", anchor: -eight-core-terms-first}
+        zh-Hans: {heading: "🧩 先认识八个核心术语", anchor: -先认识八个核心术语}
+      diagnosis:
+        zh-TW: {heading: "🩺 先看症狀，再選方法", anchor: -先看症狀再選方法}
+        en: {heading: "🩺 Start with the symptom, then choose a method", anchor: -start-with-the-symptom-then-choose-a-method}
+        zh-Hans: {heading: "🩺 先看症状，再选方法", anchor: -先看症状再选方法}
+      required-reading:
+        zh-TW: {heading: "📚 必修閱讀", anchor: -必修閱讀}
+        en: {heading: "📚 Required reading", anchor: -required-reading}
+        zh-Hans: {heading: "📚 必读材料", anchor: -必读材料}
+      learning-ladder:
+        zh-TW: {heading: "🪜 從基本到進階的順序", anchor: -從基本到進階的順序}
+        en: {heading: "🪜 The order from basic to advanced", anchor: -the-order-from-basic-to-advanced}
+        zh-Hans: {heading: "🪜 从基础到进阶的顺序", anchor: -从基础到进阶的顺序}
+      experiment:
+        zh-TW: {heading: "🛠 一個可重跑的小實驗", anchor: -一個可重跑的小實驗}
+        en: {heading: "🛠 A small rerunnable experiment", anchor: -a-small-rerunnable-experiment}
+        zh-Hans: {heading: "🛠 一个可重复运行的小实验", anchor: -一个可重复运行的小实验}
+      projects:
+        zh-TW: {heading: "🎯 精選 Projects 與學習資源", anchor: -精選-projects-與學習資源}
+        en: {heading: "🎯 Curated projects and learning resources", anchor: -curated-projects-and-learning-resources}
+        zh-Hans: {heading: "🎯 精选 Projects 与学习资源", anchor: -精选-projects-与学习资源}
+      completion:
+        zh-TW: {heading: "✅ 自我檢查", anchor: -自我檢查}
+        en: {heading: "✅ Self-check", anchor: -self-check}
+        zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
+    visible_section_minimums:
+      required-reading: {min_links: 6}
+      projects: {min_links: 12, min_ratings: 12}
+    resource_group_rowspans: [4, 4, 4]
+
+  - id: agent-memory
+    canonical: resources/agent-memory.md
+    mirrors:
+      en: resources/agent-memory.en.md
+      zh-Hans: resources/agent-memory.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 6000
+      en: 9800
+      zh-Hans: 6000
+    max_open_details: 0
+    required_details_count: 2
+    visible_section_order:
+      - learning-goals
+      - core-terms
+      - required-reading
+      - time-ranges
+      - content-types
+      - lifecycle
+      - design
+      - safety
+      - exercise
+      - projects
+      - completion
+    forbidden_terms:
+      zh-TW: ["★", '""', "“”", "Zep Community Edition 是現行主線"]
+      en: ["★", '""', "“”", "Zep Community Edition is the current mainline"]
+      zh-Hans: ["★", '""', "“”", "Zep Community Edition 是当前主线"]
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+    required_visible_sections:
+      learning-goals:
+        zh-TW: {heading: "📌 學習目標", anchor: -學習目標}
+        en: {heading: "📌 Learning goals", anchor: -learning-goals}
+        zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
+      core-terms:
+        zh-TW: {heading: "🧩 先把四樣東西分開", anchor: -先把四樣東西分開}
+        en: {heading: "🧩 Separate these four things first", anchor: -separate-these-four-things-first}
+        zh-Hans: {heading: "🧩 先把四样东西分开", anchor: -先把四样东西分开}
+      required-reading:
+        zh-TW: {heading: "📚 必修閱讀", anchor: -必修閱讀}
+        en: {heading: "📚 Required reading", anchor: -required-reading}
+        zh-Hans: {heading: "📚 必读材料", anchor: -必读材料}
+      time-ranges:
+        zh-TW: {heading: "⏱ 兩種時間範圍", anchor: -兩種時間範圍}
+        en: {heading: "⏱ Two time ranges", anchor: -two-time-ranges}
+        zh-Hans: {heading: "⏱ 两种时间范围", anchor: -两种时间范围}
+      content-types:
+        zh-TW: {heading: "🧠 三種內容類型", anchor: -三種內容類型}
+        en: {heading: "🧠 Three content types", anchor: -three-content-types}
+        zh-Hans: {heading: "🧠 三种内容类型", anchor: -三种内容类型}
+      lifecycle:
+        zh-TW: {heading: "🔄 一筆 Memory 的生命週期", anchor: -一筆-memory-的生命週期}
+        en: {heading: "🔄 A Memory lifecycle", anchor: -a-memory-lifecycle}
+        zh-Hans: {heading: "🔄 一笔 Memory 的生命周期", anchor: -一笔-memory-的生命周期}
+      design:
+        zh-TW: {heading: "🧱 先選最簡單的設計", anchor: -先選最簡單的設計}
+        en: {heading: "🧱 Choose the simplest design first", anchor: -choose-the-simplest-design-first}
+        zh-Hans: {heading: "🧱 先选最简单的设计", anchor: -先选最简单的设计}
+      safety:
+        zh-TW: {heading: "🛡️ Memory 的安全底線", anchor: -memory-的安全底線}
+        en: {heading: "🛡️ Memory safety floor", anchor: -memory-safety-floor}
+        zh-Hans: {heading: "🛡️ Memory 的安全底线", anchor: -memory-的安全底线}
+      exercise:
+        zh-TW: {heading: "🛠 一個最小 Memory 練習", anchor: -一個最小-memory-練習}
+        en: {heading: "🛠 A minimal Memory exercise", anchor: -a-minimal-memory-exercise}
+        zh-Hans: {heading: "🛠 一个最小 Memory 练习", anchor: -一个最小-memory-练习}
+      projects:
+        zh-TW: {heading: "🎯 精選 Projects 與學習資源", anchor: -精選-projects-與學習資源}
+        en: {heading: "🎯 Curated projects and learning resources", anchor: -curated-projects-and-learning-resources}
+        zh-Hans: {heading: "🎯 精选 Projects 与学习资源", anchor: -精选-projects-与学习资源}
+      completion:
+        zh-TW: {heading: "✅ 自我檢查", anchor: -自我檢查}
+        en: {heading: "✅ Self-check", anchor: -self-check}
+        zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
+    visible_section_minimums:
+      required-reading: {min_links: 5}
+      projects: {min_links: 11, min_ratings: 11}
+    resource_group_rowspans: [4, 3, 4]
 
   - id: stage-07
     canonical: stages/07-multi-agent-production.md

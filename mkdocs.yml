@@ -170,7 +170,10 @@ nav:
       - Stage 3 — Tool Use & Your First Agent Loop: stages/03-tool-use-and-hello-agent.md
       - Stage 4 — Workflow Graphs & Agent Frameworks: stages/04-agent-frameworks.md
       - Stage 5 — Claude Code Ecosystem: stages/05-claude-code-ecosystem.md
-      - Stage 6 — Memory & RAG: stages/06-memory-rag.md
+      - Stage 6 — Memory & RAG:
+          - Overview: stages/06-memory-rag.md
+          - Advanced RAG: resources/advanced-rag.md
+          - Agent Memory: resources/agent-memory.md
       - Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph: stages/07-multi-agent-production.md
       - Stage 7.5 — Advanced Agentic: stages/07.5-advanced-agentic-concepts.md
       - Stage 8 — Agent Interfaces: stages/08-agent-interfaces.md

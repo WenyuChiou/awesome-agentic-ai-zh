@@ -14,10 +14,20 @@ PAGES = {
     "en": ROOT / "stages/06-memory-rag.en.md",
     "zh-Hans": ROOT / "stages/06-memory-rag.zh-Hans.md",
 }
+ADVANCED_PAGES = {
+    "zh-TW": ROOT / "resources/advanced-rag.md",
+    "en": ROOT / "resources/advanced-rag.en.md",
+    "zh-Hans": ROOT / "resources/advanced-rag.zh-Hans.md",
+}
 DIAGRAMS = {
     "zh-TW": ROOT / "resources/diagrams/rag-pipeline-overview.png",
     "en": ROOT / "resources/diagrams/rag-pipeline-overview.en.png",
     "zh-Hans": ROOT / "resources/diagrams/rag-pipeline-overview.zh-Hans.png",
+}
+PIPELINE_HEADINGS = {
+    "zh-TW": "## 🌐 RAG 基礎流水線",
+    "en": "## 🌐 Basic RAG pipeline",
+    "zh-Hans": "## 🌐 RAG 基础流水线",
 }
 
 
@@ -83,16 +93,19 @@ def test_current_hybrid_search_sources_and_graphrag_status_are_locked() -> None:
         "zh-Hans": "维护模式",
     }
     for locale, page in PAGES.items():
-        text = page.read_text(encoding="utf-8")
-        assert langchain in text
-        assert old_langchain not in text
-        assert "2026-08-30" in text
-        assert qdrant in text
-        assert weaviate in text
-        assert not any(url in text for url in old_urls)
-        assert "https://github.com/microsoft/graphrag" in text
+        gateway = page.read_text(encoding="utf-8")
+        advanced = ADVANCED_PAGES[locale].read_text(encoding="utf-8")
+        combined = gateway + advanced
+        assert langchain in combined
+        assert old_langchain not in combined
+        assert "2026-08-30" in gateway
+        assert "2026-08-30" in advanced
+        assert qdrant in advanced
+        assert weaviate in advanced
+        assert not any(url in combined for url in old_urls)
+        assert "https://github.com/microsoft/graphrag" in advanced
         assert re.search(
-            rf"GraphRAG.{{0,500}}{maintenance_terms[locale]}", text, flags=re.DOTALL
+            rf"GraphRAG.{{0,500}}{maintenance_terms[locale]}", advanced, flags=re.DOTALL
         )
 
 
@@ -103,3 +116,16 @@ def test_pipeline_diagram_stays_inside_a_closed_disclosure() -> None:
         assert "rag-pipeline-overview" in detail
         opening = text[: text.index(detail)].rsplit("<details", 1)[-1].split(">", 1)[0]
         assert " open" not in opening
+
+
+def test_pipeline_heading_stays_visible_and_adjacent_to_its_disclosure() -> None:
+    for locale, page in PAGES.items():
+        text = page.read_text(encoding="utf-8")
+        heading = PIPELINE_HEADINGS[locale]
+        expected = (
+            f'{heading}\n\n<details markdown="1">\n'
+            "<summary>"
+        )
+        assert text.count(heading) == 1
+        assert expected in text
+        assert "\n## " not in _basic_pipeline_detail(text)

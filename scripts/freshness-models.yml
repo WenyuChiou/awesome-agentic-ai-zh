@@ -118,6 +118,9 @@ stage06_fact_pack:
     microsoft_graphrag_docs: 'https://microsoft.github.io/graphrag/'
     ragas: 'https://github.com/vibrantlabsai/ragas'
     mem0: 'https://github.com/mem0ai/mem0'
+    langchain_memory: 'https://docs.langchain.com/oss/python/concepts/memory'
+    langgraph_memory: 'https://docs.langchain.com/oss/python/langgraph/add-memory'
+    letta: 'https://github.com/letta-ai/letta'
     letta_code: 'https://github.com/letta-ai/letta-code'
     langmem: 'https://github.com/langchain-ai/langmem'
     zep: 'https://github.com/getzep/zep'
@@ -131,6 +134,43 @@ stage06_fact_pack:
     openai_retrieval: 'https://developers.openai.com/api/docs/guides/retrieval'
     ragas_metrics: 'https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/'
     lancedb: 'https://lancedb.github.io/lancedb/'
+
+advanced_rag_fact_pack:
+  canonical: 'resources/advanced-rag.md'
+  verified_on: '2026-08-30'
+  scope: ['rag', 'retrieval', 'reranking', 'graph-rag', 'evaluation', 'project-status']
+  official_sources:
+    langchain_retrieval: 'https://docs.langchain.com/oss/python/deepagents/retrieval'
+    anthropic_contextual_retrieval: 'https://www.anthropic.com/engineering/contextual-retrieval'
+    qdrant_hybrid_queries: 'https://qdrant.tech/documentation/search/hybrid-queries/'
+    weaviate_hybrid_search: 'https://docs.weaviate.io/weaviate/concepts/search/hybrid-search'
+    langgraph_agentic_rag: 'https://docs.langchain.com/oss/python/langgraph/agentic-rag'
+    microsoft_graphrag: 'https://github.com/microsoft/graphrag'
+    microsoft_graphrag_docs: 'https://microsoft.github.io/graphrag/'
+    ragas: 'https://github.com/vibrantlabsai/ragas'
+    ragas_metrics: 'https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/'
+    lightrag: 'https://github.com/HKUDS/LightRAG'
+    raptor: 'https://github.com/parthsarthi03/raptor'
+    dspy: 'https://github.com/stanfordnlp/dspy'
+
+agent_memory_fact_pack:
+  canonical: 'resources/agent-memory.md'
+  verified_on: '2026-08-30'
+  scope: ['memory', 'privacy', 'retention', 'isolation', 'project-status']
+  official_sources:
+    langchain_memory: 'https://docs.langchain.com/oss/python/concepts/memory'
+    langgraph_memory: 'https://docs.langchain.com/oss/python/langgraph/add-memory'
+    mem0: 'https://github.com/mem0ai/mem0'
+    memory_benchmarks: 'https://github.com/mem0ai/memory-benchmarks'
+    letta: 'https://github.com/letta-ai/letta'
+    letta_code: 'https://github.com/letta-ai/letta-code'
+    langmem: 'https://github.com/langchain-ai/langmem'
+    graphiti: 'https://github.com/getzep/graphiti'
+    zep: 'https://github.com/getzep/zep'
+  research_sources:
+    coala: 'https://arxiv.org/abs/2309.02427'
+    generative_agents: 'https://arxiv.org/abs/2304.03442'
+    reflexion: 'https://arxiv.org/abs/2303.11366'
 
 stage075_fact_pack:
   canonical: 'stages/07.5-advanced-agentic-concepts.md'
@@ -344,6 +384,12 @@ verified_pages:
     max_age_days: 90
   - canonical: 'stages/06-memory-rag.md'
     required_scopes: ['rag', 'retrieval', 'embeddings', 'vector-stores', 'memory', 'evaluation', 'project-status']
+    max_age_days: 90
+  - canonical: 'resources/advanced-rag.md'
+    required_scopes: ['rag', 'retrieval', 'reranking', 'graph-rag', 'evaluation', 'project-status']
+    max_age_days: 90
+  - canonical: 'resources/agent-memory.md'
+    required_scopes: ['memory', 'privacy', 'retention', 'isolation', 'project-status']
     max_age_days: 90
   - canonical: 'stages/07.5-advanced-agentic-concepts.md'
     required_scopes: ['agent-patterns', 'harnesses', 'evals', 'dynamic-workflows', 'framework-status', 'research']
@@ -716,27 +762,32 @@ stale_patterns:
     note: 'Stage 06 uses current embedding examples and must not recommend the legacy ada-002 model'
 
   - pattern: 'explodinggradients/ragas'
-    include_files: ['stages/06-memory-rag.md']
+    include_files: ['stages/06-memory-rag.md', 'resources/advanced-rag.md']
     qualifier_terms: ['former', 'previous', 'historical', '舊', '旧', '歷史', '历史', 'redirect']
     note: 'The canonical Ragas repository moved to vibrantlabsai/ragas'
 
   - pattern: 'Microsoft GraphRAG.{0,120}Apache-2\.0|Apache-2\.0.{0,120}Microsoft GraphRAG'
-    include_files: ['stages/06-memory-rag.md']
+    include_files: ['stages/06-memory-rag.md', 'resources/advanced-rag.md']
     qualifier_terms: []
     note: 'Microsoft GraphRAG is MIT licensed and currently largely in maintenance mode'
 
   - pattern: 'github\.com/letta-ai/letta(?!-code)'
-    include_files: ['stages/06-memory-rag.md']
-    qualifier_terms: ['historical', 'history', 'retired', 'landing page', '舊', '旧', '歷史', '历史', '退役', '入口']
-    note: 'Current Letta development lives in letta-ai/letta-code; the letta repository is a landing and V1 history page'
+    include_files: ['stages/06-memory-rag.md', 'resources/agent-memory.md']
+    qualifier_terms: ['historical', 'history', 'retired', 'landing page', 'archive branch', '舊', '旧', '歷史', '历史', '退役', '入口']
+    note: 'letta-ai/letta is now a project landing page; current source and App Server live in letta-ai/letta-code'
+
+  - pattern: 'github\.com/mem0ai/mem0/tree/main/evaluation'
+    include_files: ['resources/agent-memory.md']
+    qualifier_terms: []
+    note: 'The old Mem0 evaluation path is gone; use the canonical mem0ai/memory-benchmarks repository'
 
   - pattern: 'Zep Community Edition'
-    include_files: ['stages/06-memory-rag.md']
+    include_files: ['stages/06-memory-rag.md', 'resources/agent-memory.md']
     qualifier_terms: ['deprecated', 'legacy', 'historical', '歷史', '历史', '棄用', '弃用', '移到', 'moved']
     note: 'Zep Community Edition is deprecated and retained under legacy/'
 
   - pattern: '★\s*\d'
-    include_files: ['stages/06-memory-rag.md']
+    include_files: ['stages/06-memory-rag.md', 'resources/advanced-rag.md', 'resources/agent-memory.md']
     qualifier_terms: []
     note: 'Keep editorial ratings but do not freeze volatile GitHub star counts in Stage 06'
 

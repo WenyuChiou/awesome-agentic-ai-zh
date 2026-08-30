@@ -270,8 +270,8 @@ def test_visible_beginner_path_is_ordered_and_complete(locale: str) -> None:
 def test_closed_disclosures_render_their_markdown(locale: str) -> None:
     text = PAGES[locale].read_text(encoding="utf-8")
     openings = re.findall(r"^<details\b[^>]*>", text, flags=re.MULTILINE)
-    assert len(openings) == 5
-    assert openings == ['<details markdown="1">'] * 5
+    assert len(openings) == 2
+    assert openings == ['<details markdown="1">'] * 2
 
 
 @pytest.mark.parametrize("locale", PAGES)
@@ -284,8 +284,10 @@ def test_required_reading_and_rated_resources_stay_visible(locale: str) -> None:
         "https://docs.langchain.com/oss/python/langgraph/agentic-rag",
     ):
         assert url in visible
-    assert visible.count("<tr>") >= 19
-    assert visible.count("⭐") >= 18
+    assert "../resources/advanced-rag" in visible
+    assert "../resources/agent-memory" in visible
+    assert visible.count("<tr>") >= 10
+    assert visible.count("⭐") >= 9
 
 
 @pytest.mark.parametrize("locale", PAGES)
@@ -316,15 +318,13 @@ def test_exercise_5_does_not_overclaim_ephemeral_memory(locale: str) -> None:
 
 def test_three_locales_share_current_fact_urls_and_date() -> None:
     required = {
-        "https://github.com/microsoft/graphrag",
         "https://github.com/vibrantlabsai/ragas",
-        "https://github.com/letta-ai/letta-code",
-        "https://github.com/getzep/graphiti",
-        "https://github.com/mem0ai/mem0",
+        "https://github.com/run-llama/llama_index",
+        "https://github.com/chroma-core/chroma",
     }
     for page in PAGES.values():
         text = page.read_text(encoding="utf-8")
-        assert required <= set(re.findall(r"https://[^)\s<>]+", text))
+        assert all(url in text for url in required)
         assert "2026-08-30" in text
 
 
@@ -366,16 +366,16 @@ def test_stale_stage06_claims_are_absent(page: Path) -> None:
 
 
 @pytest.mark.parametrize("page", PAGES.values())
-def test_resource_table_uses_real_rowgroups_and_preserves_18_ratings(page: Path) -> None:
+def test_resource_table_uses_real_rowgroups_and_preserves_9_ratings(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     table = re.search(r"<table>.*?⭐{3,5}.*?</table>", text, flags=re.DOTALL)
     assert table, "missing grouped resource table"
     assert len(re.findall(r'<th scope="col">', table.group())) == 6
     groups = re.findall(r"<tbody>(.*?)</tbody>", table.group(), flags=re.DOTALL)
-    assert len(groups) == 5
-    expected = [4, 5, 4, 3, 2]
+    assert len(groups) == 3
+    expected = [3, 4, 2]
     for group, rows in zip(groups, expected):
         assert len(re.findall(r"<tr>", group)) == rows
         assert f'scope="rowgroup" rowspan="{rows}"' in group
-    assert sum(int(value) for value in re.findall(r'rowspan="(\d+)"', text)) == 18
-    assert len(re.findall(r"⭐{3,5}", text)) == 18
+    assert sum(int(value) for value in re.findall(r'rowspan="(\d+)"', text)) == 9
+    assert len(re.findall(r"⭐{3,5}", text)) == 9
