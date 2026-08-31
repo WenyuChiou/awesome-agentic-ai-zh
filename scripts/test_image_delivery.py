@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_current_repository_stays_inside_the_delivery_ratchet() -> None:
     metrics, errors = delivery.check_delivery(ROOT)
     assert not errors
-    assert metrics.png_count == 67
+    assert metrics.png_count == 70
     assert metrics.largest_image is not None
     assert metrics.heaviest_page is not None
 

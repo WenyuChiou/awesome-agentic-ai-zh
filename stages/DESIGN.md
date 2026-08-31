@@ -171,6 +171,8 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 
 多數 stage 保留以下 section；**呈現順序採漸進式揭露**。Stage 1 是第一個完成遷移的 pilot，其他 stage 在各自內容更新時逐章遷移，不要求在同一個 PR 一次重寫：
 
+Stage 1 的模型生命週期固定保持可見：`資料 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系統`。正文先粗體白話解釋 **Pre-training**、**Post-training**、**Fine-tuning** 與 **Inference**，再用三語同構亮色圖整理關係。圖與正文都要明說 Agent 是包住模型使用流程的系統，不是第七個模型 checkpoint；Prompt、RAG、Memory、Tools 與 Harness 通常不改模型權重。SFT、DPO 與 RLHF／RL 留在 Stage 1 可見主線；GRPO、PEFT／LoRA、Distillation 與 Quantization 由三語 `resources/model-training-guide*` 提供可見選修導覽。選修頁的名詞、必修閱讀、完整五星資源與完成檢查直接可見，只有實作前安全清單預設收合。Stage 6 提到 Fine-tuning 時必須連回同語言指南，避免把它誤當成 RAG 或保存最新資料的方法。
+
 Stage 2 的固定主線是「目標／資料／規則／輸出 → Zero-Shot／One-Shot／Few-Shot → Chain-of-Thought 的正確邊界 → 六筆固定案例 → 一次只改一件事 → 比較分數」。三語概念圖固定放在可見核心詞之後：先由正文定義，再用同構圖整理關係；圖片不能取代定義，也不能畫入正文已撤掉的固定數字。必修閱讀與 18 筆五星資源表保持可見；程式碼、模型比較與安全補充預設收合。CoT 必須先用白話解釋，但不當成要求模型公開完整內部推理的通用步驟。
 
 Stage 3 的章名與固定主線都把 **Agent Loop** 當成入口：「八個可見核心詞 → Tool Use 六步亮色圖 → 一般回答／Structured Output／Function Calling 的選擇 → 五條安全底線 → schema → Tool Call → 程式執行 → Tool Result → final answer → 有界 Agent Loop」。正文必須直接寫出 `model → tool call → execute → tool result → model`，避免只看章名還不知道 loop 是什麼。三語同構圖要清楚畫出模型只提出請求、程式先驗證再執行，以及 allowlist、HITL、最大輪數三個安全邊界；圖片不取代正文定義。三份必修閱讀、六題的標題／成果／第一個可複製動作，以及完整 21 筆五星編輯評分資源表保持可見；先備條件、環境、時間、預算、完整程式、供應商差異、費用、排錯與 Reflection 路由預設收合。ReAct 使用可觀察的 action／observation loop 教學，不要求公開私人 Chain-of-Thought。
@@ -284,9 +286,9 @@ README 的必讀入口、精選專案、相關資源與兩條 track 保持可見
 
 ### Resource hub 固定結構
 
-`resources/README*` 是工具櫃入口，不是第十二份教材。固定可見順序為「我現在卡在哪裡 → 五個資源類型核心詞 → 11 份完整參考資料 → 回主線的位置 → 30 秒完成檢查」。全部 11 份入口保持可見；只有「為什麼分檔」與 maintainer 規則放進兩個預設關閉的 `<details markdown="1">`。
+`resources/README*` 是工具櫃入口，不是第十三份教材。固定可見順序為「我現在卡在哪裡 → 五個資源類型核心詞 → 12 份完整參考資料 → 回主線的位置 → 30 秒完成檢查」。全部 12 份入口保持可見；只有「為什麼分檔」與 maintainer 規則放進兩個預設關閉的 `<details markdown="1">`。
 
-完整表固定使用 `4／2／2／2／1` 五個 `<tbody>`，以真正的 `scope="rowgroup"` 與 `rowspan` 合併同類型欄位。三語檔名、順序、用途與限制一致。不要放容易漂移的行數、GitHub stars 或舊產品名稱；新 reference 必須有獨立工作、被至少三個 stage／track／branch 使用，否則留在原章節。
+完整表固定使用 `4／2／3／2／1` 五個 `<tbody>`，以真正的 `scope="rowgroup"` 與 `rowspan` 合併同類型欄位。三語檔名、順序、用途與限制一致。不要放容易漂移的行數、GitHub stars 或舊產品名稱；新 reference 必須有獨立工作、被至少三個 stage／track／branch 使用，否則留在原章節。
 
 ### 課程地圖固定結構
 

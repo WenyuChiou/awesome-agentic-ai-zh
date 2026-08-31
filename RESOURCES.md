@@ -11,6 +11,7 @@
 | 我現在想要…… | 從這裡開始 | 編輯評分 |
 |---|---|---|
 | 從頭學 AI Agent | [Stage 0](stages/00-foundations.md) | ⭐⭐⭐⭐⭐ |
+| 分清模型怎麼學會與怎麼被使用 | [模型訓練與調整指南](resources/model-training-guide.md) | ⭐⭐⭐⭐⭐ |
 | 查一個不懂的詞 | [Glossary](resources/glossary.md) | ⭐⭐⭐⭐ |
 | 選一個 CLI Agent | [CLI Agents Guide](resources/cli-agents-guide.md) | ⭐⭐⭐⭐⭐ |
 | 把 Agent 接到外部工具 | [MCP／Skills Catalog](resources/mcp-skills-catalog.md) | ⭐⭐⭐⭐⭐ |
@@ -99,4 +100,5 @@
 
 - 不懂名詞：打開 [`resources/glossary.md`](resources/glossary.md)。
 - 想直接做：打開 [`resources/cookbook.md`](resources/cookbook.md)。
+- 想分清 Pre-training、Post-training 與 Fine-tuning：打開 [`resources/model-training-guide.md`](resources/model-training-guide.md)。
 - 想貢獻或翻譯：先看 [`resources/style-guide.md`](resources/style-guide.md) 與 [`CONTRIBUTING.md`](CONTRIBUTING.md)。

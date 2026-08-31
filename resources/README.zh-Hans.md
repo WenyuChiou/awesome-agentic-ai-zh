@@ -12,6 +12,7 @@
 |---|---|
 | 我完全没写过 code，不知道怎么开始 | [`setup-guide.zh-Hans.md`](setup-guide.zh-Hans.md) |
 | 我想按完整学习地图开始 | [主页](../README.zh-Hans.md) → [Stage 0](../stages/00-foundations.zh-Hans.md) |
+| 我分不清模型怎么学会、怎么被调整、什么时候只是在生成答案 | [`model-training-guide.zh-Hans.md`](model-training-guide.zh-Hans.md) |
 | 我看到一个词，但不知道意思 | [查词卡](glossary.zh-Hans.md) |
 | 我分不清这四个名字：OpenRouter＝统一模型 API／router；Ollama＝本地模型 runtime；OpenCode／Pi＝coding agent／toolkit | [`cli-agents-guide.zh-Hans.md`](cli-agents-guide.zh-Hans.md) |
 | 我想做出第一个操作卡（Skill）、工具接头（MCP server）或文档流程 | [实践食谱](cookbook.zh-Hans.md) |
@@ -31,7 +32,7 @@
 - **Catalog（目录）**：把很多工具放在同一处，方便搜索和比较。
 - **Glossary（词典）**：先给短定义，再把你送到讲得更完整的章节。
 
-## 📚 全部 11 份参考资料
+## 📚 全部 12 份参考资料
 
 同一类型已经合并在左栏。表格全部保持展开，因为读者要先看见有哪些入口。
 
@@ -48,7 +49,8 @@
 <tr><td><a href="schema-design-cheatsheet.zh-Hans.md">schema-design-cheatsheet.zh-Hans.md</a></td><td>工具选错或参数经常传错</td><td>不教完整 MCP server 安装</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">搜索与定位</th><td><a href="mcp-skills-catalog.zh-Hans.md">mcp-skills-catalog.zh-Hans.md</a></td><td>按工作类型寻找工具接头（MCP server）或操作卡（Skill）</td><td>收录不代表零风险或永远可用</td></tr>
+<tr><th scope="rowgroup" rowspan="3">搜索与定位</th><td><a href="model-training-guide.zh-Hans.md">model-training-guide.zh-Hans.md</a></td><td>分清 Pre-training、Post-training、Fine-tuning 与 Inference</td><td>不是从零训练模型的完整课程</td></tr>
+<tr><td><a href="mcp-skills-catalog.zh-Hans.md">mcp-skills-catalog.zh-Hans.md</a></td><td>按工作类型寻找工具接头（MCP server）或操作卡（Skill）</td><td>收录不代表零风险或永远可用</td></tr>
 <tr><td><a href="agent-paradigms.zh-Hans.md">agent-paradigms.zh-Hans.md</a></td><td>分清 agent 运行在终端、编辑器、云端还是自己的设备</td><td>不是产品排行榜</td></tr>
 </tbody>
 <tbody>
@@ -74,7 +76,7 @@
 - [ ] 我看完后，知道要回主线的哪一站。
 
 <details markdown="1">
-<summary>为什么不把 11 份资料合成一本书？</summary>
+<summary>为什么不把 12 份资料合成一本书？</summary>
 
 因为它们解决不同问题。Glossary 是 30 秒查词，Stage 是几分钟建立概念，Cookbook 是跟着做出成果，Catalog 则是需要时搜索工具。全部混成一本书，读者反而更难找到入口。
 
@@ -85,7 +87,7 @@
 <details markdown="1">
 <summary>Maintainer：三语覆盖与新增 reference 的规则</summary>
 
-上表 11 份资料都有繁中、英文与简中版本。新增 reference 前要同时符合：
+上表 12 份资料都有繁中、英文与简中版本。新增 reference 前要同时符合：
 
 1. 它有一个现有文件无法取代的工作。
 2. 至少三个 stage、track 或 branch 会需要它。

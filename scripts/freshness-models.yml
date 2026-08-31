@@ -11,9 +11,11 @@
 
 stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
-  verified_on: '2026-08-27'
-  scope: ['models', 'pricing', 'availability', 'deprecations']
+  verified_on: '2026-08-31'
+  scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
+    openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
+    google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
     claude: 'https://platform.claude.com/docs/en/models/overview'
     gpt: 'https://developers.openai.com/api/docs/models'
     gemini: 'https://ai.google.dev/gemini-api/docs/models'
@@ -325,8 +327,8 @@ courses_fact_pack:
 
 glossary_fact_pack:
   canonical: 'resources/glossary.md'
-  verified_on: '2026-08-30'
-  scope: ['protocols', 'product-identities', 'terminology', 'official-links']
+  verified_on: '2026-08-31'
+  scope: ['protocols', 'product-identities', 'terminology', 'official-links', 'model-lifecycle']
   official_sources:
     provider_api: 'https://platform.claude.com/docs/en/api/overview'
     openrouter_faq: 'https://openrouter.ai/docs/faq'
@@ -347,6 +349,19 @@ glossary_fact_pack:
     openai_harness_engineering: 'https://openai.com/index/harness-engineering/'
     ibm_loop_engineering: 'https://www.ibm.com/think/topics/loop-engineering'
     anthropic_context_engineering: 'https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents'
+
+model_training_fact_pack:
+  canonical: 'resources/model-training-guide.md'
+  verified_on: '2026-08-31'
+  scope: ['model-training', 'post-training', 'adaptation', 'compression', 'inference']
+  official_sources:
+    openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
+    openai_gpt_oss: 'https://openai.com/index/introducing-gpt-oss/'
+    google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
+    huggingface_trl: 'https://huggingface.co/docs/trl/quickstart'
+    huggingface_peft: 'https://huggingface.co/docs/peft/main/methods/overview'
+    huggingface_lora: 'https://huggingface.co/docs/peft/main/conceptual_guides/lora'
+    huggingface_quantization: 'https://huggingface.co/docs/transformers/main_classes/quantization'
 
 setup_guide_fact_pack:
   canonical: 'resources/setup-guide.md'
@@ -371,7 +386,10 @@ setup_guide_fact_pack:
 
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
-    required_scopes: ['models', 'pricing', 'availability', 'deprecations']
+    required_scopes: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
+    max_age_days: 90
+  - canonical: 'resources/model-training-guide.md'
+    required_scopes: ['model-training', 'post-training', 'adaptation', 'compression', 'inference']
     max_age_days: 90
   - canonical: 'stages/03-tool-use-and-hello-agent.md'
     required_scopes: ['models', 'pricing', 'tool-apis', 'security']
@@ -416,7 +434,7 @@ verified_pages:
     required_scopes: ['course-availability', 'cost', 'certificate', 'assessment', 'repository-status']
     max_age_days: 90
   - canonical: 'resources/glossary.md'
-    required_scopes: ['protocols', 'product-identities', 'terminology', 'official-links']
+    required_scopes: ['protocols', 'product-identities', 'terminology', 'official-links', 'model-lifecycle']
     max_age_days: 90
   - canonical: 'resources/setup-guide.md'
     required_scopes: ['install-paths', 'api-keys', 'authentication', 'provider-entrypoints', 'project-status']

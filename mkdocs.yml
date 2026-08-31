@@ -160,7 +160,9 @@ nav:
   - 書本版: https://wenyuchiou.github.io/awesome-agentic-ai-zh/book/
   - 共用基礎:
       - Stage 0 — Foundations: stages/00-foundations.md
-      - Stage 1 — LLM Basics: stages/01-llm-basics.md
+      - Stage 1 — LLM Basics:
+          - Overview: stages/01-llm-basics.md
+          - Model Training & Adaptation: resources/model-training-guide.md
       - Stage 2 — Prompt Engineering: stages/02-prompt-engineering.md
   - Track A — CLI:
       - A1 — CLI Intro: tracks/cli/A1-cli-intro.md

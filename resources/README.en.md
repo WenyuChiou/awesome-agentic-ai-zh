@@ -12,6 +12,7 @@ Think of this folder as a tool cabinet. When you get stuck, take only the card y
 |---|---|
 | I have never coded and do not know where to start | [`setup-guide.en.md`](setup-guide.en.md) |
 | I want to follow the complete learning map | [Home](../README.en.md) → [Stage 0](../stages/00-foundations.en.md) |
+| I cannot tell how models learn, how they are adapted, and when they are only producing an answer | [`model-training-guide.en.md`](model-training-guide.en.md) |
 | I see a term but do not know what it means | [Term lookup](glossary.en.md) |
 | I cannot tell these names apart: OpenRouter = unified model API/router; Ollama = local model runtime; OpenCode/Pi = coding agents/toolkits | [`cli-agents-guide.en.md`](cli-agents-guide.en.md) |
 | I want to build my first action card (Skill), tool connector (MCP server), or document workflow | [Hands-on recipes](cookbook.en.md) |
@@ -31,7 +32,7 @@ Think of this folder as a tool cabinet. When you get stuck, take only the card y
 - **Catalog**: keeps many tools in one searchable, comparable place.
 - **Glossary**: gives a short definition, then sends you to the chapter with the full explanation.
 
-## 📚 All 11 references
+## 📚 All 12 references
 
 The left column merges resources of the same type. This table stays visible because learners need to see which entrances exist.
 
@@ -48,7 +49,8 @@ The left column merges resources of the same type. This table stays visible beca
 <tr><td><a href="schema-design-cheatsheet.en.md">schema-design-cheatsheet.en.md</a></td><td>A tool or its parameters are often wrong</td><td>Does not teach complete MCP server installation</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Search and position</th><td><a href="mcp-skills-catalog.en.md">mcp-skills-catalog.en.md</a></td><td>Find a tool connector (MCP server) or action card (Skill) by job</td><td>Listing does not mean risk-free or permanently available</td></tr>
+<tr><th scope="rowgroup" rowspan="3">Search and position</th><td><a href="model-training-guide.en.md">model-training-guide.en.md</a></td><td>Separate Pre-training, Post-training, Fine-tuning, and Inference</td><td>Is not a complete course on training a model from scratch</td></tr>
+<tr><td><a href="mcp-skills-catalog.en.md">mcp-skills-catalog.en.md</a></td><td>Find a tool connector (MCP server) or action card (Skill) by job</td><td>Listing does not mean risk-free or permanently available</td></tr>
 <tr><td><a href="agent-paradigms.en.md">agent-paradigms.en.md</a></td><td>See whether an agent runs in a terminal, editor, cloud, or your own device</td><td>Is not a product leaderboard</td></tr>
 </tbody>
 <tbody>
@@ -74,7 +76,7 @@ The left column merges resources of the same type. This table stays visible beca
 - [ ] I know where to return on the main route afterward.
 
 <details markdown="1">
-<summary>Why not combine all 11 references into one book?</summary>
+<summary>Why not combine all 12 references into one book?</summary>
 
 They solve different problems. The Glossary is a 30-second lookup, a Stage builds a concept in a few minutes, the Cookbook helps you make something, and the Catalog helps you search for tools. Mixing them into one book would make the entrance harder to find.
 
@@ -85,7 +87,7 @@ For chapter-length Chinese lessons, continue with [Hello-Agents](https://github.
 <details markdown="1">
 <summary>Maintainers: locale coverage and rules for a new reference</summary>
 
-All 11 references above have Traditional Chinese, English, and Simplified Chinese versions. Before adding another reference, confirm all four rules:
+All 12 references above have Traditional Chinese, English, and Simplified Chinese versions. Before adding another reference, confirm all four rules:
 
 1. It has a job that no existing file can replace.
 2. At least three stages, tracks, or branches will need it.

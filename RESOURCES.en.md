@@ -11,6 +11,7 @@ You do not need to read the whole list. Pick the task you want to do now:
 | I want to… | Start here | Editorial rating |
 |---|---|---|
 | Learn AI agents from the beginning | [Stage 0](stages/00-foundations.en.md) | ⭐⭐⭐⭐⭐ |
+| Understand how models learn and how they are used | [Model training guide](resources/model-training-guide.en.md) | ⭐⭐⭐⭐⭐ |
 | Look up an unfamiliar term | [Glossary](resources/glossary.en.md) | ⭐⭐⭐⭐ |
 | Choose a CLI agent | [CLI Agents Guide](resources/cli-agents-guide.en.md) | ⭐⭐⭐⭐⭐ |
 | Connect an Agent to external tools | [MCP / Skills Catalog](resources/mcp-skills-catalog.en.md) | ⭐⭐⭐⭐⭐ |
@@ -99,4 +100,5 @@ The table below shows selected projects and official entry points directly. Star
 
 - Unclear term: open [`resources/glossary.en.md`](resources/glossary.en.md).
 - Want to build now: open [`resources/cookbook.en.md`](resources/cookbook.en.md).
+- Want to understand training choices: open [`resources/model-training-guide.en.md`](resources/model-training-guide.en.md).
 - Want to contribute or translate: read [`resources/style-guide.en.md`](resources/style-guide.en.md) and [`CONTRIBUTING.en.md`](CONTRIBUTING.en.md).

@@ -18,12 +18,16 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DIAGRAM_DIR = Path("resources/diagrams")
-MAX_PNG_COUNT = 67
-MAX_TOTAL_BYTES = 83_000_000
+# Stage 1's required trilingual model-lifecycle diagram raises the audited
+# baseline from 67 to 70 PNGs. The final visual-cleanup stack must lower both
+# limits again after deleting obsolete diagram triplets; this is not free
+# headroom for unrelated images.
+MAX_PNG_COUNT = 70
+MAX_TOTAL_BYTES = 86_700_000
 MAX_SINGLE_BYTES = 1_550_000
 MAX_PAGE_BYTES = 4_200_000
-EXPECTED_RENDERED_DIAGRAMS = 69
-EXPECTED_RENDERED_LAZY = 66
+EXPECTED_RENDERED_DIAGRAMS = 75
+EXPECTED_RENDERED_LAZY = 72
 EXPECTED_RENDERED_EAGER = 3
 
 IMAGE_LINK = re.compile(

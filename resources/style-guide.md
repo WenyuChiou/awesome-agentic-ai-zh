@@ -426,9 +426,9 @@ Cookbook 的用途、選擇表、核心詞、六份 recipe 標題、成果、第
 
 ### Resources 工具櫃入口
 
-`resources/README*` 先問讀者卡在哪裡，再用粗體白話定義 Reference、Guide、Cookbook、Catalog 與 Glossary。11 份 reference 的入口、用途、限制與回主線連結保持可見；只有分檔理由與 maintainer 規則收合。不要加會漂移的行數、GitHub stars 或把舊產品名稱寫成現行名稱。
+`resources/README*` 先問讀者卡在哪裡，再用粗體白話定義 Reference、Guide、Cookbook、Catalog 與 Glossary。12 份 reference 的入口、用途、限制與回主線連結保持可見；只有分檔理由與 maintainer 規則收合。不要加會漂移的行數、GitHub stars 或把舊產品名稱寫成現行名稱。
 
-完整入口表固定使用五個獨立 `<tbody>`，分類列數為 `4／2／2／2／1`。同類型只在第一列出現一次，使用 `scope="rowgroup"` 與真正 `rowspan`；不可用重複文字或空白儲存格假裝合併。三語檔名依 locale 指向自己的 mirror，順序與語意一致。
+完整入口表固定使用五個獨立 `<tbody>`，分類列數為 `4／2／3／2／1`。同類型只在第一列出現一次，使用 `scope="rowgroup"` 與真正 `rowspan`；不可用重複文字或空白儲存格假裝合併。三語檔名依 locale 指向自己的 mirror，順序與語意一致。
 
 ### Glossary 查字入口
 

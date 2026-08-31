@@ -11,6 +11,7 @@
 | 我现在想要…… | 从这里开始 | 编辑评分 |
 |---|---|---|
 | 从头学习 AI Agent | [Stage 0](stages/00-foundations.zh-Hans.md) | ⭐⭐⭐⭐⭐ |
+| 分清模型怎么学会与怎么被使用 | [模型训练与调整指南](resources/model-training-guide.zh-Hans.md) | ⭐⭐⭐⭐⭐ |
 | 查一个不懂的词 | [Glossary](resources/glossary.zh-Hans.md) | ⭐⭐⭐⭐ |
 | 选择一个 CLI Agent | [CLI Agents Guide](resources/cli-agents-guide.zh-Hans.md) | ⭐⭐⭐⭐⭐ |
 | 把 Agent 接到外部工具 | [MCP / Skills Catalog](resources/mcp-skills-catalog.zh-Hans.md) | ⭐⭐⭐⭐⭐ |
@@ -99,4 +100,5 @@
 
 - 不懂名词：打开 [`resources/glossary.zh-Hans.md`](resources/glossary.zh-Hans.md)。
 - 想直接做：打开 [`resources/cookbook.zh-Hans.md`](resources/cookbook.zh-Hans.md)。
+- 想了解训练选择：打开 [`resources/model-training-guide.zh-Hans.md`](resources/model-training-guide.zh-Hans.md)。
 - 想贡献或翻译：先看 [`resources/style-guide.zh-Hans.md`](resources/style-guide.zh-Hans.md) 和 [`CONTRIBUTING.zh-Hans.md`](CONTRIBUTING.zh-Hans.md)。

@@ -2,15 +2,16 @@
 
 > [繁體中文](./01-llm-basics.md) | **English** | [简体中文](./01-llm-basics.zh-Hans.md)
 
-> Purpose: follow a repeatable local-to-cloud path to call an LLM through an API (application programming interface), understand **Token**, **Context Window**, and **Temperature**, and explain model choices using cost and latency.
+> Purpose: first see how a model moves from data to an Agent, then use a repeatable local-to-cloud path to call an LLM through an API (application programming interface). You will understand **Token**, **Context Window**, and **Temperature**, and explain model choices using cost and latency.
 
-<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-31; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
 
 ## 📌 Learning Goals
 
 By the end of this stage, you can:
 
 - Make your first API call with a local Ollama model, then compare it with Anthropic.
+- Explain the order from Pre-training and Post-training to Inference.
 - Explain token, context window, and temperature with simple examples.
 - Read input and output token counts from a response's `usage` field.
 - Explain a model choice using input/output price, latency, and data sensitivity.
@@ -28,6 +29,23 @@ A Context Window is the token space a model can process for one request. Think o
 ### 3. **Temperature**
 
 Temperature controls how much sampling varies. Imagine choosing the next block from several candidates: a low value favors the most likely candidate, which suits classification and fixed formats; a high value tries less likely candidates more often, which can help brainstorming but may be less stable. This stage treats it as a knob for output stability; it does not add knowledge or guarantee exact reproducibility.
+
+## How a Model Moves from Data to an Agent
+
+Keep this main path in mind:
+
+`Data → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent system`
+
+- **Pre-training**: the model learns patterns from large amounts of text, images, or code. This changes the model weights.
+- **Post-training**: demonstrations, preferences, or feedback teach the model to follow instructions and act more safely. Common methods include **SFT**, **DPO**, and **RLHF/RL**; this also changes weights.
+- **Fine-tuning**: smaller, specialized data is used to continue changing model weights. Post-training is the broad later-training stage; Fine-tuning is one common kind of it.
+- **Inference**: after training, the model receives one input and produces one result. This uses the model; it does not retrain it.
+
+![Data passes through Pre-training and Post-training to make a model ready for Inference; Prompt, RAG, Memory, Tools, and Harness surround the model in an Agent system and usually do not change its weights](../resources/diagrams/model-lifecycle-to-agent.en.png)
+
+**Agent** is not the next model checkpoint in the training process. It is a system that connects a model with Prompt, RAG, Memory, Tools, and Harness. These parts usually work outside the model and do not change its weights.
+
+For SFT, DPO, RLHF/RL, GRPO, LoRA/PEFT, Distillation, and Quantization, open the [optional model training and adaptation guide](../resources/model-training-guide.en.md). Beginners do not need to train a model in this stage.
 
 ## Scene-Based Model Picker
 
@@ -64,15 +82,17 @@ The local path costs $0 per call (though it uses electricity and time). For 3–
 
 ## 📚 Required Reading
 
-Know where these five official entry points are; open them when needed instead of reading everything first.
+Know where these seven official entry points are; open them when needed instead of reading everything first.
 
-Read 1–3 before starting the exercises; consult 4–5 when you need tokenizer or local-runtime details:
+Read 1–3 before starting the exercises; consult 4–7 when you need model, tokenizer, or local-runtime details:
 
-1. [Anthropic Claude model overview](https://platform.claude.com/docs/en/models/overview) — model names, context, and pricing entry point.
-2. [OpenAI API models](https://developers.openai.com/api/docs/models) — model and pricing fields.
-3. [Google Gemini models](https://ai.google.dev/gemini-api/docs/models) — GA/Preview status and context.
-4. [Hugging Face LLM Course: Tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) — how tokenizers split text.
-5. [Ollama](https://ollama.com) — installing and serving local models.
+1. [OpenAI: how models are developed](https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/) — the relationship between data, training, and models.
+2. [Google Machine Learning: LLM tuning](https://developers.google.com/machine-learning/crash-course/llm/tuning) — the boundary between Prompt Engineering, Fine-tuning, and Distillation.
+3. [Anthropic Claude model overview](https://platform.claude.com/docs/en/models/overview) — model names, context, and pricing entry point.
+4. [OpenAI API models](https://developers.openai.com/api/docs/models) — model and pricing fields.
+5. [Google Gemini models](https://ai.google.dev/gemini-api/docs/models) — GA/Preview status and context.
+6. [Hugging Face LLM Course: Tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) — how tokenizers split text.
+7. [Ollama](https://ollama.com) — installing and serving local models.
 
 ## 🛠 Hands-On Exercises
 

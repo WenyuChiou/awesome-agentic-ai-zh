@@ -49,7 +49,7 @@ By the end of this stage, you can:
 | The data is short and needed only for this answer | **Long context** | Put it directly in this request for the shortest flow. |
 | There are many documents and you only know which passages matter after the question arrives | **RAG** | Retrieve relevant passages instead of sending every document every time. |
 | The assistant must remember preferences, task state, or results next time | **Memory** | Write reusable information to a storage layer that can be read again. |
-| You want to consistently change model behavior or a capability | **Fine-tuning** | It changes behavior; it does not automatically provide current documents. |
+| You want to consistently change model behavior or a capability | [**Fine-tuning**](../resources/model-training-guide.en.md) | It adjusts model weights and behavior; it does not automatically provide current documents. |
 
 No option is always best. Evaluate using your own data, questions, and success criteria.
 

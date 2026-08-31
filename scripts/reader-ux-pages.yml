@@ -84,9 +84,9 @@ pages:
       en: stages/01-llm-basics.en.md
       zh-Hans: stages/01-llm-basics.zh-Hans.md
     max_visible_chars:
-      zh-TW: 7162
-      en: 10785
-      zh-Hans: 7156
+      zh-TW: 8197
+      en: 12475
+      zh-Hans: 8222
     max_open_details: 3
     required_visible_sections:
       core-terms:
@@ -99,6 +99,16 @@ pages:
         zh-Hans:
           heading: "三个核心词"
           anchor: 三个核心词
+      model-lifecycle:
+        zh-TW:
+          heading: "模型怎麼從資料走到 Agent？"
+          anchor: 模型怎麼從資料走到-agent
+        en:
+          heading: "How a Model Moves from Data to an Agent"
+          anchor: how-a-model-moves-from-data-to-an-agent
+        zh-Hans:
+          heading: "模型如何从数据走到 Agent？"
+          anchor: 模型如何从数据走到-agent
       required-reading:
         zh-TW:
           heading: "📚 必修閱讀"
@@ -150,7 +160,7 @@ pages:
           heading: "练习 6：Local LLM"
           anchor: 练习-6local-llm
     visible_section_minimums:
-      required-reading: {min_links: 5}
+      required-reading: {min_links: 7}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -1073,7 +1083,7 @@ pages:
       zh-Hans: stages/06-memory-rag.zh-Hans.md
     max_visible_chars:
       zh-TW: 6300
-      en: 9900
+      en: 10003
       zh-Hans: 6300
     max_open_details: 0
     required_details_count: 2
@@ -2927,9 +2937,9 @@ pages:
       en: RESOURCES.en.md
       zh-Hans: RESOURCES.zh-Hans.md
     max_visible_chars:
-      zh-TW: 5389
-      en: 7352
-      zh-Hans: 5459
+      zh-TW: 5526
+      en: 7576
+      zh-Hans: 5657
     max_open_details: 0
     required_details_count: 1
     visible_section_order:
@@ -2979,9 +2989,9 @@ pages:
       en: resources/README.en.md
       zh-Hans: resources/README.zh-Hans.md
     max_visible_chars:
-      zh-TW: 3454
-      en: 5148
-      zh-Hans: 3839
+      zh-TW: 3676
+      en: 5522
+      zh-Hans: 4143
     max_open_details: 0
     required_details_count: 2
     visible_section_order:
@@ -3008,9 +3018,9 @@ pages:
         en: {heading: "🧩 Five words to know first", anchor: -five-words-to-know-first}
         zh-Hans: {heading: "🧩 先分清五个词", anchor: -先分清五个词}
       references:
-        zh-TW: {heading: "📚 全部 11 份參考資料", anchor: -全部-11-份參考資料}
-        en: {heading: "📚 All 11 references", anchor: -all-11-references}
-        zh-Hans: {heading: "📚 全部 11 份参考资料", anchor: -全部-11-份参考资料}
+        zh-TW: {heading: "📚 全部 12 份參考資料", anchor: -全部-12-份參考資料}
+        en: {heading: "📚 All 12 references", anchor: -all-12-references}
+        zh-Hans: {heading: "📚 全部 12 份参考资料", anchor: -全部-12-份参考资料}
       return-route:
         zh-TW: {heading: "🔁 看完要回哪裡？", anchor: -看完要回哪裡}
         en: {heading: "🔁 Where do you return next?", anchor: -where-do-you-return-next}
@@ -3020,7 +3030,7 @@ pages:
         en: {heading: "✅ 30-second completion check", anchor: -30-second-completion-check}
         zh-Hans: {heading: "✅ 30 秒完成检查", anchor: -30-秒完成检查}
     visible_section_minimums:
-      references: {min_links: 11}
+      references: {min_links: 12}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: references
@@ -3046,7 +3056,66 @@ pages:
           zh-TW: {term: Glossary, label: "Glossary（詞典）"}
           en: {term: Glossary, label: Glossary}
           zh-Hans: {term: Glossary, label: "Glossary（词典）"}
-    resource_group_rowspans: [4, 2, 2, 2, 1]
+    resource_group_rowspans: [4, 2, 3, 2, 1]
+
+  - id: model-training-guide
+    canonical: resources/model-training-guide.md
+    mirrors:
+      en: resources/model-training-guide.en.md
+      zh-Hans: resources/model-training-guide.zh-Hans.md
+    max_visible_chars:
+      zh-TW: 3975
+      en: 5840
+      zh-Hans: 3986
+    max_open_details: 0
+    required_details_count: 1
+    visible_section_order:
+      - lifecycle
+      - methods
+      - boundary
+      - resources
+      - exercise
+      - completion
+    parity:
+      ordered_external_urls: true
+      resource_url_ratings: true
+      literals:
+        - "2026-08-31"
+        - "Pre-training"
+        - "Post-training"
+        - "Fine-tuning"
+        - "Inference"
+        - "GRPO"
+        - "LoRA"
+        - "Quantization"
+    required_visible_sections:
+      lifecycle:
+        zh-TW: {heading: "🧭 先看整條路", anchor: -先看整條路}
+        en: {heading: "🧭 See the whole path first", anchor: -see-the-whole-path-first}
+        zh-Hans: {heading: "🧭 先看整条路", anchor: -先看整条路}
+      methods:
+        zh-TW: {heading: "🧩 先認識方法，不必先實作", anchor: -先認識方法不必先實作}
+        en: {heading: "🧩 Learn the methods without implementing them first", anchor: -learn-the-methods-without-implementing-them-first}
+        zh-Hans: {heading: "🧩 先认识方法，不必先实作", anchor: -先认识方法不必先实作}
+      boundary:
+        zh-TW: {heading: "不要把外部系統誤認成訓練", anchor: 不要把外部系統誤認成訓練}
+        en: {heading: "Do not mistake external systems for training", anchor: do-not-mistake-external-systems-for-training}
+        zh-Hans: {heading: "不要把外部系统误认成训练", anchor: 不要把外部系统误认成训练}
+      resources:
+        zh-TW: {heading: "📚 必修閱讀與精選資源", anchor: -必修閱讀與精選資源}
+        en: {heading: "📚 Required reading and selected resources", anchor: -required-reading-and-selected-resources}
+        zh-Hans: {heading: "📚 必修阅读与精选资源", anchor: -必修阅读与精选资源}
+      exercise:
+        zh-TW: {heading: "🛠 一個不花 GPU 的判斷練習", anchor: -一個不花-gpu-的判斷練習}
+        en: {heading: "🛠 A decision exercise with no GPU", anchor: -a-decision-exercise-with-no-gpu}
+        zh-Hans: {heading: "🛠 一个不花 GPU 的判断练习", anchor: -一个不花-gpu-的判断练习}
+      completion:
+        zh-TW: {heading: "✅ 完成檢查", anchor: -完成檢查}
+        en: {heading: "✅ Completion check", anchor: -completion-check}
+        zh-Hans: {heading: "✅ 完成检查", anchor: -完成检查}
+    visible_section_minimums:
+      resources: {min_links: 7, min_ratings: 7}
+    resource_group_rowspans: [2, 2, 3]
 
   - id: glossary
     canonical: resources/glossary.md
@@ -3054,9 +3123,9 @@ pages:
       en: resources/glossary.en.md
       zh-Hans: resources/glossary.zh-Hans.md
     max_visible_chars:
-      zh-TW: 12860
-      en: 21347
-      zh-Hans: 13154
+      zh-TW: 13589
+      en: 22756
+      zh-Hans: 13895
     max_open_details: 0
     required_details_count: 2
     visible_section_order:
@@ -3067,7 +3136,7 @@ pages:
     parity:
       ordered_external_urls: true
       literals:
-        - "2026-08-30"
+        - "2026-08-31"
         - "OpenRouter"
         - "Ollama"
         - "OpenCode"

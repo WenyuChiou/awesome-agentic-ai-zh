@@ -150,6 +150,50 @@
 
 **Chain-of-Thought（CoT）** 是讓模型經過中間推理步驟再回答的 prompting 研究方法。早期研究包含 [Few-shot CoT](https://arxiv.org/abs/2201.11903) 與 [Zero-shot CoT](https://arxiv.org/abs/2205.11916)。實作時通常要求簡短、可核對的理由與證據，不要求公開模型的私人推理全文。
 
+## 模型訓練與調整
+
+### Pre-training（預訓練）
+
+**Pre-training** 是用大量資料讓模型先學會一般模式。它會改變模型權重，產生之後還能繼續調整的 Base Model。
+
+### Post-training（後訓練）
+
+**Post-training** 是 Base Model 完成後的訓練階段。它用示範、偏好或回饋，讓模型更會照指令、安全地完成任務。
+
+### Inference（推論）
+
+**Inference** 是模型訓練完成後，收到這一次輸入並產生這一次結果。它是在使用模型，不是在重新訓練模型。
+
+### Fine-tuning（模型微調）
+
+**Fine-tuning** 用較小、較專門的資料繼續調整模型權重。它適合反覆出現的行為或格式；每天變動的事實通常改用 RAG 或工具讀取。
+
+### SFT（Supervised Fine-Tuning）
+
+**SFT** 把好輸入與好答案交給模型模仿。它是常見的 Post-training 方法，會調整模型權重。
+
+### DPO（Direct Preference Optimization）
+
+**DPO** 讓模型從「較好答案」與「較差答案」的配對中學習偏好。它需要可信的偏好資料，也會調整權重。
+
+### RLHF / RL
+
+**RLHF／RL** 用人類或規則的回饋來訓練模型。回饋設計錯誤時，模型也可能學會鑽評分漏洞，所以仍要做獨立 Eval。
+
+### GRPO
+
+**GRPO** 讓同一題的多個答案互相比較，再依相對表現更新模型。它是 Post-training 方法之一，不是每個專案都必須使用。
+
+### PEFT / LoRA
+
+**PEFT** 是只訓練較少參數的一組方法；**LoRA** 會凍結原本權重，再訓練新增的低秩矩陣。它們能減少需要更新的參數，但仍需要資料與 Eval。
+
+### Distillation（蒸餾）
+
+**Distillation** 讓較小的 Student Model 學習較大的 Teacher Model。目標常是縮小模型或降低推論成本，但效果要用自己的任務測試。
+
+📍 選修導覽：[模型訓練與調整指南](model-training-guide.md)
+
 ## 2. Agent / 工具使用
 
 ### Agent（代理人）
@@ -239,10 +283,6 @@
 ### Contextual Retrieval
 
 **Contextual Retrieval** 先替每個 chunk 補上它在原文件裡的簡短背景，再建立搜尋索引。Anthropic 的[方法說明](https://www.anthropic.com/engineering/contextual-retrieval)把 contextual embeddings 與 contextual BM25 一起評估；效果仍要用自己的資料測。
-
-### Fine-tuning（模型微調）
-
-**Fine-tuning** 用訓練資料調整模型權重，適合反覆出現的行為或格式。它不適合拿來保存每天改變的事實；這類資料通常用 RAG 或工具讀取。
 
 ## 4. Multi-Agent
 
@@ -447,8 +487,8 @@
 
 上面的易變產品與協定敘述只採官方文件；研究名詞連回原始 paper。完整型號、價格與 Context 清單集中在 Stage 1，不在詞典複製。
 
-<small>官方連結與產品身分查核：2026-08-30 UTC。</small>
+<small>官方連結、產品身分與模型生命週期查核：2026-08-31 UTC。</small>
 
-<!-- freshness: canonical=resources/glossary.md; verified_on=2026-08-30; scope=protocols,product-identities,terminology,official-links; max_age_days=90 -->
+<!-- freshness: canonical=resources/glossary.md; verified_on=2026-08-31; scope=protocols,product-identities,terminology,official-links,model-lifecycle; max_age_days=90 -->
 
 </details>

@@ -2,15 +2,16 @@
 
 > **繁體中文** | [简体中文](./01-llm-basics.zh-Hans.md) | [English](./01-llm-basics.en.md)
 
-> 本章目的：用一條可重複的本機到雲端路徑，學會透過 API（應用程式介面）呼叫 LLM，讀懂 **Token（詞元）**、**Context Window（上下文視窗）** 與 **Temperature（溫度）**，再用成本與延遲做出可解釋的模型選擇。
+> 本章目的：先看懂模型怎麼從資料走到 Agent，再用一條可重複的本機到雲端路徑呼叫 LLM。你會讀懂 **Token（詞元）**、**Context Window（上下文視窗）** 與 **Temperature（溫度）**，也會用成本與延遲解釋模型選擇。
 
-<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-27; scope=models,pricing,availability,deprecations; max_age_days=90 -->
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-31; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
 
 ## 📌 學習目標
 
 完成本階段後，你可以：
 
 - 用 Ollama 的本機模型完成第一次 API 呼叫，再用 Anthropic API 做對照。
+- 說出模型從 Pre-training、Post-training 到 Inference 的順序。
 - 以簡單例子說明 token、context window 與 temperature。
 - 從回應的 usage 欄位讀出輸入與輸出 token。
 - 用輸入／輸出單價、延遲與資料敏感度解釋模型選擇。
@@ -28,6 +29,23 @@ Context Window 是模型處理一次請求時可用的 token 空間。它像桌�
 ### 3. **Temperature（溫度）**
 
 Temperature 是控制抽樣變化程度的參數。把模型想成每次都從幾塊候選積木中挑下一塊：低值偏向最可能的候選，適合分類或固定格式；高值更常嘗試其他候選，適合構思但可能更不穩定。本章把它當成輸出穩定度的旋鈕；它不會增加模型知識，也不會保證完全可重現。
+
+## 模型怎麼從資料走到 Agent？
+
+先記住一條主線：
+
+`資料 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系統`
+
+- **Pre-training（預訓練）**：模型先從大量資料學習文字、圖片或程式碼裡的模式。這一步會改變模型權重。
+- **Post-training（後訓練）**：再教模型怎麼照指令、比較偏好，並更安全地完成任務。常見方法有 **SFT**、**DPO**、**RLHF／RL**；這一步也會改變權重。
+- **Fine-tuning（微調）**：拿較小、較專門的資料繼續調整模型權重。Post-training 是廣義的後續訓練階段；Fine-tuning 是其中常見的一類做法。
+- **Inference（推論）**：訓練完成後，模型收到這次輸入並產生這次結果。這是在使用模型，不是在重新訓練它。
+
+![資料經過 Pre-training 與 Post-training 變成可供 Inference 使用的模型；Prompt、RAG、Memory、Tools 與 Harness 在 Agent 系統中包住模型，通常不改模型權重](../resources/diagrams/model-lifecycle-to-agent.png)
+
+**Agent** 不是訓練流程的下一個模型版本。它是把模型、Prompt、RAG、Memory、Tools 與 Harness 接在一起的系統。這些零件通常在模型外面工作，不會改變模型權重。
+
+想知道 SFT、DPO、RLHF／RL、GRPO、LoRA／PEFT、Distillation 與 Quantization 各自做什麼，請打開[模型訓練與調整選修指南](../resources/model-training-guide.md)。初學本章不用自己訓練模型。
 
 ## 場景式模型選擇器
 
@@ -64,15 +82,17 @@ Path A 需要 [Ollama](https://ollama.com)、`pip install openai`，以及 `olla
 
 ## 📚 必修閱讀
 
-先知道這五個官方入口；需要時再展開，不必讀完才開始練習。
+先知道這七個官方入口；不必讀完才開始練習。
 
-依序閱讀 1–3 後開始練習；4–5 在需要理解 token 或本機部署時查閱：
+依序閱讀 1–3 後開始練習；4–7 在需要理解模型型號、token 或本機部署時查閱：
 
-1. [Anthropic Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) — 型號、context 與價格入口。
-2. [OpenAI API 模型文件](https://developers.openai.com/api/docs/models) — 型號與計價欄位。
-3. [Google Gemini 模型文件](https://ai.google.dev/gemini-api/docs/models) — GA／Preview 狀態與 context。
-4. [Hugging Face LLM Course：Tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) — tokenizer 如何切分文字。
-5. [Ollama 官方網站](https://ollama.com) — 本機模型安裝與服務啟動。
+1. [OpenAI：模型如何開發](https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/) — 先看資料、訓練與模型之間的關係。
+2. [Google Machine Learning：LLM 調整](https://developers.google.com/machine-learning/crash-course/llm/tuning) — 分清 Prompt Engineering、Fine-tuning 與 Distillation。
+3. [Anthropic Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) — 型號、context 與價格入口。
+4. [OpenAI API 模型文件](https://developers.openai.com/api/docs/models) — 型號與計價欄位。
+5. [Google Gemini 模型文件](https://ai.google.dev/gemini-api/docs/models) — GA／Preview 狀態與 context。
+6. [Hugging Face LLM Course：Tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) — tokenizer 如何切分文字。
+7. [Ollama 官方網站](https://ollama.com) — 本機模型安裝與服務啟動。
 
 ## 🛠 動手練習
 

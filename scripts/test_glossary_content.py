@@ -87,6 +87,17 @@ PUBLISHED_TERMS = (
     "gVisor",
 )
 NEW_TERMS = ("Model Runtime", "Workflow Graph", "Agent Harness")
+MODEL_LIFECYCLE_TERMS = (
+    "Pre-training",
+    "Post-training",
+    "Inference",
+    "SFT",
+    "DPO",
+    "RLHF / RL",
+    "GRPO",
+    "PEFT / LoRA",
+    "Distillation",
+)
 CORE_TERMS = (
     "Prompt",
     "Token",
@@ -111,8 +122,8 @@ IDENTITY_URLS = (
 )
 FRESHNESS = (
     "<!-- freshness: canonical=resources/glossary.md; "
-    "verified_on=2026-08-30; "
-    "scope=protocols,product-identities,terminology,official-links; "
+    "verified_on=2026-08-31; "
+    "scope=protocols,product-identities,terminology,official-links,model-lifecycle; "
     "max_age_days=90 -->"
 )
 
@@ -168,8 +179,8 @@ def test_every_published_term_and_new_boundary_term_stays_visible(page: Path) ->
     text = page.read_text(encoding="utf-8")
     visible = _without_details(text)
     headings = re.findall(r"^### (.+)$", visible, flags=re.MULTILINE)
-    assert len(headings) == 71
-    for term in (*PUBLISHED_TERMS, *NEW_TERMS):
+    assert len(headings) == 80
+    for term in (*PUBLISHED_TERMS, *NEW_TERMS, *MODEL_LIFECYCLE_TERMS):
         assert any(heading.startswith(term) for heading in headings), term
 
 
@@ -259,12 +270,13 @@ def test_freshness_config_enrols_the_glossary_fact_pack_and_page() -> None:
     config = yaml.safe_load((ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8"))
     pack = config["glossary_fact_pack"]
     assert pack["canonical"] == "resources/glossary.md"
-    assert pack["verified_on"] == "2026-08-30"
+    assert pack["verified_on"] == "2026-08-31"
     assert pack["scope"] == [
         "protocols",
         "product-identities",
         "terminology",
         "official-links",
+        "model-lifecycle",
     ]
     assert pack["official_sources"]["mlx_lm"] == "https://github.com/ml-explore/mlx-lm"
     assert pack["official_sources"]["claude_prompt_caching"] == (
