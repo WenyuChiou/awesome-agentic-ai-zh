@@ -63,6 +63,11 @@ _THEME_SEARCH_SHARE = re.compile(
     r'[^>]*?\bhref\s*=\s*)(["\'])javascript:void\(0\)\2',
     re.IGNORECASE,
 )
+_LANGUAGE_ALTERNATE_LINK = re.compile(
+    r'\s*<link\b(?=[^>]*\brel=["\']alternate["\'])'
+    r'(?=[^>]*\bhreflang=["\'][^"\']+["\'])[^>]*>\s*',
+    re.IGNORECASE,
+)
 
 # Markdown renders a standalone image as ``<p><img ...></p>``.  Diagram text is
 # intentionally kept in the PNG so GitHub and the docs site show the same visual,
@@ -306,9 +311,6 @@ def add_locale_metadata(
         output,
         count=1,
     )
-    if 'rel="alternate"' in output.split("</head>", 1)[0]:
-        return output
-
     base = site_url.rstrip("/") + "/"
     neutral_stem, _ = _strip_locale_suffix(src_path.replace("\\", "/"))
     canonical_source = f"{neutral_stem}.md"
@@ -320,7 +322,14 @@ def add_locale_metadata(
         f'<link rel="alternate" hreflang="x-default" '
         f'href="{base + _site_path_for_source(canonical_source, locale="zh-TW")}">'
     )
-    return output.replace("</head>", "\n    " + "\n    ".join(links) + "\n  </head>", 1)
+    head, separator, tail = output.partition("</head>")
+    if not separator:
+        return output
+    # mkdocs-static-i18n may run before or after this hook depending on the
+    # installed plugin version. Normalize its relative three-link set instead
+    # of returning early, so build order cannot change the public metadata.
+    head = _LANGUAGE_ALTERNATE_LINK.sub("\n", head)
+    return head + "\n    " + "\n    ".join(links) + "\n  </head>" + tail
 
 
 def sanitize_theme_placeholders(output: str) -> str:

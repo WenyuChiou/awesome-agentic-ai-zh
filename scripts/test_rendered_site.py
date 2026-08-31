@@ -244,6 +244,30 @@ def test_only_theme_search_share_placeholder_is_sanitized() -> None:
     assert 'href="javascript:alert(1)"' in sanitized
 
 
+def test_metadata_replaces_plugin_relative_alternates() -> None:
+    plugin_links = "".join(
+        f'<link rel="alternate" hreflang="{language}" href="{href}">'
+        for language, href in (
+            ("zh-TW", "./"),
+            ("zh-Hans", "../zh-Hans/stages/page/"),
+            ("en", "../en/stages/page/"),
+        )
+    )
+    output = hooks.add_locale_metadata(
+        f'<html lang="zh"><head>{plugin_links}</head><body></body></html>',
+        src_path="stages/page.md",
+        site_url=SITE_URL,
+        page_url="stages/page/",
+    )
+
+    assert output.count('rel="alternate"') == 4
+    assert 'hreflang="x-default"' in output
+    assert 'href="./"' not in output
+    assert f'href="{SITE_URL}stages/page/"' in output
+    assert f'href="{SITE_URL}zh-Hans/stages/page/"' in output
+    assert f'href="{SITE_URL}en/stages/page/"' in output
+
+
 @pytest.mark.parametrize(
     ("page_url", "label"),
     [
