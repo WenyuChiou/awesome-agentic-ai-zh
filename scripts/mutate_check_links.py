@@ -67,8 +67,8 @@ MUTANTS: list[tuple[str, str, str]] = [
      "    if probe.skipped:\n        return SKIPPED",
      '    if probe.detail.startswith("skipped"):\n        return SKIPPED'),
     ("connection errors treated as skips",
-     "    if probe.status is None:\n        return FAILED",
-     "    if probe.status is None:\n        return SKIPPED"),
+     "        return UNVERIFIABLE\n    if probe.status in UNVERIFIABLE_STATUSES",
+     "        return SKIPPED\n    if probe.status in UNVERIFIABLE_STATUSES"),
     ("4xx/5xx treated as OK",
      "    if probe.status >= 400:\n        return FAILED",
      "    if probe.status >= 400:\n        return OK"),
@@ -103,8 +103,8 @@ MUTANTS: list[tuple[str, str, str]] = [
      '    if url in LOGIN_GATED:\n        return Probe(url, None, "skipped (login-gated)", skipped=True)',
      "    pass"),
     ("code fences no longer stripped",
-     '    text = strip_code_blocks(\n        md_path.read_text(encoding="utf-8"), source=str(md_path)\n    )',
-     '    text = md_path.read_text(encoding="utf-8")'),
+     "    text = strip_code_blocks(text, source=source)",
+     "    text = text"),
 ]
 
 
