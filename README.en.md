@@ -25,7 +25,7 @@
 
 ## 🎯 What does this map help you do?
 
-An **AI Agent** is "a program that reads a goal, uses tools, and decides its next step from the result." You need no term up front — the map covers three things in order:
+An **AI Agent** is “an AI-powered system that acts on a person's behalf within clear rules.” Give it a goal and it reads the current state, chooses the next step, uses tools when needed, then, based on the result, continues, corrects course, stops, or hands control back to the person. A one-shot chatbot or a script with every step fixed in advance is not necessarily an Agent. You need no term up front — the map covers three things in order:
 
 1. **Get the basics**: what an LLM, a prompt, an API, and a token are.
 2. **Then build something**: let a model call tools, run an agent loop, read documents, remember things.

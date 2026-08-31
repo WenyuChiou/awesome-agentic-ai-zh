@@ -45,6 +45,39 @@ ENTRY_BOUNDARIES = {
     "zh-Hans": "走 Track A 或 Track B 前，先确认 Stage 0–2；只走日常用户路线的人可以直接打开角色指南。",
 }
 
+AGENT_DEFINITION_MARKERS = {
+    "zh-TW": (
+        "由 AI 驅動",
+        "替人完成事情",
+        "在規則內",
+        "選下一步",
+        "必要時使用工具",
+        "依結果",
+        "把控制權交還給人",
+        "不一定是 Agent",
+    ),
+    "en": (
+        "AI-powered",
+        "on a person's behalf",
+        "within clear rules",
+        "chooses the next step",
+        "uses tools when needed",
+        "based on the result",
+        "hands control back",
+        "not necessarily an Agent",
+    ),
+    "zh-Hans": (
+        "由 AI 驱动",
+        "替人完成事情",
+        "在规则内",
+        "选择下一步",
+        "需要时使用工具",
+        "根据结果",
+        "把控制权交还给人",
+        "不一定是 Agent",
+    ),
+}
+
 TRACK_A_LINKS = (
     "tracks/cli/A1-cli-intro",
     "tracks/cli/A2-cli-workflow",
@@ -113,6 +146,16 @@ def test_visible_mainline_keeps_reader_decisions_and_resources(locale: str, page
     for target in (*ROLE_LINKS, "resources/glossary", "resources/cookbook", "examples/README"):
         assert target in visible
     assert "<table>" in visible and "rowspan=" in visible
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_homepage_defines_an_agent_by_purpose_behavior_and_boundary(
+    locale: str, page: Path
+) -> None:
+    text = _text(page)
+    section = _section(text, HEADINGS[locale][0], HEADINGS[locale][1])
+    assert "**AI Agent**" in section
+    assert all(marker in section for marker in AGENT_DEFINITION_MARKERS[locale])
 
 
 @pytest.mark.parametrize("page", PAGES.values())

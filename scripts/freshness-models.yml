@@ -357,6 +357,8 @@ glossary_fact_pack:
   verified_on: '2026-08-31'
   scope: ['protocols', 'product-identities', 'terminology', 'official-links', 'model-lifecycle']
   official_sources:
+    openai_agent_guide: 'https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/'
+    anthropic_effective_agents: 'https://www.anthropic.com/engineering/building-effective-agents'
     provider_api: 'https://platform.claude.com/docs/en/api/overview'
     openrouter_faq: 'https://openrouter.ai/docs/faq'
     openrouter_routing: 'https://openrouter.ai/docs/guides/routing/provider-selection'
