@@ -58,7 +58,7 @@
 <tbody>
 <tr><th scope="rowgroup" rowspan="4">Desktop</th><td><a href="https://claude.com/download">Claude Desktop</a></td><td>Windows、macOS 与 Linux 的当前入口以官方页面为准</td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://chatgpt.com/download">ChatGPT Desktop</a></td><td>平台要求以官方下载页为准</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://gemini.google.com/mac">Gemini for macOS</a></td><td>目前是 macOS App；其他系统可使用 Web</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google/mac">Gemini for macOS</a></td><td>目前是 macOS App；其他系统可使用 Web</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://lmstudio.ai/download">LM Studio</a></td><td>本地模型 runtime 和图形界面；仍要管理模型、硬件和文件权限</td><td>⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>

@@ -58,7 +58,7 @@ The table below is an entry-point list, not a ranking. The recommendation rating
 <tbody>
 <tr><th scope="rowgroup" rowspan="4">Desktop</th><td><a href="https://claude.com/download">Claude Desktop</a></td><td>Use the official page for the current Windows, macOS, and Linux entry points</td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://chatgpt.com/download">ChatGPT Desktop</a></td><td>Use the official download page for platform requirements</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://gemini.google.com/mac">Gemini for macOS</a></td><td>Currently a macOS app; use the Web version on other systems</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google/mac">Gemini for macOS</a></td><td>Currently a macOS app; use the Web version on other systems</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://lmstudio.ai/download">LM Studio</a></td><td>Local-model runtime and graphical interface; you still manage models, hardware, and file permissions</td><td>⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
