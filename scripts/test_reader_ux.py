@@ -207,6 +207,18 @@ def test_empty_compatibility_anchors_do_not_count_as_visible_text() -> None:
     assert rc == 0, out
 
 
+def test_raw_html_attributes_do_not_count_as_visible_text() -> None:
+    body = '<div class="' + "x" * 800 + '" aria-label="screen reader">visible</div>\n'
+    rc, out = _run(body, config=_config(limit=80))
+    assert rc == 0, out
+
+
+def test_markdown_autolinks_and_angle_bracket_prose_still_count() -> None:
+    body = " ".join(["<https://example.com>", "x < y > z"] * 8)
+    rc, out = _run(body, config=_config(limit=80))
+    assert rc == 1 and "visible characters" in out, out
+
+
 def test_empty_anchor_literal_inside_fenced_code_still_counts() -> None:
     body = "```html\n" + '<a id="visible-code"></a>\n' * 8 + "```\n"
     rc, out = _run(body, config=_config(limit=80))

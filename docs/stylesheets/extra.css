@@ -145,6 +145,19 @@ body[data-md-color-scheme="slate"] {
 }
 
 /* ---- Tables: tighter, rounded, hover ---- */
+.md-typeset .resource-table-scroll {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+.md-typeset .resource-table-scroll:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+.md-typeset .resource-table-scroll > table.resource-table {
+  inline-size: 100%;
+  min-inline-size: 44rem;
+}
 .md-typeset table:not([class]) {
   border-radius: 10px;
   /* auto, not hidden. Any non-visible overflow value still gives the rounded

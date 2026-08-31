@@ -48,6 +48,7 @@
 
 下面直接顯示精選專案與官方入口。從你需要的分類開始看；更長的補充清單才放在收合選單。
 
+<div class="resource-table-scroll" role="region" tabindex="0" aria-label="精選資源表（可左右捲動）">
 <table class="resource-table">
 <thead><tr><th scope="col">分類</th><th scope="col">資源</th><th scope="col">能幫你什麼</th><th scope="col">狀態／限制</th><th scope="col">編輯評分</th></tr></thead>
 <tbody>
@@ -77,6 +78,7 @@
 <tr><th scope="rowgroup" rowspan="1">中文生態</th><td><a href="https://github.com/leemysw/feishu-docx">leemysw/feishu-docx</a></td><td>在飛書（Lark）文件與 Markdown 間轉換</td><td>社群工具；先確認文件分享與寫入權限</td><td>⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
+</div>
 
 <a id="research-workflow"></a>
 <a id="研究工作流本-repo-維護者出品"></a>

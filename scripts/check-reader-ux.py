@@ -45,9 +45,6 @@ SUMMARY_RE = re.compile(r"<summary\b[^>]*>(.*?)</summary>", re.IGNORECASE)
 HEADING_RE = re.compile(r"^#{1,6}\s+(.+?)\s*$")
 TAG_RE = re.compile(r"<[^>]+>")
 TH_RE = re.compile(r"<th\b[^>]*>", re.IGNORECASE)
-EMPTY_ANCHOR_RE = re.compile(
-    r"<a\b[^>]*(?:>\s*</a>|\s*/>)", re.IGNORECASE
-)
 INLINE_CODE_SPAN_RE = re.compile(
     r"(?<!`)(?P<ticks>`+)(?P<body>.*?)(?P=ticks)(?!`)"
 )
@@ -76,7 +73,9 @@ class PageMetrics:
 
 EXTERNAL_URL_RE = re.compile(r"https://[^\s<>)\"']+")
 RATING_RE = re.compile(r"(?<!⭐)(⭐{1,5})(?!⭐)")
-RAW_HTML_TAG_RE = re.compile(r'''<(?:"[^"]*"|'[^']*'|[^'">])*>''')
+RAW_HTML_TAG_RE = re.compile(
+    r'''</?[A-Za-z][A-Za-z0-9:-]*(?:\s+(?:"[^"]*"|'[^']*'|[^'"<>])*)?\s*/?>'''
+)
 ATTRIBUTE_MARKDOWN_LINK_RE = re.compile(r"!?\[([^]]+)]\([^)]+\)")
 HTML_ID_RE = re.compile(
     r"\bid\s*=\s*(?:\"([^\"]+)\"|'([^']+)'|([^\s>]+))",
@@ -119,16 +118,16 @@ def _without_all_html_comments(text: str) -> str:
     return re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
 
-def _without_empty_anchors_outside_inline_code(line: str) -> str:
-    """Drop renderless anchors while preserving literals shown in code spans."""
+def _without_html_tags_outside_inline_code(line: str) -> str:
+    """Measure rendered text, while preserving HTML literals shown as code."""
 
     parts: list[str] = []
     cursor = 0
     for match in INLINE_CODE_SPAN_RE.finditer(line):
-        parts.append(EMPTY_ANCHOR_RE.sub("", line[cursor : match.start()]))
+        parts.append(RAW_HTML_TAG_RE.sub("", line[cursor : match.start()]))
         parts.append(match.group(0))
         cursor = match.end()
-    parts.append(EMPTY_ANCHOR_RE.sub("", line[cursor:]))
+    parts.append(RAW_HTML_TAG_RE.sub("", line[cursor:]))
     return "".join(parts)
 
 
@@ -159,7 +158,7 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
             visible_measurement_lines.append(line)
         else:
             visible_measurement_lines.append(
-                _without_empty_anchors_outside_inline_code(line)
+                _without_html_tags_outside_inline_code(line)
             )
 
     for line_no, (line, in_code) in enumerate(zip(lines, code_flags), start=1):
@@ -219,8 +218,8 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
         errors.append("unclosed HTML comment")
 
     visible_source = "\n".join(visible_lines)
-    # Empty compatibility anchors keep old deep links working but render no
-    # text. Literals in fenced or inline code are visible and still count.
+    # Raw HTML tags and their attributes do not render as visible prose.
+    # Literals in fenced or inline code are visible and still count.
     visible_measurement_source = "\n".join(visible_measurement_lines)
     visible_chars = len(re.sub(r"\s+", "", visible_measurement_source))
     return PageMetrics(

@@ -285,6 +285,28 @@ def test_resources_grouped_highlights_have_exact_trilingual_parity() -> None:
     assert len(set(observed)) == 1
 
 
+def test_resources_keep_the_wide_table_inside_a_keyboard_scroll_region() -> None:
+    labels = {
+        "zh-TW": "精選資源表（可左右捲動）",
+        "en": "Selected resources table (scroll horizontally)",
+        "zh-Hans": "精选资源表（可左右滚动）",
+    }
+    for locale, page in TRIOS["resources"].items():
+        text = page.read_text(encoding="utf-8")
+        opening = (
+            '<div class="resource-table-scroll" role="region" tabindex="0" '
+            f'aria-label="{labels[locale]}">'
+        )
+        assert text.count(opening) == 1
+        assert text.index(opening) < text.index('<table class="resource-table">')
+        assert text.index("</table>") < text.index("</div>", text.index("</table>"))
+
+    css = (ROOT / "docs" / "stylesheets" / "extra.css").read_text(encoding="utf-8")
+    assert ".md-typeset .resource-table-scroll" in css
+    assert "overflow-x: auto" in css
+    assert "min-inline-size: 44rem" in css
+
+
 def test_resources_use_current_official_integrations_and_limits() -> None:
     required = (
         "https://developers.notion.com/guides/mcp/overview",
