@@ -158,6 +158,9 @@ jobs:
       - name: Check rendered image delivery
         run: python scripts/check-image-delivery.py --site _build/site
 
+      - name: Check rendered links, locale metadata, and public search
+        run: python scripts/check-rendered-site.py --site _build/site
+
       - name: Upload gate evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

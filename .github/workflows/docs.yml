@@ -67,6 +67,9 @@ jobs:
       - name: Verify rendered image delivery
         run: python scripts/check-image-delivery.py --site _build/site
 
+      - name: Verify rendered links, locale metadata, and public search
+        run: python scripts/check-rendered-site.py --site _build/site
+
       - name: Install mdBook
         run: |
           MDBOOK_VERSION="0.4.52"

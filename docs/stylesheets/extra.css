@@ -93,6 +93,26 @@ body[data-md-color-scheme="slate"] {
   background: var(--md-default-fg-color--lightest);
 }
 
+/* ---- Mobile reading and touch targets ---- */
+.md-header__button {
+  align-items: center;
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+.md-select__link {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  min-height: 44px;
+}
+.md-typeset a,
+.md-typeset code {
+  overflow-wrap: anywhere;
+}
+
 /* ---- Stat strip ---- */
 .aaz-stats {
   display: grid;
