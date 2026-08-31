@@ -427,6 +427,25 @@ def _inside_bold_span(text: str, span: tuple[int, int]) -> bool:
     return False
 
 
+def _html_strong_to_markdown(text: str) -> str:
+    """Preserve semantic HTML bold when normalizing visible prose."""
+    text = re.sub(r"<strong\b[^>]*>", "**", text, flags=re.IGNORECASE)
+    return re.sub(r"</strong\s*>", "**", text, flags=re.IGNORECASE)
+
+
+def _bold_label_spans(text: str, label: str) -> list[tuple[int, int]]:
+    """Find a bold label written as Markdown or accessible HTML."""
+    patterns = (
+        re.escape(f"**{label}**"),
+        rf"<strong\b[^>]*>\s*{re.escape(label)}\s*</strong\s*>",
+    )
+    return [
+        (match.start(), match.end())
+        for pattern in patterns
+        for match in re.finditer(pattern, text, flags=re.IGNORECASE)
+    ]
+
+
 def _core_term_errors(
     text: str,
     metrics: PageMetrics,
@@ -448,7 +467,12 @@ def _core_term_errors(
     if core_span[0] >= exercise_span[0]:
         return ["core terms section must appear before the first exercise"]
 
-    prose = TAG_RE.sub("", _without_link_destinations(strip_code_blocks(visible)))
+    prose = TAG_RE.sub(
+        "",
+        _html_strong_to_markdown(
+            _without_link_destinations(strip_code_blocks(visible))
+        ),
+    )
     # The page title may name the chapter topic. It is navigation, not the first
     # explanatory use, so exclude only the H1 line from the first-use check.
     first_use_lines: list[str] = []
@@ -476,13 +500,14 @@ def _core_term_errors(
             errors.append(f"first visible use of core term {term!r} must be bold")
 
         marker = f"**{label}**"
-        starts = [match.start() for match in re.finditer(re.escape(marker), core_block)]
-        if not starts:
+        spans = _bold_label_spans(core_block, label)
+        if not spans:
             errors.append(
                 f"core term {term!r} needs visible bold definition label {marker!r}"
             )
             continue
-        ordered_spans.append((starts[0], starts[0] + len(marker), term))
+        start, end = min(spans)
+        ordered_spans.append((start, end, term))
 
     if len(ordered_spans) == len(core_terms["terms"]):
         starts = [item[0] for item in ordered_spans]

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "verified_at": "2026-08-30T15:40:54Z",
-  "repository_count": 263,
+  "repository_count": 262,
   "repositories": {
     "01-ai/yi": {
       "requested": "01-ai/Yi",
@@ -1255,31 +1255,6 @@
         "resources/mcp-skills-catalog.en.md",
         "resources/mcp-skills-catalog.md",
         "resources/mcp-skills-catalog.zh-Hans.md"
-      ]
-    },
-    "comet-ml/opik": {
-      "requested": "comet-ml/opik",
-      "state": "verified",
-      "checked_at": "2026-08-30T15:40:54Z",
-      "api_status": 200,
-      "canonical": "comet-ml/opik",
-      "html_url": "https://github.com/comet-ml/opik",
-      "redirected": false,
-      "archived": false,
-      "disabled": false,
-      "visibility": "public",
-      "default_branch": "main",
-      "license": "Apache-2.0",
-      "pushed_at": "2026-08-30T14:52:53Z",
-      "latest_release": {
-        "tag": "2.2.44",
-        "published_at": "2026-08-28T11:15:11Z"
-      },
-      "reference_count": 3,
-      "sources": [
-        "stages/07-multi-agent-production.en.md",
-        "stages/07-multi-agent-production.md",
-        "stages/07-multi-agent-production.zh-Hans.md"
       ]
     },
     "composiohq/composio": {
@@ -4324,12 +4299,9 @@
       "license": "Apache-2.0",
       "pushed_at": "2026-08-30T15:27:24Z",
       "latest_release": null,
-      "reference_count": 4,
+      "reference_count": 1,
       "sources": [
-        "CHANGELOG.md",
-        "stages/07-multi-agent-production.en.md",
-        "stages/07-multi-agent-production.md",
-        "stages/07-multi-agent-production.zh-Hans.md"
+        "CHANGELOG.md"
       ]
     },
     "nvidia/openshell": {
@@ -6651,16 +6623,13 @@
       "license": "Apache-2.0",
       "pushed_at": "2026-08-28T16:56:33Z",
       "latest_release": null,
-      "reference_count": 20,
+      "reference_count": 17,
       "sources": [
         "CHANGELOG.md",
         "docs/plans/2026-08-27-track-a-progressive-disclosure.md",
         "resources/cli-agents-guide.en.md",
         "resources/cli-agents-guide.md",
         "resources/cli-agents-guide.zh-Hans.md",
-        "stages/07-multi-agent-production.en.md",
-        "stages/07-multi-agent-production.md",
-        "stages/07-multi-agent-production.zh-Hans.md",
         "tracks/cli/A1-cli-intro.en.md",
         "tracks/cli/A1-cli-intro.md",
         "tracks/cli/A1-cli-intro.zh-Hans.md"

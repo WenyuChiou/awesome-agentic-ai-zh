@@ -2,11 +2,11 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 5: Put an Agent Behind FastAPI and Docker
+# Core Exercise: Put an Agent Behind FastAPI and Docker
 
 You will wrap one model call in two HTTP endpoints: `/health` says the service process is alive, while `/chat` accepts a question and returns an answer.
 
-Pairs with Exercise 5 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
+Pairs with Core Exercise 4 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md). Complete Eval, Observability, and Safe Execution first, then make the service available to others.
 
 ## 🎯 Learning goals
 

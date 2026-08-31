@@ -2,11 +2,11 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 2：用 Eval 检查 Agent
+# 核心练习：用 Eval 检查 Agent
 
 **Eval（评测）**像一张固定考卷：每次改 Prompt、模型或程序后，都用同一批题目再考一次。
 
-对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 2。
+对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 1。
 
 ## 🎯 学习目标
 

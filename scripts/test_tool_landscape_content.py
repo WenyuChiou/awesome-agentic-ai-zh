@@ -63,7 +63,7 @@ def test_examples_keep_required_reading_index_and_rated_resources_visible(locale
 
 
 def test_examples_match_the_real_folder_inventory() -> None:
-    expected = {"stage-1": 2, "stage-2": 1, "stage-3": 6, "stage-4": 5, "stage-5": 1, "stage-6": 5, "stage-7": 5}
+    expected = {"stage-1": 2, "stage-2": 1, "stage-3": 6, "stage-4": 5, "stage-5": 1, "stage-6": 5, "stage-7": 6}
     actual = {
         name: len([path for path in (ROOT / "examples" / name).iterdir() if path.is_dir()])
         for name in expected
@@ -94,6 +94,7 @@ def test_examples_document_and_match_distinct_folder_shapes() -> None:
             "test_anthropic.py",
         },
         "stage-5/tool-calling-tutor": common_readmes | {"SKILL.md"},
+        "stage-7/06-safe-execution": common_readmes | {"starter.py", "test.py"},
     }
     additive_extras = {
         "stage-4/01-same-agent-two-frameworks": {"starter_crewai.py", "test_crewai.py"},
@@ -126,7 +127,7 @@ def test_examples_document_and_match_distinct_folder_shapes() -> None:
 def test_examples_trilingual_facts_and_external_urls_match() -> None:
     texts = {locale: _text(path) for locale, path in EXAMPLE_PAGES.items()}
     marker = (
-        "<!-- freshness: canonical=examples/README.md; verified_on=2026-08-30; "
+        "<!-- freshness: canonical=examples/README.md; verified_on=2026-08-31; "
         "scope=example-inventory,local-model-tags,download-sizes,sdk-entry-points; max_age_days=90 -->"
     )
     for text in texts.values():

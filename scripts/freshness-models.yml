@@ -174,6 +174,20 @@ agent_memory_fact_pack:
     generative_agents: 'https://arxiv.org/abs/2304.03442'
     reflexion: 'https://arxiv.org/abs/2303.11366'
 
+stage07_fact_pack:
+  canonical: 'stages/07-multi-agent-production.md'
+  verified_on: '2026-08-31'
+  scope: ['evals', 'observability', 'human-approval', 'persistence', 'recovery', 'orchestration', 'resources']
+  official_sources:
+    anthropic_evals: 'https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents'
+    anthropic_agent_patterns: 'https://www.anthropic.com/engineering/building-effective-agents'
+    openai_tracing: 'https://openai.github.io/openai-agents-python/tracing/'
+    openai_human_in_the_loop: 'https://openai.github.io/openai-agents-python/human_in_the_loop/'
+    langgraph_persistence: 'https://docs.langchain.com/oss/python/langgraph/persistence'
+    langgraph_interrupts: 'https://docs.langchain.com/oss/python/langgraph/interrupts'
+    ibm_loop_engineering: 'https://www.ibm.com/think/topics/loop-engineering'
+    openai_harness_engineering: 'https://openai.com/index/harness-engineering/'
+
 stage075_fact_pack:
   canonical: 'stages/07.5-advanced-agentic-concepts.md'
   verified_on: '2026-08-29'
@@ -277,7 +291,7 @@ cookbook_fact_pack:
 
 examples_index_fact_pack:
   canonical: 'examples/README.md'
-  verified_on: '2026-08-30'
+  verified_on: '2026-08-31'
   scope: ['example-inventory', 'local-model-tags', 'download-sizes', 'sdk-entry-points']
   official_sources:
     ollama_gemma4_e4b: 'https://ollama.com/library/gemma4:e4b'
@@ -408,6 +422,9 @@ verified_pages:
     max_age_days: 90
   - canonical: 'resources/agent-memory.md'
     required_scopes: ['memory', 'privacy', 'retention', 'isolation', 'project-status']
+    max_age_days: 90
+  - canonical: 'stages/07-multi-agent-production.md'
+    required_scopes: ['evals', 'observability', 'human-approval', 'persistence', 'recovery', 'orchestration', 'resources']
     max_age_days: 90
   - canonical: 'stages/07.5-advanced-agentic-concepts.md'
     required_scopes: ['agent-patterns', 'harnesses', 'evals', 'dynamic-workflows', 'framework-status', 'research']

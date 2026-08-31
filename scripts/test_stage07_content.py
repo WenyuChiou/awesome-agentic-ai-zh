@@ -49,43 +49,64 @@ CONTROL_DIAGRAM_ALT_MARKERS = {
 }
 CORE_LABELS = {
     "zh-TW": (
-        "Multi-Agent（多 Agent）",
-        "Orchestration",
-        "Handoff",
+        "Eval（評測）",
+        "Outcome（結果）",
+        "Trajectory（軌跡）",
+        "Observability（可觀測性）",
+        "Guardrail（護欄）",
+        "Human Approval（人工核准）",
+        "Checkpoint（檢查點）",
+        "Resume（續跑）",
+        "Recovery（復原）",
+        "Idempotency（冪等）",
         "Harness",
-        "Eval",
-        "Observability",
-        "Guardrail",
         "Loop Engineering",
         "Graph Engineering",
+        "Orchestration",
+        "Multi-Agent（多 Agent）",
+        "Handoff",
     ),
     "en": (
-        "Multi-Agent",
-        "Orchestration",
-        "Handoff",
-        "Harness",
         "Eval",
+        "Outcome",
+        "Trajectory",
         "Observability",
         "Guardrail",
+        "Human Approval",
+        "Checkpoint",
+        "Resume",
+        "Recovery",
+        "Idempotency",
+        "Harness",
         "Loop Engineering",
         "Graph Engineering",
+        "Orchestration",
+        "Multi-Agent",
+        "Handoff",
     ),
     "zh-Hans": (
-        "Multi-Agent（多 Agent）",
-        "Orchestration",
-        "Handoff",
+        "Eval（评测）",
+        "Outcome（结果）",
+        "Trajectory（轨迹）",
+        "Observability（可观测性）",
+        "Guardrail（护栏）",
+        "Human Approval（人工批准）",
+        "Checkpoint（检查点）",
+        "Resume（续跑）",
+        "Recovery（恢复）",
+        "Idempotency（幂等）",
         "Harness",
-        "Eval",
-        "Observability",
-        "Guardrail",
         "Loop Engineering",
         "Graph Engineering",
+        "Orchestration",
+        "Multi-Agent（多 Agent）",
+        "Handoff",
     ),
 }
 CORE_SECTION_HEADINGS = {
-    "zh-TW": ("## 🧩 九個核心詞", "## 🚪 進入條件"),
-    "en": ("## 🧩 Nine Core Terms", "## 🚪 Entry Conditions"),
-    "zh-Hans": ("## 🧩 九个核心词", "## 🚪 进入条件"),
+    "zh-TW": ("## 🧩 十六個核心詞（分三組讀）", "## 🚪 進入條件"),
+    "en": ("## 🧩 Sixteen Core Terms (Read Them in Three Groups)", "## 🚪 Entry Conditions"),
+    "zh-Hans": ("## 🧩 十六个核心词（分三组读）", "## 🚪 进入条件"),
 }
 PAGE_TITLES = {
     "zh-TW": "# Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph",
@@ -103,12 +124,23 @@ EXERCISE_DIRS = (
     "03-observability",
     "04-sdk-advanced",
     "05-deploy",
+    "06-safe-execution",
+)
+CORE_EXERCISE_DIRS = (
+    "02-eval",
+    "03-observability",
+    "06-safe-execution",
+    "05-deploy",
 )
 CURRENT_FACT_URLS = {
     "https://openai.github.io/openai-agents-python/running_agents/",
     "https://openai.github.io/openai-agents-python/multi_agent/",
     "https://www.ibm.com/think/topics/loop-engineering",
     "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "https://openai.github.io/openai-agents-python/tracing/",
+    "https://openai.github.io/openai-agents-python/human_in_the_loop/",
+    "https://docs.langchain.com/oss/python/langgraph/persistence",
+    "https://docs.langchain.com/oss/python/langgraph/interrupts",
     "https://docs.langchain.com/oss/python/langgraph/workflows-agents",
     "https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/",
     "https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/builder-and-execution",
@@ -123,11 +155,12 @@ CURRENT_FACT_URLS = {
     "https://github.com/yc-software/qm",
 }
 REQUIRED_READING_URLS = (
+    "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "https://openai.github.io/openai-agents-python/tracing/",
+    "https://openai.github.io/openai-agents-python/human_in_the_loop/",
+    "https://docs.langchain.com/oss/python/langgraph/persistence",
+    "https://docs.langchain.com/oss/python/langgraph/interrupts",
     "https://www.anthropic.com/engineering/building-effective-agents",
-    "https://openai.github.io/openai-agents-python/running_agents/",
-    "https://openai.github.io/openai-agents-python/multi_agent/",
-    "https://docs.langchain.com/oss/python/langgraph/workflows-agents",
-    "https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/",
 )
 FORBIDDEN_TERMINOLOGY = (
     "Loop Engineering（本專案教學用語）",
@@ -164,11 +197,11 @@ RESOURCE_URL_RATINGS = (
     ("https://github.com/open-telemetry/semantic-conventions-genai", "⭐⭐⭐⭐"),
     ("https://github.com/langfuse/langfuse", "⭐⭐⭐⭐⭐"),
     ("https://github.com/Arize-ai/phoenix", "⭐⭐⭐⭐"),
-    ("https://github.com/comet-ml/opik", "⭐⭐⭐⭐"),
+    ("https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents", "⭐⭐⭐⭐⭐"),
     ("https://github.com/anthropics/claude-agent-sdk-python", "⭐⭐⭐⭐⭐"),
     ("https://github.com/deepseek-ai/deepseek-harness", "⭐⭐⭐"),
-    ("https://github.com/xai-org/grok-build", "⭐⭐⭐"),
-    ("https://github.com/NVIDIA/NemoClaw", "⭐⭐⭐"),
+    ("https://openai.github.io/openai-agents-python/human_in_the_loop/", "⭐⭐⭐⭐⭐"),
+    ("https://docs.langchain.com/oss/python/langgraph/interrupts", "⭐⭐⭐⭐⭐"),
     ("https://github.com/bentoml/BentoML", "⭐⭐⭐⭐"),
     ("https://github.com/crewAIInc/crewAI", "⭐⭐⭐⭐"),
     ("https://github.com/stablyai/orca", "⭐⭐⭐⭐"),
@@ -192,11 +225,11 @@ def _external_urls(text: str) -> list[str]:
 
 
 @pytest.mark.parametrize("locale,page", PAGES.items())
-def test_reader_path_has_six_closed_disclosures(locale: str, page: Path) -> None:
+def test_reader_path_has_seven_closed_disclosures(locale: str, page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     assert text.startswith(PAGE_TITLES[locale])
     assert OLD_PAGE_TITLES[locale] not in text
-    assert len(re.findall(r'<details markdown="1">', text)) == 6
+    assert len(re.findall(r'<details markdown="1">', text)) == 7
     assert not re.search(r"<details[^>]*\bopen\b", text)
     visible = _without_closed_details(text)
     assert "Stage 7" in visible
@@ -214,10 +247,12 @@ def test_all_core_terms_are_bold_and_defined_before_exercises(
     core = text[core_start:core_end]
     positions = []
     for label in CORE_LABELS[locale]:
-        marker = f"**{label}**"
+        marker = f"<strong>{label}</strong>"
         assert marker in core
         positions.append(core.index(marker))
     assert positions == sorted(positions)
+    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', core) == ["4", "6", "6"]
+    assert len(re.findall(r"<tr>", core)) == 17
 
 
 @pytest.mark.parametrize("locale,page", PAGES.items())
@@ -287,14 +322,52 @@ def test_required_reading_and_featured_resources_are_visible(page: Path) -> None
     assert all(url in visible and rating in visible for url, rating in RESOURCE_URL_RATINGS)
 
 
-@pytest.mark.parametrize("page", PAGES.values())
-def test_five_real_exercises_are_visible_and_no_fake_sixth_exists(page: Path) -> None:
+ENTRY_SENTENCES = {
+    "zh-TW": "先做四個核心練習，再為核心練習 4 補 Docker",
+    "en": "Do the four core exercises first and learn Docker for Core Exercise 4",
+    "zh-Hans": "先做四个核心练习，再为核心练习 4 补 Docker",
+}
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_six_real_exercises_exist_and_the_four_step_core_path_is_visible(
+    locale: str, page: Path
+) -> None:
     text = page.read_text(encoding="utf-8")
     visible = _without_closed_details(text)
     for folder in EXERCISE_DIRS:
-        assert f"cd examples/stage-7/{folder}" in visible
         assert (ROOT / "examples/stage-7" / folder / "README.md").is_file()
-    assert not re.search(r"^### .*(Exercise|練習|练习) 6", text, flags=re.MULTILINE)
+    positions = []
+    for folder in CORE_EXERCISE_DIRS:
+        command = f"cd examples/stage-7/{folder}"
+        assert command in visible
+        positions.append(visible.index(command))
+    assert positions == sorted(positions)
+    assert "../examples/stage-7/01-multi-agent-debate/README" in visible
+    assert "../examples/stage-7/04-sdk-advanced/README" in visible
+    assert "cd examples/stage-7/01-multi-agent-debate" not in visible
+    assert "cd examples/stage-7/04-sdk-advanced" not in visible
+    assert ENTRY_SENTENCES[locale] in visible
+
+
+PRODUCTION_PATH_HEADINGS = {
+    "zh-TW": "## 🛡 上線四步：Eval → Observability → Approval／Recovery → Deploy",
+    "en": "## 🛡 Four Release Steps: Eval → Observability → Approval / Recovery → Deploy",
+    "zh-Hans": "## 🛡 上线四步：Eval → Observability → Approval／Recovery → Deploy",
+}
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_production_path_is_visible_and_multi_agent_stays_optional(
+    locale: str, page: Path
+) -> None:
+    visible = _without_closed_details(page.read_text(encoding="utf-8"))
+    assert PRODUCTION_PATH_HEADINGS[locale] in visible
+    assert "Outcome" in visible and "Trajectory" in visible
+    core_path = visible.index(PRODUCTION_PATH_HEADINGS[locale])
+    exercise_path = visible.index(CORE_EXERCISE_DIRS[0])
+    optional_path = visible.index("01-multi-agent-debate")
+    assert core_path < exercise_path < optional_path
 
 
 def test_three_locales_have_the_same_external_urls_and_current_fact_sources() -> None:
@@ -305,16 +378,18 @@ def test_three_locales_have_the_same_external_urls_and_current_fact_sources() ->
     assert url_lists["zh-TW"] == url_lists["en"] == url_lists["zh-Hans"]
     assert CURRENT_FACT_URLS <= set(url_lists["zh-TW"])
     for page in PAGES.values():
-        assert "2026-08-29 UTC" in page.read_text(encoding="utf-8")
+        assert "2026-08-31 UTC" in page.read_text(encoding="utf-8")
 
 
 @pytest.mark.parametrize("page", PAGES.values())
 def test_resource_table_has_accessible_merged_groups_and_20_ratings(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
-    table = re.search(r"<table>.*?⭐{3,5}.*?</table>", text, flags=re.DOTALL)
-    assert table
-    assert len(re.findall(r'<th scope="col">', table.group())) == 5
-    groups = re.findall(r"<tbody>(.*?)</tbody>", table.group(), flags=re.DOTALL)
+    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    rated_tables = [table for table in tables if re.search(r"⭐{3,5}", table)]
+    assert len(rated_tables) == 1
+    table = rated_tables[0]
+    assert len(re.findall(r'<th scope="col">', table)) == 5
+    groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
     expected = [4, 6, 5, 5]
     assert len(groups) == len(expected)
     for group, rows in zip(groups, expected):
@@ -323,7 +398,7 @@ def test_resource_table_has_accessible_merged_groups_and_20_ratings(page: Path) 
     pairs = tuple(
         re.findall(
             r'<a href="([^"]+)">.*?</a></td><td>(⭐{3,5})</td>',
-            table.group(),
+            table,
         )
     )
     assert pairs == RESOURCE_URL_RATINGS

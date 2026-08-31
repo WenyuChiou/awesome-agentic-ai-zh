@@ -2,11 +2,11 @@
   <a href="./README.md">繁體中文</a> | <strong>简体中文</strong> | <a href="./README.en.md">English</a>
 </div>
 
-# 练习 3：看见 Agent 里面发生什么
+# 核心练习：看见 Agent 里面发生什么
 
 **Observability（可观测性）**像帮 Agent 装仪表板：它慢了、错了或花太多 token 时，你知道是哪一步。
 
-对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 练习 3。
+对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 2。
 
 ## 🎯 学习目标
 

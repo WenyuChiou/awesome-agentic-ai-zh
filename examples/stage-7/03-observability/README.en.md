@@ -2,11 +2,11 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 3: See What Happens Inside an Agent
+# Core Exercise: See What Happens Inside an Agent
 
 **Observability** is like adding an instrument panel to an agent: when it becomes slow, fails, or uses too many tokens, you can find the responsible step.
 
-Pairs with Exercise 3 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
+Pairs with Core Exercise 2 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
 
 ## 🎯 Learning goals
 

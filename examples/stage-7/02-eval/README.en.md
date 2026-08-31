@@ -2,11 +2,11 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 2: Check an Agent with Evals
+# Core Exercise: Check an Agent with Evals
 
 An **Eval (evaluation)** is like a reusable test sheet: after changing a prompt, model, or program, run the same questions again.
 
-Pairs with Exercise 2 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
+Pairs with Core Exercise 1 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
 
 ## 🎯 Learning goals
 

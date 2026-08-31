@@ -2,11 +2,11 @@
   <strong>繁體中文</strong> | <a href="./README.zh-Hans.md">简体中文</a> | <a href="./README.en.md">English</a>
 </div>
 
-# 練習 1：讓三個 Agent 一起辯論
+# 進階選修：讓三個 Agent 一起辯論
 
 你會做出三個角色：PRO 說「贊成」、CON 說「反對」，Judge 看完兩邊再選一邊。
 
-對應 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](../../../stages/07-multi-agent-production.md) 練習 1。
+對應 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](../../../stages/07-multi-agent-production.md) 選修 A。先完成單一 Agent 的 Eval、安全執行與 Deploy 核心路線，再比較多 Agent 是否真的更好。
 
 ## 🎯 學習目標
 

@@ -2,11 +2,11 @@
   <a href="./README.md">繁體中文</a> | <a href="./README.zh-Hans.md">简体中文</a> | <strong>English</strong>
 </div>
 
-# Exercise 1: Let Three Agents Debate
+# Advanced Option: Let Three Agents Debate
 
 You will make three roles: PRO argues yes, CON argues no, and a Judge reads both sides before choosing one.
 
-Pairs with Exercise 1 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
+Pairs with Option A in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md). Complete the single-Agent Eval, safe execution, and Deploy core route first, then compare whether Multi-Agent is actually better.
 
 ## 🎯 Learning goals
 

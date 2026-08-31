@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Regression contract for the five runnable Stage 07 examples."""
+"""Regression contract for the six runnable Stage 07 examples."""
 
 from __future__ import annotations
 
 import ast
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -17,6 +19,7 @@ FOLDERS = (
     "04-sdk-advanced",
     "05-deploy",
 )
+SAFE_FOLDER = "06-safe-execution"
 README_NAMES = ("README.md", "README.en.md", "README.zh-Hans.md")
 RESOURCE_HEADINGS = {
     "README.md": "## 📚 必讀與學習資源",
@@ -29,6 +32,7 @@ RESOURCE_COUNTS = {
     "03-observability": 7,
     "04-sdk-advanced": 4,
     "05-deploy": 5,
+    SAFE_FOLDER: 4,
 }
 RESOURCE_FOOTERS = {
     "README.md": "完整清單見",
@@ -100,7 +104,7 @@ def test_detail_depth_detects_a_resource_hidden_after_its_heading() -> None:
 
 def test_stage_shape_and_current_dependencies() -> None:
     actual = {path.name for path in STAGE.iterdir() if path.is_dir()}
-    assert actual == set(FOLDERS)
+    assert actual == {*FOLDERS, SAFE_FOLDER}
     for folder_name in FOLDERS:
         folder = STAGE / folder_name
         for name in (*README_NAMES, *PYTHON_NAMES, "requirements.txt"):
@@ -108,6 +112,11 @@ def test_stage_shape_and_current_dependencies() -> None:
         expected = DEPLOY_REQUIREMENTS if folder_name == "05-deploy" else COMMON_REQUIREMENTS
         assert _lines(folder / "requirements.txt") == expected, folder_name
     assert (STAGE / "05-deploy" / "Dockerfile").is_file()
+    safe = STAGE / SAFE_FOLDER
+    for name in (*README_NAMES, "starter.py", "test.py"):
+        assert (safe / name).is_file(), f"{SAFE_FOLDER}: missing {name}"
+    assert not (safe / "requirements.txt").exists()
+    assert not (safe / "starter_anthropic.py").exists()
 
 
 def test_starters_parse_and_pin_current_models() -> None:
@@ -131,7 +140,7 @@ def test_shared_model_guide_separates_stage7_from_function_calling() -> None:
     for path, guide in zip(guide_paths, guides):
         assert "qwen2.5:3b" in guide, path
         assert OLLAMA_MODEL in guide, path
-        assert "2026-08-30" in guide, path
+        assert "2026-08-31" in guide, path
         assert not re.search(r"Stage\s*3\+", guide), path
         assert "API cost is $0" not in guide
         assert "API 成本是 $0" not in guide
@@ -182,6 +191,54 @@ def test_model_outputs_are_validated_and_judges_are_strict() -> None:
     eval_source = (STAGE / "02-eval" / "starter.py").read_text(encoding="utf-8")
     assert "parse_verdict(" in eval_source and "fullmatch(" in eval_source
     assert '"PASS" in verdict' not in eval_source
+
+
+def test_safe_execution_is_offline_fail_closed_and_idempotent() -> None:
+    folder = STAGE / SAFE_FOLDER
+    starter_path = folder / "starter.py"
+    test_path = folder / "test.py"
+    starter = starter_path.read_text(encoding="utf-8")
+    tests = test_path.read_text(encoding="utf-8")
+    ast.parse(starter, filename=str(starter_path))
+    ast.parse(tests, filename=str(test_path))
+
+    forbidden_imports = ("openai", "anthropic", "requests", "httpx", "urllib")
+    imported = {
+        node.names[0].name.split(".", 1)[0]
+        for node in ast.walk(ast.parse(starter))
+        if isinstance(node, (ast.Import, ast.ImportFrom)) and node.names
+    }
+    assert imported.isdisjoint(forbidden_imports)
+    for marker in (
+        "waiting_for_approval",
+        "idempotency_key",
+        "tempfile.mkstemp",
+        "os.fsync",
+        "status and approval decision do not agree",
+        "duplicate idempotency key",
+    ):
+        assert marker in starter
+    for marker in (
+        "test_start_pauses_without_a_side_effect",
+        "test_rejection_cancels_without_a_side_effect",
+        "test_approval_executes_exactly_once",
+        "test_resume_after_ledger_write_does_not_repeat_the_side_effect",
+        "test_corrupt_or_mismatched_state_fails_closed",
+    ):
+        assert marker in tests
+
+    result = subprocess.run(
+        [sys.executable, "test.py"],
+        cwd=folder,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=30,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "8/8 passed" in result.stdout
 
 
 def test_prompt_cache_demo_exceeds_the_documented_minimum_and_checks_usage() -> None:
@@ -303,6 +360,48 @@ def test_readmes_are_power_shell_first_progressive_and_fact_aligned() -> None:
     dockerfile = (STAGE / "05-deploy" / "Dockerfile").read_text(encoding="utf-8")
     assert 'CMD ["uvicorn", "starter:app"' in dockerfile
     assert 'CMD ["sh", "-c"' not in dockerfile and "APP_MODULE" not in dockerfile
+
+
+def test_safe_execution_readmes_keep_the_core_path_and_resources_visible() -> None:
+    folder = STAGE / SAFE_FOLDER
+    paths = tuple(folder / name for name in README_NAMES)
+    texts = tuple(path.read_text(encoding="utf-8") for path in paths)
+    expected_urls = (
+        "https://openai.github.io/openai-agents-python/human_in_the_loop/",
+        "https://docs.langchain.com/oss/python/langgraph/interrupts",
+        "https://docs.langchain.com/oss/python/langgraph/persistence",
+        "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    )
+    required_terms = (
+        "Human Approval",
+        "Checkpoint",
+        "Resume",
+        "Recovery",
+        "Idempotency",
+    )
+    for name, text in zip(README_NAMES, texts):
+        resource_index = text.index(RESOURCE_HEADINGS[name])
+        first_detail = text.index('<details markdown="1">')
+        assert text.startswith("<div align=\"right\">")
+        assert "Core Exercise" in text or "核心練習" in text or "核心练习" in text
+        assert r"py -3.11 test.py" in text[:first_detail]
+        assert all(f"**{term}" in text for term in required_terms)
+        assert tuple(re.findall(r"https?://[^)\s]+", text)) == expected_urls
+        assert len(re.findall(r"(?m)^- ⭐⭐⭐⭐⭐ ", text[resource_index:])) == 4
+        assert _detail_depth_at(text, resource_index) == 0
+        assert _detail_depth_at(text, text.index("<small>", resource_index)) == 0
+        assert text.count('<details markdown="1">') == 2
+        assert '<details markdown="1" open>' not in text
+        assert "2026-08-31 UTC" in text
+        assert OLLAMA_MODEL not in text and ANTHROPIC_MODEL not in text
+        assert "requirements.txt" not in text
+    assert "../../../stages/07-multi-agent-production.en.md" in texts[1]
+    assert "../../../stages/07-multi-agent-production.zh-Hans.md" in texts[2]
+    assert "../../../stages/07-multi-agent-production.md#-上線四步eval--observability--approvalrecovery--deploy" in texts[0]
+    assert "../../../stages/07-multi-agent-production.en.md#-four-release-steps-eval--observability--approval--recovery--deploy" in texts[1]
+    assert "../../../stages/07-multi-agent-production.zh-Hans.md#-上线四步eval--observability--approvalrecovery--deploy" in texts[2]
+    english_body = texts[1].split("</div>", 1)[1]
+    assert not re.search(r"[\u3400-\u9fff]", english_body)
 
 
 if __name__ == "__main__":

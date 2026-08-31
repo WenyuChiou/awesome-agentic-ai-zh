@@ -6,7 +6,7 @@
 
 > [← Back to the main README](../README.en.md)
 
-<!-- freshness: canonical=examples/README.md; verified_on=2026-08-30; scope=example-inventory,local-model-tags,download-sizes,sdk-entry-points; max_age_days=90 -->
+<!-- freshness: canonical=examples/README.md; verified_on=2026-08-31; scope=example-inventory,local-model-tags,download-sizes,sdk-entry-points; max_age_days=90 -->
 
 A Stage page first explains what an idea means. This folder lets you run it once. You do not need to install every model or read every line of code before starting.
 
@@ -87,18 +87,18 @@ This table lists folders that actually exist. Short exercises still live directl
 | [Stage 4](../stages/04-agent-frameworks.en.md) | **Workflow Graphs & Agent Frameworks** | `stage-4/`: 5; use a separate Python 3.11 environment for each |
 | [Stage 5](../stages/05-claude-code-ecosystem.en.md) | Claude Code ecosystem and Skills | `stage-5/`: 1; the others stay in the Stage page |
 | [Stage 6](../stages/06-memory-rag.en.md) | Embeddings, RAG, and Memory | `stage-6/`: 5 |
-| [Stage 7](../stages/07-multi-agent-production.en.md) | **Agent Production Engineering** | `stage-7/`: 5 |
+| [Stage 7](../stages/07-multi-agent-production.en.md) | **Agent Production Engineering** | `stage-7/`: 6; core order is Eval → Observability → Safe Execution → Deploy |
 | [Track A1–A3](../tracks/cli/A1-cli-intro.en.md) | CLI workflows | Inline exercises; there is no `examples/track-a/` |
 
 ## 🧠 Choose a local model
 
-A newer model is not automatically the right model. Start with the tag named by the exercise, then run its fixed tests. Download sizes are the values shown by the official Ollama tag pages on **2026-08-30 UTC**.
+A newer model is not automatically the right model. Start with the tag named by the exercise, then run its fixed tests. Download sizes are the values shown by the official Ollama tag pages on **2026-08-31 UTC**.
 
 | Range | Default tag | Official download size | Why |
 |---|---|---:|---|
 | Stages 1–2 | [`gemma4:e4b`](https://ollama.com/library/gemma4:e4b) | 9.6 GB | Chat and Prompt exercises |
 | Stages 3–6 | [`qwen2.5:3b`](https://ollama.com/library/qwen2.5:3b) | 1.9 GB | Current default for tool-use examples |
-| Stage 7 | [`qwen3.5:4b`](https://ollama.com/library/qwen3.5:4b) | 3.4 GB | Observe evaluation, monitoring, and deployment flows |
+| Stage 7 | [`qwen3.5:4b`](https://ollama.com/library/qwen3.5:4b) | 3.4 GB | Evaluation, observability, and deployment model path; `06-safe-execution` needs no model |
 
 Current models, prices, Context, and alternatives are maintained only in [Stage 1](../stages/01-llm-basics.en.md), so two pages do not tell two different stories.
 
@@ -112,6 +112,7 @@ Open that exercise's `README` first. File names change with the lesson, so a fol
 | Provider switch | `stage-1/04-cross-provider/` | It compares endpoints with one OpenAI-compatible client, so it has only `starter.py` and `test.py` |
 | Good/bad schema comparison | `stage-3/06-schema-design/` | `starter_bad*` and `starter_good*` instead of the usual starter names |
 | Framework/deployment extra | `stage-4/01-same-agent-two-frameworks/`<br>`stage-4/04-codeact-vs-json-tool/`<br>`stage-7/05-deploy/` | A standard two-path folder plus CrewAI, a Docker smoke test, or a `Dockerfile` |
+| Safe Execution | `stage-7/06-safe-execution/` | Only `starter.py`, `test.py`, and three locale READMEs; fake actions in a local JSON ledger teach approval, checkpoints, resume, and idempotency without calling a model |
 | Skill package | `stage-5/tool-calling-tutor/` | `SKILL.md`, references, translations, and three locale READMEs; it is not a Python starter project |
 
 Design baseline: every Python exercise must check its fixed logic with an offline test; repository structure tests check the Skill package. Keep starters small; use fake keys in examples; check real model behavior with fixed evals; never disable required hooks or approvals.
@@ -154,4 +155,4 @@ Stars are this learning map's reading priority. They are not GitHub stars or an 
 - [ ] I did not put a key or private data in the repo.
 - [ ] I judge results with tests and diffs, not only by whether the program printed something.
 
-<small>Example inventory, model tags, and official entry points checked: 2026-08-30 UTC.</small>
+<small>Example inventory, model tags, and official entry points checked: 2026-08-31 UTC.</small>

@@ -2,24 +2,26 @@
 
 > [繁體中文](./07-multi-agent-production.md) | **简体中文** | [English](./07-multi-agent-production.en.md)
 
-这一关要做的是 **Agent Production Engineering（Agent 上线工程）**：为 Agent 搭好能安全工作的 **Harness**，设计会根据证据继续或停止的 Loop，再用 Workflow Graph 排好完整路线。它不只要“偶尔成功”，还要能被看见、被检查，出错时也能安全停下来。
+<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-08-31; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
+
+这一关要做的是 **Agent Production Engineering（Agent 上线工程）**：先用 **Eval** 证明结果真的正确，再用 **Observability** 看见过程，接着加入人工批准、**Checkpoint** 和恢复，最后才部署。它不只要“偶尔成功”，还要能被检查、能安全停下，也能从正确位置继续。
 
 ## 🎯 这一关在做什么（先定位）
 
-**Multi-Agent（多 Agent）**就是让两个以上的 Agent 分工。像一起做报告：有人找资料、有人写、有人检查。
-
 **Production（可供使用）**不是“一定要服务一百万人”。只要别人真的会用，你就要知道它做了什么、花了多少、失败后怎么办。
 
-先记住一条规则：
+先记住这个顺序：
 
-> **先用一个 Agent。只有工作真的能分开，或需要不同角色互相检查时，才增加 Agent。**
+> **Eval → Observability → Approval／Recovery → Deploy。前一步没有证据，先不要急着做下一步。**
 
-| 你的工作 | 建议 | 为什么 |
+| 你现在卡在哪里 | 先做什么 | 你要拿出的证据 |
 |---|---|---|
-| 一个人一次就能做完 | 单一 Agent | 最容易理解、测试和修理 |
-| 可以同时找很多互不依赖的资料 | 多 Agent 并行探索 | 能缩短等待时间，但会多花 token |
-| 需要“执行者”和“审查者”分开 | 多 Agent 分工 | 避免同一个 Agent 自己做、自己说没问题 |
-| 每一步有固定顺序或批准点 | Workflow／Graph | 让顺序、状态和人工批准看得见 |
+| 不知道答案算不算成功 | **Eval** | 固定案例、成功条件与失败门槛 |
+| 出错时不知道坏在哪一步 | **Observability** | trace、错误、延迟、token 与 request ID |
+| 会寄信、付款、删除或写入数据 | **Approval／Recovery** | 人工批准点、**Checkpoint**、**Resume** 与 **Idempotency** test |
+| 前三项都能重跑并通过 | **Deploy** | health check、停止方式、恢复方法与版本记录 |
+
+**Multi-Agent（多 Agent）**仍然保留，但放在进阶选修。先把一个 Agent 做到可测试、可观察、可停止、可恢复；只有工作真的能分开，或需要不同角色互相检查时，才增加 Agent。
 
 <details markdown="1">
 <summary>⏱ 展开：时间、环境、费用与安全提醒</summary>
@@ -36,25 +38,39 @@
 
 完成本章后，你能：
 
-1. 说清楚什么时候该用单一 Agent，什么时候才需要 **Multi-Agent**。
-2. 分清 **Harness**、**Agent Loop** 和 **Workflow Graph**，知道三者会协作，但不会互相取代。
-3. 用 **Eval** 检查质量，不只靠“我看起来觉得可以”。
-4. 用 **Observability** 看见每一步、错误、延迟和 token 用量。
-5. 加上 **Guardrail**、人工批准和恢复方式，再把 Agent 交给别人使用。
+1. 分清 **Outcome（最后真的发生了什么）**与 **Trajectory（中间怎么走）**，并用两者建立 Eval。
+2. 把真实失败改写成可重跑的 Eval cases，不只看一次漂亮输出。
+3. 用 **Observability** 找到每一步、错误、延迟、token 与成本。
+4. 用 **Human Approval、Checkpoint、Resume、Recovery、Idempotency** 让高风险动作能停、能接着做，又不会重复执行。
+5. 按 `Eval → Observability → Approval／Recovery → Deploy` 完成上线检查；Multi-Agent 只在真的需要分工时加入。
 
-## 🧩 九个核心词
+## 🧩 十六个核心词（分三组读）
 
-| 核心词 | 五岁也能懂的说法 | 正确术语 |
-|---|---|---|
-| **Multi-Agent（多 Agent）** | 好几个小帮手一起做事 | 多个 Agent 以明确角色共同完成任务 |
-| **Orchestration** | 像指挥家，决定谁先做、谁后做 | 编排执行顺序、数据流、角色和停止条件 |
-| **Handoff** | 把接力棒交给下一个人 | 一个 Agent 把任务控制权和必要 context 交给另一个 Agent |
-| **Harness** | Agent 做事时的安全工作间 | 调用模型、路由工具，并管理权限、sandbox、状态、错误和记录的执行系统；里面通常也会运行 Agent Loop |
-| **Eval** | 出一张小考卷，看它是不是真的会 | 用固定案例和评分规则测量行为 |
-| **Observability** | 装上透明窗，知道它做到哪里 | 用 trace、log、metrics 看见系统内部状态 |
-| **Guardrail** | 游戏场边的护栏 | 限制输入、输出、工具权限或高风险操作的规则 |
-| **Loop Engineering** | 做一步、检查，再决定要不要继续 | 设计 Agent Loop 的目标、反馈、验证、预算、状态、停止和人工升级 |
-| **Graph Engineering** | 画一张完整工作地图，每一格都有下一站 | 用 Workflow Graph 组织 node、edge、分支、并行路线、state、checkpoint 和人工批准 |
+<table>
+<thead><tr><th scope="col">先解决什么</th><th scope="col">核心词</th><th scope="col">大白话说法</th><th scope="col">正确术语</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">先证明做对了</th><td><strong>Eval（评测）</strong></td><td>每次都用同一张考卷</td><td>用固定案例、环境、grader 与门槛测量 Agent</td></tr>
+<tr><td><strong>Outcome（结果）</strong></td><td>最后真的发生了什么</td><td>任务结束时外部环境可验证的状态；不是 Agent 自己说“完成了”</td></tr>
+<tr><td><strong>Trajectory（轨迹）</strong></td><td>它一路做过哪些事</td><td>一次 trial 的完整 trace，包括工具调用、中间结果、错误与输出</td></tr>
+<tr><td><strong>Observability（可观测性）</strong></td><td>给系统装透明窗</td><td>用 trace、log 与 metrics 看见内部状态</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="6">能停、能安全继续</th><td><strong>Guardrail（护栏）</strong></td><td>先挡住不能做的事</td><td>限制输入、输出、工具权限或高风险操作的规则</td></tr>
+<tr><td><strong>Human Approval（人工批准）</strong></td><td>危险动作先问人</td><td>执行敏感 tool call 前暂停，由人批准、修改或拒绝</td></tr>
+<tr><td><strong>Checkpoint（检查点）</strong></td><td>先存档再往下走</td><td>保存可恢复的 workflow state 与版本信息</td></tr>
+<tr><td><strong>Resume（续跑）</strong></td><td>回到存档点继续</td><td>用同一个 task／thread ID 载入 checkpoint 并继续执行</td></tr>
+<tr><td><strong>Recovery（恢复）</strong></td><td>跌倒后安全回来</td><td>失败后停止、重试、补偿或交给人接手的策略</td></tr>
+<tr><td><strong>Idempotency（幂等）</strong></td><td>按两次也只做一次</td><td>相同 idempotency key 的重试不会重复产生外部副作用</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="6">排好完整路线</th><td><strong>Harness</strong></td><td>Agent 做事时的安全工作间</td><td>调用模型、路由工具并管理权限、sandbox、状态、错误和记录的执行系统</td></tr>
+<tr><td><strong>Loop Engineering</strong></td><td>做一步、检查，再决定要不要继续</td><td>设计反复执行的目标、证据、预算、停止与人工升级</td></tr>
+<tr><td><strong>Graph Engineering</strong></td><td>画出所有站、岔路与回程</td><td>用 Workflow Graph 组织 node、edge、分支、state、checkpoint 与批准点</td></tr>
+<tr><td><strong>Orchestration</strong></td><td>像指挥家排先后顺序</td><td>编排执行顺序、数据流、角色与停止条件</td></tr>
+<tr><td><strong>Multi-Agent（多 Agent）</strong></td><td>几个小帮手一起做事</td><td>多个 Agent 以明确角色共同完成任务</td></tr>
+<tr><td><strong>Handoff</strong></td><td>把接力棒交给下一个人</td><td>一个 Agent 把控制权与必要 context 交给另一个 Agent</td></tr>
+</tbody>
+</table>
 
 **Prompt（提示）**仍然是你交给模型的指令和材料；本章不是把 Prompt 丢掉，而是替它加上能执行、检查和恢复的外围系统。
 
@@ -66,26 +82,30 @@
 - [Stage 5](05-claude-code-ecosystem.zh-Hans.md)：看过工具权限、Subagent 和开发流程。
 - [Stage 6](06-memory-rag.zh-Hans.md)：知道 Context、RAG 和 Memory 不一样。
 
-Docker 还不熟也可以开始；先做练习 1–4，练习 5 再补。
+Docker 还不熟也可以开始；先做四个核心练习，再为核心练习 4 补 Docker。
 
 ## 📚 必读内容
 
-先读这五份。它们会先把 Agent Loop、Workflow Graph 和多 Agent 的关系说清楚：
+先按 production 顺序读这六份：
 
-1. [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)：先用简单组合，只有需要时才增加自主性。
-2. [OpenAI Agents SDK — Running agents](https://openai.github.io/openai-agents-python/running_agents/)：看一次 Agent Loop 如何在模型、工具与 Handoff 之间反复执行，并用 `max_turns` 停下来。
-3. [OpenAI Agents SDK — Multi-agent orchestration](https://openai.github.io/openai-agents-python/multi_agent/)：比较“管理者调用其他 Agent”和 **Handoff**。
-4. [LangGraph — Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents)：分清固定 Workflow 与会自己决定下一步的 Agent。
-5. [Microsoft Agent Framework — Workflow concepts](https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/)：看 executor、edge、event 与 state 怎样组成 Workflow Graph。
+1. [Anthropic — Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)：先分清 **Outcome** 与完整 **Trajectory**；Agent 说“完成”不等于外部结果真的完成。
+2. [OpenAI Agents SDK — Tracing](https://openai.github.io/openai-agents-python/tracing/)：看 trace、span、tool、handoff 与 guardrail 事件如何串起一次 run。
+3. [OpenAI Agents SDK — Human-in-the-loop](https://openai.github.io/openai-agents-python/human_in_the_loop/)：敏感工具先暂停，再保存 `RunState`、批准或拒绝并 resume。
+4. [LangGraph — Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)：分清 checkpoint 与跨 thread store，知道中断、恢复与长期记忆不是同一件事。
+5. [LangGraph — Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts)：看人工批准如何暂停与续跑，以及为什么 interrupt 前的副作用必须幂等。
+6. [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)：先用简单组合，只有真的需要分工时才增加自主性或 Multi-Agent。
 
 <details markdown="1">
 <summary>📖 展开：延伸阅读与用途</summary>
 
-1. [Anthropic — Develop tests and evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)：先写可测量的成功标准，再选择评分方式。
-2. [OpenAI Agents SDK — Tracing](https://openai.github.io/openai-agents-python/tracing/)：理解 trace、span、tool、handoff 和 guardrail 事件。
-3. [OpenAI Agents SDK — Testing utilities](https://openai.github.io/openai-agents-python/testing/)：用可重复的假模型测试，不必每次花 API 费用。
-4. [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/)：看环境、反馈循环和机器规则怎样帮助 Agent 稳定工作。
-5. [OpenTelemetry — GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai)：认识可移植的追踪字段；规范仍在演进，不要假设所有平台都完整支持。
+1. [Anthropic — Develop tests and evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)：先写可测量的成功标准，再选择 grader。
+2. [OpenAI Agents SDK — Testing utilities](https://openai.github.io/openai-agents-python/testing/)：用可重复的假模型测试，不必每次花 API 费用。
+3. [OpenAI Agents SDK — Running agents](https://openai.github.io/openai-agents-python/running_agents/)：看一次 Agent Loop 如何反复执行，并用 `max_turns` 停下来。
+4. [OpenAI Agents SDK — Multi-agent orchestration](https://openai.github.io/openai-agents-python/multi_agent/)：比较 manager 与 **Handoff**；这是选修，不是第一个 production 步骤。
+5. [LangGraph — Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents)：分清固定 Workflow 与会自己决定下一步的 Agent。
+6. [Microsoft Agent Framework — Workflow concepts](https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/)：看 executor、edge、event 与 state 怎样组成 Workflow Graph。
+7. [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/)：看环境、反馈循环和机器规则怎样帮助 Agent 稳定工作。
+8. [OpenTelemetry — GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai)：认识可移植的追踪字段；规范仍在演进，不要假设所有平台都完整支持。
 
 </details>
 
@@ -195,6 +215,21 @@ IBM 用 `Goal → Action → Observation → Adjustment` 说明 Loop Engineering
 
 </details>
 
+## 🛡 上线四步：Eval → Observability → Approval／Recovery → Deploy
+
+这四步不是成熟度徽章，而是同一次修改要走完的检查路线：
+
+| 顺序 | 先回答的问题 | 最少要留下的证据 | 没通过时怎么做 |
+|---:|---|---|---|
+| 1. **Eval** | 最后结果真的对吗？中间有没有走危险捷径？ | 20–50 个代表真实工作的 cases；Outcome、Trajectory、grader、成本与失败门槛 | 先补案例或修行为，不进部署 |
+| 2. **Observability** | 坏掉时找得到哪一步吗？ | task ID、trace／span、tool call、错误类型、延迟、token 与敏感数据遮盖 | 先让失败看得见，再改 Prompt 或模型 |
+| 3. **Approval／Recovery** | 高风险动作能先停下吗？中断后能安全续跑吗？ | 人工批准点、版本化 checkpoint、resume 测试、idempotency key、拒绝／timeout／补偿路线 | fail closed，停止自动执行并交给人 |
+| 4. **Deploy** | 前三项能在新版本重跑吗？ | health／readiness、rate limit、rollback、停止开关、版本与 release 记录 | 保留旧版或回滚，不把“服务有启动”当成功 |
+
+**Outcome Eval** 要检查外部世界的结果。例如 Agent 说“信已寄出”只是文字；测试环境真的只有一封信、收件者正确，才是 Outcome 通过。**Trajectory Eval** 则检查它用了哪些工具、尝试几次、是否绕过批准、花多少 token。两种一起看，才不会只因最后一句很漂亮就放行。
+
+案例先从真实失败建立：每遇到一次错误，就留下去识别化的输入、预期 Outcome、禁止动作与重现步骤。正式资料不能直接复制进公开 repo；必要时改成结构相同的假资料。
+
 ## 🧭 OpenRouter、Pi、OpenCode、Orca、QM 到底有什么差别？
 
 它们不是五个同类产品。把它们放到正确层，就不会混在一起：
@@ -211,18 +246,9 @@ IBM 用 `Goal → Action → Observation → Adjustment` 说明 Loop Engineering
 
 ## 🛠 动手练习
 
-每题都有完整示例。不要先把文件改名或重抄一份；先直接跑测试，再改一个小地方。
+先走四个核心练习。不要先把文件改名或重抄一份；直接跑测试，再只改一个小地方。
 
-### 练习 1：Multi-Agent 辩论
-
-**成果：**两个 Agent 分别提出正反意见，第三个 Agent 按规则裁决。
-
-```bash
-cd examples/stage-7/01-multi-agent-debate
-python test.py
-```
-
-### 练习 2：Eval
+### 核心练习 1：Eval
 
 **成果：**用固定案例和规则检查 Agent，看到哪一题退步。
 
@@ -231,7 +257,7 @@ cd examples/stage-7/02-eval
 python test.py
 ```
 
-### 练习 3：Observability
+### 核心练习 2：Observability
 
 **成果：**看到一次运行的步骤、延迟、token 和错误。
 
@@ -240,16 +266,16 @@ cd examples/stage-7/03-observability
 python test.py
 ```
 
-### 练习 4：SDK 进阶
+### 核心练习 3：Approval、Checkpoint 与 Recovery
 
-**成果：**比较 streaming 和 prompt caching 的行为；成本效果必须自己测量。
+**成果：**敏感动作先停在人工批准点；重新启动后从 checkpoint resume，相同 idempotency key 不会重复执行。
 
 ```bash
-cd examples/stage-7/04-sdk-advanced
+cd examples/stage-7/06-safe-execution
 python test.py
 ```
 
-### 练习 5：Deploy
+### 核心练习 4：Deploy
 
 **成果：**把 Agent 包成有 `/health` 和 `/chat` 的 API，再用测试确认错误状态。
 
@@ -262,22 +288,53 @@ python test.py
 <summary>🛠 展开：练习顺序、付费路径与观察重点</summary>
 
 1. 每题先跑 `python test.py`；这条路径使用 mock，不需要 API 密钥。
-2. 测试通过后，按该文件夹 README 选择本地 Ollama 或 Anthropic 路径。
-3. 只改一件事：角色提示、评分规则、trace 字段、cache 设置或 API 错误处理。
+2. Eval、Observability 与 Deploy 测试通过后，才按 README 选择本地 Ollama 或 Anthropic 路径；Safe Execution 全程使用假动作，不需要模型。
+3. 只改一件事：评分规则、trace 字段、批准结果、checkpoint 损坏情境或 API 错误处理。
 4. 再跑测试，写下“改了什么、哪个结果变了、是否超过预算”。
-5. 练习 5 的 Docker 是加分项；先用 FastAPI 测试确认行为，再启动服务。
+5. 核心练习 4 的 Docker 是加分项；先用 FastAPI 测试确认行为，再启动服务。
 
 </details>
 
-## 🧪 推荐小项目：有收据的研究小队
+## 🧭 进阶选修（入口保持可见）
 
-做一个三角色小队：
+### 选修 A：Multi-Agent 辩论
 
-1. **Researcher** 找三个来源。
-2. **Writer** 只根据来源写短摘要。
-3. **Reviewer** 用固定 rubric 检查引用、遗漏和不确定描述。
+**成果：**两个 Agent 分别提出正反意见，第三个 Agent 按规则裁决。只有单一 Agent baseline 已有 Eval，且角色真的需要分开时再做。
 
-最后输出一张 **execution receipt（运行收据）**：任务 ID、每个步骤、使用工具、引用来源、耗时、token、错误和人工批准记录。先用 5 个固定题目做 Eval；任何一题退步，就先不要部署。
+[打开 Multi-Agent 示例](../examples/stage-7/01-multi-agent-debate/README.zh-Hans.md)
+
+### 选修 B：Streaming 与 Prompt caching
+
+**成果：**比较 streaming 与 prompt caching 的行为；成本效果必须自己测量，不把 cache 当成安全或恢复机制。
+
+[打开 SDK 进阶示例](../examples/stage-7/04-sdk-advanced/README.zh-Hans.md)
+
+<details markdown="1">
+<summary>🧪 展开：两个选修的直接测试命令</summary>
+
+```bash
+cd examples/stage-7/01-multi-agent-debate
+python test.py
+
+cd ../04-sdk-advanced
+python test.py
+```
+
+</details>
+
+## 🧪 推荐小项目：有收据的研究助理
+
+先做一个单一 Agent 版本：
+
+1. 找三个来源，保留 URL 与抓取时间。
+2. 只根据来源写短摘要；找不到就明写不知道。
+3. 在“发布摘要”前停下，让人批准、修改或拒绝。
+4. 保存 checkpoint；模拟程序中断后 resume。
+5. 用 idempotency key 证明同一次发布重跑也只写入一次。
+
+最后输出一张 **execution receipt（执行收据）**：task ID、Outcome、Trajectory、工具、来源、耗时、token、错误、checkpoint 版本与人工批准记录。先用 5 个固定题目做 baseline，再把真实失败逐步加到 20 个以上；任何一题退步，就先不要部署。
+
+单一 Agent 版本稳定后，才把“找资料”与“审查”拆成不同 Agent，比较质量、成本与延迟是否真的更好。
 
 ## 📊 Agent Benchmark Landscape：怎么看，不要只看排行榜 + ⚠ Reward-Hacking 警告
 
@@ -330,13 +387,13 @@ python test.py
     <tr><td><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI conventions</a></td><td>⭐⭐⭐⭐</td><td>学习可移植的 trace 字段</td><td>规范仍在演进，各平台支持度不同</td></tr>
     <tr><td><a href="https://github.com/langfuse/langfuse">Langfuse</a></td><td>⭐⭐⭐⭐⭐</td><td>trace、Eval 和 prompt 管理</td><td>自行托管仍需要运维和数据治理</td></tr>
     <tr><td><a href="https://github.com/Arize-ai/phoenix">Arize Phoenix</a></td><td>⭐⭐⭐⭐</td><td>OpenTelemetry 和本地分析</td><td>先设计敏感数据遮盖</td></tr>
-    <tr><td><a href="https://github.com/comet-ml/opik">Opik</a></td><td>⭐⭐⭐⭐</td><td>在同一平台做 tracing 和 evaluation</td><td>功能多，先从一条 trace 开始</td></tr>
+     <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td>⭐⭐⭐⭐⭐</td><td>一起检查 Outcome、Trajectory 与 grader</td><td>案例仍要从自己的真实工作与失败建立</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="5">Harness／Sandbox／Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>阅读工具循环、权限和 subagent 实现</td><td>以 Claude runtime 为中心</td></tr>
     <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>阅读 plugin-based harness 架构</td><td>Developer preview；可能有破坏性变更</td></tr>
-    <tr><td><a href="https://github.com/xai-org/grok-build">Grok Build</a></td><td>⭐⭐⭐</td><td>比较 coding-agent harness 的组成</td><td>先读 README 和安全边界，再决定是否试用</td></tr>
-    <tr><td><a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a></td><td>⭐⭐⭐</td><td>观察 sandbox 和企业部署方向</td><td>Alpha／best-effort；不适合作为稳定依赖</td></tr>
+    <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td>⭐⭐⭐⭐⭐</td><td>暂停敏感工具、保存 RunState 并 resume</td><td>保存的 state 也可能含 context 与 runtime metadata，要按敏感资料管理</td></tr>
+    <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td>⭐⭐⭐⭐⭐</td><td>批准、checkpoint、resume 与幂等副作用</td><td>production 要使用 durable checkpointer，不能只靠记忆体</td></tr>
     <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td>⭐⭐⭐⭐</td><td>把应用打包成服务和容器</td><td>部署框架不会自动补齐 Eval 和 Guardrail</td></tr>
   </tbody>
   <tbody>
@@ -348,15 +405,16 @@ python test.py
   </tbody>
 </table>
 
-<small>数据核查：2026-08-29 UTC</small>
+<small>数据核查：2026-08-31 UTC</small>
 
 ## ✅ Stage 7 之后的自我检查
 
-- [ ] 我能用一句话分清 OpenRouter、Agent runtime 和多 Agent 平台。
-- [ ] 我能说明为什么单一 Agent 应该是默认选择。
-- [ ] 我有固定 Eval cases，不只看一次漂亮输出。
+- [ ] 我能分清 Outcome 与 Trajectory，并用两者检查同一个 case。
+- [ ] 我有从真实失败建立的固定 Eval cases，不只看一次漂亮输出。
 - [ ] 我能找到一次运行的 trace、错误、延迟和 token。
-- [ ] 高风险工具有最小权限、人工批准和可以安全重试的设计。
-- [ ] 我能展示一张 execution receipt，说明 Agent 做了什么。
+- [ ] 高风险工具有最小权限与人工批准；没有批准时会 fail closed。
+- [ ] 我能从 checkpoint resume，并证明相同 idempotency key 不会重复副作用。
+- [ ] 我能展示 execution receipt，并说明何时停止、恢复或 rollback。
+- [ ] 我能用一句话分清 OpenRouter、Agent runtime 和多 Agent 平台，也知道单一 Agent 是默认选择。
 
 完成后，进入 [Stage 7.5 — 进阶 Agentic 概念地图](07.5-advanced-agentic-concepts.zh-Hans.md)，再到 [Stage 8 — Agent Interfaces](08-agent-interfaces.zh-Hans.md)。如果其中一项还说不清楚，回到对应练习，只改一件事再测试一次。

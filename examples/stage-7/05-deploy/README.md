@@ -2,11 +2,11 @@
   <strong>繁體中文</strong> | <a href="./README.zh-Hans.md">简体中文</a> | <a href="./README.en.md">English</a>
 </div>
 
-# 練習 5：把 Agent 放進 FastAPI 與 Docker
+# 核心練習：把 Agent 放進 FastAPI 與 Docker
 
 你會把一個模型呼叫包成兩個 HTTP endpoint：`/health` 說服務還活著，`/chat` 接收問題並回傳答案。
 
-對應 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](../../../stages/07-multi-agent-production.md) 練習 5。
+對應 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](../../../stages/07-multi-agent-production.md) 核心練習 4。先完成 Eval、Observability 與 Safe Execution，再把服務交給別人使用。
 
 ## 🎯 學習目標
 

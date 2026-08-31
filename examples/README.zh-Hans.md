@@ -6,7 +6,7 @@
 
 > [← 回主路线 README](../README.zh-Hans.md)
 
-<!-- freshness: canonical=examples/README.md; verified_on=2026-08-30; scope=example-inventory,local-model-tags,download-sizes,sdk-entry-points; max_age_days=90 -->
+<!-- freshness: canonical=examples/README.md; verified_on=2026-08-31; scope=example-inventory,local-model-tags,download-sizes,sdk-entry-points; max_age_days=90 -->
 
 Stage 章节先告诉你“这个概念是什么”；这个文件夹让你真的运行一次。第一次不用把所有模型都装好，也不用先读完整份程序。
 
@@ -87,18 +87,18 @@ python starter_anthropic.py
 | [Stage 4](../stages/04-agent-frameworks.zh-Hans.md) | **Workflow Graph 与 Agent 框架** | `stage-4/`：5 个；各自使用独立的 Python 3.11 环境 |
 | [Stage 5](../stages/05-claude-code-ecosystem.zh-Hans.md) | Claude Code 生态和 Skill | `stage-5/`：1 个；其余是章节内练习 |
 | [Stage 6](../stages/06-memory-rag.zh-Hans.md) | Embedding、RAG 和 Memory | `stage-6/`：5 个 |
-| [Stage 7](../stages/07-multi-agent-production.zh-Hans.md) | **Agent Production Engineering** | `stage-7/`：5 个 |
+| [Stage 7](../stages/07-multi-agent-production.zh-Hans.md) | **Agent Production Engineering** | `stage-7/`：6 个；核心顺序是 Eval → Observability → Safe Execution → Deploy |
 | [Track A1–A3](../tracks/cli/A1-cli-intro.zh-Hans.md) | CLI 工作流 | 章节内练习；没有 `examples/track-a/` |
 
 ## 🧠 本地模型怎么选
 
-模型不是“越新就一定越适合”。先用题目指定的 tag，再跑固定测试。下载大小以 Ollama 官方 tag 页面在 **2026-08-30 UTC** 的显示为准。
+模型不是“越新就一定越适合”。先用题目指定的 tag，再跑固定测试。下载大小以 Ollama 官方 tag 页面在 **2026-08-31 UTC** 的显示为准。
 
 | 范围 | 默认 tag | 官方显示下载大小 | 为什么 |
 |---|---|---:|---|
 | Stage 1–2 | [`gemma4:e4b`](https://ollama.com/library/gemma4:e4b) | 9.6 GB | 纯对话和 Prompt 练习 |
 | Stage 3–6 | [`qwen2.5:3b`](https://ollama.com/library/qwen2.5:3b) | 1.9 GB | 当前范例的工具调用练习默认值 |
-| Stage 7 | [`qwen3.5:4b`](https://ollama.com/library/qwen3.5:4b) | 3.4 GB | 观察评测、监控和部署流程 |
+| Stage 7 | [`qwen3.5:4b`](https://ollama.com/library/qwen3.5:4b) | 3.4 GB | 评测、观测和部署的模型路径；`06-safe-execution` 不需要模型 |
 
 完整的现行模型、价格、Context 和替代方案只在 [Stage 1](../stages/01-llm-basics.zh-Hans.md) 维护，避免两个页面讲成不同版本。
 
@@ -112,6 +112,7 @@ python starter_anthropic.py
 | Provider 切换 | `stage-1/04-cross-provider/` | 只用 OpenAI-compatible client 比较 endpoint，所以只有 `starter.py` 和 `test.py` |
 | Schema 好坏比较 | `stage-3/06-schema-design/` | `starter_bad*` 和 `starter_good*`，不是普通 starter 文件名 |
 | Framework／部署加项 | `stage-4/01-same-agent-two-frameworks/`<br>`stage-4/04-codeact-vs-json-tool/`<br>`stage-7/05-deploy/` | 在标准双路径外，再加入 CrewAI、Docker smoke test 或 `Dockerfile` |
+| Safe Execution | `stage-7/06-safe-execution/` | 只有 `starter.py`、`test.py` 与三语 README；用本机 JSON 假动作教 approval、checkpoint、resume 与 idempotency，不调用模型 |
 | Skill 包 | `stage-5/tool-calling-tutor/` | `SKILL.md`、references、translations 和三语 README；它不是 Python starter 项目 |
 
 设计底线：每个 Python 练习都要能用离线测试检查固定逻辑；Skill 包由 repository 结构测试检查。starter 保持小；环境变量只放假 key 范例；真实模型行为用固定 eval 核对；不要关闭必要 hook 或 approval。
@@ -154,4 +155,4 @@ python starter_anthropic.py
 - [ ] 我没有把 key 或私人数据写进 repo。
 - [ ] 我用测试和 diff 判断结果，不只看“程序有输出”。
 
-<small>范例目录、模型 tag 与官方入口核查：2026-08-30 UTC。</small>
+<small>范例目录、模型 tag 与官方入口核查：2026-08-31 UTC。</small>

@@ -2,24 +2,26 @@
 
 > [繁體中文](./07-multi-agent-production.md) | [简体中文](./07-multi-agent-production.zh-Hans.md) | **English**
 
-This stage is **Agent Production Engineering**: give the Agent a **Harness** where it can work safely, design a Loop that continues or stops based on evidence, and arrange the whole route with a Workflow Graph. It should do more than “succeed once”: you should be able to see and check its work, and it should stop safely when something goes wrong.
+<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-08-31; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
+
+This stage is **Agent Production Engineering**: first use **Eval** to prove the result is really correct, then use **Observability** to see the process, add **Human Approval**, **Checkpoint**, **Resume**, **Recovery**, and **Idempotency**, and only then deploy. It should do more than “succeed once”: you should be able to check it, stop it safely, and continue from the right place.
 
 ## 🎯 What This Stage Does (Start Here)
 
-**Multi-Agent** means two or more Agents divide the work. Think of a group report: one person researches, one writes, and one checks.
-
 **Production** does not have to mean “serving a million people.” If someone else will actually use the Agent, you need to know what it did, what it cost, and what happens after a failure.
 
-Remember one rule:
+Remember this order:
 
-> **Start with one Agent. Add Agents only when the work can truly be separated or when distinct roles must check one another.**
+> **Eval → Observability → Approval / Recovery → Deploy. Without evidence from the previous step, do not rush to the next one.**
 
-| Your work | Recommendation | Why |
+| Where you are stuck | Do this first | Evidence to produce |
 |---|---|---|
-| One worker can finish it in one path | Single Agent | Easiest to understand, test, and repair |
-| Many independent searches can happen at once | Parallel Agents | May reduce waiting, but uses more tokens |
-| The “worker” and “reviewer” must be separate | Multi-Agent roles | Avoids having one Agent do the work and approve itself |
-| Steps have a fixed order or approval point | Workflow / Graph | Makes order, state, and human approval visible |
+| You do not know what counts as a correct answer | **Eval** | Fixed cases, success criteria, and a failure threshold |
+| You do not know which step failed | **Observability** | Traces, errors, latency, tokens, and a request ID |
+| It can send mail, pay, delete, or write data | **Approval / Recovery** | A human approval point, checkpoint, resume, and idempotency test |
+| All three earlier steps can rerun and pass | **Deploy** | Health check, stop method, recovery method, and version record |
+
+**Multi-Agent** still belongs here, but as an advanced option. First make one Agent testable, visible, stoppable, and recoverable; add Agents only when the work can truly be separated or distinct roles must check one another.
 
 <details markdown="1">
 <summary>⏱ Expand: time, environment, cost, and safety notes</summary>
@@ -36,25 +38,39 @@ Remember one rule:
 
 After this stage, you can:
 
-1. Explain when a single Agent is enough and when **Multi-Agent** is justified.
-2. Distinguish **Harness**, **Agent Loop**, and **Workflow Graph**: they work together, but none replaces the others.
-3. Use an **Eval** to check quality instead of saying, “It looks fine to me.”
-4. Use **Observability** to see steps, errors, latency, and token usage.
-5. Add a **Guardrail**, human approval, and recovery before other people use the Agent.
+1. Distinguish **Outcome** (what really happened at the end) from **Trajectory** (how it got there), and use both to build an Eval.
+2. Turn real failures into rerunnable Eval cases instead of judging one attractive output.
+3. Use **Observability** to find every step, error, latency, token count, and cost.
+4. Use **Human Approval**, **Checkpoint**, **Resume**, **Recovery**, and **Idempotency** so risky actions can stop, continue, and avoid duplicate execution.
+5. Complete the release check in the order `Eval → Observability → Approval / Recovery → Deploy`; add Multi-Agent only when real division of labor needs it.
 
-## 🧩 Nine Core Terms
+## 🧩 Sixteen Core Terms (Read Them in Three Groups)
 
-| Core term | Plain-language meaning | Precise meaning |
-|---|---|---|
-| **Multi-Agent** | Several helpers work together | Multiple Agents complete a task with explicit roles |
-| **Orchestration** | A conductor decides who acts next | The order, data flow, roles, and stop conditions of execution |
-| **Handoff** | One runner passes the baton | One Agent passes control and the needed context to another Agent |
-| **Harness** | A safe workspace where the Agent does its job | The execution system that calls models, routes tools, and manages permissions, sandboxes, state, errors, and records; it commonly runs the Agent Loop too |
-| **Eval** | A small test that checks whether it really works | Fixed cases and scoring rules used to measure behavior |
-| **Observability** | A clear window into the system | Traces, logs, and metrics that reveal internal state |
-| **Guardrail** | A rail at the edge of the playground | Rules that limit inputs, outputs, tool permissions, or risky actions |
-| **Loop Engineering** | Do one step, check it, then decide whether to continue | Design the Agent Loop's goals, feedback, verification, budget, state, stopping, and human escalation |
-| **Graph Engineering** | Draw the whole work map, with a next stop for every box | Organize nodes, edges, branches, parallel paths, state, checkpoints, and human approval with a Workflow Graph |
+<table>
+<thead><tr><th scope="col">What to solve first</th><th scope="col">Core term</th><th scope="col">Plain-language meaning</th><th scope="col">Precise meaning</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="4">Prove it did the right thing</th><td><strong>Eval</strong></td><td>Use the same test every time</td><td>Measure an Agent with fixed cases, an environment, a grader, and a threshold</td></tr>
+<tr><td><strong>Outcome</strong></td><td>What really happened at the end</td><td>The verifiable state of the outside world when the task ends; not the Agent saying “done”</td></tr>
+<tr><td><strong>Trajectory</strong></td><td>Everything it did along the way</td><td>The complete trace of one trial, including tool calls, intermediate results, errors, and output</td></tr>
+<tr><td><strong>Observability</strong></td><td>Put a clear window on the system</td><td>Use traces, logs, and metrics to see internal state</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="6">Stop and continue safely</th><td><strong>Guardrail</strong></td><td>Block what must not happen</td><td>Rules that limit inputs, outputs, tool permissions, or risky actions</td></tr>
+<tr><td><strong>Human Approval</strong></td><td>Ask a person before a risky action</td><td>Pause before a sensitive tool call so a person can approve, edit, or reject it</td></tr>
+<tr><td><strong>Checkpoint</strong></td><td>Save before moving on</td><td>Save recoverable workflow state and version information</td></tr>
+<tr><td><strong>Resume</strong></td><td>Continue from the saved point</td><td>Load a checkpoint with the same task or thread ID and continue execution</td></tr>
+<tr><td><strong>Recovery</strong></td><td>Come back safely after falling</td><td>A strategy to stop, retry, compensate, or hand a failure to a person</td></tr>
+<tr><td><strong>Idempotency</strong></td><td>Press twice, do it once</td><td>Retries with the same idempotency key do not duplicate external side effects</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="6">Arrange the complete route</th><td><strong>Harness</strong></td><td>A safe workspace for the Agent</td><td>The execution system that calls models, routes tools, and manages permissions, sandboxes, state, errors, and records</td></tr>
+<tr><td><strong>Loop Engineering</strong></td><td>Take a step, check it, then decide whether to continue</td><td>Design goals, evidence, budget, stopping, and human escalation for repeated execution</td></tr>
+<tr><td><strong>Graph Engineering</strong></td><td>Draw every stop, branch, and return route</td><td>Use a Workflow Graph to organize nodes, edges, branches, state, checkpoints, and approval points</td></tr>
+<tr><td><strong>Orchestration</strong></td><td>A conductor arranges the order</td><td>Arrange execution order, data flow, roles, and stop conditions</td></tr>
+<tr><td><strong>Multi-Agent</strong></td><td>Several helpers work together</td><td>Multiple Agents complete a task with explicit roles</td></tr>
+<tr><td><strong>Handoff</strong></td><td>Pass the baton to the next person</td><td>One Agent passes control and the needed context to another Agent</td></tr>
+</tbody>
+</table>
 
 A **Prompt** is still the instruction and material you give the model. This stage does not throw prompts away; it adds an execution, checking, and recovery system around them.
 
@@ -66,26 +82,30 @@ You should have completed at least:
 - [Stage 5](05-claude-code-ecosystem.en.md): have seen tool permissions, Subagents, and development workflows.
 - [Stage 6](06-memory-rag.en.md): know that Context, RAG, and Memory are different.
 
-You can start even if Docker is new to you. Do Exercises 1–4 first and learn Docker for Exercise 5.
+You can start even if Docker is new to you. Do the four core exercises first and learn Docker for Core Exercise 4.
 
 ## 📚 Required Reading
 
-Read these five first. They explain the relationship between Agent Loops, Workflow Graphs, and Multi-Agent systems:
+Read these six in production order:
 
-1. [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents): start with simple compositions and add autonomy only when needed.
-2. [OpenAI Agents SDK — Running agents](https://openai.github.io/openai-agents-python/running_agents/): see an Agent Loop repeat across the model, tools, and Handoffs, and stop with `max_turns`.
-3. [OpenAI Agents SDK — Multi-agent orchestration](https://openai.github.io/openai-agents-python/multi_agent/): compare a manager that calls Agents with **Handoffs**.
-4. [LangGraph — Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents): distinguish fixed Workflows from Agents that choose their next step.
-5. [Microsoft Agent Framework — Workflow concepts](https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/): see how executors, edges, events, and state form a Workflow Graph.
+1. [Anthropic — Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents): distinguish **Outcome** from the complete **Trajectory**; an Agent saying “done” does not prove the outside result is done.
+2. [OpenAI Agents SDK — Tracing](https://openai.github.io/openai-agents-python/tracing/): see how trace, span, tool, handoff, and guardrail events connect one run.
+3. [OpenAI Agents SDK — Human-in-the-loop](https://openai.github.io/openai-agents-python/human_in_the_loop/): pause before a sensitive tool, save `RunState`, approve or reject, and resume.
+4. [LangGraph — Persistence](https://docs.langchain.com/oss/python/langgraph/persistence): distinguish checkpoints from cross-thread stores; interruption, recovery, and long-term memory are not the same thing.
+5. [LangGraph — Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts): see how human approval pauses and resumes, and why side effects before an interrupt must be idempotent.
+6. [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents): start with simple compositions and add autonomy or Multi-Agent only when real division of labor needs it.
 
 <details markdown="1">
 <summary>📖 Expand: further reading and purpose</summary>
 
-1. [Anthropic — Develop tests and evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests): define measurable success before choosing a grader.
-2. [OpenAI Agents SDK — Tracing](https://openai.github.io/openai-agents-python/tracing/): understand trace, span, tool, handoff, and guardrail events.
-3. [OpenAI Agents SDK — Testing utilities](https://openai.github.io/openai-agents-python/testing/): test with repeatable fake models instead of paying for every run.
-4. [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/): see how environments, feedback loops, and mechanical rules help Agents work reliably.
-5. [OpenTelemetry — GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai): learn portable tracing fields; the conventions are evolving, so do not assume every platform supports all of them.
+1. [Anthropic — Develop tests and evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests): define measurable success criteria before choosing a grader.
+2. [OpenAI Agents SDK — Testing utilities](https://openai.github.io/openai-agents-python/testing/): test with repeatable fake models instead of paying for every run.
+3. [OpenAI Agents SDK — Running agents](https://openai.github.io/openai-agents-python/running_agents/): see an Agent Loop repeat, and stop it with `max_turns`.
+4. [OpenAI Agents SDK — Multi-agent orchestration](https://openai.github.io/openai-agents-python/multi_agent/): compare manager and **Handoff** patterns; this is an advanced option, not the first production step.
+5. [LangGraph — Workflows and agents](https://docs.langchain.com/oss/python/langgraph/workflows-agents): distinguish fixed Workflows from Agents that choose their next step.
+6. [Microsoft Agent Framework — Workflow concepts](https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/): see how executors, edges, events, and state form a Workflow Graph.
+7. [OpenAI — Harness engineering](https://openai.com/index/harness-engineering/): see how environments, feedback loops, and mechanical rules help Agents work reliably.
+8. [OpenTelemetry — GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai): learn portable tracing fields; the conventions are evolving, so do not assume every platform supports all of them.
 
 </details>
 
@@ -195,6 +215,21 @@ Outside writing sometimes calls this engineering work **Graph Engineering**. The
 
 </details>
 
+## 🛡 Four Release Steps: Eval → Observability → Approval / Recovery → Deploy
+
+These four steps are not maturity badges; they are the check route for the same change:
+
+| Order | Question to answer | Minimum evidence to leave | What to do if it fails |
+|---:|---|---|---|
+| 1. **Eval** | Is the final result really correct? Did it take a dangerous shortcut? | 20–50 cases representing real work; Outcome, Trajectory, grader, cost, and a failure threshold | Add cases or fix behavior; do not deploy |
+| 2. **Observability** | Can you find the failed step? | Task ID, trace/span, tool call, error type, latency, tokens, and sensitive-data redaction | Make failures visible before changing the Prompt or model |
+| 3. **Approval / Recovery** | Can a risky action stop first? Can it resume safely after interruption? | Human approval point, versioned checkpoint, resume test, idempotency key, and reject/timeout/compensation route | Fail closed, stop automation, and hand it to a person |
+| 4. **Deploy** | Can the first three steps rerun on the new version? | Health/readiness, rate limit, rollback, stop switch, version, and release record | Keep the old version or roll back; “the service started” is not success |
+
+An **Outcome Eval** checks the outside-world result. For example, an Agent saying “the email was sent” is only text; the test environment having exactly one email sent to the right recipient is an Outcome pass. A **Trajectory Eval** checks which tools it used, how many attempts it made, whether it bypassed approval, and how many tokens it spent. Use both so a polished final sentence cannot pass by itself.
+
+Build cases from real failures first: for each error, keep a de-identified input, expected Outcome, forbidden actions, and reproduction steps. Do not copy production data into a public repo; use structurally equivalent fake data when needed.
+
 ## 🧭 What Is the Difference Between OpenRouter, Pi, OpenCode, Orca, and QM?
 
 They are not five versions of the same product. Put each one at the right layer:
@@ -211,18 +246,9 @@ They are not five versions of the same product. Put each one at the right layer:
 
 ## 🛠 Hands-on Exercises
 
-Each exercise includes a complete example. Do not rename files or copy everything into a blank file first. Run the test directly, then change one small thing.
+Start with the four core exercises. Do not rename files or copy everything into a blank file first. Run the test directly, then change one small thing.
 
-### Exercise 1: Multi-Agent Debate
-
-**Result:** two Agents make independent cases and a third Agent judges them with a rule.
-
-```bash
-cd examples/stage-7/01-multi-agent-debate
-python test.py
-```
-
-### Exercise 2: Eval
+### Core Exercise 1: Eval
 
 **Result:** fixed cases and rules reveal which behavior regressed.
 
@@ -231,7 +257,7 @@ cd examples/stage-7/02-eval
 python test.py
 ```
 
-### Exercise 3: Observability
+### Core Exercise 2: Observability
 
 **Result:** see the steps, latency, tokens, and errors in one run.
 
@@ -240,16 +266,16 @@ cd examples/stage-7/03-observability
 python test.py
 ```
 
-### Exercise 4: Advanced SDK Features
+### Core Exercise 3: Approval, Checkpoint, and Recovery
 
-**Result:** compare streaming and prompt caching; measure the cost effect yourself.
+**Result:** a sensitive action stops at human approval; after a restart it resumes from a checkpoint, and the same idempotency key does not repeat the action.
 
 ```bash
-cd examples/stage-7/04-sdk-advanced
+cd examples/stage-7/06-safe-execution
 python test.py
 ```
 
-### Exercise 5: Deploy
+### Core Exercise 4: Deploy
 
 **Result:** wrap an Agent in an API with `/health` and `/chat`, then test its error states.
 
@@ -262,22 +288,53 @@ python test.py
 <summary>🛠 Expand: exercise order, paid paths, and what to observe</summary>
 
 1. Run `python test.py` first in every folder. It uses mocks and needs no API key.
-2. After tests pass, choose the local Ollama or Anthropic path in that folder’s README.
-3. Change only one thing: a role prompt, grading rule, trace field, cache setting, or API error response.
+2. Only after Eval, Observability, and Deploy tests pass, choose the local Ollama or Anthropic path in that folder’s README; Safe Execution uses fake actions throughout and needs no model.
+3. Change only one thing: a grading rule, trace field, approval result, corrupted-checkpoint case, or API error response.
 4. Run the test again. Record what changed, which result moved, and whether it stayed within budget.
-5. Docker in Exercise 5 is optional at first. Verify behavior with FastAPI tests before starting a service.
+5. Docker in Core Exercise 4 is optional at first. Verify behavior with FastAPI tests before starting a service.
 
 </details>
 
-## 🧪 Recommended Mini-Project: A Research Team with a Receipt
+## 🧭 Advanced Options (Keep the Entrances Visible)
 
-Build a three-role team:
+### Option A: Multi-Agent Debate
 
-1. A **Researcher** finds three sources.
-2. A **Writer** writes a short summary using only those sources.
-3. A **Reviewer** checks citations, omissions, and uncertain claims with a fixed rubric.
+**Result:** two Agents make independent cases and a third Agent judges them with a rule. Do this only after a single-Agent baseline has an Eval and the roles truly need to be separate.
 
-Finally, produce an **execution receipt**: task ID, each step, tools used, sources, elapsed time, tokens, errors, and human approvals. Start with five fixed Eval questions. If any case regresses, do not deploy yet.
+[Open the Multi-Agent example](../examples/stage-7/01-multi-agent-debate/README.en.md)
+
+### Option B: Streaming and Prompt caching
+
+**Result:** compare streaming and prompt caching; measure the cost effect yourself. Cache is not a safety or recovery mechanism.
+
+[Open the advanced SDK example](../examples/stage-7/04-sdk-advanced/README.en.md)
+
+<details markdown="1">
+<summary>🧪 Expand: direct test commands for both options</summary>
+
+```bash
+cd examples/stage-7/01-multi-agent-debate
+python test.py
+
+cd ../04-sdk-advanced
+python test.py
+```
+
+</details>
+
+## 🧪 Recommended Mini-Project: A Research Assistant with a Receipt
+
+Start with a single-Agent version:
+
+1. Find three sources and keep their URLs and retrieval times.
+2. Write a short summary using only the sources; say clearly when you do not know.
+3. Stop before “publishing the summary” so a person can approve, edit, or reject it.
+4. Save a checkpoint and simulate a restart followed by resume.
+5. Use an idempotency key to prove that rerunning one publication writes only once.
+
+Finally, produce an **execution receipt**: task ID, Outcome, Trajectory, tools, sources, elapsed time, tokens, errors, checkpoint version, and human approval records. Start with five fixed questions, then add real failures until you have at least 20; if any case regresses, do not deploy yet.
+
+Only after the single-Agent version is stable should you split “find sources” and “review” into separate Agents, then compare quality, cost, and latency to see whether the split is actually better.
 
 ## 📊 Agent Benchmark Landscape: How to read it, not just the leaderboard + ⚠ Reward-Hacking Warning
 
@@ -330,13 +387,13 @@ The 20 entries below are directly visible because readers may return here as a t
     <tr><td><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI conventions</a></td><td>⭐⭐⭐⭐</td><td>Learn portable trace fields</td><td>The conventions evolve and support varies</td></tr>
     <tr><td><a href="https://github.com/langfuse/langfuse">Langfuse</a></td><td>⭐⭐⭐⭐⭐</td><td>Tracing, Eval, and prompt management</td><td>Self-hosting still needs operations and data governance</td></tr>
     <tr><td><a href="https://github.com/Arize-ai/phoenix">Arize Phoenix</a></td><td>⭐⭐⭐⭐</td><td>OpenTelemetry and local analysis</td><td>Design sensitive-data redaction first</td></tr>
-    <tr><td><a href="https://github.com/comet-ml/opik">Opik</a></td><td>⭐⭐⭐⭐</td><td>Tracing and evaluation on one platform</td><td>Start with one trace before exploring every feature</td></tr>
+     <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Check Outcome, Trajectory, and graders together</td><td>Build cases from your own real work and failures</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="5">Harness / Sandbox / Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>Read tool loops, permissions, and subagent code</td><td>Centers on the Claude runtime</td></tr>
     <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>Read a plugin-based harness architecture</td><td>Developer preview; breaking changes are possible</td></tr>
-    <tr><td><a href="https://github.com/xai-org/grok-build">Grok Build</a></td><td>⭐⭐⭐</td><td>Compare coding-agent harness components</td><td>Read the README and safety boundaries before trying it</td></tr>
-    <tr><td><a href="https://github.com/NVIDIA/NemoClaw">NemoClaw</a></td><td>⭐⭐⭐</td><td>Study sandbox and enterprise deployment direction</td><td>Alpha / best-effort; not a stable dependency</td></tr>
+     <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td>⭐⭐⭐⭐⭐</td><td>Pause sensitive tools, save RunState, and resume</td><td>Saved state may contain context and runtime metadata; manage it as sensitive data</td></tr>
+     <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td>⭐⭐⭐⭐⭐</td><td>Approval, checkpoints, resume, and idempotent side effects</td><td>Production needs a durable checkpointer, not only memory</td></tr>
     <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td>⭐⭐⭐⭐</td><td>Package an application as a service and container</td><td>A deployment framework does not add Evals or Guardrails for you</td></tr>
   </tbody>
   <tbody>
@@ -348,15 +405,16 @@ The 20 entries below are directly visible because readers may return here as a t
   </tbody>
 </table>
 
-<small>Verified: 2026-08-29 UTC</small>
+<small>Verified: 2026-08-31 UTC</small>
 
 ## ✅ Self-Check After Stage 7
 
-- [ ] I can distinguish OpenRouter, an Agent runtime, and a Multi-Agent platform in one sentence.
-- [ ] I can explain why a single Agent should be the default.
-- [ ] I have fixed Eval cases instead of one attractive output.
+- [ ] I can distinguish Outcome and Trajectory and use both to check the same case.
+- [ ] I have fixed Eval cases built from real failures instead of one attractive output.
 - [ ] I can find the trace, error, latency, and token count for one run.
-- [ ] Risky tools have least privilege, human approval, and safe retry behavior.
-- [ ] I can show an execution receipt that explains what the Agent did.
+- [ ] Risky tools have least privilege and human approval; without approval they fail closed.
+- [ ] I can resume from a checkpoint and prove the same idempotency key does not duplicate a side effect.
+- [ ] I can show an execution receipt and explain when to stop, recover, or roll back.
+- [ ] I can distinguish OpenRouter, an Agent runtime, and a Multi-Agent platform in one sentence, and I know a single Agent is the default.
 
 Next, go to [Stage 7.5 — Advanced Agentic Concept Map](07.5-advanced-agentic-concepts.en.md), then [Stage 8 — Agent Interfaces](08-agent-interfaces.en.md). If one item is still unclear, return to its exercise, change one thing, and test again.

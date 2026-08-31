@@ -457,7 +457,7 @@ def test_stage7_umbrella_title_matches_all_direct_reader_routes(
     assert stage7_compact.removeprefix("Stage 7 — ") in examples_index
 
     examples = sorted((ROOT / "examples/stage-7").glob(f"*/README{suffix}.md"))
-    assert len(examples) == 5, (locale, examples)
+    assert len(examples) == 6, (locale, examples)
     for page in examples:
         assert f"[{stage7_title}]" in read(page), (locale, page)
 

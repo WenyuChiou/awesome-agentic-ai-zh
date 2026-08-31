@@ -2,11 +2,11 @@
   <strong>繁體中文</strong> | <a href="./README.zh-Hans.md">简体中文</a> | <a href="./README.en.md">English</a>
 </div>
 
-# 練習 4：一邊顯示答案，一邊確認 Cache
+# 進階選修：一邊顯示答案，一邊確認 Cache
 
 **Streaming**讓答案分段出現；**Prompt caching**讓相同的長前綴有機會被重用。兩者解決不同問題。
 
-對應 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](../../../stages/07-multi-agent-production.md) 練習 4。
+對應 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](../../../stages/07-multi-agent-production.md) 選修 B。Streaming 與 Cache 是體驗／成本技巧，不取代 Approval、Checkpoint 或 Recovery。
 
 ## 🎯 學習目標
 

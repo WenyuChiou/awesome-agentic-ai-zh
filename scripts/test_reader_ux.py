@@ -344,6 +344,14 @@ def test_visible_bold_ordered_core_terms_pass() -> None:
     assert rc == 0, out
 
 
+def test_visible_html_strong_ordered_core_terms_pass() -> None:
+    body = _core_terms_body().replace("**Token**", "<strong>Token</strong>").replace(
+        "**Context Window**", "<strong>Context Window</strong>"
+    )
+    rc, out = _run(body, config=_config(limit=2000, core_terms=True))
+    assert rc == 0, out
+
+
 def test_fenced_heading_does_not_truncate_core_term_section() -> None:
     body = (
         "## Core Terms\n\n```markdown\n## Setup\n```\n\n"
