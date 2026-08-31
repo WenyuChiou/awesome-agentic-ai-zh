@@ -45,12 +45,31 @@ def test_prepare_locks_main_and_builds_all_locales() -> None:
 def test_publish_rechecks_sha_and_verifies_draft_before_publish() -> None:
     text = WORKFLOW.read_text(encoding="utf-8")
     assert text.count('test "$current_main" = "$LOCKED_SHA"') == 2
-    assert text.count('test "$(git rev-list -n 1 "$RELEASE_VERSION")" = "$LOCKED_SHA"') == 3
+    assert text.count('test "$(git rev-list -n 1 "$RELEASE_VERSION")" = "$LOCKED_SHA"') == 2
     assert 'git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_VERSION"' in text
     draft = text.index("Create or refresh a Draft Release")
     verify = text.index("Verify the Draft Release before publishing")
     publish = text.index("Publish and verify the Release")
     assert draft < verify < publish
+    draft_verify_block = text[verify:publish]
+    assert 'gh release view "$RELEASE_VERSION" --repo "$REPOSITORY"' in draft_verify_block
+    assert "--json isDraft,targetCommitish,body,assets" in draft_verify_block
+    assert 'test "$(jq -r .isDraft /tmp/release.json)" = true' in draft_verify_block
+    assert 'test "$(jq -r .targetCommitish /tmp/release.json)" = "$LOCKED_SHA"' in draft_verify_block
+    assert "releases/tags/" not in draft_verify_block
+    refresh_block = text[draft:verify]
+    existing_draft_branch = refresh_block.split("          else", maxsplit=1)[0]
+    assert 'gh release edit "$RELEASE_VERSION"' in existing_draft_branch
+    assert '--draft --target "$LOCKED_SHA" --title "$title"' in existing_draft_branch
+    publish_command = text.index(
+        'gh release edit "$RELEASE_VERSION" --repo "$REPOSITORY" --draft=false --latest',
+        publish,
+    )
+    tag_fetch = text.index(
+        'git fetch --force origin "refs/tags/$RELEASE_VERSION:refs/tags/$RELEASE_VERSION"',
+        publish,
+    )
+    assert publish_command < tag_fetch
     for locale in ("zh-TW", "zh-Hans", "en"):
         assert f'awesome-agentic-ai-zh-$RELEASE_VERSION-{locale}.pdf' in text
 

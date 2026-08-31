@@ -8,6 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-31
 
+- **release / Draft verification / tag order** · 修正首次發布時 Draft Release 尚未建立遠端 tag，驗證步驟卻先抓 tag 而失敗的順序問題：Draft 階段改為核對 GitHub API 回傳的 `target_commitish` 是否等於鎖定的 main SHA；只有正式發布後才抓取 tag 並再次驗證 tag SHA。重跑既有 Draft 時也會把 target 重新鎖回同一 SHA，不會跳過附件、三語 body 或人工 Environment gate。
 - **maintenance / researcher route / official source** · 三語研究人員路線的 DVC command reference 改用目前會直接回應的官方 `doc.dvc.org/command-reference`，不再繞過已重新導向且容易被 rate limit 的舊入口；學習順序與說明不變。
 - **maintenance / Stage 1 / official source** · 三語 Llama 列不再指向已搬遷的 `ai.meta.com/llama/get-started`，改用重新導向後的 Meta AI 現行開發者文件；freshness gate 會阻擋舊入口回歸，模型內容與推薦定位不變。
 - **maintenance / setup guide / product identity** · 三語 Setup Guide 將已更名的 Windsurf 更新為現行 **Devin Desktop（原 Windsurf）**，入口改用官方 `devin.ai/desktop`，並說清楚它是桌面 Coding Agent／IDE 介面，不只是籠統的 AI editor；推薦度維持不變。Setup Guide 的官方來源包與查核日期同步更新，freshness gate 會阻擋舊 `windsurf.com/editor` 入口回歸。

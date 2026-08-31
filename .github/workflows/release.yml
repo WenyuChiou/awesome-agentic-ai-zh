@@ -259,7 +259,8 @@ jobs:
           if gh release view "$RELEASE_VERSION" --repo "$REPOSITORY" --json isDraft >/tmp/existing-release.json 2>/dev/null; then
             test "$(jq -r .isDraft /tmp/existing-release.json)" = true
             gh release edit "$RELEASE_VERSION" --repo "$REPOSITORY" \
-              --draft --title "$title" --notes-file candidate/release-body.md
+              --draft --target "$LOCKED_SHA" --title "$title" \
+              --notes-file candidate/release-body.md
           else
             gh release create "$RELEASE_VERSION" --repo "$REPOSITORY" \
               --draft --target "$LOCKED_SHA" --title "$title" \
@@ -275,10 +276,10 @@ jobs:
           LOCKED_SHA: ${{ needs.prepare.outputs.sha }}
         run: |
           set -euo pipefail
-          git fetch --force origin "refs/tags/$RELEASE_VERSION:refs/tags/$RELEASE_VERSION"
-          test "$(git rev-list -n 1 "$RELEASE_VERSION")" = "$LOCKED_SHA"
-          gh api "repos/$REPOSITORY/releases/tags/$RELEASE_VERSION" > /tmp/release.json
-          test "$(jq -r .draft /tmp/release.json)" = true
+          gh release view "$RELEASE_VERSION" --repo "$REPOSITORY" \
+            --json isDraft,targetCommitish,body,assets > /tmp/release.json
+          test "$(jq -r .isDraft /tmp/release.json)" = true
+          test "$(jq -r .targetCommitish /tmp/release.json)" = "$LOCKED_SHA"
           jq -r '.body' /tmp/release.json | grep -Fx '## 繁體中文'
           jq -r '.body' /tmp/release.json | grep -Fx '## 简体中文'
           jq -r '.body' /tmp/release.json | grep -Fx '## English'
@@ -300,9 +301,9 @@ jobs:
           set -euo pipefail
           current_main="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
           test "$current_main" = "$LOCKED_SHA"
+          gh release edit "$RELEASE_VERSION" --repo "$REPOSITORY" --draft=false --latest
           git fetch --force origin "refs/tags/$RELEASE_VERSION:refs/tags/$RELEASE_VERSION"
           test "$(git rev-list -n 1 "$RELEASE_VERSION")" = "$LOCKED_SHA"
-          gh release edit "$RELEASE_VERSION" --repo "$REPOSITORY" --draft=false --latest
           gh api "repos/$REPOSITORY/releases/tags/$RELEASE_VERSION" > /tmp/published-release.json
           test "$(jq -r .draft /tmp/published-release.json)" = false
           test "$(jq -r .prerelease /tmp/published-release.json)" = false
