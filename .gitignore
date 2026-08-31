@@ -25,9 +25,7 @@ mermaid.min.js
 mermaid-init.js
 
 
-# CI workflow scratch files (mirror sync reminder generates this temporarily)
-.mirror-sync-comment.md
-# weekly-catalog-refresh.yml diagnostic logs — must NOT leak into the auto-PR
+# Content Health and local catalog diagnostic logs must not be committed.
 star-refresh.log
 link-report.txt
 

@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-08-31
+
+- **governance / required PR gate / content health** · **新增固定出現的 `Required / pr-gate`，讓零 checks、失敗 checks 與未完成的 dependency review 都不能被誤當成可合併**：PR 使用 GitHub 產生的 merge ref 與唯讀 token，依序檢查 diff、anchors、三語鏡像與連結、Hans、reader UX、freshness、重複 repo、圖片、所有 scripts tests、三語 MkDocs、修改過的外部連結與 GitHub repository 事實；初評只整理證據並固定標示「等待 Maintainer」，不會送出 Approve 或自動合併。具留言權限的 job 不 checkout、也不執行 PR 程式碼；所有第三方 Actions 固定完整 commit SHA，另加入 dependency review、actionlint checksum 驗證、workflow 權限 gate 與 Dependabot。每週／每月 Content Health 合併舊的連結、repository 與模型 freshness 掃描，只更新單一 tracking issue 和 artifacts；timeout／403／rate limit 保留為未驗證，HTML `href`、autolink 與壞 redirect 納入檢查，並以完整 merge-base 與 base／head 文件判斷 fenced code，避免 stacked PR 改名或示範網址造成誤判；舊 stars 更新與所有自動 merge workflow 移除。GitHub API UTC 日期於 `2026-08-31T00:51:47Z` 確認；完整 regression `985 passed`，另以乾淨 Python 3.11 venv 驗證依賴安裝、三語 MkDocs 與 rendered image gate。本層為 stacked Draft PR；未經使用者明確同意不合併或清理 branch／worktree。
+
 ## 2026-08-30
 
 - **maintenance / main README / repository inventory** · 首頁新增或移除 GitHub 連結後，同步 6 個既有 repository snapshot row 的 `reference_count` 與 `sources`；不改動 License、封存、更新時間或其他官方事實。離線 gate 重新確認 263 個 tracked repositories 全部有對應 row。

@@ -41,6 +41,11 @@ LINK_RE = re.compile(
     r"\[([^\]]+)\]"
     r"\((https?://[^\s()]+(?:\([^\s()]*\))?[^\s)]*)\)"
 )
+HTML_HREF_RE = re.compile(
+    r"<a\b[^>]*?\bhref\s*=\s*([\"'])(https?://[^\"']+)\1",
+    re.IGNORECASE,
+)
+AUTOLINK_RE = re.compile(r"<(https?://[^<>\s]+)>")
 
 TIMEOUT = 15
 MAX_WORKERS = 10
@@ -59,22 +64,30 @@ def find_md_files(root: Path) -> list[Path]:
     return files
 
 
-def extract_urls(md_path: Path) -> list[tuple[int, str]]:
-    """回傳 [(line_no, url), ...]，跳過程式碼區塊內的 URL。"""
+def extract_urls_from_text(text: str, *, source: str = "<memory>") -> list[tuple[int, str]]:
+    """Return Markdown, HTML href, and autolink URLs outside fenced code."""
     urls = []
     # Fenced code blanked by the shared parser (md_fences), not a local toggle —
     # see #95/#97. Without this the checker fetches every URL in every code
     # sample, which is both slow and a source of phantom "dead link" reports.
-    text = strip_code_blocks(
+    text = strip_code_blocks(text, source=source)
+    for line_no, line in enumerate(text.splitlines(), start=1):
+        found: set[str] = set()
+        for match in LINK_RE.finditer(line):
+            found.add(match.group(2).rstrip(".,;:!?"))
+        for match in HTML_HREF_RE.finditer(line):
+            found.add(match.group(2).rstrip(".,;:!?"))
+        for match in AUTOLINK_RE.finditer(line):
+            found.add(match.group(1).rstrip(".,;:!?"))
+        urls.extend((line_no, url) for url in sorted(found))
+    return urls
+
+
+def extract_urls(md_path: Path) -> list[tuple[int, str]]:
+    """Return [(line_no, url), ...], skipping fenced code blocks."""
+    return extract_urls_from_text(
         md_path.read_text(encoding="utf-8"), source=str(md_path)
     )
-    for line_no, line in enumerate(text.splitlines(), start=1):
-        # 也跳過 inline code（粗略：只在 ` ` 之間的 URL 不算）
-        # Markdown 規範允許 inline code 內含 link 但通常不是真 link
-        for match in LINK_RE.finditer(line):
-            url = match.group(2).rstrip(".,;:!?")
-            urls.append((line_no, url))
-    return urls
 
 
 # A real browser's headers. The old identifying UA
@@ -210,6 +223,7 @@ class Probe(NamedTuple):
     detail: str = ""
     host_blocked: bool = False
     skipped: bool = False
+    final_url: str = ""
 
 
 def classify(probe: Probe) -> str:
@@ -217,12 +231,36 @@ def classify(probe: Probe) -> str:
     if probe.skipped:
         return SKIPPED
     if probe.status is None:
-        return FAILED  # no status and not a skip == we never reached it
+        # No HTTP response is evidence about the scanner's reachability, not
+        # proof that the page is gone. Keep it visible, but never call it 404.
+        return UNVERIFIABLE
     if probe.status in UNVERIFIABLE_STATUSES or probe.host_blocked:
         return UNVERIFIABLE
     if probe.status >= 400:
         return FAILED
+    if bad_redirect(probe.url, probe.final_url):
+        return FAILED
     return OK
+
+
+def bad_redirect(original: str, final: str) -> bool:
+    """A deep page collapsing to a site root is not a successful page move."""
+    if not final or final.rstrip("/") == original.rstrip("/"):
+        return False
+    source = urlsplit(original)
+    target = urlsplit(final)
+    source_path = source.path.rstrip("/")
+    target_path = target.path.rstrip("/")
+    return bool(source_path and source_path != "/" and target_path in ("", "/"))
+
+
+def probe_label(probe: Probe) -> str:
+    """Describe the result with enough redirect evidence to act on it."""
+    if bad_redirect(probe.url, probe.final_url):
+        return f"HTTP {probe.status} — collapsed to site root: {probe.final_url}"
+    if probe.status is None:
+        return probe.detail
+    return f"HTTP {probe.status}" + (f" — {probe.detail}" if probe.detail else "")
 
 
 def exit_code(kinds: Iterable[str]) -> int:
@@ -307,7 +345,7 @@ def check_url(url: str, fast_mode: bool = False) -> Probe:
                             host_blocked=True,
                         )
 
-            return Probe(url, status)
+            return Probe(url, status, final_url=r.url or url)
         except requests.exceptions.RequestException as e:
             # One retry before calling a link dead. A single connection blip on
             # one of 700 URLs would otherwise fail the whole run, which is the
@@ -338,6 +376,8 @@ def main() -> int:
     parser.add_argument("--quiet", action="store_true", help="只印失敗")
     parser.add_argument("--update-baseline", action="store_true",
                         help="把目前所有 unverifiable URL 寫進 baseline（人工看過之後才跑）")
+    parser.add_argument("--json-report", type=Path,
+                        help="write machine-readable results to this path")
     args = parser.parse_args()
 
     files = find_md_files(REPO_ROOT)
@@ -353,15 +393,22 @@ def main() -> int:
 
     buckets: dict[str, list[tuple[str, str]]] = {FAILED: [], UNVERIFIABLE: [], OK: [], SKIPPED: []}
 
+    records: list[dict] = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
         futures = {ex.submit(check_url, url, args.fast): url for url in occurrences}
         for i, fut in enumerate(as_completed(futures), start=1):
             probe = fut.result()
             # main() makes NO judgement of its own — see classify().
             kind = classify(probe)
-            label = (probe.detail if probe.status is None
-                     else f"HTTP {probe.status}" + (f" — {probe.detail}" if probe.detail else ""))
+            label = probe_label(probe)
             buckets[kind].append((probe.url, label))
+            records.append({
+                "url": probe.url,
+                "state": kind,
+                "status": probe.status,
+                "detail": probe.detail,
+                "final_url": probe.final_url,
+            })
             if not args.quiet:
                 mark = {OK: "✓", FAILED: "❌", UNVERIFIABLE: "⚠", SKIPPED: "-"}[kind]
                 suffix = "" if kind == OK else f" — {label}"
@@ -455,6 +502,22 @@ def main() -> int:
             print(f"\n⚠ {url}  [{reason}]")
             for fp, line_no in occurrences[url]:
                 print(f"   {fp.relative_to(REPO_ROOT)}:{line_no}")
+
+    if args.json_report:
+        args.json_report.parent.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "checked": len(occurrences) - skipped,
+            "ok": len(buckets[OK]),
+            "failed": len(failures),
+            "unverified": len(unverifiable),
+            "new_unverified": len(new_unverifiable),
+            "skipped": skipped,
+            "results": sorted(records, key=lambda row: row["url"]),
+        }
+        args.json_report.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
 
     # Every classification made this run, not a re-derived summary — so a bucket
     # accidentally left out of the report still counts toward the verdict.

@@ -1,12 +1,10 @@
-name: Lint (link rot + banned words + schema)
+name: Lint (content, freshness, and schema)
 
 on:
   # 刻意「不」加 paths 過濾。這是 blocking gate，將來可能被設成 required status check；
   # 而 GitHub 對「required 但從未回報」的 check 是無限期等待，PR 會永遠卡在
   # 「Expected — Waiting for status to be reported」。paths 過濾會讓整個 workflow 不觸發、
   # 連 check 物件都不產生，正是那個死鎖。
-  # （job 層的 `if:` 不一樣——被 skip 的 job 仍然會回報一個 skipped 的 check，GitHub 視為
-  # 通過，所以本檔的 link-rot / star-drift 那種 guard 是安全的，不必動。）
   # 這個 filter 原本讓 130 / 473 個 tracked 檔案觸發不了任何一次執行（examples/ 114、
   # .github/ 9、root 6、docs/ 1）。它也會跳過只動 CITATION.cff 的 chore(release) commit
   # ——全部 12 個 release commit 裡有 9 個是這種；另外 3 個只是因為同時改了 CHANGELOG.md
@@ -18,21 +16,17 @@ on:
   # 2026-08-03 的實例：一個 overclaim 片語在 main 上紅了約 15 小時沒人發現
   #（47c9682 07:06 EDT 引入 → c0f2bbe 22:07 EDT 修掉），而且不是我們自己抓到的，
   # 是靠一個外部 PR 照出來的——因為 GitHub 的 PR 檢查跑的是「合併後」的結果，不是分支本身。
-  # link-rot / star-drift 兩個 job 有 `if: schedule || workflow_dispatch` 的 guard，
-  # 不會被 push 觸發，所以 push 跑的是 banned-words + freshness-tests
+  # push 跑的是 banned-words + freshness-tests
   #（實測 17s + 9s）+ anchor-slug-parity。最後那個是這份檔案裡第一個要裝
   # 非 stdlib 依賴的 job（`requirements-docs.txt`，因為它需要真正的 mkdocs
   # config loader 才能問出網站實際會用哪個 slugify），所以會比另外兩個久一些。
   push:
     branches: [main]
-  schedule:
-    # 每月 1 號 UTC 03:00 跑完整檢查（catch link rot + star drift）
-    - cron: '0 3 1 * *'
   workflow_dispatch:
 
 # 這個 workflow 只讀 repo、不寫回任何東西。pull_request 事件下 GitHub 對 fork 一律
 # 發唯讀 token，但 push 事件的權限來自 repo 設定，未來被改掉就會靜默放寬，所以明寫。
-# 跟 anchor-validator / stage-template-check / freshness-2026 一致。
+# 跟 anchor-validator / stage-template-check / Required gate 一致。
 permissions:
   contents: read
 
@@ -41,7 +35,7 @@ jobs:
     name: Banned-word audit (zh-Hans slips + overclaim phrases)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Check zh-Hans slips in zh-TW canonical files
         run: |
@@ -373,60 +367,6 @@ jobs:
         # stdlib-only, network-free.
         run: python3 scripts/test_check_anchors.py
 
-  link-rot:
-    name: Link rot check (GitHub URLs)
-    runs-on: ubuntu-latest
-    # 只在 schedule 跟 workflow_dispatch 跑——PR 跑會太慢
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.11'
-
-      - name: Install requests
-        run: pip install requests
-
-      - name: Run link-check (full — every URL, not just GitHub)
-        # Was `--fast`, which filters to github.com. That meant NOTHING in CI ever
-        # executed the host-block probe, the 404/410 guard or the unverifiable
-        # bucket, because github.com's root answers 200 — all five dead links in
-        # issue #94 were only findable by running this by hand.
-        #
-        # This job is already `if: schedule || workflow_dispatch` (see above), so
-        # full mode costs zero PR latency; it only affects the monthly cron. And
-        # it is affordable now precisely because the report is triaged into
-        # Failed vs Unverifiable, so a refusal no longer turns the job red.
-        run: python scripts/check-links.py --quiet
-
-  star-drift:
-    name: Star drift detection
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.11'
-
-      - name: Install requests
-        run: pip install requests
-
-      - name: Run refresh-stars (warn only, don't fail CI)
-        # gh CLI 已內建在 ubuntu-latest runner，GH_TOKEN 自動 set
-        # 高門檻 (50%) 才警告，避免每月誤報
-        run: |
-          # 用 --check 才會在 drift 時退 1；用 || 接 ::warning:: 退 0
-          if ! python scripts/refresh-stars.py --threshold 50 --check; then
-            echo "::warning::Star drift detected (>=50%). 跑 'python scripts/refresh-stars.py' 看哪些 entry 要更新。"
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   freshness-tests:
     name: Freshness gate unit tests
     runs-on: ubuntu-latest
@@ -434,10 +374,10 @@ jobs:
     # guard), so the freshness-gate coverage can't silently regress the way it
     # did in 2026-07.
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.11'
 
@@ -468,10 +408,10 @@ jobs:
     # Runs on every PR — docs.yml would be too late, it only fires on push
     # to main, i.e. after the merge.
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
 

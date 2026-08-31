@@ -91,11 +91,11 @@ python scripts/check-2026-freshness.py
 
 ## 建議的維護節奏
 
-- **每週**：`weekly-catalog-refresh` 跑 GitHub repo 快速連結檢查
-- **每週**：`repository-freshness` 對每個 unique repo 做一次完整狀態盤點並上傳報告
-- **每月**：`lint` workflow 跑一次完整 `check-links.py`，包含非 GitHub 連結
-- **星數刷新**：`weekly-catalog-refresh` CI 每週自動跑 `refresh-stars.py`（手動補跑可看大幅成長 / 衰退的 repo）
-- **每個 PR 與 main push**：`stage-template-check` 同時執行 reader-UX regression 與正式 gate
+- **每週**：`Content Health` 掃所有外部連結與每個不重複的 GitHub repository，並上傳 JSON／Markdown 證據
+- **每月**：同一個 `Content Health` 再檢查模型、價格、授權、可用狀態與官方文件 freshness
+- **Release 前**：手動以 `release` 模式重跑完整 Content Health；明確錯誤會阻擋，403／429／timeout 只列為無法驗證
+- **推薦度**：正文的 `⭐⭐⭐⭐⭐` 是編輯推薦度，不是 GitHub stars；Action 不會自動改寫或合併教材
+- **每個 PR**：`Required / pr-gate` 固定出現並彙整所有阻擋關卡；最終是否合併仍由 Maintainer 決定
 
 這些檢查已接到 GitHub Actions；本機修改前後仍可用上面的命令做最小驗證。
 

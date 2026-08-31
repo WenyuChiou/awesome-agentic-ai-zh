@@ -12,7 +12,7 @@
 |---|---|---|
 | `scripts/refresh-stars.py` | ✅ Verified | 19 組單元測試綠 + **7 個突變全部被殺**（還原 no-op 防呆 / 重試 / `FETCH_GONE` 三態 / 算繪比對 / 越界檢查，各自都會讓測試 FAIL）。2026-08-10 實跑：275 repos、drift 0 / prose-drift 0 / not-found 0 / could-not-query 0、exit 0，`--threshold 5` 與 CI 用的 `--threshold 50` 兩種參數都跑過。**反向也驗過**：把 `stages/08` 英文版改回舊星數後，同一道指令報 5 筆、exit 1（確認它真的會抓，不是剛好沒東西可報）。此列原本寫「在 main 上跑過 N 次」，那個 N 是沒填完的佔位字 |
 | `scripts/pr-link-audit.py` | ✅ Verified | unit tests 綠 + offline `--diff-file` smoke；live `gh api` 正確 flag 了 archived LangServe（★/license/pushed 都對證過） |
-| `.github/workflows/pr-link-audit.yml` | ✅ Verified | PR #68（throwaway、已關）真 PR 實測：Action 觸發、首發 POST + 第 2 次 push sticky PATCH 更新（同一 comment id、無重複）、archived / stale(23mo) / no-license flag 全對、2 runs 都綠。fork PR 仍略過（read-only token、by design） |
+| `.github/workflows/pr-link-audit.yml` | 🗃️ Retired | 歷史證據保留：PR #68（throwaway、已關）曾驗證首發 POST、後續 sticky PATCH、archived／stale／no-license 判斷與 fork read-only 邊界。此 workflow 於 2026-08-31 移除；修改過的連結與 repository 事實改由每個 PR 都會出現的 `Required / pr-gate` 唯讀檢查。 |
 | `scripts/check-links.py --fast` | ✅ Verified | 跑過 120 GitHub URLs 全 OK |
 | `gh api` repo 元資料抓取 | ✅ Verified | 152 個 entry 的 stars / license / pushed 都對證過至少一次 |
 | Mermaid syntax | ✅ Verified | GitHub 上 render 看過正確（README hero） |

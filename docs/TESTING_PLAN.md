@@ -291,8 +291,8 @@ contracts. Outreach additionally rejects cached stars, stargazers, forks, clone 
 and other traffic snapshots through the same shared gate functions used by the file-level regression;
 changelog history, implementation plans, and test fixtures remain evidence rather than current advertising.
 
-Repository health is a separate fact layer. `repository-freshness.yml` performs a fork-safe changed-line
-check on PRs and a scheduled full scan of every unique GitHub repository. It records canonical owner,
+Repository health is a separate fact layer. `Required / pr-gate` checks changed lines on PRs, while
+`content-health.yml` performs a scheduled full scan of every unique GitHub repository. It records canonical owner,
 redirect, archive／disabled status, license metadata, release and push signals. Hard contradictions can
 block; missing release metadata or older activity remains a human-review warning and never deletes an
 entry automatically. The ordinary URL checker continues to cover non-GitHub documentation and hosted

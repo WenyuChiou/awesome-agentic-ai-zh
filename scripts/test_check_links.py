@@ -264,6 +264,23 @@ def test_code_block_urls_are_not_checked() -> None:
     )
 
 
+def test_html_hrefs_and_autolinks_are_checked() -> None:
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / "t.md"
+        p.write_text(
+            '<a href="https://example.com/double">double</a>\n'
+            "<a class='x' href='https://example.com/single'>single</a>\n"
+            "<https://example.com/auto>\n",
+            encoding="utf-8",
+        )
+        urls = [u for _, u in cl.extract_urls(p)]
+    assert urls == [
+        "https://example.com/double",
+        "https://example.com/single",
+        "https://example.com/auto",
+    ]
+
+
 # --- classify / exit_code: the verdict, as a pure function ----------------
 # These used to be inline in main() and therefore untested (#102).
 
@@ -274,21 +291,32 @@ def test_classify_covers_every_shape() -> None:
         (cl.Probe("u", 403), cl.UNVERIFIABLE),
         (cl.Probe("u", 404), cl.FAILED),
         (cl.Probe("u", 500), cl.FAILED),
+        (cl.Probe("https://example.com/deep", 200,
+                  final_url="https://example.com/"), cl.FAILED),
         (cl.Probe("u", 400, "blocked", host_blocked=True), cl.UNVERIFIABLE),
         (cl.Probe("u", None, "skipped (--fast)", skipped=True), cl.SKIPPED),
         (cl.Probe("u", None, "skipped (login-gated)", skipped=True), cl.SKIPPED),
-        # A connection error is NOT a skip. It has no status either, so the flag
-        # is the only thing separating the two — get this backwards and every
-        # timeout silently disappears from the report.
-        (cl.Probe("u", None, "ConnectionError: nope"), cl.FAILED),
-        # And the split must be the FLAG, not the words. A detail that merely
-        # reads like a skip is still a failure if nothing set the flag; this is
-        # what stops "skipped (--fast)" from being load-bearing prose.
-        (cl.Probe("u", None, "skipped-looking text, but no flag"), cl.FAILED),
+        # A connection error says the scanner could not verify the page. It is
+        # not proof that the page is missing.
+        (cl.Probe("u", None, "ConnectionError: nope"), cl.UNVERIFIABLE),
+        # The skip flag still matters for reporting: skip and unverified are
+        # separate buckets even though neither fails the run.
+        (cl.Probe("u", None, "skipped-looking text, but no flag"), cl.UNVERIFIABLE),
     ]
     for probe, want in cases:
         got = cl.classify(probe)
         assert got == want, f"classify({probe!r}) = {got!r}, want {want!r}"
+
+
+def test_bad_redirect_label_names_the_destination() -> None:
+    probe = cl.Probe(
+        "https://docs.example.com/deep/page",
+        200,
+        final_url="https://docs.example.com/",
+    )
+    label = cl.probe_label(probe)
+    assert "collapsed to site root" in label
+    assert "https://docs.example.com/" in label
 
 
 def test_skips_set_the_flag_not_just_the_message() -> None:

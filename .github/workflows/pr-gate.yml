@@ -1,0 +1,278 @@
+name: Required
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Existing pull request number to verify
+        required: true
+        type: number
+
+# Fork pull requests receive a read-only token. Only the final internal-branch
+# summary job gets narrowly scoped comment permission.
+permissions:
+  contents: read
+
+concurrency:
+  group: required-pr-gate-${{ github.event.pull_request.number || inputs.pr_number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  context:
+    name: Resolve pull request
+    runs-on: ubuntu-latest
+    outputs:
+      number: ${{ steps.pr.outputs.number }}
+      base_sha: ${{ steps.pr.outputs.base_sha }}
+      head_sha: ${{ steps.pr.outputs.head_sha }}
+      merge_ref: ${{ steps.pr.outputs.merge_ref }}
+      internal: ${{ steps.pr.outputs.internal }}
+    steps:
+      - name: Resolve immutable refs
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_NUMBER: ${{ github.event.pull_request.number }}
+          EVENT_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          EVENT_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          EVENT_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          INPUT_NUMBER: ${{ inputs.pr_number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            number="$EVENT_NUMBER"
+            base_sha="$EVENT_BASE_SHA"
+            head_sha="$EVENT_HEAD_SHA"
+            head_repo="$EVENT_HEAD_REPO"
+          else
+            number="$INPUT_NUMBER"
+            payload="$(gh api "repos/$REPOSITORY/pulls/$number")"
+            base_sha="$(jq -r '.base.sha' <<< "$payload")"
+            head_sha="$(jq -r '.head.sha' <<< "$payload")"
+            head_repo="$(jq -r '.head.repo.full_name' <<< "$payload")"
+          fi
+          test -n "$number"
+          test -n "$base_sha"
+          test -n "$head_sha"
+          {
+            echo "number=$number"
+            echo "base_sha=$base_sha"
+            echo "head_sha=$head_sha"
+            echo "merge_ref=refs/pull/$number/merge"
+            if [ "$head_repo" = "$REPOSITORY" ]; then
+              echo "internal=true"
+            else
+              echo "internal=false"
+            fi
+          } >> "$GITHUB_OUTPUT"
+
+  quality:
+    name: Content, links, locales, docs, and images
+    needs: context
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out the GitHub-generated merge result
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.context.outputs.merge_ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            requirements-docs.txt
+            scripts/requirements-reader-ux.txt
+
+      - name: Install locked gate dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-docs.txt
+          python -m pip install --disable-pip-version-check --require-hashes -r scripts/requirements-reader-ux.txt
+          python -m pip install --disable-pip-version-check pytest==8.4.2 requests==2.32.5 opencc-python-reimplemented==0.1.7 Pillow==11.3.0
+
+      - name: Validate GitHub Actions syntax with a checksum-pinned actionlint
+        run: |
+          curl -fsSL \
+            https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz \
+            -o /tmp/actionlint.tar.gz
+          echo '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  /tmp/actionlint.tar.gz' \
+            | sha256sum --check --strict
+          tar -xzf /tmp/actionlint.tar.gz -C /tmp actionlint
+          /tmp/actionlint -color
+
+      - name: Reject whitespace errors in the PR diff
+        env:
+          BASE_SHA: ${{ needs.context.outputs.base_sha }}
+          HEAD_SHA: ${{ needs.context.outputs.head_sha }}
+        run: git diff --check "$BASE_SHA...$HEAD_SHA"
+
+      - name: Run blocking content gates
+        run: |
+          python scripts/check-anchors.py --strict
+          python scripts/check-mirror-parity.py
+          python scripts/check-locale-links.py
+          python scripts/zh-hans-localize.py --check
+          python scripts/check-hans-chars.py --require-opencc
+          python scripts/check-reader-ux.py
+          python scripts/check-stage-template.py
+          python scripts/check-image-locale.py --strict
+          python scripts/check-image-delivery.py
+          python scripts/check-duplicate-repos.py
+          python scripts/check-2026-freshness.py
+          python scripts/check-workflow-security.py
+
+      - name: Check newly added external links
+        env:
+          BASE_SHA: ${{ needs.context.outputs.base_sha }}
+          HEAD_SHA: ${{ needs.context.outputs.head_sha }}
+        run: |
+          python scripts/check-changed-links.py --base "$BASE_SHA" --head "$HEAD_SHA" \
+            --markdown /tmp/changed-links.md --json /tmp/changed-links.json
+
+      - name: Check changed GitHub repositories against official data
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_SHA: ${{ needs.context.outputs.base_sha }}
+          HEAD_SHA: ${{ needs.context.outputs.head_sha }}
+        run: |
+          python scripts/check-repository-freshness.py changed \
+            --base "$BASE_SHA" --head "$HEAD_SHA" \
+            --report /tmp/repositories.md --json-report /tmp/repositories.json
+
+      - name: Build docs tree and run every scripts test
+        run: |
+          python scripts/build-docs-tree.py
+          python -m pytest scripts -q
+
+      - name: Build all three MkDocs locales
+        run: python -m mkdocs build
+
+      - name: Check rendered image delivery
+        run: python scripts/check-image-delivery.py --site _build/site
+
+      - name: Upload gate evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: pr-gate-evidence-${{ needs.context.outputs.number }}
+          path: |
+            /tmp/changed-links.md
+            /tmp/changed-links.json
+            /tmp/repositories.md
+            /tmp/repositories.json
+          if-no-files-found: warn
+
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    needs: context
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Review newly introduced dependencies
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: moderate
+          comment-summary-in-pr: never
+
+  required:
+    name: pr-gate
+    if: always()
+    needs: [context, quality, dependency-review]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the PR head for the factual summary
+        if: needs.context.result == 'success'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.context.outputs.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Generate the initial assessment
+        if: needs.context.result == 'success'
+        env:
+          BASE_SHA: ${{ needs.context.outputs.base_sha }}
+          HEAD_SHA: ${{ needs.context.outputs.head_sha }}
+          QUALITY_RESULT: ${{ needs.quality.result }}
+          DEPENDENCY_RESULT: ${{ needs.dependency-review.result }}
+        run: |
+          python scripts/pr-readiness.py \
+            --base "$BASE_SHA" --head "$HEAD_SHA" \
+            --machine-gate "$QUALITY_RESULT" \
+            --dependency-review "$DEPENDENCY_RESULT" \
+            --markdown /tmp/pr-readiness.md \
+            --json /tmp/pr-readiness.json
+          cat /tmp/pr-readiness.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the assessment
+        if: needs.context.result == 'success'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: pr-readiness-${{ needs.context.outputs.number }}
+          path: |
+            /tmp/pr-readiness.md
+            /tmp/pr-readiness.json
+          if-no-files-found: error
+
+      - name: Enforce the required result
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          CONTEXT_RESULT: ${{ needs.context.result }}
+          QUALITY_RESULT: ${{ needs.quality.result }}
+          DEPENDENCY_RESULT: ${{ needs.dependency-review.result }}
+        run: |
+          test "$CONTEXT_RESULT" = success
+          test "$QUALITY_RESULT" = success
+          if [ "$EVENT_NAME" = pull_request ]; then
+            test "$DEPENDENCY_RESULT" = success
+          fi
+
+  comment:
+    name: Update initial assessment comment
+    if: >-
+      always() &&
+      github.event_name == 'pull_request' &&
+      needs.context.result == 'success' &&
+      needs.context.outputs.internal == 'true'
+    needs: [context, required]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pull-requests: write
+    steps:
+      - name: Download the read-only job's assessment artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: pr-readiness-${{ needs.context.outputs.number }}
+          path: evidence
+
+      - name: Update one bot-owned comment
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ needs.context.outputs.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          marker='<!-- pr-readiness-summary -->'
+          id="$(gh api "repos/$REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"$marker\"))) | .id" \
+            | head -1)"
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPOSITORY/issues/comments/$id" \
+              -F body=@evidence/pr-readiness.md >/dev/null
+          else
+            gh api -X POST "repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
+              -F body=@evidence/pr-readiness.md >/dev/null
+          fi

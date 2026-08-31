@@ -1,0 +1,188 @@
+name: Content Health
+
+on:
+  schedule:
+    - cron: '23 4 * * 1'  # weekly: every external link and unique repository
+    - cron: '17 5 1 * *'  # monthly: add model/product freshness
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Scan depth
+        required: true
+        default: weekly
+        type: choice
+        options: [weekly, monthly, release]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: content-health
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    name: Links, repositories, and freshness
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+
+      - name: Install scanner dependencies
+        run: python -m pip install --disable-pip-version-check requests==2.32.5 PyYAML==6.0.3
+
+      - name: Choose scan mode
+        id: mode
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          INPUT_MODE: ${{ inputs.mode }}
+        run: |
+          if [ "$EVENT_NAME" = workflow_dispatch ]; then
+            mode="$INPUT_MODE"
+          elif [ "$SCHEDULE" = '17 5 1 * *' ]; then
+            mode=monthly
+          else
+            mode=weekly
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+
+      - name: Scan every external link once
+        id: links
+        run: |
+          set +e
+          python scripts/check-links.py --quiet \
+            --json-report /tmp/link-health.json > /tmp/link-health.md 2>&1
+          code=$?
+          if [ ! -f /tmp/link-health.json ]; then
+            printf '{"checked":0,"ok":0,"failed":1,"unverified":0,"new_unverified":0,"skipped":0,"results":[],"error":"scanner stopped before JSON output"}\n' > /tmp/link-health.json
+          fi
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Inspect every unique GitHub repository once
+        id: repositories
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          python scripts/check-repository-freshness.py full --workers 4 \
+            --output-snapshot /tmp/repository-freshness-snapshot.json \
+            --report /tmp/repository-health.md \
+            --json-report /tmp/repository-health.json
+          code=$?
+          if [ ! -f /tmp/repository-health.json ]; then
+            printf '{"checked_at":null,"records":{},"findings":[{"severity":"error","code":"scan_failed","message":"scanner stopped before JSON output"}]}\n' > /tmp/repository-health.json
+          fi
+          if [ ! -f /tmp/repository-health.md ]; then
+            printf '# Repository health\n\nScanner stopped before Markdown output.\n' > /tmp/repository-health.md
+          fi
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Check model and product freshness when due
+        id: freshness
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: |
+          if [ "$MODE" = weekly ]; then
+            printf '# Freshness\n\nNot due in the weekly scan.\n' > /tmp/freshness-health.md
+            echo 'ran=false' >> "$GITHUB_OUTPUT"
+            echo 'exit_code=0' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          set +e
+          python scripts/check-2026-freshness.py > /tmp/freshness-health.md 2>&1
+          code=$?
+          echo 'ran=true' >> "$GITHUB_OUTPUT"
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Build one human and machine report
+        id: summary
+        env:
+          MODE: ${{ steps.mode.outputs.mode }}
+          FRESHNESS_EXIT: ${{ steps.freshness.outputs.exit_code }}
+          FRESHNESS_RAN: ${{ steps.freshness.outputs.ran }}
+        run: |
+          set +e
+          python scripts/content-health-summary.py \
+            --link-json /tmp/link-health.json \
+            --repo-json /tmp/repository-health.json \
+            --freshness-exit "$FRESHNESS_EXIT" \
+            --freshness-ran "$FRESHNESS_RAN" \
+            --mode "$MODE" \
+            --markdown /tmp/content-health.md \
+            --json /tmp/content-health.json
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          if [ -f /tmp/content-health.md ] && [ -f /tmp/content-health.json ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+            cat /tmp/content-health.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+          fi
+          exit 0
+
+      - name: Upload complete evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: content-health-${{ steps.mode.outputs.mode }}-${{ github.run_id }}
+          path: |
+            /tmp/content-health.md
+            /tmp/content-health.json
+            /tmp/link-health.md
+            /tmp/link-health.json
+            /tmp/repository-health.md
+            /tmp/repository-health.json
+            /tmp/repository-freshness-snapshot.json
+            /tmp/freshness-health.md
+          if-no-files-found: error
+
+      - name: Update the single tracking issue
+        if: always() && steps.summary.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: |
+          title='[automation] Content health needs review'
+          number="$(gh issue list --repo "$REPOSITORY" --state open \
+            --search "in:title $title" --json number,title \
+            --jq ".[] | select(.title == \"$title\") | .number" | head -1)"
+          state="$(jq -r .state /tmp/content-health.json)"
+          if [ "$state" = healthy ]; then
+            if [ "$MODE" = weekly ]; then
+              echo 'Weekly scan did not recheck freshness; leaving any existing monthly issue unchanged.'
+              exit 0
+            fi
+            if [ -n "$number" ]; then
+              gh issue comment "$number" --repo "$REPOSITORY" \
+                --body 'The latest complete scan found no new review item. Closing this tracking issue.'
+              gh issue close "$number" --repo "$REPOSITORY"
+            fi
+          elif [ -n "$number" ]; then
+            if [ "$MODE" = weekly ]; then
+              echo 'Appending weekly evidence without replacing the issue body or monthly freshness evidence.'
+              gh issue comment "$number" --repo "$REPOSITORY" --body-file /tmp/content-health.md
+            else
+              gh issue edit "$number" --repo "$REPOSITORY" --body-file /tmp/content-health.md
+            fi
+          else
+            gh issue create --repo "$REPOSITORY" --title "$title" --body-file /tmp/content-health.md
+          fi
+
+      - name: Fail only on hard findings
+        if: always()
+        env:
+          SUMMARY_EXIT: ${{ steps.summary.outputs.exit_code }}
+        run: test "$SUMMARY_EXIT" = 0

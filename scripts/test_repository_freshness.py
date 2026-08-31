@@ -392,16 +392,18 @@ def test_caveat_only_deletion_selects_owning_repo_entry():
     assert any(item["code"] == "inactive-described-active" for item in findings)
 
 
-def test_workflow_runs_read_only_changed_gate_for_forks():
-    workflow = (Path(__file__).resolve().parent.parent / ".github" / "workflows" /
-                "repository-freshness.yml").read_text(encoding="utf-8")
-    changed_job = workflow.split("  changed-links:", 1)[1].split("  full-inventory:", 1)[0]
-    assert "permissions:\n      contents: read" in changed_job
-    assert "head.repo.full_name" not in changed_job
-    assert "pull_request_target" not in workflow
-    full_job = workflow.split("  full-inventory:", 1)[1]
-    assert full_job.count("if: always()") >= 2
-    assert "scan did not produce an inventory" in full_job
+def test_workflows_run_read_only_changed_gate_for_forks_and_preserve_full_evidence():
+    workflows = Path(__file__).resolve().parent.parent / ".github" / "workflows"
+    pr_gate = (workflows / "pr-gate.yml").read_text(encoding="utf-8")
+    content_health = (workflows / "content-health.yml").read_text(encoding="utf-8")
+    quality = pr_gate.split("  quality:", 1)[1].split("  dependency-review:", 1)[0]
+    assert "permissions:\n  contents: read" in pr_gate
+    assert "check-repository-freshness.py changed" in quality
+    assert "head.repo.full_name" not in quality
+    assert "pull_request_target" not in pr_gate
+    assert "if: always()" in content_health
+    assert "scanner stopped before JSON output" in content_health
+    assert "repository-freshness-snapshot.json" in content_health
 
 
 def test_unverified_scan_artifact_does_not_replace_verified_baseline():
