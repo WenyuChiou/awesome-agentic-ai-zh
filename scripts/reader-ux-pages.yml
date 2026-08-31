@@ -1365,9 +1365,9 @@ pages:
       en: stages/07-multi-agent-production.en.md
       zh-Hans: stages/07-multi-agent-production.zh-Hans.md
     max_visible_chars:
-      zh-TW: 16612
-      en: 25888
-      zh-Hans: 16781
+      zh-TW: 16838
+      en: 26202
+      zh-Hans: 17000
     max_open_details: 0
     required_details_count: 7
     visible_section_order:
@@ -1509,7 +1509,7 @@ pages:
         zh-Hans: {heading: "✅ Stage 7 之后的自我检查", anchor: -stage-7-之后的自我检查}
     visible_section_minimums:
       required-reading: {min_links: 6}
-      projects: {min_links: 20, min_ratings: 20}
+      projects: {min_links: 21, min_ratings: 21}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -1579,7 +1579,7 @@ pages:
           zh-TW: {term: Handoff, label: Handoff}
           en: {term: Handoff, label: Handoff}
           zh-Hans: {term: Handoff, label: Handoff}
-    resource_group_rowspans: [4, 6, 5, 5]
+    resource_group_rowspans: [4, 6, 6, 5]
 
   - id: stage-07.5
     canonical: stages/07.5-advanced-agentic-concepts.md

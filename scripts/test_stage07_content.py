@@ -202,6 +202,7 @@ RESOURCE_URL_RATINGS = (
     ("https://github.com/deepseek-ai/deepseek-harness", "⭐⭐⭐"),
     ("https://openai.github.io/openai-agents-python/human_in_the_loop/", "⭐⭐⭐⭐⭐"),
     ("https://docs.langchain.com/oss/python/langgraph/interrupts", "⭐⭐⭐⭐⭐"),
+    ("https://github.com/sandbaseai/sandbase-harness", "⭐⭐⭐⭐"),
     ("https://github.com/bentoml/BentoML", "⭐⭐⭐⭐"),
     ("https://github.com/crewAIInc/crewAI", "⭐⭐⭐⭐"),
     ("https://github.com/stablyai/orca", "⭐⭐⭐⭐"),
@@ -382,7 +383,7 @@ def test_three_locales_have_the_same_external_urls_and_current_fact_sources() ->
 
 
 @pytest.mark.parametrize("page", PAGES.values())
-def test_resource_table_has_accessible_merged_groups_and_20_ratings(page: Path) -> None:
+def test_resource_table_has_accessible_merged_groups_and_21_ratings(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
     rated_tables = [table for table in tables if re.search(r"⭐{3,5}", table)]
@@ -390,7 +391,7 @@ def test_resource_table_has_accessible_merged_groups_and_20_ratings(page: Path) 
     table = rated_tables[0]
     assert len(re.findall(r'<th scope="col">', table)) == 5
     groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
-    expected = [4, 6, 5, 5]
+    expected = [4, 6, 6, 5]
     assert len(groups) == len(expected)
     for group, rows in zip(groups, expected):
         assert len(re.findall(r"<tr>", group)) == rows
@@ -402,6 +403,7 @@ def test_resource_table_has_accessible_merged_groups_and_20_ratings(page: Path) 
         )
     )
     assert pairs == RESOURCE_URL_RATINGS
+    assert "v0.x" in table
 
 
 @pytest.mark.parametrize("page", PAGES.values())
