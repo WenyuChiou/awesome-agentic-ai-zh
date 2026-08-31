@@ -11,4 +11,4 @@ mkdocs-static-i18n==1.2.3
 # and the deploy run. scripts/test_anchor_slug_parity.py asserts it still
 # matches scripts/check-anchors.py, so a drift fails closed rather than
 # silently re-breaking every CJK anchor.
-pymdown-extensions==10.21.3
+pymdown-extensions==11.0.2
