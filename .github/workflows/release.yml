@@ -1,0 +1,309 @@
+name: Trilingual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Calendar tag, for example v2026.08.31 or v2026.08.31-2
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: trilingual-release
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Build and verify three release candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    outputs:
+      version: ${{ steps.lock.outputs.version }}
+      sha: ${{ steps.lock.outputs.sha }}
+    steps:
+      - name: Check out the current main branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/heads/main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            requirements-docs.txt
+            scripts/requirements-reader-ux.txt
+
+      - name: Install locked content-gate dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-docs.txt
+          python -m pip install --disable-pip-version-check --require-hashes -r scripts/requirements-reader-ux.txt
+          python -m pip install --disable-pip-version-check pytest==8.4.2 requests==2.32.5 opencc-python-reimplemented==0.1.7 Pillow==11.3.0
+
+      - name: Lock the release version and source commit
+        id: lock
+        env:
+          DISPATCH_REF: ${{ github.ref }}
+          INPUT_VERSION: ${{ inputs.version }}
+          REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$DISPATCH_REF" = refs/heads/main
+          python scripts/release_manifest.py validate-version --version "$INPUT_VERSION"
+          api_date="$(curl -fsSI --retry 3 https://api.github.com/ | tr -d '\r' | sed -n 's/^[Dd]ate: //p' | head -1)"
+          test -n "$api_date"
+          official_version="v$(date -u -d "$api_date" +%Y.%m.%d)"
+          version_day="${INPUT_VERSION%%-*}"
+          if [ "$version_day" != "$official_version" ]; then
+            echo "Release version $INPUT_VERSION does not match GitHub API UTC date $official_version" >&2
+            exit 1
+          fi
+          environment_json="$(curl -fsSL --retry 3 \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/$REPOSITORY/environments/release")"
+          reviewer_count="$(jq '[.protection_rules[]? | select(.type == "required_reviewers") | .reviewers[]?] | length' <<<"$environment_json")"
+          if [ "$reviewer_count" -lt 1 ]; then
+            echo "The release Environment must exist and require at least one reviewer" >&2
+            exit 1
+          fi
+          sha="$(git rev-parse HEAD)"
+          remote_main="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
+          test "$sha" = "$remote_main"
+          {
+            echo "version=$INPUT_VERSION"
+            echo "sha=$sha"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate the single release source
+        env:
+          RELEASE_VERSION: ${{ steps.lock.outputs.version }}
+        run: python scripts/release_manifest.py validate --strict-urls --version "$RELEASE_VERSION"
+
+      - name: Run blocking repository gates
+        run: |
+          git diff --check
+          python scripts/check-anchors.py --strict
+          python scripts/check-mirror-parity.py
+          python scripts/check-locale-links.py
+          python scripts/zh-hans-localize.py --check
+          python scripts/check-hans-chars.py --require-opencc
+          python scripts/check-reader-ux.py
+          python scripts/check-stage-template.py
+          python scripts/check-image-locale.py --strict
+          python scripts/check-image-delivery.py
+          python scripts/check-duplicate-repos.py
+          python scripts/check-2026-freshness.py
+          python scripts/check-workflow-security.py
+          python scripts/build-docs-tree.py
+          python -m pytest scripts -q
+          python -m mkdocs build
+          python scripts/check-image-delivery.py --site _build/site
+          python scripts/check-rendered-site.py --site _build/site
+
+      - name: Run the full release content-health scan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          python scripts/check-links.py --quiet --json-report /tmp/link-health.json > /tmp/link-health.md 2>&1
+          link_code=$?
+          python scripts/check-repository-freshness.py full --workers 4 \
+            --output-snapshot /tmp/repository-freshness-snapshot.json \
+            --report /tmp/repository-health.md \
+            --json-report /tmp/repository-health.json
+          repo_code=$?
+          python scripts/check-2026-freshness.py > /tmp/freshness-health.md 2>&1
+          freshness_code=$?
+          python scripts/content-health-summary.py \
+            --link-json /tmp/link-health.json \
+            --repo-json /tmp/repository-health.json \
+            --freshness-exit "$freshness_code" \
+            --freshness-ran true \
+            --mode release \
+            --markdown /tmp/content-health.md \
+            --json /tmp/content-health.json
+          summary_code=$?
+          cat /tmp/content-health.md >> "$GITHUB_STEP_SUMMARY"
+          echo "scanner exits: links=$link_code repositories=$repo_code freshness=$freshness_code summary=$summary_code"
+          exit "$summary_code"
+
+      - name: Install PDF build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pandoc weasyprint poppler-utils \
+            fonts-dejavu-core fonts-noto-cjk fonts-noto-color-emoji
+
+      - name: Build all three PDFs from the same page order
+        env:
+          RELEASE_VERSION: ${{ steps.lock.outputs.version }}
+        run: |
+          for locale in zh-TW zh-Hans en; do
+            LANG_VARIANT="$locale" bash scripts/build-pdf.sh
+          done
+
+      - name: Verify PDF text, coverage, and filenames
+        env:
+          RELEASE_VERSION: ${{ steps.lock.outputs.version }}
+        run: |
+          python scripts/release_manifest.py validate-pdfs \
+            --version "$RELEASE_VERSION" \
+            --dist dist \
+            --json /tmp/pdf-validation.json
+
+      - name: Render one trilingual Release body
+        env:
+          RELEASE_VERSION: ${{ steps.lock.outputs.version }}
+          LOCKED_SHA: ${{ steps.lock.outputs.sha }}
+        run: |
+          python scripts/release_manifest.py render-notes \
+            --version "$RELEASE_VERSION" \
+            --sha "$LOCKED_SHA" \
+            --output /tmp/release-body.md
+
+      - name: Collect release candidates and evidence
+        if: always()
+        run: |
+          mkdir -p release-candidate/dist release-candidate/evidence
+          find dist -maxdepth 1 -type f -name '*.pdf' -exec cp '{}' release-candidate/dist/ \; 2>/dev/null || true
+          for file in \
+            release-body.md pdf-validation.json content-health.md content-health.json \
+            link-health.md link-health.json repository-health.md repository-health.json \
+            repository-freshness-snapshot.json freshness-health.md; do
+            if [ -f "/tmp/$file" ]; then
+              cp "/tmp/$file" release-candidate/evidence/
+            fi
+          done
+          if [ -f release-candidate/evidence/release-body.md ]; then
+            cp release-candidate/evidence/release-body.md release-candidate/release-body.md
+          fi
+
+      - name: Upload release candidates and evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-candidate-${{ steps.lock.outputs.version || github.run_id }}
+          path: release-candidate/
+          if-no-files-found: warn
+          retention-days: 14
+
+  publish:
+    name: Publish the approved immutable candidate
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the locked source commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+
+      - name: Install the manifest parser
+        run: python -m pip install --disable-pip-version-check PyYAML==6.0.3
+
+      - name: Download the approved candidate
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-candidate-${{ needs.prepare.outputs.version }}
+          path: candidate
+
+      - name: Recheck main and the three assets before writing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+          LOCKED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          set -euo pipefail
+          current_main="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
+          test "$current_main" = "$LOCKED_SHA"
+          if git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_VERSION" >/dev/null 2>&1; then
+            git fetch --force origin "refs/tags/$RELEASE_VERSION:refs/tags/$RELEASE_VERSION"
+            test "$(git rev-list -n 1 "$RELEASE_VERSION")" = "$LOCKED_SHA"
+          fi
+          python scripts/release_manifest.py validate --strict-urls --version "$RELEASE_VERSION"
+          python scripts/release_manifest.py validate-version --version "$RELEASE_VERSION"
+          for locale in zh-TW zh-Hans en; do
+            name="$(python scripts/release_manifest.py asset-name --version "$RELEASE_VERSION" --locale "$locale")"
+            test -s "candidate/dist/$name"
+          done
+          test -s candidate/release-body.md
+
+      - name: Create or refresh a Draft Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+          LOCKED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          set -euo pipefail
+          title="$RELEASE_VERSION — 三語正式版 / Trilingual release"
+          if gh release view "$RELEASE_VERSION" --repo "$REPOSITORY" --json isDraft >/tmp/existing-release.json 2>/dev/null; then
+            test "$(jq -r .isDraft /tmp/existing-release.json)" = true
+            gh release edit "$RELEASE_VERSION" --repo "$REPOSITORY" \
+              --draft --title "$title" --notes-file candidate/release-body.md
+          else
+            gh release create "$RELEASE_VERSION" --repo "$REPOSITORY" \
+              --draft --target "$LOCKED_SHA" --title "$title" \
+              --notes-file candidate/release-body.md
+          fi
+          gh release upload "$RELEASE_VERSION" --repo "$REPOSITORY" --clobber candidate/dist/*.pdf
+
+      - name: Verify the Draft Release before publishing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+          LOCKED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --force origin "refs/tags/$RELEASE_VERSION:refs/tags/$RELEASE_VERSION"
+          test "$(git rev-list -n 1 "$RELEASE_VERSION")" = "$LOCKED_SHA"
+          gh api "repos/$REPOSITORY/releases/tags/$RELEASE_VERSION" > /tmp/release.json
+          test "$(jq -r .draft /tmp/release.json)" = true
+          jq -r '.body' /tmp/release.json | grep -Fx '## 繁體中文'
+          jq -r '.body' /tmp/release.json | grep -Fx '## 简体中文'
+          jq -r '.body' /tmp/release.json | grep -Fx '## English'
+          printf '%s\n' \
+            "awesome-agentic-ai-zh-$RELEASE_VERSION-en.pdf" \
+            "awesome-agentic-ai-zh-$RELEASE_VERSION-zh-Hans.pdf" \
+            "awesome-agentic-ai-zh-$RELEASE_VERSION-zh-TW.pdf" \
+            > /tmp/expected-assets.txt
+          jq -r '.assets[].name' /tmp/release.json | sort > /tmp/actual-assets.txt
+          diff -u /tmp/expected-assets.txt /tmp/actual-assets.txt
+
+      - name: Publish and verify the Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+          LOCKED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          set -euo pipefail
+          current_main="$(gh api "repos/$REPOSITORY/commits/main" --jq .sha)"
+          test "$current_main" = "$LOCKED_SHA"
+          git fetch --force origin "refs/tags/$RELEASE_VERSION:refs/tags/$RELEASE_VERSION"
+          test "$(git rev-list -n 1 "$RELEASE_VERSION")" = "$LOCKED_SHA"
+          gh release edit "$RELEASE_VERSION" --repo "$REPOSITORY" --draft=false --latest
+          gh api "repos/$REPOSITORY/releases/tags/$RELEASE_VERSION" > /tmp/published-release.json
+          test "$(jq -r .draft /tmp/published-release.json)" = false
+          test "$(jq -r .prerelease /tmp/published-release.json)" = false
+          echo "Published: $(jq -r .html_url /tmp/published-release.json)" >> "$GITHUB_STEP_SUMMARY"

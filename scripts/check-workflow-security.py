@@ -18,6 +18,7 @@ WRITE_ALLOWLIST = {
     (".github/workflows/docs.yml", "deploy"): {"pages", "id-token"},
     (".github/workflows/content-health.yml", "scan"): {"issues"},
     (".github/workflows/pr-gate.yml", "comment"): {"pull-requests"},
+    (".github/workflows/release.yml", "publish"): {"contents"},
 }
 
 

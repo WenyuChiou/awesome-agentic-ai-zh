@@ -1,0 +1,141 @@
+@page {
+  size: A4;
+  margin: 18mm 16mm 20mm;
+
+  @bottom-center {
+    content: counter(page);
+    color: #64748b;
+    font-size: 9pt;
+  }
+}
+
+html:lang(zh-Hant),
+html:lang(zh-Hant) body {
+  font-family: "Noto Sans CJK TC", "Noto Sans TC", sans-serif;
+}
+
+html:lang(zh-Hans),
+html:lang(zh-Hans) body {
+  font-family: "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+}
+
+html:lang(en),
+html:lang(en) body {
+  font-family: "DejaVu Sans", "Noto Sans", sans-serif;
+}
+
+body {
+  color: #172033;
+  font-size: 10.5pt;
+  line-height: 1.62;
+  overflow-wrap: anywhere;
+}
+
+h1, h2, h3, h4 {
+  color: #102a56;
+  line-height: 1.3;
+  break-after: avoid;
+}
+
+h1 {
+  border-bottom: 3px solid #60a5fa;
+  padding-bottom: 0.25em;
+}
+
+h2 {
+  border-left: 5px solid #34d399;
+  padding-left: 0.55em;
+}
+
+a {
+  color: #1769aa;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  max-height: 220mm;
+  height: auto;
+  margin: 0.8em auto;
+  break-inside: avoid;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.5pt;
+  margin: 0.8em 0;
+}
+
+th, td {
+  border: 1px solid #cbd5e1;
+  padding: 0.42em 0.5em;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #eaf4ff;
+  color: #102a56;
+}
+
+pre, code {
+  font-family: "DejaVu Sans Mono", monospace;
+}
+
+pre {
+  background: #f5f7fb;
+  border-left: 4px solid #94a3b8;
+  padding: 0.7em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 8.5pt;
+}
+
+blockquote {
+  background: #f0fdf4;
+  border-left: 5px solid #34d399;
+  margin: 0.8em 0;
+  padding: 0.4em 0.8em;
+}
+
+.release-cover {
+  box-sizing: border-box;
+  height: 235mm;
+  padding-top: 68mm;
+  text-align: center;
+  break-after: page;
+}
+
+.release-cover h1 {
+  border: 0;
+  font-size: 28pt;
+}
+
+.release-cover p {
+  color: #475569;
+  font-size: 14pt;
+}
+
+.release-cover .release-meta {
+  color: #64748b;
+  font-size: 10pt;
+  margin-top: 1.2em;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tr {
+  break-inside: avoid;
+}
+
+.release-page-break {
+  break-before: page;
+}
+
+.table-scroll-region {
+  overflow: visible;
+}

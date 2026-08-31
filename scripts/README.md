@@ -101,60 +101,49 @@ python scripts/check-2026-freshness.py
 
 ---
 
-## `build-pdf.sh` — 編譯成單一 PDF
+## `build-pdf.sh` — 從同一份清單建立三語 PDF
 
 ```bash
-bash scripts/build-pdf.sh                  # zh-TW 版（預設）
-LANG_VARIANT=en bash scripts/build-pdf.sh  # 英文版
+RELEASE_VERSION=v2026.08.31 LANG_VARIANT=zh-TW bash scripts/build-pdf.sh
+RELEASE_VERSION=v2026.08.31 LANG_VARIANT=zh-Hans bash scripts/build-pdf.sh
+RELEASE_VERSION=v2026.08.31 LANG_VARIANT=en bash scripts/build-pdf.sh
 ```
 
-輸出：`dist/awesome-agentic-ai-zh.pdf`（或 `.en.pdf`）
+輸出檔名固定為：
 
-依賴：
+- `dist/awesome-agentic-ai-zh-v2026.08.31-zh-TW.pdf`
+- `dist/awesome-agentic-ai-zh-v2026.08.31-zh-Hans.pdf`
+- `dist/awesome-agentic-ai-zh-v2026.08.31-en.pdf`
 
-- `pandoc` (>= 3.0)
-- `xelatex`（TeX Live with CJK support）
-- **CJK 字型**：`Noto Sans CJK TC`（zh-TW + en 共用——en 版也需要，因為章節標題仍含中文）
-- **西文字型**：`DejaVu Sans`
+頁面順序只寫在 [`release/pages.yml`](../release/pages.yml) 一次；工具會從同一列推導繁中、簡中、英文檔名，並阻擋缺頁、順序漂移和外部 URL 漂移。Stage 0–8、Stage 7.5、A1–A3、五條角色路線、walkthrough、Capstone、Setup、Glossary、Resources、Advanced RAG、Agent Memory、CLI 與模型訓練選修都在這份清單裡。正文裡預設收合的補充內容會在 PDF 中展開。
 
-### 安裝指令
-
-**macOS**：
-```bash
-brew install pandoc
-brew install --cask mactex-no-gui          # TeX Live + xelatex
-brew install --cask font-noto-sans-cjk-tc  # CJK 字型
-brew install --cask font-dejavu            # 西文字型
-```
-
-**Linux (Debian / Ubuntu)**：
-```bash
-sudo apt install pandoc texlive-xetex texlive-lang-chinese \
-                 fonts-noto-cjk fonts-dejavu
-```
-
-**Windows**：
-```powershell
-choco install pandoc miktex
-# 然後手動裝字型：
-# Noto Sans CJK TC: https://fonts.google.com/noto/specimen/Noto+Sans+TC
-# DejaVu Sans: https://dejavu-fonts.github.io/
-```
-
-### 換字型
-
-如果上面的字型沒有，可以改用系統內建的：
+依賴：Python + PyYAML、Pandoc、WeasyPrint、Poppler、Noto CJK 與 DejaVu 字型。Ubuntu 的安裝方式與正式 workflow 相同：
 
 ```bash
-# macOS（已內建 PingFang）
-CJK_FONT="PingFang TC" bash scripts/build-pdf.sh
-# Windows（已內建 Microsoft JhengHei）
-CJK_FONT="Microsoft JhengHei" bash scripts/build-pdf.sh
+sudo apt-get install pandoc weasyprint poppler-utils \
+  fonts-dejavu-core fonts-noto-cjk fonts-noto-color-emoji
 ```
 
-兩個字型 env var 都支援：`CJK_FONT` 跟 `MAIN_FONT`。
+建立後必須抽出文字再驗證，不能只看「有三個檔案」：
 
-**Mermaid 圖**：目前 build-pdf.sh 會把 ` ```mermaid` 退化成普通 code block。要 render 圖需要另外裝 `pandoc-mermaid` filter（複雜度高，預設跳過）。
+```bash
+python scripts/release_manifest.py validate-pdfs \
+  --version v2026.08.31 --dist dist --json dist/pdf-validation.json
+```
+
+[`release/notes.yml`](../release/notes.yml) 也只寫一次。`release_manifest.py render-notes` 會用相同 change ID、順序和共用連結產生三個語言段落。
+
+## 正式 Release
+
+[`Trilingual Release`](../.github/workflows/release.yml) 只接受手動啟動：
+
+1. 用 GitHub API UTC 日期驗證 calendar tag，鎖定當下 `main` SHA。
+2. 跑完整內容、連結、repository、freshness、圖片、三語網站與 tests。
+3. 建立三份 PDF candidate、抽字驗證，並上傳可下載的 Actions artifact。
+4. 在 `release` Environment 等待人工批准。
+5. 再確認 `main` 沒有前進，先建 Draft Release、驗證 tag／三份附件／三語 body，最後才發布。
+
+同一天第二次發布使用 `vYYYY.MM.DD-2`。Workflow 不由 push 或 PR 自動發布，也不會略過人工 Environment 關卡。
 
 ## `build-mdbook.sh` — 建可瀏覽的網站版
 
@@ -173,7 +162,7 @@ bash scripts/build-mdbook.sh --serve   # 建好後本機開 server (port 3000)
 推 main branch 時，[`.github/workflows/docs.yml`](../.github/workflows/docs.yml) 會自動 build mkdocs 站（`/` 首頁）+ mdBook（`/book/`）並 deploy 到 GitHub Pages。單一 workflow 擁有 Pages（兩個 workflow 各自 deploy 會互搶同一個 root，故已合併、刪除舊的 `deploy-book.yml`）。
 要啟用，去 Settings → Pages → Source: GitHub Actions。
 
-## 整體 Phase 5 deploy 流程
+## 網站與 Release 流程
 
 1. 推 main → `docs.yml` 自動 build mkdocs（`/` 首頁）+ mdBook（`/book/`）並 deploy 到 `https://wenyuchiou.github.io/awesome-agentic-ai-zh/`
-2. PDF：手動跑 `bash scripts/build-pdf.sh`，把 `dist/*.pdf` 上傳到 GitHub Release（或自動化 release workflow，TBD）
+2. Release：手動啟動 `release.yml`，先下載並檢查 candidate artifact，再通過 `release` Environment 發布三語 PDF 與三語 Release Notes

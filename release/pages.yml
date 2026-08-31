@@ -1,0 +1,75 @@
+schema_version: 1
+
+locales:
+  zh-TW:
+    html_lang: zh-Hant
+    title: awesome-agentic-ai-zh — AI Agent 學習地圖
+    subtitle: 從第一個模型呼叫，到能安全交付的 Agent
+  zh-Hans:
+    html_lang: zh-Hans
+    title: awesome-agentic-ai-zh — AI Agent 学习地图
+    subtitle: 从第一次模型调用，到能够安全交付的 Agent
+  en:
+    html_lang: en
+    title: awesome-agentic-ai-zh — AI Agent Learning Roadmap
+    subtitle: From a first model call to a safely delivered agent
+
+# Write each path once, using the canonical zh-TW filename. The release tooling
+# derives `.zh-Hans.md` and `.en.md` mirrors from the same ordered list.
+pages:
+  - id: readme
+    path: README.md
+  - id: stage-00
+    path: stages/00-foundations.md
+  - id: stage-01
+    path: stages/01-llm-basics.md
+  - id: stage-02
+    path: stages/02-prompt-engineering.md
+  - id: stage-03
+    path: stages/03-tool-use-and-hello-agent.md
+  - id: stage-04
+    path: stages/04-agent-frameworks.md
+  - id: stage-05
+    path: stages/05-claude-code-ecosystem.md
+  - id: stage-06
+    path: stages/06-memory-rag.md
+  - id: stage-07
+    path: stages/07-multi-agent-production.md
+  - id: stage-07-5
+    path: stages/07.5-advanced-agentic-concepts.md
+  - id: stage-08
+    path: stages/08-agent-interfaces.md
+  - id: cli-a1
+    path: tracks/cli/A1-cli-intro.md
+  - id: cli-a2
+    path: tracks/cli/A2-cli-workflow.md
+  - id: cli-a3
+    path: tracks/cli/A3-cli-production.md
+  - id: role-everyday-user
+    path: branches/for-everyday-users.md
+  - id: role-developer
+    path: branches/for-developer.md
+  - id: role-researcher
+    path: branches/for-researcher.md
+  - id: role-knowledge-worker
+    path: branches/for-knowledge-worker.md
+  - id: role-teacher
+    path: branches/for-teacher.md
+  - id: walkthrough-paper-bot
+    path: walkthroughs/build-first-agent-in-7-steps.md
+  - id: capstone
+    path: CAPSTONE.md
+  - id: setup
+    path: resources/setup-guide.md
+  - id: glossary
+    path: resources/glossary.md
+  - id: resources-index
+    path: resources/README.md
+  - id: advanced-rag
+    path: resources/advanced-rag.md
+  - id: agent-memory
+    path: resources/agent-memory.md
+  - id: cli-agents-guide
+    path: resources/cli-agents-guide.md
+  - id: model-training-guide
+    path: resources/model-training-guide.md

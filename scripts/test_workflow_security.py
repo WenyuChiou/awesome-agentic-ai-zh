@@ -109,3 +109,37 @@ jobs:
       - run: gh api -X POST endpoint -F body=@evidence/pr-readiness.md
 """
     assert ws.problems_for_text(Path(".github/workflows/pr-gate.yml"), text) == []
+
+
+def test_release_publish_job_has_narrow_write_permission() -> None:
+    text = """name: Trilingual Release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  publish:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    environment: release
+    steps: []
+"""
+    assert ws.problems_for_text(Path(".github/workflows/release.yml"), text) == []
+
+
+def test_other_release_job_cannot_inherit_contents_write() -> None:
+    text = """name: Trilingual Release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps: []
+"""
+    problems = ws.problems_for_text(Path(".github/workflows/release.yml"), text)
+    assert any("unapproved write" in item for item in problems)
