@@ -26,8 +26,6 @@ import posixpath
 import re
 from urllib.parse import urlsplit
 
-from mkdocs.utils import get_relative_url
-
 # The switcher is always the very first element of the README; the
 # banner that follows is <div align="center"> (different), so a
 # non-greedy first-match on align="right" is safe.
@@ -221,6 +219,9 @@ def rewrite_local_html_links(
     """
 
     from pathlib import Path
+    # Keep image-only hook tests stdlib-only; MkDocs is guaranteed when this
+    # site-link rewrite actually runs during a documentation build.
+    from mkdocs.utils import get_relative_url
 
     root = Path(repo_root) if repo_root is not None else Path(__file__).resolve().parent.parent
     source_locale = _locale_for_page(src_path, page_url)
