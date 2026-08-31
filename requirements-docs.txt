@@ -1,7 +1,7 @@
 # Docs site (GitHub Pages) build dependencies — used by .github/workflows/docs.yml
 # and for local preview: pip install -r requirements-docs.txt && mkdocs serve
 # Explicit base pin so a future mkdocs 2.x can't silently break CI.
-mkdocs>=1.6,<2
+mkdocs>=1.6.1,<2
 mkdocs-material==9.7.7
 mkdocs-static-i18n==1.2.3
 # Pinned explicitly even though mkdocs-material pulls it in transitively:
