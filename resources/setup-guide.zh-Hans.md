@@ -4,7 +4,7 @@
 
 > [← 返回主路线 README](../README.zh-Hans.md)
 
-<!-- freshness: canonical=resources/setup-guide.md; verified_on=2026-08-30; scope=install-paths,api-keys,authentication,provider-entrypoints,project-status; max_age_days=90 -->
+<!-- freshness: canonical=resources/setup-guide.md; verified_on=2026-08-31; scope=install-paths,api-keys,authentication,provider-entrypoints,project-status; max_age_days=90 -->
 
 这一页不是要你把所有工具都装一遍。你只要先选一扇门，完成一个小结果。
 
@@ -63,7 +63,7 @@
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="5">IDE／Editor</th><td><a href="https://cursor.com">Cursor</a></td><td>AI editor；确认每次修改和 terminal 操作</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://windsurf.com/editor">Windsurf</a></td><td>AI editor；方案和权限以官方文档为准</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://devin.ai/desktop">Devin Desktop（原 Windsurf）</a></td><td>Windsurf 更名后的桌面 Coding Agent／IDE；仍要确认工具权限和方案</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://cline.bot">Cline</a></td><td>VS Code coding agent；从低权限开始</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://zed.dev/ai">Zed AI</a></td><td>Zed editor 的 AI 功能</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/features/copilot">GitHub Copilot</a></td><td>可在 GitHub、IDE 和其他界面使用；各界面的权限不同</td><td>⭐⭐⭐⭐⭐</td></tr>

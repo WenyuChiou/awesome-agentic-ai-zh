@@ -217,7 +217,7 @@ RESEARCHER_REQUIRED_READING_URLS = (
     "https://support.google.com/gemininotebook/answer/17004255",
     "https://www.zotero.org/support/quick_start_guide",
     "https://github.com/Future-House/paper-qa",
-    "https://dvc.org/doc/command-reference/",
+    "https://doc.dvc.org/command-reference",
     "https://help.zenodo.org/docs/get-started/quickstart/",
 )
 

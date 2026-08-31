@@ -26,7 +26,7 @@ stage01_fact_pack:
     qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
     glm: 'https://docs.z.ai/guides/llm/glm-5.3'
     yi: 'https://github.com/01-ai/Yi'
-    llama: 'https://ai.meta.com/llama/get-started/'
+    llama: 'https://developer.meta.com/ai/docs/overview/'
     muse: 'https://huggingface.co/meta-models/Muse-Glimmer-30B'
     gemma: 'https://ai.google.dev/gemma/docs/core'
     mistral: 'https://docs.mistral.ai/models'
@@ -394,7 +394,7 @@ model_training_fact_pack:
 
 setup_guide_fact_pack:
   canonical: 'resources/setup-guide.md'
-  verified_on: '2026-08-30'
+  verified_on: '2026-08-31'
   scope: ['install-paths', 'api-keys', 'authentication', 'provider-entrypoints', 'project-status']
   official_sources:
     claude_api_quickstart: 'https://platform.claude.com/docs/en/get-started'
@@ -412,6 +412,7 @@ setup_guide_fact_pack:
     alibaba_model_studio: 'https://help.aliyun.com/en/model-studio/base-url'
     zai_api: 'https://docs.z.ai/api-reference/introduction'
     ollama_openai_compatibility: 'https://docs.ollama.com/api/openai-compatibility'
+    devin_desktop: 'https://devin.ai/desktop'
 
 verified_pages:
   - canonical: 'stages/01-llm-basics.md'
@@ -536,10 +537,15 @@ stale_patterns:
     qualifier_terms: []
     note: 'Beginner entry pages must not freeze volatile account grants or stale desktop availability'
 
-  - pattern: 'https://codeium\.com/windsurf'
-    include_files: ['resources/agent-paradigms.md']
+  - pattern: 'https://codeium\.com/windsurf|https://windsurf\.com/editor'
+    include_files: ['resources/agent-paradigms.md', 'resources/setup-guide.md']
     qualifier_terms: []
-    note: 'Windsurf uses its current official editor entry point'
+    note: 'Windsurf is now Devin Desktop and must use the current official product entry point'
+
+  - pattern: 'https://ai\.meta\.com/llama/get-started/'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: []
+    note: 'Meta moved the current Llama developer entry point to developer.meta.com/ai/docs/overview/'
 
   - pattern: '(?:54 exercises|54 個練習|54 个练习|gemma4:e4b.{0,60}7\.5 GB|gemma4:e2b.{0,60}4\.0 GB)'
     include_files: ['examples/README.md']

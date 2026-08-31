@@ -60,7 +60,7 @@ Gemini Notebook 是 Google 于 2026-07-16 为 NotebookLM 使用的现行名称�
 2. [Gemini Notebook 隐私与使用条款](https://support.google.com/gemininotebook/answer/17004255)：上传前了解数据怎样被处理。
 3. [Zotero 快速入门](https://www.zotero.org/support/quick_start_guide)：整理作者、年份、PDF 和笔记。
 4. [PaperQA2 README](https://github.com/Future-House/paper-qa)：了解文献 RAG 如何把回答连回文件。
-5. [DVC 常用流程](https://dvc.org/doc/command-reference/)：用 Git 管理数据版本和可重跑 pipeline。
+5. [DVC 常用流程](https://doc.dvc.org/command-reference)：用 Git 管理数据版本和可重跑 pipeline。
 6. [Zenodo 快速入门](https://help.zenodo.org/docs/get-started/quickstart/)：将可公开的数据、代码或材料保存成可引用版本。
 
 <a id="精选-projects"></a><a id="大纲与写作"></a><a id="文献管理集成"></a>

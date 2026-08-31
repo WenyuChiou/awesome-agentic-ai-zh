@@ -22,7 +22,7 @@ READMES = {
 }
 FRESHNESS = (
     "<!-- freshness: canonical=resources/setup-guide.md; "
-    "verified_on=2026-08-30; "
+    "verified_on=2026-08-31; "
     "scope=install-paths,api-keys,authentication,provider-entrypoints,project-status; "
     "max_age_days=90 -->"
 )
@@ -164,6 +164,19 @@ def test_three_locales_share_freshness_sources_commands_and_model_ids() -> None:
     assert len(set(url_orders)) == 1
 
 
+def test_devin_desktop_replaces_the_retired_windsurf_entry() -> None:
+    labels = {
+        "zh-TW": "Devin Desktop（原 Windsurf）",
+        "en": "Devin Desktop (formerly Windsurf)",
+        "zh-Hans": "Devin Desktop（原 Windsurf）",
+    }
+    for locale, page in PAGES.items():
+        text = page.read_text(encoding="utf-8")
+        assert text.count('href="https://devin.ai/desktop"') == 1
+        assert labels[locale] in text
+        assert "https://windsurf.com/editor" not in text
+
+
 @pytest.mark.parametrize("page", PAGES.values())
 def test_secret_setup_is_copyable_and_gitignore_precedes_env_creation(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
@@ -223,7 +236,8 @@ def test_freshness_config_enrols_setup_guide_fact_pack_and_page() -> None:
     config = yaml.safe_load((ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8"))
     pack = config["setup_guide_fact_pack"]
     assert pack["canonical"] == "resources/setup-guide.md"
-    assert pack["verified_on"] == "2026-08-30"
+    assert pack["verified_on"] == "2026-08-31"
+    assert pack["official_sources"]["devin_desktop"] == "https://devin.ai/desktop"
     assert pack["scope"] == [
         "install-paths",
         "api-keys",

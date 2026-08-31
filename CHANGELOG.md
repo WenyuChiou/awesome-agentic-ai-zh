@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-08-31
 
+- **maintenance / researcher route / official source** · 三語研究人員路線的 DVC command reference 改用目前會直接回應的官方 `doc.dvc.org/command-reference`，不再繞過已重新導向且容易被 rate limit 的舊入口；學習順序與說明不變。
+- **maintenance / Stage 1 / official source** · 三語 Llama 列不再指向已搬遷的 `ai.meta.com/llama/get-started`，改用重新導向後的 Meta AI 現行開發者文件；freshness gate 會阻擋舊入口回歸，模型內容與推薦定位不變。
+- **maintenance / setup guide / product identity** · 三語 Setup Guide 將已更名的 Windsurf 更新為現行 **Devin Desktop（原 Windsurf）**，入口改用官方 `devin.ai/desktop`，並說清楚它是桌面 Coding Agent／IDE 介面，不只是籠統的 AI editor；推薦度維持不變。Setup Guide 的官方來源包與查核日期同步更新，freshness gate 會阻擋舊 `windsurf.com/editor` 入口回歸。
 - **release / PDF / table typography** · 正式三語 PDF 的表頭與儲存格不再沿用正文的任意斷字規則，英文 `Desktop`、`Recommendation` 與一般欄位文字會保留完整單字；Release validator 也會阻擋兩個已知的表頭跨行碎字重新出現。
 - **maintenance / setup guide / link health** · 三語 Setup Guide 將 Gemini for macOS 的失效網址修正為 Google 官方現行下載入口 `gemini.google/mac`；產品定位、推薦度與其他資源不變。
 - **release / trilingual PDF / guarded publishing** · **建立單一來源的三語正式 Release 流程，繁中、簡中與英文不再各自維護容易漂移的頁面清單**：`release/pages.yml` 固定 28 個入口，包含 Stage 0–8、Stage 7.5、A1–A3、五條角色路線、walkthrough、Capstone、Setup、Glossary、Resources、Advanced RAG、Agent Memory、CLI 與模型訓練選修；工具會推導三語檔名，阻擋缺頁、順序、H1 或外部 URL 漂移，並把正文收合內容展開到 PDF。`release/notes.yml` 以穩定 change ID、同序三語文字與共用連結產生一份 Release body。新的手動 workflow 以 GitHub API UTC 日期驗證 `vYYYY.MM.DD(-N)`、鎖定 main SHA、重跑完整內容健康與文件 gate、建置並抽字驗證三份固定命名 PDF；只有通過 `release` Environment 後的 publish job 具有局部 `contents: write`，且會先建 Draft、驗 tag／SHA／三份附件／三語 body，再發布。本機 Ubuntu 24.04 container 已用 Pandoc 3.1.3 + WeasyPrint 61.1 真正產生繁中 `26,887,670`、簡中 `26,200,059`、英文 `25,944,123` bytes PDF，Poppler 驗證三份各有 28 個 heading；封面、Stage 0、Stage 5、Stage 7.5／表格與完成卡抽樣清楚，遠端裝飾圖不進 PDF，本地教學圖保留。`release.yml` 的 GitHub artifact／Environment／Draft → publish 端到端證據仍須在本工具 PR 合併後取得，不把本機 smoke 寫成已發布。
