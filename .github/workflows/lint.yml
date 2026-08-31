@@ -35,7 +35,7 @@ jobs:
     name: Banned-word audit (zh-Hans slips + overclaim phrases)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Check zh-Hans slips in zh-TW canonical files
         run: |
@@ -374,7 +374,7 @@ jobs:
     # guard), so the freshness-gate coverage can't silently regress the way it
     # did in 2026-07.
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -408,7 +408,7 @@ jobs:
     # Runs on every PR — docs.yml would be too late, it only fires on push
     # to main, i.e. after the merge.
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
