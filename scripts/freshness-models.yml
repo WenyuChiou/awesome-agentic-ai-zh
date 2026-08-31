@@ -188,6 +188,19 @@ stage07_fact_pack:
     ibm_loop_engineering: 'https://www.ibm.com/think/topics/loop-engineering'
     openai_harness_engineering: 'https://openai.com/index/harness-engineering/'
 
+walkthrough_fact_pack:
+  canonical: 'walkthroughs/build-first-agent-in-7-steps.md'
+  verified_on: '2026-08-31'
+  scope: ['models', 'frameworks', 'evals', 'observability', 'human-approval', 'interfaces']
+  official_sources:
+    anthropic_model_ids: 'https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions'
+    langgraph_v1_migration: 'https://docs.langchain.com/oss/python/migrate/langgraph-v1'
+    langchain_agents: 'https://docs.langchain.com/oss/python/langchain/agents'
+    langchain_human_in_the_loop: 'https://docs.langchain.com/oss/python/langchain/human-in-the-loop'
+    langgraph_persistence: 'https://docs.langchain.com/oss/python/langgraph/persistence'
+    promptfoo_python_provider: 'https://www.promptfoo.dev/docs/providers/python/'
+    langfuse_langchain_integration: 'https://langfuse.com/integrations/frameworks/langchain'
+
 stage075_fact_pack:
   canonical: 'stages/07.5-advanced-agentic-concepts.md'
   verified_on: '2026-08-29'
@@ -425,6 +438,9 @@ verified_pages:
     max_age_days: 90
   - canonical: 'stages/07-multi-agent-production.md'
     required_scopes: ['evals', 'observability', 'human-approval', 'persistence', 'recovery', 'orchestration', 'resources']
+    max_age_days: 90
+  - canonical: 'walkthroughs/build-first-agent-in-7-steps.md'
+    required_scopes: ['models', 'frameworks', 'evals', 'observability', 'human-approval', 'interfaces']
     max_age_days: 90
   - canonical: 'stages/07.5-advanced-agentic-concepts.md'
     required_scopes: ['agent-patterns', 'harnesses', 'evals', 'dynamic-workflows', 'framework-status', 'research']

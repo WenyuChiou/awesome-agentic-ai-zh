@@ -478,9 +478,11 @@ catalog 不使用 popularity 排名、固定 GitHub stars、固定安裝時間�
 不是純線性——Stage 4 有「memory peek」指 Stage 6（「LangGraph 有 checkpoint，那是 memory 的東西，到 Stage 6 會講」），讓讀者知道延伸但不卡關。
 
 ### 跨 stage walkthrough 怎麼用
-[`walkthroughs/build-first-agent-in-7-steps.md`](../walkthroughs/build-first-agent-in-7-steps.md) 用同一個 Paper Summary Bot 串完 Stage 1 到 7。這份是 stage 之間銜接的 ground truth：每個 stage 結束時 agent 應該長什麼樣，下一 stage 怎麼增加新層。
+[`walkthroughs/build-first-agent-in-7-steps.md`](../walkthroughs/build-first-agent-in-7-steps.md) 用同一個 Paper Summary Bot 串完 Stage 1 到 7，再以 Stage 8 的最小介面與安全出口收尾。這份是 stage 之間銜接的 ground truth：每個 stage 結束時 Agent 應該長什麼樣，下一 stage 怎麼增加新層。
 
-如果某個 stage 改了結構（譬如 Stage 6 換了 vector DB），walkthrough 也要同步改——是 maintain cost，但確保 stage 之間真的能串得起來。
+Walkthrough 的固定 production 收尾是 `Eval → Observability → Human Approval／Checkpoint／Resume／Recovery → Deploy → Stage 8 最小介面`。Stage 6 之後必須保留一個有明確 step budget 與 typed result 的 current-agent 入口；Eval、trace 與部署全部呼叫它，不得退回較早、功能較少或安全邊界較弱的示範。必須讓 **Outcome** 與 **Trajectory** 都能被檢查；敏感外部寫入前先停下，checkpoint 與 idempotency 支援安全 resume；遇到來源、Eval、預算、approval 或 ledger 衝突時，`needs_review` 是正式安全出口。Stage 8 先選 API／Fetch，只有任務真的需要才升級到 Browser Use、Computer Use 或 Sandbox。
+
+如果某個 stage 改了結構（譬如 Stage 6 換了 vector DB、Stage 7 改 production 順序、Stage 8 改介面邊界），walkthrough 也要同步改——這是 maintain cost，但確保 stage 之間真的能串得起來。
 
 ---
 
