@@ -78,6 +78,15 @@ th, td {
 th {
   background: #eaf4ff;
   color: #102a56;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+td {
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 pre, code {

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import re
 from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
@@ -77,6 +78,20 @@ def test_asset_names_are_exact_and_locale_specific() -> None:
     assert rm.asset_name("v2026.08.31", "zh-TW") == "awesome-agentic-ai-zh-v2026.08.31-zh-TW.pdf"
     assert rm.asset_name("v2026.08.31-2", "zh-Hans") == "awesome-agentic-ai-zh-v2026.08.31-2-zh-Hans.pdf"
     assert rm.asset_name("v2026.08.31", "en") == "awesome-agentic-ai-zh-v2026.08.31-en.pdf"
+
+
+def test_pdf_table_text_keeps_whole_words() -> None:
+    css = (rm.ROOT / "release" / "pdf.css").read_text(encoding="utf-8")
+    header_rule = re.search(r"(?sm)^th \{(.*?)^\}", css)
+    cell_rule = re.search(r"(?sm)^td \{(.*?)^\}", css)
+    assert header_rule is not None
+    assert "hyphens: none" in header_rule.group(1)
+    assert "overflow-wrap: normal" in header_rule.group(1)
+    assert "word-break: normal" in header_rule.group(1)
+    assert cell_rule is not None
+    assert "hyphens: none" in cell_rule.group(1)
+    assert "overflow-wrap: normal" in cell_rule.group(1)
+    assert "word-break: normal" in cell_rule.group(1)
 
 
 def test_heading_normalization_never_swallows_across_pdf_lines() -> None:
@@ -156,4 +171,31 @@ def test_pdf_validator_rejects_an_english_body_that_is_mostly_cjk(
         lambda command, **_: SimpleNamespace(stdout=extracted[Path(command[2]).name], stderr=b""),
     )
     with pytest.raises(rm.ReleaseManifestError, match="too much CJK"):
+        rm.validate_pdfs("v2026.08.31", tmp_path)
+
+
+def test_pdf_validator_rejects_broken_english_table_labels(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    manifest = rm.validate_pages_manifest()
+    extracted: dict[str, bytes] = {}
+    for locale in rm.LOCALES:
+        name = rm.asset_name("v2026.08.31", locale)
+        (tmp_path / name).write_bytes(b"%PDF-1.7\n" + b"0" * 12_000)
+        text = "\n".join(
+            value
+            for page in manifest["pages"]
+            for value in (page["headings"][locale], page["body_markers"][locale])
+        )
+        if locale == "en":
+            text += "\nDeskto\np\nRecommen\ndation\n"
+        extracted[name] = text.encode("utf-8")
+
+    monkeypatch.setattr(rm.shutil, "which", lambda _: "pdftotext")
+    monkeypatch.setattr(
+        rm.subprocess,
+        "run",
+        lambda command, **_: SimpleNamespace(stdout=extracted[Path(command[2]).name], stderr=b""),
+    )
+    with pytest.raises(rm.ReleaseManifestError, match="splits an English table label"):
         rm.validate_pdfs("v2026.08.31", tmp_path)

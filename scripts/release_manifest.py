@@ -415,6 +415,13 @@ def validate_pdfs(version: str, dist: Path, *, pdftotext: str = "pdftotext") -> 
                 missing.append(f"{page['id']}:{page['headings'][locale]}")
         if missing:
             raise ReleaseManifestError(f"{name} is missing page headings: {missing}")
+        if locale == "en" and re.search(
+            r"(?im)\b(?:Deskto[ \t]*\r?\n[ \t]*p|Recommen[ \t]*\r?\n[ \t]*dation)\b",
+            extracted,
+        ):
+            raise ReleaseManifestError(
+                f"{name} splits an English table label across lines"
+            )
         cjk_count = len(CJK_RE.findall(extracted))
         if locale == "en" and cjk_count > max(200, len(extracted) // 100):
             raise ReleaseManifestError(
