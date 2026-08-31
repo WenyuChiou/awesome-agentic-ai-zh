@@ -44,37 +44,101 @@ ENTRY_BOUNDARIES = {
     "en": "Before Track A or Track B, check Stage 0–2. If you only want everyday AI use, go straight to the role guide.",
     "zh-Hans": "走 Track A 或 Track B 前，先确认 Stage 0–2；只走日常用户路线的人可以直接打开角色指南。",
 }
+LANDING_PAGES = {
+    "zh-TW": ROOT / "index.md",
+    "en": ROOT / "index.en.md",
+    "zh-Hans": ROOT / "index.zh-Hans.md",
+}
 
 AGENT_DEFINITION_MARKERS = {
     "zh-TW": (
-        "由 AI 驅動",
-        "替人完成事情",
-        "在規則內",
-        "選下一步",
+        "能為了人的目標",
+        "自己判斷下一步",
+        "採取行動",
         "必要時使用工具",
         "依結果",
+        "自動替人完成工作",
+        "規則與權限",
         "把控制權交還給人",
+        "只回答一次的聊天機器人",
+        "每一步都固定寫好的腳本",
         "不一定是 Agent",
     ),
     "en": (
-        "AI-powered",
-        "on a person's behalf",
-        "within clear rules",
+        "toward a person's goal",
+        "decide what to do next",
+        "take action",
         "chooses the next step",
         "uses tools when needed",
         "based on the result",
+        "do work automatically",
+        "rules and permissions",
         "hands control back",
+        "one-shot chatbot",
+        "fixed script",
         "not necessarily an Agent",
     ),
     "zh-Hans": (
-        "由 AI 驱动",
-        "替人完成事情",
-        "在规则内",
-        "选择下一步",
+        "能为了人的目标",
+        "自己判断下一步",
+        "采取行动",
         "需要时使用工具",
         "根据结果",
+        "自动替人完成工作",
+        "规则和权限",
         "把控制权交还给人",
+        "只回答一次的聊天机器人",
+        "每一步都预先固定好的脚本",
         "不一定是 Agent",
+    ),
+}
+LANDING_AGENT_HEADINGS = {
+    "zh-TW": "## 🤖 先懂一件事：AI Agent 是什麼？",
+    "en": "## 🤖 First: what is an AI Agent?",
+    "zh-Hans": "## 🤖 先懂一件事：AI Agent 是什么？",
+}
+LANDING_AGENT_MARKERS = {
+    "zh-TW": (
+        "能為了人的目標",
+        "自己判斷下一步",
+        "採取行動",
+        "目前情況",
+        "必要時使用工具",
+        "依結果",
+        "繼續",
+        "修正",
+        "停止",
+        "把控制權交還給人",
+        "自動替人完成工作",
+        "規則與權限",
+    ),
+    "en": (
+        "toward a person's goal",
+        "decide what to do next",
+        "take action",
+        "current situation",
+        "uses tools when needed",
+        "based on the result",
+        "continues",
+        "corrects course",
+        "stops",
+        "hands control back",
+        "do work automatically",
+        "rules and permissions",
+    ),
+    "zh-Hans": (
+        "能为了人的目标",
+        "自己判断下一步",
+        "采取行动",
+        "当前情况",
+        "需要时使用工具",
+        "根据结果",
+        "继续",
+        "修正",
+        "停止",
+        "把控制权交还给人",
+        "自动替人完成工作",
+        "规则和权限",
     ),
 }
 
@@ -156,6 +220,15 @@ def test_homepage_defines_an_agent_by_purpose_behavior_and_boundary(
     section = _section(text, HEADINGS[locale][0], HEADINGS[locale][1])
     assert "**AI Agent**" in section
     assert all(marker in section for marker in AGENT_DEFINITION_MARKERS[locale])
+
+
+@pytest.mark.parametrize("locale,page", LANDING_PAGES.items())
+def test_docs_landing_keeps_the_agent_definition_visible(locale: str, page: Path) -> None:
+    visible = _without_details(_text(page))
+    heading = LANDING_AGENT_HEADINGS[locale]
+    section = _section(visible, heading, "## ")
+    assert "**AI Agent**" in section
+    assert all(marker in section for marker in LANDING_AGENT_MARKERS[locale])
 
 
 @pytest.mark.parametrize("page", PAGES.values())

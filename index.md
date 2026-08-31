@@ -27,6 +27,10 @@ hide:
 <div class="aaz-stat"><span class="aaz-num">3</span><span class="aaz-lbl">語言</span></div>
 </div>
 
+## 🤖 先懂一件事：AI Agent 是什麼？
+
+**AI Agent**（AI 代理人）是能為了人的目標，自己判斷下一步並採取行動的 AI 系統。人給它目標後，它會看目前情況、必要時使用工具，再依結果繼續、修正、停止，或把控制權交還給人；它可以自動替人完成工作，但只能在規則與權限內行動。
+
 ## 選一條學習路線
 
 <div class="grid cards" markdown>

@@ -27,6 +27,10 @@ hide:
 <div class="aaz-stat"><span class="aaz-num">3</span><span class="aaz-lbl">languages</span></div>
 </div>
 
+## 🤖 First: what is an AI Agent?
+
+An **AI Agent** is an AI system that can decide what to do next and take action toward a person's goal. Once given a goal, it reads the current situation, uses tools when needed, then continues, corrects course, stops, or hands control back based on the result. It can do work automatically on a person's behalf, but only within clear rules and permissions.
+
 ## Pick a learning track
 
 <div class="grid cards" markdown>

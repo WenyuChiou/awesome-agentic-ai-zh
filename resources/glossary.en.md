@@ -9,7 +9,7 @@ When an unfamiliar term appears, you do not need to stop reading the whole chapt
 - [**Prompt**](#prompt) — the complete task package you give a model, including the job, data, examples, and limits.
 - [**Token**](#token) — a small unit a model uses to split input; usage limits and billing often count it.
 - [**Context Window**](#context-window) — the information space a model can consider together in one call.
-- [**Agent**](#agent) — an AI-powered system that acts on a person's behalf within rules, checks results, and adjusts its next step.
+- [**Agent**](#agent) — an AI system that decides what to do next and takes action toward a person's goal, automatically but only within rules and permissions.
 - [**Tool Use**](#tool-use--function-calling) — the model requests a tool, but the program checks and executes it.
 - [**Agent Loop**](#agent-loop) — the running cycle of deciding, acting, and observing until completion or a stop condition.
 - [**RAG**](#rag-retrieval-augmented-generation) — retrieve evidence first, then give that evidence to the model for an answer.
@@ -198,7 +198,7 @@ More examples are not automatically better. Compare them with the same Eval.
 
 ### Agent
 
-An **Agent** is an AI-powered system that acts on a person's behalf within clear rules and permissions. Once a person gives it a goal, it reads the current state, decides the next step, uses tools when needed, then, based on the result, continues, corrects course, stops, or hands control back to the person.
+An **Agent** is an AI system that can decide what to do next and take action toward a person's goal. Once a person gives it a goal, it reads the current state, decides the next step, uses tools when needed, then, based on the result, continues, corrects course, stops, or hands control back to the person. It can do work automatically on a person's behalf, but only within clear rules and permissions.
 
 A one-shot chatbot or a fixed script with every step hard-coded in advance is not necessarily an Agent. The key is whether the AI decides how to achieve the goal based on the current state while it runs. This boundary follows [OpenAI's practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/) and [Anthropic's explanation of effective agents](https://www.anthropic.com/engineering/building-effective-agents).
 

@@ -27,6 +27,10 @@ hide:
 <div class="aaz-stat"><span class="aaz-num">3</span><span class="aaz-lbl">语言</span></div>
 </div>
 
+## 🤖 先懂一件事：AI Agent 是什么？
+
+**AI Agent**（AI 智能体）是能为了人的目标，自己判断下一步并采取行动的 AI 系统。人给它目标后，它会读取当前情况、需要时使用工具，再根据结果继续、修正、停止，或把控制权交还给人；它可以自动替人完成工作，但只能在规则和权限内行动。
+
 ## 选一条学习路线
 
 <div class="grid cards" markdown>

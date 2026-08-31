@@ -9,7 +9,7 @@
 - [**Prompt（提示词）**](#prompt提示词) — 你交给模型的完整任务包，包含要做什么、数据、示例和限制。
 - [**Token**](#token) — 模型切分文字时使用的小单位；计费和可读长度常用它计算。
 - [**Context Window（上下文视窗）**](#context-window上下文视窗) — 模型这一次最多能一起参考的信息空间。
-- [**Agent**](#agent代理人) — 由 AI 驱动，会在规则内替人完成事情、查看结果并调整下一步的系统。
+- [**Agent**](#agent代理人) — 能为了人的目标，自己判断下一步并采取行动；只在规则和权限内自动做事的 AI 系统。
 - [**Tool Use（工具使用）**](#tool-use--function-calling) — 模型提出工具请求，程序检查后才真正执行。
 - [**Agent Loop**](#agent-loop) — Agent 重复“决定、行动、观察”，直到完成或停止的执行循环。
 - [**RAG**](#ragretrieval-augmented-generation) — 先找数据，再把证据交给模型回答。
@@ -198,7 +198,7 @@
 
 ### Agent（代理人）
 
-**Agent** 是由 AI 驱动、能在明确规则和权限内替人完成任务的系统。人给它目标后，它会读取当前状态、决定下一步，需要时使用工具，再根据结果继续、修正、停止，或把控制权交还给人。
+**Agent** 是能为了人的目标，自己判断下一步并采取行动的 AI 系统。人给它目标后，它会读取当前状态、决定下一步，需要时使用工具，再根据结果继续、修正、停止，或把控制权交还给人。它可以自动替人完成工作，但只能在明确规则和权限内行动。
 
 只回答一次的聊天机器人，或每一步都由程序预先写死的固定脚本，不一定是 Agent。关键在于 AI 是否会在执行过程中，根据状态决定如何达成目标。这个边界参考 [OpenAI 的 Agent 指南](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/) 和 [Anthropic 的 Agents 说明](https://www.anthropic.com/engineering/building-effective-agents)。
 
