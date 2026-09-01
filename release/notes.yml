@@ -1,54 +1,15 @@
 schema_version: 1
-release_version: v2026.08.31
+release_version: v2026.09.01
 
 # One ordered list produces all three language sections in the GitHub Release.
 # Links are shared so the three summaries cannot silently point to different pages.
 changes:
-  - id: beginner-path
-    category: curriculum
-    zh-TW: 把 Stage 0–8、Stage 7.5 與 A1–A3 整理成清楚的學習路線；核心詞、必讀、精選專案與完成條件保持展開，補充步驟才收合。
-    zh-Hans: 把 Stage 0–8、Stage 7.5 与 A1–A3 整理成清楚的学习路线；核心词、必读、精选项目与完成条件保持展开，补充步骤才收合。
-    en: Reworked Stages 0–8, Stage 7.5, and A1–A3 into a clear learning path. Core terms, required reading, selected projects, and completion checks stay visible; secondary steps collapse.
+  - id: claude-fable-mythos-5-1
+    category: models
+    zh-TW: 依 2026-09-01 官方公告，主流模型表更新為 Claude Fable 5.1 與 Claude Mythos 5.1。兩者皆有 1M context、128K 最大輸出與 $10/$50 輸入／輸出價格，cache read 為 $0.25；Fable 5.1 一般可用，Mythos 5.1 只提供給通過審核的資安與生命科學使用者。
+    zh-Hans: 根据 2026-09-01 官方公告，主流模型表更新为 Claude Fable 5.1 与 Claude Mythos 5.1。两者都有 1M context、128K 最大输出和 $10/$50 输入／输出价格，cache read 为 $0.25；Fable 5.1 普遍可用，Mythos 5.1 只提供给通过审核的网络安全与生命科学用户。
+    en: Updated the model guide for the September 1, 2026 release of Claude Fable 5.1 and Claude Mythos 5.1. Both have a 1M context window, 128K maximum output, $10/$50 input/output pricing, and $0.25 cache reads. Fable 5.1 is generally available; Mythos 5.1 is limited to vetted cybersecurity and life-science users.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/stages
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/tracks/cli
-  - id: definitions-and-model-lifecycle
-    category: fundamentals
-    zh-TW: 說清楚 AI Agent、Prompt、Token、Context、Pre-training、Post-training、Inference 等重要名詞，也補上從資料到 Agent 的模型生命週期圖。
-    zh-Hans: 说清楚 AI Agent、Prompt、Token、Context、Pre-training、Post-training、Inference 等重要名词，也补上从数据到 Agent 的模型生命周期图。
-    en: Clarified AI Agent, Prompt, Token, Context, Pre-training, Post-training, Inference, and other core terms, with a model-lifecycle diagram from data to agent.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/resources/glossary.md
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/stages/01-llm-basics.md
-  - id: rag-memory-and-agent-engineering
-    category: advanced-learning
-    zh-TW: 將進階 RAG 與 Agent Memory 拆成可單獨閱讀的指南，並釐清 Prompt、Context、Harness、Loop、Graph 等工程層次。
-    zh-Hans: 将进阶 RAG 与 Agent Memory 拆成可单独阅读的指南，并理清 Prompt、Context、Harness、Loop、Graph 等工程层次。
-    en: Split Advanced RAG and Agent Memory into standalone guides and clarified the Prompt, Context, Harness, Loop, and Graph engineering layers.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/resources/advanced-rag.md
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/resources/agent-memory.md
-  - id: eval-and-safe-execution
-    category: production
-    zh-TW: 把 Stage 7 與 Paper Summary Bot 接到 Eval、可觀測性、人工批准、Checkpoint、Resume 與失敗恢復，讓「能跑」和「能安全交付」分得清楚。
-    zh-Hans: 把 Stage 7 与 Paper Summary Bot 接到 Eval、可观测性、人工批准、Checkpoint、Resume 与失败恢复，让“能跑”和“能安全交付”分得清楚。
-    en: Connected Stage 7 and the Paper Summary Bot to evals, observability, human approval, checkpoints, resume, and recovery so “it runs” is distinct from “it is safe to deliver.”
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/stages/07-multi-agent-production.md
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/walkthroughs/build-first-agent-in-7-steps.md
-  - id: roles-resources-and-freshness
-    category: resources
-    zh-TW: 重整五條角色路線、Cookbook、課程與資源入口；保留五星推薦度，並用官方資料檢查連結、專案狀態與易變資訊。
-    zh-Hans: 重整五条角色路线、Cookbook、课程与资源入口；保留五星推荐度，并用官方资料检查链接、项目状态与易变信息。
-    en: Reworked the five role paths, Cookbook, courses, and resource hub. Five-star editorial ratings remain visible, while official data checks links, repository state, and volatile facts.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/branches
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/tree/main/resources
-  - id: trilingual-site-and-governance
-    category: delivery
-    zh-TW: 補強三語鏡像、手機表格、圖片載入、線上文件與必要 PR gate；Release 現在由同一份頁面清單產生繁中、簡中、英文 PDF。
-    zh-Hans: 补强三语镜像、手机表格、图片加载、在线文档与必要 PR gate；Release 现在由同一份页面清单生成繁中、简中、英文 PDF。
-    en: Strengthened locale mirrors, mobile tables, image delivery, the live docs site, and the required PR gate. Releases now build zh-TW, zh-Hans, and English PDFs from one page manifest.
-    links:
-      - https://wenyuchiou.github.io/awesome-agentic-ai-zh/
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/actions
+      - https://www.anthropic.com/claude-fable-and-mythos-5-1
+      - https://platform.claude.com/docs/en/models/fable-5-1/overview
+      - https://platform.claude.com/docs/en/models/mythos-5-1/overview

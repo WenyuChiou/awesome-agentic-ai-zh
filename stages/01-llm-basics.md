@@ -4,7 +4,7 @@
 
 > 本章目的：先看懂模型怎麼從資料走到 Agent，再用一條可重複的本機到雲端路徑呼叫 LLM。你會讀懂 **Token（詞元）**、**Context Window（上下文視窗）** 與 **Temperature（溫度）**，也會用成本與延遲解釋模型選擇。
 
-<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-31; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-01; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
 
 ## 📌 學習目標
 
@@ -307,7 +307,7 @@ PRICING = {
     "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
     "claude-sonnet-5":    {"input": 2.00, "output": 10.00},
     "claude-opus-5":      {"input": 5.00, "output": 25.00},
-    "claude-fable-5":     {"input": 10.00, "output": 50.00},
+    "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
 }
 
 client = anthropic.Anthropic()
@@ -478,7 +478,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 
 | 家族 | 目前推薦型號 | 狀態 | Context | 價格或授權 | 適合做什麼 | 限制 | 官方來源 |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5；Opus 5；Sonnet 5；Haiku 4.5 | 正式可用 | 1M（Haiku 200K） | API：Fable $10/$50、Opus $5/$25、Sonnet $2/$10、Haiku $1/$5（輸入／輸出） | 長文、程式、agent 工作流 | Fable 已正式開放，不是邀請限定；各平台的 model ID 不同，使用前確認平台與區域支援 | [Anthropic 模型總覽](https://platform.claude.com/docs/en/models/overview) |
+| Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5；Sonnet 5；Haiku 4.5 | Fable 5.1：正式可用；Mythos 5.1：限核准使用者 | 1M context／128K 最大輸出（Haiku 200K／64K） | API：Fable／Mythos $10/$50、Opus $5/$25、Sonnet $2/$10、Haiku $1/$5（輸入／輸出）；Fable／Mythos cache read $0.25 | 長文、程式、長時間 agent 工作流 | Mythos 5.1 是與 Fable 5.1 相同的模型，但只提供給通過審核的資安與生命科學使用者 | [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) · [Mythos 5.1](https://platform.claude.com/docs/en/models/mythos-5-1/overview) |
 | GPT | GPT-5.6 Sol／Terra／Luna | 正式可用 | 1.05M | API：$4/$20、$2/$12、$0.20/$1.20（輸入／輸出） | 通用對話、工具呼叫、既有 SDK 整合 | 價格與限制依型號及 API 方案 | [OpenAI API 模型](https://developers.openai.com/api/docs/models) |
 | Gemini | Gemini 3.7 Flash | 正式可用 | 1M | 2026-12-31 前介紹價 $0.75/$3.75（輸入／輸出） | 長文件、多模態與 Google 生態整合 | Gemini 3.1 Pro 為 Preview；介紹價有期限 | [Gemini 模型文件](https://ai.google.dev/gemini-api/docs/models) · [Gemini API 定價](https://ai.google.dev/gemini-api/docs/pricing) |
 | DeepSeek | `deepseek-v4-flash`／`deepseek-v4-pro` | 正式可用 | 1M | Cache-miss：Flash $0.14/$0.28、Pro $0.435/$0.87（輸入／輸出） | 推理、程式、大量 token 任務 | 舊 `deepseek-chat`／`deepseek-reasoner` alias 已於 2026-07-24 棄用 | [DeepSeek 定價](https://api-docs.deepseek.com/quick_start/pricing/) |

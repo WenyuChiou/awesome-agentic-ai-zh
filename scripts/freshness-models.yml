@@ -11,12 +11,12 @@
 
 stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
-  verified_on: '2026-08-31'
+  verified_on: '2026-09-01'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
     google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
-    claude: 'https://platform.claude.com/docs/en/models/overview'
+    claude: 'https://platform.claude.com/docs/en/models/fable-5-1/overview'
     gpt: 'https://developers.openai.com/api/docs/models'
     gemini: 'https://ai.google.dev/gemini-api/docs/models'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
@@ -477,10 +477,11 @@ verified_pages:
     max_age_days: 90
 
 current_frontier_models:
-  # Verified 2026-08-27 from provider docs / official model cards.
+  # Verified 2026-09-01 from provider docs / official model cards.
   # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
-    - "Fable 5"
+    - "Fable 5.1"
+    - "Mythos 5.1"   # same model; limited to vetted cyber and life-science users
     - "Opus 5"
     - "Sonnet 5"
     - "Haiku 4.5"
@@ -525,6 +526,11 @@ current_frontier_models:
 # scanned — a qualifier written as "baseline" in zh-TW/en often becomes "基线" in
 # the zh-Hans mirror, and the gate must recognize all three (2026-07 gap).
 stale_patterns:
+  - pattern: 'Fable 5(?!\.1)|Mythos 5(?!\.1)'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: ['前身', '歷史', '舊版', 'predecessor', 'historical', 'legacy', '前代', '历史', '旧版']
+    note: 'Fable 5.1 and Mythos 5.1 superseded the 5.0 model recommendations on 2026-09-01'
+
   # The setup guide is a copy/run entry point. It must use current native
   # installation paths and avoid freezing account-specific prices or credits.
   - pattern: 'npm install -g @anthropic-ai/claude-code|Node\.js\s*(?:v?18|18\+)'

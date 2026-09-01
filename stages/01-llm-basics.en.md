@@ -4,7 +4,7 @@
 
 > Purpose: first see how a model moves from data to an Agent, then use a repeatable local-to-cloud path to call an LLM through an API (application programming interface). You will understand **Token**, **Context Window**, and **Temperature**, and explain model choices using cost and latency.
 
-<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-08-31; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-01; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
 
 ## 📌 Learning Goals
 
@@ -307,7 +307,7 @@ PRICING = {
     "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
     "claude-sonnet-5":    {"input": 2.00, "output": 10.00},
     "claude-opus-5":      {"input": 5.00, "output": 25.00},
-    "claude-fable-5":     {"input": 10.00, "output": 50.00},
+    "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
 }
 
 client = anthropic.Anthropic()
@@ -478,7 +478,7 @@ If an official source gives no reliable public number, the table says “Not pub
 
 | Family | Current recommended models | Status | Context | Price or license | Good for | Limitations | Official source |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5; Opus 5; Sonnet 5; Haiku 4.5 | Generally available | 1M (Haiku 200K) | API: Fable $10/$50, Opus $5/$25, Sonnet $2/$10, Haiku $1/$5 (input/output) | Long-form, coding, agent workflows | Fable is generally available, not invitation-only; model IDs differ by platform, so confirm platform and region support before use | [Anthropic model overview](https://platform.claude.com/docs/en/models/overview) |
+| Claude | Fable 5.1 (`claude-fable-5-1`); Mythos 5.1 (`claude-mythos-5-1`); Opus 5; Sonnet 5; Haiku 4.5 | Fable 5.1: generally available; Mythos 5.1: vetted access only | 1M context / 128K max output (Haiku 200K / 64K) | API: Fable/Mythos $10/$50, Opus $5/$25, Sonnet $2/$10, Haiku $1/$5 (input/output); Fable/Mythos cache reads $0.25 | Long-form, coding, long-running agent workflows | Mythos 5.1 is the same model as Fable 5.1 but is limited to vetted cybersecurity and life-science users | [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) · [Mythos 5.1](https://platform.claude.com/docs/en/models/mythos-5-1/overview) |
 | GPT | GPT-5.6 Sol / Terra / Luna | Generally available | 1.05M | API: $4/$20, $2/$12, $0.20/$1.20 (input/output) | General chat, tool use, existing SDK integration | Price and limits vary by model and API plan | [OpenAI API models](https://developers.openai.com/api/docs/models) |
 | Gemini | Gemini 3.7 Flash | Generally available | 1M | Through 2026-12-31, introductory $0.75/$3.75 (input/output) | Long documents, multimodal tasks, Google integration | Gemini 3.1 Pro is Preview; introductory pricing has an end date | [Gemini models](https://ai.google.dev/gemini-api/docs/models) · [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) |
 | DeepSeek | `deepseek-v4-flash` / `deepseek-v4-pro` | Generally available | 1M | Cache-miss: Flash $0.14/$0.28, Pro $0.435/$0.87 (input/output) | Reasoning, coding, high-token workloads | Legacy `deepseek-chat` / `deepseek-reasoner` aliases were deprecated 2026-07-24 | [DeepSeek pricing](https://api-docs.deepseek.com/quick_start/pricing/) |

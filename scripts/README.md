@@ -104,16 +104,16 @@ python scripts/check-2026-freshness.py
 ## `build-pdf.sh` — 從同一份清單建立三語 PDF
 
 ```bash
-RELEASE_VERSION=v2026.08.31 LANG_VARIANT=zh-TW bash scripts/build-pdf.sh
-RELEASE_VERSION=v2026.08.31 LANG_VARIANT=zh-Hans bash scripts/build-pdf.sh
-RELEASE_VERSION=v2026.08.31 LANG_VARIANT=en bash scripts/build-pdf.sh
+RELEASE_VERSION=v2026.09.01 LANG_VARIANT=zh-TW bash scripts/build-pdf.sh
+RELEASE_VERSION=v2026.09.01 LANG_VARIANT=zh-Hans bash scripts/build-pdf.sh
+RELEASE_VERSION=v2026.09.01 LANG_VARIANT=en bash scripts/build-pdf.sh
 ```
 
 輸出檔名固定為：
 
-- `dist/awesome-agentic-ai-zh-v2026.08.31-zh-TW.pdf`
-- `dist/awesome-agentic-ai-zh-v2026.08.31-zh-Hans.pdf`
-- `dist/awesome-agentic-ai-zh-v2026.08.31-en.pdf`
+- `dist/awesome-agentic-ai-zh-v2026.09.01-zh-TW.pdf`
+- `dist/awesome-agentic-ai-zh-v2026.09.01-zh-Hans.pdf`
+- `dist/awesome-agentic-ai-zh-v2026.09.01-en.pdf`
 
 頁面順序只寫在 [`release/pages.yml`](../release/pages.yml) 一次；工具會從同一列推導繁中、簡中、英文檔名，並阻擋缺頁、順序漂移和外部 URL 漂移。Stage 0–8、Stage 7.5、A1–A3、五條角色路線、walkthrough、Capstone、Setup、Glossary、Resources、Advanced RAG、Agent Memory、CLI 與模型訓練選修都在這份清單裡。正文裡預設收合的補充內容會在 PDF 中展開。
 
@@ -128,7 +128,7 @@ sudo apt-get install pandoc weasyprint poppler-utils \
 
 ```bash
 python scripts/release_manifest.py validate-pdfs \
-  --version v2026.08.31 --dist dist --json dist/pdf-validation.json
+  --version v2026.09.01 --dist dist --json dist/pdf-validation.json
 ```
 
 [`release/notes.yml`](../release/notes.yml) 也只寫一次。`release_manifest.py render-notes` 會用相同 change ID、順序和共用連結產生三個語言段落。

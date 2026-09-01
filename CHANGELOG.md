@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-01
+
+- **content / Stage 1 / Claude models** · 依 Anthropic 於 2026-09-01 發布的官方公告與模型頁，三語主流模型表更新為 **Claude Fable 5.1**（`claude-fable-5-1`）與 **Claude Mythos 5.1**（`claude-mythos-5-1`）：兩者皆為 1M context、128K 最大輸出、$10/$50（每百萬輸入／輸出 token），cache read 降為 $0.25。教材明確區分 Fable 5.1 一般可用；Mythos 5.1 是同一模型，但只提供給通過審核的資安與生命科學使用者。Stage 1 freshness 查核日與官方來源、專案模型白名單、Release Notes 及 citation 版本同步更新。
+
 ## 2026-08-31
 
 - **release / Draft verification / tag order** · 修正首次發布時 Draft Release 尚未建立遠端 tag，驗證步驟卻先抓 tag 而失敗的順序問題：Draft 階段改為核對 GitHub API 回傳的 `target_commitish` 是否等於鎖定的 main SHA；只有正式發布後才抓取 tag 並再次驗證 tag SHA。重跑既有 Draft 時也會把 target 重新鎖回同一 SHA，不會跳過附件、三語 body 或人工 Environment gate。
