@@ -244,7 +244,7 @@ Success criterion: you can restart the program and continue from a checkpoint; w
 
 ## 🎯 Curated Projects
 
-Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐: it lets you directly see state, edges, checkpoints, and interruption points. The other 17 entries are grouped by purpose below; the ratings indicate this chapter's learning order, not a popularity ranking.
+Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐: it lets you directly see state, edges, checkpoints, and interruption points. The other 18 entries are grouped by purpose below; the ratings indicate this chapter's learning order, not a popularity ranking.
 
 <small>Framework information checked: 2026-08-27 UTC</small>
 
@@ -284,7 +284,8 @@ Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐�
     <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>Those who need high-level building blocks for models, retrieval, tools, and middleware.</td><td>Maintained; MIT. Complex orchestration can move down to LangGraph.</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="1">Infrastructure</th><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>Those switching providers through one interface or building an AI gateway.</td><td>Maintained; the root LICENSE says everything except enterprise uses MIT, while <code>enterprise/</code> has a separate license. It is not an Agent framework.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Infrastructure</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>Those who need a self-hosted gateway for multi-provider routing, failover, and load balancing.</td><td>Maintained; Apache-2.0. It is infrastructure rather than an Agent framework, so study it at the model-provider boundary.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>Those switching providers through one interface or building an AI gateway.</td><td>Maintained; the root LICENSE says everything except enterprise uses MIT, while <code>enterprise/</code> has a separate license. It is not an Agent framework.</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 

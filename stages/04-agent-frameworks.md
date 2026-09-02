@@ -244,7 +244,7 @@ py -3.11 test.py
 
 ## 🎯 精選 Projects
 
-第一個入口先看 [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐：你能直接看到 state、edge、checkpoint 與中斷點。其餘 17 筆已依用途分組放在下面；推薦度是本章學習順序，不是人氣排行榜。
+第一個入口先看 [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐：你能直接看到 state、edge、checkpoint 與中斷點。其餘 18 筆已依用途分組放在下面；推薦度是本章學習順序，不是人氣排行榜。
 
 <small>框架資訊查核：2026-08-27 UTC</small>
 
@@ -284,7 +284,8 @@ py -3.11 test.py
     <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>要模型、retrieval、tool 與 middleware 的高階積木。</td><td>維護中；MIT。複雜 orchestration 可下沉到 LangGraph。</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="1">基礎設施</th><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>用同一介面切換多家 provider，或建立 AI gateway。</td><td>維護中；根目錄 LICENSE 說明 enterprise 以外採 MIT，<code>enterprise/</code> 另有授權。它不是 Agent framework。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">基礎設施</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>需要 self-hosted gateway，做多 provider routing、failover 與 load balancing。</td><td>維護中；Apache-2.0。它是 infrastructure，不是 Agent framework，適合放在 model-provider 邊界理解。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>用同一介面切換多家 provider，或建立 AI gateway。</td><td>維護中；根目錄 LICENSE 說明 enterprise 以外採 MIT，<code>enterprise/</code> 另有授權。它不是 Agent framework。</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 
