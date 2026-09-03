@@ -52,7 +52,7 @@
 <details markdown="1">
 <summary>⏱ 展开时间、环境与预算</summary>
 
-- 建议时间：`2–3 周`，约 `10–15 小时`。不用一次看完 18 个项目。
+- 建议时间：`2–3 周`，约 `10–15 小时`。不用一次看完 19 个项目。
 - Python：现有示例先用 `3.11`。CrewAI `1.15.18` 当前要求 Python `>=3.10,<3.14`；Python 3.14 用户请另外建立 3.11 环境。紧接着的 stacked 04B 会把五个示例迁移到当前 major，并在干净环境中验收；本内容层不把旧 requirements 说成已经升级。
 - Path A：Ollama 练习不收 API 费；你的硬件、电力与下载时间仍有成本。
 - Path B：本章用 Anthropic Haiku 比较。单次成本公式是 `输入 tokens ÷ 1,000,000 × $1 + 输出 tokens ÷ 1,000,000 × $5`；五题总成本是五次实际用量相加，不先猜固定小数。
@@ -244,9 +244,9 @@ py -3.11 test.py
 
 ## 🎯 精选 Projects
 
-第一个入口先看 [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐：你能直接看到 state、edge、checkpoint 与中断点。其余 17 条已按用途分组放在下面；推荐度是本章学习顺序，不是人气排行榜。
+第一个入口先看 [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐：你能直接看到 state、edge、checkpoint 与中断点。其余 18 条已按用途分组放在下面；推荐度是本章学习顺序，不是人气排行榜。
 
-<small>框架信息核查：2026-08-27 UTC</small>
+<small>既有框架信息核查：2026-08-27 UTC；Bifrost：2026-09-03 UTC</small>
 
 <table>
   <thead>
@@ -284,7 +284,8 @@ py -3.11 test.py
     <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>要模型、retrieval、tool 与 middleware 的高阶积木。</td><td>维护中；MIT。复杂 orchestration 可下沉到 LangGraph。</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="1">基础设施</th><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>用同一接口切换多家 provider，或建立 AI gateway。</td><td>维护中；根目录 LICENSE 说明 enterprise 以外采用 MIT，<code>enterprise/</code> 另有授权。它不是 Agent framework。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">基础设施</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>想自建 gateway，以统一接口连接多家 provider，并练习 routing、fallback 与 load balancing。</td><td>维护中；Apache-2.0。它是 infrastructure，不是 Agent framework；adaptive load balancing、clustering 与部分 guardrails 属于 enterprise 功能。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>想用 Python SDK 或 OpenAI-compatible proxy 统一切换多家 provider。</td><td>维护中；根目录 LICENSE 说明 enterprise 以外采用 MIT，<code>enterprise/</code> 另有授权。它不是 Agent framework。</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 
@@ -296,7 +297,7 @@ py -3.11 test.py
 - [ ] 我跑过五题的离线测试，并完成至少一条 Ollama Path A。
 - [ ] 我知道 CodeAct 要隔离执行，type-safe output 也仍需检查内容。
 
-都做到后，进入 [Stage 5 — Claude Code Ecosystem](05-claude-code-ecosystem.zh-Hans.md)。如果还分不清四格，回到上面的选择地图；不必重读 18 笔表格。
+都做到后，进入 [Stage 5 — Claude Code Ecosystem](05-claude-code-ecosystem.zh-Hans.md)。如果还分不清四格，回到上面的选择地图；不必重读 19 笔表格。
 
 <details markdown="1">
 <summary>💡 展开疑难排解与后续路由</summary>

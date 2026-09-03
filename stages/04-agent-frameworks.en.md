@@ -52,7 +52,7 @@ Complete Stage 3's six exercises first, and be able to explain `schema → call 
 <details markdown="1">
 <summary>⏱ Expand time, environment, and budget</summary>
 
-- Suggested time: `2–3 weeks`, about `10–15 hours`. You do not need to read all 18 projects at once.
+- Suggested time: `2–3 weeks`, about `10–15 hours`. You do not need to read all 19 projects at once.
 - Python: use `3.11` for the existing examples. CrewAI `1.15.18` currently requires Python `>=3.10,<3.14`; Python 3.14 users should create a separate 3.11 environment. The immediately following stacked 04B layer will migrate all five examples to current majors and verify them in clean environments; this content layer does not claim the old requirements are already upgraded.
 - Path A: Ollama exercises have no API charge; your hardware, electricity, and download time still cost something.
 - Path B: this chapter compares Anthropic Haiku. The single-run formula is `input tokens ÷ 1,000,000 × $1 + output tokens ÷ 1,000,000 × $5`; the total for five exercises is the sum of five actual usages, not a guessed fixed decimal.
@@ -246,7 +246,7 @@ Success criterion: you can restart the program and continue from a checkpoint; w
 
 Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐: it lets you directly see state, edges, checkpoints, and interruption points. The other 18 entries are grouped by purpose below; the ratings indicate this chapter's learning order, not a popularity ranking.
 
-<small>Framework information checked: 2026-08-27 UTC</small>
+<small>Existing framework information checked: 2026-08-27 UTC; Bifrost: 2026-09-03 UTC</small>
 
 <table>
   <thead>
@@ -284,8 +284,8 @@ Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐�
     <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>Those who need high-level building blocks for models, retrieval, tools, and middleware.</td><td>Maintained; MIT. Complex orchestration can move down to LangGraph.</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Infrastructure</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>Those who need a self-hosted gateway for multi-provider routing, failover, and load balancing.</td><td>Maintained; Apache-2.0. It is infrastructure rather than an Agent framework, so study it at the model-provider boundary.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>Those switching providers through one interface or building an AI gateway.</td><td>Maintained; the root LICENSE says everything except enterprise uses MIT, while <code>enterprise/</code> has a separate license. It is not an Agent framework.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Infrastructure</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>Those who want to self-host a gateway, connect multiple providers through one interface, and practise routing, fallback, and load balancing.</td><td>Maintained; Apache-2.0. It is infrastructure rather than an Agent framework; adaptive load balancing, clustering, and some guardrails are enterprise features.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>Those who want a Python SDK or OpenAI-compatible proxy for switching among providers.</td><td>Maintained; the root LICENSE says everything except enterprise uses MIT, while <code>enterprise/</code> has a separate license. It is not an Agent framework.</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 
@@ -297,7 +297,7 @@ Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐�
 - [ ] I have run the offline tests for all five exercises and completed at least one Ollama Path A.
 - [ ] I know CodeAct must run in isolation and that type-safe output still needs its contents checked.
 
-Once you have done all of this, move on to [Stage 5 — Claude Code Ecosystem](05-claude-code-ecosystem.en.md). If the four cells are still unclear, return to the choice map above; you do not need to reread the 18-row table.
+Once you have done all of this, move on to [Stage 5 — Claude Code Ecosystem](05-claude-code-ecosystem.en.md). If the four cells are still unclear, return to the choice map above; you do not need to reread the 19-row table.
 
 <details markdown="1">
 <summary>💡 Expand troubleshooting and next steps</summary>

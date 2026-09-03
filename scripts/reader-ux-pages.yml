@@ -632,6 +632,7 @@ pages:
       resource_url_ratings: true
       literals:
         - "2026-08-27"
+        - "2026-09-03"
         - "1.15.18"
         - ">=3.10,<3.14"
         - "90.2%"
@@ -848,7 +849,7 @@ pages:
           anchor: -进-stage-5-前的自我检查
     visible_section_minimums:
       required-reading: {min_links: 5}
-      projects: {min_links: 18, min_ratings: 18}
+      projects: {min_links: 19, min_ratings: 19}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -886,7 +887,7 @@ pages:
           zh-TW: {term: Human-in-the-loop, label: "Human-in-the-loop（HITL，人在迴圈中）"}
           en: {term: Human-in-the-loop, label: "Human-in-the-loop (HITL)"}
           zh-Hans: {term: Human-in-the-loop, label: "Human-in-the-loop（HITL，人在循环中）"}
-    resource_group_rowspans: [4, 6, 4, 3, 1]
+    resource_group_rowspans: [4, 6, 4, 3, 2]
 
   - id: stage-05
     canonical: stages/05-claude-code-ecosystem.md

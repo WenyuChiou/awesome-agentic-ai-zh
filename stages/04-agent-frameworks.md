@@ -52,7 +52,7 @@
 <details markdown="1">
 <summary>⏱ 展開時間、環境與預算</summary>
 
-- 建議時間：`2–3 週`，約 `10–15 小時`。不用一次看完 18 個專案。
+- 建議時間：`2–3 週`，約 `10–15 小時`。不用一次看完 19 個專案。
 - Python：現有範例先用 `3.11`。CrewAI `1.15.18` 目前要求 Python `>=3.10,<3.14`；Python 3.14 使用者請另外建立 3.11 環境。五個範例的 current-major migration 與 clean-environment 驗收會在緊接的 stacked 04B 完成；本層不把舊 requirements 說成已升級。
 - Path A：Ollama 練習不收 API 費；你的硬體、電力與下載時間仍有成本。
 - Path B：本章用 Anthropic Haiku 比較。單次成本公式是 `輸入 tokens ÷ 1,000,000 × $1 + 輸出 tokens ÷ 1,000,000 × $5`；五題總成本是五次實際用量相加，不先猜固定小數。
@@ -246,7 +246,7 @@ py -3.11 test.py
 
 第一個入口先看 [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐：你能直接看到 state、edge、checkpoint 與中斷點。其餘 18 筆已依用途分組放在下面；推薦度是本章學習順序，不是人氣排行榜。
 
-<small>框架資訊查核：2026-08-27 UTC</small>
+<small>既有框架資訊查核：2026-08-27 UTC；Bifrost：2026-09-03 UTC</small>
 
 <table>
   <thead>
@@ -284,8 +284,8 @@ py -3.11 test.py
     <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>要模型、retrieval、tool 與 middleware 的高階積木。</td><td>維護中；MIT。複雜 orchestration 可下沉到 LangGraph。</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">基礎設施</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>需要 self-hosted gateway，做多 provider routing、failover 與 load balancing。</td><td>維護中；Apache-2.0。它是 infrastructure，不是 Agent framework，適合放在 model-provider 邊界理解。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>用同一介面切換多家 provider，或建立 AI gateway。</td><td>維護中；根目錄 LICENSE 說明 enterprise 以外採 MIT，<code>enterprise/</code> 另有授權。它不是 Agent framework。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">基礎設施</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>想自架 gateway，以統一介面連接多家 provider，並練習 routing、fallback 與 load balancing。</td><td>維護中；Apache-2.0。它是 infrastructure，不是 Agent framework；adaptive load balancing、clustering 與部分 guardrails 屬 enterprise 功能。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>想用 Python SDK 或 OpenAI-compatible proxy 統一切換多家 provider。</td><td>維護中；根目錄 LICENSE 說明 enterprise 以外採 MIT，<code>enterprise/</code> 另有授權。它不是 Agent framework。</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 
@@ -297,7 +297,7 @@ py -3.11 test.py
 - [ ] 我跑過五題的離線測試，並完成至少一條 Ollama Path A。
 - [ ] 我知道 CodeAct 要隔離執行，type-safe output 也仍需檢查內容。
 
-都做到後，進入 [Stage 5 — Claude Code Ecosystem](05-claude-code-ecosystem.md)。如果還分不清四格，回到上面的選擇地圖；不必重讀 18 筆表格。
+都做到後，進入 [Stage 5 — Claude Code Ecosystem](05-claude-code-ecosystem.md)。如果還分不清四格，回到上面的選擇地圖；不必重讀 19 筆表格。
 
 <details markdown="1">
 <summary>💡 展開疑難排解與後續路由</summary>

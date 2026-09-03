@@ -46,6 +46,11 @@ STAGE4_READING_URLS = (
     "https://docs.langchain.com/oss/python/langgraph/overview",
     "https://docs.crewai.com/",
 )
+STAGE4_PROJECT_COUNT_TEXT = {
+    "zh-TW": ("19 個專案", "19 筆表格"),
+    "en": ("19 projects", "19-row table"),
+    "zh-Hans": ("19 个项目", "19 笔表格"),
+}
 BRIDGE_LABELS = (
     "Agent Loop",
     "Agent Framework",
@@ -117,19 +122,24 @@ def test_stage3_required_reading_and_all_rated_resources_are_visible(
     assert 'scope="rowgroup"' in table.group()
 
 
-@pytest.mark.parametrize("page", STAGE4.values())
+@pytest.mark.parametrize("locale,page", STAGE4.items())
 def test_stage4_required_reading_and_all_rated_resources_are_visible(
-    page: Path,
+    locale: str, page: Path,
 ) -> None:
-    visible = _without_closed_details(page.read_text(encoding="utf-8"))
+    source = page.read_text(encoding="utf-8")
+    visible = _without_closed_details(source)
     assert all(url in visible for url in STAGE4_READING_URLS)
+    assert all(text in source for text in STAGE4_PROJECT_COUNT_TEXT[locale])
     projects = visible[visible.index("## 🎯") :]
     table = re.search(r"<table>.*?</table>", projects, flags=re.DOTALL)
     assert table
+    table_html = table.group()
     assert len(
-        re.findall(r"<td>⭐{2,5}[^<]*</td>", table.group())
-    ) == 18
-    assert 'scope="rowgroup"' in table.group()
+        re.findall(r"<td>⭐{2,5}[^<]*</td>", table_html)
+    ) == 19
+    assert "https://github.com/maximhq/bifrost" in table_html
+    assert "https://github.com/BerriAI/litellm" in table_html
+    assert 'scope="rowgroup"' in table_html
 
 
 @pytest.mark.parametrize("page", STAGE4.values())
