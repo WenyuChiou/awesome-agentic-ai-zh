@@ -115,16 +115,16 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 **Audience**: Logseq users automating daily journals, cross-page links, backlink queries.
 **Notes**: enable Logseq's HTTP API (Settings → Features → HTTP API).
 
-### [skridlevsky/graphthulhu](https://github.com/skridlevsky/graphthulhu) ⭐⭐⭐
+### [skridlevsky/graphthulhu](https://github.com/skridlevsky/graphthulhu) ⭐⭐⭐ (archived / historical example)
 
 | Field | Value |
 |---|---|
 | License | MIT |
-| Rating | ⭐⭐⭐ (covers both Logseq + Obsidian) |
+| Rating | ⭐⭐⭐ (historical learning value; archived, so new projects should not start with it) |
 
 **What it does**: a broad tool set across navigation, search, analysis, writing, journals, flashcards, whiteboards.
-**Audience**: people using both Logseq and Obsidian who don't want two MCP servers.
-**Notes**: community project; broad tool surface but each tool is relatively basic.
+**Audience**: people studying early Logseq + Obsidian MCP design; new projects should choose a maintained alternative.
+**Notes**: this GitHub project is archived and is useful as historical reference; do not use it as the starting point for a new project.
 
 ### [ankimcp/anki-mcp-server](https://github.com/ankimcp/anki-mcp-server) ⭐⭐⭐
 

@@ -24,3 +24,11 @@ changes:
       - https://api-docs.deepseek.com/quick_start/pricing/
       - https://cloud.tencent.com/document/product/1823/130051
       - https://huggingface.co/MiniMaxAI/MiniMax-M3
+
+  - id: graphthulhu-archived-resource
+    category: resources
+    zh-TW: MCP 資源表將已封存的 Graphthulhu 改列為歷史學習範例。原有 ⭐⭐⭐ 編輯推薦度保留，但清楚提醒新專案應選擇仍在維護的替代方案。
+    zh-Hans: MCP 资源表将已归档的 Graphthulhu 改列为历史学习范例。原有 ⭐⭐⭐ 编辑推荐度保留，但清楚提醒新项目应选择仍在维护的替代方案。
+    en: The MCP catalog now marks the archived Graphthulhu project as a historical learning example. Its ⭐⭐⭐ editorial rating remains visible, with a clear note that new projects should choose a maintained alternative.
+    links:
+      - https://github.com/skridlevsky/graphthulhu

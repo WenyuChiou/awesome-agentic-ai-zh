@@ -116,16 +116,16 @@
 **適合誰**：Logseq 使用者要自動化 daily journal、跨頁 link、查詢 backlinks。
 **備註**：需要 Logseq 開啟 HTTP API（Settings → Features → HTTP API）。
 
-### [skridlevsky/graphthulhu](https://github.com/skridlevsky/graphthulhu) ⭐⭐⭐
+### [skridlevsky/graphthulhu](https://github.com/skridlevsky/graphthulhu) ⭐⭐⭐（已封存／歷史範例）
 
 | 欄位 | 內容 |
 |---|---|
 | License | MIT |
-| 推薦度 | ⭐⭐⭐（同時支援 Logseq + Obsidian） |
+| 推薦度 | ⭐⭐⭐（歷史學習價值；已封存，新專案不建議從它開始） |
 
 **教什麼**：把 navigation、search、analysis、writing、journals、flashcards 與 whiteboards 等操作包成工具。
-**適合誰**：同時用 Logseq 跟 Obsidian、不想裝兩套 MCP server 的人。
-**備註**：community project，工具數多但每個工具相對基本。
+**適合誰**：想研究早期 Logseq + Obsidian MCP 設計的人；新專案應改找仍在維護的替代方案。
+**備註**：此 GitHub 專案已封存，適合當歷史參考；不要用它作為新專案的起點。
 
 ### [ankimcp/anki-mcp-server](https://github.com/ankimcp/anki-mcp-server) ⭐⭐⭐
 
