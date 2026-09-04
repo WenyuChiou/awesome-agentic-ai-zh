@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-09-04
 
-- **content / Stage 1 / current model guide** · 依 15 個模型家族的官方模型、價格、公告或 model card 重新查核三語主流模型表：OpenAI 首選更新為 **GPT-6 Astra**，並保留 GPT-5.6 Terra／Luna 的一般與省成本路線；清楚標示 Astra 仍分批開放、1.05M context、128K 最大輸出、$10/$50，以及超過 272K 輸入後整次請求的 2× 輸入／cache 與 1.5× 輸出費率，GPT-5.6 Sol 則仍可用但不再列為首選。同次查核也把 Gemini 更新為穩定版 3.8 Flash、DeepSeek V4 改為現行峰谷價與 384K 最大輸出、Hy3 補上 256K 與規格來源並將舊 preview 改為已下線、MiniMax M3 改列開放權重且標明永久 50% API 折扣與 MiniMax Community License；Stage 1 freshness fact pack 與回歸測試同步更新至 GitHub API UTC `2026-09-04`。
+- **content / Stage 1 / current model guide** · 依 15 個模型家族的官方模型、價格、公告或 model card 重新查核三語主流模型表：OpenAI 推薦欄更新為 **GPT-6 Astra**，並保留 GPT-5.6 Terra／Luna 的一般與省成本路線；清楚標示 Astra 仍分批開放、1.05M context、128K 最大輸出、$10/$50，以及超過 272K 輸入後整次請求的 2× 輸入／cache 與 1.5× 輸出費率，GPT-5.6 Sol 則仍可用但未列在目前推薦型號欄。同次查核也把 Gemini 更新為穩定版 3.8 Flash、DeepSeek V4 改為現行峰谷價與 384K 最大輸出、Hy3 補上 256K 與規格來源並將舊 preview 改為已下線、MiniMax M3 改列開放權重且標明永久 50% API 折扣與 MiniMax Community License；Stage 1 freshness fact pack 與回歸測試同步更新至 GitHub API UTC `2026-09-04`。
 
 ## 2026-09-01
 
