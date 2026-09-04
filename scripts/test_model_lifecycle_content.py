@@ -133,7 +133,7 @@ def test_freshness_markers_share_one_date_and_canonical_scope() -> None:
 
     assert len(set(stage_markers)) == 1
     assert len(set(guide_markers)) == 1
-    assert "verified_on=2026-09-01" in stage_markers[0]
+    assert "verified_on=2026-09-04" in stage_markers[0]
     assert "scope=models,pricing,availability,deprecations,model-lifecycle" in stage_markers[0]
     assert "canonical=resources/model-training-guide.md" in guide_markers[0]
     assert "verified_on=2026-08-31" in guide_markers[0]

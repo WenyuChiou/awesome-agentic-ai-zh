@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-04
+
+- **content / Stage 1 / current model guide** · 依 15 個模型家族的官方模型、價格、公告或 model card 重新查核三語主流模型表：OpenAI 首選更新為 **GPT-6 Astra**，並保留 GPT-5.6 Terra／Luna 的一般與省成本路線；清楚標示 Astra 仍分批開放、1.05M context、128K 最大輸出、$10/$50，以及超過 272K 輸入後整次請求的 2× 輸入／cache 與 1.5× 輸出費率，GPT-5.6 Sol 則仍可用但不再列為首選。同次查核也把 Gemini 更新為穩定版 3.8 Flash、DeepSeek V4 改為現行峰谷價與 384K 最大輸出、Hy3 補上 256K 與規格來源並將舊 preview 改為已下線、MiniMax M3 改列開放權重且標明永久 50% API 折扣與 MiniMax Community License；Stage 1 freshness fact pack 與回歸測試同步更新至 GitHub API UTC `2026-09-04`。
+
 ## 2026-09-01
 
 - **content / Stage 1 / Claude models** · 依 Anthropic 於 2026-09-01 發布的官方公告與模型頁，三語主流模型表更新為 **Claude Fable 5.1**（`claude-fable-5-1`）與 **Claude Mythos 5.1**（`claude-mythos-5-1`）：兩者皆為 1M context、128K 最大輸出、$10/$50（每百萬輸入／輸出 token），cache read 降為 $0.25。教材明確區分 Fable 5.1 一般可用；Mythos 5.1 是同一模型，但只提供給通過審核的資安與生命科學使用者。Stage 1 freshness 查核日與官方來源、專案模型白名單、Release Notes 及 citation 版本同步更新。

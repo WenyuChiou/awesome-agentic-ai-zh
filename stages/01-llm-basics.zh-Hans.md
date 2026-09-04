@@ -4,7 +4,7 @@
 
 > 本章目的：先看懂模型如何从数据走到 Agent，再通过一条可重复的本地到云端路径调用 LLM。你会理解 **Token（词元）**、**Context Window（上下文窗口）** 和 **Temperature（温度）**，也会用成本与延迟解释模型选择。
 
-<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-01; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-04; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
 
 ## 📌 学习目标
 
@@ -55,7 +55,7 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 |---|---|---|
 | 第一次学 API，想零费用反复试 | **Ollama + `gemma4:e4b`** | 本地运行，单次 API 成本为 $0，可以反复修改示例。 |
 | 想比较云端质量，数据可以发送出去 | **Claude Haiku 4.5／Sonnet 5** | Anthropic SDK 路径简单，按输入和输出 token 计费。 |
-| 文档很长，还要处理图像或视频 | **Gemini 3.7 Flash 或 Kimi K3** | 先查型号的 context 和多模态支持，再用自己的文档小测。 |
+| 文档很长，还要处理图像或视频 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型号的 context 和多模态支持，再用自己的文档小测。 |
 | 中文 API 任务，希望控制用量 | **DeepSeek V4 或 GLM-5.3** | 比较官方价格、输出限制和可用性，不要只看模型名称。 |
 | 隐私、离线或需要自部署 | **Llama 4、Qwen 3.8、Gemma 4 等开放权重** | 先估算硬件和授权，再用 Ollama 或其他运行时测量真实速度。 |
 
@@ -472,19 +472,19 @@ print("💡 本次调用为 $0（不含电费）")
 <details markdown="1">
 <summary>🌐 完整 15 个家族表（官方规格入口）</summary>
 
-<small>数据查核：2026-08-27 UTC。</small>
+<small>数据查核：2026-09-04 UTC。</small>
 
 没有可靠公开数字就写“官方未公布”。价格通常是 USD／每 1M token；供应商若用别的单位，就按官方单位记录。
 
 | 家族 | 当前推荐型号 | 状态 | Context | 价格或授权 | 适合做什么 | 限制 | 官方来源 |
 |---|---|---|---|---|---|---|---|
 | Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5；Sonnet 5；Haiku 4.5 | Fable 5.1：正式可用；Mythos 5.1：限核准用户 | 1M context／128K 最大输出（Haiku 200K／64K） | API：Fable／Mythos $10/$50、Opus $5/$25、Sonnet $2/$10、Haiku $1/$5（输入／输出）；Fable／Mythos cache read $0.25 | 长文、编程、长时间 agent 工作流 | Mythos 5.1 是与 Fable 5.1 相同的模型，但只提供给通过审核的网络安全与生命科学用户 | [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) · [Mythos 5.1](https://platform.claude.com/docs/en/models/mythos-5-1/overview) |
-| GPT | GPT-5.6 Sol／Terra／Luna | 正式可用 | 1.05M | API：$4/$20、$2/$12、$0.20/$1.20（输入／输出） | 通用对话、工具调用、已有 SDK 集成 | 价格与限制按型号及 API 方案变化 | [OpenAI API 模型](https://developers.openai.com/api/docs/models) |
-| Gemini | Gemini 3.7 Flash | 正式可用 | 1M | 2026-12-31 前介绍价 $0.75/$3.75（输入／输出） | 长文档、多模态与 Google 生态整合 | Gemini 3.1 Pro 为 Preview；介绍价有期限 | [Gemini 模型文档](https://ai.google.dev/gemini-api/docs/models) · [Gemini API 定价](https://ai.google.dev/gemini-api/docs/pricing) |
-| DeepSeek | `deepseek-v4-flash`／`deepseek-v4-pro` | 正式可用 | 1M | Cache-miss：Flash $0.14/$0.28、Pro $0.435/$0.87（输入／输出） | 推理、编程、大量 token 任务 | 旧 `deepseek-chat`／`deepseek-reasoner` alias 已于 2026-07-24 弃用 | [DeepSeek 定价](https://api-docs.deepseek.com/quick_start/pricing/) |
+| GPT | GPT-6 Astra；GPT-5.6 Terra／Luna | Astra：正式发布、分批开放；Terra／Luna：正式可用 | Astra：1.05M context／128K 最大输出 | API：Astra $10/$50、Terra $2/$12、Luna $0.20/$1.20（输入／输出） | Astra 适合最难、需要长时间工作的任务；Terra／Luna 适合通用与省成本工作 | Astra 只分批开放给符合资格的组织；超过 272K 输入后，整次请求的输入／cache 为 2×、输出为 1.5×；GPT-5.6 Sol 仍可用，但已不是首选 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [OpenAI API 模型](https://developers.openai.com/api/docs/models) |
+| Gemini | Gemini 3.8 Flash | 正式可用 | 1,048,576 context／65,536 最大输出 | 2026-12-31 前介绍价 $0.75/$3.75（输入／输出） | 长时间软件开发、多模态与多步 Agent 工作 | Gemini 3.1 Pro 为 Preview；介绍价有期限 | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API 定价](https://ai.google.dev/gemini-api/docs/pricing) |
+| DeepSeek | `deepseek-v4-flash`／`deepseek-v4-pro` | 正式可用 | 1M context／384K 最大输出 | Cache-miss 峰／谷价：Flash $0.44/$0.22 输入、$1.32/$0.66 输出；Pro $1.32/$0.66 输入、$3.96/$1.98 输出 | 推理、编程、大量 token 任务 | 价格按北京时间的高峰／低谷时段变化；旧 `deepseek-chat`／`deepseek-reasoner` alias 已于 2026-07-24 弃用 | [DeepSeek 定价](https://api-docs.deepseek.com/quick_start/pricing/) |
 | Kimi | `kimi-k3` | 正式可用 | 1M | API：cache hit／输入／输出分别为 CNY 2／20／100，每百万 tokens | 中文长文、视觉输入、长上下文任务 | 2.8T 参数；部署与配额取决于平台 | [Kimi 平台总览](https://platform.kimi.com/docs/overview) · [Kimi API 定价](https://platform.kimi.com/) |
-| Hunyuan | `Hy3`（TokenHub） | 正式可用 | 官方未公布 | API：cache hit／输入／输出分别为 CNY 0.25／1／4，每百万 tokens | 中文推理与 Tencent Cloud 整合 | `hy3-preview` 将于 2026-08-31 下线；旧 T1／TurboS 已关闭或迁移 | [TokenHub 定价](https://cloud.tencent.com/document/product/1823/130055) · [Hy3 迁移公告](https://cloud.tencent.com/announce/detail/2391) |
-| MiniMax | MiniMax M3 | 正式可用 | 1M | API：context ≤512K 为 US$0.30／$1.20；512K–1M 为 $0.60／$2.40，每百万输入／输出 tokens | 文本、视觉与 coding 任务 | 价格按输入长度和方案变化 | [MiniMax M3](https://www.minimax.io/blog/minimax-m3) · [MiniMax API 定价](https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise) |
+| Hunyuan | `Hy3`（TokenHub） | 正式可用 | 256K | API：cache hit／输入／输出分别为 CNY 0.25／1／4，每百万 tokens | 中文推理与 Tencent Cloud 整合 | `hy3-preview` 已于 2026-08-31 下线；Hy4 仍是 Preview | [TokenHub 模型列表](https://cloud.tencent.com/document/product/1823/130051) · [TokenHub 定价](https://cloud.tencent.com/document/product/1823/130055) · [Hy3 迁移公告](https://cloud.tencent.com/announce/detail/2391) |
+| MiniMax | MiniMax M3 | 开放权重 | 1M | API 永久 50% 折扣：context ≤512K 为 US$0.30／$1.20；512K–1M 为 $0.60／$2.40，每百万输入／输出 tokens；权重使用 MiniMax Community License | 文本、视觉、coding 与自部署工作 | 不是 Apache／MIT；使用或分发权重前要先阅读社区授权 | [MiniMax M3 model card](https://huggingface.co/MiniMaxAI/MiniMax-M3) · [MiniMax API 定价](https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise) |
 | Qwen | qwen3.8-max（API）；Qwen3.8 开放权重变体 | 正式可用 | 1M | API 按地区定价；例如北京为 CNY 12／36，每百万输入／输出 tokens；开放权重变体使用各自授权 | 中文任务、多模态、自部署工作流 | API 型号与开放权重变体不可混用；可用性与授权要分别确认 | [Qwen 3.8 Max](https://help.aliyun.com/en/model-studio/qwen3-8-max) |
 | GLM | GLM-5.3 | 正式可用 | 1M（输出 128K） | API：输入／cache hit／输出分别为 US$1.40／$0.26／$4.40，每百万 tokens | 中文 agent、工具使用、推理 | 纯文本；reasoning 始终启用 | [GLM-5.3 文档](https://docs.z.ai/guides/llm/glm-5.3) · [GLM API 定价](https://docs.z.ai/guides/overview/pricing) |
 | Yi | Yi-34B／Yi-9B 及 200K 变体 | 维护中 | 200K（部分旧型号） | 官方 repo 授权与已有服务条件；当前价格官方未公布 | 维护已有 Yi 实验、自部署基线 | 没有查到已验证的当前 frontier 后继型号 | [01.AI Yi repository](https://github.com/01-ai/Yi) |

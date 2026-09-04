@@ -11,18 +11,18 @@
 
 stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
-  verified_on: '2026-09-01'
+  verified_on: '2026-09-04'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
     google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
     claude: 'https://platform.claude.com/docs/en/models/fable-5-1/overview'
-    gpt: 'https://developers.openai.com/api/docs/models'
-    gemini: 'https://ai.google.dev/gemini-api/docs/models'
+    gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
+    gemini: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     kimi: 'https://platform.kimi.com/docs/overview'
-    hunyuan: 'https://cloud.tencent.com/document/product/1823/130055'
-    minimax: 'https://www.minimax.io/blog/minimax-m3'
+    hunyuan: 'https://cloud.tencent.com/document/product/1823/130051'
+    minimax: 'https://huggingface.co/MiniMaxAI/MiniMax-M3'
     qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
     glm: 'https://docs.z.ai/guides/llm/glm-5.3'
     yi: 'https://github.com/01-ai/Yi'
@@ -32,6 +32,7 @@ stage01_fact_pack:
     mistral: 'https://docs.mistral.ai/models'
     phi: 'https://azure.microsoft.com/en-us/products/phi'
   pricing_sources:
+    gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
     gemini: 'https://ai.google.dev/gemini-api/docs/pricing'
     kimi: 'https://platform.kimi.com/'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130055'
@@ -477,7 +478,7 @@ verified_pages:
     max_age_days: 90
 
 current_frontier_models:
-  # Verified 2026-09-01 from provider docs / official model cards.
+  # Verified 2026-09-04 from provider docs / official model cards.
   # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
     - "Fable 5.1"
@@ -486,11 +487,12 @@ current_frontier_models:
     - "Sonnet 5"
     - "Haiku 4.5"
   openai:
-    - "GPT-5.6 Sol"
+    - "GPT-6 Astra"
     - "GPT-5.6 Terra"
     - "GPT-5.6 Luna"
+    - "GPT-5.6 Sol (available previous flagship)"
   google_gemini:
-    - "Gemini 3.7 Flash"
+    - "Gemini 3.8 Flash"
     - "Gemini 3.1 Pro Preview"
   deepseek:
     - "DeepSeek-V4-Pro"
@@ -591,12 +593,17 @@ stale_patterns:
     qualifier_terms: []
     note: 'Prompt and Context Engineering are overlapping responsibilities, not replacement generations'
 
-  # Stage 01 completed its 2026-08-27 refresh. These patterns are deliberately
+  # Stage 01 completed its 2026-09-04 refresh. These patterns are deliberately
   # scoped to its three mirrors so later stages can migrate in their own PRs.
+  - pattern: 'GPT-5\.6 Sol\s*(?:／|/)\s*Terra\s*(?:／|/)\s*Luna'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: []
+    note: 'The former exact Stage 01 roster must be replaced with GPT-6 Astra plus the Terra/Luna routes; Sol remains available but is no longer the first choice'
+
   - pattern: 'Gemini 3\.5 (Flash|Pro)'
     include_files: ['stages/01-llm-basics.md']
     qualifier_terms: ['前身', '歷史', '历史', '舊版', '旧版', 'legacy', 'historical', 'replaced', 'superseded']
-    note: 'Stage 01 recommends Gemini 3.7 Flash; Gemini 3.1 Pro remains Preview'
+    note: 'Stage 01 recommends Gemini 3.8 Flash; Gemini 3.1 Pro remains Preview'
 
   - pattern: 'GLM-5\.2'
     include_files: ['stages/01-llm-basics.md']
@@ -611,7 +618,7 @@ stale_patterns:
   - pattern: 'hy3-preview'
     include_files: ['stages/01-llm-basics.md']
     qualifier_terms: ['sunset', 'shutdown', 'shuts down', '2026-08-31', '下線', '下线', '歷史', '历史', 'legacy']
-    note: 'Tencent schedules hy3-preview to shut down on 2026-08-31; Stage 01 recommends Hy3'
+    note: 'Tencent shut down hy3-preview on 2026-08-31; Stage 01 recommends Hy3'
 
   - pattern: 'deepseek-chat|deepseek-reasoner'
     include_files: ['stages/01-llm-basics.md']

@@ -186,6 +186,21 @@ def test_real_config_blocks_legacy_windsurf_entry_in_paradigm_mirrors():
     assert len(_scan(text, _REAL_CFG, rel="resources/agent-paradigms.zh-Hans.md")) == 1
 
 
+def test_real_config_allows_supported_gpt_and_gemini_models():
+    rel = "stages/01-llm-basics.en.md"
+    assert _scan("Gemini 3.7 Flash remains fully supported.\n", _REAL_CFG, rel=rel) == []
+    assert _scan("GPT-5.6 Sol remains available.\n", _REAL_CFG, rel=rel) == []
+
+
+def test_real_config_blocks_old_stage01_gpt_roster_without_cross_row_escape():
+    text = (
+        "| GPT | GPT-5.6 Sol / Terra / Luna | Generally available |\n"
+        "| DeepSeek | legacy deepseek-chat alias |\n"
+    )
+    findings = _scan(text, _REAL_CFG, rel="stages/01-llm-basics.en.md")
+    assert any(match == "GPT-5.6 Sol / Terra / Luna" for _, _, match, _, _ in findings)
+
+
 # ── Machine-readable page freshness markers ──────────────────────────────────
 
 _PAGE_CFG = {
