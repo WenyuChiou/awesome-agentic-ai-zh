@@ -91,6 +91,7 @@ The table below shows selected projects and official entry points directly. Star
 - [punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers): browse community Servers by category; review before installing.
 - [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code): Claude Code community resources.
 - [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills): Agent Skills community list.
+- [Awesome WorkBuddy](https://github.com/sandbaseai/awesome-workbuddy): a CC0 bilingual WorkBuddy resource directory covering Skills, MCP, workflows, and harness references with license, provenance, permission, and data-flow notes; each indexed project still requires its own review.
 - [Canva MCP](https://www.canva.dev/docs/mcp/): official remote MCP; features, plans, and permissions depend on the account, so no fixed tool count is stated.
 - [Course list](resources/courses.en.md): choose courses by learning goal; a certificate is not a degree.
 - [Agent paradigms](resources/agent-paradigms.en.md): compare common Agent shapes with diagrams.

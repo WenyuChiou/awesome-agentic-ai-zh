@@ -91,6 +91,7 @@
 - [punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)：依分類瀏覽社群 Server；安裝前自行審查。
 - [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code)：Claude Code 社群資源。
 - [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)：Agent Skills 社群清單。
+- [Awesome WorkBuddy](https://github.com/sandbaseai/awesome-workbuddy)：CC0 雙語 WorkBuddy 資源目錄，按許可、來源、權限與資料流補充 Skills、MCP、工作流和 harness 參考；各外部專案仍需自行審查。
 - [Canva MCP](https://www.canva.dev/docs/mcp/)：官方 remote MCP；功能、方案與權限依帳號而異，不先記固定工具數。
 - [課程清單](resources/courses.md)：按學習目標挑課程，不把證書當成學位。
 - [Agent paradigms](resources/agent-paradigms.md)：用圖比較常見 Agent 形狀。
