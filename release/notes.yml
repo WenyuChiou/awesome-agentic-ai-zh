@@ -1,15 +1,26 @@
 schema_version: 1
-release_version: v2026.09.01
+release_version: v2026.09.04
 
 # One ordered list produces all three language sections in the GitHub Release.
 # Links are shared so the three summaries cannot silently point to different pages.
 changes:
-  - id: claude-fable-mythos-5-1
-    category: models
-    zh-TW: 依 2026-09-01 官方公告，主流模型表更新為 Claude Fable 5.1 與 Claude Mythos 5.1。兩者皆有 1M context、128K 最大輸出與 $10/$50 輸入／輸出價格，cache read 為 $0.25；Fable 5.1 一般可用，Mythos 5.1 只提供給通過審核的資安與生命科學使用者。
-    zh-Hans: 根据 2026-09-01 官方公告，主流模型表更新为 Claude Fable 5.1 与 Claude Mythos 5.1。两者都有 1M context、128K 最大输出和 $10/$50 输入／输出价格，cache read 为 $0.25；Fable 5.1 普遍可用，Mythos 5.1 只提供给通过审核的网络安全与生命科学用户。
-    en: Updated the model guide for the September 1, 2026 release of Claude Fable 5.1 and Claude Mythos 5.1. Both have a 1M context window, 128K maximum output, $10/$50 input/output pricing, and $0.25 cache reads. Fable 5.1 is generally available; Mythos 5.1 is limited to vetted cybersecurity and life-science users.
+  - id: bifrost-stage4-gateway
+    category: infrastructure
+    zh-TW: Stage 4 加入 Bifrost，讓讀者和 LiteLLM 並排學習 AI gateway。教材清楚說明 gateway 負責統一連接模型、routing、fallback 與 load balancing，不是替 Agent 決定下一步的 Agent framework；也分開標示開源功能與 enterprise 功能。
+    zh-Hans: Stage 4 加入 Bifrost，让读者和 LiteLLM 并排学习 AI gateway。教材清楚说明 gateway 负责统一连接模型、routing、fallback 和 load balancing，不是替 Agent 决定下一步的 Agent framework；也分开标示开源功能和 enterprise 功能。
+    en: Stage 4 adds Bifrost beside LiteLLM as an AI gateway learning resource. It explains that a gateway connects model providers and handles routing, fallbacks, and load balancing; it is not the Agent framework that decides the next step. Open-source and enterprise features are also separated.
     links:
-      - https://www.anthropic.com/claude-fable-and-mythos-5-1
-      - https://platform.claude.com/docs/en/models/fable-5-1/overview
-      - https://platform.claude.com/docs/en/models/mythos-5-1/overview
+      - https://github.com/maximhq/bifrost
+      - https://docs.getbifrost.ai
+
+  - id: gpt6-stage1-model-refresh
+    category: models
+    zh-TW: Stage 1 重新查核 15 個模型家族。GPT 欄更新為 GPT-6 Astra 與 GPT-5.6 Terra／Luna，並說明 Astra 正在分批開放、1.05M context、128K 最大輸出、$10/$50 價格，以及超過 272K 輸入後的費率變化。Gemini 更新為 3.8 Flash；DeepSeek V4、Hunyuan Hy3 與 MiniMax M3 的價格、輸出、狀態、來源或授權也依官方資料修正。
+    zh-Hans: Stage 1 重新核查 15 个模型家族。GPT 栏更新为 GPT-6 Astra 与 GPT-5.6 Terra／Luna，并说明 Astra 正在分批开放、1.05M context、128K 最大输出、$10/$50 价格，以及超过 272K 输入后的费率变化。Gemini 更新为 3.8 Flash；DeepSeek V4、Hunyuan Hy3 与 MiniMax M3 的价格、输出、状态、来源或授权也根据官方资料修正。
+    en: Stage 1 rechecks all 15 model families. The GPT entry now lists GPT-6 Astra with GPT-5.6 Terra and Luna, and explains Astra's rollout, 1.05M context, 128K maximum output, $10/$50 pricing, and the rate change above 272K input. Gemini moves to 3.8 Flash, while official sources correct the pricing, output, status, source, or license details for DeepSeek V4, Hunyuan Hy3, and MiniMax M3.
+    links:
+      - https://developers.openai.com/api/docs/models/gpt-6-astra
+      - https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash
+      - https://api-docs.deepseek.com/quick_start/pricing/
+      - https://cloud.tencent.com/document/product/1823/130051
+      - https://huggingface.co/MiniMaxAI/MiniMax-M3

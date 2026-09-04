@@ -44,9 +44,9 @@ def test_page_manifest_has_one_ordered_trilingual_source() -> None:
 
 
 def test_release_notes_are_trilingual_mirrors() -> None:
-    manifest = rm.validate_notes_manifest(expected_version="v2026.09.01")
+    manifest = rm.validate_notes_manifest(expected_version="v2026.09.04")
     rendered = rm.render_notes(
-        "v2026.09.01", sha="0123456789abcdef0123456789abcdef01234567"
+        "v2026.09.04", sha="0123456789abcdef0123456789abcdef01234567"
     )
     assert rendered.index("## 繁體中文") < rendered.index("## 简体中文") < rendered.index("## English")
     assert rendered.count("- `") == len(manifest["changes"]) * 3
