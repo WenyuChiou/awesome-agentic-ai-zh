@@ -369,7 +369,7 @@ Do not copy one SOTA score into the page as a permanent fact. Release decisions 
 
 Choose one by purpose; do not install everything at once. Ratings show teaching usefulness in this project, not GitHub stars.
 
-The 21 entries below are directly visible because readers may return here as a tool-selection map.
+The 22 entries below are directly visible because readers may return here as a tool-selection map.
 
 <table>
   <thead>
@@ -398,15 +398,16 @@ The 21 entries below are directly visible because readers may return here as a t
     <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td>⭐⭐⭐⭐</td><td>Package an application as a service and container</td><td>A deployment framework does not add Evals or Guardrails for you</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Multi-Agent Cases</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>⭐⭐⭐⭐</td><td>Understand role-based task division</td><td>More roles do not guarantee a better answer</td></tr>
+    <tr><th scope="rowgroup" rowspan="6">Multi-Agent Cases</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>⭐⭐⭐⭐</td><td>Understand role-based task division</td><td>More roles do not guarantee a better answer</td></tr>
     <tr><td><a href="https://github.com/stablyai/orca">Orca</a></td><td>⭐⭐⭐⭐</td><td>Run coding Agents in isolated worktrees</td><td>A person must still review and select parallel results</td></tr>
     <tr><td><a href="https://github.com/yc-software/qm">QM</a></td><td>⭐⭐⭐⭐</td><td>Study team workspaces, permissions, and schedules</td><td>Organization-wide deployment is more complex than a personal CLI</td></tr>
     <tr><td><a href="https://github.com/AMAP-ML/LongHorizon-Harness">LongHorizon-Harness</a></td><td>⭐⭐⭐</td><td>See Manager / Executor / Auditor roles</td><td>Very new, with limited long-term maintenance history</td></tr>
     <tr><td><a href="https://github.com/cft0808/edict">Edict</a></td><td>⭐⭐⭐</td><td>Learn planning, review, and execution roles from a Chinese-language case</td><td>Its special role names are a case design, not an industry standard</td></tr>
+    <tr><td><a href="https://github.com/yylo-dev/yylo">YYLO</a></td><td>⭐⭐⭐</td><td>Orchestrate coding agents in isolated worktrees behind typed task, validation, and merge boundaries, with receipt-backed changes</td><td>A CLI orchestrator rather than a framework; its task model and receipt formats are still early and yylo-dev-specific</td></tr>
   </tbody>
 </table>
 
-<small>Verified: 2026-08-31 UTC</small>
+<small>Existing data checked: 2026-08-31 UTC; YYLO: 2026-09-08 UTC</small>
 
 ## ✅ Self-Check After Stage 7
 

@@ -1405,6 +1405,7 @@ pages:
       resource_url_ratings: true
       literals:
         - "2026-08-31"
+        - "2026-09-08"
         - "OpenRouter"
         - "Pi"
         - "OpenCode"
@@ -1510,7 +1511,7 @@ pages:
         zh-Hans: {heading: "✅ Stage 7 之后的自我检查", anchor: -stage-7-之后的自我检查}
     visible_section_minimums:
       required-reading: {min_links: 6}
-      projects: {min_links: 21, min_ratings: 21}
+      projects: {min_links: 22, min_ratings: 22}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -1580,7 +1581,7 @@ pages:
           zh-TW: {term: Handoff, label: Handoff}
           en: {term: Handoff, label: Handoff}
           zh-Hans: {term: Handoff, label: Handoff}
-    resource_group_rowspans: [4, 6, 6, 5]
+    resource_group_rowspans: [4, 6, 6, 6]
 
   - id: stage-07.5
     canonical: stages/07.5-advanced-agentic-concepts.md

@@ -209,6 +209,7 @@ RESOURCE_URL_RATINGS = (
     ("https://github.com/yc-software/qm", "⭐⭐⭐⭐"),
     ("https://github.com/AMAP-ML/LongHorizon-Harness", "⭐⭐⭐"),
     ("https://github.com/cft0808/edict", "⭐⭐⭐"),
+    ("https://github.com/yylo-dev/yylo", "⭐⭐⭐"),
 )
 
 
@@ -383,7 +384,7 @@ def test_three_locales_have_the_same_external_urls_and_current_fact_sources() ->
 
 
 @pytest.mark.parametrize("page", PAGES.values())
-def test_resource_table_has_accessible_merged_groups_and_21_ratings(page: Path) -> None:
+def test_resource_table_has_accessible_merged_groups_and_22_ratings(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
     rated_tables = [table for table in tables if re.search(r"⭐{3,5}", table)]
@@ -391,7 +392,7 @@ def test_resource_table_has_accessible_merged_groups_and_21_ratings(page: Path) 
     table = rated_tables[0]
     assert len(re.findall(r'<th scope="col">', table)) == 5
     groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
-    expected = [4, 6, 6, 5]
+    expected = [4, 6, 6, 6]
     assert len(groups) == len(expected)
     for group, rows in zip(groups, expected):
         assert len(re.findall(r"<tr>", group)) == rows

@@ -369,7 +369,7 @@ python test.py
 
 先按用途選一個，不要一次安裝全部。評分是本專案的教學適合度，不是 GitHub stars。
 
-以下 21 筆直接放在這裡，因為它們是讀者選工具時會回來看的路標。
+以下 22 筆直接放在這裡，因為它們是讀者選工具時會回來看的路標。
 
 <table>
   <thead>
@@ -398,15 +398,16 @@ python test.py
     <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td>⭐⭐⭐⭐</td><td>把應用包成服務與容器</td><td>部署框架不會自動補齊 Eval 和 Guardrail</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Multi-Agent 案例</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>⭐⭐⭐⭐</td><td>理解角色式任務分工</td><td>角色多不等於答案一定更好</td></tr>
+    <tr><th scope="rowgroup" rowspan="6">Multi-Agent 案例</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>⭐⭐⭐⭐</td><td>理解角色式任務分工</td><td>角色多不等於答案一定更好</td></tr>
     <tr><td><a href="https://github.com/stablyai/orca">Orca</a></td><td>⭐⭐⭐⭐</td><td>在隔離 worktree 平行跑 coding agents</td><td>平行結果仍需要人審查與選擇</td></tr>
     <tr><td><a href="https://github.com/yc-software/qm">QM</a></td><td>⭐⭐⭐⭐</td><td>觀察團隊 workspace、權限與排程</td><td>組織級部署比個人 CLI 複雜</td></tr>
     <tr><td><a href="https://github.com/AMAP-ML/LongHorizon-Harness">LongHorizon-Harness</a></td><td>⭐⭐⭐</td><td>看 Manager／Executor／Auditor 分工</td><td>專案很新，長期維護紀錄仍有限</td></tr>
     <tr><td><a href="https://github.com/cft0808/edict">Edict</a></td><td>⭐⭐⭐</td><td>用中文案例理解規劃、審查與執行角色</td><td>特殊角色命名是案例設計，不是業界標準</td></tr>
+    <tr><td><a href="https://github.com/yylo-dev/yylo">YYLO</a></td><td>⭐⭐⭐</td><td>在隔離 worktree 編排 coding agents，用 typed task、驗證與 merge 邊界管控高風險變更並留下收據</td><td>CLI orchestrator 而非框架；任務模型與收據格式偏 yylo-dev 自家生態，仍在早期</td></tr>
   </tbody>
 </table>
 
-<small>資料查核：2026-08-31 UTC</small>
+<small>既有資料查核：2026-08-31 UTC；YYLO：2026-09-08 UTC</small>
 
 ## ✅ Stage 7 之後的自我檢查
 
