@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import re
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -44,9 +44,9 @@ def test_page_manifest_has_one_ordered_trilingual_source() -> None:
 
 
 def test_release_notes_are_trilingual_mirrors() -> None:
-    manifest = rm.validate_notes_manifest(expected_version="v2026.09.04")
+    manifest = rm.validate_notes_manifest(expected_version="v2026.09.08")
     rendered = rm.render_notes(
-        "v2026.09.04", sha="0123456789abcdef0123456789abcdef01234567"
+        "v2026.09.08", sha="0123456789abcdef0123456789abcdef01234567"
     )
     assert rendered.index("## 繁體中文") < rendered.index("## 简体中文") < rendered.index("## English")
     assert rendered.count("- `") == len(manifest["changes"]) * 3
@@ -55,6 +55,20 @@ def test_release_notes_are_trilingual_mirrors() -> None:
             assert change[locale] in rendered
         for link in change["links"]:
             assert rendered.count(f"]({link})") == 3
+
+
+def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:
+    calls: list[object] = []
+
+    class FixedUtcDateTime:
+        @staticmethod
+        def now(tz: object) -> object:
+            calls.append(tz)
+            return datetime(2026, 9, 8, 0, 5, tzinfo=rm.UTC)
+
+    monkeypatch.setattr(rm, "datetime", FixedUtcDateTime)
+    assert rm.validate_version("v2026.09.08") == date(2026, 9, 8)
+    assert calls == [rm.UTC]
 
 
 def test_release_notes_reject_a_different_dispatch_version() -> None:

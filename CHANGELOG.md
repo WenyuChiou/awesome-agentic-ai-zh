@@ -6,9 +6,15 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-08
+
+- **maintenance / GitHub Pages / deployment reliability** · 將官方 `actions/deploy-pages` 從 `v5.0.0` 更新至 `v5.0.1`，並繼續鎖定完整 commit SHA；新版為部署狀態輪詢加入 backoff 與 jitter，降低暫時性服務問題造成的重試壓力。PR 的 Required gate、dependency review 與合併後 Pages 部署皆通過。（f9213cb）
+
 ## 2026-09-04
 
-- **content / Stage 1 / current model guide** · 依 15 個模型家族的官方模型、價格、公告或 model card 重新查核三語主流模型表：OpenAI 推薦欄更新為 **GPT-6 Astra**，並保留 GPT-5.6 Terra／Luna 的一般與省成本路線；清楚標示 Astra 仍分批開放、1.05M context、128K 最大輸出、$10/$50，以及超過 272K 輸入後整次請求的 2× 輸入／cache 與 1.5× 輸出費率，GPT-5.6 Sol 則仍可用但未列在目前推薦型號欄。同次查核也把 Gemini 更新為穩定版 3.8 Flash、DeepSeek V4 改為現行峰谷價與 384K 最大輸出、Hy3 補上 256K 與規格來源並將舊 preview 改為已下線、MiniMax M3 改列開放權重且標明永久 50% API 折扣與 MiniMax Community License；Stage 1 freshness fact pack 與回歸測試同步更新至 GitHub API UTC `2026-09-04`。
+- **content / Stage 1 / current model guide** · 依 15 個模型家族的官方模型、價格、公告或 model card 重新查核三語主流模型表：OpenAI 推薦欄更新為 **GPT-6 Astra**，並保留 GPT-5.6 Terra／Luna 的一般與省成本路線；清楚標示 Astra 仍分批開放、1.05M context、128K 最大輸出、$10/$50，以及超過 272K 輸入後整次請求的 2× 輸入／cache 與 1.5× 輸出費率，GPT-5.6 Sol 則仍可用但未列在目前推薦型號欄。同次查核也把 Gemini 更新為穩定版 3.8 Flash、DeepSeek V4 改為現行峰谷價與 384K 最大輸出、Hy3 補上 256K 與規格來源並將舊 preview 改為已下線、MiniMax M3 改列開放權重且標明永久 50% API 折扣與 MiniMax Community License；Stage 1 freshness fact pack 與回歸測試同步更新至 GitHub API UTC `2026-09-04`。（985c03b）
+- **content / Stage 4 / AI gateway** · 將 Bifrost 與 LiteLLM 並列為 AI gateway 學習資源，說清楚 gateway 負責統一模型入口、routing、fallback 與 load balancing，不是替 Agent 決定下一步的 Agent framework；開源與 enterprise 功能邊界分開標示。（dce3048）
+- **maintenance / MCP catalog / archived resource** · 三語資源表將已封存的 Graphthulhu 改列為歷史學習範例；保留原有 ⭐⭐⭐ 編輯推薦度，同時明確提醒新專案應選擇仍在維護的替代方案。（a3b29b1）
 
 ## 2026-09-01
 

@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import sys
 import unicodedata
-from datetime import date
+from datetime import UTC, date, datetime
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -89,7 +89,7 @@ def validate_version(version: str, *, today: date | None = None) -> date:
         )
     except ValueError as exc:
         raise ReleaseManifestError(f"version contains an invalid calendar date: {version}") from exc
-    if release_date > (today or date.today()):
+    if release_date > (today or datetime.now(UTC).date()):
         raise ReleaseManifestError(f"release date cannot be in the future: {version}")
     return release_date
 
