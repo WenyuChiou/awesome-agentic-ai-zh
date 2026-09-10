@@ -1,13 +1,27 @@
 schema_version: 1
-release_version: v2026.09.08
+release_version: v2026.09.10
 
 # One ordered list produces all three language sections in the GitHub Release.
 # Links are shared so the three summaries cannot silently point to different pages.
 changes:
-  - id: deploy-pages-v5-0-1
-    category: maintenance
-    zh-TW: GitHub Pages 部署 Action 從 v5.0.0 更新至 v5.0.1，並繼續鎖定官方完整 commit SHA。新版為部署狀態輪詢加入 backoff 與 jitter，讓暫時性服務問題不會造成過密重試；教材內容與網址不變。
-    zh-Hans: GitHub Pages 部署 Action 从 v5.0.0 更新至 v5.0.1，并继续锁定官方完整 commit SHA。新版为部署状态轮询加入 backoff 和 jitter，让临时服务问题不会造成过密重试；教材内容与网址不变。
-    en: The GitHub Pages deployment Action moves from v5.0.0 to v5.0.1 while remaining pinned to the official full commit SHA. The update adds backoff and jitter to deployment polling so temporary service problems do not cause overly frequent retries; curriculum content and URLs are unchanged.
+  - id: original-banner-icon-motion
+    category: reader-ux
+    zh-TW: 首頁頂部 Banner 保留原版構圖、配色、文字與圖示，加入 18 秒循環動畫。先走共用基礎，再依序展示 A、B 路線；每語言 13 個圖示區域會做對應的小動作，包括 CLI 游標輸入、工具輕轉與 Hub 箭頭旋轉。文字與卡片固定，最後 2 秒保持靜止。
+    zh-Hans: 首页顶部 Banner 保留原版构图、配色、文字与图标，加入 18 秒循环动画。先走共用基础，再依次展示 A、B 路线；每语言 13 个图标区域会做对应的小动作，包括 CLI 光标输入、工具轻转与 Hub 箭头旋转。文字与卡片固定，最后 2 秒保持静止。
+    en: The homepage's top banner keeps the original composition, colors, text, and icons, with an 18-second animation loop. Shared foundations come first, followed by tracks A and B; 13 icon regions per language make small, meaningful movements, including typing CLI cursors, gently turning tools, and rotating Hub arrows. Text and cards stay fixed, with 2 still seconds at the end.
     links:
-      - https://github.com/actions/deploy-pages/releases/tag/v5.0.1
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/256
+  - id: banner-static-and-print-support
+    category: accessibility
+    zh-TW: 三語文件站提供停止／播放控制；系統偏好減少動態或停用 JavaScript 時使用靜態圖。README 保留靜態圖入口，三語 PDF 也使用完整 PNG。SVG 不載入外部圖片、字型或 JavaScript，圖片容量上限未提高。GitHub 嵌入圖片是否遵守真實系統的減少動態偏好仍未確認，需要靜態閱讀時請使用靜態圖入口或文件站控制。
+    zh-Hans: 三语文档站提供停止／播放控制；系统偏好减少动态或禁用 JavaScript 时使用静态图。README 保留静态图入口，三语 PDF 也使用完整 PNG。SVG 不加载外部图片、字体或 JavaScript，图片容量上限未提高。GitHub 嵌入图片是否遵守真实系统的减少动态偏好仍未确认，需要静态阅读时请使用静态图入口或文档站控制。
+    en: All three documentation locales provide stop/play controls and use a static image when reduced motion is preferred or JavaScript is disabled. Each README links to its static image, and all three PDFs use the complete PNG. SVGs load no external images, fonts, or JavaScript; image budgets have not increased. Whether GitHub's embedded image follows the actual system reduced-motion preference remains unverified; use the static-image link or documentation controls for still viewing.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/256
+  - id: lower-learning-map-pending-correction
+    category: known-limitations
+    zh-TW: 首頁下方的舊學習地圖仍待修正，不屬於本次頂部 Banner 更新。Track A 的正確順序是 A1 → A2 → Stage 5 → A3 → Stage 8；Stage 7.5 是進階選讀。修圖前請以正文中保持展開的路線表為準；這張舊圖尚未加入動畫。
+    zh-Hans: 首页下方的旧学习地图仍待修正，不属于本次顶部 Banner 更新。Track A 的正确顺序是 A1 → A2 → Stage 5 → A3 → Stage 8；Stage 7.5 是进阶选读。修图前请以正文中保持展开的路线表为准；这张旧图尚未加入动画。
+    en: The older learning map lower on the homepage still needs correction and is not part of this top-banner update. The correct Track A order is A1 → A2 → Stage 5 → A3 → Stage 8; Stage 7.5 is an advanced option. Until that image is corrected, follow the always-visible route tables in the text. The old map has not been animated.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/README.md

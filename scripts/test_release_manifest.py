@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import re
+from collections import Counter
 from datetime import date, datetime
 from pathlib import Path
 from types import SimpleNamespace
@@ -44,17 +45,18 @@ def test_page_manifest_has_one_ordered_trilingual_source() -> None:
 
 
 def test_release_notes_are_trilingual_mirrors() -> None:
-    manifest = rm.validate_notes_manifest(expected_version="v2026.09.08")
+    manifest = rm.validate_notes_manifest()
     rendered = rm.render_notes(
-        "v2026.09.08", sha="0123456789abcdef0123456789abcdef01234567"
+        manifest["release_version"], sha="0123456789abcdef0123456789abcdef01234567"
     )
     assert rendered.index("## 繁體中文") < rendered.index("## 简体中文") < rendered.index("## English")
     assert rendered.count("- `") == len(manifest["changes"]) * 3
     for change in manifest["changes"]:
         for locale in rm.LOCALES:
             assert change[locale] in rendered
-        for link in change["links"]:
-            assert rendered.count(f"]({link})") == 3
+    link_counts = Counter(link for change in manifest["changes"] for link in change["links"])
+    for link, count in link_counts.items():
+        assert rendered.count(f"]({link})") == count * len(rm.LOCALES)
 
 
 def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:
