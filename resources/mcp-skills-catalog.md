@@ -939,6 +939,18 @@ Observability 工具能看見 trace 與 log；不要把 secret、個資或完整
 npx -y jacobian mcp
 ```
 
+
+### [contextstream/mcp-server](https://github.com/contextstream/mcp-server) ⭐⭐⭐⭐（⚠️ 作者本人投稿）
+
+| 欄位 | 內容 |
+|---|---|
+| 形式 | hosted remote MCP + 開源 server |
+| 推薦度 | ⭐⭐⭐⭐ |
+
+**教什麼**：Shared project context for Cursor、Claude Code、Codex、Grok；用 hosted MCP 讓多人／多 agent 對齊同一專案 context。
+**適合誰**：用多種 coding agent、需要跨工具共享專案 context 的團隊。
+**備註**：Hosted endpoint：https://mcp.contextstream.io/mcp ；網站：https://contextstream.io 。Intelligence isn’t the bottleneck. Context is.
+
 </details>
 
 ---

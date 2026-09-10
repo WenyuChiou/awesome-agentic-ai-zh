@@ -907,6 +907,18 @@ npx -y jacobian mcp
 
 ---
 
+
+### [contextstream/mcp-server](https://github.com/contextstream/mcp-server) ⭐⭐⭐⭐（⚠️ 作者本人投稿）
+
+| 字段 | 内容 |
+|---|---|
+| 形式 | hosted remote MCP + 开源 server |
+| 推荐度 | ⭐⭐⭐⭐ |
+
+**教什么**：Shared project context for Cursor、Claude Code、Codex、Grok；用 hosted MCP 让多人／多 agent 对齐同一项目 context。
+**适合谁**：使用多种 coding agent、需要跨工具共享项目 context 的团队。
+**备注**：Hosted endpoint：https://mcp.contextstream.io/mcp ；网站：https://contextstream.io 。Intelligence isn’t the bottleneck. Context is.
+
 </details>
 ## 13. 研究工作流 Skills（学术 / paper / 文献）
 

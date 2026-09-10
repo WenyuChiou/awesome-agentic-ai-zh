@@ -906,6 +906,18 @@ npx -y jacobian mcp
 
 ---
 
+
+### [contextstream/mcp-server](https://github.com/contextstream/mcp-server) ⭐⭐⭐⭐ (⚠️ author submission)
+
+| Field | Value |
+|---|---|
+| Delivery | hosted remote MCP + open-source server |
+| Rating | ⭐⭐⭐⭐ |
+
+**What it does**: Shared project context for Cursor, Claude Code, Codex, and Grok via hosted MCP so teammates and multi-agent workflows stay aligned.
+**Audience**: Teams using multiple coding agents who need shared project context across tools.
+**Notes**: Hosted endpoint: https://mcp.contextstream.io/mcp — site: https://contextstream.io. Intelligence isn’t the bottleneck. Context is.
+
 </details>
 <a id="13-research-workflow-skills-academic--paper--literature"></a>
 ## 13. Research Workflow Skills (academic / paper / lit)
