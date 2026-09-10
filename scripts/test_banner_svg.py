@@ -40,13 +40,16 @@ def test_banner_is_exactly_reproducible_and_self_contained(locale):
     assert tree.attrib["lang"] == locale
     assert tree.find(SVG + "title").text
     assert tree.find(SVG + "desc").text
-    allowed = {"svg", "title", "desc", "metadata", "style", "image", "path", "rect", "circle"}
+    allowed = {"svg", "title", "desc", "metadata", "style", "image", "path", "rect", "circle", "g", "defs", "clipPath", "use"}
     for element in tree.iter():
         assert element.tag.removeprefix(SVG) in allowed
         assert not any(key.lower().startswith("on") for key in element.attrib)
         if "href" in element.attrib:
-            assert element.tag == SVG + "image"
-            assert element.attrib["href"].startswith("data:image/webp;base64,")
+            if element.tag == SVG + "image":
+                assert element.attrib["href"].startswith("data:image/webp;base64,")
+            else:
+                assert element.tag == SVG + "use"
+                assert element.attrib["href"] == "#original-art"
     assert len(tree.findall(SVG + "image")) == 1
     assert tree.find(SVG + "image").attrib["id"] == "original-art"
     with Image.open(io.BytesIO(banner.read_art(locale))) as art:
@@ -59,10 +62,58 @@ def test_banner_is_exactly_reproducible_and_self_contained(locale):
     assert not re.search(r"@import|@font-face|https?:|data:", css)
     assert all(target.startswith("#") for target in re.findall(r"url\((.*?)\)", source))
     assert path.stat().st_size < 300_000
-    # Motion selectors never hide text, cards, full arrows, or icons.
-    assert all(re.fullmatch(r"\.(dot|halo)(-[\w-]+)?", selector) for selector in
+    # Only bounded icon crops move; text, cards, and complete arrows stay fixed.
+    assert all(re.fullmatch(r"\.(dot|halo|icon-layer|icon-motion)(-[\w-]+)?", selector) for selector in
                re.findall(r"(\.[\w-]+)\{[^{}]*animation:", css))
     assert not re.search(r"<(text|path|g)\b[^>]*class=\"(?:dot|halo)", source)
+
+
+@pytest.mark.parametrize("locale", banner.LOCALES)
+def test_representative_icons_reuse_original_pixels_and_do_not_add_another_art_style(locale):
+    tree = ET.fromstring(banner.build_svg(locale))
+    icons = [node for node in tree.findall(SVG + "g") if node.attrib.get("id", "").startswith("icon-")]
+    assert [node.attrib["id"] for node in icons] == [f"icon-{name}" for name in banner.ICON_MOTION]
+    assert len(icons) == 13
+    assert len(banner.ICONS[locale]) == len(icons)
+    with Image.open(io.BytesIO(banner.read_art(locale))) as art:
+        for node, (name, (motion, windows)), (x,y,w,h) in zip(icons, banner.ICON_MOTION.items(), banner.ICONS[locale], strict=True):
+            assert node.attrib["data-motion"] == motion
+            assert list(node.iter(SVG + "use"))[0].attrib["href"] == "#original-art"
+            clip = node.find(f'{SVG}defs/{SVG}clipPath')
+            assert clip.attrib["id"] == f"clip-icon-{name}"
+            assert clip.find(SVG + "rect").attrib == dict(x=str(x), y=str(y), width=str(w), height=str(h))
+            assert 0 <= x < x+w <= 1672 and 0 <= y < y+h <= 941
+            assert all(0 <= start < end < 16 for start, end in windows)
+            if not name.startswith("cli"):
+                corners = [art.getpixel(p) for p in [(x,y),(x+w-1,y),(x,y+h-1),(x+w-1,y+h-1)]]
+                assert all(min(rgb[:3]) > 210 for rgb in corners), (locale, name, corners)
+    css = tree.find(SVG + "style").text
+    assert ".icon-layer{opacity:0;pointer-events:none}" in css
+    assert ".dot,.halo,.icon-layer,.icon-motion{animation:none!important}" in css
+    assert ".dot,.halo,.icon-layer{opacity:0!important}" in css
+
+
+def test_icon_movement_has_a_specific_learning_meaning_and_shared_timing():
+    assert banner.ICON_MOTION["cli-large"][0] == "type"
+    assert banner.ICON_MOTION["tools-large"][0] == "turn"
+    assert banner.ICON_MOTION["hub5"][0] == banner.ICON_MOTION["hub8"][0] == "cycle"
+    assert banner.ICON_MOTION["knowledge"][0] == "grow"
+    assert banner.ICON_MOTION["research"][0] == "experiment"
+    assert banner.ICON_MOTION["checklist"][0] == "check"
+    for name, (_, windows) in banner.ICON_MOTION.items():
+        if name.startswith("cli"):
+            assert all(2 <= start < end <= 8 for start, end in windows)
+        if name.startswith("tools"):
+            assert all(8 <= start < end <= 16 for start, end in windows)
+    assert len({banner.icon_css() for _ in banner.LOCALES}) == 1
+
+
+def test_small_traditional_chinese_cursor_crop_covers_its_left_edge():
+    # Independent visual review found this white edge left stationary at 2.46s.
+    index = list(banner.ICON_MOTION).index("cli-small")
+    x, y, w, h = banner.ICONS["zh-TW"][index]
+    assert x < 60 < x+w and y <= 562 < y+h  # Include a one-pixel left margin.
+    assert x+w == 77  # Do not grow toward the terminal circle's right edge.
 
 
 def test_three_locales_share_graph_topology_and_timing_on_original_art():

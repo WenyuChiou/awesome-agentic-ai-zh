@@ -52,6 +52,13 @@ checks 320 / 375 / 768 / 1440 px, light/dark mode, reduced motion, no JavaScript
 instant navigation, and frames from both routes and loop boundaries. GitHub README playback is
 verified separately from its raw SVG/file preview; unsupported animation remains a complete map.
 
+The icon-motion follow-up reuses 13 original-art crops per language: foundations, two CLI
+cursors, two tool icons, both Hub arrows, a checklist, and the five role icons. Tests restrict
+SVG `use` references to the single pinned artwork, verify crop bounds and shared motion windows,
+and keep the last 2 seconds still. Browser checks must prove all 39 localized icon regions really
+change, inspect crop edges and text clearance, compare resting frames, and confirm reduced motion
+disables both the icon motion and its backing. The static PNGs and PDF banner remain unchanged.
+
 `scripts/test_main_readme_content.py` protects the README's progressive reading path. It requires
 the main route, role choices, important terms, required reading, and ten rated learning resources to
 stay visible. Only four secondary groups may start closed. The resource table must keep three real

@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-09-10
 
-- **reader UX / README / animated banner experiment** · 三語 README 頂部以自包含 SVG 內嵌各自原版插圖，只加 18 秒循環的路線光點與節點外框亮起效果，不重畫字體、圖示、配色、構圖或底部四格。沿用 `1672×941` 畫布、共用基礎、兩條 Track、Stage 5／8 Hub 與五條角色路線；三語路線順序與動畫時間相同，覆蓋層依各自原圖接線對齊。原圖以 WebP quality 95 高品質壓縮後內嵌，再解碼成同版 PNG；六個檔共 2,707,304 bytes（原三張 PNG 為 3,733,651 bytes），未提高容量上限。新增靜態圖與文件站入口、停止／播放、減少動態與無 JavaScript 的靜態 fallback、手機分流提示及 PDF 的 PNG 替換；圖片 gate 納入 SVG 與靜態引用，同步更新 DESIGN、三語 style guide、來源紀錄與回歸測試。僅作 Draft PR，不改下方學習地圖、角色圖或章節正文，不合併、不發布 Release。
+- **reader UX / README / animated banner experiment** · 三語 README 頂部以自包含 SVG 內嵌各自原版插圖，加入 18 秒循環的路線光點、節點外框及代表性圖示動作，不重畫字體、圖示、配色、構圖或底部四格。每語言 13 個裁切區域重用同一底圖：CLI 游標輸入、工具輕轉、Hub 箭頭旋轉、清單確認與角色回饋；活動時蓋住原位置避免重影，文字與卡片固定，最後 2 秒完全靜止。沿用 `1672×941` 畫布、共用基礎、兩條 Track、Stage 5／8 Hub 與五條角色路線；三語路線順序與動畫時間相同，覆蓋層依各自原圖接線對齊。原圖以 WebP quality 95 高品質壓縮後內嵌，再解碼成同版 PNG；六個檔共 2,756,321 bytes（原三張 PNG 為 3,733,651 bytes），未提高容量上限，圖示動作不改靜態 PNG。新增靜態圖與文件站入口、停止／播放、減少動態與無 JavaScript 的靜態 fallback、手機分流提示及 PDF 的 PNG 替換；圖片 gate 納入 SVG 與靜態引用，同步更新 DESIGN、三語 style guide、來源紀錄與回歸測試。僅作 Draft PR，不改下方學習地圖、角色圖或章節正文，不合併、不發布 Release。
 
 ## 2026-09-08
 

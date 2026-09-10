@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Animate the existing artwork, without redrawing its text, icons, or layout.
 
-SVGs embed a compressed copy of the original illustration. The only new visible
-elements are moving route dots and temporary node outlines. No external assets,
-fonts, or JavaScript are loaded. --png decodes the same embedded art for printing.
+SVGs reuse the original illustration, including clipped copies of its icons for
+small, meaningful movements. Text and layout stay fixed. No external assets,
+fonts, or JavaScript are loaded. --png decodes the unchanged art for printing.
 """
 from __future__ import annotations
 
@@ -13,6 +13,7 @@ import hashlib
 from html import escape
 import io
 from pathlib import Path
+from statistics import median
 import subprocess
 import xml.etree.ElementTree as ET
 
@@ -82,6 +83,93 @@ ART_HASHES = {
     "zh-Hans": "d18657fdc244a8296744cfe22a0af17622c151d08b3239cb3c543c24b729f891",
 }
 
+# Animate the original pixels, not replacement emoji or a different icon set.
+# Windows are shared across languages; 16–18 seconds stays completely still.
+ICON_MOTION = {
+    "foundation": ("lift", [(0.15, 1.1)]),
+    "cli-small": ("type", [(2.1, 3), (3.3, 4.2), (5.8, 6.7)]),
+    "cli-large": ("type", [(2.1, 3), (3.3, 4.2), (5.8, 6.7)]),
+    "tools-small": ("turn", [(8.1, 9.2), (9.7, 10.6), (12.1, 13)]),
+    "tools-large": ("turn", [(8.1, 9.2), (9.7, 10.6), (12.1, 13)]),
+    "hub5": ("cycle", [(4.5, 5.4), (10.6, 11.5)]),
+    "hub8": ("cycle", [(7.15, 7.95), (15.1, 15.9)]),
+    "checklist": ("check", [(7.25, 7.95), (15.15, 15.9)]),
+    "research": ("experiment", [(7.3, 7.95), (15.25, 15.95)]),
+    "developer": ("check", [(7.3, 7.95), (15.25, 15.95)]),
+    "teacher": ("turn", [(7.3, 7.95), (15.25, 15.95)]),
+    "knowledge": ("grow", [(7.3, 7.95), (15.25, 15.95)]),
+    "everyday": ("lift", [(7.3, 7.95), (15.25, 15.95)]),
+}
+# x, y, width, height, with a small paper margin. CLI crops contain ONLY the
+# existing underscore cursor; their blue backing stays inside the terminal.
+ICONS = {
+    "zh-TW": [(93,361,44,41),(59,559,18,7),(104,826,32,11),
+        (36,630,49,51),(454,766,98,96),(631,461,36,35),(1146,462,37,35),
+        (851,766,79,99),(1435,217,46,54),(1432,320,51,51),(1432,424,53,45),
+        (1432,524,46,45),(1432,623,52,44)],
+    "en": [(89,369,42,44),(59,570,14,7),(105,825,32,10),
+        (33,636,52,58),(488,761,101,107),(616,465,34,34),(1171,465,35,34),
+        (854,762,99,107),(1443,207,38,48),(1440,304,44,47),(1440,400,45,42),
+        (1441,501,42,50),(1438,607,49,51)],
+    "zh-Hans": [(87,371,49,43),(61,575,17,8),(113,827,29,12),
+        (35,642,53,56),(475,773,91,94),(619,469,34,33),(1201,470,34,32),
+        (869,773,76,95),(1457,214,41,49),(1457,317,44,45),(1456,421,46,43),
+        (1456,523,44,45),(1455,623,48,44)],
+}
+POSES = {
+    "lift": [(0, "translateY(0px)"), (.4, "translateY(-4px)"), (1, "translateY(0px)")],
+    "type": [(0, "translateX(0px)"), (.3, "translateX(4px)"), (.7, "translateX(4px)"), (1, "translateX(0px)")],
+    "turn": [(0, "rotate(0deg)"), (.3, "rotate(-10deg)"), (.7, "rotate(8deg)"), (1, "rotate(0deg)")],
+    "cycle": [(0, "rotate(0deg)"), (1, "rotate(360deg)")],
+    "check": [(0, "scale(1)"), (.4, "scale(1.055)"), (1, "scale(1)")],
+    "experiment": [(0, "rotate(0deg)"), (.3, "rotate(-7deg)"), (.7, "rotate(7deg)"), (1, "rotate(0deg)")],
+    "grow": [(0, "scaleY(1)"), (.25, "scaleY(.75)"), (.75, "scaleY(1.04)"), (1, "scaleY(1)")],
+}
+
+
+def icon_css():
+    css = [".icon-layer{opacity:0;pointer-events:none}.icon-motion{transform-origin:0 0}"]
+    for name, (motion, windows) in ICON_MOTION.items():
+        css.append(f'.icon-layer-{name}{{animation:show-icon-{name} 18s linear infinite}}')
+        easing = "linear" if motion == "cycle" else "cubic-bezier(.25,1,.5,1)"
+        css.append(f'.icon-motion-{name}{{animation:move-icon-{name} 18s {easing} infinite}}')
+        visibility = ['0%,100%{opacity:0}']
+        movement = ['0%,100%{transform:none;opacity:1}']
+        for start, end in windows:
+            visibility.extend([f'{percent(start-.002)}{{opacity:0}}', f'{percent(start)}{{opacity:1}}',
+                               f'{percent(end)}{{opacity:1}}', f'{percent(end+.002)}{{opacity:0}}'])
+            for progress, transform in POSES[motion]:
+                opacity = ".3" if motion == "type" and progress == .3 else "1"
+                movement.append(f'{percent(start+(end-start)*progress)}{{transform:{transform};opacity:{opacity}}}')
+        css.append(f'@keyframes show-icon-{name}{{{"".join(visibility)}}}')
+        css.append(f'@keyframes move-icon-{name}{{{"".join(movement)}}}')
+    return "\n".join(css)
+
+
+def icon_layers(locale, art):
+    """Cover only an active icon, then move a clipped reuse of its exact pixels.
+
+    At rest the entire layer disappears: the original image is untouched. A
+    corner-sampled backing prevents a second, stationary icon showing beneath
+    the moving copy. No new image payload, symbol library, or text is added.
+    """
+    from PIL import Image
+
+    with Image.open(io.BytesIO(art)) as source:
+        source = source.convert("RGB")
+        parts = []
+        for (name, (motion, _)), (x, y, w, h) in zip(ICON_MOTION.items(), ICONS[locale], strict=True):
+            corners = [source.getpixel(point) for point in [(x,y),(x+w-1,y),(x,y+h-1),(x+w-1,y+h-1)]]
+            backing = '#'+''.join(f'{int(median(channel)):02x}' for channel in zip(*corners))
+            cx, cy = x+w/2, y+h if motion == "grow" else y+h/2
+            parts.append(f'<g id="icon-{name}" class="icon-layer icon-layer-{name}" aria-hidden="true" data-motion="{motion}">'
+                f'<defs><clipPath id="clip-icon-{name}"><rect x="{x}" y="{y}" width="{w}" height="{h}"/></clipPath></defs>'
+                f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{backing}"/>'
+                f'<g transform="translate({cx} {cy})"><g class="icon-motion icon-motion-{name}">'
+                f'<g transform="translate({-cx} {-cy})" clip-path="url(#clip-icon-{name})"><use href="#original-art"/></g>'
+                '</g></g></g>')
+    return "\n".join(parts)
+
 
 def percent(seconds):
     return f"{seconds / 18 * 100:.4f}%"
@@ -102,7 +190,8 @@ def animation_css(locale):
             frames.extend([f'{percent(start)}{{opacity:0}}', f'{percent(start+.12)}{{opacity:.8}}',
                            f'{percent(end-.12)}{{opacity:.8}}', f'{percent(end)}{{opacity:0}}'])
         css.append(f'@keyframes light-{name}{{{"".join(frames)}}}')
-    css.append('@media(prefers-reduced-motion:reduce){.dot,.halo{animation:none!important;opacity:0!important}}')
+    css.append(icon_css())
+    css.append('@media(prefers-reduced-motion:reduce){.dot,.halo,.icon-layer,.icon-motion{animation:none!important}.dot,.halo,.icon-layer{opacity:0!important}}')
     return "\n".join(css)
 
 
@@ -144,7 +233,8 @@ def build_svg(locale, art=None):
         f'<title id="title">{escape(t["title"])}</title><desc id="desc">{escape(t["desc"])}</desc>',
         f'<metadata>Original artwork: {SOURCE_COMMIT}; WebP quality 95; overlay only.</metadata>',
         f'<style>{animation_css(locale)}</style>',
-        f'<image id="original-art" width="1672" height="941" href="data:image/webp;base64,{encoded}"/>']
+        f'<image id="original-art" width="1672" height="941" href="data:image/webp;base64,{encoded}"/>',
+        icon_layers(locale, art)]
     for name, (x,y,w,h,radius) in zip(WINDOWS,NODES[locale],strict=True):
         route = "common" if name=="base" else "hub" if name in {"s5","s8"} else "a" if name.startswith("a") else "b"
         parts.append(f'<rect id="node-{name}" class="halo halo-{name}" x="{x-3}" y="{y-3}" width="{w+6}" height="{h+6}" rx="{radius+3}" fill="none" stroke="{COLORS[route]}" stroke-width="3"/>')
