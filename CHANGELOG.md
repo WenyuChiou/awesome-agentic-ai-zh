@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-09-10
 
-- **release health / resources** · 正式發布的全站掃描發現 `PleasePrompto/notebooklm-skill` 當日已封存，以及 Graphthulhu 原入口回傳 404。三語 catalog／Cookbook 將前者明確列為歷史範例、不再推薦新流程使用；後者移除失效連結但保留歷史名稱、錨點與評分，授權改標目前無法核對。保留原編輯星級，不新增替代專案，也不把 403／429 當成失效。三語 Release Notes 同步記錄修正。
+- **release health / resources** · 正式發布的全站掃描發現 `PleasePrompto/notebooklm-skill` 當日已封存，以及 Graphthulhu 原入口回傳 404。三語 catalog／Cookbook 將前者明確列為歷史範例、不再推薦新流程使用；後者移除失效連結但保留歷史名稱、錨點與評分，授權改標目前無法核對。同步移除 snapshot 中不再有正文引用的單筆 Graphthulhu 記錄，數量改為 263；其餘記錄與查核時間不動。保留原編輯星級，不新增替代專案，也不把 403／429 當成失效。三語 Release Notes 同步記錄修正。
 
 - **release / v2026.09.10** · 使用者批准 PR #256 的原版 Banner 動畫合併與發布；準備同一 calendar tag 的繁中、簡中、英文摘要與三份 PDF，同步引用版本。PDF 操作範例與三語摘要測試改讀發布清單中的版本，測試亦支援不同變更共用同一來源連結。三語 Notes 同步記錄 GitHub 減少動態偏好尚未確認，以及下方舊學習地圖的 Track A 順序／Stage 7.5 待修問題；本版不把舊圖動畫化，也不納入其他 PR。下方角色分流動畫另作試版審查。
 

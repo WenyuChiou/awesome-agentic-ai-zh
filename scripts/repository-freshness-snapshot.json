@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "verified_at": "2026-09-03T01:37:10Z",
-  "repository_count": 264,
+  "repository_count": 263,
   "repositories": {
     "01-ai/yi": {
       "requested": "01-ai/Yi",
@@ -5356,31 +5356,6 @@
       "latest_release": {
         "tag": "v3.7.2",
         "published_at": "2026-09-02T00:11:50Z"
-      },
-      "reference_count": 3,
-      "sources": [
-        "resources/mcp-skills-catalog.en.md",
-        "resources/mcp-skills-catalog.md",
-        "resources/mcp-skills-catalog.zh-Hans.md"
-      ]
-    },
-    "skridlevsky/graphthulhu": {
-      "requested": "skridlevsky/graphthulhu",
-      "state": "verified",
-      "checked_at": "2026-09-03T01:37:10Z",
-      "api_status": 200,
-      "canonical": "skridlevsky/graphthulhu",
-      "html_url": "https://github.com/skridlevsky/graphthulhu",
-      "redirected": false,
-      "archived": false,
-      "disabled": false,
-      "visibility": "public",
-      "default_branch": "main",
-      "license": "MIT",
-      "pushed_at": "2026-04-30T21:02:22Z",
-      "latest_release": {
-        "tag": "v0.5.0",
-        "published_at": "2026-04-30T21:03:52Z"
       },
       "reference_count": 3,
       "sources": [
