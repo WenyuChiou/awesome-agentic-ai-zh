@@ -43,6 +43,11 @@ DIAGRAM_DIR = REPO_ROOT / "resources" / "diagrams"
 
 # ![alt](path) — relative paths only; skip external URLs and data: URIs.
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\((?!https?:|data:)([^)\s]+)\)")
+# The README animation has a real static-image link, not a second embed. Only
+# banner fallbacks count here; unrelated image hyperlinks retain old semantics.
+BANNER_FALLBACK_RE = re.compile(
+    r"(?<!!)\[[^\]]*\]\(((?:\.\./)*resources/diagrams/banner(?:\.en|\.zh-Hans)?\.png)\)"
+)
 LOCALE_SUFFIXES = {".en.md": "en", ".zh-Hans.md": "zh-Hans"}
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
 # `.claude` and `.ai` are listed for parity with the other gates even though
@@ -84,7 +89,7 @@ def scan(page: Path):
     # toggle — see #95/#97. Blanking preserves line numbers.
     text = strip_code_blocks(page.read_text(encoding="utf-8"), source=str(page))
     for i, line in enumerate(text.split("\n"), 1):
-        for m in IMAGE_RE.finditer(line):
+        for m in (*IMAGE_RE.finditer(line), *BANNER_FALLBACK_RE.finditer(line)):
             asset = m.group(1)
             if Path(asset).suffix.lower() in IMAGE_EXTS:
                 yield i, asset

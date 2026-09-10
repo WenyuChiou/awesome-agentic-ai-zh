@@ -36,11 +36,21 @@ figures inside one closed time-estimate disclosure. The test blocks the old stag
 fixed frontier year windows, approximate code-line claims, and the old blank-file rewrite exercise.
 
 Each landing page must show ten cards in order from Stage 0 through Stage 8, including Stage 7.5.
-The banner trio must be three distinct PNG files on the same `1672×941` canvas and remain under
-2 MB each. The reproducibility contract records Track A as A1 → A2 → Stage 5 → A3 → Stage 8 and
+The README-only banner experiment uses three self-contained animated SVGs and three matching
+static PNGs on the same `1672×941` canvas; existing image budgets are not raised. The reproducibility
+contract records Track A as A1 → A2 → Stage 5 → A3 → Stage 8 and
 Track B as 3 → 4 → Stage 5 → 6 → 7 → 7.5 → Stage 8 before the role paths. It forbids mutable
 duration, price, version, year, and stars metrics. Human review still checks text rendering,
 alignment, and arrow／icon overlap.
+
+`scripts/test_banner_svg.py` locks the original embedded artwork hashes, shared route topology,
+18-second timeline (2 / 6 / 8 / 2), safe SVG surface, exact regeneration, matching PNG pixels,
+and localized static links. Overlay coordinates follow each original localized illustration;
+the artwork's existing typography, icons, colors, and composition are not redrawn. The site/PDF
+support tests cover PNG substitution, eager loading, and localized controls. Browser acceptance
+checks 320 / 375 / 768 / 1440 px, light/dark mode, reduced motion, no JavaScript, stop/play,
+instant navigation, and frames from both routes and loop boundaries. GitHub README playback is
+verified separately from its raw SVG/file preview; unsupported animation remains a complete map.
 
 `scripts/test_main_readme_content.py` protects the README's progressive reading path. It requires
 the main route, role choices, important terms, required reading, and ten rated learning resources to

@@ -61,6 +61,9 @@ REMOTE_HTML_IMAGE_RE = re.compile(
     r"<img\b[^>]*\bsrc\s*=\s*([\"'])https?://.*?\1[^>]*>",
     re.IGNORECASE | re.DOTALL,
 )
+LOCAL_BANNER_IMAGE_RE = re.compile(
+    r'(?P<embed>!\[[^\]\n]*\]\()(resources/diagrams/banner(?:\.en|\.zh-Hans)?)\.svg(?=\))'
+)
 
 
 class ReleaseManifestError(ValueError):
@@ -116,7 +119,12 @@ def localized_path(canonical: PurePosixPath, locale: str) -> PurePosixPath:
 
 def _external_urls(text: str, source: str) -> set[str]:
     visible = strip_code_blocks(text, source=source)
-    return {match.group(0).rstrip(".,;:!?") for match in URL_RE.finditer(visible)}
+    urls = {match.group(0).rstrip(".,;:!?") for match in URL_RE.finditer(visible)}
+    # The README animation controls live on the matching localized about page.
+    # Treat only those exact site destinations as equivalent for mirror parity.
+    site = "https://wenyuchiou.github.io/awesome-agentic-ai-zh/"
+    localized_about = {f"{site}{locale}/about/" for locale in ("en", "zh-Hans")}
+    return {f"{site}about/" if url in localized_about else url for url in urls}
 
 
 def _heading(text: str, source: str) -> str:
@@ -335,6 +343,7 @@ def assemble_markdown(locale: str, version: str) -> str:
         relative = page["localized"][locale]
         text = (ROOT / relative).read_text(encoding="utf-8")
         text = _strip_remote_images(_expand_details(_strip_front_matter(text))).strip()
+        text = LOCAL_BANNER_IMAGE_RE.sub(r"\g<embed>\2.png", text)
         lines.extend(
             [
                 '<div class="release-page-break"></div>',

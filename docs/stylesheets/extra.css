@@ -55,6 +55,46 @@ body[data-md-color-scheme="slate"] {
 }
 
 /* ---- Teaching diagrams: fast to load, easy to enlarge on a phone ---- */
+.md-typeset .aaz-banner img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  width: 100%;
+}
+.aaz-banner__controls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .75rem;
+  gap: .25rem .75rem;
+  justify-content: center;
+  margin-top: .25rem;
+}
+.aaz-banner__controls a,
+.aaz-banner__toggle {
+  align-items: center;
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: .25rem .5rem;
+}
+.aaz-banner__toggle {
+  background: var(--md-default-bg-color);
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+  font: inherit;
+}
+.aaz-banner__toggle[hidden] { display: none; }
+.aaz-banner__toggle:disabled { cursor: default; }
+.aaz-banner__toggle:focus-visible,
+.aaz-banner__original:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 3px;
+}
 .md-typeset .aaz-diagram {
   margin: 1.5rem auto;
   text-align: center;
@@ -111,6 +151,18 @@ body[data-md-color-scheme="slate"] {
 .md-typeset a,
 .md-typeset code {
   overflow-wrap: anywhere;
+}
+
+.md-typeset .aaz-banner__route-hint {
+  display: none;
+}
+@media (max-width: 47.99rem) {
+  .md-typeset .aaz-banner__route-hint {
+    display: block;
+    margin: .5rem 0;
+    font-size: .8rem;
+    text-align: start;
+  }
 }
 
 /* ---- Stat strip ---- */

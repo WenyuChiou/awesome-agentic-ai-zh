@@ -181,7 +181,7 @@ def _section(text: str, start: str, end: str) -> str:
 
 
 def _normalized_internal_target(target: str) -> str:
-    target = re.sub(r"\.(?:en|zh-Hans)(?=\.(?:md|png)(?:#|$))", "", target)
+    target = re.sub(r"\.(?:en|zh-Hans)(?=\.(?:md|png|svg)(?:#|$))", "", target)
     return target.removeprefix("./")
 
 
@@ -287,7 +287,8 @@ def test_trilingual_links_and_stable_facts_match() -> None:
             if not re.match(r"(?:https?:|mailto:|#)", target)
         ]
         external[locale] = [
-            target for target in targets if re.match(r"https?://", target)
+            re.sub(r"(?<=github.io/awesome-agentic-ai-zh/)(?:en|zh-Hans)/(?=about/$)", "", target)
+            for target in targets if re.match(r"https?://", target)
         ]
     assert internal["zh-TW"] == internal["en"] == internal["zh-Hans"]
     assert external["zh-TW"] == external["en"] == external["zh-Hans"]
@@ -304,7 +305,11 @@ def test_homepage_is_shorter_without_deleting_key_terms(page: Path) -> None:
     # English naturally uses more characters than either CJK mirror. All three
     # stay well below their previous 16k–22k versions without rewarding terse,
     # under-explained translations.
-    assert len(text) <= 14_000
+    # Keep the same content ceiling. Accessible banner alt text and its static/
+    # docs delivery links have their own contract, not a reason to cut a lesson.
+    content = text[text.index("# awesome-agentic-ai-zh"):]
+    assert len(text) - len(content) <= 550
+    assert len(content) <= 14_000
     assert len(text.splitlines()) <= 230
     for banned in ("240+", "81+", "Agent Workflow Audit", "mv starter.py"):
         assert banned not in text

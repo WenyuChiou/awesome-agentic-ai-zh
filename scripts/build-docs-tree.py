@@ -41,7 +41,11 @@ CONTENT_DIRS = [
 # Reader-facing files that live below an otherwise maintainer-only directory.
 # `docs/plans/` and `docs/TESTING_PLAN.md` are repository evidence, not lessons;
 # copying the whole directory made 35 internal planning pages searchable online.
-CONTENT_FILES = ["docs/HOW_TO_USE.md", "docs/stylesheets/extra.css"]
+CONTENT_FILES = [
+    "docs/HOW_TO_USE.md",
+    "docs/stylesheets/extra.css",
+    "docs/javascripts/banner-motion.js",
+]
 
 # Root-level pages (plus their .en.md / .zh-Hans.md siblings, auto-found)
 ROOT_STEMS = [

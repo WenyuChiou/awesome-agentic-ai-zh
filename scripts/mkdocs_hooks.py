@@ -85,11 +85,24 @@ _DIAGRAM_IMAGE = re.compile(
     re.IGNORECASE,
 )
 _ATTR = r'\s{0}\s*=\s*(["\'])(.*?)\1'
-_EAGER_DIAGRAMS = {"banner.png", "banner.en.png", "banner.zh-Hans.png"}
+_ANIMATED_BANNERS = {"banner.svg", "banner.en.svg", "banner.zh-Hans.svg"}
+_EAGER_DIAGRAMS = {
+    "banner.png", "banner.en.png", "banner.zh-Hans.png", *_ANIMATED_BANNERS
+}
 _FULL_SIZE_LABELS = {
     "zh-TW": "開啟原圖（新分頁）",
     "en": "Open full-size image (new tab)",
     "zh-Hans": "打开原图（新标签页）",
+}
+_BANNER_MOTION_LABELS = {
+    "zh-TW": ("播放動畫", "停止動畫", "動畫已停用：系統偏好減少動態效果"),
+    "en": ("Play animation", "Stop animation", "Animation disabled: reduced motion is on"),
+    "zh-Hans": ("播放动画", "停止动画", "动画已停用：系统偏好减少动态效果"),
+}
+_BANNER_ROUTE_HINTS = {
+    "zh-TW": "先走共用基礎，再選 A：用 CLI 做事，或 B：打造 Agent。",
+    "en": "Start with shared foundations. Choose A: use CLI tools, or B: build an Agent.",
+    "zh-Hans": "先走共用基础，再选 A：用 CLI 做事，或 B：打造 Agent。",
 }
 
 
@@ -107,9 +120,43 @@ def _add_attribute(tag: str, name: str, value: str) -> str:
     return f'{core} {name}="{html_lib.escape(value, quote=True)}"{suffix}'
 
 
+def _set_attribute(tag: str, name: str, value: str) -> str:
+    tag = re.sub(_ATTR.format(re.escape(name)), "", tag, flags=re.IGNORECASE)
+    return _add_attribute(tag, name, value)
+
+
+def _banner_html(image: str, src: str, locale: str) -> str:
+    """Ship one static image; the site script progressively enables motion."""
+
+    animated = html_lib.unescape(src)
+    parsed = urlsplit(animated)
+    static = parsed._replace(path=parsed.path.removesuffix(".svg") + ".png").geturl()
+    image = _set_attribute(image, "src", static)
+    image = _set_attribute(image, "loading", "eager")
+    label = _FULL_SIZE_LABELS.get(locale, _FULL_SIZE_LABELS["zh-TW"])
+    play, stop, reduced = _BANNER_MOTION_LABELS.get(locale, _BANNER_MOTION_LABELS["zh-TW"])
+    attributes = " ".join(
+        f'data-{name}="{html_lib.escape(value, quote=True)}"'
+        for name, value in (
+            ("static-src", static), ("animated-src", animated),
+            ("play-label", play), ("stop-label", stop), ("reduced-label", reduced),
+        )
+    )
+    return (
+        f'<div class="aaz-banner" {attributes}>\n'
+        f'{image}\n<p class="aaz-banner__route-hint">'
+        f'{html_lib.escape(_BANNER_ROUTE_HINTS.get(locale, _BANNER_ROUTE_HINTS["zh-TW"]))}</p>'
+        '<div class="aaz-banner__controls">'
+        f'<button class="aaz-banner__toggle" type="button" hidden>{play}</button>'
+        f'<a class="aaz-banner__original" href="{html_lib.escape(static, quote=True)}" '
+        f'target="_blank" rel="noopener">{label}</a>'
+        "</div>\n</div>"
+    )
+
+
 def _enhance_image(tag: str, src: str) -> str:
     tag = _add_attribute(tag, "decoding", "async")
-    if src.rsplit("/", 1)[-1] not in _EAGER_DIAGRAMS:
+    if urlsplit(src).path.rsplit("/", 1)[-1] not in _EAGER_DIAGRAMS:
         tag = _add_attribute(tag, "loading", "lazy")
     return tag
 
@@ -353,7 +400,10 @@ def enhance_diagram_html(content: str, *, locale: str) -> str:
         if not _is_local_diagram(src):
             return match.group(0)
         image = _enhance_image(match.group("img"), src)
-        if src.rsplit("/", 1)[-1] in _EAGER_DIAGRAMS:
+        basename = urlsplit(src).path.rsplit("/", 1)[-1]
+        if basename in _ANIMATED_BANNERS:
+            return _banner_html(image, src, locale)
+        if basename in _EAGER_DIAGRAMS:
             return f"<p>{image}</p>"
 
         alt = _attribute(image, "alt") or "diagram"

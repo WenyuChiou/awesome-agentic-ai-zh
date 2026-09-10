@@ -4,7 +4,9 @@
 
 <div align="center" markdown="1">
 
-![AI Agent 學習路徑](resources/diagrams/banner.png)
+![從 Stage 0–2 共用基礎分流到 CLI 與 Agent 路線，共用 Stage 5、8，再依需求選角色路線](resources/diagrams/banner.svg)
+
+[靜態圖](resources/diagrams/banner.png) · [文件站](https://wenyuchiou.github.io/awesome-agentic-ai-zh/about/)
 
 # awesome-agentic-ai-zh
 

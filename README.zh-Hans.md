@@ -4,7 +4,9 @@
 
 <div align="center" markdown="1">
 
-![AI Agent 学习路径](resources/diagrams/banner.zh-Hans.png)
+![从 Stage 0–2 共用基础分流到 CLI 与 Agent 路线，共用 Stage 5、8，再按需选择角色路线](resources/diagrams/banner.zh-Hans.svg)
+
+[静态图](resources/diagrams/banner.zh-Hans.png) · [文档站](https://wenyuchiou.github.io/awesome-agentic-ai-zh/zh-Hans/about/)
 
 # awesome-agentic-ai-zh
 

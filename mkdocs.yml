@@ -16,6 +16,9 @@ site_dir: _build/site
 extra_css:
   - docs/stylesheets/extra.css
 
+extra_javascript:
+  - docs/javascripts/banner-motion.js
+
 exclude_docs: |
   *.py
   *.sh

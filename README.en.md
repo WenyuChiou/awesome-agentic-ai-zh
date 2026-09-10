@@ -4,7 +4,9 @@
 
 <div align="center" markdown="1">
 
-![AI Agent learning roadmap](resources/diagrams/banner.en.png)
+![Stages 0–2 split into CLI and Agent paths, sharing Stages 5 and 8; choose role paths as needed](resources/diagrams/banner.en.svg)
+
+[Static image](resources/diagrams/banner.en.png) · [Docs site](https://wenyuchiou.github.io/awesome-agentic-ai-zh/en/about/)
 
 # awesome-agentic-ai-zh
 

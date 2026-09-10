@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-10
+
+- **reader UX / README / animated banner experiment** · 三語 README 頂部以自包含 SVG 內嵌各自原版插圖，只加 18 秒循環的路線光點與節點外框亮起效果，不重畫字體、圖示、配色、構圖或底部四格。沿用 `1672×941` 畫布、共用基礎、兩條 Track、Stage 5／8 Hub 與五條角色路線；三語路線順序與動畫時間相同，覆蓋層依各自原圖接線對齊。原圖以 WebP quality 95 高品質壓縮後內嵌，再解碼成同版 PNG；六個檔共 2,707,304 bytes（原三張 PNG 為 3,733,651 bytes），未提高容量上限。新增靜態圖與文件站入口、停止／播放、減少動態與無 JavaScript 的靜態 fallback、手機分流提示及 PDF 的 PNG 替換；圖片 gate 納入 SVG 與靜態引用，同步更新 DESIGN、三語 style guide、來源紀錄與回歸測試。僅作 Draft PR，不改下方學習地圖、角色圖或章節正文，不合併、不發布 Release。
+
 ## 2026-09-08
 
 - **maintenance / GitHub Pages / deployment reliability** · 將官方 `actions/deploy-pages` 從 `v5.0.0` 更新至 `v5.0.1`，並繼續鎖定完整 commit SHA；新版為部署狀態輪詢加入 backoff 與 jitter，降低暫時性服務問題造成的重試壓力。PR 的 Required gate、dependency review 與合併後 Pages 部署皆通過。（f9213cb）
