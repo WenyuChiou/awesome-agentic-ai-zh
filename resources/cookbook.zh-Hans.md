@@ -271,7 +271,7 @@ notebooklm skill install
 <details markdown="1">
 <summary>展开另一个浏览器 skill 与排错提醒</summary>
 
-[`PleasePrompto/notebooklm-skill`](https://github.com/PleasePrompto/notebooklm-skill) 通过浏览器自动查询 notebook。它同样不是 Google 官方集成，而且必须在浏览器完成登录。
+[`PleasePrompto/notebooklm-skill`](https://github.com/PleasePrompto/notebooklm-skill) 已归档（2026-09-10 UTC 查核），不再提供更新或支持。它展示用浏览器查询 notebook 的历史做法，并非 Google 官方集成；新流程请用官方网页，或另行评估上面的 `notebooklm-py`。
 
 选择方式：
 
@@ -279,7 +279,7 @@ notebooklm skill install
 |---|---|
 | 只想可靠阅读与人工核对 | Gemini Notebook 官方网页 |
 | 想批量新增来源、问答或导出 | `notebooklm-py` CLI |
-| 已使用 Claude Code，想用 skill 调用浏览器 | `notebooklm-skill` |
+| 想研究早期浏览器 Skill 设计 | `notebooklm-skill`（已归档，只作历史参考） |
 
 遇到登录失效，先回官方网页确认账号能正常使用，再按社区项目自己的 auth 指令重新登录。不要用大量重试绕过 Google 的限制。
 
@@ -436,7 +436,7 @@ aider --model ollama_chat/gemma4:e4b
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="2">Gemini Notebook</th><td><a href="https://github.com/teng-lin/notebooklm-py">notebooklm-py</a></td><td>批量来源、问答与 artifact 导出</td><td>非官方、未公开 API 可能改变</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>从 Claude Code 用浏览器查询 notebook</td><td>非官方且依赖浏览器登录</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>研究早期浏览器 Skill 设计</td><td>已归档；非官方，只作历史参考</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="3">Zotero</th><td><a href="https://github.com/WenyuChiou/zotero-skills">zotero-skills</a></td><td>从 Agent 搜索与整理 Zotero</td><td>写入前一定先 preview</td><td>⭐⭐⭐⭐</td></tr>

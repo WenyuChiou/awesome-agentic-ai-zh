@@ -4,6 +4,13 @@ release_version: v2026.09.10
 # One ordered list produces all three language sections in the GitHub Release.
 # Links are shared so the three summaries cannot silently point to different pages.
 changes:
+  - id: release-resource-health-corrections
+    category: maintenance
+    zh-TW: 發布前掃描發現 notebooklm-skill 已封存，三語資源表與 Cookbook 改列歷史範例，不再推薦新流程使用。Graphthulhu 原入口回傳 404，移除失效連結並保留歷史名稱與評分；其授權目前無法重新核對。原編輯星級不變，沒有新增替代專案。
+    zh-Hans: 发布前扫描发现 notebooklm-skill 已归档，三语资源表与 Cookbook 改列历史范例，不再推荐新流程使用。Graphthulhu 原入口返回 404，移除失效链接并保留历史名称与评分；其授权目前无法重新核对。原编辑星级不变，没有新增替代项目。
+    en: The pre-release scan found notebooklm-skill archived. All three catalogs and Cookbooks now keep it as a historical example, not a recommendation for new workflows. Graphthulhu's original address returns 404; its dead link was removed while retaining its historical name and rating. Its license cannot currently be reverified. Editorial ratings are unchanged, and no replacement project was added.
+    links:
+      - https://github.com/PleasePrompto/notebooklm-skill
   - id: original-banner-icon-motion
     category: reader-ux
     zh-TW: 首頁頂部 Banner 保留原版構圖、配色、文字與圖示，加入 18 秒循環動畫。先走共用基礎，再依序展示 A、B 路線；每語言 13 個圖示區域會做對應的小動作，包括 CLI 游標輸入、工具輕轉與 Hub 箭頭旋轉。文字與卡片固定，最後 2 秒保持靜止。

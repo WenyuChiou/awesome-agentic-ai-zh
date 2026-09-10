@@ -271,7 +271,7 @@ Signing in will open the browser and save the verification status. Don't commit 
 <details markdown="1">
 <summary>Expand another browser skill and troubleshooting reminder</summary>
 
-[`PleasePrompto/notebooklm-skill`](https://github.com/PleasePrompto/notebooklm-skill) queries notebooks through a browser. It is also an unofficial Google integration and requires a browser login.
+[`PleasePrompto/notebooklm-skill`](https://github.com/PleasePrompto/notebooklm-skill) is archived (checked 2026-09-10 UTC), with no further updates or support. It demonstrates a historical browser-based notebook query approach, not an official Google integration. For new workflows, use the official website or separately assess `notebooklm-py` above.
 
 How to choose:
 
@@ -279,7 +279,7 @@ How to choose:
 |---|---|
 | Just want reliable reading and manual verification | Gemini Notebook official website |
 | Want to add sources, Q&A or export in batches | `notebooklm-py` CLI |
-| You already use Claude Code and want a browser-based Skill | `notebooklm-skill` |
+| Study early browser-based Skill design | `notebooklm-skill` (archived; historical reference only) |
 
 If your login fails, first go back to the official website to confirm that your account can be used normally, and then log in again according to the community project's own auth instructions. Don't use lots of retries to bypass Google's restrictions.
 
@@ -436,7 +436,7 @@ The rating measures teaching usefulness in this project. It is not a GitHub star
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="2">Gemini Notebook</th><td><a href="https://github.com/teng-lin/notebooklm-py">notebooklm-py</a></td><td>Add sources, ask questions, and export artifacts in batches</td><td>Unofficial; its unpublished API may change</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>Query a notebook from Claude Code through a browser</td><td>Unofficial and dependent on browser login</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>Study early browser-based Skill design</td><td>Archived; unofficial, historical reference only</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="3">Zotero</th><td><a href="https://github.com/WenyuChiou/zotero-skills">zotero-skills</a></td><td>Search and organize Zotero from an Agent</td><td>Always preview before writing</td><td>⭐⭐⭐⭐</td></tr>

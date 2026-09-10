@@ -84,13 +84,15 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [PleasePrompto/notebooklm-skill](https://github.com/PleasePrompto/notebooklm-skill) ⭐⭐⭐⭐
 
+**Status (2026-09-10 UTC)**: archived; the author no longer provides updates or support. Kept as a historical learning example, not a starting point for new workflows.
+
 | Field | Value |
 |---|---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
 
 **What it does**: a Claude Code Skill that uses browser automation to query Gemini Notebook (formerly NotebookLM), with citation-backed answers.
-**Audience**: people who manage papers / research notes in Gemini Notebook (formerly NotebookLM) but want to query from Claude Code in one prompt.
+**Audience**: people studying early browser-automation Skill design. For actual use, start with the official website or assess `notebooklm-py` below yourself.
 **Notes**: requires Google account auth.
 
 ### [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) ⭐⭐⭐⭐
@@ -115,16 +117,16 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 **Audience**: Logseq users automating daily journals, cross-page links, backlink queries.
 **Notes**: enable Logseq's HTTP API (Settings → Features → HTTP API).
 
-### [skridlevsky/graphthulhu](https://github.com/skridlevsky/graphthulhu) ⭐⭐⭐ (archived / historical example)
+### skridlevsky/graphthulhu ⭐⭐⭐ (archived / historical example)
 
 | Field | Value |
 |---|---|
-| License | MIT |
-| Rating | ⭐⭐⭐ (historical learning value; archived, so new projects should not start with it) |
+| License | Previously recorded as MIT; cannot currently reverify |
+| Rating | ⭐⭐⭐ (historical rating; no longer publicly accessible) |
 
 **What it does**: a broad tool set across navigation, search, analysis, writing, journals, flashcards, whiteboards.
 **Audience**: people studying early Logseq + Obsidian MCP design; new projects should choose a maintained alternative.
-**Notes**: this GitHub project is archived and is useful as historical reference; do not use it as the starting point for a new project.
+**Notes (2026-09-10 UTC)**: the original GitHub address returns 404, so its dead link has been removed. We do not infer deletion, a private repository, or a move. Only the historical name and rating remain, not an available learning resource.
 
 ### [ankimcp/anki-mcp-server](https://github.com/ankimcp/anki-mcp-server) ⭐⭐⭐
 

@@ -85,13 +85,15 @@
 
 ### [PleasePrompto/notebooklm-skill](https://github.com/PleasePrompto/notebooklm-skill) ⭐⭐⭐⭐
 
+**狀態（2026-09-10 UTC）**：已封存，作者不再提供更新或支援。保留作歷史學習範例；新流程不要從它開始。
+
 | 欄位 | 內容 |
 |---|---|
 | License | MIT |
 | 推薦度 | ⭐⭐⭐⭐ |
 
 **教什麼**：Claude Code Skill，用瀏覽器自動化操作 Gemini Notebook（舊名 NotebookLM）、查詢上傳文件，回覆帶 citation。
-**適合誰**：用 Gemini Notebook（舊名 NotebookLM）管 paper 跟研究筆記，但想在 Claude Code 用一條 prompt 直接查的人。
+**適合誰**：想研究早期瀏覽器自動化 Skill 設計的人；實際使用請先看官方網頁或下方仍需自行評估的 `notebooklm-py`。
 **備註**：需要 Google 帳號登入授權。
 
 ### [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) ⭐⭐⭐⭐
@@ -116,16 +118,16 @@
 **適合誰**：Logseq 使用者要自動化 daily journal、跨頁 link、查詢 backlinks。
 **備註**：需要 Logseq 開啟 HTTP API（Settings → Features → HTTP API）。
 
-### [skridlevsky/graphthulhu](https://github.com/skridlevsky/graphthulhu) ⭐⭐⭐（已封存／歷史範例）
+### skridlevsky/graphthulhu ⭐⭐⭐（已封存／歷史範例）
 
 | 欄位 | 內容 |
 |---|---|
-| License | MIT |
-| 推薦度 | ⭐⭐⭐（歷史學習價值；已封存，新專案不建議從它開始） |
+| License | 先前記錄為 MIT；目前無法重新核對 |
+| 推薦度 | ⭐⭐⭐（歷史評分；目前無法公開取得） |
 
 **教什麼**：把 navigation、search、analysis、writing、journals、flashcards 與 whiteboards 等操作包成工具。
 **適合誰**：想研究早期 Logseq + Obsidian MCP 設計的人；新專案應改找仍在維護的替代方案。
-**備註**：此 GitHub 專案已封存，適合當歷史參考；不要用它作為新專案的起點。
+**備註（2026-09-10 UTC）**：原 GitHub 入口回傳 404，已移除失效連結。不推測它是刪除、轉為私人或搬家；此處只保留歷史名稱與評分，不再當作可取得的學習資源。
 
 ### [ankimcp/anki-mcp-server](https://github.com/ankimcp/anki-mcp-server) ⭐⭐⭐
 
