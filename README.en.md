@@ -121,7 +121,9 @@ The timeline is a planning aid. Finish the step in front of you; no need to read
 
 ### Keep going by who you are
 
-![Choose a role-based extension](resources/diagrams/branch-decision-tree.en.png)
+![Research, development, teaching, knowledge work, and everyday use are five options; choose what you need, not every path](resources/diagrams/branch-decision-tree.en.svg)
+
+[Static image](resources/diagrams/branch-decision-tree.en.png)
 
 | Route | Who it fits | What you will handle |
 |---|---|---|

@@ -1,5 +1,14 @@
 # 語系變體圖 — 生成流程與教訓
 
+## 2026-09-10：角色分流原畫動畫試版
+
+- 原圖固定在 commit `20dc3fb50e3cc605c28d1847701b467f7300e477` 的三語 `branch-decision-tree.png`；繁中、簡中為 `1600×900`，英文為 `1672×941`。不統一重畫、不更換字型、色彩、圖示或構圖。
+- `scripts/build-role-map.py` 以 WebP quality 95 內嵌原圖，固定來源 PNG 與壓縮 payload SHA-256。這是高品質有損壓縮，不宣稱與舊 PNG bytes 相同；新靜態 PNG 與 SVG 底圖像素一致。
+- 五個裁切區域依序做小動作：顯微鏡傾斜、電腦確認、學士帽輕轉、圖表伸縮、人物上移；各自兩秒，間隔一秒，18 秒循環，16–18 秒完全靜止。活動時以角落取色遮住原位置，避免重影。文字與接線不動，不表示必須依序學完五條角色路線。
+- 重製：`python scripts/build-role-map.py --png`；唯讀驗證：`python scripts/build-role-map.py --check`。首次匯入用 `--import-original --png`，之後不需要讀舊 commit。
+- 文件站保留 lazy／async、兩個原圖入口與三語停止／播放控制；README 有靜態圖連結，PDF 使用 PNG。上方與下方動畫共用停止狀態，減少動態或無 JavaScript 時顯示 PNG。
+- 試版已知限制：保留的英文原圖把知識工作者寫成較窄的 `Analysts`，三語文字亦有歷史差異。正式採用前要校正，不能以此試版宣稱三語圖中文字已完全一致。下方 `learning-map` 的舊順序另行修正後再動畫化。
+
 > 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 兩組三語概念圖的 Image 2.0 重產規格）。
 > 這份記錄的是 **2026-08-02 那批 5 張圖 × 3 語系** 是怎麼產出來的，以及過程中踩到的坑。
 

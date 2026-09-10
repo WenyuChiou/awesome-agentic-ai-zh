@@ -19,6 +19,7 @@
       // Repeated document$ emissions must not restart the SVG animation.
       if (image.getAttribute("src") !== src) image.setAttribute("src", src);
       original.setAttribute("href", src);
+      banner.querySelector(".aaz-diagram__image-link")?.setAttribute("href", src);
       button.textContent = reducedMotion.matches
         ? banner.dataset.reducedLabel
         : playing ? banner.dataset.stopLabel : banner.dataset.playLabel;

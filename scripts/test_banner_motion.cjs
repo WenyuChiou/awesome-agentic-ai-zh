@@ -7,25 +7,27 @@ const vm = require("node:vm");
 
 const source = readFileSync(join(__dirname, "../docs/javascripts/banner-motion.js"), "utf8");
 
-function banner() {
-  const attributes = { src: "../resources/diagrams/banner.en.png" };
+function banner({ role = false } = {}) {
+  const basename = role ? "branch-decision-tree" : "banner";
+  const attributes = { src: `../resources/diagrams/${basename}.en.png` };
   const image = {
     writes: 0,
     getAttribute: (name) => attributes[name],
     setAttribute(name, value) { attributes[name] = value; this.writes += 1; },
   };
   const original = { setAttribute(name, value) { this[name] = value; } };
+  const imageLink = role ? { setAttribute(name, value) { this[name] = value; } } : null;
   const button = { hidden: true, disabled: false };
   const element = {
     dataset: {
-      staticSrc: attributes.src, animatedSrc: "../resources/diagrams/banner.en.svg",
+      staticSrc: attributes.src, animatedSrc: `../resources/diagrams/${basename}.en.svg`,
       playLabel: "Play animation", stopLabel: "Stop animation",
       reducedLabel: "Animation disabled: reduced motion is on",
     },
-    querySelector: (selector) => ({ img: image, ".aaz-banner__toggle": button, ".aaz-banner__original": original })[selector],
+    querySelector: (selector) => ({ img: image, ".aaz-banner__toggle": button, ".aaz-banner__original": original, ".aaz-diagram__image-link": imageLink })[selector],
   };
   button.closest = (selector) => selector === ".aaz-banner" ? element : button;
-  return { element, image, button, original };
+  return { element, image, button, original, imageLink };
 }
 
 function browser({ reduced = false, loading = false, instant = true } = {}) {
@@ -116,4 +118,31 @@ test("standalone DOM-ready initialization works without Material document$", () 
   page.listeners.DOMContentLoaded[0]();
   assert.equal(page.button.hidden, false);
   assert.equal(page.button.textContent, "Stop animation");
+});
+
+test("role figures update both full-size links and share pause and reduced-motion state", () => {
+  const page = browser();
+  const role = banner({ role: true });
+  page.document.banners.push(role.element);
+  page.subscribers[0]();
+  for (const asset of [page, role]) {
+    assert.equal(asset.image.getAttribute("src"), asset.element.dataset.animatedSrc);
+    assert.equal(asset.original.href, asset.element.dataset.animatedSrc);
+  }
+  assert.equal(role.imageLink.href, role.element.dataset.animatedSrc);
+  page.listeners.click[0]({ target: role.button });
+  for (const asset of [page, role]) {
+    assert.equal(asset.image.getAttribute("src"), asset.element.dataset.staticSrc);
+    assert.equal(asset.original.href, asset.element.dataset.staticSrc);
+    assert.equal(asset.button.textContent, "Play animation");
+  }
+  assert.equal(role.imageLink.href, role.element.dataset.staticSrc);
+  page.setReduced(true);
+  assert.equal(role.button.disabled, true);
+  assert.equal(role.button.textContent, role.element.dataset.reducedLabel);
+  page.setReduced(false);
+  page.click();
+  assert.equal(role.imageLink.href, role.element.dataset.animatedSrc);
+  page.setReduced(true);
+  assert.equal(role.imageLink.href, role.element.dataset.staticSrc);
 });

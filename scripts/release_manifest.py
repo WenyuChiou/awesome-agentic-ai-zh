@@ -62,7 +62,8 @@ REMOTE_HTML_IMAGE_RE = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 LOCAL_BANNER_IMAGE_RE = re.compile(
-    r'(?P<embed>!\[[^\]\n]*\]\()(resources/diagrams/banner(?:\.en|\.zh-Hans)?)\.svg(?=\))'
+    r'(?P<embed>!\[[^\]\n]*\]\()'
+    r'(resources/diagrams/(?:banner|branch-decision-tree)(?:\.en|\.zh-Hans)?)\.svg(?=\))'
 )
 
 

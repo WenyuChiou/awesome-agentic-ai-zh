@@ -121,7 +121,9 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 
 
 ### 依你的身分繼續走
 
-![依身分選擇延伸路線](resources/diagrams/branch-decision-tree.png)
+![研究、開發、教學、知識工作與日常使用是五種選擇，依需求選讀，不必全部走完](resources/diagrams/branch-decision-tree.svg)
+
+[靜態圖](resources/diagrams/branch-decision-tree.png)
 
 | 路線 | 適合誰 | 你會處理什麼？ |
 |---|---|---|

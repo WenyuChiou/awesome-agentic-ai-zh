@@ -44,9 +44,9 @@ DIAGRAM_DIR = REPO_ROOT / "resources" / "diagrams"
 # ![alt](path) — relative paths only; skip external URLs and data: URIs.
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\((?!https?:|data:)([^)\s]+)\)")
 # The README animation has a real static-image link, not a second embed. Only
-# banner fallbacks count here; unrelated image hyperlinks retain old semantics.
+# approved banner and role-map fallbacks count; unrelated links stay unchanged.
 BANNER_FALLBACK_RE = re.compile(
-    r"(?<!!)\[[^\]]*\]\(((?:\.\./)*resources/diagrams/banner(?:\.en|\.zh-Hans)?\.png)\)"
+    r"(?<!!)\[[^\]]*\]\(((?:\.\./)*resources/diagrams/(?:banner|branch-decision-tree)(?:\.en|\.zh-Hans)?\.png)\)"
 )
 LOCALE_SUFFIXES = {".en.md": "en", ".zh-Hans.md": "zh-Hans"}
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}

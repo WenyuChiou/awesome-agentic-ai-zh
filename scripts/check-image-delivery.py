@@ -47,6 +47,11 @@ HTML_FIGCAPTION = re.compile(
 )
 HTML_ATTRIBUTE = r"\s{0}\s*=\s*([\"'])(.*?)\1"
 EAGER_BANNERS = {f"banner{locale}.{ext}" for locale in ("", ".en", ".zh-Hans") for ext in ("png", "svg")}
+ANIMATED_IMAGES = {
+    f"{stem}{locale}.svg"
+    for stem in ("banner", "branch-decision-tree")
+    for locale in ("", ".en", ".zh-Hans")
+}
 
 
 @dataclass(frozen=True)
@@ -83,7 +88,7 @@ def _image_targets(markdown: str) -> list[str]:
         target = unquote(target.split("#", 1)[0])
         if target.lower().endswith((".png", ".svg")):
             targets.append(target)
-            if Path(target).name in EAGER_BANNERS and target.endswith(".svg"):
+            if Path(target).name in ANIMATED_IMAGES:
                 # Budget a reader's animated + static requests together.
                 targets.append(target[:-4] + ".png")
     return targets

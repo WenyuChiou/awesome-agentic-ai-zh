@@ -90,12 +90,60 @@ def test_svg_banners_do_not_change_ordinary_figures_or_external_images():
     assert hooks.enhance_diagram_html(external, locale="en") == external
 
 
+@pytest.mark.parametrize("locale,suffix,hint", [
+    ("zh-TW", "", "依需求選一條延伸路線，不必全部走完。"),
+    ("en", ".en", "Choose one extension for your needs; you do not need to follow every path."),
+    ("zh-Hans", ".zh-Hans", "依需求选一条延伸路线，不必全部走完。"),
+])
+def test_role_motion_keeps_a_lazy_figure_with_both_original_links(locale, suffix, hint):
+    src = f"../resources/diagrams/branch-decision-tree{suffix}.svg"
+    static = src.removesuffix(".svg") + ".png"
+    rendered = hooks.enhance_diagram_html(f'<p><img src="{src}" alt="Roles &amp; choices"></p>', locale=locale)
+    tags = Tags(rendered)
+    assert tags.of_type("img") == [{
+        "src": static, "alt": "Roles & choices", "decoding": "async", "loading": "lazy",
+    }]
+    figure, = tags.of_type("figure")
+    assert set(figure["class"].split()) == {"aaz-diagram", "aaz-banner"}
+    assert figure["data-static-src"] == static
+    assert figure["data-animated-src"] == src
+    assert figure["data-play-label"] == hooks._BANNER_MOTION_LABELS[locale][0]
+    assert figure["data-reduced-label"] == hooks._BANNER_MOTION_LABELS[locale][2]
+    image_link, fullsize_link = tags.of_type("a")
+    assert image_link["class"] == "aaz-diagram__image-link"
+    assert image_link["aria-label"] == f"{hooks._FULL_SIZE_LABELS[locale]}: Roles & choices"
+    for link in (image_link, fullsize_link):
+        assert link["href"] == static
+        assert link["target"] == "_blank"
+        assert link["rel"] == "noopener"
+    assert tags.of_type("figcaption") == [{"class": "aaz-diagram__caption"}]
+    assert tags.of_type("button")[0]["hidden"] is None
+    assert hint in rendered
+    assert hooks._BANNER_ROUTE_HINTS[locale] not in rendered
+    assert hooks.enhance_diagram_html(rendered, locale=locale) == rendered
+
+
+@pytest.mark.parametrize("src", [
+    "https://example.com/resources/diagrams/branch-decision-tree.svg",
+    "//example.com/resources/diagrams/branch-decision-tree.svg",
+    "../resources/diagrams/branch-decision-tree-custom.svg",
+    "../resources/diagrams/branch-decision-tree.fr.svg",
+    "../resources/diagrams/branch-decision-tree.png",
+])
+def test_role_motion_does_not_expand_the_exact_local_svg_allowlist(src):
+    rendered = hooks.enhance_diagram_html(f'<p><img src="{src}" alt="Other"></p>', locale="en")
+    assert "data-animated-src" not in rendered
+    assert "aaz-banner__toggle" not in rendered
+
+
 @pytest.mark.parametrize("locale,suffix", [("zh-TW", ""), ("en", ".en"), ("zh-Hans", ".zh-Hans")])
-def test_pdf_assembly_replaces_only_exact_local_banner_embeds(tmp_path, monkeypatch, locale, suffix):
-    local = f"resources/diagrams/banner{suffix}"
+@pytest.mark.parametrize("basename", ["banner", "branch-decision-tree"])
+def test_pdf_assembly_replaces_only_exact_local_banner_embeds(tmp_path, monkeypatch, locale, suffix, basename):
+    local = f"resources/diagrams/{basename}{suffix}"
     untouched = [
         "![Lesson](resources/diagrams/lesson.svg)",
         "![Other](resources/diagrams/banner-custom.svg)",
+        "![Other role](resources/diagrams/branch-decision-tree-custom.svg)",
         f"[Original]({local}.svg)",
         f"![Elsewhere](other/{local}.svg)",
     ]
