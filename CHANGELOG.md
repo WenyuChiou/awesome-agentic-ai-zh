@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-13
+
+- **governance / trilingual contribution contract** · 貢獻指南、PR template、角色路線 DESIGN 與 launch checklist 不再拒收簡中，也不再要求以會自然漂移的 GitHub stars 當新增資源欄位；公開教材改為繁中先定稿、英文與簡中同一 PR 同步，三語概念、URL、數字、評分與安全限制一致。過時資源回報改走 repository freshness 證據。同步把 `CLAUDE.md` 的 2026-05 課程快照與已解決 follow-up 收斂為現行課程契約，將 `docs/TESTING_PLAN.md` 的 `28/30` 明確標回歷史批次，並修正已完成的 Stage 6 executable-hardening 狀態；2026-09-13 實際 inventory 為 58 個 `scripts/test_*.py` 模組、1,145 個可收集測試，後續仍以 Required gate 與即時 collection 為準。
+
 ## 2026-09-10
 
 - **reader UX / role diagram draft** · README 下方三語角色分流圖沿用原版構圖、配色、字型與圖示，只讓五個角色圖示輪流輕動；18 秒循環，文字、卡片與接線固定，16–18 秒完全靜止。新增可重製產生器與原畫雜湊，三語 SVG／同版 PNG 共 2,596,276 bytes（原三張 PNG 共 3,176,510 bytes），不提高容量上限。文件站保留 lazy／async、圖片及 caption 原圖入口、三語停止／播放與減少動態；無 JavaScript、靜態入口與 PDF 使用 PNG。同步更新 DESIGN、三語 style guide、來源紀錄及測試。本次只作 Draft，不合併或納入 Release；舊英文角色名稱等三語文字差異需在採用前校正，舊 learning-map 的順序問題也尚未動畫化。

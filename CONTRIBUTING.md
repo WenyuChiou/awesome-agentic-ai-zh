@@ -6,19 +6,19 @@
 
 這個 repo **本來就是設計給社群一起改良的**——一個人 curate 永遠跟不上 AI agent 生態的變化速度。Maintainer 一個季度跑 1 次 review 不夠，需要更多眼睛看。
 
-這份 catalog 分**兩條軌道**：**Track A**（CLI Power User，`tracks/cli/A1-A3`）跟 **Track B**（Agent Builder，`stages/03-07`）。貢獻時請註明你動的是哪條軌道——兩條的 audience 不一樣。
+這份 catalog 分**兩條軌道**：**Track A**（CLI Power User，`tracks/cli/A1-A3`）跟 **Track B**（Agent Builder，`stages/03-08`，包含 Stage 7.5）。貢獻時請註明你動的是哪條軌道——兩條的 audience 不一樣。
 
 ## 🚪 第一次貢獻：好上手的 5 個切入點
 
 不確定從哪開始？挑一個你 30 分鐘內能做完的：
 
-1. **🐛 回報過時 entry**：跑 `python scripts/refresh-stars.py` 找星數差距大的 repo，開 issue 說「這個應該移除 / 更新」
+1. **🐛 回報過時 entry**：跑 `python scripts/check-repository-freshness.py full`，把封存、停用、搬家或 License 不一致的證據放進 issue
 2. **🔗 修一個失效連結**：你看 stage X 時連結 404 了，直接 PR 改
 3. **✍️ 補一個 entry 的 `怎麼跑` section**：很多 entry 沒寫安裝指令，你跑過就補上
-4. **🌏 補英文 companion 沒翻好的句子**：找一個 `.en.md` 跟 zh 對照，你覺得翻得不順的地方改一行
+4. **🌏 修正三語鏡像**：比對繁中、簡中與英文，把意思不同、連結不同或翻譯不順的地方改好
 5. **💬 對某個 entry 加個人筆記**：你跑過 `練習 3` 卡某個地方，補一句「注意：xxx」
 
-這 5 種都不用先讀完整份 style-guide，merge 速度也快——適合第一次貢獻、累積信心。
+這 5 種都不用先讀完整份 style guide，範圍小、容易檢查，適合第一次貢獻。
 
 > 🧪 **想跑 walkthrough / build script / CI workflow 第一次？** 看 [`.github/TESTING-STATUS.md`](.github/TESTING-STATUS.md)——這份**誠實揭露**哪些 code maintainer 真的跑過、哪些只 syntax check、哪些完全沒測。第一個踩到坑的人開 issue + PR 是 highest-value contribution。
 
@@ -26,7 +26,7 @@
 
 ### 高價值 PR
 - **新增 project** 到某個 stage，並說明為什麼這個 project 對應該階段的學習
-- **翻譯** 某個 stage 頁面成繁中（只要繁中——我們不收 zh-Hans）
+- **補齊或修正三語內容**；繁中先定稿，再讓英文與簡中表達同一件事
 - **標記停滯 / 失維護的 project**（請先開 issue）
 - **改善現有 project 的策展備註**（讓「教什麼」說明更清楚）
 - **重新整理** 某個 stage 內部順序，如果現在的順序不符合學習進程
@@ -52,7 +52,6 @@
 | 欄位 | 內容 |
 |---|---|
 | 語言 | Python / TS / etc. |
-| Stars | ★ k |
 | License | MIT / Apache 2 / ... |
 | 推薦度 | ⭐⭐⭐⭐ |
 
@@ -79,10 +78,11 @@
 
 自動檢查會合併同一個 repo 的重複連結，查它是否搬家、封存、停用，以及 GitHub 顯示的 SPDX license。半年沒更新只是一個請你再看一眼的提醒：穩定而且仍有教學價值的專案可以保留，但要把狀態寫清楚。若 GitHub API 暫時失敗，結果會標成「無法確認」，不會假裝一切正常。
 
-## 雙語風格
+## 三語風格
 
-- **繁中（Traditional Chinese, zh-TW）為正本**，英文版（`*.en.md`）是 companion。
-- **不接受 zh-Hans PR**。如果你交 zh-Hans 的 PR，我們會請你轉成繁中。
+- **繁中（Traditional Chinese, zh-TW）為正本**；英文（`*.en.md`）與簡中（`*.zh-Hans.md`）是正式鏡像。
+- 修改已有三語版本的公開教材時，PR 必須一起更新三語。若只會一種語言，請在 issue 提供證據與建議文字，讓維護者安排完整同步。
+- 三語的概念、URL、數字、推薦度、安全限制與完成條件必須一致。
 - **自然翻譯**，不要逐字對譯。技術詞如果直接用英文比較自然，就保留英文（「使用 LangGraph 建 multi-agent 系統」）。
 - **完整風格規範請看 [`resources/style-guide.md`](resources/style-guide.md)**——禁用詞、entry schema、license 標註慣例、寫作風格、推薦星等定義都在裡面。PR 之前請先讀。
 

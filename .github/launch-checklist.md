@@ -6,11 +6,11 @@
 
 ## ✅ Pre-launch（已完成）
 
-- [x] Phase 1-5 內容 ship（134 entries、style guide、walkthrough、Mermaid 圖）
+- [x] Phase 1–5 初版內容 ship（當時快照：134 entries、style guide、walkthrough、Mermaid 圖）
 - [x] `.github/` issue + PR template
-- [x] `resources/style-guide.md` zh + en
-- [x] `scripts/check-links.py` + `refresh-stars.py` 可跑
-- [x] CI lint workflow（zh-Hans slip + overclaim 自動檢查；每月跑 link-rot + star-drift）
+- [x] `resources/style-guide.md` 繁中 + 簡中 + 英文
+- [x] Required PR gate、連結檢查與 repository freshness 檢查可跑
+- [x] CI 檢查三語鏡像、用詞、連結、易變資訊、圖片與測試；Content Health 定期整理證據，不自動合併正文
 
 ## 🟡 Pre-launch（一次性手動 setup）
 
@@ -58,7 +58,7 @@
 這份是**參考節奏，不是 SLA**——能做就做、忙起來放著也沒關係。社群開放型 repo 不需要強制定期維護。
 
 - 有空時：review issue / 合併 PR
-- 偶爾跑：CI 已設定每月自動跑 link rot + star drift（被動的、不用人工）
+- 自動證據：Content Health 每週查連結與 repository 狀態，每月再查模型／產品 freshness；不自動改寫或合併教材
 - 想做的時候：加幾個新 entry、清掉幾個 archived repo
 - 不必排定期程：phase milestone、新增 branch 等大改——有 traction 訊號再做
 

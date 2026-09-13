@@ -4,7 +4,7 @@
 <!-- 勾選 -->
 - [ ] 🆕 新增 project（Add new project entry）
 - [ ] 🔧 修正錯誤（Fix error: stale link / wrong info）
-- [ ] 🌏 翻譯（Translation: zh + en companion）
+- [ ] 🌏 三語同步（Trilingual sync: zh-TW + zh-Hans + en）
 - [ ] 📝 內容改善（Content improvement）
 - [ ] 🎨 風格 / 結構（Style / structure）
 - [ ] 其他 / Other
@@ -24,14 +24,15 @@
 - [ ] 我可以一句話說明它**教這個 stage 的什麼**
 
 ## 如果是翻譯 / 文字修正：style-guide check
-- [ ] 沒有 zh-Hans 用詞（教程 / 視頻 / 軟件 / 用戶 / 網絡 / 接口 / 默認 / 函数 / 算法）
+- [ ] 繁中檔沒有誤用 zh-Hans 用詞（教程 / 視頻 / 軟件 / 用戶 / 網絡 / 接口 / 默認 / 函数 / 算法）
+- [ ] 簡中檔已通過 Hans 檢查，沒有殘留繁體字詞
 - [ ] 沒有 overclaim（the best / production-grade / 首選 / 全世界最好）
 - [ ] License 標註符合 [慣例](../resources/style-guide.md#5-license-標註慣例)
-- [ ] zh + en companion 兩邊都有更新（如果只動到一邊請說明為什麼）
+- [ ] 公開教材的繁中、簡中與英文已同步；若只會一種語言，先開 issue 提供證據與建議文字
 
 ## 額外說明 / Additional notes
 <!-- 任何 reviewer 應該知道的 context -->
 
 ---
 
-**Reviewer 會檢查**：策展理由是否成立、entry schema 是否符合 style guide、license 標註是否正確、zh/en 結構是否同步。
+**Reviewer 會檢查**：策展理由是否成立、entry schema 是否符合 style guide、license 標註是否正確、三語概念／連結／數字／評分／安全限制與完成條件是否同步。

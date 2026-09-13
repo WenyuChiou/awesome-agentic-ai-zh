@@ -7,19 +7,19 @@ Thanks for considering a contribution. **This is a curated learning roadmap, not
 
 This repo is **designed for community-driven improvement** — one person can't keep pace with the AI agent ecosystem alone. The maintainer's quarterly review isn't enough; more eyes are needed.
 
-The catalog is split into **two tracks**: **Track A** (CLI Power User, `tracks/cli/A1-A3`) and **Track B** (Agent Builder, `stages/03-07`). When contributing, please indicate which track you're modifying — the two have different audiences.
+The catalog is split into **two tracks**: **Track A** (CLI Power User, `tracks/cli/A1-A3`) and **Track B** (Agent Builder, `stages/03-08`, including Stage 7.5). When contributing, please indicate which track you're modifying — the two have different audiences.
 
 ## 🚪 First-time contribution: 5 easy starting points
 
 Not sure where to start? Pick one you can finish in 30 minutes:
 
-1. **🐛 Report a stale entry**: run `python scripts/refresh-stars.py`, find repos with significant star drift, open an issue saying "this should be removed / updated"
+1. **🐛 Report a stale entry**: run `python scripts/check-repository-freshness.py full`, then put evidence of archival, disabling, relocation, or license mismatch in an issue
 2. **🔗 Fix one broken link**: hit a 404 reading stage X? Just PR the fix
 3. **✍️ Fill in an entry's "Run it" section**: many entries lack install commands; if you've run it, add them
-4. **🌏 Improve one English companion sentence**: pick any `.en.md`, compare to the zh version, fix one awkward translation
+4. **🌏 Fix a locale mirror**: compare Traditional Chinese, Simplified Chinese, and English, then fix mismatched meaning, links, or awkward wording
 5. **💬 Add a personal note to an entry**: stuck on `Exercise 3`? Add a "Note: xxx" line
 
-None of these require reading the full style-guide first; they merge fast — perfect for a first PR.
+None of these require reading the full style guide first. Their small, checkable scope makes them good first contributions.
 
 > 🧪 **Running the walkthrough / build script / CI workflow for the first time?** See [`.github/TESTING-STATUS.md`](.github/TESTING-STATUS.md) — an **honest disclosure** of what the maintainer has actually executed vs only syntax-checked vs not tested at all. Being the first to hit a bug and open an issue + PR is the highest-value contribution.
 
@@ -27,7 +27,7 @@ None of these require reading the full style-guide first; they merge fast — pe
 
 ### High-value PRs
 - **Adding a project** to a stage with reasoning for why it teaches that stage
-- **Translating** a stage page to 繁中 (Traditional Chinese only — we are NOT zh-Hans)
+- **Completing or correcting trilingual content**: finalize Traditional Chinese first, then make English and Simplified Chinese say the same thing
 - **Flagging stale / unmaintained projects** (open an issue first)
 - **Improving curation notes** on existing projects (clearer "what it teaches" explanations)
 - **Reorganizing** within a stage if the current ordering doesn't match learning progression
@@ -53,7 +53,6 @@ Each project in a stage page should follow this format:
 | Field | Value |
 |---|---|
 | Language | Python / TS / etc. |
-| Stars | ★ k |
 | License | MIT / Apache 2 / ... |
 | Recommendation | ⭐⭐⭐⭐ |
 
@@ -80,10 +79,11 @@ A project worth listing must have:
 
 The automated check merges duplicate links to the same repo, then checks whether it moved, was archived or disabled, and which SPDX license GitHub reports. No push in six months is only a prompt to look again: a stable project with teaching value may stay when its status is clear. If the GitHub API cannot answer, the result says “unverified”; it never pretends everything is healthy.
 
-## Bilingual Style
+## Trilingual Style
 
-- **Traditional Chinese (zh-TW) is canonical**; English (`*.en.md`) is the companion.
-- **No zh-Hans PRs accepted**. If you submit zh-Hans we'll ask you to convert.
+- **Traditional Chinese (zh-TW) is canonical**; English (`*.en.md`) and Simplified Chinese (`*.zh-Hans.md`) are formal mirrors.
+- A change to public learning material that already has three locales must update all three in the same PR. If you write only one language, open an issue with the evidence and proposed wording so a maintainer can arrange the complete sync.
+- Concepts, URLs, numbers, ratings, safety limits, and completion criteria must match across all three locales.
 - **Natural translation**, not word-for-word. Technical terms can stay in English where natural ("使用 LangGraph 建 multi-agent 系統").
 - **Full style rules: see [`resources/style-guide.md`](resources/style-guide.md)** (zh) or [`resources/style-guide.en.md`](resources/style-guide.en.md) (en) — banned words, entry schema, license conventions, writing style, recommendation star definitions all live there. Read before PR.
 

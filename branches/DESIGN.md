@@ -153,8 +153,8 @@ audience 切太細會：
 社群 repo 的維護是「能做就做」、不是排程義務。下面是大致方向：
 
 ### Review 頻率
-- 沒有強制節奏。CI 已設定每月自動跑 link rot + star drift（被動的）。
-- 有空想動的人 → 跑 `python scripts/refresh-stars.py` 看哪些 entry 過時、`python scripts/check-links.py --fast` 看哪些連結壞掉。
+- 沒有強制人工節奏。Content Health 每週整理外部連結與 repository 狀態，每月再整理模型與產品 freshness 證據；它不會自動改寫或合併教材。
+- 有空想動的人 → 跑 `python scripts/check-repository-freshness.py full` 看哪些 entry 搬家、封存、停用或 License 改變，再用 `python scripts/check-links.py --fast` 找失效連結。
 
 ### Entry 加入 / 移除節奏
 - 加入：看到值得收的就 PR。不必為了「衝量」主動找。
