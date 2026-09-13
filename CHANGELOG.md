@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-09-13
 
+- **examples / Stage 7 / executable Eval evidence** · `02-eval` 從寫死在 Python 的 5 題示範改為 8 題版本化 JSON（5 題 development、3 題 holdout），Ollama 與 Anthropic 共用同一資料與 provider-neutral runner。CLI 預設只跑 development 一次且不寫檔；讀者可明確選 `--split`、1–20 次 `--trials`、`--save-report` 與 `--baseline`。報告保存 dataset version、split、provider、model、逐次與分類結果、失敗案例及 improved／same／regressed；baseline 或 dataset schema 不相容時會在任何模型呼叫前停止，同一路徑也不可同時當 baseline 與新報告。空輸出一律失敗，兩條 provider 路徑的 LLM Judge 都只接受完整 `PASS`／`FAIL`。三語 README 直接教讀者修改 `eval_cases.json`，必讀、五星資源、核心詞與成功檢查維持展開；離線測試不連網、不讀 API key。
+
 - **content / Stage 7 / Eval foundations** · 三語 Stage 7 在進入條件前加入可見的九個 Eval 基礎積木，以真正合併的 `3／3／3` rowgroup 分清 Case／Task、Suite、Golden／Reference Set、Reference Solution／Criteria、Trial、Grader、Baseline、Regression 與 Holdout Set；Golden Set 明確不是訓練資料或 few-shot 範例，開發案例與凍結 holdout 分開使用，回歸判斷需依多次 trials、預先門檻與失敗複查，不因一次隨機失敗就阻擋發布。Paper Summary Bot 與 Capstone 同步記錄 dataset version、split、grader、trial 次數與 baseline，並以 development／holdout 分割避免邊調邊偷看考卷。新增三語同版亮色 Eval 證據迴圈圖、完整 Glossary 定義、官方 Anthropic／OpenAI 來源、reader-UX／內容 regression 與 2026-09-13 freshness fact pack；圖片 inventory 實測為 73 張、89,659,368 bytes，容量 ceiling 僅保留 2% headroom。必讀、精選資源、核心詞及完成條件仍保持展開。
 
 - **governance / trilingual contribution contract** · 貢獻指南、PR template、角色路線 DESIGN 與 launch checklist 不再拒收簡中，也不再要求以會自然漂移的 GitHub stars 當新增資源欄位；公開教材改為繁中先定稿、英文與簡中同一 PR 同步，三語概念、URL、數字、評分與安全限制一致。過時資源回報改走 repository freshness 證據。同步把 `CLAUDE.md` 的 2026-05 課程快照與已解決 follow-up 收斂為現行課程契約，將 `docs/TESTING_PLAN.md` 的 `28/30` 明確標回歷史批次，並修正已完成的 Stage 6 executable-hardening 狀態；2026-09-13 實際 inventory 為 58 個 `scripts/test_*.py` 模組、1,145 個可收集測試，後續仍以 Required gate 與即時 collection 為準。

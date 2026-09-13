@@ -11,8 +11,9 @@ Pairs with Core Exercise 1 in [Stage 7 — Agent Production Engineering: Harness
 ## 🎯 Learning goals
 
 - Explain an **Eval case**: one input, an expected result, and a scoring method.
-- Separate fixed rules from **LLM-as-judge**; a Judge model is not always reliable.
-- Require an exact `PASS` or `FAIL`, so a sentence that merely contains `PASS` cannot slip through.
+- Keep five **development split** cases separate from three **holdout set** cases.
+- Save a **Baseline** and see whether the next version improved, stayed the same, or had a **Regression**.
+- Start with deterministic graders; when **LLM-as-judge** is needed, accept only a complete `PASS` or `FAIL`.
 
 ## Run the model-free tests first
 
@@ -25,10 +26,10 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe test_anthropic.py
 ```
 
-Two `🎉` messages mean the five-case dataset, score aggregation, empty-output checks, and Judge parser passed. This step uses only fake replies.
+Two `🎉` messages mean the versioned eight-case dataset, 5/3 split, repeated trials, baseline comparison, empty-output checks, and Judge parser passed. This step uses fake replies only: no network and no API key.
 
 <details markdown="1">
-<summary>Path A: Run five Eval cases with Ollama</summary>
+<summary>Path A: Run Evals with Ollama</summary>
 
 ```powershell
 ollama pull qwen3.5:4b
@@ -41,7 +42,27 @@ Open another PowerShell window:
 .\.venv\Scripts\python.exe starter.py
 ```
 
-Ollama does not charge a provider model API fee. Electricity, hardware, downloads, waiting, and maintenance still cost something. These five teaching cases do not prove model quality on your work.
+The first run uses the five development cases once and writes no file. To save a comparable baseline, copy:
+
+```powershell
+.\.venv\Scripts\python.exe starter.py --split dev --trials 3 --save-report reports/dev-baseline.json
+```
+
+After changing the prompt or code, run:
+
+```powershell
+.\.venv\Scripts\python.exe starter.py --split dev --trials 3 --baseline reports/dev-baseline.json --save-report reports/dev-current.json
+```
+
+Run the holdout only when preparing a release:
+
+```powershell
+.\.venv\Scripts\python.exe starter.py --split holdout --trials 3 --save-report reports/holdout.json
+```
+
+Ollama does not charge a provider model API fee. Electricity, hardware, downloads, waiting, and maintenance still cost something. These eight teaching cases do not prove model quality on your work.
+
+Reports keep case IDs and model outputs; inputs remain in the versioned dataset. Do not use secrets, personal data, or customer data, and do not commit sensitive reports to Git. `--trials` is limited to 1–20 so a typo cannot create unbounded model calls.
 
 </details>
 
@@ -54,6 +75,8 @@ $env:MODEL = "claude-haiku-4-5-20251001"
 .\.venv\Scripts\python.exe starter_anthropic.py
 ```
 
+The Anthropic path accepts the same `--split`, `--trials`, `--save-report`, and `--baseline` options shown above.
+
 Haiku 4.5 costs `$1 / 1M` input tokens and `$5 / 1M` output tokens:
 
 ```text
@@ -64,11 +87,15 @@ Actual cost depends on every case's token use. Set a `$1` provider spend limit, 
 
 </details>
 
-## Three important terms
+## Five important terms
 
-- **Eval case**: one input, the expected important point, and its scoring rule.
-- **Deterministic evaluator**: the same input always receives the same score, such as substring or regular-expression checks.
-- **LLM-as-judge**: another LLM assigns a score. It can handle open-ended answers, but can also be biased or break the required format.
+- **Golden / Reference Set**: a human-checked box of good test cases with inputs, success criteria, and graders. It is not training data or a bag of few-shot examples.
+- **Development split**: cases you may rerun while changing a prompt or program; failures help you fix things.
+- **Holdout Set**: cases kept unseen during development and run for a release check, so you can notice when the system only memorized the development cases.
+- **Baseline**: the saved scorecard from before a change, including dataset version, split, model, and per-case results.
+- **Regression**: the new version performs worse on the same test sheet. Inspect failed cases and repeated trials before deciding whether to block a release.
+
+A **Deterministic evaluator** gives the same output the same score, such as substring, exact match, or regular expression. **LLM-as-judge** can assess open-ended answers, but it may be biased or break the required format, so keep human sampling.
 
 | Shape of the task | Start with | Why |
 |---|---|---|
@@ -80,17 +107,26 @@ This exercise accepts a Judge reply only when the whole response is `PASS` or `F
 
 ## Change one thing
 
-Add one real question from your work to `EVAL_CASES`, then make the fake agent answer it incorrectly. Confirm that the report identifies the failing `id`.
+Open `eval_cases.json` and replace one development case with a real failure from your work. Keep its unique `id`, success criteria, grader, and a non-sensitive source note. Whenever any case content changes, update `dataset_version`. Then run:
+
+```powershell
+.\.venv\Scripts\python.exe test.py
+```
+
+Do not copy it into a blank text file first. Edit the runnable data directly and confirm that the report names the failing `id`.
 
 ## Success check
 
 - [ ] Every case has one stable, unique `id`.
-- [ ] You can explain why a case uses substring rather than an LLM Judge.
+- [ ] After changing a case, success criterion, or grader, you also updated `dataset_version`.
+- [ ] You know the development split may be rerun, while the holdout must not be watched during tuning.
+- [ ] Baseline and current report have the same dataset version, split, and case IDs.
+- [ ] You can explain why a case starts with a deterministic grader rather than an LLM Judge.
 - [ ] An empty answer cannot pass.
-- [ ] Model comparisons reuse the same cases.
+- [ ] The report keeps provider, model, trials, category results, failures, and improved/same/regressed counts.
 
 <details markdown="1">
-<summary>Grow five cases into a real Eval suite</summary>
+<summary>Grow eight teaching cases into a real Eval suite</summary>
 
 The teaching loop is:
 
@@ -121,4 +157,4 @@ Common problems:
 
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
-<small>Models, prices, packages, and links checked: 2026-08-28 UTC.</small>
+<small>Models, prices, packages, and links checked: 2026-09-13 UTC.</small>

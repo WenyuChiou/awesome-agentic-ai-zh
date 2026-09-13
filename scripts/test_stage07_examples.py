@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import ast
+import json
 import re
 import subprocess
 import sys
@@ -109,8 +110,13 @@ def test_stage_shape_and_current_dependencies() -> None:
         folder = STAGE / folder_name
         for name in (*README_NAMES, *PYTHON_NAMES, "requirements.txt"):
             assert (folder / name).is_file(), f"{folder_name}: missing {name}"
-        expected = DEPLOY_REQUIREMENTS if folder_name == "05-deploy" else COMMON_REQUIREMENTS
+        expected = (
+            DEPLOY_REQUIREMENTS if folder_name == "05-deploy" else COMMON_REQUIREMENTS
+        )
         assert _lines(folder / "requirements.txt") == expected, folder_name
+    eval_folder = STAGE / "02-eval"
+    assert (eval_folder / "eval_core.py").is_file()
+    assert (eval_folder / "eval_cases.json").is_file()
     assert (STAGE / "05-deploy" / "Dockerfile").is_file()
     safe = STAGE / SAFE_FOLDER
     for name in (*README_NAMES, "starter.py", "test.py"):
@@ -146,10 +152,21 @@ def test_shared_model_guide_separates_stage7_from_function_calling() -> None:
         assert "API 成本是 $0" not in guide
         assert "隱私敏感資料 OK" not in guide
         assert "隐私敏感资料 OK" not in guide
-    assert all(guide.count(OLLAMA_MODEL) == guides[0].count(OLLAMA_MODEL) for guide in guides[1:])
+    assert all(
+        guide.count(OLLAMA_MODEL) == guides[0].count(OLLAMA_MODEL)
+        for guide in guides[1:]
+    )
     for path, guide in zip(guide_paths, guides):
-        qwen25_row = next(line for line in guide.splitlines() if "`qwen2.5:3b`" in line and "1.9 GB" in line)
-        qwen35_row = next(line for line in guide.splitlines() if "`qwen3.5:4b`" in line and "3.4 GB" in line)
+        qwen25_row = next(
+            line
+            for line in guide.splitlines()
+            if "`qwen2.5:3b`" in line and "1.9 GB" in line
+        )
+        qwen35_row = next(
+            line
+            for line in guide.splitlines()
+            if "`qwen3.5:4b`" in line and "3.4 GB" in line
+        )
         assert "3–6" in qwen25_row, path
         assert "Stage 7" in qwen35_row, path
 
@@ -158,11 +175,14 @@ def test_shared_model_guide_separates_stage7_from_function_calling() -> None:
     assert OLLAMA_MODEL in repo_contract
     assert "does not replace the Stage 3–6 tool-use default" in repo_contract
 
-    setup_paths = tuple(ROOT / "resources" / name for name in (
-        "setup-guide.md",
-        "setup-guide.en.md",
-        "setup-guide.zh-Hans.md",
-    ))
+    setup_paths = tuple(
+        ROOT / "resources" / name
+        for name in (
+            "setup-guide.md",
+            "setup-guide.en.md",
+            "setup-guide.zh-Hans.md",
+        )
+    )
     setup_guides = [path.read_text(encoding="utf-8") for path in setup_paths]
     for path, guide in zip(setup_paths, setup_guides):
         assert "qwen2.5:3b" in guide and OLLAMA_MODEL in guide, path
@@ -171,7 +191,10 @@ def test_shared_model_guide_separates_stage7_from_function_calling() -> None:
         assert "zero API cost" not in guide, path
         assert "不付 API 費" not in guide, path
         assert "不付 API 费" not in guide, path
-    assert all(guide.count(OLLAMA_MODEL) == setup_guides[0].count(OLLAMA_MODEL) for guide in setup_guides[1:])
+    assert all(
+        guide.count(OLLAMA_MODEL) == setup_guides[0].count(OLLAMA_MODEL)
+        for guide in setup_guides[1:]
+    )
 
 
 def test_model_outputs_are_validated_and_judges_are_strict() -> None:
@@ -181,16 +204,81 @@ def test_model_outputs_are_validated_and_judges_are_strict() -> None:
             (folder / name).read_text(encoding="utf-8")
             for name in ("starter.py", "starter_anthropic.py")
         )
-        assert "require_text(" in starters, f"{folder_name}: empty output is not rejected"
+        assert "require_text(" in starters, (
+            f"{folder_name}: empty output is not rejected"
+        )
 
-    debate = (STAGE / "01-multi-agent-debate" / "starter.py").read_text(encoding="utf-8")
-    debate_b = (STAGE / "01-multi-agent-debate" / "starter_anthropic.py").read_text(encoding="utf-8")
+    debate = (STAGE / "01-multi-agent-debate" / "starter.py").read_text(
+        encoding="utf-8"
+    )
+    debate_b = (STAGE / "01-multi-agent-debate" / "starter_anthropic.py").read_text(
+        encoding="utf-8"
+    )
     assert "parse_winner(" in debate and "fullmatch(" in debate
     assert "parse_winner(" in debate_b and "fullmatch(" in debate_b
 
-    eval_source = (STAGE / "02-eval" / "starter.py").read_text(encoding="utf-8")
+    eval_source = (STAGE / "02-eval" / "eval_core.py").read_text(encoding="utf-8")
     assert "parse_verdict(" in eval_source and "fullmatch(" in eval_source
     assert '"PASS" in verdict' not in eval_source
+
+
+def test_eval_example_is_versioned_split_aware_and_offline_tested() -> None:
+    folder = STAGE / "02-eval"
+    dataset = json.loads((folder / "eval_cases.json").read_text(encoding="utf-8"))
+    assert dataset["dataset_version"] == "2026-09-13.1"
+    assert len(dataset["cases"]) == 8
+    assert [case["split"] for case in dataset["cases"]].count("dev") == 5
+    assert [case["split"] for case in dataset["cases"]].count("holdout") == 3
+    required = {
+        "id",
+        "split",
+        "category",
+        "input",
+        "success_criteria",
+        "grader",
+        "source",
+    }
+    assert len({case["id"] for case in dataset["cases"]}) == 8
+    assert all(required <= case.keys() for case in dataset["cases"])
+
+    core = (folder / "eval_core.py").read_text(encoding="utf-8")
+    ast.parse(core, filename=str(folder / "eval_core.py"))
+    for marker in (
+        '"--split"',
+        '"--trials"',
+        '"--save-report"',
+        '"--baseline"',
+        '"dataset_version"',
+        '"case_pass_rates"',
+        '"improved"',
+        '"same"',
+        '"regressed"',
+        "os.replace",
+    ):
+        assert marker in core
+
+    for test_name, expected in (
+        ("test.py", "14/14 passed"),
+        ("test_anthropic.py", "3/3 passed"),
+    ):
+        result = subprocess.run(
+            [sys.executable, test_name],
+            cwd=folder,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=30,
+            check=False,
+        )
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert expected in result.stdout
+
+    for starter_name in ("starter.py", "starter_anthropic.py"):
+        starter = (folder / starter_name).read_text(encoding="utf-8")
+        assert "# === 自我驗證 ===" in starter
+        assert starter.count("assert ") >= 2
+        assert "judge_fn=" in starter
 
 
 def test_safe_execution_is_offline_fail_closed_and_idempotent() -> None:
@@ -279,8 +367,11 @@ def test_deploy_has_bounded_input_and_a_non_root_container() -> None:
         assert "Field(min_length=1, max_length=4000)" in source
         assert "Field(default=300, ge=1, le=1000)" in source
         assert 'uvicorn.run(app, host="127.0.0.1", port=8000)' in source
-        health_body = source.split('def health():', 1)[1].split('@app.post', 1)[0]
-        assert "messages.create" not in health_body and "chat.completions" not in health_body
+        health_body = source.split("def health():", 1)[1].split("@app.post", 1)[0]
+        assert (
+            "messages.create" not in health_body
+            and "chat.completions" not in health_body
+        )
         assert "req.message" not in source.split("def chat", 1)[1].split("try:", 1)[0]
         assert "logger.exception" not in source
         assert "type(e).__name__" in source
@@ -290,7 +381,11 @@ def test_deploy_has_bounded_input_and_a_non_root_container() -> None:
 
     test_a = (folder / "test.py").read_text(encoding="utf-8")
     test_b = (folder / "test_anthropic.py").read_text(encoding="utf-8")
-    for marker in ("test_chat_rejects_blank_message", "test_chat_rejects_oversized_message", "test_chat_rejects_excessive_max_tokens"):
+    for marker in (
+        "test_chat_rejects_blank_message",
+        "test_chat_rejects_oversized_message",
+        "test_chat_rejects_excessive_max_tokens",
+    ):
         assert marker in test_a and marker in test_b
     assert "test_chat_500_does_not_log_secret" in test_a
     assert "test_chat_500_does_not_log_secret" in test_b
@@ -305,15 +400,21 @@ def test_readmes_are_power_shell_first_progressive_and_fact_aligned() -> None:
         urls = tuple(re.findall(r"https?://[^)\s]+", texts[0]))
         for name, text in zip(README_NAMES, texts):
             first_detail = text.index('<details markdown="1">')
-            install = text.index(r".\.venv\Scripts\python.exe -m pip install -r requirements.txt")
+            install = text.index(
+                r".\.venv\Scripts\python.exe -m pip install -r requirements.txt"
+            )
             offline = text.index(r".\.venv\Scripts\python.exe test.py")
             resource_heading = RESOURCE_HEADINGS[name]
             resource_index = text.index(resource_heading)
             resource_section = text[resource_index:]
-            rated_resources = tuple(re.finditer(r"(?m)^- (?:⭐){3,5} ", resource_section))
+            rated_resources = tuple(
+                re.finditer(r"(?m)^- (?:⭐){3,5} ", resource_section)
+            )
             footer_index = text.index(RESOURCE_FOOTERS[name], resource_index)
             verified_date_index = text.index("<small>", resource_index)
-            assert install < offline < first_detail, f"{folder_name}/{name}: quick start is hidden"
+            assert install < offline < first_detail, (
+                f"{folder_name}/{name}: quick start is hidden"
+            )
             assert r"py -3.11 -m venv .venv" in text
             assert r".\.venv\Scripts\python.exe test_anthropic.py" in text
             expected_details = 4 if folder_name == "05-deploy" else 3
@@ -333,18 +434,31 @@ def test_readmes_are_power_shell_first_progressive_and_fact_aligned() -> None:
             ), f"{folder_name}/{name}: at least one required resource is hidden"
             assert OLLAMA_MODEL in text and ANTHROPIC_MODEL in text
             assert "$1 / 1M" in text and "$5 / 1M" in text
-            assert "$1" in text and "2026-08-28 UTC" in text
+            expected_date = (
+                "2026-09-13 UTC" if folder_name == "02-eval" else "2026-08-28 UTC"
+            )
+            assert "$1" in text and expected_date in text
             assert text.count(HELLO_AGENTS_URL) == 1, (
                 f"{folder_name}/{name}: missing or duplicated chapter-style deep-learning route"
             )
             assert tuple(re.findall(r"https?://[^)\s]+", text)) == urls
             assert not FLOATING_HAIKU.search(text)
-            assert not any(phrase in text for phrase in FORBIDDEN_TEXT), f"{folder_name}/{name} has stale claim"
-        assert all(text.count(OLLAMA_MODEL) == texts[0].count(OLLAMA_MODEL) for text in texts[1:])
-        assert all(text.count(ANTHROPIC_MODEL) == texts[0].count(ANTHROPIC_MODEL) for text in texts[1:])
+            assert not any(phrase in text for phrase in FORBIDDEN_TEXT), (
+                f"{folder_name}/{name} has stale claim"
+            )
+        assert all(
+            text.count(OLLAMA_MODEL) == texts[0].count(OLLAMA_MODEL)
+            for text in texts[1:]
+        )
+        assert all(
+            text.count(ANTHROPIC_MODEL) == texts[0].count(ANTHROPIC_MODEL)
+            for text in texts[1:]
+        )
 
         english_body = texts[1].split("</div>", 1)[1]
-        assert not re.search(r"[\u3400-\u9fff]", english_body), f"{folder_name}: English body contains CJK text"
+        assert not re.search(r"[\u3400-\u9fff]", english_body), (
+            f"{folder_name}: English body contains CJK text"
+        )
         assert "../../../stages/07-multi-agent-production.en.md" in texts[1]
         assert "../../../stages/07-multi-agent-production.zh-Hans.md" in texts[2]
 
@@ -382,7 +496,7 @@ def test_safe_execution_readmes_keep_the_core_path_and_resources_visible() -> No
     for name, text in zip(README_NAMES, texts):
         resource_index = text.index(RESOURCE_HEADINGS[name])
         first_detail = text.index('<details markdown="1">')
-        assert text.startswith("<div align=\"right\">")
+        assert text.startswith('<div align="right">')
         assert "Core Exercise" in text or "核心練習" in text or "核心练习" in text
         assert r"py -3.11 test.py" in text[:first_detail]
         assert all(f"**{term}" in text for term in required_terms)
@@ -397,9 +511,18 @@ def test_safe_execution_readmes_keep_the_core_path_and_resources_visible() -> No
         assert "requirements.txt" not in text
     assert "../../../stages/07-multi-agent-production.en.md" in texts[1]
     assert "../../../stages/07-multi-agent-production.zh-Hans.md" in texts[2]
-    assert "../../../stages/07-multi-agent-production.md#-上線四步eval--observability--approvalrecovery--deploy" in texts[0]
-    assert "../../../stages/07-multi-agent-production.en.md#-four-release-steps-eval--observability--approval--recovery--deploy" in texts[1]
-    assert "../../../stages/07-multi-agent-production.zh-Hans.md#-上线四步eval--observability--approvalrecovery--deploy" in texts[2]
+    assert (
+        "../../../stages/07-multi-agent-production.md#-上線四步eval--observability--approvalrecovery--deploy"
+        in texts[0]
+    )
+    assert (
+        "../../../stages/07-multi-agent-production.en.md#-four-release-steps-eval--observability--approval--recovery--deploy"
+        in texts[1]
+    )
+    assert (
+        "../../../stages/07-multi-agent-production.zh-Hans.md#-上线四步eval--observability--approvalrecovery--deploy"
+        in texts[2]
+    )
     english_body = texts[1].split("</div>", 1)[1]
     assert not re.search(r"[\u3400-\u9fff]", english_body)
 

@@ -1,12 +1,4 @@
-"""Stage 7 練習 2：Eval — Path B（Claude）。
-
-跟 starter.py 同流程、agent + judge 都用 Claude。
-
-跑法：
-    pip install -r requirements.txt
-    export ANTHROPIC_API_KEY=sk-ant-...
-    python starter_anthropic.py
-"""
+"""Stage 7 Eval example — Path B (Anthropic)."""
 
 from __future__ import annotations
 
@@ -19,34 +11,58 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import anthropic
 
-from starter import EVAL_CASES, eval_substring, run_eval
+from eval_core import require_text, run_cli
+
 
 MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
 
 
-def require_text(value: str | None, label: str) -> str:
-    """Reject a provider response that contains no usable text."""
-    text = (value or "").strip()
-    if not text:
-        raise ValueError(f"{label} returned empty text")
-    return text
-
-
-def agent_answer_anthropic(question: str, instruction: str = "", client: Any = None) -> str:
+def agent_answer_anthropic(question: str, client: Any = None) -> str:
+    """Ask Claude one case and reject an empty response."""
     client = client or anthropic.Anthropic()
-    system = "Answer concisely (1-2 sentences). " + instruction
-    resp = client.messages.create(
-        model=MODEL, max_tokens=200, system=system,
+    response = client.messages.create(
+        model=MODEL,
+        max_tokens=200,
+        system="Answer concisely. Follow the user's format exactly.",
         messages=[{"role": "user", "content": question}],
     )
-    joined = " ".join(b.text for b in resp.content if b.type == "text")
+    joined = " ".join(block.text for block in response.content if block.type == "text")
     return require_text(joined, "Anthropic agent")
 
 
+def judge_answer_anthropic(
+    output: str, case: dict[str, Any], client: Any = None
+) -> str:
+    """Ask Claude for a strict PASS or FAIL when a case requests it."""
+    client = client or anthropic.Anthropic()
+    prompt = (
+        "Evaluate the answer using only the supplied criterion. "
+        "Reply with exactly PASS or FAIL.\n\n"
+        f"Question: {case['input']}\n"
+        f"Success criteria: {'; '.join(case['success_criteria'])}\n"
+        f"Judge rubric: {case['grader']['value']}\n"
+        f"Answer: {output}"
+    )
+    response = client.messages.create(
+        model=MODEL,
+        max_tokens=10,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    joined = " ".join(block.text for block in response.content if block.type == "text")
+    return require_text(joined, "Anthropic Judge")
+
+
+# === 自我驗證 ===
+assert MODEL.strip(), "MODEL must not be empty"
+assert callable(agent_answer_anthropic), "Anthropic adapter must be callable"
+
+
 if __name__ == "__main__":
-    out = run_eval(EVAL_CASES, agent_answer_anthropic, eval_substring)
-    for r in out["results"]:
-        mark = "✅" if r["passed"] else "❌"
-        print(f"   {mark} [{r['id']}] {r['output']}")
-    print(f"\nPass: {out['pass_count']}/{out['total']} ({out['pass_rate']:.0%})")
-    print(f"✅ 練習 2 (Anthropic) 通過 — {MODEL} 完成 {len(EVAL_CASES)} 個案例")
+    raise SystemExit(
+        run_cli(
+            agent_answer_anthropic,
+            model=MODEL,
+            provider="anthropic",
+            judge_fn=judge_answer_anthropic,
+        )
+    )
