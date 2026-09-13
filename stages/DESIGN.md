@@ -389,7 +389,7 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 
 - 初學者第一次遇到 Eval 時，先看懂「一道題 → 一組有版本的題 → 每題怎麼判 → 改前基線 → 開發集反覆改 → 保留集最後驗」；工具與 dashboard 排在概念之後。
 - Eval suite 至少記錄 dataset version、case ID、split、success criteria／reference、grader、trial 次數、Outcome、Trajectory 與 baseline。安全、成本與可靠性也可以是 regression，不只比較文字品質。
-- 能用程式精確檢查的先用 deterministic grader；使用模型或人工評分時，留下 rubric、grader 版本與原始證據。空輸出、格式錯誤或缺少必要證據不得默認通過。
+- 能用程式精確檢查的先用 deterministic grader；使用模型或人工評分時，留下 rubric、grader 版本與原始證據。空輸出、格式錯誤或缺少必要證據不得預設通過。
 - Development／reference cases 可在每次修改時重跑；frozen holdout 不拿來逐次調 Prompt、模型或 Harness，只在 release candidate／最後驗證使用。模型有隨機性時以多次 trials 與預先寫好的門檻判斷，不以單次波動阻擋或放行。
 - 動手練習 跟 self-check 是 **conceptual coverage 對應**（不是 1:1 編號對應）——跑過 動手練習 後，self-check 整體應該能過；單一條 self-check 可能對應到多個 動手練習
 - Stage 5 因為 sub-section（5.1-5.8）結構，動手練習 分散在各 sub-section
