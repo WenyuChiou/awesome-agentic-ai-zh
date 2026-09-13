@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "verified_at": "2026-09-03T01:37:10Z",
-  "repository_count": 263,
+  "repository_count": 262,
   "repositories": {
     "01-ai/yi": {
       "requested": "01-ai/Yi",
@@ -5764,28 +5764,6 @@
         "RESOURCES.en.md",
         "RESOURCES.md",
         "RESOURCES.zh-Hans.md",
-        "resources/mcp-skills-catalog.en.md",
-        "resources/mcp-skills-catalog.md",
-        "resources/mcp-skills-catalog.zh-Hans.md"
-      ]
-    },
-    "thebrierfox/intuitek-ace": {
-      "requested": "thebrierfox/intuitek-ace",
-      "state": "verified",
-      "checked_at": "2026-09-03T01:37:10Z",
-      "api_status": 200,
-      "canonical": "thebrierfox/intuitek-ace",
-      "html_url": "https://github.com/thebrierfox/intuitek-ace",
-      "redirected": false,
-      "archived": false,
-      "disabled": false,
-      "visibility": "public",
-      "default_branch": "main",
-      "license": "MIT",
-      "pushed_at": "2026-06-08T18:34:40Z",
-      "latest_release": null,
-      "reference_count": 3,
-      "sources": [
         "resources/mcp-skills-catalog.en.md",
         "resources/mcp-skills-catalog.md",
         "resources/mcp-skills-catalog.zh-Hans.md"

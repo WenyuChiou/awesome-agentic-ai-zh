@@ -4,6 +4,13 @@ release_version: v2026.09.13
 # One ordered list produces all three language sections in the GitHub Release.
 # Links are shared so the three summaries cannot silently point to different pages.
 changes:
+  - id: remove-unavailable-yield-mcp
+    category: maintenance
+    zh-TW: 發布前完整連結掃描確認 YIELD INTELLIGENCE 的 hosted MCP、替代路徑與 pricing 入口都回傳 404。三語精選目錄已移除這筆目前無法使用的服務與 repository snapshot，不以 README 仍寫著「live」取代實際端點證據。
+    zh-Hans: 发布前完整链接扫描确认 YIELD INTELLIGENCE 的 hosted MCP、替代路径与 pricing 入口都返回 404。三语精选目录已移除这项目前无法使用的服务与 repository snapshot，不以 README 仍写着“live”取代实际端点证据。
+    en: The full pre-release link scan confirmed that YIELD INTELLIGENCE's hosted MCP endpoint, alternate route, and pricing endpoint all return 404. The unavailable service and its repository snapshot were removed from all three curated catalogs; a README that still says “live” does not outweigh direct endpoint evidence.
+    links:
+      - https://github.com/thebrierfox/intuitek-ace
   - id: role-map-icon-motion
     category: reader-ux
     zh-TW: 首頁下方的角色分流圖加入圖示動畫試版：只讓五個代表性角色圖示依序輕動，並支援停止／播放、減少動態與靜態 PNG。這組圖沿用三張舊原圖，因此圖中文字尚未完全對齊；英文圖的 Analysts 也比正文的 Knowledge workers 範圍窄。正式校正前，請以圖片下方保持展開的角色表為準。

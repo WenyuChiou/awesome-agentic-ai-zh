@@ -376,8 +376,8 @@ def test_catalog_entry_urls_and_editorial_ratings_match_in_all_locales() -> None
     assert len(set(observed)) == 1
     for page in TRIOS["catalog"].values():
         text = page.read_text(encoding="utf-8")
-        assert "https://api.intuitek.ai/yield/mcp" in text
-        assert re.search(r"YIELD INTELLIGENCE[\s\S]{0,300}⭐{3}", text)
+        assert "api.intuitek.ai" not in text
+        assert "YIELD INTELLIGENCE" not in text
 
 
 def test_catalog_rejects_volatile_rankings_counts_and_fixed_model_roles() -> None:

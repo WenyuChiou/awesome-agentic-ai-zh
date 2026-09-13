@@ -867,17 +867,6 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 **Audience**: developers wiring payment / billing into agent flows.
 **Notes**: ⚠️ this is real money. Test thoroughly in sandbox before going to production.
 
-### YIELD INTELLIGENCE MCP (Hosted Remote Server)
-
-| Field | Value |
-|---|---|
-| Type | hosted MCP server |
-| Rating | ⭐⭐⭐ (finance analysis tool; practical example of hosted vs self-hosted MCP architecture) |
-
-**What it does**: Uses a hosted remote MCP to read US Treasury yields and income-asset analysis, while showing the connection shape of hosted versus self-hosted MCP.
-**Audience**: learners who want to observe MCP requests and results with test finance questions; it is not an automatic trading entry point.
-**Notes**: the [live endpoint](https://api.intuitek.ai/yield/mcp) is provided by the MIT [thebrierfox/intuitek-ace](https://github.com/thebrierfox/intuitek-ace) repository. Data timing, methods, authentication, and pricing can change; check current service documentation and original market data before use. Not investment advice.
-
 ### [ComposioHQ/composio](https://github.com/ComposioHQ/composio) ⭐⭐⭐⭐⭐
 
 | Field | Value |

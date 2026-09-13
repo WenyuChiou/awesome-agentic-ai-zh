@@ -868,17 +868,6 @@
 **适合谁**：要在 agent 内处理付款 / billing 的开发者。
 **备注**：⚠️ 涉及金流，务必用 sandbox 测试够了再接 production。
 
-### YIELD INTELLIGENCE MCP（Hosted Remote Server）
-
-| 栏位 | 内容 |
-|---|---|
-| 形式 | hosted MCP server |
-| 推荐度 | ⭐⭐⭐（金融分析工具；了解 hosted vs self-hosted MCP 实现差异的实例） |
-
-**教什么**：用 hosted remote MCP 读取美国国债收益率与收益型资产分析，并比较 hosted 与 self-hosted MCP 的连接形状。
-**适合谁**：想用测试问题观察金融分析 MCP request / result 的学习者；它不是自动下单入口。
-**备注**：[Live endpoint](https://api.intuitek.ai/yield/mcp) 由 [thebrierfox/intuitek-ace](https://github.com/thebrierfox/intuitek-ace)（MIT）提供。数据时间、方法、认证与费用可能改变；使用前查看当前服务文档并核对原始市场数据。非投资建议。
-
 ### [ComposioHQ/composio](https://github.com/ComposioHQ/composio) ⭐⭐⭐⭐⭐
 
 | 栏位 | 内容 |

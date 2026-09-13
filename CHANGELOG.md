@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-09-13
 
+- **release health / unavailable hosted MCP** · 正式發布掃描確認 YIELD INTELLIGENCE 的 `/yield`、`/yield/mcp` 與 `/pricing` 皆回傳 404；三語 MCP 精選目錄移除目前無法使用的 hosted service，相關 0-reference repository snapshot 一併刪除，總數由 263 改為 262。GitHub repository 仍未封存且 README 仍宣稱服務 live，但教材以實際端點結果為準，不保留失效入口。
+
 - **release / v2026.09.13** · 將 `v2026.09.10` 之後已合併的角色分流動畫試版、三語貢獻契約、Stage 7 Eval 基礎與可執行 Eval 證據整理成同一份三語正式版；Release Notes 明列舊角色圖三語文字尚未完全對齊，校正前以保持展開的角色表為準。Release workflow 會重新鎖定 main SHA、執行完整內容與連結健康檢查、建置並驗證繁中／簡中／英文三份 PDF，通過 `release` Environment 後才建立 tag 與發布附件。
 
 - **examples / Stage 7 / executable Eval evidence** · `02-eval` 從寫死在 Python 的 5 題示範改為 8 題版本化 JSON（5 題 development、3 題 holdout），Ollama 與 Anthropic 共用同一資料與 provider-neutral runner。CLI 預設只跑 development 一次且不寫檔；讀者可明確選 `--split`、1–20 次 `--trials`、`--save-report` 與 `--baseline`。報告保存 dataset version、split、provider、model、逐次與分類結果、失敗案例及 improved／same／regressed；baseline 或 dataset schema 不相容時會在任何模型呼叫前停止，同一路徑也不可同時當 baseline 與新報告。空輸出一律失敗，兩條 provider 路徑的 LLM Judge 都只接受完整 `PASS`／`FAIL`。三語 README 直接教讀者修改 `eval_cases.json`，必讀、五星資源、核心詞與成功檢查維持展開；離線測試不連網、不讀 API key。

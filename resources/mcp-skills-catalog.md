@@ -902,17 +902,6 @@ Observability 工具能看見 trace 與 log；不要把 secret、個資或完整
 **備註**：⚠️ 涉及金流，務必用 sandbox 測試夠了再接 production。
 
 
-### YIELD INTELLIGENCE MCP（Hosted Remote Server）
-
-| 欄位 | 內容 |
-|---|---|
-| 形式 | hosted MCP server |
-| 推薦度 | ⭐⭐⭐（Finance 分析工具；了解 hosted vs self-hosted MCP 實作差異的實例） |
-
-**教什麼**：用 hosted remote MCP 讀取美國國債殖利率與收益型資產分析，並比較 hosted 與 self-hosted MCP 的連線形狀。
-**適合誰**：想用測試問題觀察金融分析 MCP request／result 的學習者；它不是自動下單入口。
-**備註**：[Live endpoint](https://api.intuitek.ai/yield/mcp) 由 [thebrierfox/intuitek-ace](https://github.com/thebrierfox/intuitek-ace)（MIT）提供。資料時間、方法、認證與費用可能改變；使用前查看現行服務文件並核對原始市場資料。非投資建議。
-
 ### [ComposioHQ/composio](https://github.com/ComposioHQ/composio) ⭐⭐⭐⭐⭐
 
 | 欄位 | 內容 |
