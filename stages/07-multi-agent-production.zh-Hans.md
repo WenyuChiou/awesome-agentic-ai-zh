@@ -2,7 +2,7 @@
 
 > [繁體中文](./07-multi-agent-production.md) | **简体中文** | [English](./07-multi-agent-production.en.md)
 
-<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-08-31; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
+<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-09-13; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
 
 这一关要做的是 **Agent Production Engineering（Agent 上线工程）**：先用 **Eval** 证明结果真的正确，再用 **Observability** 看见过程，接着加入人工批准、**Checkpoint** 和恢复，最后才部署。它不只要“偶尔成功”，还要能被检查、能安全停下，也能从正确位置继续。
 
@@ -73,6 +73,30 @@
 </table>
 
 **Prompt（提示）**仍然是你交给模型的指令和材料；本章不是把 Prompt 丢掉，而是替它加上能执行、检查和恢复的外围系统。
+
+## 🧪 九个 Eval 基础积木（先学会怎么出考卷）
+
+先别急着安装评测工具。把 Eval 想成给 Agent 出考卷：先决定考哪一题、怎样算答对、要考几次，以及哪份题目不能偷看。
+
+<table>
+<thead><tr><th scope="col">先做哪件事</th><th scope="col">关键词</th><th scope="col">五岁也能懂的说法</th><th scope="col">正确术语</th></tr></thead>
+<tbody><tr><th scope="rowgroup" rowspan="3">先把考卷做好</th><td><strong>Case/Task（案例/任务）</strong></td><td>考卷上的一题</td><td>固定输入、测试环境和成功条件</td></tr>
+<tr><td><strong>Suite（测试组）</strong></td><td>把很多题订成一本考卷</td><td>一起执行、版本化和比较的一组 cases</td></tr>
+<tr><td><strong>Golden Set/Reference Set（黄金集/参考集）</strong></td><td>大家先确认过的可信题目</td><td>已审查的代表案例与预期标准；Golden Set 是常见实践叫法，不是通用的供应商标准</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="3">再决定怎么评</th><td><strong>Reference Solution/Criteria（参考答案/标准）</strong></td><td>定义怎样才算做好</td><td>可接受结果、必要证据、禁止行为和评分规则</td></tr>
+<tr><td><strong>Trial（试跑）</strong></td><td>同一题实际做一次</td><td>某个 case 的一次完整执行；模型有随机性时要跑多次</td></tr>
+<tr><td><strong>Grader（评分器）</strong></td><td>照规则批改考卷</td><td>用程序、相似度、模型或人工判断结果</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="3">最后判断能不能发布</th><td><strong>Baseline（基线）</strong></td><td>改之前先量一次</td><td>相同 cases、环境和阈值下的比较起点</td></tr>
+<tr><td><strong>Regression（回归）</strong></td><td>新版本反而退步</td><td>相对 baseline 超过预定义阈值的下降</td></tr>
+<tr><td><strong>Holdout Set（保留测试集）</strong></td><td>平常不偷看的最后考卷</td><td>只在发布候选版本或最后验证时使用的冻结案例</td></tr></tbody></table>
+
+**Golden Set 不是训练数据，也不是 few-shot 示例。** 迭代时使用 development/reference cases；冻结 holdout 只在发布候选版本或最后验证时打开。Regression 需要多次 trials、预先定义的阈值和失败复盘，不能因为一次随机失败就下结论。记录 dataset version、split、trial 次数、grader 和 baseline。
+
+Anthropic 建议先从 20–50 个代表真实工作的 cases 起步；这是实用起点，不是通用最低要求。
+
+Anthropic 的 [Agent Eval 指南](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)区分 task、trial、grader、trajectory 和 outcome；OpenAI 的 [Graders API](https://platform.openai.com/docs/api-reference/graders?api-mode=chat)列出评分器选项。
+
+![Agent Eval 证据循环：定义 Case、Suite 和参考标准；用多次 Trial 与 Grader 比较 Baseline；迭代时使用 Development Cases，发布候选版本才打开 Frozen Holdout，并把去标识化失败案例加入下一版 Suite](../resources/diagrams/eval-evidence-loop.zh-Hans.png)
 
 ## 🚪 进入条件
 
@@ -221,7 +245,7 @@ IBM 用 `Goal → Action → Observation → Adjustment` 说明 Loop Engineering
 
 | 顺序 | 先回答的问题 | 最少要留下的证据 | 没通过时怎么做 |
 |---:|---|---|---|
-| 1. **Eval** | 最后结果真的对吗？中间有没有走危险捷径？ | 20–50 个代表真实工作的 cases；Outcome、Trajectory、grader、成本与失败门槛 | 先补案例或修行为，不进部署 |
+| 1. **Eval** | 最后结果真的对吗？中间有没有走危险捷径？ | Anthropic 建议先从 20–50 个代表真实工作的 cases 起步；这是实用起点，不是通用最低要求。另记录 Outcome、Trajectory、grader、成本与失败门槛 | 先补案例或修行为，不进部署 |
 | 2. **Observability** | 坏掉时找得到哪一步吗？ | task ID、trace／span、tool call、错误类型、延迟、token 与敏感数据遮盖 | 先让失败看得见，再改 Prompt 或模型 |
 | 3. **Approval／Recovery** | 高风险动作能先停下吗？中断后能安全续跑吗？ | 人工批准点、版本化 checkpoint、resume 测试、idempotency key、拒绝／timeout／补偿路线 | fail closed，停止自动执行并交给人 |
 | 4. **Deploy** | 前三项能在新版本重跑吗？ | health／readiness、rate limit、rollback、停止开关、版本与 release 记录 | 保留旧版或回滚，不把“服务有启动”当成功 |
@@ -332,7 +356,7 @@ python test.py
 4. 保存 checkpoint；模拟程序中断后 resume。
 5. 用 idempotency key 证明同一次发布重跑也只写入一次。
 
-最后输出一张 **execution receipt（执行收据）**：task ID、Outcome、Trajectory、工具、来源、耗时、token、错误、checkpoint 版本与人工批准记录。先用 5 个固定题目做 baseline，再把真实失败逐步加到 20 个以上；任何一题退步，就先不要部署。
+最后输出一张 **execution receipt（执行收据）**：task ID、Outcome、Trajectory、工具、来源、耗时、token、错误、checkpoint 版本与人工批准记录。先用 5 个 development cases 做 baseline，再把真实失败逐步加入版本化 suite。结果看起来退步时，先重跑足够的 trials，确认是否超过预先写好的阈值，再检查失败案例；不能只靠一次随机失败就阻挡整版部署。
 
 单一 Agent 版本稳定后，才把“找资料”与“审查”拆成不同 Agent，比较质量、成本与延迟是否真的更好。
 
@@ -361,7 +385,7 @@ python test.py
 - [τ²-bench](https://github.com/sierra-research/tau2-bench)：需要工具和多轮互动的任务。
 - [GAIA](https://huggingface.co/gaia-benchmark)：一般助理任务。
 
-不要把页面上的某个 SOTA 分数抄成永久事实。上线判断应该以自己的案例、rubric、完整 trajectory、成本和延迟为主。每次更换模型、Prompt、Tool 或 Harness，都重新运行同一组 hold-out cases。
+不要把页面上的某个 SOTA 分数抄成永久事实。上线判断应该以自己的案例、rubric、完整 trajectory、成本和延迟为主。每次更换模型、Prompt、Tool 或 Harness，先重新运行 development/reference cases；frozen holdout 不用于逐次调整，只在 release candidate 或最后验证时打开。
 
 </details>
 
@@ -406,7 +430,7 @@ python test.py
   </tbody>
 </table>
 
-<small>数据核查：2026-08-31 UTC</small>
+<small>数据核查：2026-09-13 UTC</small>
 
 ## ✅ Stage 7 之后的自我检查
 

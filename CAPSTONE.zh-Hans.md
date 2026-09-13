@@ -58,11 +58,11 @@
 
 - 有 tool use
 - 有一个对外 interface(CLI / API / chat 任一,对应 Stage 8)
-- **有明确 evaluation**:自己定 ≥ 5 个测试案例 + 量出通过率 / 质性评估(这条不可省——这套课最容易跳过的就是“验证”)
+- **有明确 evaluation**：准备一份有版本的 Eval suite，至少 5 个 development cases + 3 个 frozen holdout cases；写清楚成功条件、grader、trial 次数和 baseline，再量通过率／质性结果（这条不可省——这套课最容易跳过的就是“验证”）
 - **失败模式分析**:写清楚它在什么情况会坏、你怎么知道
 - 架构草图(一张图或一段文字说明组件与数据流)
 
-**交付物**:程序 repo + 架构说明 + evaluation 结果(哪怕只是 N 案例 / 通过率表)+ `README` + 200 字内反思(架构哪里判断错、重来会怎么改)。
+**交付物**：程序 repo + 架构说明 + Eval 报告（dataset version、development／holdout、每题结果、trial 次数、baseline 与 regression）+ `README` + 200 字内反思（架构哪里判断错、重来会怎么改）。
 
 **时间**:8–20 小时(不含学 stage 的时间)。
 
@@ -73,7 +73,7 @@
 | 问题定义 | 模糊 | 有目标 | 范围清楚、可验收 | 清楚且说明为何值得做 |
 | 架构 | 无设计 | 能跑就好 | multi-agent / RAG 选型有理由 | 设计权衡写得出来 |
 | 实作正确性 | 跑不动 | 主流程能跑 | 边界情况也处理 | 稳定且程序可读 |
-| **评测严谨度** | 没测 | 手动试几次 | ≥5 案例 + 通过率 | 有 baseline 对照 / 回归可重跑 |
+| **评测严谨度** | 没测 | 手动试几次 | 有版本化 development／holdout cases、成功条件和 grader | 多次 trials、baseline 对照、回归可重跑且 holdout 没有用于调参 |
 | 韧性与失败分析 | 无 | 提到风险 | 具体失败模式 | 失败有侦测 + 缓解 |
 | 接口与文件 | 无 | 能跑 | interface + README 清楚 | 别人能直接用 |
 | 反思 | 无 | 一句话 | 具体(指得出架构或组件选择的具体问题) | 指得出架构级的下一步 |

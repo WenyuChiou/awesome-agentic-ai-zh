@@ -1,6 +1,6 @@
 > [繁體中文](./build-first-agent-in-7-steps.md) | **简体中文** | [English](./build-first-agent-in-7-steps.en.md)
 
-<!-- freshness: canonical=walkthroughs/build-first-agent-in-7-steps.md; verified_on=2026-08-31; scope=models,frameworks,evals,observability,human-approval,interfaces; max_age_days=90 -->
+<!-- freshness: canonical=walkthroughs/build-first-agent-in-7-steps.md; verified_on=2026-09-13; scope=models,frameworks,evals,observability,human-approval,interfaces; max_age_days=90 -->
 
 # 7 步打造你的第一个 AI Agent
 
@@ -48,7 +48,7 @@
 - ⭐⭐⭐⭐⭐ [Langfuse — LangChain／LangGraph integration](https://langfuse.com/integrations/frameworks/langchain)：看 callback 如何记录 model、tool、步骤与输入／输出。
 - ⭐⭐⭐⭐⭐ [Stage 8 — Agent 操作界面](../stages/08-agent-interfaces.zh-Hans.md)：先用 API／Fetch，真的需要时才升级到 Browser、Computer 或 Sandbox。
 
-<small>官方文件与界面查核：2026-08-31 UTC。</small>
+<small>官方文件与界面查核：2026-09-13 UTC。</small>
 
 ---
 
@@ -674,6 +674,10 @@ if __name__ == "__main__":
 - **Checkpoint／Resume（检查点／续跑）**：把可信状态存好；中断后从那里继续，不用整件重做。
 - **Idempotency（幂等）**：同一个动作即使重试，也只真正执行一次。
 
+Eval 也有自己的小积木：一个 **Case/Task** 是一道题，很多题组成有版本的 **Suite**；人先审查过的代表题常叫 **Golden Set/Reference Set**。每题要有 **Reference Solution/Criteria**，每次运行叫 **Trial**，照规则打分的是 **Grader**。修改前先记录 **Baseline**；超过阈值的退步就是 **Regression**。保留一小份冻结的 **Holdout Set**，只在发布候选版本或最后验证时使用。
+
+Golden Set 是常见实践叫法，不是通用的供应商标准、训练数据或 few-shot 示例。迭代时使用 development/reference cases；调整时不要查看 holdout。
+
 ### 7.1 Eval (`promptfoo`)
 
 > 不用全局安装；直接使用现行 CLI：`npx promptfoo@latest`。
@@ -727,16 +731,16 @@ tests:
 
 跑：`npx promptfoo@latest eval && npx promptfoo@latest view`
 
-上面两题只是 smoke test，不足以证明能上线。先准备 20 题小型 Eval 集：
+上面两题只是 smoke test，不足以证明能上线。先准备一份有版本的 20 题 Eval suite；每类 4 题放 development、1 题放 frozen holdout：
 
-| 类别 | 数量 | 要检查什么 |
-|---|---:|---|
-| 正常论文 | 5 | 三段摘要、五个关键词、来源一致 |
-| 无效／撤回／读不到 | 5 | 说明限制并安全停止，不猜内容 |
-| 恶意或像指令的论文文字 | 5 | 当成资料，不改写系统规则、不泄漏 secret |
-| 边界案例 | 5 | 超长、空结果、重复请求与格式错误 |
+| 类别 | Development | Holdout | 要检查什么 |
+|---|---:|---:|---|
+| 正常论文 | 4 | 1 | 三段摘要、五个关键词、来源一致 |
+| 无效／撤回／读不到 | 4 | 1 | 说明限制并安全停止，不猜内容 |
+| 恶意或像指令的论文文字 | 4 | 1 | 当成资料，不改写系统规则、不泄漏 secret |
+| 边界案例 | 4 | 1 | 超长、空结果、重复请求与格式错误 |
 
-每一题同时记录 **Outcome**（最后结果）与 **Trajectory**（中间 tool／决定）。失败案例要留下来，成为下一次 regression。
+每一题同时记录 **Outcome**（最后结果）与 **Trajectory**（中间 tool／决定）。先在 16 题 development cases 上调整；准备 release candidate 时才跑 4 题 holdout。模型可能每次回答不同，重要 cases 要跑多个 trials。失败案例去标识化后留下来，成为下一版 regression suite；报告记录 dataset version、split、grader、trial 次数与 baseline。
 
 ### 7.2 Observability (`langfuse`)
 

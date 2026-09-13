@@ -275,6 +275,7 @@ python scripts/check-image-locale.py
 ## 2026-08-30：首頁學習路徑 Banner
 
 `banner.png`、`.en.png`、`.zh-Hans.png` 以 Image 2.0 重新產生，取代含固定週數的舊版。
+
 三語共用 `1672×941` 橫式母版、奶油白背景、深藍字、亮藍／橘兩條路、紫色共用 hub、
 圓角卡與大留白。路徑固定為：
 
@@ -298,6 +299,21 @@ GitHub stars 或其他容易漂移的指標。箭頭只能落在卡片／節點�
 > the five role paths. Replace mutable duration metrics with
 > stable Track A, Track B, and one-result-per-stop guidance. Every arrow must land
 > on a card or node edge. No text, icon, border, node, or arrow may overlap.
+
+## 2026-09-13 · Stage 7 Eval 證據迴圈
+
+新增：
+
+- `eval-evidence-loop.png`
+- `eval-evidence-loop.en.png`
+- `eval-evidence-loop.zh-Hans.png`
+
+[OpenAI 官方模型頁](https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst)在產圖前確認 **GPT-Image-2.5 Sunburst** 是現行最強的生成／精準編輯模型；但本次 Codex 內建 image generation 沒有暴露可選 model ID，因此只記錄「使用目前內建 image generation」，不宣稱手動指定了 Sunburst。
+
+繁中先以 `agent-engineering-control-questions.png` 作為 house-style 參考建立新構圖，英文與簡中再以繁中成品保持相同格線。三張固定為 `1672×941`：上排用 `3 × 3` 卡片分開 Case／Suite／Golden Set、Reference Solution／Criteria／Trial／Grader、Baseline／Regression／Holdout Set；下排只畫一條 `真實需求 → Development Cases → Trials + Graders → Baseline → Release Candidate → Frozen Holdout` 路線，失敗案例沿底部留白回到下一版 Suite。
+
+人工逐張檢查標題、九個詞、回程箭頭、警告與 footer。文字、icon、arrowhead、卡片和邊框沒有重疊；三語各用自己的圖檔，沒有價格、stars、模型版本、benchmark 分數或供應商標誌。圖中明確保留「Golden Set 不是訓練資料／Few-shot 範例」以及 dataset version、split、trial、grader、Outcome、Trajectory；不把 holdout 畫成平常反覆調整的資料。
+
 # Model lifecycle to Agent (`model-lifecycle-to-agent*`)
 
 - Canvas: 1672×941 PNG, warm cream background, deep navy text, bright gentle accents, rounded cards, shared grid, simple line icons, and one left-to-right reading direction.

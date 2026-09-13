@@ -1,6 +1,6 @@
 > [繁體中文](./build-first-agent-in-7-steps.md) | [简体中文](./build-first-agent-in-7-steps.zh-Hans.md) | **English**
 
-<!-- freshness: canonical=walkthroughs/build-first-agent-in-7-steps.md; verified_on=2026-08-31; scope=models,frameworks,evals,observability,human-approval,interfaces; max_age_days=90 -->
+<!-- freshness: canonical=walkthroughs/build-first-agent-in-7-steps.md; verified_on=2026-09-13; scope=models,frameworks,evals,observability,human-approval,interfaces; max_age_days=90 -->
 
 # Build Your First AI Agent in 7 Steps
 
@@ -48,7 +48,7 @@ Each Stage **adds one capability** to the same agent. By the end, it can read pa
 - ⭐⭐⭐⭐⭐ [Langfuse — LangChain/LangGraph integration](https://langfuse.com/integrations/frameworks/langchain): see callbacks record the model, tools, steps, and inputs/outputs.
 - ⭐⭐⭐⭐⭐ [Stage 8 — Agent Interfaces](../stages/08-agent-interfaces.en.md): start with API/Fetch and upgrade to Browser, Computer, or Sandbox only when needed.
 
-<small>Official documents and interfaces checked: 2026-08-31 UTC.</small>
+<small>Official documents and interfaces checked: 2026-09-13 UTC.</small>
 
 ---
 
@@ -674,6 +674,10 @@ First learn five terms that will keep appearing here:
 - **Checkpoint/Resume**: save trusted state and continue from it after an interruption instead of redoing everything.
 - **Idempotency**: even after a retry, the same action runs only once.
 
+Eval has its own building blocks: a **Case/Task** is one question; many cases form a versioned **Suite**; reviewed representative questions are often called a **Golden Set/Reference Set**. Each case needs **Reference Solution/Criteria**, each run is a **Trial**, and a **Grader** scores it. Record a **Baseline** before changes; a threshold-crossing decline is a **Regression**. Keep a small frozen **Holdout Set** for release-candidate or final validation only.
+
+Golden Set is a common practical label, not a universal vendor standard, training data, or few-shot examples. Use development/reference cases for iteration; do not peek at holdout during tuning.
+
 ### 7.1 Eval (`promptfoo`)
 
 > No global install needed; use the current CLI directly: `npx promptfoo@latest`.
@@ -727,16 +731,16 @@ tests:
 
 Run: `npx promptfoo@latest eval && npx promptfoo@latest view`
 
-Those two cases are only a smoke test, not proof of release readiness. Start a small 20-case Eval set:
+Those two cases are only a smoke test, not proof of release readiness. Start a versioned 20-case Eval suite, with 16 development cases and 4 frozen holdout cases:
 
-| Category | Count | What to check |
-|---|---:|---|
-| Normal papers | 5 | Three-paragraph summary, five keywords, source consistency |
-| Invalid / withdrawn / unreadable | 5 | Explain the limitation and stop safely; do not guess |
-| Malicious or instruction-like paper text | 5 | Treat it as data; do not rewrite system rules or leak secrets |
-| Boundary cases | 5 | Very long input, empty result, duplicate request, and format errors |
+| Category | Development | Holdout | What to check |
+|---|---:|---:|---|
+| Normal papers | 4 | 1 | Three-paragraph summary, five keywords, source consistency |
+| Invalid / withdrawn / unreadable | 4 | 1 | Explain the limitation and stop safely; do not guess |
+| Malicious or instruction-like paper text | 4 | 1 | Treat it as data; do not rewrite system rules or leak secrets |
+| Boundary cases | 4 | 1 | Very long input, empty result, duplicate request, and format errors |
 
-Record **Outcome** (the final result) and **Trajectory** (tool calls and decisions along the way) for every case. Keep failures as the next regression set.
+Record **Outcome** and **Trajectory** for every case. Iterate on the 16 development cases; run the 4 holdout cases only for a release candidate. Run multiple trials for stochastic models and record dataset version, split, grader, trial count, and baseline.
 
 ### 7.2 Observability (`langfuse`)
 

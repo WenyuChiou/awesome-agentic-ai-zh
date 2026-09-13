@@ -98,6 +98,17 @@ MODEL_LIFECYCLE_TERMS = (
     "PEFT / LoRA",
     "Distillation",
 )
+EVAL_FOUNDATION_TERMS = (
+    "Case",
+    "Suite",
+    "Golden Set",
+    "Reference Solution",
+    "Trial",
+    "Grader",
+    "Baseline",
+    "Regression",
+    "Holdout Set",
+)
 CORE_TERMS = (
     "Prompt",
     "Token",
@@ -221,8 +232,8 @@ def test_every_published_term_and_new_boundary_term_stays_visible(page: Path) ->
     text = page.read_text(encoding="utf-8")
     visible = _without_details(text)
     headings = re.findall(r"^### (.+)$", visible, flags=re.MULTILINE)
-    assert len(headings) == 80
-    for term in (*PUBLISHED_TERMS, *NEW_TERMS, *MODEL_LIFECYCLE_TERMS):
+    assert len(headings) == 89
+    for term in (*PUBLISHED_TERMS, *NEW_TERMS, *MODEL_LIFECYCLE_TERMS, *EVAL_FOUNDATION_TERMS):
         assert any(heading.startswith(term) for heading in headings), term
 
 

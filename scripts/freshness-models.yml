@@ -177,10 +177,11 @@ agent_memory_fact_pack:
 
 stage07_fact_pack:
   canonical: 'stages/07-multi-agent-production.md'
-  verified_on: '2026-08-31'
+  verified_on: '2026-09-13'
   scope: ['evals', 'observability', 'human-approval', 'persistence', 'recovery', 'orchestration', 'resources']
   official_sources:
     anthropic_evals: 'https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents'
+    openai_graders: 'https://platform.openai.com/docs/api-reference/graders?api-mode=chat'
     anthropic_agent_patterns: 'https://www.anthropic.com/engineering/building-effective-agents'
     openai_tracing: 'https://openai.github.io/openai-agents-python/tracing/'
     openai_human_in_the_loop: 'https://openai.github.io/openai-agents-python/human_in_the_loop/'
@@ -191,7 +192,7 @@ stage07_fact_pack:
 
 walkthrough_fact_pack:
   canonical: 'walkthroughs/build-first-agent-in-7-steps.md'
-  verified_on: '2026-08-31'
+  verified_on: '2026-09-13'
   scope: ['models', 'frameworks', 'evals', 'observability', 'human-approval', 'interfaces']
   official_sources:
     anthropic_model_ids: 'https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions'

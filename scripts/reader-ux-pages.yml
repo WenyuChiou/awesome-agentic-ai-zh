@@ -1374,6 +1374,7 @@ pages:
     visible_section_order:
       - learning-goals
       - core-terms
+      - eval-foundations
       - entry-conditions
       - required-reading
       - control-questions
@@ -1404,7 +1405,7 @@ pages:
       ordered_external_urls: true
       resource_url_ratings: true
       literals:
-        - "2026-08-31"
+        - "2026-09-13"
         - "OpenRouter"
         - "Pi"
         - "OpenCode"
@@ -1420,6 +1421,10 @@ pages:
         zh-TW: {heading: "🧩 十六個核心詞（分三組讀）", anchor: -十六個核心詞分三組讀}
         en: {heading: "🧩 Sixteen Core Terms (Read Them in Three Groups)", anchor: -sixteen-core-terms-read-them-in-three-groups}
         zh-Hans: {heading: "🧩 十六个核心词（分三组读）", anchor: -十六个核心词分三组读}
+      eval-foundations:
+        zh-TW: {heading: "🧪 九個 Eval 基礎積木（先學會怎麼出考卷）", anchor: -九個-eval-基礎積木先學會怎麼出考卷}
+        en: {heading: "🧪 Nine Eval Foundation Building Blocks (Learn to Write the Test First)", anchor: -nine-eval-foundation-building-blocks-learn-to-write-the-test-first}
+        zh-Hans: {heading: "🧪 九个 Eval 基础积木（先学会怎么出考卷）", anchor: -九个-eval-基础积木先学会怎么出考卷}
       entry-conditions:
         zh-TW: {heading: "🚪 進入條件", anchor: -進入條件}
         en: {heading: "🚪 Entry Conditions", anchor: -entry-conditions}
@@ -3165,9 +3170,9 @@ pages:
       en: resources/glossary.en.md
       zh-Hans: resources/glossary.zh-Hans.md
     max_visible_chars:
-      zh-TW: 13589
-      en: 22756
-      zh-Hans: 13895
+      zh-TW: 14161
+      en: 24446
+      zh-Hans: 14471
     max_open_details: 0
     required_details_count: 2
     visible_section_order:

@@ -360,6 +360,42 @@ An **Eval** compares a Prompt, model, or Agent with fixed inputs, success criter
 
 📍 Start: [Stage 2](../stages/02-prompt-engineering.en.md); Agent systems: [Stage 7](../stages/07-multi-agent-production.en.md)
 
+### Case/Task
+
+An Eval **Case/Task** is one question on the exam: fixed input, test environment, and success criteria. Without a clear case, you cannot tell whether two runs tested the same thing.
+
+### Suite
+
+A **Suite** is a group of cases that run together and have a version. Record that version; otherwise, “90% this time” cannot be fairly compared with an earlier score from a different set of questions.
+
+### Golden Set/Reference Set
+
+A **Golden Set/Reference Set** contains human-reviewed cases that represent real work and their expected criteria. Golden Set is a common practical label, not a universal vendor standard; it checks the system and is not training data or Few-shot examples.
+
+### Reference Solution/Criteria
+
+**Reference Solution/Criteria** explains what success means. Agent tasks may have more than one good answer, so this can define required evidence, acceptable ranges, prohibited behavior, and a rubric instead of one exact text answer.
+
+### Trial
+
+A **Trial** is one complete execution of a case. Model output can change, so high-risk or unstable cases need multiple trials; one run is not proof of fixed capability.
+
+### Grader
+
+A **Grader** applies rules to a trial. Prefer a deterministic grader when code can check the result exactly. For fuzzy quality, a model or person may grade it, but keep the rubric, version, and original evidence.
+
+### Baseline
+
+A **Baseline** is the comparison point measured before a change. It must use the same case version, environment, trial count, and thresholds, or the before-and-after scores are not a fair comparison.
+
+### Regression
+
+A **Regression** is a decline beyond a predefined threshold relative to the baseline. It can affect quality, cost, safety, or reliability. Review multiple trials and failed cases before deciding whether to block a release.
+
+### Holdout Set
+
+A **Holdout Set** contains frozen cases that are not repeatedly used for tuning. Use development/reference cases while iterating; open the holdout only for a release candidate or final validation so the system is not shaped only around questions it has already seen.
+
 ### Observability
 
 **Observability** leaves inspectable records of Agent steps, tools, state, timing, usage, and results. It works like a flight recorder; redact secrets, private data, and unnecessary Prompt content.

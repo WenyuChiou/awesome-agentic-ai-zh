@@ -360,6 +360,42 @@
 
 📍 入门：[Stage 2](../stages/02-prompt-engineering.zh-Hans.md)；Agent 系统：[Stage 7](../stages/07-multi-agent-production.zh-Hans.md)
 
+### Case/Task（案例/任务）
+
+**Case/Task** 是 Eval 考卷上的一道题：固定输入、测试环境和成功条件。没有清楚的 case，就不知道两次执行是不是在考同一件事。
+
+### Suite（测试组）
+
+**Suite** 是一起执行和版本化的一组 cases。报告要记录 suite 的版本，否则“这次 90 分”不能和换过题目的上次直接比较。
+
+### Golden Set/Reference Set（黄金集/参考集）
+
+**Golden Set/Reference Set** 是人先审查过、能代表真实工作的案例与预期标准。Golden Set 是常见实践叫法，不是跨供应商的正式规范；它用来检查系统，不等于训练数据或 Few-shot 示例。
+
+### Reference Solution/Criteria（参考答案/标准）
+
+**Reference Solution/Criteria** 说明怎样才算成功。Agent 任务常有不止一种好答案，所以可以写必要证据、允许范围、禁止行为和 rubric，不一定只放一段标准文字。
+
+### Trial（试跑）
+
+**Trial** 是同一个 case 的一次完整执行。模型输出可能变化，所以高风险或不稳定案例要跑多次，不能用一次结果假装成固定能力。
+
+### Grader（评分器）
+
+**Grader** 按规则判断 trial。能用程序精确检查的先用 deterministic grader；模糊质量可以加模型或人工评分，但要留下 rubric、版本和原始证据。
+
+### Baseline（基线）
+
+**Baseline** 是修改前的比较起点。它必须使用同一版 cases、环境、trial 次数和阈值，否则前后分数不能公平比较。
+
+### Regression（回归）
+
+**Regression** 是新版本相对 baseline 出现超过阈值的退步，可能发生在质量、成本、安全或可靠性。先看多次 trials 和失败案例，再决定是否阻挡发布。
+
+### Holdout Set（保留测试集）
+
+**Holdout Set** 是平常不拿来反复调整的冻结案例。开发时使用 development/reference cases；准备发布或做最后验证时才打开 holdout，避免把系统调成只会回答已经看过的考题。
+
 ### Observability
 
 **Observability** 把 Agent 的步骤、工具、状态、时间、usage 和结果留下可查询记录。它像行车记录仪；记录时仍要遮住 secret、私人数据和不必要的 Prompt 内容。

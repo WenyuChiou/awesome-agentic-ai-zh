@@ -2,7 +2,7 @@
 
 > **繁體中文** | [简体中文](./07-multi-agent-production.zh-Hans.md) | [English](./07-multi-agent-production.en.md)
 
-<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-08-31; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
+<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-09-13; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
 
 這一關要做的是 **Agent Production Engineering（Agent 上線工程）**：先用 **Eval** 證明結果真的對，再用 **Observability** 看見過程，接著放入人工核准、**Checkpoint** 與復原，最後才部署。它不只要「偶爾成功」，還要能被檢查、能安全停下，也能從正確位置繼續。
 
@@ -73,6 +73,35 @@
 </table>
 
 **Prompt（提示）**仍然是你交給模型的指令與材料；本章不是把 Prompt 丟掉，而是替它加上能執行、檢查和復原的外圍系統。
+
+## 🧪 九個 Eval 基礎積木（先學會怎麼出考卷）
+
+先別急著裝評測工具。Eval 就像替 Agent 出考卷：你要先決定考哪一題、怎樣算答對、要考幾次，以及哪一份題目不能偷看。
+
+<table>
+<thead><tr><th scope="col">先做哪件事</th><th scope="col">關鍵詞</th><th scope="col">五歲也能懂的說法</th><th scope="col">正確術語</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">先把考卷做好</th><td><strong>Case／Task（案例／任務）</strong></td><td>考卷上的一題</td><td>一個固定輸入、測試環境與成功條件</td></tr>
+<tr><td><strong>Suite（測試組）</strong></td><td>把很多題訂成一本考卷</td><td>一起執行、版本化與比較的一組 cases</td></tr>
+<tr><td><strong>Golden Set／Reference Set（黃金集／參考集）</strong></td><td>大家先確認過的可信題目</td><td>已審查的代表案例與預期標準；Golden Set 是常見實務叫法，不是各家共用的正式規格</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">再決定怎麼評</th><td><strong>Reference Solution／Criteria（參考答案／標準）</strong></td><td>不是只看一句答案，還要看怎樣才算做好</td><td>可接受結果、必要證據、禁止行為與評分規則</td></tr>
+<tr><td><strong>Trial（試跑）</strong></td><td>同一題實際做一次</td><td>某個 case 的一次完整執行；模型有隨機性時要跑多次</td></tr>
+<tr><td><strong>Grader（評分器）</strong></td><td>照規則改考卷的人</td><td>用程式規則、字串／相似度、模型評分或人工檢查判定結果</td></tr>
+</tbody>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">最後判斷能不能發布</th><td><strong>Baseline（基線）</strong></td><td>改之前先量一次</td><td>同一版本 cases、環境與門檻下的比較起點</td></tr>
+<tr><td><strong>Regression（回歸）</strong></td><td>新版本反而退步</td><td>相對 baseline 超過門檻的品質、成本、安全或可靠性下降</td></tr>
+<tr><td><strong>Holdout Set（保留測試集）</strong></td><td>平常不偷看的最後考卷</td><td>不拿來反覆調 Prompt／模型；只在 release candidate 或最後驗證時使用的凍結案例</td></tr>
+</tbody>
+</table>
+
+**Golden Set 不是拿去訓練模型，也不是 Few-shot 範例。**它是你拿來檢查系統的參考題。平常調整時用 development cases；準備發布時才打開 frozen holdout。每次報告都要寫 dataset version、split、trial 次數、grader 與 baseline，不要只留一個通過率。
+
+Anthropic 的 [Agent Eval 指南](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)把 task、trial、grader、trajectory 與 outcome 分開；OpenAI 的 [Graders API](https://platform.openai.com/docs/api-reference/graders?api-mode=chat)則列出字串、相似度、模型與多重 grader。工具不同，先把上述證據說清楚的原則相同。
+
+![Agent Eval 證據迴圈：先建立 Case、Suite 與參考標準，用多次 Trial 和 Grader 比較 Baseline；開發時只用 Development Cases，Release Candidate 才打開 Frozen Holdout，失敗案例去識別化後回到下一版 Suite](../resources/diagrams/eval-evidence-loop.png)
 
 ## 🚪 進入條件
 
@@ -221,7 +250,7 @@ IBM 用 `Goal → Action → Observation → Adjustment` 說明 Loop Engineering
 
 | 順序 | 先回答的問題 | 最少要留下的證據 | 沒通過時怎麼做 |
 |---:|---|---|---|
-| 1. **Eval** | 最後結果真的對嗎？中間有沒有走危險捷徑？ | 20–50 個代表真實工作的 cases；Outcome、Trajectory、grader、成本與失敗門檻 | 先補案例或修行為，不進部署 |
+| 1. **Eval** | 最後結果真的對嗎？中間有沒有走危險捷徑？ | Anthropic 建議先從 20–50 個代表真實工作的 cases 起步；這是實務起點，不是所有專案的硬性最低數。另記 Outcome、Trajectory、grader、成本與失敗門檻 | 先補案例或修行為，不進部署 |
 | 2. **Observability** | 壞掉時找得到哪一步嗎？ | task ID、trace／span、tool call、錯誤類型、延遲、token 與敏感資料遮罩 | 先讓失敗看得見，再改 Prompt 或模型 |
 | 3. **Approval／Recovery** | 高風險動作能先停下嗎？中斷後能安全續跑嗎？ | 人工核准點、版本化 checkpoint、resume 測試、idempotency key、拒絕／timeout／補償路線 | fail closed，停止自動執行並交給人 |
 | 4. **Deploy** | 前三項能在新版本重跑嗎？ | health／readiness、rate limit、rollback、停止開關、版本與 release 紀錄 | 保留舊版或回滾，不把「服務有啟動」當成功 |
@@ -332,7 +361,7 @@ python test.py
 4. 保存 checkpoint；模擬程式中斷後 resume。
 5. 用 idempotency key 證明同一次發布重跑也只寫入一次。
 
-最後輸出一張 **execution receipt（執行收據）**：task ID、Outcome、Trajectory、工具、來源、耗時、token、錯誤、checkpoint 版本與人工核准紀錄。先用 5 個固定題目做 baseline，再把真實失敗逐步加到 20 個以上；任何一題退步，就先不要部署。
+最後輸出一張 **execution receipt（執行收據）**：task ID、Outcome、Trajectory、工具、來源、耗時、token、錯誤、checkpoint 版本與人工核准紀錄。先用 5 個 development cases 做 baseline，再把真實失敗逐步加進版本化 suite。若結果看起來退步，先重跑足夠 trials，確認是否超過預先寫好的門檻，再檢查失敗案例；不能因一次隨機失敗就直接判定整版不可部署。
 
 單一 Agent 版本穩定後，才把「找資料」與「審查」拆成不同 Agent，比較品質、成本與延遲是否真的更好。
 
@@ -361,7 +390,7 @@ python test.py
 - [τ²-bench](https://github.com/sierra-research/tau2-bench)：需要工具與多輪互動的任務。
 - [GAIA](https://huggingface.co/gaia-benchmark)：一般助理任務。
 
-不要把頁面上的某個 SOTA 分數抄成永久事實。上線判斷應以自己的案例、rubric、完整 trajectory、成本與延遲為主。每次換模型、Prompt、Tool 或 Harness，都重跑同一組 hold-out cases。
+不要把頁面上的某個 SOTA 分數抄成永久事實。上線判斷應以自己的案例、rubric、完整 trajectory、成本與延遲為主。每次換模型、Prompt、Tool 或 Harness，先重跑 development／reference cases；frozen holdout 不拿來逐次調整，只在 release candidate 或最後驗證時打開。
 
 </details>
 
@@ -406,7 +435,7 @@ python test.py
   </tbody>
 </table>
 
-<small>資料查核：2026-08-31 UTC</small>
+<small>資料查核：2026-09-13 UTC</small>
 
 ## ✅ Stage 7 之後的自我檢查
 

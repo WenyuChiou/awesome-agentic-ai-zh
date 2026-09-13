@@ -22,7 +22,7 @@ PAGES = {
 }
 FRESHNESS = (
     "<!-- freshness: canonical=walkthroughs/build-first-agent-in-7-steps.md; "
-    "verified_on=2026-08-31; "
+    "verified_on=2026-09-13; "
     "scope=models,frameworks,evals,observability,human-approval,interfaces; "
     "max_age_days=90 -->"
 )
@@ -189,7 +189,7 @@ def test_required_reading_and_freshness_stay_visible(locale: str, page: Path) ->
     text = read(page)
     reading_heading, stage7_heading, stage8_heading = HEADINGS[locale]
     assert FRESHNESS in text
-    assert "2026-08-31 UTC" in text
+    assert "2026-09-13 UTC" in text
     assert reading_heading in text
     reading = text[text.index(reading_heading) : text.index("## Stage 0")]
     assert all(url in reading for url in REQUIRED_URLS)
@@ -486,8 +486,11 @@ def test_stage7_teaches_outcome_trajectory_and_safe_resume(locale: str, page: Pa
         positions.append(section.index(marker))
     assert positions == sorted(positions)
     assert "20" in section and "Outcome" in section and "Trajectory" in section
-    for count in ("| 5 |",):
-        assert section.count(count) == 4
+    assert section.count("| 4 | 1 |") == 4
+    assert "|---|---:|---:|---|" in section
+    for term in ("dataset version", "split", "grader", "trial", "baseline"):
+        assert term.lower() in section.lower()
+    assert "development" in section.lower() and "holdout" in section.lower()
     for state_field in (
         '"task_id"',
         '"status"',
@@ -545,7 +548,7 @@ def test_freshness_fact_pack_matches_the_walkthrough_contract() -> None:
     config = yaml.safe_load((ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8"))
     pack = config["walkthrough_fact_pack"]
     assert pack["canonical"] == "walkthroughs/build-first-agent-in-7-steps.md"
-    assert pack["verified_on"] == "2026-08-31"
+    assert pack["verified_on"] == "2026-09-13"
     assert pack["scope"] == [
         "models",
         "frameworks",

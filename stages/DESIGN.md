@@ -333,7 +333,7 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 
 - 圖只整理已經用白話定義過的關係，不能讓新名詞先在圖裡突然出現，也不能用圖片取代可搜尋、可翻譯、可被螢幕閱讀器讀到的正文。
 - 全站預設沿用主頁 README 的舒服、清楚、簡單、直白風格：奶油白底、深藍主字、少量亮色、圓角卡、簡單線條 icon、充足留白與一個主要閱讀方向。每張圖只回答一個核心問題；放不下就拆圖，不能縮字硬塞。
-- 新畫或重畫的概念圖以 Image 2.0 產出 PNG，不用臨時 SVG 代替。舊圖不因這條規則一次全部重做；輪到該章重畫時才套用這個 ratchet。
+- 新畫或重畫的概念圖優先以現行 **GPT-Image-2.5 Sunburst** 產出 PNG，不用臨時 SVG 代替；若執行工具沒有暴露可選 model ID，只記錄「使用目前內建 image generation」，不能假稱指定了 Sunburst。舊圖不因這條規則一次全部重做；輪到該章重畫時才套用這個 ratchet。
 - 三語頁使用同一畫布比例、構圖、格線與語意，各自引用 `.png`、`.en.png`、`.zh-Hans.png`；每張都要有在地化 alt text。三語卡片位置、外距、內距與同層高度保持一致。
 - 箭頭只走留白通道，不穿過文字、icon 或其他卡片；arrowhead、icon、標籤與框線不得互相重疊。所有同層卡片依共同格線、等高與一致內距對齊。
 - 型號、價格、數量與狀態等易變事實，必須和正文採用同一官方證據。沒有通則就不用看似精確的固定數字。
@@ -358,7 +358,8 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 
 - **Stage 0**：prerequisite gateway，使用可見的跳過判斷、單一整合練習、18 筆五星學習資源與短版完成檢查；時間、環境、補充練習與名詞預設收合（見「Stage 0 為什麼可以 skip」）
 - **Stage 5**：分 7 個核心 sub-stage（5.1-5.7）+ 5.8 SDK（選修、包成產品或服務才需要），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
-- **Stage 6 / 7**：直接跳過 進入條件 section（前面 stage 已隱含 prerequisite）
+- **Stage 6**：直接跳過進入條件 section（前面 stage 已隱含 prerequisite）；Stage 7 仍保留可見進入條件，讓讀者先確認 Stage 4／5／6 的必要基礎。
+- **Stage 7 Eval**：16 個 production 核心詞之後，另放可見的 9 個 Eval 基礎積木：Case／Task、Suite、Golden／Reference Set、Reference Solution／Criteria、Trial、Grader、Baseline、Regression、Holdout Set。先說白話，再保留正式術語；Golden Set 要明寫為常見實務叫法，不冒充跨供應商標準，也不等同訓練資料或 Few-shot。Development cases 用來調整，frozen holdout 只在 release candidate／最後驗證使用。報告保留 dataset version、split、trials、grader、Outcome、Trajectory 與 baseline；不能把 20–50 cases 說成所有專案的硬性最低數，也不能因單次隨機失敗直接判定 regression。
 - **Stage 7.5**：reading-map（進階概念 + reading path），沒有 動手練習、只有輕量 self-check——是 production 之後的 frontier 概念地圖，不寫 code
 - **Stage 8**：兩軌共用的 interface 選擇 hub。可見主線先定義 8 個粗體核心詞，再用平行選擇圖分清 Search／Fetch、Browser Use、Computer Use、Sandbox，接著保留四道安全檢查、兩題第一步、五筆精選入口、21 筆完整五星資源與短版 self-check。Computer Use／benchmark、Browser Use、Sandbox、兩軌進階做法、安全案例與未來介面放進 9 個預設關閉選單；完整資源表固定用 `5／5／4／5／2` 五個真正合併的 rowgroup 並保持可見。四張介面卡不是固定升級順序，舊 heading 以空 anchor 保留深連結。
 
@@ -383,6 +384,13 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 - 通常 3-5 個（Stage 1 / 3 因為要 cover 多個概念，會到 5-6 個）
 - 每個都有具體成功標準（跑出某個輸出、看到某個錯誤等）
 - **必須是「不動手就學不會」的東西**——光讀光看不算
+
+### Eval 證據契約
+
+- 初學者第一次遇到 Eval 時，先看懂「一道題 → 一組有版本的題 → 每題怎麼判 → 改前基線 → 開發集反覆改 → 保留集最後驗」；工具與 dashboard 排在概念之後。
+- Eval suite 至少記錄 dataset version、case ID、split、success criteria／reference、grader、trial 次數、Outcome、Trajectory 與 baseline。安全、成本與可靠性也可以是 regression，不只比較文字品質。
+- 能用程式精確檢查的先用 deterministic grader；使用模型或人工評分時，留下 rubric、grader 版本與原始證據。空輸出、格式錯誤或缺少必要證據不得默認通過。
+- Development／reference cases 可在每次修改時重跑；frozen holdout 不拿來逐次調 Prompt、模型或 Harness，只在 release candidate／最後驗證使用。模型有隨機性時以多次 trials 與預先寫好的門檻判斷，不以單次波動阻擋或放行。
 - 動手練習 跟 self-check 是 **conceptual coverage 對應**（不是 1:1 編號對應）——跑過 動手練習 後，self-check 整體應該能過；單一條 self-check 可能對應到多個 動手練習
 - Stage 5 因為 sub-section（5.1-5.8）結構，動手練習 分散在各 sub-section
 

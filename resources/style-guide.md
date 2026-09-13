@@ -308,7 +308,7 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 
 - 先在正文用白話定義核心詞，再用圖整理它們的關係；不要讓圖成為讀者第一次遇到術語的地方。
 - 預設參考主頁 README：奶油白底、深藍主字、少量亮色、圓角卡、簡單線條 icon、充足留白與一個主要閱讀方向。每張圖只回答一個核心問題；資訊太多時拆成兩張，不縮字硬塞。
-- 新畫或重畫的概念圖以 Image 2.0 產出 PNG，不用臨時 SVG 代替；舊圖輪到該章重畫時才套用，不一次改壞全站歷史。
+- 新畫或重畫的概念圖優先以現行 **GPT-Image-2.5 Sunburst** 產出 PNG，不用臨時 SVG 代替；若執行工具沒有暴露可選 model ID，就只能記錄「使用目前內建 image generation」，不能假稱指定了 Sunburst。舊圖輪到該章重畫時才套用，不一次改壞全站歷史。
 - **頂部 Banner 試版例外**：明確核准的 README banner 使用自包含動畫 SVG，內嵌各語言的原版插圖，不重畫構圖、字體、圖示或配色。三語共用路線順序與 18 秒時間軸，光點依各自原圖接線移動、節點外框短暫加亮。原版代表性圖示也要有意義地動：CLI 游標輸入、工具輕轉、Hub 箭頭旋轉、清單確認及角色回饋；13 個裁切區域重用原圖，不另換圖示，文字與卡片不動。A、B 依序動，最後 2 秒完全靜止。內嵌原圖使用高品質壓縮，同版 PNG 提供靜態、減少動態與 PDF 使用；文件站有停止／播放控制，README 有靜態圖入口。SVG 不含 JavaScript 或外部資源，不轉 GIF，不提高容量上限；其他教學圖仍依上面的 PNG 規則。
 - 三語圖保持同一畫布比例、構圖、共同格線、順序、數字與限制，並各自提供正確語系的圖檔與 alt text。卡片位置、外距、內距與同層高度要一致。
 - 圖裡的精確數字也要有官方依據。沒有固定通則時，寫「多個」「依模型而異」等誠實文字，不要為了好看造出範圍。
@@ -316,6 +316,13 @@ PR 之前請先讀完本文。專案維護者也會用這份指南做 review。
 - 逐張以原尺寸檢查安全邊界、文字、繁簡字形、箭頭、共同格線與對比；任何文字、icon、箭頭或框線重疊都視為失敗。最後跑 image-locale gate 與三語 MkDocs build。
 - **角色圖試版例外**：使用者核准 `branch-decision-tree` 沿用原畫加入五個代表性圖示的小動作，一次只動一個角色，文字、卡片、接線固定。18 秒循環的最後 2 秒靜止；三語沿用各自原畫布，不另換圖示或重排文字。保留靜態 PNG、PDF、減少動態與停止／播放控制，仍用 lazy loading。此試版不表示原圖三語文字已重新核對：採用前須校正舊英文角色名稱等差異；其他圖仍用 PNG，舊學習地圖先修內容再做動畫。
 - 文件站會自動替非首屏教學圖加入 lazy loading、async decoding 與可鍵盤操作的「開啟原圖」入口；README 頂端 banner 保持 eager，不要在各章重複手寫這些 HTML。新增或替換圖檔要通過 `scripts/check-image-delivery.py` 的單圖、單頁、總量與建置後 HTML ratchet，並以 320／375／768／1440 px 人工確認 caption、表格、觸控目標與圖中文字真的讀得到。
+
+### Eval 教學寫法
+
+- 初次解釋 Eval 時，依序介紹 **Case／Task、Suite、Golden／Reference Set、Reference Solution／Criteria、Trial、Grader、Baseline、Regression、Holdout Set**。每個詞先用一句生活比喻，再保留正式術語；重要定義、圖、完成條件與學習資源保持可見。
+- **Golden Set** 是常見實務叫法，不是跨供應商的正式規格。它用來檢查系統，不等於訓練資料或 Few-shot 範例。
+- Development／reference cases 用來反覆改進；frozen holdout 只在 release candidate 或最後驗證時使用。報告至少寫 dataset version、split、case ID、trial 次數、grader、Outcome／Trajectory 與 baseline。
+- 能精確判斷就先用 deterministic grader；模型或人工 grader 必須附 rubric 與版本。Regression 要依多次 trials、預先定義的門檻與失敗案例判斷，不把單次隨機波動寫成必然退步。
 
 ### Reader UX ratchet
 

@@ -311,7 +311,7 @@ PR 之前请先读完本文。项目维护者也会用这份指南做 review。
 
 - 先在正文用白话定义核心词，再用图整理它们的关系；不要让图片成为读者第一次遇到术语的地方。
 - 默认参考主页 README：奶油白底、深蓝主字、少量亮色、圆角卡片、简单线条 icon、充足留白和一个主要阅读方向。每张图只回答一个核心问题；信息太多时拆成两张，不缩小文字硬塞。
-- 新画或重画的概念图用 Image 2.0 生成 PNG，不用临时 SVG 代替；旧图轮到该章重画时再套用，不一次迁移所有历史图片。
+- 新画或重画的概念图优先使用现行 **GPT-Image-2.5 Sunburst** 生成 PNG，不用临时 SVG 代替；如果执行工具没有暴露可选择的 model ID，只能记录“使用当前内置 image generation”，不能假称指定了 Sunburst。旧图轮到该章重画时再套用，不一次迁移所有历史图片。
 - **顶部 Banner 试版例外**：明确批准的 README banner 使用自包含动画 SVG，内嵌各语言的原版插图，不重画构图、字体、图标或配色。三语共用路线顺序与 18 秒时间轴，光点沿各自原图的连线移动、节点外框短暂加亮。原版代表性图标也要有意义地动：CLI 光标输入、工具轻转、Hub 箭头旋转、清单确认及角色反馈；13 个裁切区域复用原图，不另换图标，文字与卡片不动。A、B 依次动，最后 2 秒完全静止。内嵌原图使用高质量压缩，同版 PNG 用于静态、减少动态效果与 PDF；文档站有停止／播放控制，README 有静态图入口。SVG 不含 JavaScript 或外部资源，不转 GIF，不提高容量上限；其他教学图仍按上面的 PNG 规则。
 - 三语图保持相同画布比例、构图、共同网格、顺序、数字和限制，并分别提供正确语言的图片与 alt text。卡片位置、外边距、内边距和同层高度应一致。
 - 图里的精确数字也要有官方依据。没有固定规则时，写“多个”“依模型而异”等诚实文字，不要为了好看造出范围。
@@ -319,6 +319,13 @@ PR 之前请先读完本文。项目维护者也会用这份指南做 review。
 - 逐张以原始尺寸检查安全边距、文字、简繁字形、箭头、共同网格和对比；任何文字、icon、箭头或边框重叠都视为失败。最后运行 image-locale gate 和三语 MkDocs build。
 - **角色图试版例外**：用户批准 `branch-decision-tree` 沿用原画加入五个代表性图标的小动作，一次只动一个角色，文字、卡片、连线固定。18 秒循环的最后 2 秒静止；三语沿用各自原画布，不另换图标或重排文字。保留静态 PNG、PDF、减少动态与停止／播放控制，仍用 lazy loading。此试版不表示原图三语文字已重新核对：采用前须校正旧英文角色名称等差异；其他图仍用 PNG，旧学习地图先修内容再做动画。
 - 文档站会自动为非首屏教学图加入 lazy loading、async decoding 和可用键盘操作的“打开原图”入口；README 顶端 banner 保持 eager，不要在各章重复手写这些 HTML。新增或替换图片必须通过 `scripts/check-image-delivery.py` 的单图、单页、总量和构建后 HTML ratchet，并以 320／375／768／1440 px 人工确认 caption、表格、触控目标和图中文字确实能读。
+
+### Eval 教学写法
+
+- 第一次解释 Eval 时，按顺序介绍 **Case/Task、Suite、Golden/Reference Set、Reference Solution/Criteria、Trial、Grader、Baseline、Regression、Holdout Set**。每个词先用一句生活比喻，再保留正式术语；重要定义、图、完成条件和学习资源保持可见。
+- **Golden Set** 是常见实践叫法，不是跨供应商的正式规范。它用来检查系统，不等于训练数据或 Few-shot 示例。
+- Development/reference cases 用来反复改进；frozen holdout 只在 release candidate 或最后验证时使用。报告至少记录 dataset version、split、case ID、trial 次数、grader、Outcome/Trajectory 和 baseline。
+- 能精确判断就先用 deterministic grader；模型或人工 grader 必须附 rubric 和版本。Regression 要依据多次 trials、预先定义的阈值和失败案例判断，不能把一次随机波动写成必然退步。
 
 ### Reader UX ratchet
 

@@ -20,15 +20,23 @@ DIAGRAMS = {
     "zh-TW": (
         ROOT / "resources/diagrams/agent-engineering-control-questions.png",
         ROOT / "resources/diagrams/inside-a-graph.png",
+        ROOT / "resources/diagrams/eval-evidence-loop.png",
     ),
     "en": (
         ROOT / "resources/diagrams/agent-engineering-control-questions.en.png",
         ROOT / "resources/diagrams/inside-a-graph.en.png",
+        ROOT / "resources/diagrams/eval-evidence-loop.en.png",
     ),
     "zh-Hans": (
         ROOT / "resources/diagrams/agent-engineering-control-questions.zh-Hans.png",
         ROOT / "resources/diagrams/inside-a-graph.zh-Hans.png",
+        ROOT / "resources/diagrams/eval-evidence-loop.zh-Hans.png",
     ),
+}
+EVAL_DIAGRAM_ALT_MARKERS = {
+    "zh-TW": ("Development Cases", "Frozen Holdout", "下一版 Suite"),
+    "en": ("Development Cases", "Frozen Holdout", "next Suite"),
+    "zh-Hans": ("Development Cases", "Frozen Holdout", "下一版 Suite"),
 }
 CONTROL_DIAGRAM_ALT_MARKERS = {
     "zh-TW": (
@@ -104,10 +112,35 @@ CORE_LABELS = {
     ),
 }
 CORE_SECTION_HEADINGS = {
-    "zh-TW": ("## 🧩 十六個核心詞（分三組讀）", "## 🚪 進入條件"),
-    "en": ("## 🧩 Sixteen Core Terms (Read Them in Three Groups)", "## 🚪 Entry Conditions"),
-    "zh-Hans": ("## 🧩 十六个核心词（分三组读）", "## 🚪 进入条件"),
+    "zh-TW": ("## 🧩 十六個核心詞（分三組讀）", "## 🧪 九個 Eval 基礎積木（先學會怎麼出考卷）"),
+    "en": ("## 🧩 Sixteen Core Terms (Read Them in Three Groups)", "## 🧪 Nine Eval Foundation Building Blocks (Learn to Write the Test First)"),
+    "zh-Hans": ("## 🧩 十六个核心词（分三组读）", "## 🧪 九个 Eval 基础积木（先学会怎么出考卷）"),
 }
+EVAL_FOUNDATION_HEADINGS = {
+    "zh-TW": (
+        "## 🧪 九個 Eval 基礎積木（先學會怎麼出考卷）",
+        "## 🚪 進入條件",
+    ),
+    "en": (
+        "## 🧪 Nine Eval Foundation Building Blocks (Learn to Write the Test First)",
+        "## 🚪 Entry Conditions",
+    ),
+    "zh-Hans": (
+        "## 🧪 九个 Eval 基础积木（先学会怎么出考卷）",
+        "## 🚪 进入条件",
+    ),
+}
+EVAL_FOUNDATION_TERMS = (
+    "Case",
+    "Suite",
+    "Golden Set",
+    "Reference Solution",
+    "Trial",
+    "Grader",
+    "Baseline",
+    "Regression",
+    "Holdout Set",
+)
 PAGE_TITLES = {
     "zh-TW": "# Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph",
     "en": "# Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs",
@@ -137,6 +170,7 @@ CURRENT_FACT_URLS = {
     "https://openai.github.io/openai-agents-python/multi_agent/",
     "https://www.ibm.com/think/topics/loop-engineering",
     "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "https://platform.openai.com/docs/api-reference/graders?api-mode=chat",
     "https://openai.github.io/openai-agents-python/tracing/",
     "https://openai.github.io/openai-agents-python/human_in_the_loop/",
     "https://docs.langchain.com/oss/python/langgraph/persistence",
@@ -254,6 +288,36 @@ def test_all_core_terms_are_bold_and_defined_before_exercises(
     assert positions == sorted(positions)
     assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', core) == ["4", "6", "6"]
     assert len(re.findall(r"<tr>", core)) == 17
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_eval_foundations_are_visible_grouped_and_before_entry_conditions(
+    locale: str, page: Path
+) -> None:
+    text = page.read_text(encoding="utf-8")
+    start_heading, next_heading = EVAL_FOUNDATION_HEADINGS[locale]
+    start = text.index(start_heading)
+    end = text.index(next_heading, start)
+    section = text[start:end]
+    visible = _without_closed_details(section)
+    assert start_heading in visible
+    positions = []
+    for term in EVAL_FOUNDATION_TERMS:
+        marker = re.compile(rf"<strong>[^<]*{re.escape(term)}[^<]*</strong>")
+        match = marker.search(visible)
+        assert match is not None, term
+        positions.append(match.start())
+    assert positions == sorted(positions)
+    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', visible) == ["3", "3", "3"]
+    assert len(re.findall(r"<tr>", visible)) == 10
+    assert re.search(r"Golden Set[^\n]*(?:not training|不是[^\n]*(?:訓練|训练))", visible, re.I)
+    assert "few-shot" in visible.lower()
+    assert "20–50" in text and (
+        "not a universal minimum" in text
+        or "不是所有專案的硬性最低數" in text
+        or "不是所有项目的硬性最低数" in text
+        or "不是通用最低要求" in text
+    )
 
 
 @pytest.mark.parametrize("locale,page", PAGES.items())
@@ -379,7 +443,7 @@ def test_three_locales_have_the_same_external_urls_and_current_fact_sources() ->
     assert url_lists["zh-TW"] == url_lists["en"] == url_lists["zh-Hans"]
     assert CURRENT_FACT_URLS <= set(url_lists["zh-TW"])
     for page in PAGES.values():
-        assert "2026-08-31 UTC" in page.read_text(encoding="utf-8")
+        assert "2026-09-13 UTC" in page.read_text(encoding="utf-8")
 
 
 @pytest.mark.parametrize("page", PAGES.values())
@@ -423,6 +487,10 @@ def test_static_leaderboard_and_stale_project_claims_are_absent(page: Path) -> N
         "Fable 5",
         "Mythos 5",
         "Opus 4.8",
+        "Rerun the same hold-out cases whenever you change",
+        "每次更换模型、Prompt、Tool 或 Harness，都重新运行同一组 hold-out cases",
+        "Start with five fixed questions",
+        "先用 5 个固定题目做 baseline",
         '""',
         "“”",
     )
@@ -439,6 +507,7 @@ def test_locale_diagrams_are_distinct_large_assets_and_referenced() -> None:
     for locale, diagrams in DIAGRAMS.items():
         page_text = PAGES[locale].read_text(encoding="utf-8")
         assert all(marker in page_text for marker in CONTROL_DIAGRAM_ALT_MARKERS[locale])
+        assert all(marker in page_text for marker in EVAL_DIAGRAM_ALT_MARKERS[locale])
         for diagram in diagrams:
             data = diagram.read_bytes()
             assert diagram.suffix == ".png"
@@ -449,12 +518,24 @@ def test_locale_diagrams_are_distinct_large_assets_and_referenced() -> None:
                 assert (width, height) == (1672, 941)
             hashes.add(hashlib.sha256(data).hexdigest())
             assert f"../resources/diagrams/{diagram.name}" in page_text
-    assert len(hashes) == 6
+    assert len(hashes) == 9
 
 
 def test_control_questions_use_png_only() -> None:
     diagram_dir = ROOT / "resources/diagrams"
     assert not list(diagram_dir.glob("agent-engineering-control-questions*.svg"))
+    assert not list(diagram_dir.glob("eval-evidence-loop*.svg"))
+
+
+def test_eval_diagram_provenance_uses_complete_terms_and_official_model_url() -> None:
+    provenance = (ROOT / "resources/diagrams/locale-variant-prompts.md").read_text(
+        encoding="utf-8"
+    )
+    section = provenance[provenance.index("## 2026-09-13 · Stage 7 Eval 證據迴圈") :]
+    assert "Reference Solution／Criteria／Trial／Grader" in section
+    assert "Baseline／Regression／Holdout Set" in section
+    assert "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst" in section
+    assert "沒有暴露可選 model ID" in section
 
 
 def test_english_page_has_no_untranslated_cjk() -> None:

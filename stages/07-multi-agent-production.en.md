@@ -2,7 +2,7 @@
 
 > [繁體中文](./07-multi-agent-production.md) | [简体中文](./07-multi-agent-production.zh-Hans.md) | **English**
 
-<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-08-31; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
+<!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-09-13; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
 
 This stage is **Agent Production Engineering**: first use **Eval** to prove the result is really correct, then use **Observability** to see the process, add **Human Approval**, **Checkpoint**, **Resume**, **Recovery**, and **Idempotency**, and only then deploy. It should do more than “succeed once”: you should be able to check it, stop it safely, and continue from the right place.
 
@@ -73,6 +73,34 @@ After this stage, you can:
 </table>
 
 A **Prompt** is still the instruction and material you give the model. This stage does not throw prompts away; it adds an execution, checking, and recovery system around them.
+
+## 🧪 Nine Eval Foundation Building Blocks (Learn to Write the Test First)
+
+Before installing an evaluation tool, treat Eval like writing an exam for an Agent: decide which question to ask, what counts as correct, how many times to run it, and which questions must stay unseen.
+
+<table>
+<thead><tr><th scope="col">First do this</th><th scope="col">Key term</th><th scope="col">Plain-language picture</th><th scope="col">Formal meaning</th></tr></thead>
+<tbody>
+<tr><th scope="rowgroup" rowspan="3">Build the exam</th><td><strong>Case/Task</strong></td><td>One question on the exam</td><td>Fixed input, test environment, and success criteria</td></tr>
+<tr><td><strong>Suite</strong></td><td>Many questions bound into one exam</td><td>A versioned group of cases run and compared together</td></tr>
+<tr><td><strong>Golden Set/Reference Set</strong></td><td>Trusted questions checked in advance</td><td>Reviewed representative cases and expected criteria; Golden Set is a common practical label, not a universal vendor standard</td></tr>
+</tbody><tbody>
+<tr><th scope="rowgroup" rowspan="3">Decide how to grade</th><td><strong>Reference Solution/Criteria</strong></td><td>Define what good means</td><td>Acceptable outcomes, required evidence, prohibited behavior, and scoring rules</td></tr>
+<tr><td><strong>Trial</strong></td><td>One actual attempt</td><td>One complete case execution; run multiple trials when stochastic</td></tr>
+<tr><td><strong>Grader</strong></td><td>Mark the exam</td><td>Programmatic, similarity, model, or human judgment</td></tr>
+</tbody><tbody>
+<tr><th scope="rowgroup" rowspan="3">Decide whether to release</th><td><strong>Baseline</strong></td><td>Measure before changes</td><td>Comparison starting point under the same cases, environment, and thresholds</td></tr>
+<tr><td><strong>Regression</strong></td><td>The new version gets worse</td><td>Decline beyond the predefined threshold relative to baseline</td></tr>
+<tr><td><strong>Holdout Set</strong></td><td>The final exam you do not peek at</td><td>Frozen cases used only for a release candidate or final validation</td></tr>
+</tbody></table>
+
+**The Golden Set is not training data or few-shot examples.** Use development/reference cases for iteration; open the frozen holdout only for release-candidate or final validation. Regression requires multiple trials, predefined thresholds, and failure review—not one random failure. Record dataset version, split, trial count, grader, and baseline.
+
+Anthropic suggests starting with 20–50 representative cases as a practical range; this is not a universal minimum.
+
+Anthropic's [Agent Eval guide](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) separates task, trial, grader, trajectory, and outcome; OpenAI's [Graders API](https://platform.openai.com/docs/api-reference/graders?api-mode=chat) lists grader options.
+
+![Agent Eval evidence loop: define Case, Suite, and reference criteria; compare Baseline with multiple Trials and a Grader; iterate on Development Cases, open Frozen Holdout for a Release Candidate, and feed de-identified failures into the next Suite](../resources/diagrams/eval-evidence-loop.en.png)
 
 ## 🚪 Entry Conditions
 
@@ -221,7 +249,7 @@ These four steps are not maturity badges; they are the check route for the same 
 
 | Order | Question to answer | Minimum evidence to leave | What to do if it fails |
 |---:|---|---|---|
-| 1. **Eval** | Is the final result really correct? Did it take a dangerous shortcut? | 20–50 cases representing real work; Outcome, Trajectory, grader, cost, and a failure threshold | Add cases or fix behavior; do not deploy |
+| 1. **Eval** | Is the final result really correct? Did it take a dangerous shortcut? | Anthropic suggests starting with 20–50 cases representing real work as a practical range, not a universal minimum. Also record Outcome, Trajectory, grader, cost, and a failure threshold | Add cases or fix behavior; do not deploy |
 | 2. **Observability** | Can you find the failed step? | Task ID, trace/span, tool call, error type, latency, tokens, and sensitive-data redaction | Make failures visible before changing the Prompt or model |
 | 3. **Approval / Recovery** | Can a risky action stop first? Can it resume safely after interruption? | Human approval point, versioned checkpoint, resume test, idempotency key, and reject/timeout/compensation route | Fail closed, stop automation, and hand it to a person |
 | 4. **Deploy** | Can the first three steps rerun on the new version? | Health/readiness, rate limit, rollback, stop switch, version, and release record | Keep the old version or roll back; “the service started” is not success |
@@ -332,7 +360,7 @@ Start with a single-Agent version:
 4. Save a checkpoint and simulate a restart followed by resume.
 5. Use an idempotency key to prove that rerunning one publication writes only once.
 
-Finally, produce an **execution receipt**: task ID, Outcome, Trajectory, tools, sources, elapsed time, tokens, errors, checkpoint version, and human approval records. Start with five fixed questions, then add real failures until you have at least 20; if any case regresses, do not deploy yet.
+Finally, produce an **execution receipt**: task ID, Outcome, Trajectory, tools, sources, elapsed time, tokens, errors, checkpoint version, and human approval records. Start with five development cases for the baseline, then add real failures to a versioned suite. If results look worse, rerun enough trials, check the predefined threshold, and review the failed cases before deciding whether to block deployment; one random failure is not enough by itself.
 
 Only after the single-Agent version is stable should you split “find sources” and “review” into separate Agents, then compare quality, cost, and latency to see whether the split is actually better.
 
@@ -361,7 +389,7 @@ Ask five questions before trusting a score:
 - [τ²-bench](https://github.com/sierra-research/tau2-bench): tasks with tools and multi-turn interaction.
 - [GAIA](https://huggingface.co/gaia-benchmark): general-assistant tasks.
 
-Do not copy one SOTA score into the page as a permanent fact. Release decisions should use your own cases, rubric, complete trajectories, cost, and latency. Rerun the same hold-out cases whenever you change the model, Prompt, Tool, or Harness.
+Do not copy one SOTA score into the page as a permanent fact. Release decisions should use your own cases, rubric, complete trajectories, cost, and latency. Whenever you change the model, Prompt, Tool, or Harness, rerun the development/reference cases first; do not tune repeatedly on the frozen holdout. Open the holdout only for a release candidate or final validation.
 
 </details>
 
@@ -406,7 +434,7 @@ The 21 entries below are directly visible because readers may return here as a t
   </tbody>
 </table>
 
-<small>Verified: 2026-08-31 UTC</small>
+<small>Verified: 2026-09-13 UTC</small>
 
 ## ✅ Self-Check After Stage 7
 
