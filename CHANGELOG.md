@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-09-13
 
+- **reader UX / README banner links** · 三語 README 頂部移除重複的靜態 PNG 入口，只保留各語言文件站連結；動畫 SVG 本身仍會在不播放時顯示完整構圖，PNG 也繼續供文件站減少動態／無 JavaScript fallback 與三語 PDF 使用。
+
 - **release health / unavailable hosted MCP** · 正式發布掃描確認 YIELD INTELLIGENCE 的 `/yield`、`/yield/mcp` 與 `/pricing` 皆回傳 404；三語 MCP 精選目錄移除目前無法使用的 hosted service，相關 0-reference repository snapshot 一併刪除，總數由 263 改為 262。GitHub repository 仍未封存且 README 仍宣稱服務 live，但教材以實際端點結果為準，不保留失效入口。
 
 - **release / v2026.09.13** · 將 `v2026.09.10` 之後已合併的角色分流動畫試版、三語貢獻契約、Stage 7 Eval 基礎與可執行 Eval 證據整理成同一份三語正式版；Release Notes 明列舊角色圖三語文字尚未完全對齊，校正前以保持展開的角色表為準。Release workflow 會重新鎖定 main SHA、執行完整內容與連結健康檢查、建置並驗證繁中／簡中／英文三份 PDF，通過 `release` Environment 後才建立 tag 與發布附件。

@@ -137,15 +137,47 @@ def test_three_locales_share_graph_topology_and_timing_on_original_art():
 
 
 @pytest.mark.parametrize("locale", banner.LOCALES)
-def test_readme_has_real_localized_static_fallback(locale):
+def test_readme_uses_localized_svg_and_keeps_png_fallback(locale):
     suffix = banner.LOCALES[locale]["suffix"]
     page = ROOT / f"README{suffix}.md"
     refs = [asset for _, asset in locale_gate.scan(page)]
-    for extension in ("svg", "png"):
-        asset = f"resources/diagrams/banner{suffix}.{extension}"
-        assert asset in refs
-        assert (ROOT / asset).is_file()
-    assert re.search(r"(?<!!)\[[^\]]+\]\(resources/diagrams/banner[^)]*\.png\)", page.read_text(encoding="utf-8"))
+    svg_asset = f"resources/diagrams/banner{suffix}.svg"
+    png_asset = f"resources/diagrams/banner{suffix}.png"
+    assert svg_asset in refs
+    assert (ROOT / svg_asset).is_file()
+    assert (ROOT / png_asset).is_file()
+    assert png_asset not in refs
+
+
+def test_generated_banner_png_is_not_reported_as_unreferenced(tmp_path, monkeypatch):
+    diagrams = tmp_path / "resources" / "diagrams"
+    diagrams.mkdir(parents=True)
+    (diagrams / "banner.svg").write_text("<svg/>", encoding="utf-8")
+    (diagrams / "banner.png").write_bytes(b"png")
+    (tmp_path / "README.md").write_text(
+        "![route](resources/diagrams/banner.svg)", encoding="utf-8"
+    )
+    monkeypatch.setattr(locale_gate, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(locale_gate, "DIAGRAM_DIR", diagrams)
+
+    assert locale_gate.unreferenced_diagrams() == []
+
+
+def test_nested_banner_png_is_still_reported_as_unreferenced(tmp_path, monkeypatch):
+    diagrams = tmp_path / "resources" / "diagrams"
+    nested = diagrams / "drafts"
+    nested.mkdir(parents=True)
+    (nested / "banner.svg").write_text("<svg/>", encoding="utf-8")
+    (nested / "banner.png").write_bytes(b"png")
+    (tmp_path / "README.md").write_text(
+        "![draft](resources/diagrams/drafts/banner.svg)", encoding="utf-8"
+    )
+    monkeypatch.setattr(locale_gate, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(locale_gate, "DIAGRAM_DIR", diagrams)
+
+    assert locale_gate.unreferenced_diagrams() == [
+        "resources/diagrams/drafts/banner.png"
+    ]
 
 
 def test_svg_and_its_static_fallback_both_consume_image_budget(tmp_path):

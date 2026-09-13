@@ -6,7 +6,7 @@
 
 ![从 Stage 0–2 共用基础分流到 CLI 与 Agent 路线，共用 Stage 5、8，再按需选择角色路线](resources/diagrams/banner.zh-Hans.svg)
 
-[静态图](resources/diagrams/banner.zh-Hans.png) · [文档站](https://wenyuchiou.github.io/awesome-agentic-ai-zh/zh-Hans/about/)
+[文档站](https://wenyuchiou.github.io/awesome-agentic-ai-zh/zh-Hans/about/)
 
 # awesome-agentic-ai-zh
 
