@@ -9,17 +9,26 @@ from typing import Any
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-import anthropic
-
 from eval_core import require_text, run_cli
 
 
 MODEL = os.environ.get("MODEL", "claude-haiku-4-5-20251001")
 
 
+def new_anthropic_client() -> Any:
+    """Load the optional Anthropic client only when the example runs."""
+    try:
+        import anthropic
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            "Missing optional package 'anthropic'. Run: pip install anthropic"
+        ) from exc
+    return anthropic.Anthropic()
+
+
 def agent_answer_anthropic(question: str, client: Any = None) -> str:
     """Ask Claude one case and reject an empty response."""
-    client = client or anthropic.Anthropic()
+    client = client or new_anthropic_client()
     response = client.messages.create(
         model=MODEL,
         max_tokens=200,
@@ -34,7 +43,7 @@ def judge_answer_anthropic(
     output: str, case: dict[str, Any], client: Any = None
 ) -> str:
     """Ask Claude for a strict PASS or FAIL when a case requests it."""
-    client = client or anthropic.Anthropic()
+    client = client or new_anthropic_client()
     prompt = (
         "Evaluate the answer using only the supplied criterion. "
         "Reply with exactly PASS or FAIL.\n\n"
