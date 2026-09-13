@@ -1,34 +1,35 @@
 schema_version: 1
-release_version: v2026.09.10
+release_version: v2026.09.13
 
 # One ordered list produces all three language sections in the GitHub Release.
 # Links are shared so the three summaries cannot silently point to different pages.
 changes:
-  - id: release-resource-health-corrections
-    category: maintenance
-    zh-TW: 發布前掃描發現 notebooklm-skill 已封存，三語資源表與 Cookbook 改列歷史範例，不再推薦新流程使用。Graphthulhu 原入口回傳 404，移除失效連結並保留歷史名稱與評分；其授權目前無法重新核對。原編輯星級不變，沒有新增替代專案。
-    zh-Hans: 发布前扫描发现 notebooklm-skill 已归档，三语资源表与 Cookbook 改列历史范例，不再推荐新流程使用。Graphthulhu 原入口返回 404，移除失效链接并保留历史名称与评分；其授权目前无法重新核对。原编辑星级不变，没有新增替代项目。
-    en: The pre-release scan found notebooklm-skill archived. All three catalogs and Cookbooks now keep it as a historical example, not a recommendation for new workflows. Graphthulhu's original address returns 404; its dead link was removed while retaining its historical name and rating. Its license cannot currently be reverified. Editorial ratings are unchanged, and no replacement project was added.
-    links:
-      - https://github.com/PleasePrompto/notebooklm-skill
-  - id: original-banner-icon-motion
+  - id: role-map-icon-motion
     category: reader-ux
-    zh-TW: 首頁頂部 Banner 保留原版構圖、配色、文字與圖示，加入 18 秒循環動畫。先走共用基礎，再依序展示 A、B 路線；每語言 13 個圖示區域會做對應的小動作，包括 CLI 游標輸入、工具輕轉與 Hub 箭頭旋轉。文字與卡片固定，最後 2 秒保持靜止。
-    zh-Hans: 首页顶部 Banner 保留原版构图、配色、文字与图标，加入 18 秒循环动画。先走共用基础，再依次展示 A、B 路线；每语言 13 个图标区域会做对应的小动作，包括 CLI 光标输入、工具轻转与 Hub 箭头旋转。文字与卡片固定，最后 2 秒保持静止。
-    en: The homepage's top banner keeps the original composition, colors, text, and icons, with an 18-second animation loop. Shared foundations come first, followed by tracks A and B; 13 icon regions per language make small, meaningful movements, including typing CLI cursors, gently turning tools, and rotating Hub arrows. Text and cards stay fixed, with 2 still seconds at the end.
+    zh-TW: 首頁下方的角色分流圖加入圖示動畫試版：只讓五個代表性角色圖示依序輕動，並支援停止／播放、減少動態與靜態 PNG。這組圖沿用三張舊原圖，因此圖中文字尚未完全對齊；英文圖的 Analysts 也比正文的 Knowledge workers 範圍窄。正式校正前，請以圖片下方保持展開的角色表為準。
+    zh-Hans: 首页下方的角色分流图加入图标动画试版：只让五个代表性角色图标依次轻动，并支持停止／播放、减少动态与静态 PNG。这组图沿用三张旧原图，因此图中文字尚未完全对齐；英文图的 Analysts 也比正文的 Knowledge workers 范围窄。正式校正前，请以图片下方保持展开的角色表为准。
+    en: The role map below the homepage now has a pilot icon animation. Only the five representative role icons move in sequence, with stop/play controls, reduced-motion support, and static PNGs. Because it reuses three older source images, wording inside the images is not yet fully aligned; the English image's “Analysts” label is also narrower than “Knowledge workers” in the text. Until the artwork is corrected, use the always-visible role table below it as the canonical guide.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/256
-  - id: banner-static-and-print-support
-    category: accessibility
-    zh-TW: 三語文件站提供停止／播放控制；系統偏好減少動態或停用 JavaScript 時使用靜態圖。README 保留靜態圖入口，三語 PDF 也使用完整 PNG。SVG 不載入外部圖片、字型或 JavaScript，圖片容量上限未提高。GitHub 嵌入圖片是否遵守真實系統的減少動態偏好仍未確認，需要靜態閱讀時請使用靜態圖入口或文件站控制。
-    zh-Hans: 三语文档站提供停止／播放控制；系统偏好减少动态或禁用 JavaScript 时使用静态图。README 保留静态图入口，三语 PDF 也使用完整 PNG。SVG 不加载外部图片、字体或 JavaScript，图片容量上限未提高。GitHub 嵌入图片是否遵守真实系统的减少动态偏好仍未确认，需要静态阅读时请使用静态图入口或文档站控制。
-    en: All three documentation locales provide stop/play controls and use a static image when reduced motion is preferred or JavaScript is disabled. Each README links to its static image, and all three PDFs use the complete PNG. SVGs load no external images, fonts, or JavaScript; image budgets have not increased. Whether GitHub's embedded image follows the actual system reduced-motion preference remains unverified; use the static-image link or documentation controls for still viewing.
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/259
+  - id: trilingual-contribution-contract
+    category: governance
+    zh-TW: 貢獻規則改成繁中先定稿、英文與簡中在同一個 PR 同步。三語的概念、URL、數字、評分與安全限制必須一致；新增資源不再以會變動的 GitHub stars 當門檻，改用來源、維護狀態與教學價值判斷。
+    zh-Hans: 贡献规则改为繁中先定稿、英文与简中在同一个 PR 同步。三语的概念、URL、数字、评分与安全限制必须一致；新增资源不再以会变动的 GitHub stars 作为门槛，而是根据来源、维护状态与教学价值判断。
+    en: Contribution rules now finalize Traditional Chinese first and synchronize English and Simplified Chinese in the same PR. Concepts, URLs, numbers, ratings, and safety limits must match across locales; new resources are judged by sources, maintenance, and teaching value instead of changing GitHub star counts.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/256
-  - id: lower-learning-map-pending-correction
-    category: known-limitations
-    zh-TW: 首頁下方的舊學習地圖仍待修正，不屬於本次頂部 Banner 更新。Track A 的正確順序是 A1 → A2 → Stage 5 → A3 → Stage 8；Stage 7.5 是進階選讀。修圖前請以正文中保持展開的路線表為準；這張舊圖尚未加入動畫。
-    zh-Hans: 首页下方的旧学习地图仍待修正，不属于本次顶部 Banner 更新。Track A 的正确顺序是 A1 → A2 → Stage 5 → A3 → Stage 8；Stage 7.5 是进阶选读。修图前请以正文中保持展开的路线表为准；这张旧图尚未加入动画。
-    en: The older learning map lower on the homepage still needs correction and is not part of this top-banner update. The correct Track A order is A1 → A2 → Stage 5 → A3 → Stage 8; Stage 7.5 is an advanced option. Until that image is corrected, follow the always-visible route tables in the text. The old map has not been animated.
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/260
+  - id: eval-evidence-foundations
+    category: learning-content
+    zh-TW: Stage 7 新增可見的 Eval 基礎：Golden Set、Reference Set、Trial、Grader、Baseline、Regression 與 Holdout Set 都先用白話解釋，再保留正式名稱。三語同版圖把「定義成功、建立案例、重複測試、比較基準、人工複查」串成一個證據迴圈。
+    zh-Hans: Stage 7 新增可见的 Eval 基础：Golden Set、Reference Set、Trial、Grader、Baseline、Regression 与 Holdout Set 都先用白话解释，再保留正式名称。三语同版图把“定义成功、建立案例、重复测试、比较基准、人工复查”串成一个证据循环。
+    en: Stage 7 now teaches visible Eval foundations. Golden Set, Reference Set, Trial, Grader, Baseline, Regression, and Holdout Set are explained in plain language before retaining their formal names. A matching diagram in all three locales connects success criteria, cases, repeated trials, baseline comparison, and human review into one evidence loop.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/README.md
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/261
+  - id: runnable-eval-evidence
+    category: examples
+    zh-TW: Stage 7 的 Eval 範例改用 8 題版本化 JSON，分成 5 題開發案例與 3 題凍結 holdout。Ollama 與 Anthropic 共用同一個 runner，可選多次 trial、保存報告並和 baseline 比較；資料格式不相容或空輸出會直接失敗，離線測試不讀 API key。
+    zh-Hans: Stage 7 的 Eval 范例改用 8 题版本化 JSON，分为 5 题开发案例与 3 题冻结 holdout。Ollama 与 Anthropic 共用同一个 runner，可选择多次 trial、保存报告并与 baseline 比较；数据格式不兼容或空输出会直接失败，离线测试不读取 API key。
+    en: >-
+      The Stage 7 Eval example now uses eight versioned JSON cases: five development cases and three frozen holdouts. Ollama and Anthropic share one runner with optional repeated trials, saved reports, and baseline comparison; incompatible data or empty output fails explicitly, and offline tests never read API keys.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/262
