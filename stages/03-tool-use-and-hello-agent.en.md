@@ -147,7 +147,7 @@ If you prefer working from files, open the [complete Exercise 1 folder](../examp
 **First action**: Copy and run `ollama pull qwen2.5:3b`. Then expand Path A and copy the complete program into `hello_tool.py`.
 
 <details markdown="1">
-<summary>Path A: Complete copyable Ollama example (API cost `$0`)</summary>
+<summary>Path A: Complete copyable Ollama example (API cost <code>$0</code>)</summary>
 
 ```python
 import json
@@ -229,7 +229,7 @@ If the model does not call the tool, keep the question, model, and schema unchan
 </details>
 
 <details markdown="1">
-<summary>Path B: Complete Anthropic round trip (reserve `$0.05` first per run)</summary>
+<summary>Path B: Complete Anthropic round trip (reserve <code>$0.05</code> first per run)</summary>
 
 ```python
 import json

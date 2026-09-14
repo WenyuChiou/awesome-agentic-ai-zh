@@ -87,7 +87,7 @@ top_idx = np.argsort(-sims)[:top_k]
 
 **Normalize（正規化）**會把向量調成相同長度。完成後，dot product 就能直接當 cosine similarity 使用。
 
-<details>
+<details markdown="1">
 <summary>常見問題與下一步</summary>
 
 - **不同模型的向量不能混用**：它們像兩張不同的地圖，座標不能直接比較。

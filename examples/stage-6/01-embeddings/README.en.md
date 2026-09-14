@@ -87,7 +87,7 @@ top_idx = np.argsort(-sims)[:top_k]
 
 **Normalize** scales every vector to the same length. Once that's done, a dot product can be used directly as cosine similarity.
 
-<details>
+<details markdown="1">
 <summary>Common pitfalls and next steps</summary>
 
 - **Don't mix vectors from different models**: they're like two different maps — the coordinates aren't directly comparable.

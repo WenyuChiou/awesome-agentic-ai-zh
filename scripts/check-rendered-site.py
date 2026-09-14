@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
@@ -15,6 +16,13 @@ DEFAULT_BASE_PATH = "/awesome-agentic-ai-zh/"
 DEFAULT_SITE_URL = "https://wenyuchiou.github.io/awesome-agentic-ai-zh/"
 EXPECTED_ALTERNATES = {"zh-TW", "zh-Hans", "en", "x-default"}
 FORBIDDEN_SCHEMES = {"javascript", "vbscript"}
+IGNORED_TEXT_TAGS = {"code", "pre", "script", "style"}
+LITERAL_EMPHASIS_RE = re.compile(r"\*\*[^*\n]+\*\*")
+RAW_DETAILS_MARKDOWN_RE = re.compile(
+    r"(?:^|\n)\s*(?:[-+*]\s+\S|\d+[.)]\s+\S|#{1,6}\s+\S|>\s+\S)"
+    r"|\[[^\]\n]+\]\([^)\n]+\)"
+    r"|(?<!`)`[^`\n]+`(?!`)"
+)
 
 
 @dataclass
@@ -24,14 +32,22 @@ class PageData:
     alternates: dict[str, str] = field(default_factory=dict)
     duplicate_alternates: set[str] = field(default_factory=set)
     duplicate_url_attributes: list[str] = field(default_factory=list)
+    literal_emphasis: list[str] = field(default_factory=list)
+    unparsed_details_markdown: list[str] = field(default_factory=list)
 
 
 class PageParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.data = PageData()
+        self._ignored_depth = 0
+        self._details_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag in IGNORED_TEXT_TAGS:
+            self._ignored_depth += 1
+        if tag == "details":
+            self._details_depth += 1
         values: dict[str, list[str]] = {}
         for name, value in attrs:
             if value is not None:
@@ -51,6 +67,22 @@ class PageParser(HTMLParser):
                 if hreflang in self.data.alternates:
                     self.data.duplicate_alternates.add(hreflang)
                 self.data.alternates[hreflang] = href
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in IGNORED_TEXT_TAGS and self._ignored_depth:
+            self._ignored_depth -= 1
+        if tag == "details" and self._details_depth:
+            self._details_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if self._ignored_depth:
+            return
+        snippet = " ".join(data.split())[:180]
+        if self._details_depth and RAW_DETAILS_MARKDOWN_RE.search(data):
+            self.data.unparsed_details_markdown.append(snippet)
+            return
+        if LITERAL_EMPHASIS_RE.search(data):
+            self.data.literal_emphasis.append(snippet)
 
 
 def expected_lang(parts: tuple[str, ...]) -> str:
@@ -128,6 +160,14 @@ def audit_site(
         wanted_lang = expected_lang(page.relative_to(site).parts)
         if data.lang != wanted_lang:
             problems.append(f"{relative}: html lang={data.lang!r}, expected {wanted_lang!r}")
+        for snippet in data.unparsed_details_markdown:
+            problems.append(
+                f"{relative}: unparsed Markdown inside <details>: {snippet!r}"
+            )
+        for snippet in data.literal_emphasis:
+            problems.append(
+                f"{relative}: visible literal Markdown emphasis: {snippet!r}"
+            )
         for duplicate in data.duplicate_url_attributes:
             problems.append(f"{relative}: duplicate URL attribute on {duplicate}")
         expected = expected_alternates(relative, site_url)

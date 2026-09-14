@@ -103,7 +103,7 @@ answer = generate(query, contexts)
 
 這能降低亂答，但不能保證零 hallucination。正式系統還需要無答案測試、引用、輸出驗證與人工抽查。
 
-<details>
+<details markdown="1">
 <summary>常見問題與下一步</summary>
 
 - `top_k` 太小會漏資料；太大會把雜訊和 token 成本一起放大。

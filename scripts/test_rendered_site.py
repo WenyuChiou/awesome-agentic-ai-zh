@@ -69,6 +69,67 @@ def test_good_rendered_site_passes(tmp_path: Path) -> None:
     ) == []
 
 
+def test_visible_literal_markdown_emphasis_fails_but_code_is_allowed(
+    tmp_path: Path,
+) -> None:
+    site = _good_site(tmp_path)
+    broken = _page("zh-TW").replace(
+        "</body>",
+        "<p>**Context（上下文）**</p>"
+        "<pre><code>**intentional example**</code></pre></body>",
+    )
+    (site / "index.html").write_text(broken, encoding="utf-8")
+
+    problems = audit.audit_site(site, base_path="/docs/", site_url=SITE_URL)
+
+    assert sum("visible literal Markdown emphasis" in item for item in problems) == 1
+
+
+@pytest.mark.parametrize(
+    "raw_markdown",
+    (
+        "- dash item",
+        "+ plus item",
+        "* star item",
+        "1. ordered item",
+        "1) ordered item",
+        "# heading",
+        "> quote",
+        "[a link](asset.txt)",
+        "Use `inline_code` here",
+    ),
+)
+def test_unparsed_markdown_inside_details_fails(
+    tmp_path: Path,
+    raw_markdown: str,
+) -> None:
+    site = _good_site(tmp_path)
+    broken = _page("zh-TW").replace(
+        "</body>",
+        "<details><summary>More</summary>\n"
+        f"{raw_markdown}\n"
+        "</details></body>",
+    )
+    (site / "index.html").write_text(broken, encoding="utf-8")
+
+    problems = audit.audit_site(site, base_path="/docs/", site_url=SITE_URL)
+
+    assert any("unparsed Markdown inside <details>" in item for item in problems)
+
+
+def test_rendered_markdown_inside_details_passes(tmp_path: Path) -> None:
+    site = _good_site(tmp_path)
+    rendered = _page("zh-TW").replace(
+        "</body>",
+        "<details><summary>More</summary>"
+        "<ul><li><strong>Bold item</strong> with <a href=\"asset.txt\">a link</a></li></ul>"
+        "</details></body>",
+    )
+    (site / "index.html").write_text(rendered, encoding="utf-8")
+
+    assert audit.audit_site(site, base_path="/docs/", site_url=SITE_URL) == []
+
+
 def test_broken_link_and_wrong_language_fail(tmp_path: Path) -> None:
     site = _good_site(tmp_path)
     (site / "en" / "index.html").write_text(

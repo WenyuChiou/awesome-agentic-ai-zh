@@ -1,42 +1,36 @@
 schema_version: 1
-release_version: v2026.09.13
+release_version: v2026.09.14
 
 # One ordered list produces all three language sections in the GitHub Release.
 # Links are shared so the three summaries cannot silently point to different pages.
 changes:
-  - id: remove-unavailable-yield-mcp
-    category: maintenance
-    zh-TW: 發布前完整連結掃描確認 YIELD INTELLIGENCE 的 hosted MCP、替代路徑與 pricing 入口都回傳 404。三語精選目錄已移除這筆目前無法使用的服務與 repository snapshot，不以 README 仍寫著「live」取代實際端點證據。
-    zh-Hans: 发布前完整链接扫描确认 YIELD INTELLIGENCE 的 hosted MCP、替代路径与 pricing 入口都返回 404。三语精选目录已移除这项目前无法使用的服务与 repository snapshot，不以 README 仍写着“live”取代实际端点证据。
-    en: The full pre-release link scan confirmed that YIELD INTELLIGENCE's hosted MCP endpoint, alternate route, and pricing endpoint all return 404. The unavailable service and its repository snapshot were removed from all three curated catalogs; a README that still says “live” does not outweigh direct endpoint evidence.
-    links:
-      - https://github.com/thebrierfox/intuitek-ace
-  - id: role-map-icon-motion
+  - id: simplify-readme-banner-entry
     category: reader-ux
-    zh-TW: 首頁下方的角色分流圖加入圖示動畫試版：只讓五個代表性角色圖示依序輕動，並支援停止／播放、減少動態與靜態 PNG。這組圖沿用三張舊原圖，因此圖中文字尚未完全對齊；英文圖的 Analysts 也比正文的 Knowledge workers 範圍窄。正式校正前，請以圖片下方保持展開的角色表為準。
-    zh-Hans: 首页下方的角色分流图加入图标动画试版：只让五个代表性角色图标依次轻动，并支持停止／播放、减少动态与静态 PNG。这组图沿用三张旧原图，因此图中文字尚未完全对齐；英文图的 Analysts 也比正文的 Knowledge workers 范围窄。正式校正前，请以图片下方保持展开的角色表为准。
-    en: The role map below the homepage now has a pilot icon animation. Only the five representative role icons move in sequence, with stop/play controls, reduced-motion support, and static PNGs. Because it reuses three older source images, wording inside the images is not yet fully aligned; the English image's “Analysts” label is also narrower than “Knowledge workers” in the text. Until the artwork is corrected, use the always-visible role table below it as the canonical guide.
+    zh-TW: 三語 README 移除動畫 banner 下方重複的靜態圖與文件站捷徑，讓首頁入口更乾淨。動畫停止時仍保留完整構圖；文件站的減少動態、無 JavaScript 靜態 PNG 與三語 PDF fallback 都繼續保留。
+    zh-Hans: 三语 README 移除动画 banner 下方重复的静态图与文档站快捷入口，让首页入口更干净。动画停止时仍保留完整构图；文档站的减少动态、无 JavaScript 静态 PNG 与三语 PDF fallback 都继续保留。
+    en: The three READMEs remove the duplicate static-image and documentation-site shortcuts below the animated banner for a cleaner entry point. The complete composition remains visible when animation stops, while reduced-motion, no-JavaScript PNG, and trilingual PDF fallbacks remain available.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/259
-  - id: trilingual-contribution-contract
-    category: governance
-    zh-TW: 貢獻規則改成繁中先定稿、英文與簡中在同一個 PR 同步。三語的概念、URL、數字、評分與安全限制必須一致；新增資源不再以會變動的 GitHub stars 當門檻，改用來源、維護狀態與教學價值判斷。
-    zh-Hans: 贡献规则改为繁中先定稿、英文与简中在同一个 PR 同步。三语的概念、URL、数字、评分与安全限制必须一致；新增资源不再以会变动的 GitHub stars 作为门槛，而是根据来源、维护状态与教学价值判断。
-    en: Contribution rules now finalize Traditional Chinese first and synchronize English and Simplified Chinese in the same PR. Concepts, URLs, numbers, ratings, and safety limits must match across locales; new resources are judged by sources, maintenance, and teaching value instead of changing GitHub star counts.
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/265
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/266
+  - id: fix-rendered-markdown-emphasis
+    category: maintenance
+    zh-TW: 修正 Stage 6 五組範例的三語收合區塊，以及 CLI 工具表與 Stage 3 摘要中的行內程式碼：粗體、清單、行內程式碼與連結現在會由 MkDocs 正確解析，不再把 `**Context**` 或反引號這類 Markdown 記號直接顯示給讀者。新增 post-build gate，會檢查實際 HTML，而不是只看 `.md` 原始碼；程式碼範例中的記號仍被允許。
+    zh-Hans: 修正 Stage 6 五组示例的三语折叠区块，以及 CLI 工具表和 Stage 3 摘要中的行内代码：粗体、列表、行内代码与链接现在会由 MkDocs 正确解析，不再把 `**Context**` 或反引号这类 Markdown 标记直接显示给读者。新增 post-build gate，会检查实际 HTML，而不是只看 `.md` 源码；代码示例中的标记仍被允许。
+    en: Fixed the trilingual collapsible sections in five Stage 6 examples, plus inline code in the CLI tool table and Stage 3 summaries. MkDocs now renders emphasis, lists, inline code, and links instead of showing Markdown markers such as `**Context**` or backticks to readers. A new post-build gate checks the actual HTML rather than source `.md` alone, while still allowing markers inside code examples.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/260
-  - id: eval-evidence-foundations
+      - https://wenyuchiou.github.io/awesome-agentic-ai-zh/examples/stage-6/01-embeddings/
+  - id: stage7-production-foundations
     category: learning-content
-    zh-TW: Stage 7 新增可見的 Eval 基礎：Golden Set、Reference Set、Trial、Grader、Baseline、Regression 與 Holdout Set 都先用白話解釋，再保留正式名稱。三語同版圖把「定義成功、建立案例、重複測試、比較基準、人工複查」串成一個證據迴圈。
-    zh-Hans: Stage 7 新增可见的 Eval 基础：Golden Set、Reference Set、Trial、Grader、Baseline、Regression 与 Holdout Set 都先用白话解释，再保留正式名称。三语同版图把“定义成功、建立案例、重复测试、比较基准、人工复查”串成一个证据循环。
-    en: Stage 7 now teaches visible Eval foundations. Golden Set, Reference Set, Trial, Grader, Baseline, Regression, and Holdout Set are explained in plain language before retaining their formal names. A matching diagram in all three locales connects success criteria, cases, repeated trials, baseline comparison, and human review into one evidence loop.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/261
-  - id: runnable-eval-evidence
-    category: examples
-    zh-TW: Stage 7 的 Eval 範例改用 8 題版本化 JSON，分成 5 題開發案例與 3 題凍結 holdout。Ollama 與 Anthropic 共用同一個 runner，可選多次 trial、保存報告並和 baseline 比較；資料格式不相容或空輸出會直接失敗，離線測試不讀 API key。
-    zh-Hans: Stage 7 的 Eval 范例改用 8 题版本化 JSON，分为 5 题开发案例与 3 题冻结 holdout。Ollama 与 Anthropic 共用同一个 runner，可选择多次 trial、保存报告并与 baseline 比较；数据格式不兼容或空输出会直接失败，离线测试不读取 API key。
+    zh-TW: Stage 7 改為「Agent 上線工程：可測、可看、可停、可恢復」。同一個查資料案例依序解釋 Harness、Loop、Graph、Eval、Observability、Approval、Checkpoint、Resume 與 Recovery；完整 Eval Case 明確包含 input、初始狀態、成功條件、禁止行為、選用參考答案、評分方法與案例資訊，避免把 Golden Set 誤解成只有輸入。
+    zh-Hans: Stage 7 改为“Agent 上线工程：可测、可看、可停、可恢复”。同一个资料查询案例依次解释 Harness、Loop、Graph、Eval、Observability、Approval、Checkpoint、Resume 与 Recovery；完整 Eval Case 明确包含 input、初始状态、成功条件、禁止行为、可选参考答案、评分方法与案例信息，避免把 Golden Set 误解为只有输入。
     en: >-
-      The Stage 7 Eval example now uses eight versioned JSON cases: five development cases and three frozen holdouts. Ollama and Anthropic share one runner with optional repeated trials, saved reports, and baseline comparison; incompatible data or empty output fails explicitly, and offline tests never read API keys.
+      Stage 7 is now “Production Engineering for Agents: Testable, Observable, Stoppable, and Recoverable.” One research-assistant example progressively explains Harness, Loop, Graph, Eval, Observability, Approval, Checkpoint, Resume, and Recovery. A complete Eval Case explicitly includes input, initial state, success criteria, forbidden actions, an optional reference answer, grading method, and case metadata, so a Golden Set is not mistaken for inputs alone.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/262
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/267
+  - id: stage75-evidence-led-advanced-choices
+    category: learning-content
+    zh-TW: Stage 7.5 改成「有證據才增加複雜度」的進階選讀，不再重教 Stage 7 基礎。可見核心詞表先用白話說明 Evaluator–Optimizer／Agent-as-Judge、Failure Injection／Chaos Eval、Autonomy Gradients／Trust Layers 與 Model–Harness Fit，再用兩組三語亮色圖協助讀者依失敗證據選擇最小做法。
+    zh-Hans: Stage 7.5 改成“有证据才增加复杂度”的进阶选读，不再重复讲解 Stage 7 基础。可见核心词表先用白话说明 Evaluator–Optimizer／Agent-as-Judge、Failure Injection／Chaos Eval、Autonomy Gradients／Trust Layers 与 Model–Harness Fit，再用两组三语亮色图帮助读者根据失败证据选择最小做法。
+    en: Stage 7.5 is now an advanced reading map that adds complexity only when evidence justifies it, without reteaching Stage 7 foundations. Its visible core-term table explains Evaluator–Optimizer/Agent-as-Judge, Failure Injection/Chaos Eval, Autonomy Gradients/Trust Layers, and Model–Harness Fit in plain language, followed by two matching trilingual diagrams that help readers choose the smallest response to observed failures.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/268

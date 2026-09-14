@@ -97,7 +97,7 @@ results = semantic_query(collection, "where to drink coffee", top_k=3)
 2. 寫入 `id`、文件與 metadata。
 3. 查詢並取回距離最近的 `top-k` 筆。
 
-<details>
+<details markdown="1">
 <summary>常見問題與進階做法</summary>
 
 - `.add()` 遇到重複 `id` 會失敗；要更新資料時用 `.upsert()`。

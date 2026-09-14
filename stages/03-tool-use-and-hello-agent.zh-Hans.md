@@ -147,7 +147,7 @@ Path A 的 **API 费用是 `$0`**；仍会使用你的硬件、内存与电力�
 **第一步**：复制并运行 `ollama pull qwen2.5:3b`。接着展开 Path A，把完整程序直接复制成 `hello_tool.py`。
 
 <details markdown="1">
-<summary>Path A：Ollama 完整可复制示例（API 费用 `$0`）</summary>
+<summary>Path A：Ollama 完整可复制示例（API 费用 <code>$0</code>）</summary>
 
 ```python
 import json
@@ -229,7 +229,7 @@ python hello_tool.py
 </details>
 
 <details markdown="1">
-<summary>Path B：Anthropic 完整来回（每次先预留 `$0.05`）</summary>
+<summary>Path B：Anthropic 完整来回（每次先预留 <code>$0.05</code>）</summary>
 
 ```python
 import json

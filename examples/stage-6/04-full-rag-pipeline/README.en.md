@@ -103,7 +103,7 @@ If the context doesn't have the answer, say clearly that you don't know.
 
 This cuts down on made-up answers, but doesn't guarantee zero hallucination. A production system also needs no-answer tests, citations, output validation, and manual spot checks.
 
-<details>
+<details markdown="1">
 <summary>Common pitfalls and next steps</summary>
 
 - Too small a `top_k` misses data; too large amplifies noise and token cost together.

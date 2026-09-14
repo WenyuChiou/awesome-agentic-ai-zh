@@ -96,7 +96,7 @@ recalled = memory.recall("Which language should I learn?")
 
 本練習用簡單規則找 `I am`、`I like`、`I prefer` 等句子，只是為了看懂流程。正式系統要有清楚的 **memory policy**：使用者同意、user ID 隔離、更新、刪除、期限與稽核。
 
-<details>
+<details markdown="1">
 <summary>常見問題與 production 下一步</summary>
 
 - 不要每句都存；先判斷是否真的值得長期保留。

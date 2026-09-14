@@ -97,7 +97,7 @@ results = semantic_query(collection, "where to drink coffee", top_k=3)
 2. Write in `id`, documents, and metadata.
 3. Query and get back the closest `top-k` entries.
 
-<details>
+<details markdown="1">
 <summary>Common pitfalls and advanced practice</summary>
 
 - `.add()` fails on a duplicate `id`; use `.upsert()` when updating data.

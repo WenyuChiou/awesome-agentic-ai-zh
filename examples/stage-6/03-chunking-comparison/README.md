@@ -95,7 +95,7 @@ headings = chunk_headings(text)
 | **完整性** | 答案需要的句子有沒有被切到兩邊？ |
 | **成本** | chunk 變多後，embedding 與儲存量增加多少？ |
 
-<details>
+<details markdown="1">
 <summary>常見問題與進階做法</summary>
 
 - Chunk 太大：一段塞太多主題，向量會變得模糊。

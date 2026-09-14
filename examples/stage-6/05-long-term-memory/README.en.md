@@ -96,7 +96,7 @@ recalled = memory.recall("Which language should I learn?")
 
 This exercise uses simple rules to catch sentences like "I am", "I like", "I prefer" — just enough to see the flow. A production system needs a clear **memory policy**: user consent, per-user-ID isolation, updates, deletion, retention limits, and auditing.
 
-<details>
+<details markdown="1">
 <summary>Common pitfalls and next steps for production</summary>
 
 - Don't store every sentence; decide first whether it's genuinely worth keeping long-term.

@@ -95,7 +95,7 @@ Don't just count chunks, and don't judge from one pretty example. Prepare real q
 | **Completeness** | Did the sentences the answer needs get split across two chunks? |
 | **Cost** | How much do embedding and storage grow as chunks multiply? |
 
-<details>
+<details markdown="1">
 <summary>Common pitfalls and advanced practice</summary>
 
 - Chunks too big: too many topics crammed into one piece, so the vector gets blurry.
