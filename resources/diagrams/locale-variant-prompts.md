@@ -9,7 +9,7 @@
 - 文件站保留 lazy／async、兩個原圖入口與三語停止／播放控制；README 有靜態圖連結，PDF 使用 PNG。上方與下方動畫共用停止狀態，減少動態或無 JavaScript 時顯示 PNG。
 - 試版已知限制：保留的英文原圖把知識工作者寫成較窄的 `Analysts`，三語文字亦有歷史差異。正式採用前要校正，不能以此試版宣稱三語圖中文字已完全一致。下方 `learning-map` 的舊順序另行修正後再動畫化。
 
-> 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 兩組三語概念圖的 Image 2.0 重產規格）。
+> 姊妹檔：[`concept-prompts.md`](concept-prompts.md)（Stage 7.5 兩組三語概念圖的可重產文字與構圖規格）。
 > 這份記錄的是 **2026-08-02 那批 5 張圖 × 3 語系** 是怎麼產出來的，以及過程中踩到的坑。
 
 ## 2026-08-29：Stage 5 的 5.1–5.7 關係與資料流
@@ -52,50 +52,37 @@ verification 混成同一件事。箭頭表示每次 action 會依序接受檢�
 `scripts/test_stage08_content.py` 鎖住六張 PNG 的最小尺寸、不同 hash 與三語正文引用；
 `scripts/check-image-locale.py` 再檢查全站 locale 圖不會串錯。
 
-## 2026-08-28：Stage 7.5 問題分組圖與閱讀決策樹
+## 2026-09-13：Stage 7.5 進階選擇圖
 
-重畫 `concept-cluster.{png,en.png,zh-Hans.png}` 與
-`reading-decision-tree.{png,en.png,zh-Hans.png}`。兩組都採 16:9 暖白底、亮色卡片、
-深藍大字與固定三語版面；每張圖都由 Codex 內建 Image 2.0 獨立生成後人工逐字檢查。
+以 Codex 內建圖片生成工具建立 `advanced-agentic-decision-map.{png,en.png,zh-Hans.png}`。
+工具未提供可驗證的引擎版本，因此紀錄不宣稱特定 Image 型號。三語使用同一個
+`1672×941` 構圖：上方是已重現的失敗，中間四張平行概念卡，底部是五個只有出現
+對應證據才選的候選模式。四張卡不畫先後箭頭，避免把它們誤讀成固定階梯。
 
-概念圖不再把 12 個概念硬塞進 `Service／Repo／Config／Types` 矩陣。那組層級來自
-OpenAI 某個 codebase 的架構案例，不是通用 Agent stack。新版只按讀者會遇到的四種問題
-分組：邊界與契約、規劃與合作、檢查與學習、控制與復原；每組三張卡，中央提醒每次只選
-1–2 個。
+四張平行概念卡固定為 Evaluator–Optimizer／Agent-as-Judge、Failure Injection／Chaos Eval、
+Autonomy Gradients／Trust Layers、Model–Harness Fit；五個候選模式固定為 Parallel
+Exploration、Hierarchical Delegation、Multi-Agent Handoff、Plan–Act–Reflect、Dynamic
+Workflows。舊 `concept-cluster` 與 `reading-decision-tree` 六張圖在正文引用轉移後刪除，
+仍可由 Git 歷史恢復。
 
-決策樹也不再把容易過期的文章名稱與閱讀時間畫進圖裡，只保留五個症狀與兩個入口群組。
-正文的官方來源和 24 筆資源可以更新，圖不必跟著每次重畫。舊的 `stack-4layer`、
-`failure-lifecycle`、`principle-dependency` 三組共九張圖已完成引用掃描後移除；它們仍可從
-Git 歷史復原。
+## 2026-09-13：Stage 7.5 Model–Harness Fit 圖
 
-三語圖必須各自引用 locale 檔，並由 `scripts/test_stage075_content.py` 鎖住六張 PNG 的尺寸、
-不同 hash 與正文引用。完整文字表與重產限制在 [`concept-prompts.md`](concept-prompts.md)。
+重畫 `model-harness-fit.png`、`.en.png`、`.zh-Hans.png`。第一列依序是選一個 Harness
+元件、做刪除或簡化測試、重跑同一組品質／安全／成本／延遲 Eval；第二列是 Keep、
+Simplify、Remove 三張等大的平行結果卡。三個判斷是平行結果，不是成熟度階梯（no
+maturity ladder），彼此之間沒有箭頭。底部固定保留 permission、sandbox、audit log、
+人工核准與 rollback 這些長期責任。
 
-## 2026-08-29：Stage 7.5 Model–Harness Fit 判斷圖
-
-新增 `model-harness-fit.png`、`.en.png`、`.zh-Hans.png`。圖先讓一個 Harness 元件跑同一組 Eval，再分成平行的 Keep／Simplify／Remove 三個結果；三者不是成熟度階梯，也不暗示所有元件最後都應移除。底部固定提醒「模型變強不等於安全邊界自動過時」與「一次只改一個元件，再測一次」。
-
-初版繁中圖雖然文字正確，但 imagegen 自行加上紅色印章、山水、竹子與雲紋，不符合技術教材 house style，也違反無 watermark 約束；最終版移除全部裝飾與印章，改用暖白底、細電路線、深藍大字與藍／橘／綠三張平行卡。英語與簡中以通過人工檢查的最終繁中版作構圖 reference，各自換入完整逐字文字表。獨立 review 發現第一張簡中圖仍殘留「保護／步驟」兩個繁體詞，因此重新產圖並逐字複查；最終簡中橘卡人工逐字確認為「保护仍然需要，但步骤可以更少」。PNG 內文目前仍由人工圖文稽核，不能把一般文字檢查誤稱為 OCR。
-
-共同 prompt 約束：
-
-> Show one Harness component, run the same Eval, then branch into three equal
-> parallel outcomes: KEEP when removing it restores a repeatable failure,
-> SIMPLIFY when the protection still matters but fewer steps are enough, and
-> REMOVE when a deletion test passes without quality loss. State that a stronger
-> model does not automatically obsolete safety boundaries and that only one
-> component changes before retesting. Warm off-white modern technical-textbook
-> style, flat vector icons, no arrow between outcomes, no maturity ladder, no
-> model/version/price/ranking/vendor fact, no logo, seal, stamp, signature, or
-> watermark, and only the supplied locale text.
+三語版本都以最終繁中圖作構圖 reference，只替換文字。人工逐張確認文字、icon、箭頭和
+邊框無重疊；英文沒有 CJK，簡中正式術語未被誤譯。完整逐字文字表與重產限制在
+[`concept-prompts.md`](concept-prompts.md)。
 
 人工驗收逐張確認：
 
-- 三個結果都從同一個 Eval 分出去，彼此之間沒有箭頭。
-- 繁中圖沒有印章或山水裝飾；英語圖沒有中文；簡中圖沒有繁體字。
-- 圖沒有把 prompt workaround 與 permission／sandbox／log／Eval／recovery 畫成同一種可隨意刪除的東西。
-- 九張 Stage 7.5 圖維持不同 hash，三語正文各自引用 locale 檔。
-
+- 六張圖都是 `1672×941`，構圖相同而 hash 不同。
+- 四張概念卡、五個候選模式、三步測試與三個平行結果數量正確。
+- 圖不放產品版本、價格、ranking、模型能力或其他易變資訊。
+- 正文先解釋圖中名詞，圖片只整理關係，不負責第一次定義。
 ## 2026-08-28：Stage 6 RAG 與 Memory 三路圖
 
 新增 `rag-memory-map.png`、`.en.png`、`.zh-Hans.png`。三張都使用 16:9 亮色白底卡片，固定畫出三條互不串線的路：文件切成 Chunk、轉成 Embedding 並寫進 Vector Database；問題取回相關片段、經 Reranking 後產生有來源的答案；重要狀態寫進 Memory，下一次再讀回來。每條箭頭只在自己的色框內由左往右，不暗示 Vector Database 會自動寫入 Memory。

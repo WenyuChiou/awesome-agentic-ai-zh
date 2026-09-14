@@ -205,7 +205,7 @@ walkthrough_fact_pack:
 
 stage075_fact_pack:
   canonical: 'stages/07.5-advanced-agentic-concepts.md'
-  verified_on: '2026-08-29'
+  verified_on: '2026-09-13'
   scope: ['agent-patterns', 'harnesses', 'evals', 'dynamic-workflows', 'framework-status', 'research']
   official_sources:
     anthropic_agent_patterns: 'https://www.anthropic.com/engineering/building-effective-agents'
@@ -677,7 +677,7 @@ stale_patterns:
   - pattern: 'Dynamic Workflows.{0,120}(remains|still|仍是|仍為|仍为|綁定|绑定|bound).{0,80}Opus 4\.8|Opus 4\.8.{0,120}(feature|功能|專屬|专属)'
     include_files: ['stages/07.5-advanced-agentic-concepts.md']
     qualifier_terms: ['historical', 'history', 'originally', 'launch', 'legacy', '歷史', '历史', '最初', '發表時', '发布时']
-    note: 'Dynamic workflows are a Claude Code v2.1.154+ capability and are not bound to Opus 4.8'
+    note: 'Dynamic workflows are a current Claude Code capability without one general minimum version in the current product page and are not bound to Opus 4.8'
 
   - pattern: 'prompt.{0,40}(裡含|里含|contains).{0,20}`workflow`.{0,20}(字|word|keyword)|word `workflow`.{0,20}prompt'
     include_files: ['stages/07.5-advanced-agentic-concepts.md']

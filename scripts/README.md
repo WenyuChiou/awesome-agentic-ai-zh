@@ -78,10 +78,11 @@ python -m pytest scripts/test_stage07_examples.py -q
 
 ## `test_stage075_content.py` — 鎖住進階概念 reading-map
 
-這個 gate 檢查 Stage 7.5 三語是否保留六個可見粗體核心詞、12 個概念、四個真正合併的
-概念群組、9 個預設關閉選單、24 筆資源與 `5／5／5／5／4` rowgroups。它也鎖住
-freshness marker、AutoGen／Agent Framework／Sandbox Agents／Dynamic Workflows 現行狀態、
-legacy 深連結，以及兩組共六張不同的 `1672×941` locale 圖。
+這個 gate 檢查 Stage 7.5 三語是否保留四個可見粗體進階概念、五個選修模式、
+4 個預設關閉選單、24 筆資源與 `5／5／5／5／4` rowgroups。它也鎖住「正文先解釋
+九個名詞，第一張圖才出現」的順序、freshness marker、AutoGen／Agent Framework／
+Sandbox Agents／Dynamic Workflows 現行狀態、legacy 深連結，以及兩組共六張不同的
+`1672×941` locale 圖。
 
 ```powershell
 python -m pytest scripts/test_stage075_content.py -q
