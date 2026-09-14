@@ -1366,9 +1366,9 @@ pages:
       en: stages/07-multi-agent-production.en.md
       zh-Hans: stages/07-multi-agent-production.zh-Hans.md
     max_visible_chars:
-      zh-TW: 16838
-      en: 27200
-      zh-Hans: 17000
+      zh-TW: 14130
+      en: 25588
+      zh-Hans: 14254
     max_open_details: 0
     required_details_count: 7
     visible_section_order:
@@ -1419,9 +1419,9 @@ pages:
         en: {heading: "📌 Learning Goals", anchor: -learning-goals}
         zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
       core-terms:
-        zh-TW: {heading: "🧩 先認識核心詞", anchor: -先認識核心詞}
-        en: {heading: "🧩 Meet the Core Terms First", anchor: -meet-the-core-terms-first}
-        zh-Hans: {heading: "🧩 先认识核心词", anchor: -先认识核心词}
+        zh-TW: {heading: "🧩 先認識十九個核心詞", anchor: -先認識十九個核心詞}
+        en: {heading: "🧩 Meet Nineteen Core Terms First", anchor: -meet-nineteen-core-terms-first}
+        zh-Hans: {heading: "🧩 先认识十九个核心词", anchor: -先认识十九个核心词}
       entry-conditions:
         zh-TW: {heading: "🚪 進入條件", anchor: -進入條件}
         en: {heading: "🚪 Entry Conditions", anchor: -entry-conditions}
@@ -1562,6 +1562,10 @@ pages:
           zh-TW: {term: Trajectory, label: "Trajectory（軌跡）"}
           en: {term: Trajectory, label: Trajectory}
           zh-Hans: {term: Trajectory, label: "Trajectory（轨迹）"}
+        - id: grader
+          zh-TW: {term: Grader, label: "Grader（評分器）"}
+          en: {term: Grader, label: Grader}
+          zh-Hans: {term: Grader, label: "Grader（评分器）"}
         - id: evaluation-harness
           zh-TW: {term: Evaluation Harness, label: "Evaluation Harness（評測執行架構）"}
           en: {term: Evaluation Harness, label: Evaluation Harness}

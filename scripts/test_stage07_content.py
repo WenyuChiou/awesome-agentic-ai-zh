@@ -39,17 +39,17 @@ CONTROL_DIAGRAM_ALT_MARKERS = {
     "zh-TW": (
         "Agent Harness 是工作環境",
         "Workflow Graph 是帶分支的路線",
-        "Eval 是跨越三者的檢查量尺",
+        "Eval 用 Grader 檢查 Outcome 與 Trajectory",
     ),
     "en": (
         "Agent Harness is the work environment",
         "Workflow Graph is the branching route",
-        "Eval is the measuring stick across all three",
+        "Eval uses a Grader to check Outcome and Trajectory",
     ),
     "zh-Hans": (
         "Agent Harness 是工作环境",
         "Workflow Graph 是带分支的路线",
-        "Eval 是跨越三者的检查量尺",
+        "Eval 用 Grader 检查 Outcome 与 Trajectory",
     ),
 }
 CORE_LABELS = {
@@ -63,6 +63,7 @@ CORE_LABELS = {
         "Evaluation／Eval（評測）",
         "Outcome（結果）",
         "Trajectory（軌跡）",
+        "Grader（評分器）",
         "Evaluation Harness（評測執行架構）",
         "Trace（追蹤紀錄）",
         "Observability（可觀測性）",
@@ -83,6 +84,7 @@ CORE_LABELS = {
         "Evaluation / Eval",
         "Outcome",
         "Trajectory",
+        "Grader",
         "Evaluation Harness",
         "Trace",
         "Observability",
@@ -103,6 +105,7 @@ CORE_LABELS = {
         "Evaluation／Eval（评测）",
         "Outcome（结果）",
         "Trajectory（轨迹）",
+        "Grader（评分器）",
         "Evaluation Harness（评测执行架构）",
         "Trace（追踪纪录）",
         "Observability（可观测性）",
@@ -115,9 +118,34 @@ CORE_LABELS = {
     ),
 }
 CORE_SECTION_HEADINGS = {
-    "zh-TW": ("## 🧩 先認識核心詞", "## 🚪 進入條件"),
-    "en": ("## 🧩 Meet the Core Terms First", "## 🚪 Entry Conditions"),
-    "zh-Hans": ("## 🧩 先认识核心词", "## 🚪 进入条件"),
+    "zh-TW": ("## 🧩 先認識十九個核心詞", "## 🚪 進入條件"),
+    "en": ("## 🧩 Meet Nineteen Core Terms First", "## 🚪 Entry Conditions"),
+    "zh-Hans": ("## 🧩 先认识十九个核心词", "## 🚪 进入条件"),
+}
+LEGACY_CORE_ANCHORS = {
+    "zh-TW": '<a id="-先認識核心詞"></a>',
+    "en": '<a id="-meet-the-core-terms-first"></a>',
+    "zh-Hans": '<a id="-先认识核心词"></a>',
+}
+CORE_TABLE_HEADERS = {
+    "zh-TW": (
+        "先解決什麼",
+        "核心詞",
+        "五歲也能懂的說法",
+        "本章用途／技術界線",
+    ),
+    "en": (
+        "What to solve first",
+        "Core term",
+        "Plain-language meaning",
+        "How this chapter uses it / technical boundary",
+    ),
+    "zh-Hans": (
+        "先解决什么",
+        "核心词",
+        "五岁也能懂的说法",
+        "本章用途／技术边界",
+    ),
 }
 EVAL_SECTION_HEADINGS = {
     "zh-TW": (
@@ -284,17 +312,21 @@ def test_all_core_terms_are_bold_and_defined_before_exercises(
     core_start = text.index(core_heading)
     core_end = text.index(next_heading, core_start)
     core = text[core_start:core_end]
-    prose = core[: core.index("<table>")]
+    assert LEGACY_CORE_ANCHORS[locale] in text[:core_start]
+    header = "".join(
+        f'<th scope="col">{label}</th>' for label in CORE_TABLE_HEADERS[locale]
+    )
+    assert f"<thead><tr>{header}</tr></thead>" in core
     positions = []
     for label in CORE_LABELS[locale]:
-        assert f"**{label}**" in prose
         marker = f"<strong>{label}</strong>"
         assert marker in core
         positions.append(core.index(marker))
-    assert "Grader" in prose and prose.index("Grader") < prose.index("Evaluation Harness")
+    assert re.search(r"^- \*\*", core, flags=re.MULTILINE) is None
+    assert core.index("<strong>Grader") < core.index("<strong>Evaluation Harness")
     assert positions == sorted(positions)
-    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', core) == ["6", "6", "6"]
-    assert len(re.findall(r"<tr>", core)) == 19
+    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', core) == ["6", "7", "6"]
+    assert len(re.findall(r"<tr>", core)) == 20
 
 
 @pytest.mark.parametrize("locale,page", PAGES.items())

@@ -46,34 +46,13 @@ After this stage, you can:
 4. Stop before risky actions and continue from the right saved point.
 5. Use the same evidence to decide whether the system is ready for other people.
 
-## 🧩 Meet the Core Terms First
+<a id="-meet-the-core-terms-first"></a>
+## 🧩 Meet Nineteen Core Terms First
 
-Meet each term in one sentence before using the table to compare them:
-
-- **Agent Harness** is the room where the AI helper works; this chapter uses it to hold tools, rules, and brakes.
-- **Agent Loop** means doing one step, seeing the result, and choosing the next step; this chapter uses it to control retries and stopping.
-- **Workflow Graph** is a route map with forks; this chapter uses it to choose a route for each situation.
-- **Orchestration** arranges the order of steps and roles; this chapter uses it to connect the whole task.
-- **Multi-Agent** means several AI helpers share the work; use it only when the work can truly be separated.
-- **Handoff** passes control, needed data, and evidence to the next helper.
-- **Evaluation / Eval** checks results and process with the same measuring stick.
-- **Outcome** is what can really be verified outside the system when the task ends.
-- **Trajectory** is everything one run did along the way.
-- **Grader** is a method or program that scores one case by stated rules.
-- **Evaluation Harness** is the test system that loads cases, reruns the task, calls graders, and saves results.
-- **Trace** records a task's steps, errors, and results in time order.
-- **Observability** uses traces, logs, and metrics to show what happened inside.
-- **Guardrail** blocks forbidden inputs, outputs, or actions.
-- **Human Approval** pauses before a risky action and asks a person.
-- **Checkpoint** saves where the task has reached.
-- **Resume** continues the same task from that saved point.
-- **Recovery** stops, retries, compensates, or hands a failure to a person safely.
-- **Idempotency** means retrying the same operation does not pay, send, or write twice.
-
-These comparisons only give you a starting picture. Use each term's precise meaning and limits when you build the system.
+Use “plain-language meaning” to get oriented, then read “how this chapter uses it / technical boundary” to see what the term means here. Related terms share one group, so you do not need to read the same definition twice.
 
 <table>
-<thead><tr><th scope="col">What to solve first</th><th scope="col">Core term</th><th scope="col">Plain-language meaning</th><th scope="col">Precise meaning</th></tr></thead>
+<thead><tr><th scope="col">What to solve first</th><th scope="col">Core term</th><th scope="col">Plain-language meaning</th><th scope="col">How this chapter uses it / technical boundary</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="6">Make the task run</th><td><strong>Agent Harness</strong></td><td>The room where the AI helper works</td><td>The execution environment that holds the model, tools, permissions, state, error handling, and records; this chapter uses it to check sources and prepare a summary safely</td></tr>
 <tr><td><strong>Agent Loop</strong></td><td>Do one step, see the result, then choose the next step</td><td>The model repeatedly chooses an action and reads the tool result until it finishes, reaches a limit, or must ask a person</td></tr>
@@ -83,9 +62,10 @@ These comparisons only give you a starting picture. Use each term's precise mean
 <tr><td><strong>Handoff</strong></td><td>Pass the baton and the notes together</td><td>One Agent passes control, needed data, and result evidence to another Agent</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">Prove it did the right thing</th><td><strong>Evaluation / Eval</strong></td><td>Check with the same ruler each time</td><td>Measure an Agent's result and process with fixed cases, environments, grading methods, and thresholds</td></tr>
+<tr><th scope="rowgroup" rowspan="7">Prove it did the right thing</th><td><strong>Evaluation / Eval</strong></td><td>Use the same checklist each time</td><td>Measure an Agent's result and process with fixed cases, environments, grading methods, and thresholds</td></tr>
 <tr><td><strong>Outcome</strong></td><td>What really happened at the end</td><td>The externally verifiable state when the task ends; this chapter checks that the summary truly uses three valid sources</td></tr>
 <tr><td><strong>Trajectory</strong></td><td>The footprints left along the way</td><td>What happened during one run, including tool calls, intermediate results, errors, and output</td></tr>
+<tr><td><strong>Grader</strong></td><td>Mark one answer using stated rules</td><td>A method, program, or model that scores one Eval Case against success criteria; this chapter keeps the rules and human spot checks visible</td></tr>
 <tr><td><strong>Evaluation Harness</strong></td><td>The exam room that gives the same test and keeps the score</td><td>A test system that loads cases, reruns the Agent, calls graders, and saves results; it has a different responsibility from the Agent Harness used for daily work</td></tr>
 <tr><td><strong>Trace</strong></td><td>A notebook that collects the footprints</td><td>Steps, tool calls, errors, and results arranged by time for one task; this chapter uses it to find the failing step</td></tr>
 <tr><td><strong>Observability</strong></td><td>Put a clear window on the system</td><td>Use traces, logs, and metrics to see internal state; this chapter uses it to find where a source went missing</td></tr>
@@ -149,9 +129,9 @@ They are not four product generations, and you do not choose only one. Think abo
 | **Workflow Graph** | Which route should it take now? | Go back to research when sources are weak; otherwise ask for approval |
 | **Eval** | How do I know the result and process are acceptable? | Check three valid sources, correct citations, and no skipped approval |
 
-Eval can make the Loop retry, make the Graph choose another route, or make the Harness stop. It is a ruler across the whole system. Putting a Harness and Eval together still does not create the Loop's rules for repeating and stopping.
+Eval checks the **Outcome** and **Trajectory**, then uses a **Grader** to decide whether the run meets the stated rules. Eval can make the Loop retry, make the Graph choose another route, or make the Harness stop. Putting a Harness and Eval together still does not create the Loop's rules for repeating and stopping.
 
-![Agent Harness is the work environment, Agent Loop is the repeat-and-check rhythm, Workflow Graph is the branching route, and Eval is the measuring stick across all three](../resources/diagrams/agent-production-relationship.en.png)
+![Agent Harness is the work environment, Agent Loop is the repeat-and-check rhythm, Workflow Graph is the branching route, and Eval uses a Grader to check Outcome and Trajectory](../resources/diagrams/agent-production-relationship.en.png)
 
 The learning order is [Stage 3 Agent Loop](03-tool-use-and-hello-agent.en.md) → [Stage 4 Workflow Graph / Agent Framework](04-agent-frameworks.en.md) → safe production integration in this chapter. **Loop Engineering** is an emerging label used by IBM. **Graph Engineering** is even less settled. Learn the responsibilities first, then treat these labels as search terms used by the community. Sources: [IBM — Loop Engineering](https://www.ibm.com/think/topics/loop-engineering), [Anthropic — Agent harness and eval](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents), and [Microsoft Agent Framework — graph-based workflows](https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/builder-and-execution).
 

@@ -46,34 +46,13 @@
 4. 讓高風險動作先停下問人，並能從正確位置繼續。
 5. 用同一組證據判斷系統能不能交給別人使用。
 
-## 🧩 先認識核心詞
+<a id="-先認識核心詞"></a>
+## 🧩 先認識十九個核心詞
 
-先用一句話認識每個詞，再用下面的表格放在一起比較：
-
-- **Agent Harness（Agent 執行架構）**是 AI 幫手工作的房間；本章用它放工具、規則和煞車。
-- **Agent Loop（Agent 迴圈）**是做一步、看結果，再決定下一步；本章用它控制重試與停止。
-- **Workflow Graph（工作流程圖）**是有岔路的路線圖；本章用它安排不同情況該往哪走。
-- **Orchestration（編排）**是安排步驟與角色的順序；本章用它接起完整任務。
-- **Multi-Agent（多 Agent）**是讓多個 AI 幫手分工；只有工作真的能分開時才需要。
-- **Handoff（交接）**是把控制權、資料和證據一起交給下一個幫手。
-- **Evaluation／Eval（評測）**是用同一把尺反覆檢查結果與做事過程是否合格。
-- **Outcome（結果）**是任務結束時，外面真的可以確認的結果。
-- **Trajectory（軌跡）**是一次執行一路做過的事。
-- **Grader（評分器）**是依規則替一個案例打分的方法或程式。
-- **Evaluation Harness（評測執行架構）**是固定載入案例、重跑任務、呼叫評分器並保存結果的測試系統。
-- **Trace（追蹤紀錄）**是把一次任務的步驟、錯誤和結果依時間記下來。
-- **Observability（可觀測性）**是用追蹤紀錄、系統紀錄和指標看見裡面發生什麼事。
-- **Guardrail（護欄）**是先用規則擋住不能做的輸入、輸出或危險動作。
-- **Human Approval（人工核准）**是執行危險動作前先停下來請人檢查與決定。
-- **Checkpoint（檢查點）**是先保存任務目前做到哪裡、版本和必要狀態。
-- **Resume（續跑）**是讀取檢查點，從保存的位置繼續同一個任務。
-- **Recovery（復原）**是失敗後安全停止、重試、補償或交給人處理。
-- **Idempotency（冪等）**是同一次操作重試多次，也不會重複付款、寄信或寫入資料。
-
-比喻只幫你先抓到方向；真正實作時，仍要使用每個詞後面的正確術語與限制。
+先看「像什麼」抓住方向，再看「本章用途／技術界線」了解這一關怎麼使用它。同類詞已合併在同一組，不需要讀兩次。
 
 <table>
-<thead><tr><th scope="col">先解決什麼</th><th scope="col">核心詞</th><th scope="col">五歲也能懂的說法</th><th scope="col">正確術語</th></tr></thead>
+<thead><tr><th scope="col">先解決什麼</th><th scope="col">核心詞</th><th scope="col">五歲也能懂的說法</th><th scope="col">本章用途／技術界線</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="6">先讓任務跑得動</th><td><strong>Agent Harness（Agent 執行架構）</strong></td><td>AI 幫手工作的房間</td><td>放入模型、工具、權限、狀態、錯誤處理與紀錄的執行環境；本章用它安全地查資料與準備摘要</td></tr>
 <tr><td><strong>Agent Loop（Agent 迴圈）</strong></td><td>做一步、看結果，再決定下一步</td><td>模型在一次任務裡反覆選動作、讀取工具結果，直到完成、超出限制或需要問人</td></tr>
@@ -83,9 +62,10 @@
 <tr><td><strong>Handoff（交接）</strong></td><td>把接力棒和筆記一起交出去</td><td>一個 Agent 把控制權、必要資料與成果證據交給另一個 Agent</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">再證明有做對</th><td><strong>Evaluation／Eval（評測）</strong></td><td>用同一把尺反覆檢查</td><td>用固定案例、環境、評分方法與門檻量測 Agent 的結果和過程</td></tr>
+<tr><th scope="rowgroup" rowspan="7">再證明有做對</th><td><strong>Evaluation／Eval（評測）</strong></td><td>用同一張檢查表反覆檢查</td><td>用固定案例、環境、評分方法與門檻量測 Agent 的結果和過程</td></tr>
 <tr><td><strong>Outcome（結果）</strong></td><td>最後真的發生什麼</td><td>任務結束時外部可驗證的狀態；本章要確認摘要真的包含三個合格來源，而不是只相信 Agent 說「完成了」</td></tr>
 <tr><td><strong>Trajectory（軌跡）</strong></td><td>一路留下的腳印</td><td>一次執行中做過的事，包括工具呼叫、中間結果、錯誤與輸出</td></tr>
+<tr><td><strong>Grader（評分器）</strong></td><td>照規則批改一份答案</td><td>依成功條件替一個 Eval Case 評分的方法、程式或模型；本章要求保留規則與人工抽查</td></tr>
 <tr><td><strong>Evaluation Harness（評測執行架構）</strong></td><td>固定出題、收卷和計分的考場</td><td>載入案例、重跑 Agent、呼叫 grader 並保存結果的測試系統；它和負責日常執行的 Agent Harness 不是同一個責任</td></tr>
 <tr><td><strong>Trace（追蹤紀錄）</strong></td><td>把一路的腳印收進一本紀錄簿</td><td>一次任務中依時間排列的步驟、工具呼叫、錯誤與結果；本章用它找出哪一步出錯</td></tr>
 <tr><td><strong>Observability（可觀測性）</strong></td><td>替系統裝透明窗</td><td>用追蹤紀錄、系統紀錄與數值指標看見內部狀態；本章用它找出摘要在哪一步漏掉來源</td></tr>
@@ -150,9 +130,9 @@ Docker 還不熟也可以開始；先做四個核心練習，再為核心練習 
 | **Workflow Graph** | 遇到不同情況要往哪走？ | 來源不足就回去查；足夠就進入人工核准 |
 | **Eval** | 我怎麼知道結果和過程合格？ | 檢查三個來源、引用正確、沒有跳過核准 |
 
-Eval 可以讓 Loop 重試、讓 Graph 換路，或要求 Harness 停止。它是一把跨越整套系統的量尺；把 Harness 和 Eval 放在一起，仍不會自動產生「何時重複、何時停止」的 Loop。
+Eval 會檢查 **Outcome**、**Trajectory**，再由 **Grader** 依規則判斷是否合格。Eval 可以讓 Loop 重試、讓 Graph 換路，或要求 Harness 停止；但把 Harness 和 Eval 放在一起，仍不會自動產生「何時重複、何時停止」的 Loop。
 
-![Agent Harness 是工作環境，Agent Loop 是反覆做與看的節奏，Workflow Graph 是帶分支的路線，Eval 是跨越三者的檢查量尺](../resources/diagrams/agent-production-relationship.png)
+![Agent Harness 是工作環境，Agent Loop 是反覆做與看的節奏，Workflow Graph 是帶分支的路線，Eval 用 Grader 檢查 Outcome 與 Trajectory](../resources/diagrams/agent-production-relationship.png)
 
 學習順序是 [Stage 3 的 Agent Loop](03-tool-use-and-hello-agent.md) → [Stage 4 的 Workflow Graph／Agent Framework](04-agent-frameworks.md) → 本章的安全上線整合。**Loop Engineering** 是 IBM 使用的新興說法；**Graph Engineering** 的用法更鬆散。讀者要先學清楚責任，再把這些名稱當成社群搜尋詞。來源：[IBM — Loop Engineering](https://www.ibm.com/think/topics/loop-engineering)、[Anthropic — Agent harness 與 eval](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)、[Microsoft Agent Framework — graph-based workflows](https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/builder-and-execution)。
 

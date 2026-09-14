@@ -46,34 +46,13 @@
 4. 让高风险动作先停下问人，并能从正确位置继续。
 5. 用同一组证据判断系统能不能交给别人使用。
 
-## 🧩 先认识核心词
+<a id="-先认识核心词"></a>
+## 🧩 先认识十九个核心词
 
-先用一句话认识每个词，再用下面的表格放在一起比较：
-
-- **Agent Harness（Agent 执行架构）**是 AI 帮手工作的房间；本章用它放工具、规则和煞车。
-- **Agent Loop（Agent 循环）**是做一步、看结果，再决定下一步；本章用它控制重试与停止。
-- **Workflow Graph（工作流程图）**是有岔路的路线图；本章用它安排不同情况该往哪走。
-- **Orchestration（编排）**是安排步骤与角色的顺序；本章用它接起完整任务。
-- **Multi-Agent（多 Agent）**是让多个 AI 帮手分工；只有工作真的能分开时才需要。
-- **Handoff（交接）**是把控制权、数据和证据一起交给下一个帮手。
-- **Evaluation／Eval（评测）**是用同一把尺反复检查结果与做事过程是否合格。
-- **Outcome（结果）**是任务结束时，外面真的可以确认的结果。
-- **Trajectory（轨迹）**是一次运行一路做过的事。
-- **Grader（评分器）**是依规则替一个案例打分的方法或程序。
-- **Evaluation Harness（评测执行架构）**是固定加载案例、重跑任务、调用评分器并保存结果的测试系统。
-- **Trace（追踪纪录）**是把一次任务的步骤、错误和结果依时间记下来。
-- **Observability（可观测性）**是用追踪纪录、系统纪录和指标看见里面发生什么事。
-- **Guardrail（护栏）**是先用规则挡住不能做的输入、输出或危险动作。
-- **Human Approval（人工批准）**是运行危险动作前先停下来请人检查与决定。
-- **Checkpoint（检查点）**是先保存任务目前做到哪里、版本和必要状态。
-- **Resume（续跑）**是读取检查点，从保存的位置继续同一个任务。
-- **Recovery（恢复）**是失败后安全停止、重试、补偿或交给人处理。
-- **Idempotency（幂等）**是同一次操作重试多次，也不会重复付款、寄信或写入数据。
-
-比喻只帮你先抓到方向；真正实现时，仍要使用每个词后面的正确术语与限制。
+先看“五岁也能懂的说法”抓住方向，再看“本章用途／技术边界”了解这一关怎么使用它。同类词已经合并在同一组，不需要读两次。
 
 <table>
-<thead><tr><th scope="col">先解决什么</th><th scope="col">核心词</th><th scope="col">五岁也能懂的说法</th><th scope="col">正确术语</th></tr></thead>
+<thead><tr><th scope="col">先解决什么</th><th scope="col">核心词</th><th scope="col">五岁也能懂的说法</th><th scope="col">本章用途／技术边界</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="6">先让任务跑得动</th><td><strong>Agent Harness（Agent 执行架构）</strong></td><td>AI 帮手工作的房间</td><td>放入模型、工具、权限、状态、错误处理与纪录的执行环境；本章用它安全地查资料与准备摘要</td></tr>
 <tr><td><strong>Agent Loop（Agent 循环）</strong></td><td>做一步、看结果，再决定下一步</td><td>模型在一次任务里反复选动作、读取工具结果，直到完成、超出限制或需要问人</td></tr>
@@ -83,9 +62,10 @@
 <tr><td><strong>Handoff（交接）</strong></td><td>把接力棒和笔记一起交出去</td><td>一个 Agent 把控制权、必要数据与成果证据交给另一个 Agent</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">再证明有做对</th><td><strong>Evaluation／Eval（评测）</strong></td><td>用同一把尺反复检查</td><td>用固定案例、环境、评分方法与门槛量测 Agent 的结果和过程</td></tr>
+<tr><th scope="rowgroup" rowspan="7">再证明有做对</th><td><strong>Evaluation／Eval（评测）</strong></td><td>用同一张检查表反复检查</td><td>用固定案例、环境、评分方法与门槛量测 Agent 的结果和过程</td></tr>
 <tr><td><strong>Outcome（结果）</strong></td><td>最后真的发生什么</td><td>任务结束时外部可验证的状态；本章要确认摘要真的包含三个合格来源，而不是只相信 Agent 说“完成了”</td></tr>
 <tr><td><strong>Trajectory（轨迹）</strong></td><td>一路留下的脚印</td><td>一次运行中做过的事，包括工具调用、中间结果、错误与输出</td></tr>
+<tr><td><strong>Grader（评分器）</strong></td><td>照规则批改一份答案</td><td>依成功条件为一个 Eval Case 评分的方法、程序或模型；本章要求保留规则与人工抽查</td></tr>
 <tr><td><strong>Evaluation Harness（评测执行架构）</strong></td><td>固定出题、收卷和计分的考场</td><td>加载案例、重跑 Agent、调用 grader 并保存结果的测试系统；它和负责日常执行的 Agent Harness 不是同一个责任</td></tr>
 <tr><td><strong>Trace（追踪纪录）</strong></td><td>把一路的脚印收进一本纪录簿</td><td>一次任务中依时间排列的步骤、工具调用、错误与结果；本章用它找出哪一步出错</td></tr>
 <tr><td><strong>Observability（可观测性）</strong></td><td>替系统装透明窗</td><td>用追踪纪录、系统纪录与数值指标看见内部状态；本章用它找出摘要在哪一步漏掉来源</td></tr>
@@ -150,9 +130,9 @@ Docker 还不熟也可以开始；先做四个核心练习，再为核心练习 
 | **Workflow Graph** | 遇到不同情况要往哪走？ | 来源不足就回去查；足够就进入人工批准 |
 | **Eval** | 我怎么知道结果和过程合格？ | 检查三个来源、引用正确、没有跳过批准 |
 
-Eval 可以让 Loop 重试、让 Graph 换路，或要求 Harness 停止。它是一把跨越整套系统的量尺；把 Harness 和 Eval 放在一起，仍不会自动产生“何时重复、何时停止”的 Loop。
+Eval 会检查 **Outcome**、**Trajectory**，再由 **Grader** 依规则判断是否合格。Eval 可以让 Loop 重试、让 Graph 换路，或要求 Harness 停止；但把 Harness 和 Eval 放在一起，仍不会自动产生“何时重复、何时停止”的 Loop。
 
-![Agent Harness 是工作环境，Agent Loop 是反复做与看的节奏，Workflow Graph 是带分支的路线，Eval 是跨越三者的检查量尺](../resources/diagrams/agent-production-relationship.zh-Hans.png)
+![Agent Harness 是工作环境，Agent Loop 是反复做与看的节奏，Workflow Graph 是带分支的路线，Eval 用 Grader 检查 Outcome 与 Trajectory](../resources/diagrams/agent-production-relationship.zh-Hans.png)
 
 学习顺序是 [Stage 3 的 Agent Loop](03-tool-use-and-hello-agent.zh-Hans.md) → [Stage 4 的 Workflow Graph／Agent Framework](04-agent-frameworks.zh-Hans.md) → 本章的安全上线集成。**Loop Engineering** 是 IBM 使用的新兴说法；**Graph Engineering** 的用法更松散。读者要先学清楚责任，再把这些名称当成社群搜索词。来源：[IBM — Loop Engineering](https://www.ibm.com/think/topics/loop-engineering)、[Anthropic — Agent harness 与 eval](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)、[Microsoft Agent Framework — graph-based workflows](https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/builder-and-execution)。
 
