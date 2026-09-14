@@ -38,6 +38,26 @@ FEATURED_CONCEPTS = (
     "Autonomy Gradients／Trust Layers",
     "Model–Harness Fit",
 )
+CORE_SECTION_HEADINGS = {
+    "zh-TW": "## 🔑 先認識四個進階核心詞",
+    "en": "## 🔑 Meet Four Advanced Core Terms First",
+    "zh-Hans": "## 🔑 先认识四个进阶核心词",
+}
+LEGACY_CORE_ANCHORS = {
+    "zh-TW": '<a id="-四個進階概念先懂白話再看正式名稱"></a>',
+    "en": '<a id="-four-advanced-concepts-plain-language-first-formal-name-second"></a>',
+    "zh-Hans": '<a id="-四个进阶概念先懂白话再看正式名称"></a>',
+}
+CORE_TABLE_HEADERS = {
+    "zh-TW": ("先處理什麼", "核心詞", "五歲也能懂的說法", "何時使用／技術界線"),
+    "en": (
+        "Problem to handle first",
+        "Core term",
+        "Plain-language picture",
+        "When to use it / technical boundary",
+    ),
+    "zh-Hans": ("先处理什么", "核心词", "五岁也能懂的说法", "何时使用／技术边界"),
+}
 SELECTION_PATTERNS = (
     "Parallel Exploration",
     "Hierarchical Delegation",
@@ -117,6 +137,31 @@ def test_visible_path_starts_with_stage7_and_keeps_the_advanced_choices(locale: 
     assert visible.index("Autonomy Gradients") < visible.index("Model–Harness Fit")
     assert "## 📚" in visible
     assert "## ✅" in visible
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_four_core_terms_use_one_visible_two_by_two_grouped_table(
+    locale: str, page: Path
+) -> None:
+    text = page.read_text(encoding="utf-8")
+    visible = _without_details(text)
+    heading = CORE_SECTION_HEADINGS[locale]
+    section_start = visible.index(heading)
+    section_end = visible.index("## 🧭", section_start)
+    section = visible[section_start:section_end]
+
+    assert LEGACY_CORE_ANCHORS[locale] in visible[:section_start]
+    tables = re.findall(r"<table>.*?</table>", section, flags=re.DOTALL)
+    assert len(tables) == 1
+    table = tables[0]
+    header = "".join(
+        f'<th scope="col">{label}</th>' for label in CORE_TABLE_HEADERS[locale]
+    )
+    assert f"<thead><tr>{header}</tr></thead>" in table
+    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', table) == ["2", "2"]
+    assert len(re.findall(r"<tr>", table)) == 5
+    for concept in FEATURED_CONCEPTS:
+        assert f"<strong>{concept}" in table
 
 
 @pytest.mark.parametrize("locale", PAGES)

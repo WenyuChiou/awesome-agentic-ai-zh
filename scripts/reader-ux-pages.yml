@@ -1610,9 +1610,9 @@ pages:
       en: stages/07.5-advanced-agentic-concepts.en.md
       zh-Hans: stages/07.5-advanced-agentic-concepts.zh-Hans.md
     max_visible_chars:
-      zh-TW: 11000
-      en: 15000
-      zh-Hans: 11000
+      zh-TW: 7797
+      en: 13841
+      zh-Hans: 7837
     max_open_details: 0
     required_details_count: 4
     visible_section_order:
@@ -1657,9 +1657,9 @@ pages:
         en: {heading: "📚 Required reading", anchor: -required-reading}
         zh-Hans: {heading: "📚 必修阅读", anchor: -必修阅读}
       advanced-concepts:
-        zh-TW: {heading: "🔑 四個進階概念：先懂白話，再看正式名稱", anchor: -四個進階概念先懂白話再看正式名稱}
-        en: {heading: "🔑 Four advanced concepts: plain language first, formal name second", anchor: -four-advanced-concepts-plain-language-first-formal-name-second}
-        zh-Hans: {heading: "🔑 四个进阶概念：先懂白话，再看正式名称", anchor: -四个进阶概念先懂白话再看正式名称}
+        zh-TW: {heading: "🔑 先認識四個進階核心詞", anchor: -先認識四個進階核心詞}
+        en: {heading: "🔑 Meet Four Advanced Core Terms First", anchor: -meet-four-advanced-core-terms-first}
+        zh-Hans: {heading: "🔑 先认识四个进阶核心词", anchor: -先认识四个进阶核心词}
       selection:
         zh-TW: {heading: "🧭 其他模式：看到這種證據才選", anchor: -其他模式看到這種證據才選}
         en: {heading: "🧭 Other patterns: choose one only when you see this evidence", anchor: -other-patterns-choose-one-only-when-you-see-this-evidence}

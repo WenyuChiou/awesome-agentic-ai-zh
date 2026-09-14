@@ -225,7 +225,7 @@ Stage 5 的練習不能只叫讀者「看文件」卻宣稱已建立元件。Hoo
 
 Stage 5 的 installable Skill 範例使用 `${CLAUDE_SKILL_DIR}` 指向 bundled references，讓 personal、project 與翻譯版安裝後都能找到同一包檔案。README 先給 PowerShell 可複製安裝，再收合 POSIX；驗收先跑無網路 contract checker，再用 `/skill-name` 做產品內手動檢查。自訂 JSON 不能冒充 promptfoo config，結構測試也不能冒充 model-quality eval；要教 promptfoo 時，必須另給合法 provider／prompt／test 設定或明說只提供延伸入口。範例不能保存無來源成功率、原因比例、固定省時百分比或要求私人 Chain-of-Thought。
 
-Stage 7 負責基礎，Stage 7.5 只保留進階選擇。Stage 7.5 是 reading-map，不是第六個實作章，也不再重教 Harness、Loop、Graph、Eval 的定義。固定可見主線是「返回 Stage 7 → 四個學習目標 → 進入條件 → 三份必讀 → 四個粗體進階概念 → 五個候選模式短表 → 可直接複製的最小決策紀錄 → Model–Harness Fit 保留／簡化／移除判斷 → 深讀入口 → 五筆精選閱讀 → 24 筆完整學習資源 → 完成檢查」。四個進階概念是 **Evaluator–Optimizer／Agent-as-Judge**、**Failure Injection／Chaos Eval**、**Autonomy Gradients／Trust Layers** 與 **Model–Harness Fit**；後三組社群／編輯名稱必須明說不是跨供應商正式分層。其餘 Parallel Exploration、Hierarchical Delegation、Multi-Agent Handoff、Plan–Act–Reflect、Dynamic Workflows 只在有對應失敗證據時選一個，不得讀成全部都要安裝的清單。
+Stage 7 負責基礎，Stage 7.5 只保留進階選擇。Stage 7.5 是 reading-map，不是第六個實作章，也不再重教 Harness、Loop、Graph、Eval 的定義。固定可見主線是「返回 Stage 7 → 四個學習目標 → 進入條件 → 三份必讀 → `2／2` 合併表中的四個粗體進階核心詞 → 四段限制與來源 → 五個候選模式短表 → 可直接複製的最小決策紀錄 → Model–Harness Fit 保留／簡化／移除判斷 → 深讀入口 → 五筆精選閱讀 → 24 筆完整學習資源 → 完成檢查」。四個進階概念是 **Evaluator–Optimizer／Agent-as-Judge**、**Failure Injection／Chaos Eval**、**Autonomy Gradients／Trust Layers** 與 **Model–Harness Fit**；前兩項分成「先找出真正的問題」，後兩項分成「再控制新增的複雜度」，後三組社群／編輯名稱必須明說不是跨供應商正式分層。其餘 Parallel Exploration、Hierarchical Delegation、Multi-Agent Handoff、Plan–Act–Reflect、Dynamic Workflows 只在有對應失敗證據時選一個，不得讀成全部都要安裝的清單。
 
 四個收合區只放 Bitter Lesson／人機分工與刪除測試限制、Dynamic Workflows 細節、失敗案例及 benchmark 紀律。四個進階概念、五個候選模式、必修閱讀、精選閱讀、24 筆完整資源表與完成條件保持可見。完整資源表固定分成 `5／5／5／5／4` 五組，使用獨立 `<tbody>` 與真正 HTML `rowspan`；三語 URL、順序與五星編輯評分一致。AutoGen 的 maintenance mode、Microsoft Agent Framework 的後繼定位、Sandbox Agents 的 Beta 狀態，以及 Dynamic Workflows 的觸發、限制與供應環境使用 90 天 freshness marker；現行產品頁未列出通用最低版本，只有 ultracode 保留 `v2.1.203+` 的特定版本界線。來源衝突時以現行官方產品文件優先。
 
@@ -324,7 +324,7 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 ### 核心詞契約
 
 - 每個完成回溯的 Stage／Track，都要在第一個練習前放一個可見核心詞區；不能藏進 `<details>`。
-- 每個詞獨立說明「它是什麼、像什麼、這章用它做什麼、正確技術名稱」。先用白話搭橋，再保留英文名、縮寫或規格名稱，讓讀者之後查得到。
+- 每個詞獨立說明「它是什麼、像什麼、這章用它做什麼、正確技術名稱」。先用白話搭橋，再保留英文名、縮寫或規格名稱，讓讀者之後查得到。新建或輪到閱讀體驗重整的頁面，若有四個以上核心詞或可分成兩組以上，使用一張保持展開的合併表：分類、正式核心詞、白話說法、本章用途／技術界線；同組使用獨立 `<tbody>` 與真正 `rowspan`，不在表格前後再複製同內容速記。尚未重整的既有頁面依 stacked PR 順序遷移，不在單一 PR 一次改寫全站。
 - 核心詞只收後文、練習或 self-check 真的會用到的概念。普通名詞不為了湊數拉進來；也不能為了縮短頁面刪除重要術語。
 - 三語使用相同概念 ID 與順序，內容意思一致。翻譯可以自然，但不能一種語言多講限制、另一種語言少講用途。
 - `scripts/reader-ux-pages.yml` 的 `core_terms` 會鎖住核心區與第一題的位置、第一次可見用法的粗體、定義標籤順序和最低解釋長度。這是結構 gate；比喻與定義是否正確仍由人工 review 判斷。
