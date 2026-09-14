@@ -462,7 +462,7 @@
 
 **Agent Production Engineering** 是本學習地圖對「讓 Agent 可以長期、安全、可觀察地運作」的上位名稱。它把 Harness、Loop、Workflow Graph、Eval、Guardrails、成本、復原與人工核准放在同一章討論。
 
-學習順序是 [Stage 3 的 Agent Loop](../stages/03-tool-use-and-hello-agent.md) → [Stage 4 的 Workflow Graph／Agent Framework](../stages/04-agent-frameworks.md) → [Stage 7 的 Agent Production Engineering](../stages/07-multi-agent-production.md)。Prompt、Context、Harness、Loop、Graph 是五個會重疊的控制問題，不是五個互相取代的產品世代。
+學習順序是 [Stage 3 的 Agent Loop](../stages/03-tool-use-and-hello-agent.md) → [Stage 4 的 Workflow Graph／Agent Framework](../stages/04-agent-frameworks.md) → [Stage 7 的 Agent Production Engineering](../stages/07-multi-agent-production.md)。Prompt、Context、Harness、Loop、Graph 會一起工作；它們不是五層，也不是互相取代的產品世代。
 
 📍 完整章節：[Stage 7](../stages/07-multi-agent-production.md)
 

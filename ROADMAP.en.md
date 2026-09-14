@@ -47,7 +47,7 @@ The weekly workflow checks canonical GitHub repositories, redirects, archives, l
 
 - Stage 0–8 and A1–A3 completed their first progressive-disclosure, core-term, resource-table, and trilingual pass.
 - Stage 2 retained zero-shot, one-shot, few-shot, and Chain of Thought, and gained a localized Prompt Engineering map.
-- Stage 3 now teaches the first Agent Loop with a localized diagram; Stage 4 uses frameworks to teach Workflow Graphs; Stage 7 integrates both through Agent Production Engineering across Harness, Loops, and Graphs. Stage 6 gained a two-lane RAG pipeline; Stage 8 gained interface-choice and safety maps.
+- Stage 3 now teaches the first Agent Loop with a localized diagram; Stage 4 uses frameworks to teach Workflow Graphs; Stage 7 integrates Harnesses, Loops, Graphs, and system-wide Eval through Agent Production Engineering. Stage 6 gained a two-lane RAG pipeline; Stage 8 gained interface-choice and safety maps.
 - Stage 0 has an integrated exercise. Stage 7.5 is intentionally a reading map. Stage 8 has copyable safety exercises; a separate end-to-end example remains open to contributions.
 - MkDocs build, mirror/anchor/locale checks, reader-UX, freshness, and repository snapshot gates are in the maintenance flow.
 

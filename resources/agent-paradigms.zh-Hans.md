@@ -57,7 +57,7 @@
 1. [CLI Agents 指南](cli-agents-guide.zh-Hans.md)：比较登录、Provider、Sandbox、项目规则和权限。
 2. [Stage 4：Workflow Graph 与 Agent 框架](../stages/04-agent-frameworks.zh-Hans.md)：学习 Framework 和 Workflow Graph。
 3. [Stage 5：Claude Code 生态](../stages/05-claude-code-ecosystem.zh-Hans.md)：学习 Skills、MCP、Hooks 和 Subagents。
-4. [Stage 7：Agent Production Engineering](../stages/07-multi-agent-production.zh-Hans.md)：学习 Harness、Loop、Graph 和上线边界。
+4. [Stage 7：Agent Production Engineering](../stages/07-multi-agent-production.zh-Hans.md)：学习 Harness、Loop、Graph、跨系统 Eval 和上线边界。
 
 ## 🪜 三步选择法
 

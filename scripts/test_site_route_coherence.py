@@ -51,8 +51,8 @@ LOCALES = {
         "stage3_topic": "工具使用與第一個 Agent Loop",
         "stage4_title": "Stage 4 — Workflow Graph 與 Agent 框架",
         "stage4_topic": "Workflow Graph 與 Agent 框架",
-        "stage7_title": "Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph",
-        "stage7_topic": "Agent Production Engineering：Harness、Loop 與 Graph",
+        "stage7_title": "Stage 7 — Agent 上線工程：可測、可看、可停、可恢復",
+        "stage7_topic": "Agent 上線工程：可測、可看、可停、可恢復",
         "stage7_compact": "Stage 7 — Agent Production Engineering",
     },
     "en": {
@@ -95,8 +95,8 @@ LOCALES = {
         "stage3_topic": "Tool Use & Your First Agent Loop",
         "stage4_title": "Stage 4 — Workflow Graphs & Agent Frameworks",
         "stage4_topic": "Workflow Graphs & Agent Frameworks",
-        "stage7_title": "Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs",
-        "stage7_topic": "Agent Production Engineering: Harness, Loops, and Graphs",
+        "stage7_title": "Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable",
+        "stage7_topic": "Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable",
         "stage7_compact": "Stage 7 — Agent Production Engineering",
     },
     "zh-Hans": {
@@ -139,8 +139,8 @@ LOCALES = {
         "stage3_topic": "工具使用与第一个 Agent Loop",
         "stage4_title": "Stage 4 — Workflow Graph 与 Agent 框架",
         "stage4_topic": "Workflow Graph 与 Agent 框架",
-        "stage7_title": "Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph",
-        "stage7_topic": "Agent Production Engineering：Harness、Loop 与 Graph",
+        "stage7_title": "Stage 7 — Agent 上线工程：可测、可看、可停、可恢复",
+        "stage7_topic": "Agent 上线工程：可测、可看、可停、可恢复",
         "stage7_compact": "Stage 7 — Agent Production Engineering",
     },
 }
@@ -499,7 +499,8 @@ def test_readme_explains_learning_order_separately_from_control_scope(
     assert "**Agent Loop**" in route
     assert "**Workflow Graph**" in route
     assert "**Context Engineering**" in route
-    assert "`prompt → context → harness → loop → graph`" in route
+    assert all(term in route for term in ("Prompt", "Context", "Harness", "Loop", "Graph"))
+    assert any(marker in route for marker in ("不是五層", "not five layers", "不是五层"))
 
 
 def test_legacy_stage_titles_are_absent_repo_wide() -> None:
@@ -519,6 +520,9 @@ def test_legacy_stage_titles_are_absent_repo_wide() -> None:
         "Stage 7 — Loop／Graph Engineering：多 Agent 與穩定運作",
         "Stage 7 — Loop & Graph Engineering: Multi-Agent Production",
         "Stage 7 — Loop／Graph Engineering：多 Agent 与稳定运行",
+        "Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph",
+        "Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs",
+        "Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph",
         "Stage 7 — Multi-Agent · 進階應用",
         "Stage 7 — Multi-Agent · Advanced Applications",
         "Stage 7 — Multi-Agent · 进阶应用",

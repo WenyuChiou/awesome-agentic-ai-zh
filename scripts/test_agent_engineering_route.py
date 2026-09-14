@@ -31,7 +31,7 @@ GLOSSARY_MARKERS = {
     "zh-TW": (
         "### Agent Production Engineering",
         "學習順序是 [Stage 3 的 Agent Loop](../stages/03-tool-use-and-hello-agent.md) → [Stage 4 的 Workflow Graph／Agent Framework](../stages/04-agent-frameworks.md) → [Stage 7 的 Agent Production Engineering](../stages/07-multi-agent-production.md)",
-        "五個會重疊的控制問題",
+        "Prompt、Context、Harness、Loop、Graph 會一起工作；它們不是五層",
         "同一個 Harness 可以包含 Agent Loop",
         "而不是取代它們",
         "不是所有供應商共同採用的標準",
@@ -39,7 +39,7 @@ GLOSSARY_MARKERS = {
     "en": (
         "### Agent Production Engineering",
         "The learning order is [Stage 3 Agent Loop](../stages/03-tool-use-and-hello-agent.en.md) → [Stage 4 Workflow Graph / Agent Framework](../stages/04-agent-frameworks.en.md) → [Stage 7 Agent Production Engineering](../stages/07-multi-agent-production.en.md)",
-        "five overlapping control questions",
+        "Prompt, Context, Harness, Loop, and Graph work together; they are not five layers",
         "the same Harness may contain an Agent Loop",
         "instead of replacing them",
         "not a cross-vendor standard",
@@ -47,7 +47,7 @@ GLOSSARY_MARKERS = {
     "zh-Hans": (
         "### Agent Production Engineering",
         "学习顺序是 [Stage 3 的 Agent Loop](../stages/03-tool-use-and-hello-agent.zh-Hans.md) → [Stage 4 的 Workflow Graph／Agent Framework](../stages/04-agent-frameworks.zh-Hans.md) → [Stage 7 的 Agent Production Engineering](../stages/07-multi-agent-production.zh-Hans.md)",
-        "五个会重叠的控制问题",
+        "Prompt、Context、Harness、Loop、Graph 会一起工作；它们不是五层",
         "同一个 Harness 可以包含 Agent Loop",
         "而不是替代它们",
         "不是所有供应商共同采用的标准",

@@ -179,7 +179,7 @@ nav:
           - Overview: stages/06-memory-rag.md
           - Advanced RAG: resources/advanced-rag.md
           - Agent Memory: resources/agent-memory.md
-      - Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph: stages/07-multi-agent-production.md
+      - Stage 7 — Agent 上線工程：可測、可看、可停、可恢復: stages/07-multi-agent-production.md
       - Stage 7.5 — Advanced Agentic: stages/07.5-advanced-agentic-concepts.md
       - Stage 8 — Agent Interfaces: stages/08-agent-interfaces.md
   - 讀者分流:

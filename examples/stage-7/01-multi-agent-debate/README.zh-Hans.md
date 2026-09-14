@@ -6,7 +6,7 @@
 
 你会做出三个角色：PRO 说“赞成”、CON 说“反对”，Judge 看完两边再选一边。
 
-对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 选修 A。先完成单一 Agent 的 Eval、安全执行与 Deploy 核心路线，再比较 Multi-Agent 是否真的更好。
+对应 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](../../../stages/07-multi-agent-production.zh-Hans.md) 选修 A。先完成单一 Agent 的 Eval、安全执行与 Deploy 核心路线，再比较 Multi-Agent 是否真的更好。
 
 ## 🎯 学习目标
 

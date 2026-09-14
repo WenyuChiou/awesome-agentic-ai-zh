@@ -57,7 +57,7 @@ The shortest check is: **Who runs the model? Who routes the request? Who can tou
 1. [CLI Agents guide](cli-agents-guide.en.md): compare sign-in, Providers, Sandboxes, project rules, and permissions.
 2. [Stage 4: Workflow Graphs & Agent Frameworks](../stages/04-agent-frameworks.en.md): learn Frameworks and Workflow Graphs.
 3. [Stage 5: Claude Code Ecosystem](../stages/05-claude-code-ecosystem.en.md): learn Skills, MCP, Hooks, and Subagents.
-4. [Stage 7: Agent Production Engineering](../stages/07-multi-agent-production.en.md): learn Harnesses, Loops, Graphs, and production boundaries.
+4. [Stage 7: Agent Production Engineering](../stages/07-multi-agent-production.en.md): learn Harnesses, Loops, Graphs, system-wide Eval, and production boundaries.
 
 ## 🪜 A three-step choice
 

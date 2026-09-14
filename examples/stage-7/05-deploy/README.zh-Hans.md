@@ -6,7 +6,7 @@
 
 你会把一个模型调用包成两个 HTTP endpoint：`/health` 说明服务还活着，`/chat` 接收问题并返回答案。
 
-对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 4。先完成 Eval、Observability 与 Safe Execution，再把服务交给别人使用。
+对应 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 4。先完成 Eval、Observability 与 Safe Execution，再把服务交给别人使用。
 
 ## 🎯 学习目标
 

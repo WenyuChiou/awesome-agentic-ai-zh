@@ -6,7 +6,7 @@
 
 This exercise needs no model and does not send email or change real data. The program writes only fake actions to a local JSON ledger so you can first understand the safety skeleton.
 
-Pairs with Core Exercise 3 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
+Pairs with Core Exercise 3 in [Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](../../../stages/07-multi-agent-production.en.md).
 
 ## 🎯 Learning goals
 

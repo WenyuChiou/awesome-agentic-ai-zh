@@ -462,7 +462,7 @@ A **Frontier Model** is a model near the capability frontier at a particular tim
 
 **Agent Production Engineering** is this roadmap's umbrella name for making an Agent dependable, safe, and observable over time. It brings Harnesses, Loops, Workflow Graphs, Evals, Guardrails, cost, recovery, and human approval into one chapter.
 
-The learning order is [Stage 3 Agent Loop](../stages/03-tool-use-and-hello-agent.en.md) → [Stage 4 Workflow Graph / Agent Framework](../stages/04-agent-frameworks.en.md) → [Stage 7 Agent Production Engineering](../stages/07-multi-agent-production.en.md). Prompt, Context, Harness, Loop, and Graph are five overlapping control questions, not five product generations that replace one another.
+The learning order is [Stage 3 Agent Loop](../stages/03-tool-use-and-hello-agent.en.md) → [Stage 4 Workflow Graph / Agent Framework](../stages/04-agent-frameworks.en.md) → [Stage 7 Agent Production Engineering](../stages/07-multi-agent-production.en.md). Prompt, Context, Harness, Loop, and Graph work together; they are not five layers or product generations that replace one another.
 
 📍 Full chapter: [Stage 7](../stages/07-multi-agent-production.en.md)
 

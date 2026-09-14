@@ -53,7 +53,7 @@ cat > "$SRC_DIR/SUMMARY.md" <<'EOF'
 - [Stage 4 — Workflow Graph 與 Agent 框架](stages/04-agent-frameworks.md)
 - [Stage 5 — Claude Code 生態](stages/05-claude-code-ecosystem.md)
 - [Stage 6 — Memory · RAG · 進階](stages/06-memory-rag.md)
-- [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](stages/07-multi-agent-production.md)
+- [Stage 7 — Agent 上線工程：可測、可看、可停、可恢復](stages/07-multi-agent-production.md)
 
 # 跨 Stage 範例
 

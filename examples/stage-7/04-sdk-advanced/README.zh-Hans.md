@@ -6,7 +6,7 @@
 
 **Streaming**让答案分段出现；**Prompt caching**让相同的长前缀有机会被重用。两者解决不同问题。
 
-对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 选修 B。Streaming 与 Cache 是体验／成本技巧，不取代 Approval、Checkpoint 或 Recovery。
+对应 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](../../../stages/07-multi-agent-production.zh-Hans.md) 选修 B。Streaming 与 Cache 是体验／成本技巧，不取代 Approval、Checkpoint 或 Recovery。
 
 ## 🎯 学习目标
 

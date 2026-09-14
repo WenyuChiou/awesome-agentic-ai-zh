@@ -159,7 +159,7 @@ stage 的價值 = 讀者學完後**能回答這個問題**。
 | **4** Workflow Graph 與 Agent 框架 | 「怎麼選 framework，把多個步驟接成看得見的 graph？」 | LangGraph / AutoGen / CrewAI / Smolagents 對比 |
 | **5** ⭐⭐ Claude Code 生態 | 「Claude Code 生態系怎麼用？」 | 九個核心詞、五題累加練習、5.1–5.8 延伸入口 |
 | **6** Memory · RAG | 「怎麼讓 agent 記得事情？怎麼讓它能查自家文件？」 | embedding / vector DB / RAG / contextual retrieval |
-| **7** Agent Production Engineering | 「Harness、Loop、Graph 跟 production 怎麼一起？」 | Harness / Loop / Graph / orchestration / eval / observability |
+| **7** Agent 上線工程 | 「怎麼讓 Agent 可測、可看、可停、可恢復？」 | Harness / Loop / Graph / Eval / observability / approval / recovery |
 | **7.5** 進階概念地圖 | 「multi-agent 之後還有哪些進階 pattern 要認得？」 | 12 個進階概念 + reading path（不寫 code）|
 | **8** ⭐⭐ Agent 操作介面 | 「agent 怎麼操作 API 以外的真實環境（螢幕 / 瀏覽器 / sandbox）？」 | Computer Use / Browser Use / Code Sandbox |
 
@@ -181,7 +181,7 @@ Stage 3 的六題也各有一個 `examples/stage-3/NN-*` 可執行資料夾。�
 
 Stage 4 的章名固定把 **Workflow Graph** 放在 **Agent Framework** 前面；它先教工作地圖，再教可用來實作的工具箱，不直接把整章叫成 Graph Engineering。固定主線是「八個可見核心詞 → Agent Loop／Workflow Graph／Agent Framework／Loop Engineering／Production orchestration 五項橋接 → workflow／agent × single／multi 選擇圖 → 先用最簡單能完成任務的形狀 → 五種協作 pattern → 依需求選工具 → 五題練習」。八個主核心詞是 **Workflow／Workflow Graph**、**Framework**、**Agent**、**Orchestration**、**State**、**Checkpoint**、**Handoff** 與 **Human-in-the-loop（HITL）**；Supervisor、Worker、CodeAct 與 Type-safe 也必須在第一次可見使用時粗體解釋，不能為了縮短頁面刪掉。橋接表必須說清楚：Agent Loop 是 Stage 3 的執行迴圈，Workflow Graph 是 node／edge／branch／state 組成的工作地圖，framework 是工具箱，Production orchestration 是 Stage 7 加入預算、驗證、復原、觀測與人工核准後的上線工作；**Graph Engineering** 只作新興替代稱呼，不宣稱是業界統一標準。Multi-Agent 是可選的系統形狀，不是 framework 的定義，也不是每張 graph 的必要條件。三語亮色圖只整理正文已先定義的關係，不放版本、價格、stars 或沒有通則的數字。
 
-章節學習順序與五個工程控制問題必須分開說。章節依「先做出來，再看見結構，最後做穩」排列：Stage 2 Prompt → Stage 3 Agent Loop → Stage 4 Workflow Graph／Agent Framework → Stage 5 MCP／Skills／Plugins／Subagents 工具與規則 → Stage 6 Context 深化 → Stage 7 Agent Production Engineering 整合 Harness／Loop／Graph。`prompt → context → harness → loop → graph` 是五個檢查問題，不是嚴格軟體層或章節順序；Harness 可以包含 Agent Loop，Workflow Graph 也可以連接 Harness、固定程式、Loop 與人工核准。Stage 7 的三語完整章名固定為 `Agent Production Engineering：Harness、Loop 與 Graph`／`Agent Production Engineering: Harness, Loops, and Graphs`／`Agent Production Engineering：Harness、Loop 与 Graph`；README、首頁 index、PROGRESS、MkDocs／mdBook 導覽、Stage 6 出口、範例返回連結與補充資源若直接寫出完整章名，必須使用這組標題。這個章名是本學習地圖用來裝住三種責任的上位名稱，不宣稱所有供應商都採用同一個正式標準。檔名與既有 anchor 不因章名修正而更動。
+章節學習順序與工程控制問題必須分開說。章節依「先做出來，再看見結構，最後做穩」排列：Stage 2 Prompt → Stage 3 Agent Loop → Stage 4 Workflow Graph／Agent Framework → Stage 5 MCP／Skills／Plugins／Subagents 工具與規則 → Stage 6 Context 深化 → Stage 7 Agent 上線工程。Prompt、Context、Harness、Loop、Graph 與 Eval 是可以重疊的檢查角度，不是互相取代的產品世代，也不是嚴格軟體層。Harness 可以包含 Agent Loop；Workflow Graph 可以連接 Harness、固定程式、Loop 與人工核准；Eval 則像量尺一樣橫跨整套系統。Stage 7 的三語完整章名固定為 `Agent 上線工程：可測、可看、可停、可恢復`／`Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable`／`Agent 上线工程：可测、可看、可停、可恢复`。檔名與既有 anchor 不因章名修正而更動。
 
 Stage 4 的 4 個必修閱讀步驟（共 5 個官方連結）與 18 筆五星編輯評分資源表保持可見；時間、環境、研究證據、進階 tool patterns、五題完整步驟與疑難排解預設收合。`📌`、`🚪`、`📚`、`🛠`、`🎯`、`✅`，簡短進入條件、五題 heading／anchor、每題成果、第一個可複製 PowerShell 動作與預算提醒保持可見。資源表固定為五組 `4／6／4／3／1`，使用真正 HTML `rowspan`，保留編輯推薦星級、移除會變動的 GitHub stars；Preview、維護、凍結／歷史與遷移狀態依官方來源明寫。OpenAI Swarm 只作教育參考，不能再有 production 評分；框架版本、維護、授權與安全資訊使用 90 天 freshness marker。
 
@@ -207,13 +207,13 @@ Stage 6 overview 的 9 筆基線資源固定分成 `3／4／2` 三組；三頁�
 
 Stage 6 同樣使用兩層 stacked PR：第一層定稿三語教材、官方事實包、圖、glossary 直接矛盾、資源表與 reader-UX gate；第二層才修正五個 `examples/stage-6/` 的 chunk 邊界、collection 隔離、真正 persistent memory、雙路徑與離線測試。兩層都保留 branch 與 upstream，未經使用者明確同意不合併、不清理。
 
-Stage 7 的固定主線是「單一 Agent 先做穩、Multi-Agent 後選 → 16 個可見核心詞 → Prompt／Context／Harness／Loop／Graph 五個控制問題 → Harness／Loop／Graph 責任邊界圖 → Harness 八項 production 檢查 → Loop Engineering → Workflow Graph／Production orchestration → `Eval → Observability → Approval／Recovery → Deploy` 上線四步 → 工具角色辨識 → 四題核心練習與兩個可見選修入口 → execution receipt 小專案 → benchmark 閱讀紀律 → 精選資源 → 自我檢查」。16 個核心詞分成三組：證明做對的 **Eval**、**Outcome**、**Trajectory**、**Observability**；能停和續跑的 **Guardrail**、**Human Approval**、**Checkpoint**、**Resume**、**Recovery**、**Idempotency**；排完整路線的 **Harness**、**Loop Engineering**、**Graph Engineering**、**Orchestration**、**Multi-Agent**、**Handoff**。每個詞先用白話解釋，再保留正確術語；同類欄位使用真正 HTML `rowspan="4／6／6"`，不能重複分類或留下空白格。
+Stage 7 的固定主線是「單一 Agent 先做穩、Multi-Agent 後選 → 學習目標 → 核心詞 → Agent Harness → Agent Loop → Workflow Graph → Eval → Observability → Approval／Checkpoint／Resume／Recovery → 上線路線 → 工具角色辨識 → 四題核心練習與兩個可見選修入口 → execution receipt 小專案 → benchmark 閱讀紀律 → 精選資源 → 自我檢查」。18 個核心詞固定分為 `6／6／6`：先讓任務跑得動的 Agent Harness、Agent Loop、Workflow Graph、Orchestration、Multi-Agent、Handoff；再證明有做對的 Evaluation／Eval、Outcome、Trajectory、Evaluation Harness、Trace、Observability；最後讓它能停與續跑的 Guardrail、Human Approval、Checkpoint、Resume、Recovery、Idempotency。正文使用同一個研究助理案例：AI 查三個來源、整理摘要，送出前必須請人確認。每個核心詞第一次出現時先用粗體白話定義，說明生活比喻、這章的用途與正確術語；名詞不能先出現在圖、表格、練習或另一個名詞的定義裡。
 
-正文必須分清三種 loop：程式迴圈只重複指令，Agent Loop 在一次執行裡做「想／做／看」，Loop Engineering 則替一次長 run 或跨 session 的反覆工作加入目標、觸發、驗證、記憶、預算、停止與人工升級。**Loop 不淘汰 Harness**：Anthropic 的 Harness 定義本身包含呼叫模型與路由工具的 loop；IBM 的 Loop Engineering 範圍更廣，會納入目標、檢查、hooks、context、subagent 與持久狀態。正文教三個除錯問題，不把三者畫成互斥產品或嚴格替換世代。Agent Loop 是 Stage 3 的入門，Workflow Graph 是 Stage 4 的入門，Stage 7 才把兩者加上 production 邊界。控制問題圖必須畫出責任重疊，不再用垂直堆疊暗示唯一層級；Agent framework 是工具箱，Production orchestration 是上線工程，Graph Engineering 只作新興別名。OpenRouter 是模型 API 入口，Pi／OpenCode 是 Agent runtime／coding agent，Orca／QM 是多 Agent 協作層；不得把三層寫成可互換的同類產品。
+正文固定用四句分清責任：**Agent Harness** 是安全執行的工作環境；**Agent Loop** 是一次任務中做、看、再決定的節奏；**Workflow Graph** 是帶條件、分支與返回路線的地圖；**Eval** 是檢查結果與過程的量尺。Eval 可以影響 Loop 是否重試、Graph 走哪條路與 Harness 是否停止，但 `Harness + Eval` 本身不等於 Loop。程式迴圈、Agent Loop 與外層長任務循環仍要分開；Loop Engineering 與 Graph Engineering 只作社群／新興說法，不能寫成公認標準或互斥世代。OpenRouter 是模型 API 入口，Pi／OpenCode 是 Agent runtime／coding agent，Orca／QM 是多 Agent 協作層；不得把三層寫成可互換的同類產品。
 
-Stage 7 的時間、環境、費用、安全提醒、延伸閱讀、Loop／Graph 補充、完整練習步驟及 benchmark 長清單預設收合。六份必修閱讀、20 筆精選資源表、四題核心練習的 heading／成果／第一個可複製測試命令，以及 Multi-Agent 與 SDK 進階題的入口保持可見。四題核心練習固定依 `02-eval → 03-observability → 06-safe-execution → 05-deploy` 排列；`01-multi-agent-debate` 與 `04-sdk-advanced` 是進階選修，不能排在安全上線主線之前。外部排行榜只能教讀法，不能凍結 SOTA 分數、模型名次或第三方「最強」結論。三語頁面固定有七個預設關閉的 `<details>`，不得用收合隱藏核心詞、必修閱讀、四步上線路線、選修入口、精選資源或完成條件。
+Stage 7 的時間、環境、費用、安全提醒、延伸閱讀、Loop／Graph 補充、完整練習步驟及 benchmark 長清單預設收合。六份必修閱讀、21 筆精選資源表、四題核心練習的 heading／成果／第一個可複製測試命令，以及 Multi-Agent 與 SDK 進階題的入口保持可見。四題核心練習固定依 `02-eval → 03-observability → 06-safe-execution → 05-deploy` 排列；`01-multi-agent-debate` 與 `04-sdk-advanced` 是進階選修，不能排在安全上線主線之前。外部排行榜只能教讀法，不能凍結 SOTA 分數、模型名次或第三方「最強」結論。三語頁面固定有七個預設關閉的 `<details>`，不得用收合隱藏核心詞、必修閱讀、上線路線、選修入口、精選資源或完成條件。
 
-Stage 7 的 20 筆資源固定分成 `4／6／5／5` 四組，每組使用獨立 `<tbody>`、`scope="rowgroup"` 與真正 HTML `rowspan`。保留五星編輯評分，移除 GitHub stars；已封存、Preview、Alpha、best-effort 或維護紀錄不足的專案必須在限制欄明寫。Eval、Outcome／Trajectory、Tracing、Human Approval、Persistence、Interrupt／Resume、Recovery、Orchestration 與資源狀態納入 90 天 freshness fact pack。未經使用者明確同意不合併、不清理 branch。
+Stage 7 的 21 筆資源固定分成 `4／6／6／5` 四組，每組使用獨立 `<tbody>`、`scope="rowgroup"` 與真正 HTML `rowspan`。保留五星編輯評分，移除 GitHub stars；已封存、Preview、Alpha、best-effort 或維護紀錄不足的專案必須在限制欄明寫。Eval、Outcome／Trajectory、Tracing、Human Approval、Persistence、Interrupt／Resume、Recovery、Orchestration 與資源狀態納入 90 天 freshness fact pack。未經使用者明確同意不合併、不清理 branch。
 
 前五個 Stage 7 模型範例 README 的第一個可見動作固定是 PowerShell 建立該題自己的 Python 3.11 `.venv`，再直接跑 Ollama／Anthropic 兩份離線測試；不再要求讀者先改名完整解答或抄一份空白文字檔。實際模型路徑、macOS／Linux、程式走查、排錯與額外替代方案預設收合，但學習目標、核心詞、「只改一件事」、成功檢查，以及依 `3／6／7／4／5` 分布的 25 筆必讀／評分學習資源保持可見。共用模型選擇器必須按能力需求分段：目前 Stage 3–6 function-calling 題使用 `qwen2.5:3b`，Stage 7 的辯論、評測、觀測、串流與部署機制使用 `qwen3.5:4b`；不得用「Stage 3+」把兩者寫成同一個預設，也不得暗示換模型就一定更穩。Ollama 只能寫「沒有供應商模型 API 帳單」，仍要提醒硬體、電力、下載、時間以及裝置／log／權限安全；Anthropic 使用當期 input／output token 公式與保守 spend limit，不保存固定每次費用。
 
@@ -359,7 +359,7 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 - **Stage 0**：prerequisite gateway，使用可見的跳過判斷、單一整合練習、18 筆五星學習資源與短版完成檢查；時間、環境、補充練習與名詞預設收合（見「Stage 0 為什麼可以 skip」）
 - **Stage 5**：分 7 個核心 sub-stage（5.1-5.7）+ 5.8 SDK（選修、包成產品或服務才需要），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
 - **Stage 6**：直接跳過進入條件 section（前面 stage 已隱含 prerequisite）；Stage 7 仍保留可見進入條件，讓讀者先確認 Stage 4／5／6 的必要基礎。
-- **Stage 7 Eval**：16 個 production 核心詞之後，另放可見的 9 個 Eval 基礎積木：Case／Task、Suite、Golden／Reference Set、Reference Solution／Criteria、Trial、Grader、Baseline、Regression、Holdout Set。先說白話，再保留正式術語；Golden Set 要明寫為常見實務叫法，不冒充跨供應商標準，也不等同訓練資料或 Few-shot。Development cases 用來調整，frozen holdout 只在 release candidate／最後驗證使用。報告保留 dataset version、split、trials、grader、Outcome、Trajectory 與 baseline；不能把 20–50 cases 說成所有專案的硬性最低數，也不能因單次隨機失敗直接判定 regression。
+- **Stage 7 Eval**：先教 **Outcome**，再教完整 **Eval Case**、**Eval Suite** 與 **Reviewed Eval Set**；最後才補充 Golden／Reference Set 等外部常見名稱。Eval Case 至少交代 input、initial state、success criteria、forbidden actions、optional reference answer、grader 與 case metadata。Golden Set 不只是 input，也不等於訓練資料或 Few-shot；Development cases 用來調整，frozen holdout 只在 release candidate／最後驗證使用。報告保留 dataset version、split、trials、grader、Outcome、Trajectory 與 baseline；不能把 20–50 cases 說成所有專案的硬性最低數，也不能因單次隨機失敗直接判定 regression。
 - **Stage 7.5**：reading-map（進階概念 + reading path），沒有 動手練習、只有輕量 self-check——是 production 之後的 frontier 概念地圖，不寫 code
 - **Stage 8**：兩軌共用的 interface 選擇 hub。可見主線先定義 8 個粗體核心詞，再用平行選擇圖分清 Search／Fetch、Browser Use、Computer Use、Sandbox，接著保留四道安全檢查、兩題第一步、五筆精選入口、21 筆完整五星資源與短版 self-check。Computer Use／benchmark、Browser Use、Sandbox、兩軌進階做法、安全案例與未來介面放進 9 個預設關閉選單；完整資源表固定用 `5／5／4／5／2` 五個真正合併的 rowgroup 並保持可見。四張介面卡不是固定升級順序，舊 heading 以空 anchor 保留深連結。
 
@@ -387,7 +387,7 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 
 ### Eval 證據契約
 
-- 初學者第一次遇到 Eval 時，先看懂「一道題 → 一組有版本的題 → 每題怎麼判 → 改前基線 → 開發集反覆改 → 保留集最後驗」；工具與 dashboard 排在概念之後。
+- 初學者第一次遇到 Eval 時，先看懂「想要的 Outcome → 一個完整 Eval Case → 一組有版本的 Eval Suite → 人工檢查過的 Reviewed Eval Set → 每題怎麼判 → 改前基線 → 開發集反覆改 → 保留集最後驗」；工具與 dashboard 排在概念之後。
 - Eval suite 至少記錄 dataset version、case ID、split、success criteria／reference、grader、trial 次數、Outcome、Trajectory 與 baseline。安全、成本與可靠性也可以是 regression，不只比較文字品質。
 - 能用程式精確檢查的先用 deterministic grader；使用模型或人工評分時，留下 rubric、grader 版本與原始證據。空輸出、格式錯誤或缺少必要證據不得預設通過。
 - Development／reference cases 可在每次修改時重跑；frozen holdout 不拿來逐次調 Prompt、模型或 Harness，只在 release candidate／最後驗證使用。模型有隨機性時以多次 trials 與預先寫好的門檻判斷，不以單次波動阻擋或放行。

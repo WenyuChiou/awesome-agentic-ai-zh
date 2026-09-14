@@ -38,7 +38,7 @@
 | Stage 4 — Workflow Graph 與 Agent 框架 | （社群 PR 機會） | — |
 | Stage 5 — Claude Code 生態 ⭐⭐（兩條軌共用） | （社群 PR 機會） | — |
 | Stage 6 — Memory · RAG · 進階 | （社群 PR 機會） | — |
-| Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph | （社群 PR 機會） | — |
+| Stage 7 — Agent 上線工程：可測、可看、可停、可恢復 | （社群 PR 機會） | — |
 
 ## 🌳 Branch 維護者 / Branch maintainers
 

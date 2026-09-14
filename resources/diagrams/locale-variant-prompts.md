@@ -322,3 +322,18 @@ GitHub stars 或其他容易漂移的指標。箭頭只能落在卡片／節點�
 - Keep the Post-training chips SFT, DPO, and RLHF／RL, plus the bottom comparison between methods that change weights and systems that usually do not.
 - Locale variants must preserve every card position, icon, arrow route, border, spacing, number, and technical English term. Only the explanatory prose changes language.
 - Arrows must use whitespace lanes. Text, icons, arrowheads, borders, and chips must never overlap.
+
+## 2026-09-13 · Stage 7 上線工程關係與 Eval Case
+
+新增兩組三語 PNG：
+
+- `agent-production-relationship.{png,en.png,zh-Hans.png}`
+- `eval-case-anatomy.{png,en.png,zh-Hans.png}`
+
+內建圖片生成工具沒有暴露可選 model ID，因此只記錄實際使用的內建圖片生成工具，不宣稱手動指定某個模型版本。兩組圖皆以本專案既有的 `1672×941`、奶油白背景、深藍文字、亮色圓角卡、簡單代表性圖示與大留白為共同畫風。繁中先定稿，英文與簡中沿用相同格線、卡片位置、箭頭路徑與色彩角色，只替換文字。
+
+`agent-production-relationship` 只回答「Harness、Loop、Graph、Eval 各在哪裡」：Workflow Graph 是帶條件的分支路線，Harness 可以是路線中的工作環境，Harness 裡可以執行 Loop，Eval 則橫跨整套系統。三語固定同一組三分支與接線，只替換文字。Eval 區不再放「量尺／第四步」口號，改以 Outcome、Trajectory、Grader 三個實際評測元素說明它會看什麼。圖中不把四者畫成線性世代，也不宣稱 `Harness + Eval = Loop`。
+
+`eval-case-anatomy` 只回答「完整 Eval Case 有哪些部分」：Input、Initial State、Success Criteria、Forbidden Actions、Optional Reference Answer、Grader 與 Case Metadata 是七個同層欄位。Input 只是完整 Eval Case 的其中一格。下方再整理 `Eval Suite → Reviewed Eval Set`，並註明 Golden／Reference Set 是需回到來源確認定義的外部名稱，不只是 input，也不等於訓練資料或 few-shot 範例。
+
+人工逐張檢查三語標題、七個欄位、箭頭、警告與 footer；文字、圖示、箭頭、邊框沒有重疊。圖中不放價格、stars、模型版本、benchmark 分數或供應商標誌。

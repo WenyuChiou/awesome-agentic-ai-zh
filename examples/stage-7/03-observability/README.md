@@ -6,7 +6,7 @@
 
 **Observability（可觀測性）**像幫 Agent 裝儀表板：它慢了、錯了或花太多 token 時，你知道是哪一步。
 
-對應 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](../../../stages/07-multi-agent-production.md) 核心練習 2。
+對應 [Stage 7 — Agent 上線工程：可測、可看、可停、可恢復](../../../stages/07-multi-agent-production.md) 核心練習 2。
 
 ## 🎯 學習目標
 

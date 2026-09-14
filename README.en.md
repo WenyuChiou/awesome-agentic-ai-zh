@@ -95,13 +95,13 @@ The intended order is `A1 → A2 → Stage 5 → A3 → Stage 8`.
 | **4** · [Workflow Graphs & Agent Frameworks](stages/04-agent-frameworks.en.md) | How to draw several steps as one map? | Choose between workflow, agent, graph, framework |
 | **5** · [Claude Code ecosystem](stages/05-claude-code-ecosystem.en.md) | How do MCP, Skills, Plugins, Hooks, Subagents work together? | Combine tools, rules, reusable capabilities |
 | **6** · [Memory · RAG](stages/06-memory-rag.en.md) | How does an agent search, save, and get back what matters? | Build a minimal RAG, long-term memory, and contextual retrieval flow |
-| **7** · [Agent Production Engineering: Harness, Loops, and Graphs](stages/07-multi-agent-production.en.md) | How does an agent stay stable in production? | Add Eval, observability, budget, Human-in-the-loop approval, recovery |
+| **7** · [Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](stages/07-multi-agent-production.en.md) | How does an agent stay stable in production? | Add Eval, observability, budget, Human-in-the-loop approval, recovery |
 | **7.5** · [Advanced agentic concept map](stages/07.5-advanced-agentic-concepts.en.md) | Which advanced patterns are worth knowing? | Pick what you need from 12 concepts such as PAR loop and agent-as-judge |
 | **8** · [Agent interfaces](stages/08-agent-interfaces.en.md) | How does an agent work beyond the API? | Choose Computer Use, Browser Use, or a code sandbox |
 
 Stage 4 first explains the **Workflow Graph**, then uses a framework to build it. Stage 7 adds Eval, observability, approval, and recovery so the same work map can run reliably.
 
-> 🔭 **Learning order**: Stage 2 Prompt → Stage 3 **Agent Loop** → Stage 4 **Workflow Graph** / framework → Stage 5 tools and rules → Stage 6 **Context Engineering** → Stage 7 production. `prompt → context → harness → loop → graph` names five control questions, not the chapter order.
+> 🔭 **Learning order**: Stage 2 Prompt → Stage 3 **Agent Loop** → Stage 4 **Workflow Graph** / framework → Stage 5 tools and rules → Stage 6 **Context Engineering** → Stage 7 production. Prompt, Context, Harness, Loop, and Graph work together; they are not five layers or product generations that replace one another.
 
 After A3 or Stage 7, start the [Capstone project](CAPSTONE.en.md); track your progress in [PROGRESS.en.md](PROGRESS.en.md).
 

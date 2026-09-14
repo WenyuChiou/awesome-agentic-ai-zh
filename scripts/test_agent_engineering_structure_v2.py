@@ -16,39 +16,36 @@ LOCALES = {
         "stage7": ROOT / "stages/07-multi-agent-production.md",
         "readme": ROOT / "README.md",
         "stage4_title": "# Stage 4 — Workflow Graph 與 Agent 框架",
-        "stage7_title": "# Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph",
+        "stage7_title": "# Stage 7 — Agent 上線工程：可測、可看、可停、可恢復",
         "umbrella": "**Agent Production Engineering（Agent 上線工程）**",
-        "structure_header": "會跑的東西",
-        "work_header": "設計它的工作",
-        "stage4_bridge": "Stage 4 先教 **Workflow Graph** 和實作它的 **Agent Framework**；Stage 7 再把同一張圖做成可觀測、可復原的 production orchestration",
+        "relationship_heading": "Harness、Loop、Graph 與 Eval 怎麼合作？",
+        "cross_system_eval": "Eval 可以讓 Loop 重試、讓 Graph 換路，或要求 Harness 停止",
         "readme_route": "Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來",
-        "term_status": "**Loop Engineering** 是 IBM 明確標為 emerging practice 的新興稱呼",
+        "term_status": "**Loop Engineering** 是 IBM 使用的新興說法",
     },
     "en": {
         "stage4": ROOT / "stages/04-agent-frameworks.en.md",
         "stage7": ROOT / "stages/07-multi-agent-production.en.md",
         "readme": ROOT / "README.en.md",
         "stage4_title": "# Stage 4 — Workflow Graphs & Agent Frameworks",
-        "stage7_title": "# Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs",
+        "stage7_title": "# Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable",
         "umbrella": "**Agent Production Engineering**",
-        "structure_header": "What runs",
-        "work_header": "Work that designs it",
-        "stage4_bridge": "Stage 4 introduces the **Workflow Graph** and the **Agent Frameworks** that can implement it. Stage 7 makes that same map observable and recoverable as production orchestration",
+        "relationship_heading": "Harness, Loop, Graph, and Eval: How They Work Together",
+        "cross_system_eval": "Eval can make the Loop retry, make the Graph choose another route, or make the Harness stop",
         "readme_route": "Stage 4 first explains the **Workflow Graph**, then uses a framework to build it",
-        "term_status": "IBM explicitly describes **Loop Engineering** as an emerging practice",
+        "term_status": "**Loop Engineering** is an emerging label used by IBM",
     },
     "zh-Hans": {
         "stage4": ROOT / "stages/04-agent-frameworks.zh-Hans.md",
         "stage7": ROOT / "stages/07-multi-agent-production.zh-Hans.md",
         "readme": ROOT / "README.zh-Hans.md",
         "stage4_title": "# Stage 4 — Workflow Graph 与 Agent 框架",
-        "stage7_title": "# Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph",
+        "stage7_title": "# Stage 7 — Agent 上线工程：可测、可看、可停、可恢复",
         "umbrella": "**Agent Production Engineering（Agent 上线工程）**",
-        "structure_header": "会运行的东西",
-        "work_header": "设计它的工作",
-        "stage4_bridge": "Stage 4 先教 **Workflow Graph** 和实现它的 **Agent Framework**；Stage 7 再把同一张图做成可观测、可恢复的 production orchestration",
+        "relationship_heading": "Harness、Loop、Graph 与 Eval 怎么合作？",
+        "cross_system_eval": "Eval 可以让 Loop 重试、让 Graph 换路，或要求 Harness 停止",
         "readme_route": "Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来",
-        "term_status": "**Loop Engineering** 是 IBM 明确标为 emerging practice 的新兴称呼",
+        "term_status": "**Loop Engineering** 是 IBM 使用的新兴说法",
     },
 }
 
@@ -76,34 +73,21 @@ def test_chapter_titles_put_the_concept_before_the_tool_and_production_details(
 
 
 @pytest.mark.parametrize("locale,config", LOCALES.items())
-def test_five_control_questions_separate_the_running_structure_from_engineering_work(
+def test_four_responsibilities_are_distinct_and_eval_crosses_the_system(
     locale: str, config: dict[str, object]
 ) -> None:
     stage7 = without_closed_details(
         Path(config["stage7"]).read_text(encoding="utf-8")
     )
-    assert str(config["structure_header"]) in stage7
-    assert str(config["work_header"]) in stage7
-    lines = stage7.splitlines()
-    header_index = next(
-        index
-        for index, line in enumerate(lines)
-        if str(config["structure_header"]) in line
-    )
-    assert lines[header_index].count("|") == 7
-    assert lines[header_index + 1].count("|") == 7
-    for structure, engineering in (
-        ("Prompt", "Prompt Engineering"),
-        ("Context", "Context Engineering"),
-        ("Agent Harness", "Harness Engineering"),
-        ("Agent Loop", "Loop Engineering"),
-        ("Workflow Graph", "Production orchestration"),
-    ):
-        assert re.search(
-            rf"\|[^\n]*\*\*{re.escape(structure)}\*\*[^\n]*\*\*{re.escape(engineering)}\*\*[^\n]*\|",
-            stage7,
-        ), (locale, structure, engineering)
-    assert str(config["stage4_bridge"]) in stage7
+    assert str(config["relationship_heading"]) in stage7
+    relationship = stage7[stage7.index(str(config["relationship_heading"])) :]
+    for responsibility in ("Agent Harness", "Agent Loop", "Workflow Graph", "Eval"):
+        assert f"**{responsibility}**" in relationship
+    assert str(config["cross_system_eval"]) in relationship
+    assert "Harness + Eval = Loop" not in stage7
+    assert "Harness 和 Eval 放在一起，仍不會自動產生" in stage7 or locale != "zh-TW"
+    assert "Harness 和 Eval 放在一起，仍不会自动产生" in stage7 or locale != "zh-Hans"
+    assert "Putting a Harness and Eval together still does not create" in stage7 or locale != "en"
 
 
 @pytest.mark.parametrize("locale,config", LOCALES.items())
@@ -126,16 +110,14 @@ def test_readme_names_the_graph_before_the_framework_toolbox(
     assert str(config["readme_route"]) in readme, locale
 
 
-def test_diagram_regeneration_contract_keeps_responsibilities_overlapping() -> None:
+def test_diagram_regeneration_contract_keeps_responsibilities_distinct() -> None:
     prompt = DIAGRAM_PROMPT.read_text(encoding="utf-8")
     for marker in (
-        "Prompt 與 Context 都進入 Harness",
-        "上半部只畫一次 Agent run",
-        "Loop Engineering 另外明寫 `Goal → Action → Observation → Adjustment`",
-        "不得和 Harness 內的一次 Agent Loop 混成同一尺度",
-        "Workflow Graph／Production Orchestration",
-        "圖上以「不是五層」直接阻止嚴格層級誤讀",
-        "Harness 包住 Agent Loop",
-        "不得畫成 Harness 被 Loop 淘汰",
+        "Stage 7 上線工程關係與 Eval Case",
+        "Workflow Graph 是帶條件的分支路線",
+        "Harness 可以是路線中的工作環境",
+        "Harness 裡可以執行 Loop",
+        "Outcome、Trajectory、Grader 三個實際評測元素",
+        "不宣稱 `Harness + Eval = Loop`",
     ):
         assert marker in prompt

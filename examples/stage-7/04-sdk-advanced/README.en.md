@@ -6,7 +6,7 @@
 
 **Streaming** displays an answer in pieces. **Prompt caching** may reuse a shared long prefix. They solve different problems.
 
-Pairs with Option B in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md). Streaming and caching are experience and cost techniques; they do not replace Approval, Checkpoint, or Recovery.
+Pairs with Option B in [Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](../../../stages/07-multi-agent-production.en.md). Streaming and caching are experience and cost techniques; they do not replace Approval, Checkpoint, or Recovery.
 
 ## 🎯 Learning goals
 

@@ -241,4 +241,4 @@ RAG 有两条路：一条先整理数据，一条在问题来时找资料。
 - [ ] 我能用一小组问题比较修改前后，而不是只看一次漂亮回答。
 - [ ] Memory 只保存必要且获准的资料，用户能查看、修改与删除。
 
-都能做到后，前往 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](07-multi-agent-production.zh-Hans.md)。
+都能做到后，前往 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](07-multi-agent-production.zh-Hans.md)。

@@ -57,7 +57,7 @@
 1. [CLI Agents 指南](cli-agents-guide.md)：比較登入、Provider、Sandbox、project rules 與權限。
 2. [Stage 4：Workflow Graph 與 Agent 框架](../stages/04-agent-frameworks.md)：學 Framework 與 Workflow Graph。
 3. [Stage 5：Claude Code 生態](../stages/05-claude-code-ecosystem.md)：學 Skills、MCP、Hooks 與 Subagents。
-4. [Stage 7：Agent Production Engineering](../stages/07-multi-agent-production.md)：學 Harness、Loop、Graph 與上線邊界。
+4. [Stage 7：Agent Production Engineering](../stages/07-multi-agent-production.md)：學 Harness、Loop、Graph、跨系統 Eval 與上線邊界。
 
 ## 🪜 三步選擇法
 

@@ -6,7 +6,7 @@
 
 **Eval（评测）**像一张固定考卷：每次改 Prompt、模型或程序后，都用同一批题目再考一次。
 
-对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 1。
+对应 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 1。
 
 ## 🎯 学习目标
 

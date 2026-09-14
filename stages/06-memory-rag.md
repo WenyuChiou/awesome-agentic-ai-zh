@@ -242,4 +242,4 @@ RAG 有兩條路：一條先整理資料，一條在問題來時找資料。
 - [ ] 我能用一小組問題比較修改前後，而不是只看一次漂亮回答。
 - [ ] Memory 只保存必要且獲准的資料，使用者能查看、修改與刪除。
 
-都能做到後，前往 [Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph](07-multi-agent-production.md)。
+都能做到後，前往 [Stage 7 — Agent 上線工程：可測、可看、可停、可恢復](07-multi-agent-production.md)。

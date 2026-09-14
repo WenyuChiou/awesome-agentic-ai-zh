@@ -95,13 +95,13 @@ cd awesome-agentic-ai-zh
 | **4** · [Workflow Graph 與 Agent 框架](stages/04-agent-frameworks.md) | 怎麼把多個步驟畫成工作地圖？ | 選擇 Workflow、Agent、Graph 與 Framework |
 | **5** · [Claude Code 生態](stages/05-claude-code-ecosystem.md) | MCP、Skills、Plugins、Hooks 與 Subagents 怎麼合作？ | 組合工具、規則與可重用能力 |
 | **6** · [Memory · RAG](stages/06-memory-rag.md) | Agent 怎麼查文件、保存與取回重要資訊？ | 建立最小 RAG、long-term memory 與 contextual retrieval 流程 |
-| **7** · [Agent Production Engineering：Harness、Loop 與 Graph](stages/07-multi-agent-production.md) | Agent 怎麼在真實環境穩定運作？ | 加入 Eval、觀測、預算、Human-in-the-loop（HITL，人工批准）與復原 |
+| **7** · [Agent 上線工程：可測、可看、可停、可恢復](stages/07-multi-agent-production.md) | Agent 怎麼在真實環境穩定運作？ | 加入 Eval、觀測、預算、Human-in-the-loop（HITL，人工批准）與復原 |
 | **7.5** · [進階 Agentic 概念地圖](stages/07.5-advanced-agentic-concepts.md) | 還有哪些進階 Pattern 值得認得？ | 從 12 個概念選讀 PAR loop、agent-as-judge 等需要的主題 |
 | **8** · [Agent 操作介面](stages/08-agent-interfaces.md) | Agent 怎麼操作 API 以外的真實環境？ | 選擇 Computer Use、Browser Use 或 Code Sandbox |
 
 Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 7 再加入 Eval、觀測、批准與復原，讓同一張工作圖可以穩定運作。
 
-> 🔭 **學習順序**：Stage 2 Prompt → Stage 3 **Agent Loop** → Stage 4 **Workflow Graph**／Framework → Stage 5 工具與規則 → Stage 6 **Context Engineering** → Stage 7 production。`prompt → context → harness → loop → graph` 是五個控制問題，不是章節順序。
+> 🔭 **學習順序**：Stage 2 Prompt → Stage 3 **Agent Loop** → Stage 4 **Workflow Graph**／Framework → Stage 5 工具與規則 → Stage 6 **Context Engineering** → Stage 7 production。Prompt、Context、Harness、Loop、Graph 會一起工作；它們不是五層，也不是互相取代的產品世代。
 
 完成 A3 或 Stage 7 後，可以開始 [Capstone 專案](CAPSTONE.md)；想記錄進度可使用 [PROGRESS.md](PROGRESS.md)。
 

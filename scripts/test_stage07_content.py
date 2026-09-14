@@ -18,48 +18,53 @@ PAGES = {
 }
 DIAGRAMS = {
     "zh-TW": (
-        ROOT / "resources/diagrams/agent-engineering-control-questions.png",
-        ROOT / "resources/diagrams/inside-a-graph.png",
-        ROOT / "resources/diagrams/eval-evidence-loop.png",
+        ROOT / "resources/diagrams/agent-production-relationship.png",
+        ROOT / "resources/diagrams/eval-case-anatomy.png",
     ),
     "en": (
-        ROOT / "resources/diagrams/agent-engineering-control-questions.en.png",
-        ROOT / "resources/diagrams/inside-a-graph.en.png",
-        ROOT / "resources/diagrams/eval-evidence-loop.en.png",
+        ROOT / "resources/diagrams/agent-production-relationship.en.png",
+        ROOT / "resources/diagrams/eval-case-anatomy.en.png",
     ),
     "zh-Hans": (
-        ROOT / "resources/diagrams/agent-engineering-control-questions.zh-Hans.png",
-        ROOT / "resources/diagrams/inside-a-graph.zh-Hans.png",
-        ROOT / "resources/diagrams/eval-evidence-loop.zh-Hans.png",
+        ROOT / "resources/diagrams/agent-production-relationship.zh-Hans.png",
+        ROOT / "resources/diagrams/eval-case-anatomy.zh-Hans.png",
     ),
 }
 EVAL_DIAGRAM_ALT_MARKERS = {
-    "zh-TW": ("Development Cases", "Frozen Holdout", "下一版 Suite"),
-    "en": ("Development Cases", "Frozen Holdout", "next Suite"),
-    "zh-Hans": ("Development Cases", "Frozen Holdout", "下一版 Suite"),
+    "zh-TW": ("完整 Eval Case", "Input 只是其中一格"),
+    "en": ("complete Eval Case", "Input is only one part"),
+    "zh-Hans": ("完整 Eval Case", "Input 只是其中一格"),
 }
 CONTROL_DIAGRAM_ALT_MARKERS = {
     "zh-TW": (
-        "Harness 內含 Agent Loop",
-        "Workflow Graph 排整條路",
-        "Loop Engineering 依證據調整",
+        "Agent Harness 是工作環境",
+        "Workflow Graph 是帶分支的路線",
+        "Eval 是跨越三者的檢查量尺",
     ),
     "en": (
-        "Harness contains the Agent Loop",
-        "Workflow Graph arranges the route",
-        "Loop Engineering adjusts from evidence",
+        "Agent Harness is the work environment",
+        "Workflow Graph is the branching route",
+        "Eval is the measuring stick across all three",
     ),
     "zh-Hans": (
-        "Harness 内含 Agent Loop",
-        "Workflow Graph 排整条路线",
-        "Loop Engineering 根据证据调整",
+        "Agent Harness 是工作环境",
+        "Workflow Graph 是带分支的路线",
+        "Eval 是跨越三者的检查量尺",
     ),
 }
 CORE_LABELS = {
     "zh-TW": (
-        "Eval（評測）",
+        "Agent Harness（Agent 執行架構）",
+        "Agent Loop（Agent 迴圈）",
+        "Workflow Graph（工作流程圖）",
+        "Orchestration（編排）",
+        "Multi-Agent（多 Agent）",
+        "Handoff（交接）",
+        "Evaluation／Eval（評測）",
         "Outcome（結果）",
         "Trajectory（軌跡）",
+        "Evaluation Harness（評測執行架構）",
+        "Trace（追蹤紀錄）",
         "Observability（可觀測性）",
         "Guardrail（護欄）",
         "Human Approval（人工核准）",
@@ -67,17 +72,19 @@ CORE_LABELS = {
         "Resume（續跑）",
         "Recovery（復原）",
         "Idempotency（冪等）",
-        "Harness",
-        "Loop Engineering",
-        "Graph Engineering",
-        "Orchestration",
-        "Multi-Agent（多 Agent）",
-        "Handoff",
     ),
     "en": (
-        "Eval",
+        "Agent Harness",
+        "Agent Loop",
+        "Workflow Graph",
+        "Orchestration",
+        "Multi-Agent",
+        "Handoff",
+        "Evaluation / Eval",
         "Outcome",
         "Trajectory",
+        "Evaluation Harness",
+        "Trace",
         "Observability",
         "Guardrail",
         "Human Approval",
@@ -85,17 +92,19 @@ CORE_LABELS = {
         "Resume",
         "Recovery",
         "Idempotency",
-        "Harness",
-        "Loop Engineering",
-        "Graph Engineering",
-        "Orchestration",
-        "Multi-Agent",
-        "Handoff",
     ),
     "zh-Hans": (
-        "Eval（评测）",
+        "Agent Harness（Agent 执行架构）",
+        "Agent Loop（Agent 循环）",
+        "Workflow Graph（工作流程图）",
+        "Orchestration（编排）",
+        "Multi-Agent（多 Agent）",
+        "Handoff（交接）",
+        "Evaluation／Eval（评测）",
         "Outcome（结果）",
         "Trajectory（轨迹）",
+        "Evaluation Harness（评测执行架构）",
+        "Trace（追踪纪录）",
         "Observability（可观测性）",
         "Guardrail（护栏）",
         "Human Approval（人工批准）",
@@ -103,48 +112,43 @@ CORE_LABELS = {
         "Resume（续跑）",
         "Recovery（恢复）",
         "Idempotency（幂等）",
-        "Harness",
-        "Loop Engineering",
-        "Graph Engineering",
-        "Orchestration",
-        "Multi-Agent（多 Agent）",
-        "Handoff",
     ),
 }
 CORE_SECTION_HEADINGS = {
-    "zh-TW": ("## 🧩 十六個核心詞（分三組讀）", "## 🧪 九個 Eval 基礎積木（先學會怎麼出考卷）"),
-    "en": ("## 🧩 Sixteen Core Terms (Read Them in Three Groups)", "## 🧪 Nine Eval Foundation Building Blocks (Learn to Write the Test First)"),
-    "zh-Hans": ("## 🧩 十六个核心词（分三组读）", "## 🧪 九个 Eval 基础积木（先学会怎么出考卷）"),
+    "zh-TW": ("## 🧩 先認識核心詞", "## 🚪 進入條件"),
+    "en": ("## 🧩 Meet the Core Terms First", "## 🚪 Entry Conditions"),
+    "zh-Hans": ("## 🧩 先认识核心词", "## 🚪 进入条件"),
 }
-EVAL_FOUNDATION_HEADINGS = {
+EVAL_SECTION_HEADINGS = {
     "zh-TW": (
-        "## 🧪 九個 Eval 基礎積木（先學會怎麼出考卷）",
-        "## 🚪 進入條件",
+        "## 🧪 Eval：先說要什麼，再決定怎麼評",
+        "## 🔎 Observability：出錯時看得見是哪一步",
     ),
     "en": (
-        "## 🧪 Nine Eval Foundation Building Blocks (Learn to Write the Test First)",
-        "## 🚪 Entry Conditions",
+        "## 🧪 Eval: State What Good Means, Then Decide How to Grade",
+        "## 🔎 Observability: See Which Step Failed",
     ),
     "zh-Hans": (
-        "## 🧪 九个 Eval 基础积木（先学会怎么出考卷）",
-        "## 🚪 进入条件",
+        "## 🧪 Eval：先说要什么，再决定怎么评",
+        "## 🔎 Observability：出错时看得见是哪一步",
     ),
 }
-EVAL_FOUNDATION_TERMS = (
-    "Case",
-    "Suite",
-    "Golden Set",
-    "Reference Solution",
+EVAL_TEACHING_TERMS = (
+    "Outcome",
+    "Eval Case",
+    "Eval Suite",
+    "Reviewed Eval Set",
+    "Golden",
     "Trial",
-    "Grader",
     "Baseline",
     "Regression",
+    "Development Set",
     "Holdout Set",
 )
 PAGE_TITLES = {
-    "zh-TW": "# Stage 7 — Agent Production Engineering：Harness、Loop 與 Graph",
-    "en": "# Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs",
-    "zh-Hans": "# Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph",
+    "zh-TW": "# Stage 7 — Agent 上線工程：可測、可看、可停、可恢復",
+    "en": "# Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable",
+    "zh-Hans": "# Stage 7 — Agent 上线工程：可测、可看、可停、可恢复",
 }
 OLD_PAGE_TITLES = {
     "zh-TW": "# Stage 7 — Loop／Graph Engineering：多 Agent 與穩定運作",
@@ -206,19 +210,19 @@ FORBIDDEN_TERMINOLOGY = (
 )
 ROUTE_MARKERS = {
     "zh-TW": (
-        "Stage 3：Agent Loop 入門",
-        "Stage 4：Workflow Graph 入門",
-        "Stage 7：Agent Production Engineering 整合",
+        "Stage 3 的 Agent Loop",
+        "Stage 4 的 Workflow Graph",
+        "本章的安全上線整合",
     ),
     "en": (
-        "Stage 3: Agent Loop entry",
-        "Stage 4: Workflow Graph entry",
-        "Stage 7: Agent Production Engineering integration",
+        "Stage 3 Agent Loop",
+        "Stage 4 Workflow Graph / Agent Framework",
+        "safe production integration in this chapter",
     ),
     "zh-Hans": (
-        "Stage 3：Agent Loop 入门",
-        "Stage 4：Workflow Graph 入门",
-        "Stage 7：Agent Production Engineering 整合",
+        "Stage 3 的 Agent Loop",
+        "Stage 4 的 Workflow Graph",
+        "本章的安全上线集成",
     ),
 }
 RESOURCE_URL_RATINGS = (
@@ -280,37 +284,44 @@ def test_all_core_terms_are_bold_and_defined_before_exercises(
     core_start = text.index(core_heading)
     core_end = text.index(next_heading, core_start)
     core = text[core_start:core_end]
+    prose = core[: core.index("<table>")]
     positions = []
     for label in CORE_LABELS[locale]:
+        assert f"**{label}**" in prose
         marker = f"<strong>{label}</strong>"
         assert marker in core
         positions.append(core.index(marker))
+    assert "Grader" in prose and prose.index("Grader") < prose.index("Evaluation Harness")
     assert positions == sorted(positions)
-    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', core) == ["4", "6", "6"]
-    assert len(re.findall(r"<tr>", core)) == 17
+    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', core) == ["6", "6", "6"]
+    assert len(re.findall(r"<tr>", core)) == 19
 
 
 @pytest.mark.parametrize("locale,page", PAGES.items())
-def test_eval_foundations_are_visible_grouped_and_before_entry_conditions(
+def test_eval_case_is_complete_and_terms_follow_the_teaching_order(
     locale: str, page: Path
 ) -> None:
     text = page.read_text(encoding="utf-8")
-    start_heading, next_heading = EVAL_FOUNDATION_HEADINGS[locale]
+    start_heading, next_heading = EVAL_SECTION_HEADINGS[locale]
     start = text.index(start_heading)
     end = text.index(next_heading, start)
     section = text[start:end]
     visible = _without_closed_details(section)
     assert start_heading in visible
-    positions = []
-    for term in EVAL_FOUNDATION_TERMS:
-        marker = re.compile(rf"<strong>[^<]*{re.escape(term)}[^<]*</strong>")
-        match = marker.search(visible)
-        assert match is not None, term
-        positions.append(match.start())
+    positions = [visible.index(term) for term in EVAL_TEACHING_TERMS]
     assert positions == sorted(positions)
-    assert re.findall(r'scope="rowgroup" rowspan="(\d+)"', visible) == ["3", "3", "3"]
-    assert len(re.findall(r"<tr>", visible)) == 10
-    assert re.search(r"Golden Set[^\n]*(?:not training|不是[^\n]*(?:訓練|训练))", visible, re.I)
+    for field in (
+        "Input",
+        "Initial State",
+        "Success Criteria",
+        "Forbidden Actions",
+        "Optional Reference Answer",
+        "Grader",
+        "Case Metadata",
+    ):
+        assert field in visible
+    assert re.search(r"Golden[^\n]*(?:not input alone|不只是 input)", visible, re.I)
+    assert re.search(r"Golden[^\n]*(?:training data|訓練資料|训练数据)", visible, re.I)
     assert "few-shot" in visible.lower()
     assert "20–50" in text and (
         "not a universal minimum" in text
@@ -343,22 +354,31 @@ def test_control_questions_are_not_product_generations_or_chapter_numbering(
 
 BOUNDARY_HEADINGS = {
     "zh-TW": (
-        "## 🧭 Harness、Loop、Graph 各自管什麼？",
-        "## 🏗 Harness Engineering",
-        "## 🔁 Loop Engineering",
-        "## 🗺 Workflow Graph／Production Orchestration",
+        "## 🧭 Harness、Loop、Graph 與 Eval 怎麼合作？",
+        "## 🏗 Agent Harness：先把安全工作間準備好",
+        "## 🔁 Agent Loop：做一步、看結果，再決定",
+        "## 🗺 Workflow Graph：遇到岔路時知道往哪走",
+        "## 🧪 Eval：先說要什麼，再決定怎麼評",
+        "## 🔎 Observability：出錯時看得見是哪一步",
+        "## 🛑 Approval、Checkpoint、Resume 與 Recovery：先停，再安全繼續",
     ),
     "en": (
-        "## 🧭 What Does Harness, Loop, and Graph Each Control?",
-        "## 🏗 Harness Engineering",
-        "## 🔁 Loop Engineering",
-        "## 🗺 Workflow Graph / Production Orchestration",
+        "## 🧭 Harness, Loop, Graph, and Eval: How They Work Together",
+        "## 🏗 Agent Harness: Prepare the Safe Workspace",
+        "## 🔁 Agent Loop: Act, Observe, Then Decide",
+        "## 🗺 Workflow Graph: Know Where to Go at a Branch",
+        "## 🧪 Eval: State What Good Means, Then Decide How to Grade",
+        "## 🔎 Observability: See Which Step Failed",
+        "## 🛑 Approval, Checkpoint, Resume, and Recovery: Stop, Then Continue Safely",
     ),
     "zh-Hans": (
-        "## 🧭 Harness、Loop、Graph 各自管什么？",
-        "## 🏗 Harness Engineering",
-        "## 🔁 Loop Engineering",
-        "## 🗺 Workflow Graph／Production Orchestration",
+        "## 🧭 Harness、Loop、Graph 与 Eval 怎么合作？",
+        "## 🏗 Agent Harness：先把安全工作间准备好",
+        "## 🔁 Agent Loop：做一步、看结果，再决定",
+        "## 🗺 Workflow Graph：遇到岔路时知道往哪走",
+        "## 🧪 Eval：先说要什么，再决定怎么评",
+        "## 🔎 Observability：出错时看得见是哪一步",
+        "## 🛑 Approval、Checkpoint、Resume 与 Recovery：先停，再安全继续",
     ),
 }
 
@@ -416,9 +436,9 @@ def test_six_real_exercises_exist_and_the_four_step_core_path_is_visible(
 
 
 PRODUCTION_PATH_HEADINGS = {
-    "zh-TW": "## 🛡 上線四步：Eval → Observability → Approval／Recovery → Deploy",
-    "en": "## 🛡 Four Release Steps: Eval → Observability → Approval / Recovery → Deploy",
-    "zh-Hans": "## 🛡 上线四步：Eval → Observability → Approval／Recovery → Deploy",
+    "zh-TW": "## 🛡 完整上線路線：Eval → Observability → Approval／Recovery → Deploy",
+    "en": "## 🛡 Complete Production Route: Eval → Observability → Approval / Recovery → Deploy",
+    "zh-Hans": "## 🛡 完整上线路线：Eval → Observability → Approval／Recovery → Deploy",
 }
 
 
@@ -514,28 +534,27 @@ def test_locale_diagrams_are_distinct_large_assets_and_referenced() -> None:
             assert data.startswith(b"\x89PNG\r\n\x1a\n")
             width, height = struct.unpack(">II", data[16:24])
             assert width >= 1600 and height >= 900
-            if diagram.name.startswith("agent-engineering-control-questions"):
-                assert (width, height) == (1672, 941)
+            assert (width, height) == (1672, 941)
             hashes.add(hashlib.sha256(data).hexdigest())
             assert f"../resources/diagrams/{diagram.name}" in page_text
-    assert len(hashes) == 9
+    assert len(hashes) == 6
 
 
-def test_control_questions_use_png_only() -> None:
+def test_new_stage7_diagrams_use_png_only() -> None:
     diagram_dir = ROOT / "resources/diagrams"
-    assert not list(diagram_dir.glob("agent-engineering-control-questions*.svg"))
-    assert not list(diagram_dir.glob("eval-evidence-loop*.svg"))
+    assert not list(diagram_dir.glob("agent-production-relationship*.svg"))
+    assert not list(diagram_dir.glob("eval-case-anatomy*.svg"))
 
 
-def test_eval_diagram_provenance_uses_complete_terms_and_official_model_url() -> None:
+def test_stage7_diagram_provenance_records_both_new_layouts() -> None:
     provenance = (ROOT / "resources/diagrams/locale-variant-prompts.md").read_text(
         encoding="utf-8"
     )
-    section = provenance[provenance.index("## 2026-09-13 · Stage 7 Eval 證據迴圈") :]
-    assert "Reference Solution／Criteria／Trial／Grader" in section
-    assert "Baseline／Regression／Holdout Set" in section
-    assert "https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst" in section
-    assert "沒有暴露可選 model ID" in section
+    section = provenance[provenance.index("## 2026-09-13 · Stage 7 上線工程關係與 Eval Case") :]
+    assert "agent-production-relationship" in section
+    assert "eval-case-anatomy" in section
+    assert "Input 只是完整 Eval Case 的其中一格" in section
+    assert "內建圖片生成工具沒有暴露可選 model ID" in section
 
 
 def test_english_page_has_no_untranslated_cjk() -> None:

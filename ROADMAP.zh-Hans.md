@@ -47,7 +47,7 @@ Track A 做完 A3 就能开始 Capstone；Stage 8 建议完成，但不影响入
 
 - Stage 0–8 和 A1–A3 已完成第一轮渐进式揭露、核心词、资源表和三语整理。
 - Stage 2 保留 zero-shot、one-shot、few-shot、Chain of Thought，并加入三语 Prompt Engineering 概念图。
-- Stage 3 用三语图教第一个 Agent Loop；Stage 4 用 framework 教 Workflow Graph；Stage 7 以 Agent Production Engineering 整合 Harness、Loop 与 Graph。Stage 6 重画两条路的 RAG pipeline；Stage 8 补上界面选择与安全检查图。
+- Stage 3 用三语图教第一个 Agent Loop；Stage 4 用 framework 教 Workflow Graph；Stage 7 以 Agent Production Engineering 整合 Harness、Loop、Graph 与跨系统的 Eval。Stage 6 重画两条路的 RAG pipeline；Stage 8 补上界面选择与安全检查图。
 - Stage 0 有整合练习；Stage 7.5 本来就是 reading map；Stage 8 已有可复制安全练习，独立 end-to-end 范例仍可贡献。
 - MkDocs build、mirror／anchor／locale、reader-UX、freshness 和 repository snapshot gate 都已纳入维护流程。
 

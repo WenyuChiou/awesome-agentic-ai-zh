@@ -321,10 +321,13 @@ This rule applies to the entire learning map. The goal is for a five-year-old to
 
 ### Eval teaching style
 
-- When first explaining Eval, introduce **Case/Task, Suite, Golden/Reference Set, Reference Solution/Criteria, Trial, Grader, Baseline, Regression, Holdout Set** in that order. Give a one-sentence everyday picture before the formal term; keep important definitions, the diagram, completion criteria, and learning resources visible.
-- **Golden Set** is a common practical label, not a universal vendor standard. It checks the system and is not training data or Few-shot examples.
-- Use development/reference cases for iteration; use frozen holdout only for a release candidate or final validation. Reports must include at least dataset version, split, case ID, trial count, grader, Outcome/Trajectory, and baseline.
-- Prefer deterministic graders when code can make an exact judgment. Model or human graders need a rubric and version. Decide Regression from multiple trials, predefined thresholds, and failure review—not one random change.
+- When first explaining Eval, clarify **Outcome** (the result to obtain), then introduce **Eval Case**, **Eval Suite**, and **Reviewed Eval Set**. Only after readers understand these three layers should you add common outside labels such as Golden Set/Reference Set.
+- An **Eval Case** is more than input. At minimum, state input, initial state, success criteria, forbidden actions, an optional reference answer, a grader, and case metadata; without a reference answer, explicit criteria must still determine the result.
+- **Reviewed Eval Set** is this project's primary teaching term for a reusable set of complete, human-checked cases. The meaning of **Golden Set/Reference Set** varies by team; explain what it means in the current source rather than treating it as a cross-vendor standard.
+- Golden/Reference Set checks the system; it is not input alone, training data, or Few-shot examples. A diagram must show input as one part of a complete case.
+- Add **Trial, Grader, Baseline, Regression, Development Set,** and **Holdout Set** as needed. Give each term a plain-language purpose before retaining the formal term; keep important definitions, diagrams, completion criteria, and learning resources visible.
+- Development/reference cases support iteration; frozen holdout is used only for a release candidate or final validation. Reports must include at least dataset version, split, case ID, trial count, grader, Outcome/Trajectory, and baseline.
+- Prefer deterministic graders when code can judge exactly. Model or human graders need a rubric and version. Decide Regression from multiple trials, predefined thresholds, and failure review—not one random change.
 
 ### Reader UX ratchet
 

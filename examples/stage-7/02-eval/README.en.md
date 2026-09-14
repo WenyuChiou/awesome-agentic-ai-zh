@@ -6,7 +6,7 @@
 
 An **Eval (evaluation)** is like a reusable test sheet: after changing a prompt, model, or program, run the same questions again.
 
-Pairs with Core Exercise 1 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md).
+Pairs with Core Exercise 1 in [Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](../../../stages/07-multi-agent-production.en.md).
 
 ## 🎯 Learning goals
 

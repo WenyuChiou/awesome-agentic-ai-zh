@@ -6,7 +6,7 @@
 
 You will make three roles: PRO argues yes, CON argues no, and a Judge reads both sides before choosing one.
 
-Pairs with Option A in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md). Complete the single-Agent Eval, safe execution, and Deploy core route first, then compare whether Multi-Agent is actually better.
+Pairs with Option A in [Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](../../../stages/07-multi-agent-production.en.md). Complete the single-Agent Eval, safe execution, and Deploy core route first, then compare whether Multi-Agent is actually better.
 
 ## 🎯 Learning goals
 

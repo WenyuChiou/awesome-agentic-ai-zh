@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-09-13
 
+- **content / Stage 7 / production concepts and Eval placement** · 三語 Stage 7 改名為「Agent 上線工程：可測、可看、可停、可恢復」，用同一個「查三個來源、整理摘要、送出前問人」案例，依 Agent Harness → Agent Loop → Workflow Graph → Eval → Observability → Approval／Checkpoint／Resume／Recovery 漸進講解；18 個核心詞以 `6／6／6` 合併欄位保持展開，必修閱讀、21 筆五星資源、練習成果與完成條件也不收合。Eval 固定先教 Outcome，再把 Eval Case 拆成 Input、Initial State、Success Criteria、Forbidden Actions、Optional Reference Answer、Grader、Case Metadata，之後才教 Eval Suite、Reviewed Eval Set 與 Golden／Reference Set 外部名稱，明確阻擋把 Golden Set 誤當 input、訓練資料或 Few-shot。新增兩組三語 `1672×941` 亮色 PNG；刪除九張已無正文引用的舊控制問題、Graph 與 Eval 圖，PNG inventory 由 73 降為 70、總量由 89,659,368 降為 85,297,164 bytes，圖片容量與 rendered-site gate 同步下調。README、Glossary、Roadmap、Stage 6 出口、導覽與六組 Stage 7 範例只同步新章名／責任說法，既有深連結由相容 anchor 保留；Stage 7.5 去重留給下一層 stacked Draft PR。
+
 - **reader UX / README banner links** · 三語 README 的 banner 下方移除重複的靜態 PNG 與文件站捷徑，文件站仍可從下方徽章與手機閱讀提示進入；動畫 SVG 本身在不播放時仍顯示完整構圖，PNG 也繼續供文件站減少動態／無 JavaScript fallback 與三語 PDF 使用。
 
 - **release health / unavailable hosted MCP** · 正式發布掃描確認 YIELD INTELLIGENCE 的 `/yield`、`/yield/mcp` 與 `/pricing` 皆回傳 404；三語 MCP 精選目錄移除目前無法使用的 hosted service，相關 0-reference repository snapshot 一併刪除，總數由 263 改為 262。GitHub repository 仍未封存且 README 仍宣稱服務 live，但教材以實際端點結果為準，不保留失效入口。

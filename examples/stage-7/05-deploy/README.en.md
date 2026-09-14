@@ -6,7 +6,7 @@
 
 You will wrap one model call in two HTTP endpoints: `/health` says the service process is alive, while `/chat` accepts a question and returns an answer.
 
-Pairs with Core Exercise 4 in [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](../../../stages/07-multi-agent-production.en.md). Complete Eval, Observability, and Safe Execution first, then make the service available to others.
+Pairs with Core Exercise 4 in [Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](../../../stages/07-multi-agent-production.en.md). Complete Eval, Observability, and Safe Execution first, then make the service available to others.
 
 ## 🎯 Learning goals
 

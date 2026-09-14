@@ -322,9 +322,12 @@ PR 之前请先读完本文。项目维护者也会用这份指南做 review。
 
 ### Eval 教学写法
 
-- 第一次解释 Eval 时，按顺序介绍 **Case/Task、Suite、Golden/Reference Set、Reference Solution/Criteria、Trial、Grader、Baseline、Regression、Holdout Set**。每个词先用一句生活比喻，再保留正式术语；重要定义、图、完成条件和学习资源保持可见。
-- **Golden Set** 是常见实践叫法，不是跨供应商的正式规范。它用来检查系统，不等于训练数据或 Few-shot 示例。
-- Development/reference cases 用来反复改进；frozen holdout 只在 release candidate 或最后验证时使用。报告至少记录 dataset version、split、case ID、trial 次数、grader、Outcome/Trajectory 和 baseline。
+- 第一次解释 Eval 时，先说清楚 **Outcome（要得到的结果）**，再依次介绍 **Eval Case、Eval Suite、Reviewed Eval Set**。读者看懂这三层后，再补充 Golden Set／Reference Set 等外部常见叫法。
+- 一个 **Eval Case** 不只是输入。完整案例至少要写明输入、初始状态、成功条件、禁止行为、可选参考答案、grader 与 case metadata；没有参考答案时，也要靠明确条件判断结果。
+- **Reviewed Eval Set** 是本项目的主要教学名称，指一组由人检查、可重复使用的完整案例。**Golden Set／Reference Set** 的实际含义因团队而异；第一次出现时说明当前来源中的含义，不能直接当成跨供应商标准。
+- Golden／Reference Set 用来检查系统，不只是 input，也不等于训练数据或 Few-shot 示例。图中要把 input 画成完整案例的一部分。
+- 视需要再补充 **Trial、Grader、Baseline、Regression、Development Set、Holdout Set**。每个词先用白话说明用途，再保留正式术语；重要定义、图、完成条件和学习资源保持可见。
+- Development／reference cases 用来反复改进；frozen holdout 只在 release candidate 或最后验证时使用。报告至少记录 dataset version、split、case ID、trial 次数、grader、Outcome／Trajectory 和 baseline。
 - 能精确判断就先用 deterministic grader；模型或人工 grader 必须附 rubric 和版本。Regression 要依据多次 trials、预先定义的阈值和失败案例判断，不能把一次随机波动写成必然退步。
 
 ### Reader UX ratchet

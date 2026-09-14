@@ -250,4 +250,4 @@ This table keeps only the tools needed for a Stage 6 baseline. Advanced techniqu
 - [ ] I can compare changes with a small question set instead of one attractive answer.
 - [ ] Memory saves only necessary, permitted data and lets users view, change, and delete it.
 
-When you can do these, go to [Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs](07-multi-agent-production.en.md).
+When you can do these, go to [Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](07-multi-agent-production.en.md).

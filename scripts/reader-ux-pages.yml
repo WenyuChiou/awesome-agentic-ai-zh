@@ -1367,22 +1367,23 @@ pages:
       zh-Hans: stages/07-multi-agent-production.zh-Hans.md
     max_visible_chars:
       zh-TW: 16838
-      en: 26202
+      en: 27200
       zh-Hans: 17000
     max_open_details: 0
     required_details_count: 7
     visible_section_order:
       - learning-goals
       - core-terms
-      - eval-foundations
       - entry-conditions
       - required-reading
-      - control-questions
-      - harness-loop-graph-boundary
+      - relationship
       - harness
       - harness-components
-      - loop-engineering
-      - production-orchestration
+      - loop
+      - graph
+      - eval
+      - observability
+      - safety-controls
       - production-path
       - tool-roles
       - hands-on
@@ -1418,13 +1419,9 @@ pages:
         en: {heading: "📌 Learning Goals", anchor: -learning-goals}
         zh-Hans: {heading: "📌 学习目标", anchor: -学习目标}
       core-terms:
-        zh-TW: {heading: "🧩 十六個核心詞（分三組讀）", anchor: -十六個核心詞分三組讀}
-        en: {heading: "🧩 Sixteen Core Terms (Read Them in Three Groups)", anchor: -sixteen-core-terms-read-them-in-three-groups}
-        zh-Hans: {heading: "🧩 十六个核心词（分三组读）", anchor: -十六个核心词分三组读}
-      eval-foundations:
-        zh-TW: {heading: "🧪 九個 Eval 基礎積木（先學會怎麼出考卷）", anchor: -九個-eval-基礎積木先學會怎麼出考卷}
-        en: {heading: "🧪 Nine Eval Foundation Building Blocks (Learn to Write the Test First)", anchor: -nine-eval-foundation-building-blocks-learn-to-write-the-test-first}
-        zh-Hans: {heading: "🧪 九个 Eval 基础积木（先学会怎么出考卷）", anchor: -九个-eval-基础积木先学会怎么出考卷}
+        zh-TW: {heading: "🧩 先認識核心詞", anchor: -先認識核心詞}
+        en: {heading: "🧩 Meet the Core Terms First", anchor: -meet-the-core-terms-first}
+        zh-Hans: {heading: "🧩 先认识核心词", anchor: -先认识核心词}
       entry-conditions:
         zh-TW: {heading: "🚪 進入條件", anchor: -進入條件}
         en: {heading: "🚪 Entry Conditions", anchor: -entry-conditions}
@@ -1432,35 +1429,43 @@ pages:
       required-reading:
         zh-TW: {heading: "📚 必修閱讀", anchor: -必修閱讀}
         en: {heading: "📚 Required Reading", anchor: -required-reading}
-        zh-Hans: {heading: "📚 必读内容", anchor: -必读内容}
-      control-questions:
-        zh-TW: {heading: "五個控制問題：Prompt → Context → Harness → Loop → Graph", anchor: 五個控制問題prompt--context--harness--loop--graph}
-        en: {heading: "Five Control Questions: Prompt → Context → Harness → Loop → Graph", anchor: five-control-questions-prompt--context--harness--loop--graph}
-        zh-Hans: {heading: "五个控制问题：Prompt → Context → Harness → Loop → Graph", anchor: 五个控制问题prompt--context--harness--loop--graph}
-      harness-loop-graph-boundary:
-        zh-TW: {heading: "🧭 Harness、Loop、Graph 各自管什麼？", anchor: -harnessloopgraph-各自管什麼}
-        en: {heading: "🧭 What Does Harness, Loop, and Graph Each Control?", anchor: -what-does-harness-loop-and-graph-each-control}
-        zh-Hans: {heading: "🧭 Harness、Loop、Graph 各自管什么？", anchor: -harnessloopgraph-各自管什么}
+        zh-Hans: {heading: "📚 必修阅读", anchor: -必修阅读}
+      relationship:
+        zh-TW: {heading: "🧭 Harness、Loop、Graph 與 Eval 怎麼合作？", anchor: -harnessloopgraph-與-eval-怎麼合作}
+        en: {heading: "🧭 Harness, Loop, Graph, and Eval: How They Work Together", anchor: -harness-loop-graph-and-eval-how-they-work-together}
+        zh-Hans: {heading: "🧭 Harness、Loop、Graph 与 Eval 怎么合作？", anchor: -harnessloopgraph-与-eval-怎么合作}
       harness:
-        zh-TW: {heading: "🏗 Harness Engineering — production agent runtime 的工程設計 ⭐ 本 stage 核心概念", anchor: -harness-engineering--production-agent-runtime-的工程設計--本-stage-核心概念}
-        en: {heading: "🏗 Harness Engineering — Production Agent Runtime Design ⭐ Core Concept of This Stage", anchor: -harness-engineering--production-agent-runtime-design--core-concept-of-this-stage}
-        zh-Hans: {heading: "🏗 Harness Engineering — production agent runtime 的工程设计 ⭐ 本 stage 核心概念", anchor: -harness-engineering--production-agent-runtime-的工程设计--本-stage-核心概念}
+        zh-TW: {heading: "🏗 Agent Harness：先把安全工作間準備好", anchor: -agent-harness先把安全工作間準備好}
+        en: {heading: "🏗 Agent Harness: Prepare the Safe Workspace", anchor: -agent-harness-prepare-the-safe-workspace}
+        zh-Hans: {heading: "🏗 Agent Harness：先把安全工作间准备好", anchor: -agent-harness先把安全工作间准备好}
       harness-components:
         zh-TW: {heading: "Harness 的 8 個核心元件", anchor: harness-的-8-個核心元件}
         en: {heading: "The 8 Core Components of a Harness", anchor: the-8-core-components-of-a-harness}
-        zh-Hans: {heading: "Harness 的 8 个核心元件", anchor: harness-的-8-个核心元件}
-      loop-engineering:
-        zh-TW: {heading: "🔁 Loop Engineering — 讓 Agent 做、看、改，而且知道何時停", anchor: -loop-engineering--讓-agent-做看改而且知道何時停}
-        en: {heading: "🔁 Loop Engineering — Let the Agent Act, Observe, Adjust, and Know When to Stop", anchor: -loop-engineering--let-the-agent-act-observe-adjust-and-know-when-to-stop}
-        zh-Hans: {heading: "🔁 Loop Engineering — 让 Agent 做、看、改，而且知道何时停", anchor: -loop-engineering--让-agent-做看改而且知道何时停}
-      production-orchestration:
-        zh-TW: {heading: "🗺 Workflow Graph／Production Orchestration — 把步驟、Loop 與核准排成完整路線", anchor: -workflow-graphproduction-orchestration--把步驟loop-與核准排成完整路線}
-        en: {heading: "🗺 Workflow Graph / Production Orchestration — Arrange Steps, Loops, and Approvals into a Complete Route", anchor: -workflow-graph--production-orchestration--arrange-steps-loops-and-approvals-into-a-complete-route}
-        zh-Hans: {heading: "🗺 Workflow Graph／Production Orchestration — 把步骤、Loop 与批准排成完整路线", anchor: -workflow-graphproduction-orchestration--把步骤loop-与批准排成完整路线}
+        zh-Hans: {heading: "Harness 的 8 个核心组件", anchor: harness-的-8-个核心组件}
+      loop:
+        zh-TW: {heading: "🔁 Agent Loop：做一步、看結果，再決定", anchor: -agent-loop做一步看結果再決定}
+        en: {heading: "🔁 Agent Loop: Act, Observe, Then Decide", anchor: -agent-loop-act-observe-then-decide}
+        zh-Hans: {heading: "🔁 Agent Loop：做一步、看结果，再决定", anchor: -agent-loop做一步看结果再决定}
+      graph:
+        zh-TW: {heading: "🗺 Workflow Graph：遇到岔路時知道往哪走", anchor: -workflow-graph遇到岔路時知道往哪走}
+        en: {heading: "🗺 Workflow Graph: Know Where to Go at a Branch", anchor: -workflow-graph-know-where-to-go-at-a-branch}
+        zh-Hans: {heading: "🗺 Workflow Graph：遇到岔路时知道往哪走", anchor: -workflow-graph遇到岔路时知道往哪走}
+      eval:
+        zh-TW: {heading: "🧪 Eval：先說要什麼，再決定怎麼評", anchor: -eval先說要什麼再決定怎麼評}
+        en: {heading: "🧪 Eval: State What Good Means, Then Decide How to Grade", anchor: -eval-state-what-good-means-then-decide-how-to-grade}
+        zh-Hans: {heading: "🧪 Eval：先说要什么，再决定怎么评", anchor: -eval先说要什么再决定怎么评}
+      observability:
+        zh-TW: {heading: "🔎 Observability：出錯時看得見是哪一步", anchor: -observability出錯時看得見是哪一步}
+        en: {heading: "🔎 Observability: See Which Step Failed", anchor: -observability-see-which-step-failed}
+        zh-Hans: {heading: "🔎 Observability：出错时看得见是哪一步", anchor: -observability出错时看得见是哪一步}
+      safety-controls:
+        zh-TW: {heading: "🛑 Approval、Checkpoint、Resume 與 Recovery：先停，再安全繼續", anchor: -approvalcheckpointresume-與-recovery先停再安全繼續}
+        en: {heading: "🛑 Approval, Checkpoint, Resume, and Recovery: Stop, Then Continue Safely", anchor: -approval-checkpoint-resume-and-recovery-stop-then-continue-safely}
+        zh-Hans: {heading: "🛑 Approval、Checkpoint、Resume 与 Recovery：先停，再安全继续", anchor: -approvalcheckpointresume-与-recovery先停再安全继续}
       production-path:
-        zh-TW: {heading: "🛡 上線四步：Eval → Observability → Approval／Recovery → Deploy", anchor: -上線四步eval--observability--approvalrecovery--deploy}
-        en: {heading: "🛡 Four Release Steps: Eval → Observability → Approval / Recovery → Deploy", anchor: -four-release-steps-eval--observability--approval--recovery--deploy}
-        zh-Hans: {heading: "🛡 上线四步：Eval → Observability → Approval／Recovery → Deploy", anchor: -上线四步eval--observability--approvalrecovery--deploy}
+        zh-TW: {heading: "🛡 完整上線路線：Eval → Observability → Approval／Recovery → Deploy", anchor: -完整上線路線eval--observability--approvalrecovery--deploy}
+        en: {heading: "🛡 Complete Production Route: Eval → Observability → Approval / Recovery → Deploy", anchor: -complete-production-route-eval--observability--approval--recovery--deploy}
+        zh-Hans: {heading: "🛡 完整上线路线：Eval → Observability → Approval／Recovery → Deploy", anchor: -完整上线路线eval--observability--approvalrecovery--deploy}
       tool-roles:
         zh-TW: {heading: "🧭 OpenRouter、Pi、OpenCode、Orca、QM 到底差在哪？", anchor: -openrouterpiopencodeorcaqm-到底差在哪}
         en: {heading: "🧭 What Is the Difference Between OpenRouter, Pi, OpenCode, Orca, and QM?", anchor: -what-is-the-difference-between-openrouter-pi-opencode-orca-and-qm}
@@ -1521,10 +1526,34 @@ pages:
       first_exercise_section_id: exercise-1
       min_definition_chars: 20
       terms:
+        - id: agent-harness
+          zh-TW: {term: Agent Harness, label: "Agent Harness（Agent 執行架構）"}
+          en: {term: Agent Harness, label: Agent Harness}
+          zh-Hans: {term: Agent Harness, label: "Agent Harness（Agent 执行架构）"}
+        - id: agent-loop
+          zh-TW: {term: Agent Loop, label: "Agent Loop（Agent 迴圈）"}
+          en: {term: Agent Loop, label: Agent Loop}
+          zh-Hans: {term: Agent Loop, label: "Agent Loop（Agent 循环）"}
+        - id: workflow-graph
+          zh-TW: {term: Workflow Graph, label: "Workflow Graph（工作流程圖）"}
+          en: {term: Workflow Graph, label: Workflow Graph}
+          zh-Hans: {term: Workflow Graph, label: "Workflow Graph（工作流程图）"}
+        - id: orchestration
+          zh-TW: {term: Orchestration, label: "Orchestration（編排）"}
+          en: {term: Orchestration, label: Orchestration}
+          zh-Hans: {term: Orchestration, label: "Orchestration（编排）"}
+        - id: multi-agent
+          zh-TW: {term: Multi-Agent, label: "Multi-Agent（多 Agent）"}
+          en: {term: Multi-Agent, label: Multi-Agent}
+          zh-Hans: {term: Multi-Agent, label: "Multi-Agent（多 Agent）"}
+        - id: handoff
+          zh-TW: {term: Handoff, label: "Handoff（交接）"}
+          en: {term: Handoff, label: Handoff}
+          zh-Hans: {term: Handoff, label: "Handoff（交接）"}
         - id: eval
-          zh-TW: {term: Eval, label: "Eval（評測）"}
-          en: {term: Eval, label: Eval}
-          zh-Hans: {term: Eval, label: "Eval（评测）"}
+          zh-TW: {term: Evaluation／Eval, label: "Evaluation／Eval（評測）"}
+          en: {term: Evaluation / Eval, label: Evaluation / Eval}
+          zh-Hans: {term: Evaluation／Eval, label: "Evaluation／Eval（评测）"}
         - id: outcome
           zh-TW: {term: Outcome, label: "Outcome（結果）"}
           en: {term: Outcome, label: Outcome}
@@ -1533,6 +1562,14 @@ pages:
           zh-TW: {term: Trajectory, label: "Trajectory（軌跡）"}
           en: {term: Trajectory, label: Trajectory}
           zh-Hans: {term: Trajectory, label: "Trajectory（轨迹）"}
+        - id: evaluation-harness
+          zh-TW: {term: Evaluation Harness, label: "Evaluation Harness（評測執行架構）"}
+          en: {term: Evaluation Harness, label: Evaluation Harness}
+          zh-Hans: {term: Evaluation Harness, label: "Evaluation Harness（评测执行架构）"}
+        - id: trace
+          zh-TW: {term: Trace, label: "Trace（追蹤紀錄）"}
+          en: {term: Trace, label: Trace}
+          zh-Hans: {term: Trace, label: "Trace（追踪纪录）"}
         - id: observability
           zh-TW: {term: Observability, label: "Observability（可觀測性）"}
           en: {term: Observability, label: Observability}
@@ -1561,30 +1598,6 @@ pages:
           zh-TW: {term: Idempotency, label: "Idempotency（冪等）"}
           en: {term: Idempotency, label: Idempotency}
           zh-Hans: {term: Idempotency, label: "Idempotency（幂等）"}
-        - id: harness
-          zh-TW: {term: Harness, label: Harness}
-          en: {term: Harness, label: Harness}
-          zh-Hans: {term: Harness, label: Harness}
-        - id: loop-engineering
-          zh-TW: {term: Loop Engineering, label: Loop Engineering}
-          en: {term: Loop Engineering, label: Loop Engineering}
-          zh-Hans: {term: Loop Engineering, label: Loop Engineering}
-        - id: graph-engineering
-          zh-TW: {term: Graph Engineering, label: Graph Engineering}
-          en: {term: Graph Engineering, label: Graph Engineering}
-          zh-Hans: {term: Graph Engineering, label: Graph Engineering}
-        - id: orchestration
-          zh-TW: {term: Orchestration, label: Orchestration}
-          en: {term: Orchestration, label: Orchestration}
-          zh-Hans: {term: Orchestration, label: Orchestration}
-        - id: multi-agent
-          zh-TW: {term: Multi-Agent, label: "Multi-Agent（多 Agent）"}
-          en: {term: Multi-Agent, label: Multi-Agent}
-          zh-Hans: {term: Multi-Agent, label: "Multi-Agent（多 Agent）"}
-        - id: handoff
-          zh-TW: {term: Handoff, label: Handoff}
-          en: {term: Handoff, label: Handoff}
-          zh-Hans: {term: Handoff, label: Handoff}
     resource_group_rowspans: [4, 6, 6, 5]
 
   - id: stage-07.5

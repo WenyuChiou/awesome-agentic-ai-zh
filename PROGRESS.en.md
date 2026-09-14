@@ -47,7 +47,7 @@ This is a checklist **for your own use**. You do not need to submit it, open a P
 - [ ] **Stage 4 — Workflow Graphs & Agent Frameworks** · [`stages/04-agent-frameworks.en.md`](stages/04-agent-frameworks.en.md)
 - [ ] **Stage 5 — Claude Code Ecosystem** ⭐⭐(shared by both tracks)· [`stages/05-claude-code-ecosystem.en.md`](stages/05-claude-code-ecosystem.en.md)
 - [ ] **Stage 6 — Context Management: RAG and Memory** · [`stages/06-memory-rag.en.md`](stages/06-memory-rag.en.md)
-- [ ] **Stage 7 — Agent Production Engineering: Harness, Loops, and Graphs** · [`stages/07-multi-agent-production.en.md`](stages/07-multi-agent-production.en.md)
+- [ ] **Stage 7 — Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable** · [`stages/07-multi-agent-production.en.md`](stages/07-multi-agent-production.en.md)
 - [ ] **Stage 7.5 — Advanced Agentic Concepts** · [`stages/07.5-advanced-agentic-concepts.en.md`](stages/07.5-advanced-agentic-concepts.en.md)
 - [ ] **Stage 8 — Agent Interfaces (shared by both tracks)** · [`stages/08-agent-interfaces.en.md`](stages/08-agent-interfaces.en.md)
 

@@ -6,7 +6,7 @@
 
 这题不用模型，也不会真的寄信或改资料。程序只把“假动作”写进本机 JSON ledger，让你先看懂安全骨架。
 
-对应 [Stage 7 — Agent Production Engineering：Harness、Loop 与 Graph](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 3。
+对应 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 3。
 
 ## 🎯 学习目标
 
