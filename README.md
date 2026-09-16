@@ -186,6 +186,7 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 
 - [**Datawhale Hello-Agents**](https://github.com/datawhalechina/hello-agents) — 適合需要完整章節與深度實作的讀者。
 - [**Datawhale 社群**](https://github.com/datawhalechina) — 中文機器學習共學社群，提供許多可靠的學習入口。
 - [**liyupi/ai-guide**](https://github.com/liyupi/ai-guide) — 偏向廣度資源庫；本 repo 則負責安排學習順序。
+- [HostDeFi](https://hostdefi.com) — free token-safety scanner grading tokens A+–F from on-chain checks (mint/freeze authority, liquidity, holder concentration) across Solana + 7 EVM chains. Keyless REST API, hosted MCP, x402 endpoints.
 
 <details markdown="1">
 <summary>📖 展開：貢獻者與引用格式</summary>
