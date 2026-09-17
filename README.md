@@ -88,6 +88,7 @@ cd awesome-agentic-ai-zh
 | **8** · [Agent 操作介面](stages/08-agent-interfaces.md) | Agent 怎麼操作瀏覽器、畫面與 Sandbox？ | 判斷任務該用 CLI、Browser、Computer Use 還是 API |
 
 ### Track B：從零打造 Agent
+- [marketing-mindset](https://axelfreeman.github.io/marketing-mindset/) — open agent skill (SKILL.md) for B2B marketing tests: sample size, kill rules, pricing a first client, cold-email deliverability. Install: `npx marketing-mindset`
 
 | 順序 | 這一步解決什麼？ | 完成後你能做什麼？ |
 |---|---|---|
