@@ -2,7 +2,7 @@
 """Regression tests for scripts/pr-link-audit.py.
 
 Pins the diff-parsing (which repos count as "new"), the advisory-flag logic
-(archived / no-license / stale), and the Markdown rendering. Pure-stdlib and
+(below 1,000 stars / archived / no-license / stale), and the Markdown rendering. Pure-stdlib and
 network-free — ``audit_repo`` (the only ``gh`` caller) is never invoked; tests
 feed fact dicts straight into ``flags_for`` / ``format_report`` and inject a
 fixed ``now`` so nothing is time-dependent.
@@ -173,6 +173,26 @@ def test_flag_archived():
     assert any("archived" in f for f in flags)
 
 
+def test_flag_below_star_threshold():
+    r = {"repo": "x/y", "ok": True, "stars": 999, "license": "MIT",
+         "archived": False, "pushed": "2026-07-01T00:00:00Z"}
+    flags = pla.flags_for(r, NOW)
+    assert any("below 1,000-star" in f for f in flags)
+
+
+def test_exact_star_threshold_passes():
+    r = {"repo": "x/y", "ok": True, "stars": 1000, "license": "MIT",
+         "archived": False, "pushed": "2026-07-01T00:00:00Z"}
+    assert pla.flags_for(r, NOW) == []
+
+
+def test_missing_star_count_requires_verification():
+    r = {"repo": "x/y", "ok": True, "stars": None, "license": "MIT",
+         "archived": False, "pushed": "2026-07-01T00:00:00Z"}
+    flags = pla.flags_for(r, NOW)
+    assert any("star count unavailable" in f for f in flags)
+
+
 def test_flag_no_license():
     r = {"repo": "x/y", "ok": True, "stars": 100, "license": "none",
          "archived": False, "pushed": "2026-07-01T00:00:00Z"}
@@ -216,6 +236,7 @@ def test_report_has_marker_and_table():
     assert "| Repo | ★ Stars | License | Last push | Notes |" in md
     assert "[cool/tool](https://github.com/cool/tool)" in md
     assert "12.3k" in md
+    assert "at least 1,000 stars" in md
     assert "👍" in md  # healthy summary line
 
 
@@ -226,6 +247,7 @@ def test_report_flagged_summary():
     assert "已封存" in md          # the flagged-rows guidance block
     assert "archived" in md
     assert "no clear license" in md
+    assert "below 1,000-star" in md
 
 
 def _run_all():

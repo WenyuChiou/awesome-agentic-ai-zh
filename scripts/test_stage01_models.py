@@ -38,7 +38,7 @@ def test_stage01_uses_current_fable_and_mythos_models(
     assert "claude-fable-5-1" in text
     assert "claude-mythos-5-1" in text
     assert not re.search(r"claude-(?:fable|mythos)-5(?!-1)", text)
-    assert "verified_on=2026-09-04" in text
+    assert "verified_on=2026-09-19" in text
 
 
 @pytest.mark.parametrize(("page", "gpt_status"), (
@@ -67,7 +67,33 @@ def test_stage01_uses_current_gpt6_astra(page: Path, gpt_status: str) -> None:
     assert "1.5×" in cells[6]
     assert "GPT-5.6 Sol" in cells[6]
     assert "https://developers.openai.com/api/docs/models/gpt-6-astra" in cells[7]
-    assert "verified_on=2026-09-04" in text
+    assert "verified_on=2026-09-19" in text
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+def test_stage01_explains_typesafe_jev_without_treating_it_as_a_chat_llm(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    row = next(line for line in text.splitlines() if line.startswith("| Jev (TypeSafe AI) |") or line.startswith("| Jev（TypeSafe AI） |"))
+    cells = [cell.strip() for cell in row.strip("|").split("|")]
+
+    assert len(cells) == 8
+    assert "early access" in cells[2].lower()
+    assert "jev-1.13.0" in cells[1]
+    assert "jev-latest" in cells[1]
+    assert "TypeSafe direct" in cells[1]
+    assert "Cloudflare route" in cells[1]
+    assert "64K" in cells[3] and "32K" in cells[3]
+    assert "TypeSafe direct" in cells[3] and "Cloudflare route" in cells[3]
+    assert "$0.042" in cells[4]
+    assert "TypeSafe direct" in cells[4] and "Cloudflare route" in cells[4]
+    assert "unmetered" in cells[4] or "不計費" in cells[4] or "不计费" in cells[4]
+    assert "free-form text" in cells[6] or "自由文字" in cells[6] or "自由文本" in cells[6]
+    assert "https://docs.typesafe.ai/models" in cells[7]
+    assert "https://docs.typesafe.ai/introduction" in cells[7]
+    assert "https://typesafe.ai/blog/introducing-system-one-models-and-jev" in cells[7]
+    assert "https://developers.cloudflare.com/ai/models/typesafe/jev/" in cells[7]
+    assert "Jev" in text
+    assert "Choice" in text and "Score" in text and "Noul" in text
 
 
 @pytest.mark.parametrize("page", [item[0] for item in PAGES])

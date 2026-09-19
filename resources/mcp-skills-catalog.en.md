@@ -1151,6 +1151,6 @@ Not an SLA — just "do what you can" guidance:
 - Treat vendor documentation or the canonical repo as the source for official status, licensing, permissions, and hosted endpoints.
 - CI periodically scans repository redirects, archive status, HTTP errors, and freshness signals. A warning still needs human judgment; do not remove a stable tool only because it has not released recently.
 - Define the reader's task and safety boundary before opening a new category, then add verifiable official or high-quality community entries.
-- Apply the same learning-value, maintenance, licensing, and permission standards to Chinese-community tools; do not use a star threshold.
+- Apply the same rule to Chinese-community tools: a newly added third-party GitHub repo needs at least 1,000 stars, plus checks for learning value, maintenance, licensing, and permissions. Official documentation, standards, and irreplaceable canonical sources are exempt.
 - Make wording and formatting clear enough for a five-year-old to follow while preserving exact terms, limits, and sources.
 </details>

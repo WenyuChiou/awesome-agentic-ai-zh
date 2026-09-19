@@ -6,6 +6,12 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-19
+
+- **content / Stage 1 / typed decisions** · 依 TypeSafe AI 官方文件與發布說明，三語新增 **Jev**：先用白話把它定位成不寫自由文字的型別化決策模型，再說明 Choice、Score、Noul、機率、門檻與 fallback。完整模型表由 15 家增為 16 家，列出 Jev 1.13、`jev-1.13.0`／`jev-latest`、TypeSafe direct 的 64K request／32K `state` 加最長 question 與 $0.042／百萬 input token；Cloudflare 的 `typesafe/jev` route 另列 32K context，價格以其 dashboard 為準。服務仍為 early access；不把 Jev 寫成聊天 LLM，也不讓高風險動作只靠模型機率自動通過。
+
+- **governance / resource curation** · 新收錄的第三方 GitHub repo 統一要求查核時至少 1,000 stars；這只是進入候選名單的門檻，仍須檢查教學角色、維護、License、安全與相關性。官方文件、標準、model card 與不可替代的 canonical source 不套第三方 repo 門檻，公開頁面也不保存會漂移的 star 數字。三語 MCP／Skills 目錄移除舊的「不使用 stars 門檻」例外，PR link audit 會標出低於 1,000 stars 的新 repo，但仍只做初評，由 maintainer 判斷官方來源例外與最終是否收錄。
+
 ## 2026-09-14
 
 - **site / rendered Markdown** · 修正 Stage 6 五組範例共 15 份三語頁面未啟用 `<details markdown="1">`，造成收合區塊裡的粗體、清單、行內程式碼與連結被當成純文字的問題；CLI 工具表與 Stage 3 摘要裡不會由 Markdown 解析的反引號改用 `<code>`，另修正一筆舊 CHANGELOG 的不平衡粗體記號。`check-rendered-site.py` 現在會從實際 HTML 阻擋可見的 `**...**`，以及 details 裡未解析的清單、連結、標題、引用與行內程式碼，同時排除程式碼範例。

@@ -4,7 +4,7 @@
 
 > Purpose: first see how a model moves from data to an Agent, then use a repeatable local-to-cloud path to call an LLM through an API (application programming interface). You will understand **Token**, **Context Window**, and **Temperature**, and explain model choices using cost and latency.
 
-<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-04; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-19; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
 
 ## 📌 Learning Goals
 
@@ -51,12 +51,15 @@ For SFT, DPO, RLHF/RL, GRPO, LoRA/PEFT, Distillation, and Quantization, open the
 
 Start with the task's constraints, then choose a model; you do not need to memorize a leaderboard.
 
+Not every AI model writes text. A **Typed Decision Model** chooses from answers you define and returns a choice, score, or probability. TypeSafe AI's **Jev** does this; it cannot replace an LLM for chat, summaries, or code.
+
 | Your situation | Start with | Why |
 |---|---|---|
 | Learning the API and iterating at zero cost | **Ollama + `gemma4:e4b`** | Runs locally, so each API call costs $0 and the example can be repeated freely. |
 | Comparing cloud quality when data may be sent out | **Claude Haiku 4.5 / Sonnet 5** | The Anthropic SDK path is simple; pricing is based on input and output tokens. |
 | Very long documents with images or video | **Gemini 3.8 Flash or Kimi K3** | Check the model's context and multimodal support, then test with your own document. |
 | Chinese-language API work with usage control | **DeepSeek V4 or GLM-5.3** | Compare official prices, output limits, and availability; do not choose by name alone. |
+| Classification, scoring, or routing with fixed choices that code will use directly | **Jev 1.13 (service in early access)** | Returns probabilities for Choice, Score, or Noul questions; send low-confidence or high-risk actions to a person or another model. |
 | Privacy, offline use, or self-hosting | **Llama 4, Qwen 3.8, Gemma 4, and other open weights** | Estimate hardware and license requirements, then measure real speed with Ollama or another runtime. |
 
 ## 🚪 Entry Conditions
@@ -470,9 +473,9 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 </details>
 
 <details markdown="1">
-<summary>🌐 Complete 15-family table (official specification entries)</summary>
+<summary>🌐 Complete 16-family table (official specification entries)</summary>
 
-<small>Data checked: 2026-09-04 UTC.</small>
+<small>Data checked: 2026-09-19 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 
@@ -480,6 +483,7 @@ If an official source gives no reliable public number, the table says “Not pub
 |---|---|---|---|---|---|---|---|
 | Claude | Fable 5.1 (`claude-fable-5-1`); Mythos 5.1 (`claude-mythos-5-1`); Opus 5; Sonnet 5; Haiku 4.5 | Fable 5.1: generally available; Mythos 5.1: vetted access only | 1M context / 128K max output (Haiku 200K / 64K) | API: Fable/Mythos $10/$50, Opus $5/$25, Sonnet $2/$10, Haiku $1/$5 (input/output); Fable/Mythos cache reads $0.25 | Long-form, coding, long-running agent workflows | Mythos 5.1 is the same model as Fable 5.1 but is limited to vetted cybersecurity and life-science users | [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) · [Mythos 5.1](https://platform.claude.com/docs/en/models/mythos-5-1/overview) |
 | GPT | GPT-6 Astra; GPT-5.6 Terra / Luna | Astra: released, rolling out; Terra/Luna: generally available | Astra: 1.05M context / 128K max output | API: Astra $10/$50, Terra $2/$12, Luna $0.20/$1.20 (input/output) | Astra for the hardest long-running work; Terra/Luna for general and cost-sensitive work | Astra is rolling out only to eligible organizations; above 272K input, the whole request uses 2× input/cache rates and 1.5× output rates; GPT-5.6 Sol remains available but is not listed in the current recommended-model field | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [OpenAI API models](https://developers.openai.com/api/docs/models) |
+| Jev (TypeSafe AI) | TypeSafe direct: Jev 1.13 (`jev-1.13.0`), stable alias `jev-latest`; Cloudflare route: `typesafe/jev` | Official model; service remains in early access | TypeSafe direct: 64K per request, 32K for `state` plus the longest question; Cloudflare route: 32K | TypeSafe direct: $0.042 per million input tokens, output is unmetered; Cloudflare route: see the Cloudflare dashboard | Fixed-choice classification, routing, rubric scoring, and guardrail judgments | Does not generate free-form text; probability is not correctness, so your code and Eval must set thresholds, permissions, and fallbacks | [TypeSafe model specs](https://docs.typesafe.ai/models) · [Jev introduction](https://docs.typesafe.ai/introduction) · [Early-access announcement](https://typesafe.ai/blog/introducing-system-one-models-and-jev) · [Cloudflare route](https://developers.cloudflare.com/ai/models/typesafe/jev/) |
 | Gemini | Gemini 3.8 Flash | Generally available | 1,048,576 context / 65,536 max output | Through 2026-12-31, introductory $0.75/$3.75 (input/output) | Long-running software development, multimodal work, and multi-step agent tasks | Gemini 3.1 Pro is Preview; introductory pricing has an end date | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) |
 | DeepSeek | `deepseek-v4-flash` / `deepseek-v4-pro` | Generally available | 1M context / 384K max output | Cache-miss peak/off-peak: Flash $0.44/$0.22 input, $1.32/$0.66 output; Pro $1.32/$0.66 input, $3.96/$1.98 output | Reasoning, coding, high-token workloads | Pricing varies by Beijing-time peak/off-peak periods; legacy `deepseek-chat` / `deepseek-reasoner` aliases were deprecated 2026-07-24 | [DeepSeek pricing](https://api-docs.deepseek.com/quick_start/pricing/) |
 | Kimi | `kimi-k3` | Generally available | 1M | API: CNY 2/20/100 per million tokens for cache hit/input/output | Chinese long-form, vision input, long context | 2.8T parameters; deployment and quotas depend on the platform | [Kimi overview](https://platform.kimi.com/docs/overview) · [Kimi API pricing](https://platform.kimi.com/) |

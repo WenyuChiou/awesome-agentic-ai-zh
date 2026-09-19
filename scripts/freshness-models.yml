@@ -11,13 +11,17 @@
 
 stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
-  verified_on: '2026-09-04'
+  verified_on: '2026-09-19'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
     google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
     claude: 'https://platform.claude.com/docs/en/models/fable-5-1/overview'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
+    typesafe_jev: 'https://docs.typesafe.ai/introduction'
+    typesafe_jev_models: 'https://docs.typesafe.ai/models'
+    typesafe_jev_launch: 'https://typesafe.ai/blog/introducing-system-one-models-and-jev'
+    typesafe_jev_cloudflare: 'https://developers.cloudflare.com/ai/models/typesafe/jev/'
     gemini: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     kimi: 'https://platform.kimi.com/docs/overview'
@@ -33,6 +37,7 @@ stage01_fact_pack:
     phi: 'https://azure.microsoft.com/en-us/products/phi'
   pricing_sources:
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
+    typesafe_jev: 'https://docs.typesafe.ai/models'
     gemini: 'https://ai.google.dev/gemini-api/docs/pricing'
     kimi: 'https://platform.kimi.com/'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130055'
@@ -479,7 +484,7 @@ verified_pages:
     max_age_days: 90
 
 current_frontier_models:
-  # Verified 2026-09-04 from provider docs / official model cards.
+  # Verified 2026-09-19 from provider docs / official model cards.
   # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
     - "Fable 5.1"
@@ -492,6 +497,8 @@ current_frontier_models:
     - "GPT-5.6 Terra"
     - "GPT-5.6 Luna"
     - "GPT-5.6 Sol (available previous flagship)"
+  typesafe_ai:
+    - "Jev 1.13 / jev-1.13.0 (official model; service in early access)"
   google_gemini:
     - "Gemini 3.8 Flash"
     - "Gemini 3.1 Pro Preview"

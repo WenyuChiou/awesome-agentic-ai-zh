@@ -4,7 +4,7 @@
 
 > 本章目的：先看懂模型怎麼從資料走到 Agent，再用一條可重複的本機到雲端路徑呼叫 LLM。你會讀懂 **Token（詞元）**、**Context Window（上下文視窗）** 與 **Temperature（溫度）**，也會用成本與延遲解釋模型選擇。
 
-<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-04; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
+<!-- freshness: canonical=stages/01-llm-basics.md; verified_on=2026-09-19; scope=models,pricing,availability,deprecations,model-lifecycle; max_age_days=90 -->
 
 ## 📌 學習目標
 
@@ -51,12 +51,15 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 
 先看任務的限制，再看模型；不必先背排行榜。
 
+不是每種 AI 模型都會寫文章。**Typed Decision Model（型別化決策模型）**只從你先定好的答案中選擇、評分或回傳機率。TypeSafe AI 的 **Jev** 就是這一類；它不能代替聊天、摘要或寫程式的 LLM。
+
 | 你的場景 | 先試哪條路 | 選擇理由 |
 |---|---|---|
 | 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`** | 本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
 | 要比較雲端品質、資料可送出 | **Claude Haiku 4.5／Sonnet 5** | Anthropic SDK 路徑簡單；按輸入與輸出 token 計費。 |
 | 文件很長，且要處理圖像或影音 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型號的 context 與多模態支援，再用自己的文件小測試。 |
 | 中文 API 任務，希望控制用量 | **DeepSeek V4 或 GLM-5.3** | 先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
+| 固定選項的分類、評分或分流，結果要直接交給程式 | **Jev 1.13（服務 Early access）** | 回傳 Choice、Score 或 Noul 的機率結果；低信心或高風險動作仍要交給人或另一個模型。 |
 | 隱私、離線或需自行部署 | **Llama 4、Qwen 3.8、Gemma 4 等開放權重** | 先估算硬體與授權，再以 Ollama 或其他推論工具測量實際速度。 |
 
 ## 🚪 進入條件
@@ -470,9 +473,9 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 </details>
 
 <details markdown="1">
-<summary>🌐 完整 15 家族資料表（官方規格入口）</summary>
+<summary>🌐 完整 16 家族資料表（官方規格入口）</summary>
 
-<small>資料查核：2026-09-04 UTC。</small>
+<small>資料查核：2026-09-19 UTC。</small>
 
 沒有可靠公開數字就寫「官方未公布」。價格通常是 USD／每 1M token；供應商若用別的單位，就照官方單位記錄。
 
@@ -480,6 +483,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 |---|---|---|---|---|---|---|---|
 | Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5；Sonnet 5；Haiku 4.5 | Fable 5.1：正式可用；Mythos 5.1：限核准使用者 | 1M context／128K 最大輸出（Haiku 200K／64K） | API：Fable／Mythos $10/$50、Opus $5/$25、Sonnet $2/$10、Haiku $1/$5（輸入／輸出）；Fable／Mythos cache read $0.25 | 長文、程式、長時間 agent 工作流 | Mythos 5.1 是與 Fable 5.1 相同的模型，但只提供給通過審核的資安與生命科學使用者 | [Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) · [Mythos 5.1](https://platform.claude.com/docs/en/models/mythos-5-1/overview) |
 | GPT | GPT-6 Astra；GPT-5.6 Terra／Luna | Astra：正式發布、分批開放；Terra／Luna：正式可用 | Astra：1.05M context／128K 最大輸出 | API：Astra $10/$50、Terra $2/$12、Luna $0.20/$1.20（輸入／輸出） | Astra 適合最難、需要長時間工作的任務；Terra／Luna 適合一般與省成本工作 | Astra 只分批開放給符合資格的組織；超過 272K 輸入後，整次請求的輸入／cache 為 2×、輸出為 1.5×；GPT-5.6 Sol 仍可用，但未列在目前推薦型號欄 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [OpenAI API 模型](https://developers.openai.com/api/docs/models) |
+| Jev（TypeSafe AI） | TypeSafe direct：Jev 1.13（`jev-1.13.0`），穩定 alias `jev-latest`；Cloudflare route：`typesafe/jev` | 正式模型；服務仍為 Early access | TypeSafe direct：64K／request，`state` 加最長 question 上限 32K；Cloudflare route：32K | TypeSafe direct：$0.042／百萬 input token，output 不計費；Cloudflare route：以 Cloudflare dashboard 顯示為準 | 固定選項分類、路由、rubric 評分與 guardrail 判斷 | 不產生自由文字；機率不等於正確，門檻、權限與 fallback 要由自己的程式與 Eval 決定 | [TypeSafe 模型規格](https://docs.typesafe.ai/models) · [Jev 入門](https://docs.typesafe.ai/introduction) · [Early access 公告](https://typesafe.ai/blog/introducing-system-one-models-and-jev) · [Cloudflare route](https://developers.cloudflare.com/ai/models/typesafe/jev/) |
 | Gemini | Gemini 3.8 Flash | 正式可用 | 1,048,576 context／65,536 最大輸出 | 2026-12-31 前介紹價 $0.75/$3.75（輸入／輸出） | 長時間軟體開發、多模態與多步 Agent 工作 | Gemini 3.1 Pro 為 Preview；介紹價有期限 | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API 定價](https://ai.google.dev/gemini-api/docs/pricing) |
 | DeepSeek | `deepseek-v4-flash`／`deepseek-v4-pro` | 正式可用 | 1M context／384K 最大輸出 | Cache-miss 峰／谷價：Flash $0.44/$0.22 輸入、$1.32/$0.66 輸出；Pro $1.32/$0.66 輸入、$3.96/$1.98 輸出 | 推理、程式、大量 token 任務 | 價格依北京時間的尖峰／離峰時段變化；舊 `deepseek-chat`／`deepseek-reasoner` alias 已於 2026-07-24 棄用 | [DeepSeek 定價](https://api-docs.deepseek.com/quick_start/pricing/) |
 | Kimi | `kimi-k3` | 正式可用 | 1M | API：cache hit／輸入／輸出各 CNY 2／20／100，每百萬 tokens | 中文長文、視覺輸入、長上下文任務 | 2.8T 參數；部署與配額依平台 | [Kimi 平台總覽](https://platform.kimi.com/docs/overview) · [Kimi API 定價](https://platform.kimi.com/) |

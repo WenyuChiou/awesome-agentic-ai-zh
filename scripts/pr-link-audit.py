@@ -10,13 +10,16 @@ the repo's own inclusion bar (CONTRIBUTING ``§策展標準``):
     explicit "stable / no longer maintained" note),
   * clear license — MIT / Apache-2 / BSD / ... (else flag: repo policy avoids
     unlicensed projects),
-  * not archived — an archived repo needs a deprecation caveat in the entry.
+  * not archived — an archived repo needs a deprecation caveat in the entry,
+  * at least 1,000 stars — the admission threshold for newly added third-party
+    GitHub repos. Official documentation, standards, model cards, and an
+    irreplaceable canonical source may be exempt after maintainer review.
 
 **Advisory only.** The GitHub Action posts the table as a sticky PR comment and
-NEVER fails the build: star counts have no hard numeric bar here (that was a
-CLI-guide-specific rule, not repo-wide), and "self-promo without teaching value"
-is a human judgment the bot cannot make. The bot surfaces facts; the maintainer
-decides. This mirrors the existing ``star-drift`` job's "warn only" philosophy.
+NEVER fails the build. It flags a repo below the 1,000-star admission threshold,
+but cannot determine whether a URL is an exempt official or canonical source;
+"self-promo without teaching value" also needs human judgment. The bot surfaces
+facts; the maintainer makes the final inclusion decision.
 
 **Coverage (v1):** only same-repo (maintainer) branches are audited. Fork PRs —
 how most external "add a project" contributions actually arrive — are skipped by
@@ -50,6 +53,7 @@ from repository_freshness import (
 )
 
 STALE_DAYS = 183  # ~6 months, matching CONTRIBUTING §策展標準 "最近 6 個月內有 commit"
+MIN_STARS = 1_000  # new third-party GitHub repo admission threshold
 MARKER = "<!-- pr-link-audit -->"  # sticky-comment anchor used by the workflow
 NO_LICENSE = {"", "none", "noassertion", "no-license", None}
 
@@ -176,6 +180,11 @@ def flags_for(result: dict, now: datetime) -> list[str]:
     if not result.get("ok"):
         return [f"❓ {result.get('error', 'lookup failed')} — verify the link"]
     flags: list[str] = []
+    stars = result.get("stars")
+    if not isinstance(stars, int):
+        flags.append("❓ star count unavailable — verify the admission threshold")
+    elif stars < MIN_STARS:
+        flags.append(f"❌ below {MIN_STARS:,}-star admission threshold")
     if result.get("archived"):
         flags.append("❌ archived — needs a deprecation caveat")
     lic = (result.get("license") or "none").strip()
@@ -212,9 +221,9 @@ def format_report(results: list[dict], now: datetime) -> str:
         "### 🔗 New repo links in this PR — automated audit",
         "",
         "_Advisory only (never blocks the PR). Checks CONTRIBUTING "
-        "`§策展標準`: maintained within 6 months · clear license · not archived. "
-        "Star counts are informational (no hard bar); self-promo / teaching "
-        "value is a human call the bot can't make._",
+        "`§策展標準`: at least 1,000 stars for a new third-party repo · maintained "
+        "within 6 months · clear license · not archived. Official or irreplaceable "
+        "canonical sources may be exempt; teaching value is still a human call._",
         "",
         "| Repo | ★ Stars | License | Last push | Notes |",
         "|---|---|---|---|---|",
@@ -235,10 +244,11 @@ def format_report(results: list[dict], now: datetime) -> str:
     lines.append("")
     if any_flag:
         lines.append(
-            "> **For flagged rows:** archived or stale repos need an explicit "
-            "「已封存 / no longer maintained」note in the entry; unlicensed repos "
-            "are generally declined (CONTRIBUTING `§策展標準`). Please confirm each "
-            "flagged repo still earns its slot before merging."
+            "> **For flagged rows:** a new third-party repo below 1,000 stars is "
+            "declined unless the URL is an exempt official or irreplaceable canonical "
+            "source. Archived or stale repos need an explicit 「已封存 / no longer "
+            "maintained」 note; unlicensed repos are generally declined. Please "
+            "confirm every exception before merging."
         )
     else:
         lines.append("> All added repos look healthy against the inclusion bar. 👍")
