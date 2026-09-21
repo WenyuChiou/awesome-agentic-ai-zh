@@ -89,7 +89,7 @@
 
 - [MCP Registry](https://registry.modelcontextprotocol.io/)：找已發布 Server 的官方 discovery 入口。
 - [punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)：依分類瀏覽社群 Server；安裝前自行審查。
-- [Continuum-AI-Corp/OrcaPromptVault](https://github.com/Continuum-AI-Corp/OrcaPromptVault)：35 個產品的系統提示詞與工具定義存檔，其中 35 份是用本機代理在真實請求裡錄下來的，每份附一行可重跑的指令。**對應 Stage 2**：知道「Agent 開口之前已經被講了什麼」，看得到 Claude Code 在終端機送 26,131 字元 35 個工具、`claude -p` 只剩 20,806 字元 29 個工具。每份檔案標明是 captured（錄到的原文）還是 reported（模型複述），不要把兩者混著讀。
+- [Continuum-AI-Corp/OrcaPromptVault](https://github.com/Continuum-AI-Corp/OrcaPromptVault)：43 個產品的系統提示詞與工具定義存檔，其中 44 份是用本機代理在真實請求裡錄下來的，每份附一行可重跑的指令。**對應 Stage 2**：知道「Agent 開口之前已經被講了什麼」，看得到 Claude Code 在終端機送 26,131 字元 35 個工具、`claude -p` 只剩 20,806 字元 29 個工具。每份檔案標明是 captured（錄到的原文）還是 reported（模型複述），不要把兩者混著讀。
 - [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code)：Claude Code 社群資源。
 - [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)：Agent Skills 社群清單。
 - [Canva MCP](https://www.canva.dev/docs/mcp/)：官方 remote MCP；功能、方案與權限依帳號而異，不先記固定工具數。
