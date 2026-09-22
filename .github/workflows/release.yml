@@ -20,6 +20,9 @@ jobs:
     name: Build and verify three release candidates
     runs-on: ubuntu-24.04
     timeout-minutes: 90
+    permissions:
+      contents: read
+      actions: read
     outputs:
       version: ${{ steps.lock.outputs.version }}
       sha: ${{ steps.lock.outputs.sha }}
@@ -65,10 +68,7 @@ jobs:
             echo "Release version $INPUT_VERSION does not match GitHub API UTC date $official_version" >&2
             exit 1
           fi
-          environment_json="$(curl -fsSL --retry 3 \
-            -H 'Accept: application/vnd.github+json' \
-            -H 'X-GitHub-Api-Version: 2022-11-28' \
-            "https://api.github.com/repos/$REPOSITORY/environments/release")"
+          environment_json="$(gh api "repos/$REPOSITORY/environments/release")"
           reviewer_count="$(jq '[.protection_rules[]? | select(.type == "required_reviewers") | .reviewers[]?] | length' <<<"$environment_json")"
           if [ "$reviewer_count" -lt 1 ]; then
             echo "The release Environment must exist and require at least one reviewer" >&2

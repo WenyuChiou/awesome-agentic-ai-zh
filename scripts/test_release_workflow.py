@@ -23,7 +23,7 @@ def test_release_can_only_be_started_manually() -> None:
 
 def test_only_environment_guarded_publish_job_can_write() -> None:
     jobs = load_workflow()["jobs"]
-    assert "permissions" not in jobs["prepare"]
+    assert jobs["prepare"]["permissions"] == {"contents": "read", "actions": "read"}
     assert jobs["publish"]["environment"] == "release"
     assert jobs["publish"]["permissions"] == {"contents": "write"}
     assert jobs["publish"]["needs"] == "prepare"
@@ -35,6 +35,7 @@ def test_prepare_locks_main_and_builds_all_locales() -> None:
     assert "test \"$DISPATCH_REF\" = refs/heads/main" in text
     assert "https://api.github.com/" in text
     assert "environments/release" in text
+    assert 'environment_json="$(gh api "repos/$REPOSITORY/environments/release")"' in text
     assert "required_reviewers" in text
     assert "test \"$sha\" = \"$remote_main\"" in text
     assert "for locale in zh-TW zh-Hans en" in text
