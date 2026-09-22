@@ -54,7 +54,7 @@ If unsure, ask the user to run `ollama list` and verify.
 | **`claude-mythos-5-1`** | Same model as Fable 5.1, with access limited to vetted cybersecurity and life-science users | $10 input / $50 output; $0.25 cache read |
 | **`claude-haiku-4-5`** | Cheapest cloud option, OK for all exercises | $1 input / $5 output |
 | **`claude-sonnet-5`** | Production default, agent development | $2 input / $10 output |
-| **`claude-opus-5`** | Opus-class default for most workloads; use Fable 5.1 when evals still fall short | $5 input / $25 output |
+| **`claude-opus-5-5`** | Current Opus-class default for most workloads; use Fable 5.1 when evals still fall short | $4 input / $20 output; $0.20 cache read |
 
 ## Framing rules (do not violate)
 

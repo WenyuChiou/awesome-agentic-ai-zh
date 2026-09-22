@@ -8,9 +8,9 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = (
-    (ROOT / "stages" / "01-llm-basics.md", "Fable 5.1：正式可用", "Mythos 5.1：限核准使用者"),
-    (ROOT / "stages" / "01-llm-basics.zh-Hans.md", "Fable 5.1：正式可用", "Mythos 5.1：限核准用户"),
-    (ROOT / "stages" / "01-llm-basics.en.md", "Fable 5.1: generally available", "Mythos 5.1: vetted access only"),
+    (ROOT / "stages" / "01-llm-basics.md", "Fable／Opus／Sonnet／Haiku：正式可用", "Mythos：限核准使用者"),
+    (ROOT / "stages" / "01-llm-basics.zh-Hans.md", "Fable／Opus／Sonnet／Haiku：正式可用", "Mythos：限核准用户"),
+    (ROOT / "stages" / "01-llm-basics.en.md", "Fable/Opus/Sonnet/Haiku: generally available", "Mythos: vetted access only"),
 )
 
 
@@ -33,12 +33,14 @@ def test_stage01_uses_current_fable_and_mythos_models(
     assert "128K" in cells[3]
     assert "$10/$50" in cells[4]
     assert "$0.25" in cells[4]
-    assert "https://platform.claude.com/docs/en/models/fable-5-1/overview" in cells[7]
-    assert "https://platform.claude.com/docs/en/models/mythos-5-1/overview" in cells[7]
+    assert "claude-opus-5-5" in cells[1]
+    assert "$4/$20" in cells[4]
+    assert "$0.20" in cells[4]
+    assert "https://platform.claude.com/docs/en/models/opus-5-5/overview" in cells[7]
     assert "claude-fable-5-1" in text
     assert "claude-mythos-5-1" in text
     assert not re.search(r"claude-(?:fable|mythos)-5(?!-1)", text)
-    assert "verified_on=2026-09-19" in text
+    assert "verified_on=2026-09-22" in text
 
 
 @pytest.mark.parametrize(("page", "gpt_status"), (
@@ -67,7 +69,7 @@ def test_stage01_uses_current_gpt6_astra(page: Path, gpt_status: str) -> None:
     assert "1.5×" in cells[6]
     assert "GPT-5.6 Sol" in cells[6]
     assert "https://developers.openai.com/api/docs/models/gpt-6-astra" in cells[7]
-    assert "verified_on=2026-09-19" in text
+    assert "verified_on=2026-09-22" in text
 
 
 @pytest.mark.parametrize("page", [item[0] for item in PAGES])
@@ -113,7 +115,9 @@ def test_stage01_current_model_table_corrections(page: Path) -> None:
         "1M context／384K 最大输出",
         "1M context / 384K max output",
     }
-    assert "$0.44/$0.22" in deepseek[4]
+    assert "deepseek-flash" in deepseek[1]
+    assert "$0.30/$0.15" in deepseek[4]
+    assert "$1.20/$0.60" in deepseek[4]
     assert "$1.32/$0.66" in deepseek[4]
     assert "$3.96/$1.98" in deepseek[4]
 
@@ -123,6 +127,34 @@ def test_stage01_current_model_table_corrections(page: Path) -> None:
     assert "https://cloud.tencent.com/document/product/1823/130051" in hunyuan[7]
 
     minimax = [cell.strip() for cell in rows["MiniMax"].strip("|").split("|")]
-    assert "permanent 50% off" in minimax[4] or "永久 50% 折扣" in minimax[4]
+    assert "permanent 50% off" not in minimax[4]
+    assert "永久 50% 折扣" not in minimax[4]
+    assert "$0.30/$0.06/$1.20" in minimax[4]
+    assert "$0.60/$0.12/$2.40" in minimax[4]
     assert "MiniMax Community License" in minimax[4]
     assert "https://huggingface.co/MiniMaxAI/MiniMax-M3" in minimax[7]
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+def test_stage01_has_eighteen_sourced_families_and_distinguishes_muse_products(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    rows = {
+        line.split("|", 2)[1].strip(): [cell.strip() for cell in line.strip("|").split("|")]
+        for line in text.splitlines() if line.startswith("|")
+    }
+    families = {"Claude", "GPT", "Jev（TypeSafe AI）", "Jev (TypeSafe AI)", "Gemini", "DeepSeek", "Kimi", "Hunyuan", "MiniMax", "Qwen", "GLM", "Yi", "Llama", "Muse", "Grok", "MiMo", "Gemma", "Mistral", "Phi"}
+    assert len(set(rows) & families) == 18
+    assert "muse-spark-1.3" in rows["Muse"][1]
+    assert "muse-spark-1.3-contributor" in rows["Muse"][1]
+    assert "US$1.25/$0.15/$4.25" in rows["Muse"][4]
+    assert "US$0.10/$0.002/$0.20" in rows["Muse"][4]
+    assert "https://dev.meta.ai/docs/pricing-rate-limits" in rows["Muse"][7]
+    assert "grok-4.7" in rows["Grok"][1]
+    assert "US$2/$0.50/$6" in rows["Grok"][4]
+    assert "https://docs.x.ai/developers/models/grok-4.7" in rows["Grok"][7]
+    assert "mimo-v2.6-pro" in rows["MiMo"][1]
+    assert "US$0.435/$0.0036/$0.87" in rows["MiMo"][4]
+    assert "https://mimo.mi.com/models/en-US/mimo-v2.6-pro" in rows["MiMo"][7]
+    assert "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live" in text
+    table_region = text[text.index("| Claude |"):text.index("\n", text.index("| Phi |"))]
+    assert all(line.startswith("|") for line in table_region.splitlines())

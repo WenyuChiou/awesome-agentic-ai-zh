@@ -184,7 +184,7 @@
 **適合誰**：要 LLM 從大綱 / Markdown 自動生 PPT 的人（顧問、講師、學生）。
 **備註**：跟 anthropics/skills 的 pptx skill 重疊；那邊不夠用再來這邊。
 
-### [1weiho/open-slide](https://github.com/1weiho/open-slide) ⭐⭐⭐⭐
+### [open-slide/open-slide](https://github.com/open-slide/open-slide) ⭐⭐⭐⭐
 
 | 欄位 | 內容 |
 |---|---|
@@ -194,17 +194,6 @@
 **教什麼**：為 coding agent 打造的 React 簡報框架——用自然語言描述簡報、讓 Claude Code / Codex / Cursor 寫出 React slides；內附 `/create-slide`、`/slide-authoring` 兩個 Claude Code Skill。
 **適合誰**：想讓 agent 直接產出「程式碼即簡報、可進 git 版控」的人，跟 PowerPoint-MCP 走 .pptx 不同路。
 **備註**：TypeScript / React / Vite，`npx @open-slide/cli init` 起手。它是 agent-native 工具（agent 來寫），不是 Stage 4 那種建構 agent 的編排框架。
-
-### [SylphxAI/pdf-reader-mcp](https://github.com/SylphxAI/pdf-reader-mcp) ⭐⭐⭐⭐
-
-| 欄位 | 內容 |
-|---|---|
-| License | MIT |
-| 推薦度 | ⭐⭐⭐⭐（PDF 高效解析） |
-
-**教什麼**：高速 PDF 解析 MCP，比 anthropics/skills 的 pdf skill 快 5-10×（號稱）。
-**適合誰**：要批次讀 paper / contract / report 的人。
-**備註**：parallel processing；大 PDF 處理速度有感差別。
 
 ### [tfriedel/claude-office-skills](https://github.com/tfriedel/claude-office-skills) ⭐⭐⭐
 

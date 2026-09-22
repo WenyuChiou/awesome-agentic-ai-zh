@@ -82,6 +82,8 @@ Then check three things yourself:
 
 If you only want to chat, you do not need a CLI Agent or local runtime. Go to [Track A1](../tracks/cli/A1-cli-intro.en.md) when you want the command line, or [Stage 1](../stages/01-llm-basics.en.md) when you want to understand models.
 
+**Personal Agent** is an assistant that can carry out multi-step work across tools after you give it a goal—like asking an assistant to research, draft, and return for approval. [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) is one example, rolling out in the US as checked on 2026-09-22; it asks for approval before important actions such as sending mail or buying something. Muse is a product, not the Muse Spark model and not Muse Code running in a terminal. Check which accounts it connects to and what permissions it receives; “acts on its own” does not mean “skip human review.”
+
 <a id="required-reading"></a>
 ## 📖 Required reading
 

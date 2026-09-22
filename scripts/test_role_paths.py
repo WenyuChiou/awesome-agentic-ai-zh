@@ -1028,6 +1028,16 @@ def test_everyday_user_uses_four_job_based_doors_not_an_upgrade_ladder(locale: s
 
 
 @pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
+def test_everyday_user_explains_muse_product_separately_from_models(locale: str) -> None:
+    visible = _without_details(PAGES["everyday-user"][locale].read_text(encoding="utf-8"))
+    assert "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/" in visible
+    for term in ("Muse", "Muse Spark", "Muse Code"):
+        assert term in visible
+    assert re.search(r"美國|美国|United States|U.S.", visible, re.IGNORECASE)
+    assert re.search(r"逐步|rollout|rolling", visible, re.IGNORECASE)
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
 def test_everyday_user_teaches_permission_and_local_cloud_boundaries(locale: str) -> None:
     text = PAGES["everyday-user"][locale].read_text(encoding="utf-8")
     required = {

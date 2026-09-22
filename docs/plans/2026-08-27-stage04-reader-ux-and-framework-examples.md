@@ -131,7 +131,7 @@
 9. [Microsoft Agent Framework](https://github.com/microsoft/agent-framework)、[Migration Guide](https://learn.microsoft.com/en-us/agent-framework/migration-guide/)：Python `1.0.0` 於 2026-04-02 stable；官方提供 AutoGen／Semantic Kernel 遷移路徑。
 10. [AutoGen](https://microsoft.github.io/autogen/)：現行 package 是 `autogen-agentchat 0.7.5`；舊 0.2 tutorial 不可當現行 API。
 11. [Deep Agents](https://docs.langchain.com/oss/python/deepagents/overview)：官方定位是建在 LangGraph 上的 agent harness，包含 planning、filesystem、subagent、memory、permissions 與 HITL。
-12. [Strands Agents](https://strandsagents.com/docs/user-guide/quickstart/overview/)：Python／TypeScript SDK；canonical monorepo 是 `strands-agents/harness-sdk`。
+12. [Strands Agents](https://strandsagents.com/docs/user-guide/sdk/quickstart/overview/)：Python／TypeScript SDK；canonical monorepo 是 `strands-agents/harness-sdk`。
 13. [Smolagents](https://huggingface.co/docs/smolagents/index)、[secure code execution](https://huggingface.co/docs/smolagents/tutorials/secure_code_execution)：CodeAgent 執行模型產生的程式，必須清楚說明本機執行風險與 sandbox 選項。
 14. [Pydantic AI Agent](https://pydantic.dev/docs/ai/core-concepts/agent/)、[Output](https://pydantic.dev/docs/ai/core-concepts/output/)、[Multi-agent](https://pydantic.dev/docs/ai/guides/multi-agent-applications/)：typed output 使用 schema／validation，validation failure 可以重試，但不能保證答案語意正確。
 15. [Agno](https://docs.agno.com/)：目前定位是 AgentOS 平台，原生支援 agents、teams、workflows，也能包裝其他 framework。

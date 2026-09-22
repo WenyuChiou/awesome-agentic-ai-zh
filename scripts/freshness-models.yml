@@ -11,19 +11,22 @@
 
 stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
-  verified_on: '2026-09-19'
+  verified_on: '2026-09-22'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
     google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
     claude: 'https://platform.claude.com/docs/en/models/fable-5-1/overview'
+    claude_opus: 'https://platform.claude.com/docs/en/models/opus-5-5/overview'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
     typesafe_jev: 'https://docs.typesafe.ai/introduction'
     typesafe_jev_models: 'https://docs.typesafe.ai/models'
     typesafe_jev_launch: 'https://typesafe.ai/blog/introducing-system-one-models-and-jev'
     typesafe_jev_cloudflare: 'https://developers.cloudflare.com/ai/models/typesafe/jev/'
     gemini: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash'
+    gemini_live: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
+    deepseek_updates: 'https://api-docs.deepseek.com/updates/'
     kimi: 'https://platform.kimi.com/docs/overview'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130051'
     minimax: 'https://huggingface.co/MiniMaxAI/MiniMax-M3'
@@ -32,10 +35,14 @@ stage01_fact_pack:
     yi: 'https://github.com/01-ai/Yi'
     llama: 'https://developer.meta.com/ai/docs/overview/'
     muse: 'https://huggingface.co/meta-models/Muse-Glimmer-30B'
+    muse_spark: 'https://dev.meta.ai/docs/models'
+    grok: 'https://docs.x.ai/developers/models/grok-4.7'
+    mimo: 'https://mimo.mi.com/models/en-US/mimo-v2.6-pro'
     gemma: 'https://ai.google.dev/gemma/docs/core'
     mistral: 'https://docs.mistral.ai/models'
     phi: 'https://azure.microsoft.com/en-us/products/phi'
   pricing_sources:
+    claude: 'https://platform.claude.com/docs/en/about-claude/pricing'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
     typesafe_jev: 'https://docs.typesafe.ai/models'
     gemini: 'https://ai.google.dev/gemini-api/docs/pricing'
@@ -44,6 +51,10 @@ stage01_fact_pack:
     minimax: 'https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise'
     qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
     glm: 'https://docs.z.ai/guides/overview/pricing'
+    deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
+    muse_spark: 'https://dev.meta.ai/docs/pricing-rate-limits'
+    grok: 'https://docs.x.ai/developers/pricing'
+    mimo: 'https://mimo.mi.com/models/en-US/mimo-v2.6-pro'
   migration_sources:
     hunyuan: 'https://cloud.tencent.com/announce/detail/2391'
 
@@ -84,7 +95,7 @@ stage04_fact_pack:
     microsoft_migration_guide: 'https://learn.microsoft.com/en-us/agent-framework/migration-guide/'
     autogen: 'https://microsoft.github.io/autogen/'
     deepagents: 'https://docs.langchain.com/oss/python/deepagents/overview'
-    strands_agents: 'https://strandsagents.com/docs/user-guide/quickstart/overview/'
+    strands_agents: 'https://strandsagents.com/docs/user-guide/sdk/quickstart/overview/'
     smolagents_security: 'https://huggingface.co/docs/smolagents/tutorials/secure_code_execution'
     pydantic_ai_outputs: 'https://pydantic.dev/docs/ai/core-concepts/output/'
     agno: 'https://docs.agno.com/'
@@ -484,12 +495,12 @@ verified_pages:
     max_age_days: 90
 
 current_frontier_models:
-  # Verified 2026-09-19 from provider docs / official model cards.
+  # Verified 2026-09-22 from provider docs / official model cards.
   # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
     - "Fable 5.1"
     - "Mythos 5.1"   # same model; limited to vetted cyber and life-science users
-    - "Opus 5"
+    - "Opus 5.5"
     - "Sonnet 5"
     - "Haiku 4.5"
   openai:
@@ -504,7 +515,7 @@ current_frontier_models:
     - "Gemini 3.1 Pro Preview"
   deepseek:
     - "DeepSeek-V4-Pro"
-    - "DeepSeek-V4-Flash"
+    - "DeepSeek-V4.1-Flash (deepseek-flash)"
   moonshot:
     - "Kimi K3"
   tencent:
@@ -517,10 +528,15 @@ current_frontier_models:
   zhipu:
     - "GLM-5.3"
   zero_one_ai:
-    - "Yi-34B / Yi-9B (maintenance or historical use)"
+    - "Yi-34B / Yi-9B (historical baseline; current maintenance unverified)"
   meta:
     - "Llama 4 Scout / Maverick"
     - "Muse Glimmer 30B"
+    - "Muse Spark 1.3 (Meta Model API public preview)"
+  xai:
+    - "Grok 4.7"
+  xiaomi:
+    - "MiMo V2.6 Pro"
   google_gemma:
     - "Gemma 4"
   mistral:
@@ -633,6 +649,16 @@ stale_patterns:
     qualifier_terms: ['前身', '歷史', '历史', '舊', '旧', 'legacy', 'historical', 'deprecated', '棄用', '弃用', '停用']
     note: 'DeepSeek retired the old aliases on 2026-07-24'
 
+  - pattern: 'deepseek-v4-flash|DeepSeek-V4-Flash'
+    include_files: ['stages/01-llm-basics.md']
+    qualifier_terms: ['舊名', '旧名', '舊', '旧', '退役', 'retired', 'legacy', 'historical']
+    note: 'The old V4 Flash model retired; its legacy alias now routes to V4.1 Flash'
+
+  - pattern: 'claude-opus-5(?!-5)|Opus 5(?!\.5)'
+    include_files: ['stages/01-llm-basics.md', 'CLAUDE.md']
+    qualifier_terms: ['前身', '舊版', '旧版', 'historical', 'legacy', 'previous']
+    note: 'Opus 5.5 is the current Opus-class default; Opus 5 remains available but is not the recommended default'
+
   - pattern: 'Claude 3\.5 Sonnet'
     qualifier_terms: ['前身', '歷史', 'lineage', '舊版', '原始', 'baseline', '基線', '基线', 'predecessor', 'history']
     note: 'Pre-2026 Claude version (Claude 3.5 Sonnet was current circa 2024-Q4)'
@@ -667,7 +693,7 @@ stale_patterns:
 
   - pattern: 'Opus 4\.7'
     qualifier_terms: ['前身', '歷史', 'lineage', '舊版', '原始', 'baseline', '基線', '基线', 'predecessor', 'history']
-    note: 'Opus 4.8 (May 2026) supersedes 4.7. Opus 5 (2026-07-24) is now the recommended Opus-class default, but Opus 4.8 stays ACTIVE (not deprecated) and is deliberately NOT listed as a stale pattern'
+    note: 'Opus 5.5 (2026-09-22) is now the recommended Opus-class default; Opus 4.8 stays ACTIVE (not deprecated) and is deliberately NOT listed as a stale pattern'
 
   # Stage 05 direct dependencies: Claude Code renamed the dispatch tool in
   # v2.1.63. `Task` survives only as a compatibility alias, so learner-facing

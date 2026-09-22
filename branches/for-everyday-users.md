@@ -82,6 +82,8 @@
 
 如果你只想聊天，不需要安裝 CLI Agent 或本地 Runtime。想學命令列時再去 [Track A 第一站](../tracks/cli/A1-cli-intro.md)；想了解模型時再去 [Stage 1](../stages/01-llm-basics.md)。
 
+**個人 Agent（Personal Agent）** 是你交代目標後，能跨工具幫你做多步驟事情的助手，像請一位助理先查資料、填草稿，再拿回來給你確認。[Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) 是一個例子，於 2026-09-22 查核時正在美國逐步開放；它做寄信或購買等重要動作前會請人批准。Muse 是產品，不等於 Muse Spark 模型，也不等於在終端機工作的 Muse Code。先看它會連哪些帳號、拿到什麼權限；不要把「會自己做事」當成可以跳過人工檢查。
+
 <a id="必修閱讀"></a>
 ## 📖 必修閱讀
 
