@@ -43,33 +43,36 @@ def test_stage01_uses_current_fable_and_mythos_models(
     assert "verified_on=2026-09-22" in text
 
 
-@pytest.mark.parametrize(("page", "gpt_status"), (
-    (ROOT / "stages" / "01-llm-basics.md", "Astra：正式發布、分批開放；Terra／Luna：正式可用"),
-    (ROOT / "stages" / "01-llm-basics.zh-Hans.md", "Astra：正式发布、分批开放；Terra／Luna：正式可用"),
-    (ROOT / "stages" / "01-llm-basics.en.md", "Astra: released, rolling out; Terra/Luna: generally available"),
-))
-def test_stage01_uses_current_gpt6_astra(page: Path, gpt_status: str) -> None:
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+def test_stage01_uses_current_gpt6_family(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     row = next(line for line in text.splitlines() if line.startswith("| GPT |"))
     cells = [cell.strip() for cell in row.strip("|").split("|")]
 
     assert len(cells) == 8
-    assert "GPT-6 Astra" in cells[1]
-    assert "GPT-5.6 Terra" in cells[1]
-    assert "Luna" in cells[1]
-    assert "Sol" not in cells[1]
-    assert gpt_status in cells[2]
+    for model in ("gpt-6-astra", "gpt-6-sol", "gpt-6-luna"):
+        assert model in cells[1]
+        assert f"https://developers.openai.com/api/docs/models/{model}" in cells[7]
+    assert "GPT-5.6" not in cells[1]
     assert "1.05M" in cells[3]
     assert "128K" in cells[3]
-    assert "$10/$50" in cells[4]
-    assert "$2/$12" in cells[4]
-    assert "$0.20/$1.20" in cells[4]
+    assert "Standard" in cells[4]
+    assert "$10/$1/$12.50/$50" in cells[4]
+    assert "$2/$0.20/$2.50/$10" in cells[4]
+    assert "$0.10/$0.01/$0.125/$0.50" in cells[4]
     assert "272K" in cells[6]
-    assert "2×" in cells[6]
-    assert "1.5×" in cells[6]
-    assert "GPT-5.6 Sol" in cells[6]
-    assert "https://developers.openai.com/api/docs/models/gpt-6-astra" in cells[7]
+    assert "1.5" in cells[6]
+    assert "https://developers.openai.com/api/docs/pricing" in cells[7]
+    assert "GPT-6 Sol" in text.split("<details", maxsplit=1)[0]
+    assert "2026-09-23 UTC" in text
     assert "verified_on=2026-09-22" in text
+
+
+def test_stage01_fact_pack_separates_full_table_and_gpt_update_dates() -> None:
+    fact_pack = (ROOT / "scripts" / "freshness-models.yml").read_text(encoding="utf-8")
+    assert "verified_on: '2026-09-22'" in fact_pack
+    assert "gpt: '2026-09-23'" in fact_pack
+    assert "gpt: 'https://developers.openai.com/api/docs/pricing'" in fact_pack
 
 
 @pytest.mark.parametrize("page", [item[0] for item in PAGES])

@@ -12,6 +12,8 @@
 stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
   verified_on: '2026-09-22'
+  provider_updates:
+    gpt: '2026-09-23'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
@@ -19,6 +21,9 @@ stage01_fact_pack:
     claude: 'https://platform.claude.com/docs/en/models/fable-5-1/overview'
     claude_opus: 'https://platform.claude.com/docs/en/models/opus-5-5/overview'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
+    gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6-sol'
+    gpt_luna: 'https://developers.openai.com/api/docs/models/gpt-6-luna'
+    gpt_pricing: 'https://developers.openai.com/api/docs/pricing'
     typesafe_jev: 'https://docs.typesafe.ai/introduction'
     typesafe_jev_models: 'https://docs.typesafe.ai/models'
     typesafe_jev_launch: 'https://typesafe.ai/blog/introducing-system-one-models-and-jev'
@@ -43,7 +48,7 @@ stage01_fact_pack:
     phi: 'https://azure.microsoft.com/en-us/products/phi'
   pricing_sources:
     claude: 'https://platform.claude.com/docs/en/about-claude/pricing'
-    gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
+    gpt: 'https://developers.openai.com/api/docs/pricing'
     typesafe_jev: 'https://docs.typesafe.ai/models'
     gemini: 'https://ai.google.dev/gemini-api/docs/pricing'
     kimi: 'https://platform.kimi.com/'
@@ -495,7 +500,7 @@ verified_pages:
     max_age_days: 90
 
 current_frontier_models:
-  # Verified 2026-09-22 from provider docs / official model cards.
+  # GPT-6 Sol and Luna checked 2026-09-23; other providers retain prior checks.
   # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
     - "Fable 5.1"
@@ -505,9 +510,9 @@ current_frontier_models:
     - "Haiku 4.5"
   openai:
     - "GPT-6 Astra"
-    - "GPT-5.6 Terra"
-    - "GPT-5.6 Luna"
-    - "GPT-5.6 Sol (available previous flagship)"
+    - "GPT-6 Sol"
+    - "GPT-6 Luna"
+    - "GPT-5.6 Sol / Terra / Luna (previous generation; not Stage 01 defaults)"
   typesafe_ai:
     - "Jev 1.13 / jev-1.13.0 (official model; service in early access)"
   google_gemini:
@@ -617,12 +622,12 @@ stale_patterns:
     qualifier_terms: []
     note: 'Prompt and Context Engineering are overlapping responsibilities, not replacement generations'
 
-  # Stage 01 completed its 2026-09-04 refresh. These patterns are deliberately
+  # Stage 01 completed its 2026-09-23 refresh. These patterns are deliberately
   # scoped to its three mirrors so later stages can migrate in their own PRs.
   - pattern: 'GPT-5\.6 Sol\s*(?:／|/)\s*Terra\s*(?:／|/)\s*Luna'
     include_files: ['stages/01-llm-basics.md']
     qualifier_terms: []
-    note: 'The former exact Stage 01 roster must be replaced with GPT-6 Astra plus the Terra/Luna routes; Sol remains available but is no longer the first choice'
+    note: 'The former exact Stage 01 roster has been replaced with GPT-6 Astra, Sol and Luna; previous-generation models are not current defaults'
 
   - pattern: 'Gemini 3\.5 (Flash|Pro)'
     include_files: ['stages/01-llm-basics.md']

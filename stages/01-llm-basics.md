@@ -57,6 +57,7 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 |---|---|---|
 | 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`** | 本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
 | 要比較雲端品質、資料可送出 | **Claude Haiku 4.5／Sonnet 5** | Anthropic SDK 路徑簡單；按輸入與輸出 token 計費。 |
+| OpenAI Agent API | **GPT-6 Sol／GPT-6 Luna** | 難題先試 Sol；大量簡單任務先試 Luna。用自己的任務測，再查價格。 |
 | 文件很長，且要處理圖像或影音 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型號的 context 與多模態支援，再用自己的文件小測試。 |
 | 中文 API 任務，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
 | 固定選項的分類、評分或分流，結果要直接交給程式 | **Jev 1.13（服務 Early access）** | 回傳 Choice、Score 或 Noul 的機率結果；低信心或高風險動作仍要交給人或另一個模型。 |
@@ -475,14 +476,15 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details markdown="1">
 <summary>🌐 完整 18 家族資料表（官方規格入口）</summary>
 
-<small>資料查核：2026-09-22 UTC。</small>
+<small>全表查核：2026-09-22 UTC；GPT 一列更新：2026-09-23 UTC。</small>
 
 沒有可靠公開數字就寫「官方未公布」。價格通常是 USD／每 1M token；供應商若用別的單位，就照官方單位記錄。
+**快取（cache）**像重用已讀過的便條：讀取舊內容與寫入新內容可能有不同價格。
 
 | 家族 | 目前推薦型號 | 狀態 | Context | 價格或授權 | 適合做什麼 | 限制 | 官方來源 |
 |---|---|---|---|---|---|---|---|
 | Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5.5（`claude-opus-5-5`）；Sonnet 5；Haiku 4.5 | Fable／Opus／Sonnet／Haiku：正式可用；Mythos：限核准使用者 | 多數為 1M context／128K 最大輸出；Haiku 為 200K／64K | Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$1/$5（每百萬輸入／輸出 token）；Opus cache read US$0.20，Fable／Mythos US$0.25 | 長文、程式、長時間 Agent 工作流 | Mythos 5.1 只提供給通過審核的資安與生命科學使用者；雲端夥伴平台的區域價格另查 | [Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Claude API 價格](https://platform.claude.com/docs/en/about-claude/pricing) |
-| GPT | GPT-6 Astra；GPT-5.6 Terra／Luna | Astra：正式發布、分批開放；Terra／Luna：正式可用 | Astra：1.05M context／128K 最大輸出 | API：Astra $10/$50、Terra $2/$12、Luna $0.20/$1.20（輸入／輸出） | Astra 適合最難、需要長時間工作的任務；Terra／Luna 適合一般與省成本工作 | Astra 只分批開放給符合資格的組織；超過 272K 輸入後，整次請求的輸入／cache 為 2×、輸出為 1.5×；GPT-5.6 Sol 仍可用，但未列在目前推薦型號欄 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [OpenAI API 模型](https://developers.openai.com/api/docs/models) |
+| GPT | GPT-6 Astra（`gpt-6-astra`）；Sol（`gpt-6-sol`）；Luna（`gpt-6-luna`） | 三者均列於正式 API 模型頁；免費層不支援 | 三者皆 1.05M context／128K 最大輸出 | Standard API，每百萬 token，US$ 輸入／cache 讀／cache 寫／輸出：Astra $10/$1/$12.50/$50；Sol $2/$0.20/$2.50/$10；Luna $0.10/$0.01/$0.125/$0.50 | Astra 做最難的任務；Sol 做較難的程式與 Agent 工作；Luna 做聚焦、重複且量大的工作 | 超過 272K 輸入時，整次請求的輸入與 cache 價為 2 倍、輸出為 1.5 倍；Batch／Flex 為 Standard 的一半，Fast 為 2 倍。實際配額依帳號層級，工具呼叫可能另計費 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) · [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) · [OpenAI API 價格](https://developers.openai.com/api/docs/pricing) |
 | Jev（TypeSafe AI） | TypeSafe direct：Jev 1.13（`jev-1.13.0`），穩定 alias `jev-latest`；Cloudflare route：`typesafe/jev` | 正式模型；服務仍為 Early access | TypeSafe direct：64K／request，`state` 加最長 question 上限 32K；Cloudflare route：32K | TypeSafe direct：$0.042／百萬 input token，output 不計費；Cloudflare route：以 Cloudflare dashboard 顯示為準 | 固定選項分類、路由、rubric 評分與 guardrail 判斷 | 不產生自由文字；機率不等於正確，門檻、權限與 fallback 要由自己的程式與 Eval 決定 | [TypeSafe 模型規格](https://docs.typesafe.ai/models) · [Jev 入門](https://docs.typesafe.ai/introduction) · [Early access 公告](https://typesafe.ai/blog/introducing-system-one-models-and-jev) · [Cloudflare route](https://developers.cloudflare.com/ai/models/typesafe/jev/) |
 | Gemini | Gemini 3.8 Flash | 正式可用 | 1,048,576 context／65,536 最大輸出 | 2026-12-31 前介紹價 $0.75/$3.75（輸入／輸出） | 長時間軟體開發、多模態與多步 Agent 工作 | Gemini 3.1 Pro 為 Preview；介紹價有期限 | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API 定價](https://ai.google.dev/gemini-api/docs/pricing) |
 | DeepSeek | V4.1 Flash（`deepseek-flash`）；V4 Pro（`deepseek-v4-pro`） | 兩者 API 仍可用；舊 V4 Flash 已退役 | 1M context／384K 最大輸出 | 每百萬 token，尖峰／離峰：Flash 輸入 US$0.30/$0.15、輸出 US$1.20/$0.60、cache hit US$0.006/$0.003；Pro 輸入 US$1.32/$0.66、輸出 US$3.96/$1.98、cache hit US$0.044/$0.022 | 推理、程式與大量 token 任務 | `deepseek-v4-flash` 舊名暫時導向 V4.1 Flash，不代表舊模型仍在；Pro 原定下線後官方決定繼續提供。尖峰為週一至週五 UTC 01–04、06–10 時 | [DeepSeek 模型與價格](https://api-docs.deepseek.com/quick_start/pricing/) · [更新紀錄](https://api-docs.deepseek.com/updates/) |

@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-23
+
+- **content / Stage 1 / GPT-6 models** · 官方 API 文件已列出 GPT-6 Sol 與 Luna；三語選型主線及 18 家族詳表同步更新型號 ID、context、Standard 輸入／快取讀寫／輸出價格和長上下文計費條件。GPT-5.6 Terra／Luna 不再列作現行推薦；全表原查核日期與本次 GPT 查核日期分開標示，更新官方來源與回歸測試，初學者的 Ollama 起點維持不變。
+
 ## 2026-09-22
 
 - **content / Stage 1 / Agent models** · 三語模型詳表由 16 增為 18 家族：按官方 API 規格加入 Grok 4.7 與 MiMo V2.6 Pro；更新 Claude Opus 5.5 的型號與價格、DeepSeek V4.1 Flash 的新 ID／尖峰離峰價格與舊名界線、Muse Spark 1.3 的 Preview／Standard／Contributor 方案，並區分 Muse Glimmer 開放權重與個人 Agent 產品。Gemini 3.8 Live 只作語音 Agent 選讀；MiniMax M3 補 cache 與長上下文價、Yi 改列歷史，不宣稱供應商 benchmark 為跨模型排名。繁中、簡中、英文事實標記與回歸測試同步更新；可見選模型主線、必讀、精選資源、五星與完成條件未收合。
