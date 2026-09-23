@@ -348,7 +348,7 @@ Amazon 案件也不能简化成“某 browser 被全面禁止访问 Amazon”。
 <a id="-常用工具推荐按用途分类"></a>
 <a id="-精选项目模板--sdk--工具合集"></a>
 
-## 📚 21 项完整学习资源与限制
+## 📚 22 项完整学习资源与限制
 
 <small>资料核查：2026-08-28 UTC。星号是本项目的教学推荐度，不是 GitHub stars。</small>
 
@@ -364,9 +364,10 @@ Amazon 案件也不能简化成“某 browser 被全面禁止访问 Amazon”。
 <tr><td><a href="https://support.google.com/chrome/answer/16283624?hl=en">Google Chrome Help：Gemini in Chrome</a></td><td>确认自己的账号是否可用。</td><td>gradual rollout；平台与地区有限制。</td><td>⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Executor／framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">anthropics/claude-quickstarts</a></td><td>读官方 computer-use demo。</td><td>先看 container、credential 与 network 边界。</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="6">Executor／framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">anthropics/claude-quickstarts</a></td><td>读官方 computer-use demo。</td><td>先看 container、credential 与 network 边界。</td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/browser-use/browser-use">browser-use/browser-use</a></td><td>建立完整 web-agent loop。</td><td>production browser scaling 与安全仍要自行设计。</td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/microsoft/playwright-mcp">microsoft/playwright-mcp</a></td><td>把 browser 接给 MCP client。</td><td>仍需限制 origin、权限与数据。</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/cortex-docs/cortex">cortex-docs/cortex</a></td><td>把 API spec 转成 typed MCP tools。</td><td>gRPC 只提供 schema 资源，不生成可调用方法。</td><td>⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/trycua/cua">trycua/cua</a></td><td>研究跨平台 computer-use stack。</td><td>依 README 与 release 验证实际 backend。</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">bytedance/UI-TARS-desktop</a></td><td>研究开放桌面 agent。</td><td>本地控制风险高；先用测试环境。</td><td>⭐⭐⭐⭐</td></tr>
 </tbody>
