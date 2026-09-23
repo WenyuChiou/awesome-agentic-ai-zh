@@ -86,6 +86,7 @@ RESOURCE_PAIRS = (
     ("https://github.com/anthropics/claude-quickstarts", "⭐⭐⭐⭐⭐"),
     ("https://github.com/browser-use/browser-use", "⭐⭐⭐⭐⭐"),
     ("https://github.com/microsoft/playwright-mcp", "⭐⭐⭐⭐⭐"),
+    ("https://github.com/cortex-docs/cortex", "⭐⭐⭐"),
     ("https://github.com/trycua/cua", "⭐⭐⭐⭐"),
     ("https://github.com/bytedance/UI-TARS-desktop", "⭐⭐⭐⭐"),
     ("https://github.com/e2b-dev/E2B", "⭐⭐⭐⭐⭐"),
@@ -101,9 +102,9 @@ RESOURCE_PAIRS = (
     ("https://research.perplexity.ai/articles/browsesafe", "⭐⭐⭐"),
 )
 RESOURCE_HEADINGS = {
-    "zh-TW": "## 📚 21 筆完整學習資源與限制",
-    "en": "## 📚 21 complete learning resources and limits",
-    "zh-Hans": "## 📚 21 项完整学习资源与限制",
+    "zh-TW": "## 📚 22 筆完整學習資源與限制",
+    "en": "## 📚 22 complete learning resources and limits",
+    "zh-Hans": "## 📚 22 项完整学习资源与限制",
 }
 DETAIL_TAG = re.compile(r"<details\b[^>]*>|</details>")
 
@@ -381,7 +382,7 @@ def test_resources_keep_ordered_urls_ratings_and_real_rowgroups() -> None:
         assert _detail_depth_at(text, len(text)) == 0
         groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
         assert len(groups) == 5
-        for group, rows in zip(groups, (5, 5, 4, 5, 2)):
+        for group, rows in zip(groups, (5, 6, 4, 5, 2)):
             assert len(re.findall(r"<tr>", group)) == rows
             assert f'scope="rowgroup" rowspan="{rows}"' in group
         pairs = re.findall(
