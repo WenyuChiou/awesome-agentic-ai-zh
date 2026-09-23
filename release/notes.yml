@@ -1,28 +1,14 @@
 schema_version: 1
-release_version: v2026.09.22
+release_version: v2026.09.23
 
 # One ordered list produces all three language sections.
 # Links are shared so the three summaries cannot silently diverge.
 changes:
-  - id: typed-decision-model-jev
+  - id: gpt6-sol-luna-stage1
     category: learning-content
-    zh-TW: Stage 1 三語加入 TypeSafe AI 的 Jev。它是用於有型別選項、分數與門檻的決策模型，不是一般聊天模型；教材標示 early access、API 限制與需要人工確認的風險界線。
-    zh-Hans: Stage 1 三语加入 TypeSafe AI 的 Jev。它是用于有类型选项、分数与门槛的决策模型，不是普通聊天模型；教材标明 early access、API 限制与需要人工确认的风险边界。
-    en: Stage 1 adds TypeSafe AI's Jev in all three languages. It is a typed decision model for choices, scores, and thresholds, not a general chat model; the guide identifies its early-access status, API limits, and decisions that still need human review.
+    zh-TW: Stage 1 三語補上 GPT-6 Sol 與 Luna 的選型、API ID、context、Standard 價格和長上下文計費。模型詳表仍有 18 個家族；全表與本次 GPT 查核日期分開標示，入門 Ollama 路徑不變。
+    zh-Hans: Stage 1 三语补上 GPT-6 Sol 与 Luna 的选型、API ID、context、Standard 价格和长上下文计费。模型详表仍有 18 个家族；全表与本次 GPT 核查日期分开标明，入门 Ollama 路径不变。
+    en: Stage 1 adds GPT-6 Sol and Luna to the three-language model picker, with API IDs, context, Standard pricing, and long-context billing. The full table still has 18 families; its audit date is separate from this GPT update, and the beginner Ollama path is unchanged.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/274
-  - id: agent-model-facts-september-refresh
-    category: learning-content
-    zh-TW: Stage 1 的三語詳表由 16 增至 18 個模型家族，加入 Grok 4.7 與 MiMo V2.6 Pro，更新 Claude Opus 5.5、DeepSeek V4.1 Flash 等現行型號、價格及可用狀態。易變事實附官方來源與查核日期；未把供應商評測當成跨模型排名。讀者不用展開詳表，仍能先學會怎麼選模型。
-    zh-Hans: Stage 1 的三语详表由 16 增至 18 个模型家族，加入 Grok 4.7 与 MiMo V2.6 Pro，更新 Claude Opus 5.5、DeepSeek V4.1 Flash 等现行型号、价格及可用状态。易变事实附官方来源和核查日期；不把供应商评测当作跨模型排名。读者不展开详表，也能先学会如何选模型。
-    en: Stage 1 expands its trilingual reference table from 16 to 18 model families, adding Grok 4.7 and MiMo V2.6 Pro and updating current models, pricing, and availability including Claude Opus 5.5 and DeepSeek V4.1 Flash. Volatile facts have official sources and a verification date; vendor benchmarks are not presented as cross-model rankings. The beginner model-choice path remains readable without opening the full table.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/277
-  - id: distinguish-meta-muse-products
-    category: learning-content
-    zh-TW: 教材區分 Muse Spark 1.3 的 Preview API 與兩種資料使用／價格方案、開放權重 Muse Glimmer，以及在美國逐步開放的 Muse 個人 Agent。Gemini 3.8 Live 留作語音 Agent 選讀，不增加必修主線。
-    zh-Hans: 教材区分 Muse Spark 1.3 的 Preview API 与两种数据使用／价格方案、开放权重 Muse Glimmer，以及在美国逐步开放的 Muse 个人 Agent。Gemini 3.8 Live 作为语音 Agent 选读，不增加必修主线。
-    en: The guide distinguishes Muse Spark 1.3's preview API and two data-use/pricing plans, open-weight Muse Glimmer, and the Muse personal Agent gradually rolling out in the US. Gemini 3.8 Live remains optional voice-Agent reading rather than a new required track.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/277
-      - https://dev.meta.ai/docs/pricing-rate-limits
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/280
+      - https://developers.openai.com/api/docs/pricing
