@@ -127,10 +127,11 @@
 <table>
   <thead><tr><th scope="col">分类</th><th scope="col">项目／资源</th><th scope="col">编辑评分</th><th scope="col">适合谁</th><th scope="col">能学什么</th><th scope="col">状态／限制</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次做跨 session memory</td><td>library、server、cloud 与搜索生命周期</td><td>Apache-2.0；OSS 与 managed 能力分开看</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次做跨 session memory</td><td>library、server、cloud 与搜索生命周期</td><td>Apache-2.0；OSS 与 managed 能力分开看</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/langmem">LangMem</a></td><td>⭐⭐⭐⭐</td><td>已使用 LangGraph 的团队</td><td>hot-path／background memory</td><td>MIT；先理解 LangGraph store</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta">Letta 项目入口</a></td><td>⭐⭐⭐⭐</td><td>先分清 Letta 的产品范围</td><td>现行安装、文档与 source 去向</td><td>landing page；退役 V1 server 只留在 archive branch</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta-code">Letta Code</a></td><td>⭐⭐⭐⭐</td><td>建立 stateful agent 或 App Server</td><td>agent harness、git-backed MemFS、长期 identity</td><td>现行 source；产品型 agent harness，不是通用 memory DB</td></tr>
+    <tr><td><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></td><td>⭐⭐⭐⭐</td><td>先用磁盘上已经存在的记忆</td><td>从 coding agent 的 session 文件做 episodic memory；BM25 检索，不需要 embedding</td><td>MIT；只在本机、只有关键词，没有语义相似度</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="3">时间与关系</th><td><a href="https://github.com/getzep/graphiti">Graphiti</a></td><td>⭐⭐⭐⭐⭐</td><td>关系会随时间改变的应用</td><td>bi-temporal facts、temporal graph</td><td>Apache-2.0；需要图数据库与治理</td></tr>

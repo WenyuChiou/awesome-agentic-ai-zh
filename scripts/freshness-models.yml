@@ -191,6 +191,7 @@ agent_memory_fact_pack:
     langmem: 'https://github.com/langchain-ai/langmem'
     graphiti: 'https://github.com/getzep/graphiti'
     zep: 'https://github.com/getzep/zep'
+    deja_vu: 'https://github.com/vshulcz/deja-vu'
   research_sources:
     coala: 'https://arxiv.org/abs/2309.02427'
     generative_agents: 'https://arxiv.org/abs/2304.03442'
