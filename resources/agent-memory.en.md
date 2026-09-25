@@ -127,10 +127,11 @@ Ratings represent educational value for this learning map, not a project-quality
 <table>
   <thead><tr><th scope="col">Category</th><th scope="col">Project/resource</th><th scope="col">Editorial rating</th><th scope="col">Best for</th><th scope="col">What you can learn</th><th scope="col">Status/limits</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>First cross-session memory</td><td>library, server, cloud, and search lifecycle</td><td>Apache-2.0; distinguish OSS from managed capabilities</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>First cross-session memory</td><td>library, server, cloud, and search lifecycle</td><td>Apache-2.0; distinguish OSS from managed capabilities</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/langmem">LangMem</a></td><td>⭐⭐⭐⭐</td><td>Teams already using LangGraph</td><td>hot-path/background memory</td><td>MIT; understand the LangGraph store first</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta">Letta project entry</a></td><td>⭐⭐⭐⭐</td><td>Understanding the Letta product boundary first</td><td>current installation, docs, and source locations</td><td>Landing page; the retired V1 server remains only on the archive branch</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta-code">Letta Code</a></td><td>⭐⭐⭐⭐</td><td>Building a stateful agent or App Server</td><td>agent harness, git-backed MemFS, persistent identity</td><td>Current source; a product-oriented harness, not a general memory database</td></tr>
+    <tr><td><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></td><td>⭐⭐⭐⭐</td><td>Using the memory that already exists on disk</td><td>episodic memory built from coding-agent session files; BM25 retrieval with no embeddings</td><td>MIT; local and keyword-only, so there is no semantic similarity</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="3">Time and relationships</th><td><a href="https://github.com/getzep/graphiti">Graphiti</a></td><td>⭐⭐⭐⭐⭐</td><td>Applications whose relationships change over time</td><td>bi-temporal facts, temporal graphs</td><td>Apache-2.0; requires a graph database and governance</td></tr>
