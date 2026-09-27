@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "verified_at": "2026-09-22T23:10:46Z",
-  "repository_count": 261,
+  "repository_count": 262,
   "repositories": {
     "01-ai/yi": {
       "requested": "01-ai/Yi",
@@ -6173,6 +6173,31 @@
         "stages/05-claude-code-ecosystem.en.md",
         "stages/05-claude-code-ecosystem.md",
         "stages/05-claude-code-ecosystem.zh-Hans.md"
+      ]
+    },
+    "vshulcz/deja-vu": {
+      "requested": "vshulcz/deja-vu",
+      "state": "verified",
+      "checked_at": "2026-09-27T08:00:00Z",
+      "api_status": 200,
+      "canonical": "vshulcz/deja-vu",
+      "html_url": "https://github.com/vshulcz/deja-vu",
+      "redirected": false,
+      "archived": false,
+      "disabled": false,
+      "visibility": "public",
+      "default_branch": "main",
+      "license": "MIT",
+      "pushed_at": "2026-09-27T04:37:19Z",
+      "latest_release": {
+        "tag": "v0.21.2",
+        "published_at": "2026-09-24T15:19:59Z"
+      },
+      "reference_count": 3,
+      "sources": [
+        "resources/agent-memory.en.md",
+        "resources/agent-memory.md",
+        "resources/agent-memory.zh-Hans.md"
       ]
     },
     "wangrongsheng/awesome-llm-resources": {
