@@ -131,7 +131,7 @@
     <tr><td><a href="https://github.com/langchain-ai/langmem">LangMem</a></td><td>⭐⭐⭐⭐</td><td>已使用 LangGraph 的團隊</td><td>hot-path／background memory</td><td>MIT；先理解 LangGraph store</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta">Letta 專案入口</a></td><td>⭐⭐⭐⭐</td><td>先分清 Letta 的產品範圍</td><td>現行安裝、文件與 source 去向</td><td>landing page；退役 V1 server 只留在 archive branch</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta-code">Letta Code</a></td><td>⭐⭐⭐⭐</td><td>建立 stateful agent 或 App Server</td><td>agent harness、git-backed MemFS、長期 identity</td><td>現行 source；產品型 agent harness，不是通用 memory DB</td></tr>
-    <tr><td><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></td><td>⭐⭐⭐⭐</td><td>先用磁碟上已經存在的記憶</td><td>從 coding agent 的 session 檔案做 episodic memory；BM25 檢索，不需要 embedding</td><td>MIT；只在本機、只有關鍵字，沒有語意相似度</td></tr>
+    <tr><td><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></td><td>⭐⭐⭐⭐</td><td>先用磁碟上已經存在的記憶</td><td>從 coding agent 的 session 檔案做 episodic memory；預設是詞彙檢索（BM25），不需要 embedding；可選的 <code>deja embed</code> 另外加上語意召回</td><td>MIT；預設只在本機。若設定遠端 embedding 端點，會把已遮蔽憑證的索引文字送到那裡；用本機 Ollama 或 LM Studio 則不離開本機</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="3">時間與關係</th><td><a href="https://github.com/getzep/graphiti">Graphiti</a></td><td>⭐⭐⭐⭐⭐</td><td>關係會隨時間改變的應用</td><td>bi-temporal facts、temporal graph</td><td>Apache-2.0；需要圖資料庫與治理</td></tr>

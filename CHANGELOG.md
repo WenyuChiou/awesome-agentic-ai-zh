@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-27
+
+- **content / resources / Agent memory** · 三語 Memory layer 加入 **deja-vu**（MIT）：直接用 coding agent 已寫在磁碟上的 session 檔案做 episodic memory。明確區分預設、不需 embedding 的詞彙檢索（BM25）與可選的 `deja embed` 語意召回，並註明設定遠端 embedding 端點時，已遮蔽憑證的索引文字會送到該端點；本機 Ollama 或 LM Studio 則不離開本機。Memory layer 群組列數與 rowspan、reader-UX 列數測試同步更新；重新查核全部 262 個仍被引用的 repo 並更新機器快照。
+
 ## 2026-09-23
 
 - **content / Stage 1 / GPT-6 models** · 官方 API 文件已列出 GPT-6 Sol 與 Luna；三語選型主線及 18 家族詳表同步更新型號 ID、context、Standard 輸入／快取讀寫／輸出價格和長上下文計費條件。GPT-5.6 Terra／Luna 不再列作現行推薦；全表原查核日期與本次 GPT 查核日期分開標示，更新官方來源與回歸測試，初學者的 Ollama 起點維持不變。
