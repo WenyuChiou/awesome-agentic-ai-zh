@@ -6178,7 +6178,7 @@
     "vshulcz/deja-vu": {
       "requested": "vshulcz/deja-vu",
       "state": "verified",
-      "checked_at": "2026-09-27T08:00:00Z",
+      "checked_at": "2026-09-22T23:10:46Z",
       "api_status": 200,
       "canonical": "vshulcz/deja-vu",
       "html_url": "https://github.com/vshulcz/deja-vu",
@@ -6188,10 +6188,10 @@
       "visibility": "public",
       "default_branch": "main",
       "license": "MIT",
-      "pushed_at": "2026-09-27T04:37:19Z",
+      "pushed_at": "2026-09-22T21:11:31Z",
       "latest_release": {
-        "tag": "v0.21.2",
-        "published_at": "2026-09-24T15:19:59Z"
+        "tag": "v0.21.0",
+        "published_at": "2026-09-22T19:59:46Z"
       },
       "reference_count": 3,
       "sources": [

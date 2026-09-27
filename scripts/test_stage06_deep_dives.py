@@ -23,7 +23,7 @@ PAGES = {
 }
 ROWGROUPS = {
     "advanced-rag": [4, 4, 4],
-    "agent-memory": [4, 3, 4],
+    "agent-memory": [5, 3, 4],
 }
 CORE_TERMS = {
     "advanced-rag": (
