@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-27
+
+- **content / Stage 8 / Cortex** · 三語完整資源表新增 Cortex，說明將 API spec 轉成 typed MCP tools 的用途，並註明 gRPC 只提供 schema 資源、不產生可呼叫方法；維持三星教學推薦度。同步將 reader-UX 標題、連結與評分下限更新為 22 筆，Executor／framework 分組改為 6 筆，並以 GitHub API 重新查核全部 262 個 repository，更新 snapshot。
+
 ## 2026-09-23
 
 - **content / Stage 1 / GPT-6 models** · 官方 API 文件已列出 GPT-6 Sol 與 Luna；三語選型主線及 18 家族詳表同步更新型號 ID、context、Standard 輸入／快取讀寫／輸出價格和長上下文計費條件。GPT-5.6 Terra／Luna 不再列作現行推薦；全表原查核日期與本次 GPT 查核日期分開標示，更新官方來源與回歸測試，初學者的 Ollama 起點維持不變。

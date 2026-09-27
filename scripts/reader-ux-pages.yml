@@ -1792,16 +1792,16 @@ pages:
         en: {heading: "🎯 Featured Projects and Learning Resources", anchor: -featured-projects-and-learning-resources}
         zh-Hans: {heading: "🎯 精选 Projects 与学习资源", anchor: -精选-projects-与学习资源}
       complete-resources:
-        zh-TW: {heading: "📚 21 筆完整學習資源與限制", anchor: -21-筆完整學習資源與限制}
-        en: {heading: "📚 21 complete learning resources and limits", anchor: -21-complete-learning-resources-and-limits}
-        zh-Hans: {heading: "📚 21 项完整学习资源与限制", anchor: -21-项完整学习资源与限制}
+        zh-TW: {heading: "📚 22 筆完整學習資源與限制", anchor: -22-筆完整學習資源與限制}
+        en: {heading: "📚 22 complete learning resources and limits", anchor: -22-complete-learning-resources-and-limits}
+        zh-Hans: {heading: "📚 22 项完整学习资源与限制", anchor: -22-项完整学习资源与限制}
       completion:
         zh-TW: {heading: "✅ 自我檢查", anchor: -自我檢查}
         en: {heading: "✅ Self-check", anchor: -self-check}
         zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
     visible_section_minimums:
       required-reading: {min_links: 4}
-      complete-resources: {min_links: 21, min_ratings: 21}
+      complete-resources: {min_links: 22, min_ratings: 22}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: hands-on
@@ -1839,7 +1839,7 @@ pages:
           zh-TW: {term: Prompt Injection, label: "Prompt Injection（提示注入）"}
           en: {term: Prompt Injection, label: Prompt Injection}
           zh-Hans: {term: Prompt Injection, label: "Prompt Injection（提示注入）"}
-    resource_group_rowspans: [5, 5, 4, 5, 2]
+    resource_group_rowspans: [5, 6, 4, 5, 2]
 
   - id: track-a1
     canonical: tracks/cli/A1-cli-intro.md
