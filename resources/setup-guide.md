@@ -234,8 +234,8 @@ load_dotenv()
 client = Anthropic()  # 從 ANTHROPIC_API_KEY 讀取 key
 
 message = client.messages.create(
-    model="claude-sonnet-5",
-    max_tokens=120,
+    model="claude-sonnet-5-5",
+    max_tokens=1024,
     messages=[{"role": "user", "content": "請用一句話介紹你自己。"}],
 )
 

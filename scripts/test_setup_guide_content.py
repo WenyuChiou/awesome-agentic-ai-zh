@@ -120,7 +120,7 @@ def test_visible_beginner_path_keeps_choices_terms_practice_and_exit(
     assert "IDE Assistant" in visible
     assert "CLI Agent" in visible
     assert "**API**" in visible
-    assert "claude-sonnet-5" in visible
+    assert "claude-sonnet-5-5" in visible
     assert "uv python install 3.12" in visible
     assert ".claude/skills/hello-skill/SKILL.md" in visible
 
@@ -159,7 +159,7 @@ def test_three_locales_share_freshness_sources_commands_and_model_ids() -> None:
         url_orders.append(_external_urls(text))
         for command in NATIVE_INSTALLERS:
             assert command in text
-        assert text.count("claude-sonnet-5") == 1
+        assert text.count("claude-sonnet-5-5") == 1
         assert text.count("uv python install 3.12") == 1
     assert len(set(url_orders)) == 1
 

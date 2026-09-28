@@ -337,7 +337,7 @@ complete Skill example. The three HTML tables use accessible rowgroups `4／4／
 `7／1`; required reading remains visible even though the complete catalogs are secondary.
 
 `scripts/test_setup_guide_content.py` locks the exact freshness marker, external URL order, native Claude
-Code installers, Python 3.12／`uv`, `claude-sonnet-5`, copyable secret setup, real rowgroups, editorial
+Code installers, Python 3.12／`uv`, `claude-sonnet-5-5`, copyable secret setup, real rowgroups, editorial
 ratings, and README routing. It rejects the old Node 18／npm-first path, fixed setup times, frozen prices,
 promotional credits, stale desktop availability, volatile GitHub stars, and empty-quote artifacts.
 Reader UX, strict anchors, mirror／locale checks, freshness, and the trilingual site build run beside it.

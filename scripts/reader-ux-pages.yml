@@ -3379,7 +3379,7 @@ pages:
       ordered_external_urls: true
       resource_url_ratings: true
       literals:
-        - "claude-sonnet-5"
+        - "claude-sonnet-5-5"
         - "uv python install 3.12"
         - ".claude/skills/hello-skill/SKILL.md"
         - "gemma4:e4b"

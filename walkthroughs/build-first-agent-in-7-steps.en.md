@@ -97,7 +97,7 @@ response = client.messages.create(
     }]
 )
 
-print(response.content[0].text)
+print("".join(block.text for block in response.content if block.type == "text"))
 print(f"\n--- Tokens: input={response.usage.input_tokens}, "
       f"output={response.usage.output_tokens} ---")
 ```
@@ -106,7 +106,7 @@ Run: `python step1_hello_llm.py`
 
 **What you learn**: API call shape, `messages` structure, how `usage` counts tokens.
 
-The `claude-sonnet-5` value is the current Claude API ID; model IDs have lifecycles, so check [Anthropic Model IDs and versioning](https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions) before implementation.
+This walkthrough pins the still-available `claude-sonnet-5`; the newer Sonnet is `claude-sonnet-5-5`. Do not upgrade existing code by changing only the model ID: tool choice and parameters differ. Read the [Sonnet 5.5 migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) first.
 
 ---
 
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": PAPER_TEXT}]
     )
-    print(response.content[0].text)
+    print("".join(block.text for block in response.content if block.type == "text"))
 ```
 
 **What you learn**: system prompt vs user message split, explicit format constraints, anti-hallucination via "say not stated."
