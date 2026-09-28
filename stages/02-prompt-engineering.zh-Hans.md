@@ -258,7 +258,7 @@ Path A 六题两轮的 API 费用为 `$0`。Path B 先设 `$0.05` 上限；如�
   </thead>
   <tbody>
     <tr><th scope="rowgroup" rowspan="5">官方课程</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>跟着 notebook 做第一章。</td><td>维护中；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>阅读 Real World Prompting 和 Prompt Evaluations。</td><td>维护中；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>阅读旧版 Real World Prompting 和 Prompt Evaluations；动手时对照本表的现行官方文档。</td><td>已归档；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>先读“什么时候该修改 prompt”。</td><td>官方文档</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>阅读消息角色、范例和 eval。</td><td>官方文档</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>阅读清晰指令和固定结构。</td><td>官方文档</td><td>⭐⭐⭐⭐</td></tr>

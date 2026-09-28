@@ -10,6 +10,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 - **content / Stage 1 / Claude Sonnet 5.5** · 依 Anthropic 官方模型與價格頁，三語選型主線、18 家族詳表和價格練習改用 `claude-sonnet-5-5`（1M context、128K 最大輸出，Claude API 每百萬輸入／輸出 token 為 US$2／US$10，快取讀取 US$0.20）。簡單 API 起點同步更新；跨章工具實作暫留仍可使用的 Sonnet 5，標明升級需先檢查工具指定與參數差異，並改為按區塊類型讀取文字，避免 thinking 區塊造成錯誤。只重新查核 Claude 一列，沒有把全表日期誤寫成今天；fact pack、reader-UX 規則、測試計畫和回歸測試同步更新。同時修正 Content Health issue #286 指出的三語 Llama 官方文件入口誤導向首頁。
 
+- **content / archived course status** · 依 GitHub 官方 API 查核，`anthropics/courses` 已封存；Stage 1／2／3 三語資源列保留原連結、順序與五星編輯推薦，但明示它是舊範例，實作應對照同表現行 Quickstart、文件或 Cookbook。移除 Stage 2 錯誤的「維護中」描述，加入九處回歸檢查。
+
 ## 2026-09-27
 
 - **content / resources / Agent memory** · 三語 Memory layer 加入 **deja-vu**（MIT）：直接用 coding agent 已寫在磁碟上的 session 檔案做 episodic memory。明確區分預設、不需 embedding 的詞彙檢索（BM25）與可選的 `deja embed` 語意召回，並註明設定遠端 embedding 端點時，已遮蔽憑證的索引文字會送到該端點；本機 Ollama 或 LM Studio 則不離開本機。Memory layer 群組列數與 rowspan、reader-UX 列數測試同步更新；重新查核全部 262 個仍被引用的 repo 並更新機器快照。

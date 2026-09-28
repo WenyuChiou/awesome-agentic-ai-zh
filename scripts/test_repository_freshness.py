@@ -8,6 +8,8 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import mock
 
+import pytest
+
 import repository_freshness as rf
 
 _CHECKER_SPEC = importlib.util.spec_from_file_location(
@@ -18,6 +20,22 @@ checker = importlib.util.module_from_spec(_CHECKER_SPEC)
 _CHECKER_SPEC.loader.exec_module(checker)
 
 NOW = datetime(2026, 8, 27, tzinfo=timezone.utc)
+
+
+@pytest.mark.parametrize(
+    "page",
+    [
+        Path(__file__).resolve().parents[1] / "stages" / f"{stem}{suffix}.md"
+        for stem in ("01-llm-basics", "02-prompt-engineering", "03-tool-use-and-hello-agent")
+        for suffix in ("", ".en", ".zh-Hans")
+    ],
+)
+def test_archived_anthropic_courses_has_caveat_in_every_locale(page: Path):
+    rows = [line for line in page.read_text(encoding="utf-8").splitlines()
+            if "https://github.com/anthropics/courses" in line]
+    assert len(rows) == 1
+    assert rf.ARCHIVE_CAVEAT_RE.search(rows[0])
+    assert "維護中" not in rows[0] and "维护中" not in rows[0] and "Maintained" not in rows[0]
 
 
 def verified(**overrides):

@@ -359,7 +359,7 @@ The table below keeps the 17 original extension entries. They are optional, not 
   <thead><tr><th scope="col">Category</th><th scope="col">Resource</th><th scope="col">Link</th><th scope="col">Recommendation</th><th scope="col">Use / status</th></tr></thead>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">Official API intro</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Claude API notebooks for tool use, batch, and prompt cache.</td></tr>
-    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Anthropic's official courses, starting with API fundamentals.</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Archived official courses: read older examples, then check the current API Quickstart below before building.</td></tr>
     <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>⭐⭐⭐⭐</td><td>OpenAI API, structured output, and function-calling examples.</td></tr>
     <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">Docs</a></td><td>⭐⭐⭐</td><td>Quick path to a first Claude API call.</td></tr>
   </tbody>

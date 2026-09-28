@@ -359,7 +359,7 @@ print("\n✅ 练习 3 通过（Anthropic）— 已按实际 token 算出 Haiku�
   <thead><tr><th scope="col">分类</th><th scope="col">资源</th><th scope="col">入口</th><th scope="col">推荐度</th><th scope="col">用途／状态</th></tr></thead>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">官方 API 入门</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Claude API notebook，可查 tool use、batch 和 prompt cache。</td></tr>
-    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Anthropic 官方课程，从 API 基础逐步延伸。</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>已归档的官方课程；可看旧示例，动手时请对照下方现行 API Quickstart。</td></tr>
     <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>⭐⭐⭐⭐</td><td>OpenAI API、structured output 和 function calling 示例。</td></tr>
     <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">官方文档</a></td><td>⭐⭐⭐</td><td>快速完成第一次 Claude API 调用。</td></tr>
   </tbody>
