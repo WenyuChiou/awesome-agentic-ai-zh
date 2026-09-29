@@ -347,7 +347,7 @@ Choose only one to start:
 <a id="-recommended-tools-by-use-case"></a>
 <a id="-featured-projects-templates--sdks--tool-collections"></a>
 
-## 📚 21 complete learning resources and limits
+## 📚 22 complete learning resources and limits
 
 <small>Checked 2026-08-28 UTC. Stars are this project's teaching ratings, not GitHub stars.</small>
 
@@ -363,9 +363,10 @@ Choose only one to start:
 <tr><td><a href="https://support.google.com/chrome/answer/16283624?hl=en">Google Chrome Help: Gemini in Chrome</a></td><td>Check whether your account has access.</td><td>gradual rollout with platform and region limits.</td><td>⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Executor / framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">anthropics/claude-quickstarts</a></td><td>Read the official computer-use demo.</td><td>Inspect container, credentials, and network boundaries first.</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="6">Executor / framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">anthropics/claude-quickstarts</a></td><td>Read the official computer-use demo.</td><td>Inspect container, credentials, and network boundaries first.</td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/browser-use/browser-use">browser-use/browser-use</a></td><td>Build a full web-agent loop.</td><td>You still own production browser scaling and safety.</td><td>⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/microsoft/playwright-mcp">microsoft/playwright-mcp</a></td><td>Connect a browser to an MCP client.</td><td>Restrict origins, permissions, and data.</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/cortex-docs/cortex">cortex-docs/cortex</a></td><td>Turn API specifications into typed MCP tools.</td><td>gRPC exposes schema resources but no callable methods.</td><td>⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/trycua/cua">trycua/cua</a></td><td>Study a cross-platform computer-use stack.</td><td>Verify the actual backend from current README and releases.</td><td>⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">bytedance/UI-TARS-desktop</a></td><td>Study an open desktop agent.</td><td>Local control is high risk; use a test environment.</td><td>⭐⭐⭐⭐</td></tr>
 </tbody>
