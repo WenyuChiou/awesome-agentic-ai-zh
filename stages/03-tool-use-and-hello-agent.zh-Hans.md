@@ -502,7 +502,7 @@ python examples/stage-3/06-schema-design/test_anthropic.py
     <tr><td><a href="https://arxiv.org/abs/2210.03629">ReAct paper</a></td><td>先读 abstract 与方法图。</td><td>原始论文；arXiv</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">官方课程与示例</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>完成 Tool Use notebook。</td><td>官方课程；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">官方课程与示例</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>阅读旧版 Tool Use notebook；动手时对照下一行 Cookbook。</td><td>已归档的官方课程；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/anthropics/claude-cookbooks/tree/main/tool_use">Anthropic Tool Use Cookbook</a></td><td>从单工具读到并行工具。</td><td>维护中；MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/anthropics/claude-quickstarts">Anthropic Quickstarts</a></td><td>练习后看完整应用如何连接工具。</td><td>维护中；MIT</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/microsoft/ai-agents-for-beginners">Microsoft AI Agents for Beginners</a></td><td>需要另一条完整课程时选读一章。</td><td>维护中；MIT</td><td>⭐⭐⭐⭐</td></tr>

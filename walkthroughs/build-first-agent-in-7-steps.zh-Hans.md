@@ -99,7 +99,7 @@ response = client.messages.create(
     }]
 )
 
-print(response.content[0].text)
+print("".join(block.text for block in response.content if block.type == "text"))
 print(f"\n--- Tokens: input={response.usage.input_tokens}, "
       f"output={response.usage.output_tokens} ---")
 ```
@@ -108,7 +108,7 @@ print(f"\n--- Tokens: input={response.usage.input_tokens}, "
 
 **学到什么**：API call 的长相、`messages` 结构、`usage` 怎么算 token。
 
-这里的 `claude-sonnet-5` 是现行 Claude API ID；型号有生命周期，实现前仍要对照 [Anthropic Model IDs and versioning](https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions)。
+这份实作用仍可使用的 `claude-sonnet-5` 固定示例；目前更新的 Sonnet 是 `claude-sonnet-5-5`。旧程序不能只改型号：工具指定和参数有变化，升级前先看 [Sonnet 5.5 迁移指南](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide)。
 
 ---
 
@@ -150,7 +150,7 @@ if __name__ == "__main__":
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": PAPER_TEXT}]
     )
-    print(response.content[0].text)
+    print("".join(block.text for block in response.content if block.type == "text"))
 ```
 
 **学到什么**：system prompt 跟 user message 分工、明确格式要求、防 hallucinate 的“不知道就说没提到”。

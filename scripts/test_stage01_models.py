@@ -34,9 +34,13 @@ def test_stage01_uses_current_fable_and_mythos_models(
     assert "$10/$50" in cells[4]
     assert "$0.25" in cells[4]
     assert "claude-opus-5-5" in cells[1]
+    assert "claude-sonnet-5-5" in cells[1]
     assert "$4/$20" in cells[4]
+    assert "$2/$10" in cells[4]
     assert "$0.20" in cells[4]
     assert "https://platform.claude.com/docs/en/models/opus-5-5/overview" in cells[7]
+    assert "https://platform.claude.com/docs/en/models/sonnet-5-5/overview" in cells[7]
+    assert "https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide" in cells[7]
     assert "claude-fable-5-1" in text
     assert "claude-mythos-5-1" in text
     assert not re.search(r"claude-(?:fable|mythos)-5(?!-1)", text)
@@ -72,6 +76,8 @@ def test_stage01_fact_pack_separates_full_table_and_gpt_update_dates() -> None:
     fact_pack = (ROOT / "scripts" / "freshness-models.yml").read_text(encoding="utf-8")
     assert "verified_on: '2026-09-22'" in fact_pack
     assert "gpt: '2026-09-23'" in fact_pack
+    assert "anthropic: '2026-09-28'" in fact_pack
+    assert "claude_sonnet: 'https://platform.claude.com/docs/en/models/sonnet-5-5/overview'" in fact_pack
     assert "gpt: 'https://developers.openai.com/api/docs/pricing'" in fact_pack
 
 

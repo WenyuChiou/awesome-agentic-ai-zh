@@ -20,6 +20,17 @@ _CHECKER_SPEC.loader.exec_module(checker)
 NOW = datetime(2026, 8, 27, tzinfo=timezone.utc)
 
 
+def test_archived_anthropic_courses_has_caveat_in_every_locale():
+    for stem in ("01-llm-basics", "02-prompt-engineering", "03-tool-use-and-hello-agent"):
+        for suffix in ("", ".en", ".zh-Hans"):
+            page = Path(__file__).resolve().parents[1] / "stages" / f"{stem}{suffix}.md"
+            rows = [line for line in page.read_text(encoding="utf-8").splitlines()
+                    if "https://github.com/anthropics/courses" in line]
+            assert len(rows) == 1, page
+            assert rf.ARCHIVE_CAVEAT_RE.search(rows[0]), page
+            assert not any(term in rows[0] for term in ("維護中", "维护中", "Maintained")), page
+
+
 def verified(**overrides):
     row = {
         "requested": "owner/repo", "state": "verified", "canonical": "owner/repo",

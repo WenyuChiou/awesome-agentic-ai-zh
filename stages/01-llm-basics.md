@@ -56,7 +56,7 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 | 你的場景 | 先試哪條路 | 選擇理由 |
 |---|---|---|
 | 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`** | 本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
-| 要比較雲端品質、資料可送出 | **Claude Haiku 4.5／Sonnet 5** | Anthropic SDK 路徑簡單；按輸入與輸出 token 計費。 |
+| 要比較雲端品質、資料可送出 | **Claude Haiku 4.5／Sonnet 5.5** | Anthropic SDK 路徑簡單；按輸入與輸出 token 計費。 |
 | OpenAI Agent API | **GPT-6 Sol／GPT-6 Luna** | 難題先試 Sol；大量簡單任務先試 Luna。用自己的任務測，再查價格。 |
 | 文件很長，且要處理圖像或影音 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型號的 context 與多模態支援，再用自己的文件小測試。 |
 | 中文 API 任務，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
@@ -309,7 +309,7 @@ import anthropic
 # Anthropic 公開計價（每 1M token、USD）— 跑前對照 https://www.anthropic.com/pricing
 PRICING = {
     "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
-    "claude-sonnet-5":    {"input": 2.00, "output": 10.00},
+    "claude-sonnet-5-5":  {"input": 2.00, "output": 10.00},
     "claude-opus-5-5":    {"input": 4.00, "output": 20.00},
     "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
 }
@@ -359,7 +359,7 @@ print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku、sonnet、opus �
   <thead><tr><th scope="col">分類</th><th scope="col">資源</th><th scope="col">入口</th><th scope="col">推薦度</th><th scope="col">用途／狀態</th></tr></thead>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">官方 API 入門</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Claude API notebook；可查 tool use、batch 與 prompt cache。</td></tr>
-    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Anthropic 官方課程；從 API 基礎逐步延伸。</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>已封存的官方課程；可看舊範例，動手時請對照下方現行 API Quickstart。</td></tr>
     <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>⭐⭐⭐⭐</td><td>OpenAI API、structured output 與 function calling 範例。</td></tr>
     <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">官方文件</a></td><td>⭐⭐⭐</td><td>快速完成第一個 Claude API 呼叫。</td></tr>
   </tbody>
@@ -476,14 +476,14 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details markdown="1">
 <summary>🌐 完整 18 家族資料表（官方規格入口）</summary>
 
-<small>全表查核：2026-09-22 UTC；GPT 一列更新：2026-09-23 UTC。</small>
+<small>全表查核：2026-09-22 UTC；GPT 一列更新：2026-09-23 UTC；Claude 一列更新：2026-09-28 UTC。</small>
 
 沒有可靠公開數字就寫「官方未公布」。價格通常是 USD／每 1M token；供應商若用別的單位，就照官方單位記錄。
 **快取（cache）**像重用已讀過的便條：讀取舊內容與寫入新內容可能有不同價格。
 
 | 家族 | 目前推薦型號 | 狀態 | Context | 價格或授權 | 適合做什麼 | 限制 | 官方來源 |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5.5（`claude-opus-5-5`）；Sonnet 5；Haiku 4.5 | Fable／Opus／Sonnet／Haiku：正式可用；Mythos：限核准使用者 | 多數為 1M context／128K 最大輸出；Haiku 為 200K／64K | Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$1/$5（每百萬輸入／輸出 token）；Opus cache read US$0.20，Fable／Mythos US$0.25 | 長文、程式、長時間 Agent 工作流 | Mythos 5.1 只提供給通過審核的資安與生命科學使用者；雲端夥伴平台的區域價格另查 | [Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Claude API 價格](https://platform.claude.com/docs/en/about-claude/pricing) |
+| Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5.5（`claude-opus-5-5`）；Sonnet 5.5（`claude-sonnet-5-5`）；Haiku 4.5 | Fable／Opus／Sonnet／Haiku：正式可用；Mythos：限核准使用者 | 多數為 1M context／128K 最大輸出；Haiku 為 200K／64K | Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$1/$5（每百萬輸入／輸出 token）；Sonnet／Opus cache read US$0.20，Fable／Mythos US$0.25 | 長文、程式、長時間 Agent 工作流 | Mythos 5.1 限資安與生命科學核准使用者；Sonnet 5.5 的工具指定與 temperature 設定不同於舊版，升級既有程式前先看遷移指南；雲端夥伴平台價格另查 | [Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Sonnet 5.5](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) · [遷移指南](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) · [Claude API 價格](https://platform.claude.com/docs/en/about-claude/pricing) |
 | GPT | GPT-6 Astra（`gpt-6-astra`）；Sol（`gpt-6-sol`）；Luna（`gpt-6-luna`） | 三者均列於正式 API 模型頁；免費層不支援 | 三者皆 1.05M context／128K 最大輸出 | Standard API，每百萬 token，US$ 輸入／cache 讀／cache 寫／輸出：Astra $10/$1/$12.50/$50；Sol $2/$0.20/$2.50/$10；Luna $0.10/$0.01/$0.125/$0.50 | Astra 做最難的任務；Sol 做較難的程式與 Agent 工作；Luna 做聚焦、重複且量大的工作 | 超過 272K 輸入時，整次請求的輸入與 cache 價為 2 倍、輸出為 1.5 倍；Batch／Flex 為 Standard 的一半，Fast 為 2 倍。實際配額依帳號層級，工具呼叫可能另計費 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) · [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) · [OpenAI API 價格](https://developers.openai.com/api/docs/pricing) |
 | Jev（TypeSafe AI） | TypeSafe direct：Jev 1.13（`jev-1.13.0`），穩定 alias `jev-latest`；Cloudflare route：`typesafe/jev` | 正式模型；服務仍為 Early access | TypeSafe direct：64K／request，`state` 加最長 question 上限 32K；Cloudflare route：32K | TypeSafe direct：$0.042／百萬 input token，output 不計費；Cloudflare route：以 Cloudflare dashboard 顯示為準 | 固定選項分類、路由、rubric 評分與 guardrail 判斷 | 不產生自由文字；機率不等於正確，門檻、權限與 fallback 要由自己的程式與 Eval 決定 | [TypeSafe 模型規格](https://docs.typesafe.ai/models) · [Jev 入門](https://docs.typesafe.ai/introduction) · [Early access 公告](https://typesafe.ai/blog/introducing-system-one-models-and-jev) · [Cloudflare route](https://developers.cloudflare.com/ai/models/typesafe/jev/) |
 | Gemini | Gemini 3.8 Flash | 正式可用 | 1,048,576 context／65,536 最大輸出 | 2026-12-31 前介紹價 $0.75/$3.75（輸入／輸出） | 長時間軟體開發、多模態與多步 Agent 工作 | Gemini 3.1 Pro 為 Preview；介紹價有期限 | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API 定價](https://ai.google.dev/gemini-api/docs/pricing) |
@@ -494,7 +494,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 | Qwen | qwen3.8-max（API）；Qwen3.8 開放權重變體 | 正式可用 | 1M | API 依區域定價；例如北京為 CNY 12／36，每百萬輸入／輸出 tokens；開放權重變體依各自授權 | 中文任務、多模態、可自架工作流 | API 型號與開放權重變體不可混用；各自的可用性與授權要分開確認 | [Qwen 3.8 Max](https://help.aliyun.com/en/model-studio/qwen3-8-max) |
 | GLM | GLM-5.3 | 正式可用 | 1M（輸出 128K） | API：輸入／cache hit／輸出各 US$1.40／$0.26／$4.40，每百萬 tokens | 中文 agent、工具使用、推理 | 純文字；reasoning 一律啟用 | [GLM-5.3 文件](https://docs.z.ai/guides/llm/glm-5.3) · [GLM API 定價](https://docs.z.ai/guides/overview/pricing) |
 | Yi | Yi-34B／Yi-9B 及 200K 變體 | 凍結／歷史 | 200K（部分舊型號） | 官方 repo 授權；現行 API 價格官方未公布 | 重現既有 Yi 實驗、自架歷史基線 | 官方 repo 未證明目前仍有維護或現行 frontier 後繼型號；新專案先選現行型號 | [01.AI Yi repository](https://github.com/01-ai/Yi) |
-| Llama | Llama 4 Scout／Maverick；Llama 3.3 70B（較實用舊基線） | 開放權重 | Scout 10M | Llama Community License | 自架、微調、生態整合 | Scout 需要 H100 等級硬體；授權不是 Apache／MIT | [Meta AI 開發者文件](https://developer.meta.com/ai/docs/overview/) |
+| Llama | Llama 4 Scout／Maverick；Llama 3.3 70B（較實用舊基線） | 開放權重 | Scout 10M | Llama Community License | 自架、微調、生態整合 | Scout 需要 H100 等級硬體；授權不是 Apache／MIT | [Meta Llama 文件](https://dev.meta.ai/llama) |
 | Muse | Muse Spark 1.3（Standard：`muse-spark-1.3`；Contributor：`muse-spark-1.3-contributor`）；Muse Glimmer 30B | Spark：Meta Model API 公開預覽；Glimmer：開放權重 | Spark 約 1M；Glimmer 131K | Spark Standard：每百萬 token 輸入／cache hit／輸出 US$1.25/$0.15/$4.25；Contributor：US$0.10/$0.002/$0.20，但允許 Meta 使用輸入與輸出訓練模型。Glimmer：Apache 2.0 | Spark 做雲端 Agent 與程式任務；Glimmer 做本機 Agent | 個人 Agent 產品 Muse、API 模型 Spark、開放權重 Glimmer 是不同東西；Spark 1.3 的音訊理解尚未完整支援 | [Meta Model API 模型](https://dev.meta.ai/docs/models) · [價格與資料方案](https://dev.meta.ai/docs/pricing-rate-limits) · [Muse Glimmer](https://huggingface.co/meta-models/Muse-Glimmer-30B) |
 | Grok | Grok 4.7（`grok-4.7`） | 正式可用 | 500K | xAI API：每百萬 token 輸入／cache hit／輸出 US$2/$0.50/$6；提示達 200K 時，整次請求改用 US$4/$1/$12 | 程式、工具呼叫與多步 Agent 任務 | 美國區域端點另加 10%；伺服器工具呼叫可能另計費 | [Grok 4.7 規格](https://docs.x.ai/developers/models/grok-4.7) · [xAI 價格](https://docs.x.ai/developers/pricing) |
 | MiMo | MiMo V2.6 Pro（`mimo-v2.6-pro`） | 正式可用 API | 1M context／128K 最大輸出 | Xiaomi API：每百萬 token 輸入／cache hit／輸出 US$0.435/$0.0036/$0.87；官方另列 CNY 3/0.025/6 | 長任務、工具呼叫與多模態輸入的 Agent | 要確認帳號可用地區、配額與實際帳單；不要把供應商自述 benchmark 當跨模型排名 | [MiMo V2.6 Pro 規格與價格](https://mimo.mi.com/models/en-US/mimo-v2.6-pro) · [MiMo API 模型列表](https://mimo.mi.com/docs/en-US/api/model/list-models) |

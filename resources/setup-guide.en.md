@@ -234,8 +234,8 @@ load_dotenv()
 client = Anthropic()  # Read the key from ANTHROPIC_API_KEY
 
 message = client.messages.create(
-    model="claude-sonnet-5",
-    max_tokens=120,
+    model="claude-sonnet-5-5",
+    max_tokens=1024,
     messages=[{"role": "user", "content": "Introduce yourself in one sentence."}],
 )
 

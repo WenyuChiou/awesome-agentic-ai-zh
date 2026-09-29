@@ -258,7 +258,7 @@ Start with one of the three starting points above. The full list is a toolbox, n
   </thead>
   <tbody>
     <tr><th scope="rowgroup" rowspan="5">Official courses</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>Follow the first notebook chapter.</td><td>Maintained; upstream does not provide SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>Read Real World Prompting and Prompt Evaluations.</td><td>Maintained; upstream does not provide SPDX</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>Read the older Real World Prompting and Prompt Evaluations examples; use the current official docs in this table when building.</td><td>Archived; upstream does not provide SPDX</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>Read “When to change a prompt” first.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>Read about message roles, examples, and evals.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>Read about clear instructions and fixed structures.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>

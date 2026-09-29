@@ -14,12 +14,15 @@ stage01_fact_pack:
   verified_on: '2026-09-22'
   provider_updates:
     gpt: '2026-09-23'
+    anthropic: '2026-09-28'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
     google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
     claude: 'https://platform.claude.com/docs/en/models/fable-5-1/overview'
     claude_opus: 'https://platform.claude.com/docs/en/models/opus-5-5/overview'
+    claude_sonnet: 'https://platform.claude.com/docs/en/models/sonnet-5-5/overview'
+    claude_sonnet_migration: 'https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
     gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6-sol'
     gpt_luna: 'https://developers.openai.com/api/docs/models/gpt-6-luna'
@@ -38,7 +41,7 @@ stage01_fact_pack:
     qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
     glm: 'https://docs.z.ai/guides/llm/glm-5.3'
     yi: 'https://github.com/01-ai/Yi'
-    llama: 'https://developer.meta.com/ai/docs/overview/'
+    llama: 'https://dev.meta.ai/llama'
     muse: 'https://huggingface.co/meta-models/Muse-Glimmer-30B'
     muse_spark: 'https://dev.meta.ai/docs/models'
     grok: 'https://docs.x.ai/developers/models/grok-4.7'
@@ -191,6 +194,7 @@ agent_memory_fact_pack:
     langmem: 'https://github.com/langchain-ai/langmem'
     graphiti: 'https://github.com/getzep/graphiti'
     zep: 'https://github.com/getzep/zep'
+    deja_vu: 'https://github.com/vshulcz/deja-vu'
   research_sources:
     coala: 'https://arxiv.org/abs/2309.02427'
     generative_agents: 'https://arxiv.org/abs/2304.03442'
@@ -500,13 +504,13 @@ verified_pages:
     max_age_days: 90
 
 current_frontier_models:
-  # GPT-6 Sol and Luna checked 2026-09-23; other providers retain prior checks.
+  # GPT-6 Sol and Luna checked 2026-09-23; Claude Sonnet 5.5 checked 2026-09-28.
   # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
     - "Fable 5.1"
     - "Mythos 5.1"   # same model; limited to vetted cyber and life-science users
     - "Opus 5.5"
-    - "Sonnet 5"
+    - "Sonnet 5.5"
     - "Haiku 4.5"
   openai:
     - "GPT-6 Astra"
@@ -582,7 +586,7 @@ stale_patterns:
   - pattern: 'https://ai\.meta\.com/llama/get-started/'
     include_files: ['stages/01-llm-basics.md']
     qualifier_terms: []
-    note: 'Meta moved the current Llama developer entry point to developer.meta.com/ai/docs/overview/'
+    note: 'The current Meta Llama documentation entry point is https://dev.meta.ai/llama'
 
   - pattern: '(?:54 exercises|54 個練習|54 个练习|gemma4:e4b.{0,60}7\.5 GB|gemma4:e2b.{0,60}4\.0 GB)'
     include_files: ['examples/README.md']

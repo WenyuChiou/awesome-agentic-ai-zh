@@ -89,6 +89,16 @@ def named_python_block(text: str, marker: str) -> str:
     return next(block for block in python_blocks(text) if marker in block)
 
 
+@pytest.mark.parametrize("page", PAGES.values())
+def test_beginner_api_examples_read_text_blocks_not_the_first_block(page: Path) -> None:
+    text = read(page)
+    for marker in ("# step1_hello_llm.py", "# step2_paper_summary.py"):
+        block = named_python_block(text, marker)
+        ast.parse(block)
+        assert 'block.type == "text"' in block
+        assert "response.content[0].text" not in block
+
+
 def current_agent_namespace(text: str) -> dict:
     """Load only the pure wrapper from the teaching block, with fake boundaries."""
     stage3 = ast.parse(named_python_block(text, "def parse_arxiv_id"))

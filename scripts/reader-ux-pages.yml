@@ -1358,7 +1358,7 @@ pages:
     visible_section_minimums:
       required-reading: {min_links: 5}
       projects: {min_links: 11, min_ratings: 11}
-    resource_group_rowspans: [4, 3, 4]
+    resource_group_rowspans: [5, 3, 4]
 
   - id: stage-07
     canonical: stages/07-multi-agent-production.md
@@ -3379,7 +3379,7 @@ pages:
       ordered_external_urls: true
       resource_url_ratings: true
       literals:
-        - "claude-sonnet-5"
+        - "claude-sonnet-5-5"
         - "uv python install 3.12"
         - ".claude/skills/hello-skill/SKILL.md"
         - "gemma4:e4b"
