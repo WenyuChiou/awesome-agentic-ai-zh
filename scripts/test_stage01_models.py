@@ -210,6 +210,7 @@ def test_stage01_argon_is_restricted_and_not_a_guessed_api_default(page: Path) -
             "公开 API model ID 未公布",
         ),
     }[page.name]
+    assert any(label in cells[1] for label in ("發布參考", "发布参考", "release reference"))
     assert restricted in cells[2]
     assert output_limit in cells[3] and no_context in cells[3]
     assert forthcoming in cells[6] and no_id in cells[6]
@@ -219,3 +220,38 @@ def test_stage01_argon_is_restricted_and_not_a_guessed_api_default(page: Path) -
     visible_selector = text.split("<details", maxsplit=1)[0]
     assert "Gemini 3.8 Flash" in visible_selector
     assert "Gemini 4 Argon" not in visible_selector
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES if item[0].suffix == ".md" and ".en." not in item[0].name])
+def test_refreshed_model_row_sentences_fit_written_chinese_style(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    for family in ("GPT", "Gemini"):
+        row = next(line for line in text.splitlines() if line.startswith(f"| {family} |"))
+        # Exclude model-name lists and official-link lists. For descriptive,
+        # specification, and pricing cells count rendered text, not link URLs.
+        for cell in row.strip("|").split("|")[2:7]:
+            visible = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", cell)
+            visible = visible.replace("**", "").replace("`", "")
+            for sentence in re.split(r"(?<=[。！？])", visible):
+                if sentence.strip():
+                    assert len(sentence.strip()) <= 60, sentence
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES if ".en." not in item[0].name])
+def test_refreshed_model_review_date_sentences_fit_written_style(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    summary = next(line for line in text.splitlines() if line.startswith("<small>") and "2026-10-02 UTC" in line)
+    visible = re.sub(r"<[^>]+>", "", summary)
+    for sentence in re.split(r"(?<=[。！？])", visible):
+        if sentence.strip():
+            assert len(sentence.strip()) <= 60, sentence
+
+
+def test_current_model_refresh_changelog_sentences_fit_written_style() -> None:
+    text = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    current = text.split("## 2026-10-02\n", 1)[1].split("\n## ", 1)[0]
+    entry = next(line for line in current.splitlines() if "content / Stage 1 / model update" in line)
+    prose = entry.split(" · ", 1)[1].replace("`", "")
+    for sentence in re.split(r"(?<=[。！？])", prose):
+        if sentence.strip():
+            assert len(sentence.strip()) <= 60, sentence
