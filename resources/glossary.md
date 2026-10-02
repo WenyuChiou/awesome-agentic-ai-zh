@@ -12,9 +12,9 @@
 - [**Agent**](#agent代理人) — 能為了人的目標，自己判斷下一步並採取行動；只在規則與權限內自動做事的 AI 系統。
 - [**Tool Use（工具使用）**](#tool-use--function-calling) — 模型提出工具請求，程式檢查後才真正執行。
 - [**Agent Loop**](#agent-loop) — Agent 重複「決定、行動、觀察」直到完成或停止的執行迴圈。
-- [**RAG**](#ragretrieval-augmented-generation) — 先找資料，再把證據交給模型回答。
+- [**RAG**（Retrieval-Augmented Generation）](#ragretrieval-augmented-generation) — 先找資料，再把證據交給模型回答。
 - [**Memory（記憶）**](#memory記憶-兩種正交分類軸) — 把之後還要用的資訊保存起來，再於需要時讀回。
-- [**MCP**](#mcpmodel-context-protocol) — 讓 AI 應用用共同方式連接工具與資料的開放協定。
+- [**MCP**（Model Context Protocol）](#mcpmodel-context-protocol) — 讓 AI 應用用共同方式連接工具與資料的開放協定。
 - [**Eval（評估）**](#eval評估) — 用固定題目和成功條件檢查改動有沒有真的變好。
 - [**Agent Harness（執行工作台）**](#agent-harness執行工作台) — 包住模型並管理工具、權限、狀態、記錄與停止規則的系統。
 - [**Workflow Graph（工作流程圖）**](#workflow-graph工作流程圖) — 用節點和連線把工作步驟、分支與狀態畫清楚。
@@ -28,8 +28,8 @@
 <tr><th>身分</th><th>白話工作</th><th>例子與邊界</th></tr>
 </thead>
 <tbody>
-<tr><td><strong>Model Provider／API</strong></td><td>模型公司的服務入口。</td><td><a href="https://platform.claude.com/docs/en/api/overview">Anthropic API</a>；它回傳模型結果，不是會改檔的 Agent。</td></tr>
-<tr><td><strong>LLM Router</strong></td><td>用一個入口轉接模型或供應商。</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a>；它不是模型，也不是 coding agent。</td></tr>
+<tr><td><strong>Model Provider／API（Application Programming Interface）</strong></td><td>模型公司的服務入口。</td><td><a href="https://platform.claude.com/docs/en/api/overview">Anthropic API</a>；它回傳模型結果，不是會改檔的 Agent。</td></tr>
+<tr><td><strong>LLM（Large Language Model） Router</strong></td><td>LLM 是讀寫語言的模型；Router 用一個入口轉接供應商。</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a>；它不是模型，也不是 coding agent。</td></tr>
 <tr><td><strong>Model Runtime</strong></td><td>把模型在本機或服務上跑起來。</td><td><a href="https://docs.ollama.com/api/introduction">Ollama</a>；它提供模型 API，本身不會自動改專案。</td></tr>
 <tr><td><strong>Coding Agent／Harness</strong></td><td>讀檔、改檔、跑命令並回報結果。</td><td><a href="https://opencode.ai/docs">OpenCode</a>、<a href="https://github.com/earendil-works/pi">Pi</a>；裡面的模型可以更換。</td></tr>
 <tr><td><strong>Agent Framework</strong></td><td>讓開發者組合 Agent、工具、狀態與流程。</td><td><a href="https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/">Microsoft Agent Framework</a>；它是工具箱，不等於一個模型。</td></tr>
@@ -178,15 +178,15 @@
 
 ### RLHF / RL
 
-**RLHF／RL** 用人類或規則的回饋來訓練模型。回饋設計錯誤時，模型也可能學會鑽評分漏洞，所以仍要做獨立 Eval。
+**RLHF**（Reinforcement Learning from Human Feedback）／RL（Reinforcement Learning） 用人類或規則的回饋來訓練模型。回饋設計錯誤時，模型也可能學會鑽評分漏洞，所以仍要做獨立 Eval。
 
 ### GRPO
 
-**GRPO** 讓同一題的多個答案互相比較，再依相對表現更新模型。它是 Post-training 方法之一，不是每個專案都必須使用。
+**GRPO**（Group Relative Policy Optimization） 讓同一題的多個答案互相比較，再依相對表現更新模型。它是 Post-training 方法之一，不是每個專案都必須使用。
 
 ### PEFT / LoRA
 
-**PEFT** 是只訓練較少參數的一組方法；**LoRA** 會凍結原本權重，再訓練新增的低秩矩陣。它們能減少需要更新的參數，但仍需要資料與 Eval。
+**PEFT**（Parameter-Efficient Fine-Tuning） 是只訓練較少參數的一組方法；**LoRA**（Low-Rank Adaptation） 會凍結原本權重，再訓練新增的低秩矩陣。它們能減少需要更新的參數，但仍需要資料與 Eval。
 
 ### Distillation（蒸餾）
 

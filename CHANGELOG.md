@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-02
 
+- **content / first-use terminology** · 三語在九組已查核頁面補齊 52 組術語／頁面組合的首次全稱與簡短意思，包含微調方法、檢索指標及圖中先出現的 CLI／MCP／訓練方法。原標題 anchor、程式碼、來源 URL、圖檔與資源事實保留。新增有限範圍的讀者可見回歸案例；Stage 1 與術語表六個字元上限只提高到實際新增說明的長度，不宣稱全站所有縮寫已查完。
+
 - **release preparation / v2026.10.02** · 三語發布摘要整理已合併的模型、個人 Agent、託管協作與 Memory 更新。也記錄官方來源豁免界線、封存課程提示、Sentry 來源搬移、目前無法使用的 W&B 推薦暫移除與文件建置依賴與寬表格 PDF 修正。未合併的專案提案不列入。本筆是發布準備；正式版本仍須通過完整健康掃描、三語 PDF 查核與 release Environment 批准。
 
 - **release tooling / PDF tables** · 三語 PDF 的八欄以上表格使用 A4 橫向頁，保留原本 8.5pt 表格字級與內容。發布檢查新增每頁文字邊界檢查，阻擋超出紙張的裁切；字格重疊、圖片與閱讀效果仍須看實際渲染。

@@ -12,6 +12,13 @@
 
 ## 🧭 先看整條路
 
+- **SFT**（Supervised Fine-Tuning）：用好範例答案教模型模仿。
+- **DPO**（Direct Preference Optimization）：從較好、較差的答案配對學偏好。
+- **RLHF**（Reinforcement Learning from Human Feedback）：把人類回饋用於強化學習。
+- **RL**（Reinforcement Learning）：依獎勵學習；獎勵也可以來自規則。
+
+**RAG**（Retrieval-Augmented Generation）：先找相關資料，再依資料回答。
+
 ![資料經過 Pre-training 與 Post-training 變成可供 Inference 使用的模型；Prompt、RAG、Memory、Tools 與 Harness 在 Agent 系統中包住模型，通常不改模型權重](./diagrams/model-lifecycle-to-agent.png)
 
 1. **Pre-training（預訓練）**：用大量資料建立 Base Model。
@@ -26,12 +33,12 @@
 <tbody>
 <tr><th scope="rowgroup" rowspan="4">教模型怎麼做</th><td><strong>SFT（Supervised Fine-Tuning）</strong></td><td>把好問題和好答案給模型看，讓它模仿。</td><td>會</td></tr>
 <tr><td><strong>DPO（Direct Preference Optimization）</strong></td><td>給模型看兩個答案，告訴它哪一個比較符合偏好。</td><td>會</td></tr>
-<tr><td><strong>RLHF／RL</strong></td><td>用人類或規則的回饋，讓模型學著拿到更好的結果。</td><td>會</td></tr>
-<tr><td><strong>GRPO</strong></td><td>讓同一題的多個答案互相比較，再用相對表現學習。</td><td>會</td></tr>
+<tr><td><strong>RLHF（Reinforcement Learning from Human Feedback）／RL（Reinforcement Learning）</strong></td><td>用人類或規則的回饋，讓模型學著拿到更好的結果。</td><td>會</td></tr>
+<tr><td><strong>GRPO（Group Relative Policy Optimization）</strong></td><td>讓同一題的多個答案互相比較，再用相對表現學習。</td><td>會</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">少改一點就適應</th><td><strong>PEFT</strong></td><td>只訓練一小部分參數，減少需要更新的內容。</td><td>會改少量新增或選定參數</td></tr>
-<tr><td><strong>LoRA</strong></td><td>凍結原本權重，另外學一組較小的低秩矩陣。</td><td>原權重不改；會訓練新增參數</td></tr>
+<tr><th scope="rowgroup" rowspan="2">少改一點就適應</th><td><strong>PEFT（Parameter-Efficient Fine-Tuning）</strong></td><td>只訓練一小部分參數，減少需要更新的內容。</td><td>會改少量新增或選定參數</td></tr>
+<tr><td><strong>LoRA（Low-Rank Adaptation）</strong></td><td>凍結原本權重，另外學一組較小的低秩矩陣。</td><td>原權重不改；會訓練新增參數</td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">讓模型更小或更省</th><td><strong>Distillation（蒸餾）</strong></td><td>讓較小的 Student Model 學習較大的 Teacher Model。</td><td>會訓練 Student Model</td></tr>
@@ -59,7 +66,7 @@
 <thead><tr><th scope="col">分類</th><th scope="col">資源</th><th scope="col">推薦度</th><th scope="col">你會學到什麼</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">先分清主線</th><td><a href="https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/">OpenAI：模型如何開發</a></td><td>⭐⭐⭐⭐⭐</td><td>資料、訓練與模型之間的關係。</td></tr>
-<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google：LLM 調整</a></td><td>⭐⭐⭐⭐⭐</td><td>Prompt Engineering、Fine-tuning 與 Distillation 的邊界。</td></tr>
+<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google：LLM（Large Language Model，能讀寫語言的模型） 調整</a></td><td>⭐⭐⭐⭐⭐</td><td>Prompt Engineering、Fine-tuning 與 Distillation 的邊界。</td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">學 Post-training</th><td><a href="https://openai.com/index/introducing-gpt-oss/">OpenAI：gpt-oss</a></td><td>⭐⭐⭐⭐</td><td>一個模型家族如何描述 Pre-training、SFT 與 RL。</td></tr>
@@ -73,6 +80,8 @@
 </table>
 
 ## 🛠 一個不花 GPU 的判斷練習
+
+**GPU**（Graphics Processing Unit）：能平行處理許多運算的處理器。
 
 把下面四個問題各選一條先試的路，再用一句話說理由：
 

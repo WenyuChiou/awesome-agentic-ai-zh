@@ -8,7 +8,7 @@ This stage checks four tools that you will use later. If you already know them, 
 
 Check these four things. You do not need to memorize commands. You do need to find information and finish each task yourself:
 
-- [ ] Use Python to get public data from an API (an entry that lets a program get data), then find one value in the JSON.
+- [ ] Use Python to get public data from an API (Application Programming Interface, an interface through which programs request a service) (an entry that lets a program get data), then find one value in the JSON (JavaScript Object Notation, a text format commonly used to exchange data).
 - [ ] Use Git to copy a project (`clone`), create a work line (`branch`), save a version (`commit`), and send it online (`push`). When two changes collide, know what a merge conflict is and what to keep.
 - [ ] Use the command line (text commands typed in a terminal) to change folders, create files, and run a Python script.
 - [ ] Read YAML and JSON. Both are text formats for saving data.

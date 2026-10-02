@@ -1,5 +1,7 @@
 # Stage 1 — LLM 基础（LLM Basics）
 
+**LLM**（Large Language Model）：能读写语言的模型。
+
 > [繁體中文](./01-llm-basics.md) | [English](./01-llm-basics.en.md) | **简体中文**
 
 > 本章目的：先看懂模型如何从数据走到 Agent，再通过一条可重复的本地到云端路径调用 LLM。你会理解 **Token（词元）**、**Context Window（上下文窗口）** 和 **Temperature（温度）**，也会用成本与延迟解释模型选择。
@@ -10,7 +12,7 @@
 
 完成本阶段后，你可以：
 
-- 用 Ollama 的本地模型完成第一次 API 调用，再与 Anthropic 做对照。
+- 用 Ollama 的本地模型完成第一次 API（Application Programming Interface，让程序调用服务的接口） 调用，再与 Anthropic 做对照。
 - 说出模型从 Pre-training、Post-training 到 Inference 的顺序。
 - 用简单例子解释 token、context window 和 temperature。
 - 从响应的 `usage` 字段读出输入和输出 token。
@@ -37,15 +39,25 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 `数据 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系统`
 
 - **Pre-training（预训练）**：模型先从大量文字、图像或代码中学习模式。这一步会改变模型权重。
-- **Post-training（后训练）**：再用示范、偏好或反馈，教模型遵循指令并更安全地完成任务。常见方法有 **SFT**、**DPO** 和 **RLHF/RL**；这一步也会改变权重。
+- **Post-training（后训练）**：再用示范、偏好或反馈，教模型遵循指令并更安全地完成任务。这一步也会改变权重。常见方法如下。
+  - **SFT**（Supervised Fine-Tuning）：用好的输入和答案教模型模仿。
+  - **DPO**（Direct Preference Optimization）：用较好、较差的答案配对教模型学习偏好。
+  - **RLHF**（Reinforcement Learning from Human Feedback）：把人类反馈用于强化学习。
+  - **RL**（Reinforcement Learning）：让模型依据奖励学习；奖励也可以来自规则。
 - **Fine-tuning（微调）**：用较小、较专门的数据继续改变模型权重。Post-training 是广义的后续训练阶段；Fine-tuning 是其中一种常见做法。
 - **Inference（推理）**：训练完成后，模型收到一次输入并产生一次结果。这是在使用模型，不是在重新训练它。
+
+**RAG**（Retrieval-Augmented Generation）：先找相关资料，再依资料回答。
 
 ![数据经过 Pre-training 和 Post-training，变成可用于 Inference 的模型；Prompt、RAG、Memory、Tools 和 Harness 在 Agent 系统中包住模型，通常不改变模型权重](../resources/diagrams/model-lifecycle-to-agent.zh-Hans.png)
 
 **Agent** 不是训练流程中的下一个模型检查点。它是把模型、Prompt、RAG、Memory、Tools 和 Harness 连接起来的系统。这些部分通常在模型外部工作，不会改变模型权重。
 
-想了解 SFT、DPO、RLHF/RL、GRPO、LoRA/PEFT、Distillation 和 Quantization 各自做什么，请打开[模型训练与调整选修指南](../resources/model-training-guide.zh-Hans.md)。初学者不需要在本阶段自己训练模型。
+- **GRPO**（Group Relative Policy Optimization）：比较同一问题的多个答案，再根据相对表现学习。
+- **LoRA**（Low-Rank Adaptation）：冻结原来的权重，再训练新增的低秩矩阵。
+- **PEFT**（Parameter-Efficient Fine-Tuning）：只训练较少参数的一组方法。
+
+想了解这些方法与 Distillation、Quantization 的区别，请打开[模型训练与调整选修指南](../resources/model-training-guide.zh-Hans.md)。初学者不需要在本阶段自己训练模型。
 
 ## 场景式模型选择器
 
@@ -56,7 +68,7 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 | 你的场景 | 先试哪条路 | 选择理由 |
 |---|---|---|
 | 第一次学 API，想零费用反复试 | **Ollama + `gemma4:e4b`** | 本地运行，单次 API 成本为 $0，可以反复修改示例。 |
-| 想比较云端质量，数据可以发送出去 | **Claude Haiku 4.5／Sonnet 5.5** | Anthropic SDK 路径简单，按输入和输出 token 计费。 |
+| 想比较云端质量，数据可以发送出去 | **Claude Haiku 4.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，开发工具和库的工具包） 路径简单，按输入和输出 token 计费。 |
 | OpenAI Agent API | **GPT-6.1 Sol／GPT-6 Luna** | 难题先试 Sol；大量简单任务先试 Luna。用自己的任务测试，再查价格。 |
 | 文档很长，还要处理图像或视频 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型号的 context 和多模态支持，再用自己的文档小测。 |
 | 中文 API 任务，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 比较官方价格、输出限制和可用性，不要只看模型名称。 |

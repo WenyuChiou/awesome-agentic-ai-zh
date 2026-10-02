@@ -1,5 +1,7 @@
 # A1 — Choose a CLI agent and safely complete your first small task
 
+**CLI** (Command-Line Interface): an interface operated by typed terminal commands.
+
 > [繁體中文](./A1-cli-intro.md) | [简体中文](./A1-cli-intro.zh-Hans.md) | **English**
 
 > [← Back to the main path README](../../README.en.md) · **Track A: CLI Power User** — Stop 1 · [Next: A2](A2-cli-workflow.en.md)
@@ -20,7 +22,7 @@ When it is done, you should see a repo summary, a test command, a plan waiting f
 
 ## 📌 Learning Goals
 
-- Distinguish an **LLM**, **Provider API**, **Router**, **Coding agent**, and **Local runtime**.
+- Distinguish an **LLM** (Large Language Model, a model that reads and writes language), **Provider API (Application Programming Interface, an interface through which programs request a service)**, **Router**, **Coding agent**, and **Local runtime**.
 - Choose an entry point based on the account, provider, or local environment you already have; do not make an overall ranking.
 - Complete one “read first → inspect the plan → confirm → small change → `git diff` → undo” cycle in a demo repo.
 

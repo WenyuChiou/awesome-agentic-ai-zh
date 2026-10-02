@@ -4,6 +4,10 @@
 
 <div align="center" markdown="1">
 
+**CLI** (Command-Line Interface): control tools through terminal text commands.
+
+**MCP** (Model Context Protocol): a shared protocol for AI apps to use tools and data.
+
 ![Stages 0–2 split into CLI and Agent paths, sharing Stages 5 and 8; choose role paths as needed](resources/diagrams/banner.en.svg)
 
 # awesome-agentic-ai-zh
@@ -27,7 +31,7 @@
 
 An **AI Agent** is an AI system that can decide what to do next and take action toward a person's goal. It reads the situation, chooses the next step, and uses tools when needed; based on the result, it continues, corrects course, stops, or hands control back. It can do work automatically, but only within a person's rules and permissions. A one-shot chatbot or fixed script is not necessarily an Agent. The map covers three things in order:
 
-1. **Get the basics**: what an LLM, a prompt, an API, and a token are.
+1. **Get the basics**: what an LLM (Large Language Model, reads and writes language), a prompt, an API (Application Programming Interface, programs request a service), and a token are.
 2. **Then build something**: let a model call tools, run an agent loop, read documents, remember things.
 3. **Then make it reliable**: add permissions, Eval, human approval, observability, and failure recovery.
 
@@ -71,9 +75,9 @@ The map has **8 topic stages + the Stage 0 readiness check + the Stage 7.5 advan
 
 | Stage | What it settles | What you can do after |
 |---|---|---|
-| **0** · [Foundations](stages/00-foundations.en.md) | Machine and tools ready? | Call a public API in Python, read JSON, save with Git |
+| **0** · [Foundations](stages/00-foundations.en.md) | Machine and tools ready? | Call a public API in Python, read JSON (JavaScript Object Notation, a text data-exchange format), save with Git |
 | **1** · [LLM fundamentals](stages/01-llm-basics.en.md) | What are LLM, token, context; how do models differ? | Call an LLM and pick a cloud or local model |
-| **2** · [Prompt design](stages/02-prompt-engineering.en.md) | How to state goal, data, rules, output clearly? | Compare Zero-Shot, One-Shot, Few-Shot, and the boundary of CoT |
+| **2** · [Prompt design](stages/02-prompt-engineering.en.md) | How to state goal, data, rules, output clearly? | Compare Zero-Shot, One-Shot, Few-Shot, and the boundary of CoT (Chain-of-Thought, reason through intermediate steps) |
 
 ### Track A: get work done with a CLI agent
 
@@ -94,7 +98,7 @@ The intended order is `A1 → A2 → Stage 5 → A3 → Stage 8`.
 | **3** · [Tool Use & Your First Agent Loop](stages/03-tool-use-and-hello-agent.en.md) | How does a model call tools safely and continue? | Build an agent loop with a turn limit and validated arguments |
 | **4** · [Workflow Graphs & Agent Frameworks](stages/04-agent-frameworks.en.md) | How to draw several steps as one map? | Choose between workflow, agent, graph, framework |
 | **5** · [Claude Code ecosystem](stages/05-claude-code-ecosystem.en.md) | How do MCP, Skills, Plugins, Hooks, Subagents work together? | Combine tools, rules, reusable capabilities |
-| **6** · [Memory · RAG](stages/06-memory-rag.en.md) | How does an agent search, save, and get back what matters? | Build a minimal RAG, long-term memory, and contextual retrieval flow |
+| **6** · [Memory · RAG (Retrieval-Augmented Generation, retrieve information before answering)](stages/06-memory-rag.en.md) | How does an agent search, save, and get back what matters? | Build a minimal RAG, long-term memory, and contextual retrieval flow |
 | **7** · [Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](stages/07-multi-agent-production.en.md) | How does an agent stay stable in production? | Add Eval, observability, budget, Human-in-the-loop approval, recovery |
 | **7.5** · [Advanced agentic concept map](stages/07.5-advanced-agentic-concepts.en.md) | Which advanced patterns are worth knowing? | Pick what you need from 12 concepts such as PAR loop and agent-as-judge |
 | **8** · [Agent interfaces](stages/08-agent-interfaces.en.md) | How does an agent work beyond the API? | Choose Computer Use, Browser Use, or a code sandbox |

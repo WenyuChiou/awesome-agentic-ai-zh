@@ -32,6 +32,8 @@
 
 ### **Tool Schema（工具綱要）**
 
+**JSON**（JavaScript Object Notation） 是程式交換資料的文字格式。
+
 Schema 是工具的說明卡：名字、用途、可填欄位和資料型別。像點餐單告訴客人能點什麼。本章會用 JSON Schema 描述工具。Schema 能約束外形，但程式仍要驗證數值、權限與業務規則。
 
 ### **Tool Call（工具請求）**

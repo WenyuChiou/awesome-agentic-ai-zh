@@ -1,5 +1,7 @@
 # A1 — 選一個 CLI agent，安全地完成第一個小任務
 
+**CLI**（Command-Line Interface）：用終端機文字指令操作的介面。
+
 > **繁體中文** | [简体中文](./A1-cli-intro.zh-Hans.md) | [English](./A1-cli-intro.en.md)
 
 > [← 回主路線 README](../../README.md) · **Track A: CLI Power User** 第 1 站 · [下一站：A2](A2-cli-workflow.md)
@@ -20,7 +22,7 @@
 
 ## 📌 學習目標
 
-- 分清 **LLM**、**Provider API**、**Router**、**Coding agent** 與 **Local runtime**。
+- 分清 **LLM**（Large Language Model，能讀寫語言的模型）、**Provider API（Application Programming Interface，讓程式呼叫服務的介面）**、**Router**、**Coding agent** 與 **Local runtime**。
 - 依你已有的帳號、provider 或本機環境選入口，不做總排名。
 - 在 demo repo 中完成一次「先讀取 → 看計畫 → 確認 → 小改動 → `git diff` → 復原」的循環。
 
