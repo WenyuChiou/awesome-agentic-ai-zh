@@ -77,3 +77,10 @@ changes:
     en: Wide tables in all three PDFs use A4 landscape pages with their existing font size and content. An every-page text-bounds check blocks off-paper text. Real tables, covers and ordinary pages were sampled; no all-pages manual visual review is claimed.
     links:
       - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/301
+  - id: first-use-terminology
+    category: learning-content
+    zh-TW: 三語在 9 組已查核頁面補齊 52 組術語／頁面的首次全稱與簡短意思，包含微調方法、檢索指標與先出現在圖上的術語。保留原標題入口、程式碼、來源連結與圖檔；這是有限範圍修正，不是全站所有縮寫的完整盤點。
+    zh-Hans: 三语在 9 组已查核页面补齐 52 组术语／页面的首次全称与简短意思，包含微调方法、检索指标与先出现在图上的术语。保留原标题入口、代码、来源链接与图文件；这是有限范围修正，不是全站所有缩写的完整盘点。
+    en: Three locales define full names and brief meanings for 52 audited term/page pairs in nine chapter families, including fine-tuning, retrieval metrics and earlier image labels. Existing heading anchors, code, source links and images remain. This is bounded coverage, not an exhaustive site-wide acronym audit.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/303
