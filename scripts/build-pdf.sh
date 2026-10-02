@@ -79,6 +79,9 @@ if ! pandoc "$SOURCE_MD" \
   exit 1
 fi
 
+"$PYTHON_BIN" scripts/release_manifest.py prepare-html \
+  --input "$SOURCE_HTML" --output "$SOURCE_HTML" >/dev/null
+
 if ! weasyprint "$SOURCE_HTML" "$OUT_PDF" 2>"$WEASYPRINT_LOG"; then
   echo "ERROR: WeasyPrint failed while rendering $LANG_VARIANT" >&2
   sed -n '1,160p' "$WEASYPRINT_LOG" >&2

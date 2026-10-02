@@ -6,13 +6,16 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import math
 import re
 import shutil
 import subprocess
 import sys
 import unicodedata
+import xml.etree.ElementTree as ET
 from datetime import UTC, date, datetime
 from pathlib import Path, PurePosixPath
+from html.parser import HTMLParser
 from typing import Any
 
 import yaml
@@ -395,6 +398,122 @@ def _heading_key(value: str) -> str:
     return "".join(char.lower() for char in value if char.isalnum())
 
 
+def prepare_pdf_html(source: str) -> str:
+    """Mark eight-column tables for landscape pages; preserve source content."""
+    offsets = [0]
+    for line in source.splitlines(keepends=True):
+        offsets.append(offsets[-1] + len(line))
+    replacements: list[tuple[int, int, str]] = []
+
+    class Tables(HTMLParser):
+        def __init__(self) -> None:
+            super().__init__(convert_charrefs=False)
+            self.tables: list[dict[str, Any]] = []
+
+        def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+            if tag == "table":
+                line, column = self.getpos()
+                self.tables.append({"start": offsets[line - 1] + column,
+                                    "tag": self.get_starttag_text(),
+                                    "attrs": attrs,
+                                    "columns": 0, "first_done": False, "in_row": False})
+            elif self.tables:
+                table = self.tables[-1]
+                if tag == "tr" and not table["first_done"]:
+                    table["in_row"] = True
+                elif tag in ("th", "td") and table["in_row"]:
+                    span = dict(attrs).get("colspan", "1")
+                    try:
+                        count = int(span or "1")
+                    except ValueError as exc:
+                        raise ReleaseManifestError("invalid PDF table colspan") from exc
+                    if count < 1:
+                        raise ReleaseManifestError("invalid PDF table colspan")
+                    table["columns"] += count
+
+        def handle_endtag(self, tag: str) -> None:
+            if not self.tables:
+                return
+            table = self.tables[-1]
+            if tag == "tr" and table["in_row"]:
+                table["in_row"] = False
+                table["first_done"] = True
+            elif tag == "table":
+                table = self.tables.pop()
+                if table["columns"] < 8:
+                    return
+                original = table["tag"]
+                actual_classes = [value for key, value in table["attrs"] if key == "class"]
+                if actual_classes:
+                    if len(actual_classes) != 1:
+                        raise ReleaseManifestError("duplicate PDF table class attribute")
+                    # Tokenize whole attributes, consuming quoted values before
+                    # moving on. A data-class name or class= inside a title must
+                    # never be treated as the actual class attribute.
+                    tokens = re.finditer(
+                        r'''\s+([^\s=/>]+)(?:\s*=\s*("[^"]*"|'[^']*'|[^\s>]+))?''',
+                        original,
+                    )
+                    parsed = next((item for item in tokens
+                                   if item.group(1).casefold() == "class"), None)
+                    if (parsed is None or not parsed.group(2)
+                            or parsed.group(2)[0] not in "\"'"):
+                        raise ReleaseManifestError("PDF table class must be quoted")
+                    if "release-wide-table" in (actual_classes[0] or "").split():
+                        return
+                    end = parsed.end(2) - 1  # Preserve the original closing quote.
+                    changed = original[:end] + " release-wide-table" + original[end:]
+                else:
+                    # Pandoc's generated table tags and the raw curriculum
+                    # tables use either no class or a quoted class attribute.
+                    changed = original[:-1] + ' class="release-wide-table">'
+                replacements.append((table["start"], len(original), changed))
+
+    parser = Tables()
+    parser.feed(source)
+    parser.close()
+    if parser.tables:
+        raise ReleaseManifestError("unclosed table in generated PDF HTML")
+    for start, length, replacement in sorted(replacements, reverse=True):
+        source = source[:start] + replacement + source[start + length:]
+    return source
+
+
+def validate_pdf_geometry(xml: str, *, name: str) -> dict[str, int]:
+    """Reject text outside physical pages, including landscape pages.
+
+    This checks bounds, not typography, cell overlap, images, or semantic truth;
+    representative visual inspection remains a separate release gate.
+    """
+    try:
+        root = ET.fromstring(xml)
+        pages = [item for item in root.iter() if item.tag.rsplit("}", 1)[-1] == "page"]
+        if not pages:
+            raise ValueError("no page geometry")
+        words = 0
+        for index, page in enumerate(pages, 1):
+            width, height = (float(page.attrib[key]) for key in ("width", "height"))
+            if not all(math.isfinite(value) and value > 0 for value in (width, height)):
+                raise ValueError(f"invalid page dimensions on page {index}")
+            for word in page.iter():
+                if word.tag.rsplit("}", 1)[-1] != "word":
+                    continue
+                x0, y0, x1, y1 = (float(word.attrib[key])
+                                  for key in ("xMin", "yMin", "xMax", "yMax"))
+                if (not all(math.isfinite(value) for value in (x0, y0, x1, y1))
+                        or x0 > x1 or y0 > y1):
+                    raise ValueError(f"invalid word geometry on page {index}")
+                # Half a PDF point allows extractor rounding, not cropped text.
+                if x0 < -0.5 or y0 < -0.5 or x1 > width + 0.5 or y1 > height + 0.5:
+                    raise ValueError(f"text outside page {index}: {word.text!r}")
+                words += 1
+        if not words:
+            raise ValueError("no word geometry")
+        return {"pages": len(pages), "words": words}
+    except (ET.ParseError, KeyError, ValueError) as exc:
+        raise ReleaseManifestError(f"{name} has invalid or clipped text geometry: {exc}") from exc
+
+
 def validate_pdfs(version: str, dist: Path, *, pdftotext: str = "pdftotext") -> dict[str, Any]:
     manifest = validate_pages_manifest()
     binary = shutil.which(pdftotext)
@@ -437,6 +556,11 @@ def validate_pdfs(version: str, dist: Path, *, pdftotext: str = "pdftotext") -> 
             raise ReleaseManifestError(
                 f"{name} contains too much CJK text for the English edition: {cjk_count} characters"
             )
+        geometry_xml = subprocess.run(
+            [binary, "-bbox-layout", str(path), "-"], check=True,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        ).stdout.decode("utf-8", errors="strict")
+        geometry = validate_pdf_geometry(geometry_xml, name=name)
         result["assets"][locale] = {
             "name": name,
             "bytes": path.stat().st_size,
@@ -444,6 +568,8 @@ def validate_pdfs(version: str, dist: Path, *, pdftotext: str = "pdftotext") -> 
             "cjk_characters": cjk_count,
             "headings_verified": len(manifest["pages"]),
             "body_markers_verified": len(manifest["pages"]),
+            "geometry_pages_verified": geometry["pages"],
+            "geometry_words_verified": geometry["words"],
         }
     return result
 
@@ -481,6 +607,10 @@ def build_parser() -> argparse.ArgumentParser:
     notes.add_argument("--sha")
     notes.add_argument("--output", required=True, type=Path)
 
+    html = sub.add_parser("prepare-html", help="mark wide generated PDF tables for landscape pages")
+    html.add_argument("--input", required=True, type=Path)
+    html.add_argument("--output", required=True, type=Path)
+
     pdfs = sub.add_parser("validate-pdfs", help="verify all three named PDF assets")
     pdfs.add_argument("--version", required=True)
     pdfs.add_argument("--dist", default=ROOT / "dist", type=Path)
@@ -515,6 +645,9 @@ def main(argv: list[str] | None = None) -> int:
             print(args.output)
         elif args.command == "render-notes":
             _write(args.output, render_notes(args.version, sha=args.sha))
+            print(args.output)
+        elif args.command == "prepare-html":
+            _write(args.output, prepare_pdf_html(args.input.read_text(encoding="utf-8")))
             print(args.output)
         elif args.command == "validate-pdfs":
             payload = validate_pdfs(args.version, args.dist, pdftotext=args.pdftotext)

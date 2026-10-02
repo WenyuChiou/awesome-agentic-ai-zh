@@ -13,6 +13,17 @@ inventory, not a permanent badge. The required PR gate and a fresh collection ru
 the source of truth after any later change; historical exercise counts below must not
 be quoted as the current whole-repository total.
 
+## Release PDF layout checks
+
+`scripts/build-pdf.sh` marks generated tables with eight or more header columns for
+A4 landscape pages. Curriculum text, URLs, natural column widths, and the existing
+8.5pt table font remain unchanged. `scripts/test_release_manifest.py` checks the
+classification and fail-closed geometry rules. `release_manifest.py validate-pdfs`
+uses `pdftotext -bbox-layout` to check text bounds on every physical page in all
+three editions, including landscape pages. This detects off-page text, not cell
+overlap, image cropping, or readable typography. Inspect representative rendered
+wide tables, covers, and ordinary pages before publishing rebuilt assets.
+
 ## Visible required-reading and resource contract
 
 Important reading, featured projects, and complete rated learning-resource tables are part of the
