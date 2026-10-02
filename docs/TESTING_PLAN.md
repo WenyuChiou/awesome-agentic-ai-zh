@@ -359,20 +359,21 @@ mainline plus only 50 non-whitespace characters.
 
 ### Course map — learn first, certificate second
 
-`resources/courses*` keeps five bold credential terms, a task-first chooser, 12 rated courses, a
+`resources/courses*` keeps five bold credential terms, a task-first chooser, 11 rated courses, a
 copyable five-line work-evidence card, and visible return links to Stages 3／4／7. The two disclosures
 hold only certificate caveats and maintainer rules. The main table uses four accessible rowgroups
-(`3／5／2／2`); each course row has one primary URL, while the Datawhale companion stays outside the
+(`3／4／2／2`); each course row has one primary URL, while the Datawhale companion stays outside the
 table so category and rating semantics remain unambiguous.
 
-`scripts/test_courses_content.py` locks the 12 URL／rating pairs, full 22-link order, exact freshness
+`scripts/test_courses_content.py` locks the 11 URL／rating pairs, full 20-link order, exact freshness
 marker, closed disclosure count, portfolio card, locale-correct stage links, and current facts such
 as the Hugging Face 80% Unit 1 threshold, Microsoft／Datawhale no-certificate status, DeepLearning.AI
-Pro boundary, W&B's unstated public certificate rule, Claude quiz badge, and Alibaba identity
+Pro boundary, Claude quiz badge, and Alibaba identity
 condition. It rejects the former tier labels, Skilljar entrance, Edureka／Huawei rows, frozen prices,
 volatile stars, empty-quote artifacts, and generic verification-date filler. The freshness config
 separately enrolls course availability, cost, certificate, assessment, and repository status on a
-90-day review cycle.
+90-day review cycle. The temporary W&B removal preserves the access qualification without
+claiming permanent discontinuation; inactive URLs are absent from the chooser, table, and fact pack.
 
 ### Glossary — visible definitions and stable facts
 

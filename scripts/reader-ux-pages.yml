@@ -3345,8 +3345,8 @@ pages:
         en: {heading: "🧪 Leave the same piece of work evidence after every course", anchor: -leave-the-same-piece-of-work-evidence-after-every-course}
         zh-Hans: {heading: "🧪 每学完一门课，都留下同一份作品证据", anchor: -每学完一门课都留下同一份作品证据}
     visible_section_minimums:
-      chooser: {min_links: 9}
-      courses: {min_links: 13, min_ratings: 12}
+      chooser: {min_links: 8}
+      courses: {min_links: 12, min_ratings: 11}
       portfolio: {min_links: 3}
     core_terms:
       section_id: core-terms
@@ -3373,7 +3373,7 @@ pages:
           zh-TW: {term: Certification Exam, label: "Certification Exam（認證考試）"}
           en: {term: Certification Exam, label: Certification Exam}
           zh-Hans: {term: Certification Exam, label: "Certification Exam（认证考试）"}
-    resource_group_rowspans: [3, 5, 2, 2]
+    resource_group_rowspans: [3, 4, 2, 2]
 
   - id: setup-guide
     canonical: resources/setup-guide.md

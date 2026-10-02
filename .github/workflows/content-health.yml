@@ -149,7 +149,7 @@ jobs:
           if-no-files-found: error
 
       - name: Update the single tracking issue
-        if: always() && steps.summary.outputs.ready == 'true'
+        if: always() && steps.summary.outputs.ready == 'true' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
           REPOSITORY: ${{ github.repository }}
