@@ -631,7 +631,7 @@
 **适合谁**：用 Grafana 看 metric 的 SRE / DevOps。
 **备注**：“dashboard 那条线为什么掉？”直接问，LLM 捞 metric 给答案。
 
-### [getsentry/sentry-mcp](https://github.com/getsentry/sentry-mcp) ⭐⭐⭐⭐
+### [getsentry/toolkit](https://github.com/getsentry/toolkit) ⭐⭐⭐⭐
 
 | 栏位 | 内容 |
 |---|---|
@@ -641,6 +641,7 @@
 **教什么**：从 LLM 查 Sentry error event、issue、trace。
 **适合谁**：用 Sentry 接 production error 的工程师。
 **备注**：“上周这个 error 的 stack trace 给我看”直接问 Claude Code。
+原 `getsentry/sentry-mcp` 已改名为 `getsentry/toolkit`。这是同一个项目（2026-10-02 核对）。Sentry MCP 的名称仍是 `sentry-mcp`，软件包仍是 `@sentry/mcp-server`。
 
 ### [winor30/mcp-server-datadog](https://github.com/winor30/mcp-server-datadog) ⭐⭐⭐
 
