@@ -1,5 +1,7 @@
 # Stage 6 — RAG 與 Memory：先找資料，再記住重要的事
 
+**RAG**（Retrieval-Augmented Generation）：先找相關資料，再依資料回答。
+
 > **繁體中文** | [简体中文](./06-memory-rag.zh-Hans.md) | [English](./06-memory-rag.en.md)
 
 <!-- freshness: canonical=stages/06-memory-rag.md; verified_on=2026-08-30; scope=rag,retrieval,embeddings,vector-stores,memory,evaluation,project-status; max_age_days=90 -->
@@ -197,7 +199,7 @@ RAG 有兩條路：一條先整理資料，一條在問題來時找資料。
 
 ### [進階 RAG：先找出哪一步壞了，再加新技巧](../resources/advanced-rag.md)
 
-適合已經做出最小 RAG、但遇到「找不到、排序錯、跨文件關係難找」的人。頁面會完整解釋 **Hybrid Search**、**Reranking**、**HyDE**、**Multi-Query**、**RAG Fusion**、**Contextual Retrieval**、**GraphRAG**、**Self-RAG**、**CRAG**、**Adaptive RAG**、**Agentic RAG**、**RAPTOR** 與 **DSPy**，並保留必讀與五星資源表。
+適合已經做出最小 RAG、但遇到「找不到、排序錯、跨文件關係難找」的人。頁面會完整解釋 **Hybrid Search**、**Reranking**、**HyDE**、**Multi-Query**、**RAG Fusion**、**Contextual Retrieval**、**GraphRAG**、**Self-RAG**、**CRAG**（Corrective Retrieval Augmented Generation，檢索不夠好時修正查詢或來源）、**Adaptive RAG**、**Agentic RAG**、**RAPTOR** 與 **DSPy**，並保留必讀與五星資源表。
 
 ### [Agent Memory：只記值得記、允許記、能刪掉的事](../resources/agent-memory.md)
 

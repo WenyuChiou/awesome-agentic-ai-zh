@@ -32,6 +32,8 @@ The model returns a function name and arguments in an agreed format. It is like 
 
 ### **Tool Schema**
 
+**JSON** (JavaScript Object Notation) is a text format for sharing data.
+
 A schema is a tool’s information card: its name, purpose, fields, and data types. It is like a menu telling a customer what can be ordered. This chapter describes tools with JSON Schema. A schema constrains the shape, but the program must still validate values, permissions, and business rules.
 
 ### **Tool Call**

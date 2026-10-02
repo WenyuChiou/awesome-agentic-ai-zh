@@ -1,5 +1,7 @@
 # Advanced RAG: find the broken step before adding new techniques
 
+**RAG** (Retrieval-Augmented Generation): retrieve relevant material, then answer using it.
+
 [繁體中文](advanced-rag.md) | [English](advanced-rag.en.md) | [简体中文](advanced-rag.zh-Hans.md)
 
 <!-- freshness: canonical=resources/advanced-rag.md; verified_on=2026-08-30; scope=rag,retrieval,reranking,graph-rag,evaluation,project-status; max_age_days=90 -->
@@ -35,8 +37,8 @@ By the end of this page, you can:
 | Problem you see | Measure first | First method to try | Do not do this first |
 |---|---|---|---|
 | The answer exists in a document but is never retrieved | Recall@k, hit rate | Adjust chunks, metadata filters, or Hybrid Search | Switch to a larger generation model |
-| The right document is retrieved but ranks far down | MRR, nDCG, manual inspection of the top k | Reranking | Add a graph and agent loop all at once |
-| The question is short, vague, or contains several smaller questions | Hit rate and latency for each rewritten query | Multi-Query, decomposition, or HyDE | Generate an unlimited number of queries |
+| The right document is retrieved but ranks far down | MRR (Mean Reciprocal Rank, average the reciprocal rank of the first relevant result), nDCG (Normalized Discounted Cumulative Gain, compare graded ranking quality with an ideal ordering), manual inspection of the top k | Reranking | Add a graph and agent loop all at once |
+| The question is short, vague, or contains several smaller questions | Hit rate and latency for each rewritten query | Multi-Query, decomposition, or HyDE (Hypothetical Document Embeddings, retrieve using a hypothetical document embedding; the draft is not evidence) | Generate an unlimited number of queries |
 | You must answer relationships across many documents or a whole corpus | Relationship coverage, a global-question test set | GraphRAG, LightRAG, or a summary tree | Treat a graph as the default for every RAG system |
 | Some questions do not need retrieval at all | Unnecessary-retrieval rate, cost, latency | Adaptive/Agentic RAG | Let an agent retry without limits |
 | The right evidence is found but the answer is still unsupported | Faithfulness/manual citation checks | Improve the answer prompt, citation format, and abstention rules | Keep tuning retrieval to hide a generation problem |
@@ -80,7 +82,7 @@ GraphRAG fits questions such as “Which people jointly influenced this event?�
 ### 5. Add Corrective or Agentic RAG only when the flow needs judgment
 
 - **Self-RAG**: the model learns when to retrieve and reflects on evidence and answers.
-- **CRAG (Corrective RAG)**: judge whether candidates are good enough; if they are not, revise the query or source.
+- **CRAG** (Corrective Retrieval Augmented Generation, correct the query or source when retrieval is inadequate) (Corrective RAG): judge whether candidates are good enough; if they are not, revise the query or source.
 - **Adaptive RAG**: choose different flows based on question difficulty.
 - **Agentic RAG**: let an agent decide when to call a retriever; set limits for steps, time, cost, and allowed sources.
 
@@ -88,7 +90,7 @@ Original entry points: [Self-RAG](https://arxiv.org/abs/2310.11511), [CRAG](http
 
 ### 6. Touch summary trees and program optimization last
 
-**RAPTOR** repeatedly clusters and summarizes content into a tree from details to broad themes. Detail questions use leaf nodes; theme questions use higher-level summaries. **DSPy** uses examples and metrics to tune an LLM program; it still needs a clear task, reliable data, and evaluation metrics.
+**RAPTOR** (Recursive Abstractive Processing for Tree-Organized Retrieval) repeatedly clusters and summarizes content into a tree from details to broad themes. Detail questions use leaf nodes; theme questions use higher-level summaries. **DSPy** uses examples and metrics to tune an LLM (Large Language Model, a model that reads and writes language) program; it still needs a clear task, reliable data, and evaluation metrics.
 
 Read: [RAPTOR paper](https://arxiv.org/abs/2401.18059) · [DSPy](https://github.com/stanfordnlp/dspy)
 

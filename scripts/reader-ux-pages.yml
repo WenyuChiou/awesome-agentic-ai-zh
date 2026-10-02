@@ -84,9 +84,9 @@ pages:
       en: stages/01-llm-basics.en.md
       zh-Hans: stages/01-llm-basics.zh-Hans.md
     max_visible_chars:
-      zh-TW: 8197
-      en: 12475
-      zh-Hans: 8222
+      zh-TW: 8569
+      en: 13193
+      zh-Hans: 8599
     max_open_details: 3
     required_visible_sections:
       core-terms:
@@ -3206,9 +3206,9 @@ pages:
       en: resources/glossary.en.md
       zh-Hans: resources/glossary.zh-Hans.md
     max_visible_chars:
-      zh-TW: 14161
-      en: 24446
-      zh-Hans: 14471
+      zh-TW: 14380
+      en: 24657
+      zh-Hans: 14690
     max_open_details: 0
     required_details_count: 2
     visible_section_order:

@@ -12,9 +12,9 @@ When an unfamiliar term appears, you do not need to stop reading the whole chapt
 - [**Agent**](#agent) — an AI system that decides what to do next and takes action toward a person's goal, automatically but only within rules and permissions.
 - [**Tool Use**](#tool-use--function-calling) — the model requests a tool, but the program checks and executes it.
 - [**Agent Loop**](#agent-loop) — the running cycle of deciding, acting, and observing until completion or a stop condition.
-- [**RAG**](#rag-retrieval-augmented-generation) — retrieve evidence first, then give that evidence to the model for an answer.
+- [**RAG** (Retrieval-Augmented Generation)](#rag-retrieval-augmented-generation) — retrieve evidence first, then give that evidence to the model for an answer.
 - [**Memory**](#memory--two-orthogonal-classification-axes) — save information that will matter later, then read it back when needed.
-- [**MCP**](#mcp-model-context-protocol) — an open protocol for connecting AI applications to tools and data in a shared way.
+- [**MCP** (Model Context Protocol)](#mcp-model-context-protocol) — an open protocol for connecting AI applications to tools and data in a shared way.
 - [**Eval**](#eval) — fixed cases and success rules that show whether a change really improved the system.
 - [**Agent Harness**](#agent-harness) — the system around a model that manages tools, permissions, state, records, and stopping.
 - [**Workflow Graph**](#workflow-graph) — nodes and edges that make steps, branches, and shared state explicit.
@@ -28,8 +28,8 @@ One screen may contain a model, a Router, and an Agent at the same time. Ask wha
 <tr><th>Identity</th><th>Plain-language job</th><th>Example and boundary</th></tr>
 </thead>
 <tbody>
-<tr><td><strong>Model Provider / API</strong></td><td>The model company's service entrance.</td><td><a href="https://platform.claude.com/docs/en/api/overview">Anthropic API</a>; it returns model output but is not an Agent that edits files.</td></tr>
-<tr><td><strong>LLM Router</strong></td><td>One entrance that forwards requests to models or providers.</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a>; it is neither a model nor a coding agent.</td></tr>
+<tr><td><strong>Model Provider / API (Application Programming Interface)</strong></td><td>The model company's service entrance.</td><td><a href="https://platform.claude.com/docs/en/api/overview">Anthropic API</a>; it returns model output but is not an Agent that edits files.</td></tr>
+<tr><td><strong>LLM (Large Language Model) Router</strong></td><td>An LLM reads and writes language; the router forwards requests to providers.</td><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a>; it is neither a model nor a coding agent.</td></tr>
 <tr><td><strong>Model Runtime</strong></td><td>Loads and runs a model locally or as a service.</td><td><a href="https://docs.ollama.com/api/introduction">Ollama</a>; it exposes a model API but does not edit a project by itself.</td></tr>
 <tr><td><strong>Coding Agent / Harness</strong></td><td>Reads files, edits files, runs commands, and reports results.</td><td><a href="https://opencode.ai/docs">OpenCode</a> and <a href="https://github.com/earendil-works/pi">Pi</a>; the model inside can be changed.</td></tr>
 <tr><td><strong>Agent Framework</strong></td><td>Helps developers combine Agents, tools, state, and workflows.</td><td><a href="https://learn.microsoft.com/en-us/agent-framework/concepts/workflows/">Microsoft Agent Framework</a>; it is a toolkit, not a model.</td></tr>
@@ -178,15 +178,15 @@ More examples are not automatically better. Compare them with the same Eval.
 
 ### RLHF / RL
 
-**RLHF/RL** trains a model with human or rule-based feedback. Poorly designed feedback can teach the model to exploit the score, so an independent Eval is still needed.
+**RLHF** (Reinforcement Learning from Human Feedback)/RL (Reinforcement Learning) trains a model with human or rule-based feedback. Poorly designed feedback can teach the model to exploit the score, so an independent Eval is still needed.
 
 ### GRPO
 
-**GRPO** compares several answers to the same question, then updates the model from their relative results. It is one Post-training method, not a requirement for every project.
+**GRPO** (Group Relative Policy Optimization) compares several answers to the same question, then updates the model from their relative results. It is one Post-training method, not a requirement for every project.
 
 ### PEFT / LoRA
 
-**PEFT** is a group of methods that trains fewer parameters; **LoRA** freezes the original weights and trains added low-rank matrices. They reduce the parameters that must be updated, but still need data and Eval.
+**PEFT** (Parameter-Efficient Fine-Tuning) is a group of methods that trains fewer parameters; **LoRA** (Low-Rank Adaptation) freezes the original weights and trains added low-rank matrices. They reduce the parameters that must be updated, but still need data and Eval.
 
 ### Distillation
 

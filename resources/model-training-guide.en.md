@@ -12,6 +12,13 @@ This is a path-selection card, not a training course. It helps you tell which me
 
 ## 🧭 See the whole path first
 
+- **SFT** (Supervised Fine-Tuning): learn by imitating good example answers.
+- **DPO** (Direct Preference Optimization): learn from preferred and rejected answer pairs.
+- **RLHF** (Reinforcement Learning from Human Feedback): use human feedback in reinforcement learning.
+- **RL** (Reinforcement Learning): learn from rewards, which can also come from rules.
+
+**RAG** (Retrieval-Augmented Generation): retrieve relevant material, then answer using it.
+
 ![Data passes through Pre-training and Post-training to make a model ready for Inference; Prompt, RAG, Memory, Tools, and Harness surround the model in an Agent system and usually do not change its weights](./diagrams/model-lifecycle-to-agent.en.png)
 
 1. **Pre-training**: large amounts of data are used to build a Base Model.
@@ -26,12 +33,12 @@ This is a path-selection card, not a training course. It helps you tell which me
 <tbody>
 <tr><th scope="rowgroup" rowspan="4">Teach the model how to act</th><td><strong>SFT (Supervised Fine-Tuning)</strong></td><td>Show the model good questions and answers so it can imitate them.</td><td>Yes</td></tr>
 <tr><td><strong>DPO (Direct Preference Optimization)</strong></td><td>Show two answers and indicate which one is preferred.</td><td>Yes</td></tr>
-<tr><td><strong>RLHF/RL</strong></td><td>Use human or rule-based feedback to help the model get better results.</td><td>Yes</td></tr>
-<tr><td><strong>GRPO</strong></td><td>Compare several answers to one question, then learn from their relative results.</td><td>Yes</td></tr>
+<tr><td><strong>RLHF (Reinforcement Learning from Human Feedback) / RL (Reinforcement Learning)</strong></td><td>Use human or rule-based feedback to help the model get better results.</td><td>Yes</td></tr>
+<tr><td><strong>GRPO (Group Relative Policy Optimization)</strong></td><td>Compare several answers to one question, then learn from their relative results.</td><td>Yes</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Adapt with fewer changes</th><td><strong>PEFT</strong></td><td>Train only a small part of the parameters.</td><td>Only selected or added parameters</td></tr>
-<tr><td><strong>LoRA</strong></td><td>Freeze the original weights and train a smaller low-rank matrix.</td><td>Original weights no; added parameters yes</td></tr>
+<tr><th scope="rowgroup" rowspan="2">Adapt with fewer changes</th><td><strong>PEFT (Parameter-Efficient Fine-Tuning)</strong></td><td>Train only a small part of the parameters.</td><td>Only selected or added parameters</td></tr>
+<tr><td><strong>LoRA (Low-Rank Adaptation)</strong></td><td>Freeze the original weights and train a smaller low-rank matrix.</td><td>Original weights no; added parameters yes</td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">Make serving smaller or cheaper</th><td><strong>Distillation</strong></td><td>Teach a smaller Student Model from a larger Teacher Model.</td><td>Trains the Student Model</td></tr>
@@ -59,7 +66,7 @@ Read the first two to understand the main path. Use the others when you truly ne
 <thead><tr><th scope="col">Group</th><th scope="col">Resource</th><th scope="col">Rating</th><th scope="col">What you learn</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">Understand the main path</th><td><a href="https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/">OpenAI: how models are developed</a></td><td>⭐⭐⭐⭐⭐</td><td>How data, training, and models relate.</td></tr>
-<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google: LLM tuning</a></td><td>⭐⭐⭐⭐⭐</td><td>The boundary between Prompt Engineering, Fine-tuning, and Distillation.</td></tr>
+<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google: LLM (Large Language Model, a model that reads and writes language) tuning</a></td><td>⭐⭐⭐⭐⭐</td><td>The boundary between Prompt Engineering, Fine-tuning, and Distillation.</td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="2">Learn Post-training</th><td><a href="https://openai.com/index/introducing-gpt-oss/">OpenAI: gpt-oss</a></td><td>⭐⭐⭐⭐</td><td>How one model family describes Pre-training, SFT, and RL.</td></tr>
@@ -73,6 +80,8 @@ Read the first two to understand the main path. Use the others when you truly ne
 </table>
 
 ## 🛠 A decision exercise with no GPU
+
+**GPU** (Graphics Processing Unit): a processor suited to parallel computation.
 
 Choose a first path for each case and give one reason:
 

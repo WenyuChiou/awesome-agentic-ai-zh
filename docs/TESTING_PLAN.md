@@ -13,6 +13,41 @@ inventory, not a permanent badge. The required PR gate and a fresh collection ru
 the source of truth after any later change; historical exercise counts below must not
 be quoted as the current whole-repository total.
 
+## Audited first-use terminology
+
+The first-use layer covers 52 manually checked term/page pairs in nine chapter
+families, with 156 locale cases. It does not detect every all-capital token or
+claim every abbreviation in the site has been audited. Each first encounter
+shows its verified full name and a short learner meaning. Existing heading
+anchors, code, source links, product names, original images and resource facts
+remain stable. For example, LoRA is Low-Rank Adaptation: small trainable matrices
+adapt a frozen model. RL remains the broader reward-based learning method;
+RLHF specifically uses human feedback or preferences.
+
+`scripts/test_first_use_acronyms.py` renders the finite enrolled inputs with the
+existing pinned Markdown dependency and a test-only standard-library HTML parser.
+It rejects later definitions and names found only in code, comments, closed
+content, hidden elements, attributes or image alt text. An unchanged short heading
+may use its immediately adjacent visible definition. The model-lifecycle training
+fixtures reuse this same helper. Separate image-position cases require visible
+legends before the manually inspected training diagrams and README heroes;
+original-image hashes bind that reviewed inventory but do not prove semantics.
+Human review still checks the meanings and the actual displayed image labels.
+
+The existing reader-UX character counter is unchanged. Stage 1 limits are refreshed
+only from 8197 / 12475 / 8222 to 8569 / 13193 / 8599 (zh-TW / en / zh-Hans),
+and glossary limits from 14161 / 24446 / 14471 to 14380 / 24657 / 14690.
+These six caps equal the final measured proxy lengths, with no spare allowance.
+The separate English README source-length ceiling moves from 14000 to its exact
+measured 14277 characters; its base source used 13979, so the net addition is 298.
+Only newly added names/meanings were compressed before that refresh. Chinese
+README source ceilings remain 14000. Every other page cap and the existing
+disclosure/resource/heading ratchets stay unchanged.
+This is a bounded contract refresh for the newly required visible definitions,
+not a claim that the old size metric is unchanged or a measure of reading quality.
+Rebuild all three PDFs and inspect representative new legends, definitions and
+existing wide tables, in addition to every-page text/bounds checks, before release.
+
 ## Release PDF layout checks
 
 `scripts/build-pdf.sh` marks generated tables with eight or more header columns for
