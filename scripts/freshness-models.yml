@@ -13,7 +13,8 @@ stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
   verified_on: '2026-09-22'
   provider_updates:
-    gpt: '2026-09-23'
+    gpt: '2026-10-02'
+    gemini: '2026-10-02'
     anthropic: '2026-09-28'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
@@ -24,7 +25,7 @@ stage01_fact_pack:
     claude_sonnet: 'https://platform.claude.com/docs/en/models/sonnet-5-5/overview'
     claude_sonnet_migration: 'https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
-    gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6-sol'
+    gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6.1-sol'
     gpt_luna: 'https://developers.openai.com/api/docs/models/gpt-6-luna'
     gpt_pricing: 'https://developers.openai.com/api/docs/pricing'
     typesafe_jev: 'https://docs.typesafe.ai/introduction'
@@ -32,6 +33,7 @@ stage01_fact_pack:
     typesafe_jev_launch: 'https://typesafe.ai/blog/introducing-system-one-models-and-jev'
     typesafe_jev_cloudflare: 'https://developers.cloudflare.com/ai/models/typesafe/jev/'
     gemini: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash'
+    gemini_argon: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/'
     gemini_live: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     deepseek_updates: 'https://api-docs.deepseek.com/updates/'
@@ -203,6 +205,9 @@ agent_memory_fact_pack:
 stage07_fact_pack:
   canonical: 'stages/07-multi-agent-production.md'
   verified_on: '2026-09-13'
+  resource_updates:
+    openai_responses_multi_agent: '2026-10-02'
+    google_managed_agents: '2026-10-02'
   scope: ['evals', 'observability', 'human-approval', 'persistence', 'recovery', 'orchestration', 'resources']
   official_sources:
     anthropic_evals: 'https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents'
@@ -214,6 +219,9 @@ stage07_fact_pack:
     langgraph_interrupts: 'https://docs.langchain.com/oss/python/langgraph/interrupts'
     ibm_loop_engineering: 'https://www.ibm.com/think/topics/loop-engineering'
     openai_harness_engineering: 'https://openai.com/index/harness-engineering/'
+    openai_responses_multi_agent: 'https://developers.openai.com/api/docs/guides/responses-multi-agent'
+    google_managed_agents: 'https://ai.google.dev/gemini-api/docs/agents'
+    google_antigravity_agent: 'https://ai.google.dev/gemini-api/docs/antigravity-agent'
 
 walkthrough_fact_pack:
   canonical: 'walkthroughs/build-first-agent-in-7-steps.md'

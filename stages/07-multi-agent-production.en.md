@@ -4,13 +4,13 @@
 
 <!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-09-13; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
 
-This stage teaches you to hand an AI helper to someone else. It must do more than work once in front of you. You also need to check it, see what it did, stop it before risky actions, and continue safely after a failure.
+Make an AI helper testable, observable, stoppable, and recoverable before sharing it.
 
 ## 🎯 What This Stage Does (Start Here)
 
-This learning map calls the work of making an AI helper safe enough for other people to use **Agent Production Engineering**. Think of taking a toy car onto a real road: first add steering, brakes, and a dashboard. In this chapter, the term means making an Agent testable, observable, stoppable, and recoverable. It does not mean the Agent must serve millions of people.
+**Agent Production Engineering** means making an Agent testable, observable, stoppable, and recoverable. Like a toy car going onto a road, it needs steering, brakes, and a dashboard. It need not serve millions.
 
-The whole chapter uses one story. An AI research helper checks three sources, writes a summary, and asks a person before sending it. You will add a workspace, a repeat-and-check rhythm, branching routes, a way to test quality, and a safety brake.
+The chapter uses one story: a research helper checks three sources, writes a summary, and asks before sending.
 
 Remember this order:
 
@@ -23,7 +23,7 @@ Remember this order:
 | It can send mail, pay, delete, or write data | Stop before the action, ask a person, and save progress | Who approved it and where to continue |
 | The first three checks can rerun and pass | Give it to other people | Health, stop, continue-after-failure, and rollback instructions |
 
-Make one AI helper reliable first. Add more helpers only when the work can truly be separated or different roles must check one another.
+Make one AI helper reliable first. Add helpers only for separable work or independent checks.
 
 <details markdown="1">
 <summary>⏱ Expand: time, environment, cost, and safety notes</summary>
@@ -199,6 +199,13 @@ Outside writing sometimes calls this engineering work **Graph Engineering**. The
 - Add Multi-Agent only when parts can truly work independently or distinct roles must check one another.
 - A Graph node can be an Agent, a tool, fixed code, or “wait for human approval.” Not every box needs an Agent.
 
+- **Optional official docs**: [OpenAI Responses Multi-agent](https://developers.openai.com/api/docs/guides/responses-multi-agent) is in Beta for GPT-6.1 Sol and all GPT-5.6 models. The model delegates to subagents with separate contexts. They share the request's model and tools; this is not SDK manager / handoff orchestration.
+- `max_concurrent_subagents` defaults to 3 active subagents across the tree and excludes the root. Concurrency settings, total agents, and tree depth have no fixed cap; delegation can add tokens. `max_tool_calls`, `reasoning.summary`, and `/responses/compact` are unsupported; server-side automatic compaction runs independently for each Agent.
+- The API executes hosted collaboration; your application executes custom function calls. Separate contexts do not isolate tool permissions: the application must still approve sensitive tools and enforce budgets and stop conditions.
+- [Google Managed Agents](https://ai.google.dev/gemini-api/docs/agents) offers Antigravity in Public Preview. `antigravity-preview-09-2026` defaults to Gemini 3.8 Flash. It provides a managed Linux sandbox, files preserved across interactions, code execution, custom functions, and remote MCP.
+- Outbound network access is unrestricted by default; set an allowlist and minimal tool permissions. Search and URL fetching do not imply GUI browser control; `computer_use` is unsupported. A sandbox still needs this chapter's Evals, approval, and recovery.
+- Google's docs describe referencing secrets by managed credential ID: the egress proxy injects them without exposing them in the sandbox. An Agent can use the full scope of a supplied credential; grant only the minimum scope needed.
+
 </details>
 
 ## 🧪 Eval: State What Good Means, Then Decide How to Grade
@@ -373,9 +380,9 @@ Start with a single-Agent version:
 4. Save a checkpoint and simulate a restart followed by resume.
 5. Use an idempotency key to prove that rerunning one publication writes only once.
 
-Finally, produce an **execution receipt**: task ID, Outcome, Trajectory, tools, sources, elapsed time, tokens, errors, checkpoint version, and human approval records. Start with five development cases for the baseline, then add real failures to a versioned suite. If results look worse, rerun enough trials, check the predefined threshold, and review the failed cases before deciding whether to block deployment; one random failure is not enough by itself.
+Produce an **execution receipt**: task ID, Outcome, Trajectory, tools, sources, elapsed time, tokens, errors, checkpoint version, and human approval. Start with five development cases for the baseline, then add real failures to a versioned suite. If results worsen, rerun enough trials, check predefined thresholds, and inspect failures; one random failure alone does not establish a regression.
 
-Only after the single-Agent version is stable should you split “find sources” and “review” into separate Agents, then compare quality, cost, and latency to see whether the split is actually better.
+Only after the single Agent is stable, consider separating “find sources” and “review” roles. Compare quality, cost, and latency.
 
 ## 📊 Agent Benchmark Landscape: How to read it, not just the leaderboard + ⚠ Reward-Hacking Warning
 
@@ -408,17 +415,16 @@ Do not copy one SOTA score into the page as a permanent fact. Release decisions 
 
 ## 🎯 Featured Projects (Templates / SDKs / Tool Collections)
 
-Choose one by purpose; do not install everything at once. Ratings show teaching usefulness in this project, not GitHub stars.
-
-The 21 entries below are directly visible because readers may return here as a tool-selection map.
+Choose by purpose; ratings are not GitHub stars. Compare the two new three-star readings after a single-Agent baseline. Their ratings reflect documented teaching value; they haven't been run against live APIs.
 
 <table>
   <thead>
     <tr><th scope="col">Category</th><th scope="col">Project / document</th><th scope="col">Teaching fit</th><th scope="col">Best for</th><th scope="col">Know this first</th></tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Orchestration / Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Learn simple workflows before Agents</td><td>A design guide, not a deployable framework</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Orchestration / Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Learn simple workflows before Agents</td><td>A design guide, not a deployable framework</td></tr>
     <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td>⭐⭐⭐⭐⭐</td><td>Compare manager and handoff patterns</td><td>Examples center on OpenAI Agents SDK</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent (official docs)</a></td><td>⭐⭐⭐</td><td>Readers with a single-Agent baseline: model-directed independent tasks</td><td>Beta; separate contexts, shared model/tools; differs from SDK manager / handoff</td></tr>
     <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td>⭐⭐⭐⭐</td><td>Sequence, concurrency, handoff, group chat, and approval</td><td>Confirm current package version and preview status</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>⭐⭐⭐⭐⭐</td><td>State, checkpointing, and human-in-the-loop</td><td>More abstraction than a first Agent needs</td></tr>
   </tbody>
@@ -431,7 +437,8 @@ The 21 entries below are directly visible because readers may return here as a t
      <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Check Outcome, Trajectory, and graders together</td><td>Build cases from your own real work and failures</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">Harness / Sandbox / Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>Read tool loops, permissions, and subagent code</td><td>Centers on the Claude runtime</td></tr>
+    <tr><th scope="rowgroup" rowspan="7">Harness / Sandbox / Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>Read tool loops, permissions, and subagent code</td><td>Centers on the Claude runtime</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent (official docs)</a></td><td>⭐⭐⭐</td><td>Readers with a single-Agent baseline: sandbox, persistent files, and code</td><td>Public Preview; restrict network and tool permissions to manage safety</td></tr>
     <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>Read a plugin-based harness architecture</td><td>Developer preview; breaking changes are possible</td></tr>
      <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td>⭐⭐⭐⭐⭐</td><td>Pause sensitive tools, save RunState, and resume</td><td>Saved state may contain context and runtime metadata; manage it as sensitive data</td></tr>
      <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td>⭐⭐⭐⭐⭐</td><td>Approval, checkpoints, resume, and idempotent side effects</td><td>Production needs a durable checkpointer, not only memory</td></tr>
@@ -447,7 +454,7 @@ The 21 entries below are directly visible because readers may return here as a t
   </tbody>
 </table>
 
-<small>Verified: 2026-09-13 UTC</small>
+<small>Existing resources reviewed: 2026-09-13 UTC; new docs reviewed: 2026-10-02 UTC</small>
 
 ## ✅ Self-Check After Stage 7
 

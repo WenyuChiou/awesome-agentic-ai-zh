@@ -82,7 +82,17 @@ Then check three things yourself:
 
 If you only want to chat, you do not need a CLI Agent or local runtime. Go to [Track A1](../tracks/cli/A1-cli-intro.en.md) when you want the command line, or [Stage 1](../stages/01-llm-basics.en.md) when you want to understand models.
 
-**Personal Agent** is an assistant that can carry out multi-step work across tools after you give it a goal—like asking an assistant to research, draft, and return for approval. [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) is one example, rolling out in the US as checked on 2026-09-22; it asks for approval before important actions such as sending mail or buying something. Muse is a product, not the Muse Spark model and not Muse Code running in a terminal. Check which accounts it connects to and what permissions it receives; “acts on its own” does not mean “skip human review.”
+## 🧑 Personal Agents: define the goal and boundaries first
+
+<small>Personal Agent products checked: 2026-10-02 UTC</small>
+
+A **Personal Agent** can do multi-step work across tools after you give it a goal, like researching, drafting, and returning for approval. These products combine a model, tools, and permissions; a product name is not an underlying model name or a new upgrade level.
+
+- [OpenAI dots](https://learn.chatgpt.com/docs/dots): an always-on cloud assistant with its own cloud computer and browser; work can continue while your computer is off. The [2026-09-29 update](https://learn.chatgpt.com/docs/whats-new/devday-2026) describes a gradual rollout. Pro 100, Pro 200, and Pro 500 require users over 18 outside the European Economic Area, United Kingdom, and Switzerland. Business Premium and Enterprise are rolling out worldwide; Enterprise needs administrator enablement. An eligible plan does not mean your account has access yet.
+- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/): works across apps on its own cloud computer. The [2026-09-29 Muse for Small Business update](https://about.fb.com/news/2026/09/introducing-muse-small-business/) confirms US and Canada access and adds business skills and connectors; Meta says publishing, sending, and spending require your approval. Muse is the product; Muse Spark is a model, and Muse Code is a terminal coding agent.
+- [Grok Bot](https://docs.x.ai/grok-bot/overview): uses a browser, files, and terminal on a persistent cloud computer; access needs a paid Cursor plan or an eligible linked SuperGrok plan. Bots on the same account share the computer, files, browser sessions, and app logins, so do not treat them as isolated from one another. The [2026-09-28 Team Bots update](https://x.ai/news/team-bots) adds a public beta for Teams and Enterprise, with shared skills and tools and Slack collaboration. Grok Bot is a product, not a Grok model name or the coding agent [Grok Build](https://docs.x.ai/build/overview).
+
+Start with the fictional message above, without connecting accounts. When you need multiple tools, specify what the agent may read or change and when it must stop for your approval. Keep an **Approval Gate** before sending, publishing, deleting files, or paying; ongoing work still needs human review.
 
 <a id="required-reading"></a>
 ## 📖 Required reading
@@ -101,7 +111,7 @@ For a systematic introduction to prompts, zero-shot, one-shot, few-shot, and ver
 <a id="-curated-projects"></a>
 ## ⭐ Curated projects and learning resources
 
-The stars are this project's editorial rating for beginner value, documentation, and clear safety boundaries—not GitHub stars. Status and limitations were checked on `2026-08-29 UTC`.
+The stars are this project's editorial rating for beginner value, documentation, and clear safety boundaries, not GitHub stars. Other resources retain their `2026-08-29 UTC` status check. The three Personal Agent entries were checked on `2026-10-02 UTC`. They receive three stars as optional concrete product examples to compare, rather than required tools. These are untested reference/comparison examples. Ratings reflect documented teaching value, not hands-on product quality.
 
 <table>
   <thead><tr><th scope="col">Category</th><th scope="col">Entry／project</th><th scope="col">What it is</th><th scope="col">Good for</th><th scope="col">Status／terms</th><th scope="col">Know this first</th><th scope="col">Rating</th></tr></thead>
@@ -110,6 +120,11 @@ The stars are this project's editorial rating for beginner value, documentation,
     <tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>Cloud Chat surface</td><td>General questions, voice, and several work entry points</td><td>Available; commercial cloud service</td><td>It can still be wrong; use Human Review for high-impact output</td><td>⭐⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://gemini.google.com">Gemini</a></td><td>Google cloud Chat surface</td><td>Questions and eligible Google service connections</td><td>Available; commercial cloud service</td><td>Check activity and human review settings; do not add confidential data</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://perplexity.ai">Perplexity</a></td><td>Cloud search assistant with source links</td><td>Finding candidate sources and starting verification</td><td>Available; commercial cloud service</td><td>A citation is not proof; open each source</td><td>⭐⭐⭐⭐</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3">Personal Agents</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>Personal Agent product／official docs</td><td>For everyday users learning ongoing tasks and approval boundaries. Teaches goals, tools, and approval boundaries with fictional data.</td><td>Gradual rollout; commercial cloud service</td><td>Plan, age, region, and admin limits; your account may not have access yet</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>Personal Agent product／official introduction</td><td>For everyday users and small-business owners practicing cross-app drafts. Teaches cross-app drafting and human approval before actions.</td><td>Region-limited; commercial cloud service</td><td>US and Canada; Meta says publishing, sending, and spending require approval</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>Personal Agent product／official docs</td><td>For everyday users comparing ongoing tasks and shared data. Teaches ongoing tasks and shared-computer data boundaries.</td><td>Eligible-plan access; commercial cloud service</td><td>Eligible paid plan required; same-account Bots share files and logins</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">Official starter and safety guides</th><td><a href="https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively">OpenAI Prompt Guide</a></td><td>Official ChatGPT guidance</td><td>Clear, specific, iterative prompting</td><td>Current; official guidance</td><td>A good prompt cannot guarantee correctness; still verify</td><td>⭐⭐⭐⭐⭐</td></tr>
@@ -190,6 +205,7 @@ Common problems:
 - [ ] I know AI can Hallucinate, so I return to the Source for Human Review.
 - [ ] I do not paste Private Data into a service whose data policy I do not understand.
 - [ ] I keep an Approval Gate before sending, editing files, running commands, or another high-impact action.
+- [ ] I can distinguish a Personal Agent product from a model and check access and shared-data boundaries.
 
 Choose your next stop by need:
 
