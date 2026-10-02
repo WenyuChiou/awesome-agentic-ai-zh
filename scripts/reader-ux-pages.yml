@@ -2912,6 +2912,7 @@ pages:
       - core-terms
       - first-exercise
       - four-doors
+      - personal-agents
       - required-reading
       - resources
       - completion
@@ -2924,6 +2925,12 @@ pages:
       resource_url_ratings: true
       literals:
         - "2026-08-29"
+        - "2026-10-02"
+        - "2026-09-29"
+        - "2026-09-28"
+        - "Pro 100"
+        - "Pro 200"
+        - "Pro 500"
     required_visible_sections:
       purpose:
         zh-TW: {heading: "📌 這條路幫你做什麼", anchor: -這條路幫你做什麼}
@@ -2945,6 +2952,10 @@ pages:
         zh-TW: {heading: "🚪 按工作選四扇門", anchor: -按工作選四扇門}
         en: {heading: "🚪 Choose one of four doors for the job", anchor: -choose-one-of-four-doors-for-the-job}
         zh-Hans: {heading: "🚪 按工作选四扇门", anchor: -按工作选四扇门}
+      personal-agents:
+        zh-TW: {heading: "🧑 個人 Agent：先交代目標與邊界", anchor: -個人-agent先交代目標與邊界}
+        en: {heading: "🧑 Personal Agents: define the goal and boundaries first", anchor: -personal-agents-define-the-goal-and-boundaries-first}
+        zh-Hans: {heading: "🧑 个人 Agent：先说明目标与边界", anchor: -个人-agent先说明目标与边界}
       required-reading:
         zh-TW: {heading: "📖 必修閱讀", anchor: -必修閱讀}
         en: {heading: "📖 Required reading", anchor: -required-reading}
@@ -2959,7 +2970,7 @@ pages:
         zh-Hans: {heading: "✅ 完成检查与下一站", anchor: -完成检查与下一站}
     visible_section_minimums:
       required-reading: {min_links: 6}
-      resources: {min_links: 15, min_ratings: 15}
+      resources: {min_links: 18, min_ratings: 18}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: first-exercise
@@ -3001,7 +3012,7 @@ pages:
           zh-TW: {term: Approval Gate, label: "Approval Gate（人工核准關卡）"}
           en: {term: Approval Gate, label: Approval Gate}
           zh-Hans: {term: Approval Gate, label: "Approval Gate（人工批准关卡）"}
-    resource_group_rowspans: [4, 4, 4, 2, 1]
+    resource_group_rowspans: [4, 3, 4, 4, 2, 1]
 
   - id: public-resources
     canonical: RESOURCES.md

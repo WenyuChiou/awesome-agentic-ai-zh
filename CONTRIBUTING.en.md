@@ -77,6 +77,12 @@ A project worth listing must have:
 3. **Clear license**: MIT, Apache 2, BSD, or comparable. Avoid no-license repos.
 4. **Trustworthy maintainer**: well-known org, company, or individual with track record
 
+**Official AI tools from major vendors**: Official tools and documentation from established major vendors are exempt only from the 30-minute onboarding threshold above.
+Examples include official sources from OpenAI, Anthropic, Google, Meta, and xAI. This does not cover third-party wrappers or community repositories.
+
+Teaching purpose, current official sources, status, and access limits still need verification. If not tested hands-on, label them as official news / untested reference, not a verified hands-on recommendation.
+All other curation, licensing, safety, trilingual, and testing requirements still apply.
+
 The automated check merges duplicate links to the same repo, then checks whether it moved, was archived or disabled, and which SPDX license GitHub reports. No push in six months is only a prompt to look again: a stable project with teaching value may stay when its status is clear. If the GitHub API cannot answer, the result says “unverified”; it never pretends everything is healthy.
 
 ## Trilingual Style
