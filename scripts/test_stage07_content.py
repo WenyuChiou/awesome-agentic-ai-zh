@@ -256,6 +256,7 @@ ROUTE_MARKERS = {
 RESOURCE_URL_RATINGS = (
     ("https://www.anthropic.com/engineering/building-effective-agents", "⭐⭐⭐⭐⭐"),
     ("https://openai.github.io/openai-agents-python/multi_agent/", "⭐⭐⭐⭐⭐"),
+    ("https://developers.openai.com/api/docs/guides/responses-multi-agent", "⭐⭐⭐"),
     ("https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/", "⭐⭐⭐⭐"),
     ("https://github.com/langchain-ai/langgraph", "⭐⭐⭐⭐⭐"),
     ("https://platform.claude.com/docs/en/test-and-evaluate/develop-tests", "⭐⭐⭐⭐⭐"),
@@ -265,6 +266,7 @@ RESOURCE_URL_RATINGS = (
     ("https://github.com/Arize-ai/phoenix", "⭐⭐⭐⭐"),
     ("https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents", "⭐⭐⭐⭐⭐"),
     ("https://github.com/anthropics/claude-agent-sdk-python", "⭐⭐⭐⭐⭐"),
+    ("https://ai.google.dev/gemini-api/docs/antigravity-agent", "⭐⭐⭐"),
     ("https://github.com/deepseek-ai/deepseek-harness", "⭐⭐⭐"),
     ("https://openai.github.io/openai-agents-python/human_in_the_loop/", "⭐⭐⭐⭐⭐"),
     ("https://docs.langchain.com/oss/python/langgraph/interrupts", "⭐⭐⭐⭐⭐"),
@@ -499,7 +501,7 @@ def test_three_locales_have_the_same_external_urls_and_current_fact_sources() ->
 
 
 @pytest.mark.parametrize("page", PAGES.values())
-def test_resource_table_has_accessible_merged_groups_and_21_ratings(page: Path) -> None:
+def test_resource_table_has_accessible_merged_groups_and_23_ratings(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
     rated_tables = [table for table in tables if re.search(r"⭐{3,5}", table)]
@@ -507,7 +509,7 @@ def test_resource_table_has_accessible_merged_groups_and_21_ratings(page: Path) 
     table = rated_tables[0]
     assert len(re.findall(r'<th scope="col">', table)) == 5
     groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
-    expected = [4, 6, 6, 5]
+    expected = [5, 6, 7, 5]
     assert len(groups) == len(expected)
     for group, rows in zip(groups, expected):
         assert len(re.findall(r"<tr>", group)) == rows
@@ -593,3 +595,222 @@ def test_english_page_has_no_untranslated_cjk() -> None:
     text = PAGES["en"].read_text(encoding="utf-8")
     text = text.replace("繁體中文", "").replace("简体中文", "")
     assert re.search(r"[\u3400-\u9fff]", text) is None
+
+
+OPTIONAL_READING_CLAUSES = {
+    "zh-TW": {
+        "openai": (
+            "是 Beta。支援 GPT-6.1 Sol 與所有 GPT-5.6 模型。",
+            "有各自 context，但共用請求的模型與工具。這不等於 SDK 的 manager／handoff。",
+            "`max_concurrent_subagents` 預設為 3，計算整棵樹的活躍 subagent，不含 root。",
+            "並行設定、總數與樹深沒有固定上限；分工可能增加 token。",
+            "`max_tool_calls` 不支援。`reasoning.summary` 與 `/responses/compact` 也不支援。各 Agent 改用獨立的 server-side 自動 compaction。",
+            "Hosted collaboration 由 API 執行；自訂 function call 仍由應用程式執行。",
+            "Context 分開不代表工具權限隔離；應用程式仍須核准敏感工具，並限制成本與停止條件。",
+        ),
+        "google": (
+            "Antigravity 是 Public Preview。",
+            "`antigravity-preview-09-2026` 預設用 Gemini 3.8 Flash。",
+            "跨 interaction 保留的檔案。也有程式執行、自訂 function 與 remote MCP。",
+            "網路預設不限對外連線；先設 allowlist 與最小工具權限。",
+            "搜尋與 URL 擷取不代表 GUI 瀏覽器控制；目前 `computer_use` 不支援。",
+            "Google 文件說明：以 managed credential ID 引用秘密。Egress proxy 注入秘密，不暴露在 sandbox。",
+            "Agent 能使用所提供 credential 的完整權限範圍；只授予任務需要的最小範圍。",
+        ),
+    },
+    "en": {
+        "openai": (
+            "is in Beta for GPT-6.1 Sol and all GPT-5.6 models.",
+            "subagents with separate contexts. They share the request's model and tools; this is not SDK manager / handoff orchestration.",
+            "`max_concurrent_subagents` defaults to 3 active subagents across the tree and excludes the root.",
+            "Concurrency settings, total agents, and tree depth have no fixed cap; delegation can add tokens.",
+            "`max_tool_calls`, `reasoning.summary`, and `/responses/compact` are unsupported; server-side automatic compaction runs independently for each Agent.",
+            "The API executes hosted collaboration; your application executes custom function calls.",
+            "Separate contexts do not isolate tool permissions: the application must still approve sensitive tools and enforce budgets and stop conditions.",
+        ),
+        "google": (
+            "offers Antigravity in Public Preview.",
+            "`antigravity-preview-09-2026` defaults to Gemini 3.8 Flash.",
+            "files preserved across interactions, code execution, custom functions, and remote MCP.",
+            "Outbound network access is unrestricted by default; set an allowlist and minimal tool permissions.",
+            "Search and URL fetching do not imply GUI browser control; `computer_use` is unsupported.",
+            "Google's docs describe referencing secrets by managed credential ID: the egress proxy injects them without exposing them in the sandbox.",
+            "An Agent can use the full scope of a supplied credential; grant only the minimum scope needed.",
+        ),
+    },
+    "zh-Hans": {
+        "openai": (
+            "是 Beta。支持 GPT-6.1 Sol 与所有 GPT-5.6 模型。",
+            "有各自 context，但共用请求的模型与工具。这不等于 SDK 的 manager／handoff。",
+            "`max_concurrent_subagents` 默认为 3，计算整棵树的活跃 subagent，不含 root。",
+            "并行设置、总数与树深没有固定上限；分工可能增加 token。",
+            "`max_tool_calls` 不支持。`reasoning.summary` 与 `/responses/compact` 也不支持。各 Agent 改用独立的 server-side 自动 compaction。",
+            "Hosted collaboration 由 API 运行；自定义 function call 仍由应用程序运行。",
+            "Context 分开不代表工具权限隔离；应用程序仍须批准敏感工具，并限制成本与停止条件。",
+        ),
+        "google": (
+            "Antigravity 是 Public Preview。",
+            "`antigravity-preview-09-2026` 默认用 Gemini 3.8 Flash。",
+            "跨 interaction 保留的文件。也有程序运行、自定义 function 与 remote MCP。",
+            "网络默认不限对外连接；先设 allowlist 与最小工具权限。",
+            "搜索与 URL 获取不代表 GUI 浏览器控制；目前 `computer_use` 不支持。",
+            "Google 文档说明：以 managed credential ID 引用秘密。Egress proxy 注入秘密，不暴露在 sandbox。",
+            "Agent 能使用所提供 credential 的完整权限范围；只授予任务需要的最小范围。",
+        ),
+    },
+}
+
+
+def _assert_optional_reading_boundaries(text: str, locale: str) -> None:
+    # Scope the clauses to their provider's optional notes, so a correct phrase
+    # elsewhere cannot mask a reversed limit or execution responsibility here.
+    openai_start = text.index("- **" + OPTIONAL_READING_LABELS[locale])
+    google_start = text.index("- [Google Managed Agents]", openai_start)
+    notes_end = text.index("\n</details>", google_start)
+    for provider, notes in (
+        ("openai", text[openai_start:google_start]),
+        ("google", text[google_start:notes_end]),
+    ):
+        for clause in OPTIONAL_READING_CLAUSES[locale][provider]:
+            assert clause in notes, f"{locale}/{provider}: missing boundary: {clause}"
+
+
+OPTIONAL_READING_LABELS = {
+    "zh-TW": "選修官方文件",
+    "en": "Optional official docs",
+    "zh-Hans": "选修官方文档",
+}
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_optional_managed_readings_are_dated_and_keep_security_boundaries(
+    locale: str, page: Path
+) -> None:
+    text = page.read_text(encoding="utf-8")
+    visible = _without_closed_details(text)
+    assert "2026-10-02 UTC" in visible
+    assert "verified_on=2026-09-13" in text
+    assert "https://developers.openai.com/api/docs/guides/responses-multi-agent" in visible
+    assert "https://ai.google.dev/gemini-api/docs/antigravity-agent" in visible
+    assert "https://ai.google.dev/gemini-api/docs/agents" in text
+    _assert_optional_reading_boundaries(text, locale)
+    # The provider's orchestration is a reading option, not a new runnable path.
+    assert "client.beta.responses" not in text
+    assert "client.interactions.create" not in text
+    assert "Gemini 4 Argon" not in text
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+@pytest.mark.parametrize("provider", ("openai", "google"))
+def test_optional_boundary_checks_reject_direction_and_number_mutations(
+    locale: str, page: Path, provider: str
+) -> None:
+    text = page.read_text(encoding="utf-8")
+    # Exercise every requirement clause in memory without editing the checkout.
+    for clause in OPTIONAL_READING_CLAUSES[locale][provider]:
+        mutation = clause.replace("3 active", "13 active").replace("為 3，", "為 13，").replace("为 3，", "为 13，")
+        if mutation == clause:
+            mutation = clause.replace("unsupported", "supported").replace("不支援", "支援").replace("不支持", "支持")
+        if mutation == clause:
+            mutation = clause.replace("independently", "jointly").replace("獨立", "共同").replace("独立", "共同")
+        if mutation == clause:
+            mutation = clause[:-1] + " [reversed boundary]"
+        assert mutation != clause
+        with pytest.raises(AssertionError, match=f"{locale}/{provider}"):
+            _assert_optional_reading_boundaries(text.replace(clause, mutation), locale)
+
+
+
+def test_optional_resource_reviews_do_not_relabel_the_full_fact_pack() -> None:
+    import yaml
+
+    pack = yaml.safe_load(
+        (ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8")
+    )["stage07_fact_pack"]
+    assert pack["verified_on"] == "2026-09-13"
+    assert pack["resource_updates"] == {
+        "openai_responses_multi_agent": "2026-10-02",
+        "google_managed_agents": "2026-10-02",
+    }
+    assert pack["official_sources"]["openai_responses_multi_agent"] == (
+        "https://developers.openai.com/api/docs/guides/responses-multi-agent"
+    )
+    assert pack["official_sources"]["google_managed_agents"] == (
+        "https://ai.google.dev/gemini-api/docs/agents"
+    )
+    assert pack["official_sources"]["google_antigravity_agent"] == (
+        "https://ai.google.dev/gemini-api/docs/antigravity-agent"
+    )
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_new_official_reading_rows_state_audience_and_form(locale: str, page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    audience, form = {
+        "zh-TW": ("已完成單 Agent 者", "官方文件"),
+        "zh-Hans": ("已完成单 Agent 者", "官方文档"),
+        "en": ("Readers with a single-Agent baseline", "official docs"),
+    }[locale]
+    for url in ("https://developers.openai.com/api/docs/guides/responses-multi-agent", "https://ai.google.dev/gemini-api/docs/antigravity-agent"):
+        row = next(line for line in text.splitlines() if "<tr>" in line and f'href="{url}"' in line)
+        assert audience in row
+        assert form in row
+
+
+def _modified_chinese_prose(text: str, locale: str, scope: str) -> str:
+    if scope == "optional-notes":
+        start = text.index("- **" + OPTIONAL_READING_LABELS[locale])
+        return text[start:text.index("\n</details>", start)]
+    if scope == "intro":
+        start = text.index("-->", text.index("<!-- freshness:")) + 3
+        ending = "先記住上線順序" if locale == "zh-TW" else "先记住上线顺序"
+        return text[start:text.index(ending, start)]
+    assert scope == "receipt"
+    return next(paragraph for paragraph in text.split("\n\n") if "**execution receipt" in paragraph)
+
+
+def _assert_short_chinese_sentences(prose: str) -> None:
+    # Count visible sentences, excluding link destinations and Markdown
+    # decoration, while preserving exact technical identifier characters.
+    prose = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", prose)
+    prose = prose.replace("**", "").replace("`", "")
+    for line in prose.splitlines():
+        if line.startswith("#"):
+            continue
+        for sentence in re.split(r"(?<=[。！？])", line.lstrip("- ")):
+            if sentence.strip():
+                assert len(sentence.strip()) <= 60, sentence
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "zh-Hans"))
+@pytest.mark.parametrize("scope", ("optional-notes", "intro", "receipt"))
+def test_modified_chinese_prose_fits_written_sentence_style(locale: str, scope: str) -> None:
+    text = PAGES[locale].read_text(encoding="utf-8")
+    _assert_short_chinese_sentences(_modified_chinese_prose(text, locale, scope))
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "zh-Hans"))
+@pytest.mark.parametrize("scope", ("intro", "receipt"))
+def test_sentence_style_rejects_rejoined_intro_and_receipt(locale: str, scope: str) -> None:
+    text = PAGES[locale].read_text(encoding="utf-8")
+    prose = _modified_chinese_prose(text, locale, scope)
+    if scope == "intro":
+        boundary = "可恢復。這稱為" if locale == "zh-TW" else "可恢复。这称为"
+    else:
+        boundary = "**。記下" if locale == "zh-TW" else "**。记下"
+    assert boundary in prose
+    with pytest.raises(AssertionError):
+        _assert_short_chinese_sentences(prose.replace(boundary, boundary.replace("。", "，")))
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_new_reading_ratings_are_document_based_and_live_apis_are_untested(locale: str, page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    paragraph = next(line for line in text.splitlines() if "GitHub stars" in line and not line.startswith("<"))
+    basis, untested = {
+        "zh-TW": ("三星依文件教學價值", "未實跑 API"),
+        "zh-Hans": ("三星依文档教学价值", "未实跑 API"),
+        "en": ("Their ratings reflect documented teaching value", "they haven't been run against live APIs"),
+    }[locale]
+    assert basis in paragraph
+    assert untested in paragraph

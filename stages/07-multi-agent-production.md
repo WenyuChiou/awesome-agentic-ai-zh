@@ -4,13 +4,13 @@
 
 <!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-09-13; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
 
-這一關教你把 AI 幫手交給別人使用。它不能只在你面前偶爾成功；你還要能檢查它、看見它做過什麼、在危險動作前停下，並在出錯後安全繼續。
+先讓 AI 幫手可測、可看、可停、可恢復，再交給別人使用。
 
 ## 🎯 這一關在做什麼（先定位）
 
-本學習地圖把「讓 AI 幫手可以安心交給別人使用」的工作合稱為 **Agent Production Engineering（Agent 上線工程）**。它像把一台玩具車放到真正的馬路前，先補上方向盤、煞車和儀表板。本章用這個詞代表「讓 Agent 可測、可看、可停、可恢復」，不代表一定要服務很多人。
+讓 Agent 可測、可看、可停、可恢復。這稱為 **Agent Production Engineering（Agent 上線工程）**。像玩具車先裝方向盤、煞車與儀表板；不需大規模。
 
-全章只用一個故事：AI 幫手查三個來源、整理摘要，送出前先請人確認。你會逐步替它補上工作環境、重複節奏、分支路線、檢查方法和安全煞車。
+全章用一個故事：AI 幫手查三個來源、整理摘要，送出前先請人確認。
 
 先記住上線順序：
 
@@ -23,7 +23,7 @@
 | 會寄信、付款、刪除或寫入資料 | 在動作前停下來問人，並先保存進度 | 誰同意了，以及要從哪裡繼續 |
 | 前三項都能重跑並通過 | 才交給別人使用 | 系統是否正常、怎麼停止、怎麼回到舊版 |
 
-先把一個 AI 幫手做穩。只有工作真的能分開，或需要不同角色互相檢查時，才增加更多幫手。
+先做穩單一 Agent；需要獨立分工或互相檢查時，再加 Agent。
 
 <details markdown="1">
 <summary>⏱ 展開：時間、環境、費用與安全提醒</summary>
@@ -202,6 +202,13 @@ Agent Loop 負責「要不要再做一次」。Workflow Graph 負責「接下來
 - 不同部分真的能獨立工作，或必須由不同角色互查：才加入 Multi-Agent。
 - 一個 Graph 節點可以是 Agent、工具、固定程式或「等人核准」；不是每個格子都要放一個 Agent。
 
+- **選修官方文件**：[OpenAI Responses Multi-agent](https://developers.openai.com/api/docs/guides/responses-multi-agent) 是 Beta。支援 GPT-6.1 Sol 與所有 GPT-5.6 模型。模型自行分派 subagent；它們有各自 context，但共用請求的模型與工具。這不等於 SDK 的 manager／handoff。
+- `max_concurrent_subagents` 預設為 3，計算整棵樹的活躍 subagent，不含 root。並行設定、總數與樹深沒有固定上限；分工可能增加 token。`max_tool_calls` 不支援。`reasoning.summary` 與 `/responses/compact` 也不支援。各 Agent 改用獨立的 server-side 自動 compaction。
+- Hosted collaboration 由 API 執行；自訂 function call 仍由應用程式執行。Context 分開不代表工具權限隔離；應用程式仍須核准敏感工具，並限制成本與停止條件。
+- [Google Managed Agents](https://ai.google.dev/gemini-api/docs/agents) 的 Antigravity 是 Public Preview。`antigravity-preview-09-2026` 預設用 Gemini 3.8 Flash。提供受管 Linux sandbox 與跨 interaction 保留的檔案。也有程式執行、自訂 function 與 remote MCP。
+- 網路預設不限對外連線；先設 allowlist 與最小工具權限。搜尋與 URL 擷取不代表 GUI 瀏覽器控制；目前 `computer_use` 不支援。Sandbox 也不能取代本章的 Eval、核准與復原。
+- Google 文件說明：以 managed credential ID 引用秘密。Egress proxy 注入秘密，不暴露在 sandbox。Agent 能使用所提供 credential 的完整權限範圍；只授予任務需要的最小範圍。
+
 </details>
 
 <a id="-九個-eval-基礎積木先學會怎麼出考卷"></a>
@@ -377,9 +384,9 @@ python test.py
 4. 保存 checkpoint；模擬程式中斷後 resume。
 5. 用 idempotency key 證明同一次發布重跑也只寫入一次。
 
-最後輸出一張 **execution receipt（執行收據）**：task ID、Outcome、Trajectory、工具、來源、耗時、token、錯誤、checkpoint 版本與人工核准紀錄。先用 5 個 development cases 做 baseline，再把真實失敗逐步加進版本化 suite。若結果看起來退步，先重跑足夠 trials，確認是否超過預先寫好的門檻，再檢查失敗案例；不能因一次隨機失敗就直接判定整版不可部署。
+交出 **execution receipt（執行收據）**。記下 task ID、Outcome、Trajectory、工具與來源。再記耗時、token、錯誤、checkpoint 版本與人工核准。先用 5 個 development cases 做 baseline，再把真實失敗加入版本化 suite。結果變差時，重跑足夠 trials，比對預先門檻並檢查失敗案例；單次隨機失敗不等於已證實退步。
 
-單一 Agent 版本穩定後，才把「找資料」與「審查」拆成不同 Agent，比較品質、成本與延遲是否真的更好。
+單一 Agent 穩定後，才考慮拆出「找資料」與「審查」角色，比較品質、成本與延遲。
 
 ## 📊 Agent Benchmark Landscape：怎麼看，不要只看排行榜 + ⚠ Reward-Hacking 警告
 
@@ -412,17 +419,16 @@ python test.py
 
 ## 🎯 精選 Projects（範本 / SDK / 工具 collection）
 
-先按用途選一個，不要一次安裝全部。評分是本專案的教學適合度，不是 GitHub stars。
-
-以下 21 筆直接放在這裡，因為它們是讀者選工具時會回來看的路標。
+按用途選，星等不是 GitHub stars。兩份新文件供單 Agent baseline 後比較；三星依文件教學價值，未實跑 API。
 
 <table>
   <thead>
     <tr><th scope="col">分類</th><th scope="col">Project／文件</th><th scope="col">教學適合度</th><th scope="col">適合做什麼</th><th scope="col">先知道的限制</th></tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Orchestration／Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>先學簡單 workflow，再理解 Agent</td><td>是設計指南，不是可直接部署的框架</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Orchestration／Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>先學簡單 workflow，再理解 Agent</td><td>是設計指南，不是可直接部署的框架</td></tr>
     <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td>⭐⭐⭐⭐⭐</td><td>比較 manager 與 handoff</td><td>範例以 OpenAI Agents SDK 為主</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent（官方文件）</a></td><td>⭐⭐⭐</td><td>已完成單 Agent 者選讀：模型分派獨立任務</td><td>Beta；各自 context、共用模型與工具；不同於 SDK manager／handoff</td></tr>
     <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td>⭐⭐⭐⭐</td><td>順序、平行、handoff、群聊與人工核准</td><td>先確認套件版本與目前預覽狀態</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>⭐⭐⭐⭐⭐</td><td>需要 state、checkpoint 與 human-in-the-loop</td><td>抽象較多，第一個 Agent 不必從這裡開始</td></tr>
   </tbody>
@@ -435,7 +441,8 @@ python test.py
     <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td>⭐⭐⭐⭐⭐</td><td>一起檢查 Outcome、Trajectory 與 grader</td><td>案例仍要從自己的真實工作與失敗建立</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">Harness／Sandbox／Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>閱讀工具迴圈、權限與 subagent 實作</td><td>以 Claude runtime 為中心</td></tr>
+    <tr><th scope="rowgroup" rowspan="7">Harness／Sandbox／Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>閱讀工具迴圈、權限與 subagent 實作</td><td>以 Claude runtime 為中心</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent（官方文件）</a></td><td>⭐⭐⭐</td><td>已完成單 Agent 者選讀：sandbox、持久檔案與 code</td><td>Public Preview；網路與工具權限仍須限制，不能自動保證安全</td></tr>
     <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>閱讀 plugin-based harness 架構</td><td>Developer preview；可能有破壞性變更</td></tr>
     <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td>⭐⭐⭐⭐⭐</td><td>暫停敏感工具、保存 RunState 並 resume</td><td>保存的 state 也可能含 context 與 runtime metadata，要按敏感資料管理</td></tr>
     <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td>⭐⭐⭐⭐⭐</td><td>核准、checkpoint、resume 與冪等副作用</td><td>production 要使用 durable checkpointer，不能只靠記憶體</td></tr>
@@ -451,7 +458,7 @@ python test.py
   </tbody>
 </table>
 
-<small>資料查核：2026-09-13 UTC</small>
+<small>既有查核：2026-09-13 UTC；新文件查核：2026-10-02 UTC</small>
 
 ## ✅ Stage 7 之後的自我檢查
 
