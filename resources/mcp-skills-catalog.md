@@ -657,7 +657,7 @@ Observability 工具能看見 trace 與 log；不要把 secret、個資或完整
 **適合誰**：用 Grafana 看 metric 的 SRE / DevOps。
 **備註**：「dashboard 那條線為什麼掉？」直接問，LLM 撈 metric 給答案。
 
-### [getsentry/sentry-mcp](https://github.com/getsentry/sentry-mcp) ⭐⭐⭐⭐
+### [getsentry/toolkit](https://github.com/getsentry/toolkit) ⭐⭐⭐⭐
 
 | 欄位 | 內容 |
 |---|---|
@@ -667,6 +667,7 @@ Observability 工具能看見 trace 與 log；不要把 secret、個資或完整
 **教什麼**：從 LLM 查 Sentry error event、issue、trace。
 **適合誰**：用 Sentry 接 production error 的工程師。
 **備註**：「上週這個 error 的 stack trace 給我看」直接問 Claude Code。
+原 `getsentry/sentry-mcp` 已改名為 `getsentry/toolkit`。這是同一個專案（2026-10-02 核對）。Sentry MCP 的名稱仍是 `sentry-mcp`，套件仍是 `@sentry/mcp-server`。
 
 ### [winor30/mcp-server-datadog](https://github.com/winor30/mcp-server-datadog) ⭐⭐⭐
 

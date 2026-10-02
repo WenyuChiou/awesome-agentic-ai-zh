@@ -380,6 +380,40 @@ def test_catalog_entry_urls_and_editorial_ratings_match_in_all_locales() -> None
         assert "YIELD INTELLIGENCE" not in text
 
 
+@pytest.mark.parametrize("locale,page", TRIOS["catalog"].items())
+def test_sentry_catalog_uses_canonical_repo_and_preserves_mcp_identity(
+    locale: str, page: Path,
+) -> None:
+    text = page.read_text(encoding="utf-8")
+    heading = "### [getsentry/toolkit](https://github.com/getsentry/toolkit) ⭐⭐⭐⭐"
+    assert text.count(heading) == 1, page
+    assert "https://github.com/getsentry/sentry-mcp" not in text, page
+    entry = text.split(heading, 1)[1].split("\n### ", 1)[0]
+    assert "| License | NOASSERTION |" in entry
+    assert "`getsentry/sentry-mcp`" in entry
+    assert "`sentry-mcp`" in entry
+    assert "`@sentry/mcp-server`" in entry
+    assert "2026-10-02" in entry
+    facts = {
+        "zh-TW": (
+            "同一個專案", "Sentry MCP", "從 LLM 查 Sentry error event、issue、trace",
+            "用 Sentry 接 production error 的工程師", "⭐⭐⭐⭐（**Sentry 官方**）",
+        ),
+        "en": (
+            "same project", "Sentry MCP", "query Sentry error events / issues / traces from LLMs",
+            "engineers using Sentry for production errors", "⭐⭐⭐⭐ (**Sentry official**)",
+        ),
+        "zh-Hans": (
+            "同一个项目", "Sentry MCP", "从 LLM 查 Sentry error event、issue、trace",
+            "用 Sentry 接 production error 的工程师", "⭐⭐⭐⭐（**Sentry 官方**）",
+        ),
+    }
+    assert all(fact in entry for fact in facts[locale]), page
+    if locale in {"zh-TW", "zh-Hans"}:
+        note = next(line for line in entry.splitlines() if line.startswith("原 `"))
+        assert all(len(sentence.replace("`", "")) <= 60 for sentence in note.split("。")), page
+
+
 def test_catalog_rejects_volatile_rankings_counts_and_fixed_model_roles() -> None:
     for page in TRIOS["catalog"].values():
         text = page.read_text(encoding="utf-8")
