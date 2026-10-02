@@ -82,7 +82,17 @@
 
 如果你只想聊天，不需要安装 CLI Agent 或本地 Runtime。想学命令行时再去 [Track A 第一站](../tracks/cli/A1-cli-intro.zh-Hans.md)；想了解模型时再去 [Stage 1](../stages/01-llm-basics.zh-Hans.md)。
 
-**个人 Agent（Personal Agent）** 是你交代目标后，能跨工具帮你完成多步骤工作的助手，例如先查资料、写草稿，再拿回来请你确认。[Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) 是一个例子，于 2026-09-22 核查时正在美国逐步开放；它在发信或购买等重要动作前会请求批准。Muse 是产品，不等于 Muse Spark 模型，也不等于在终端工作的 Muse Code。先看它会连接哪些账号、获得什么权限；“会自己做事”不等于可以跳过人工检查。
+## 🧑 个人 Agent：先说明目标与边界
+
+<small>个人 Agent 产品核查：2026-10-02 UTC</small>
+
+**个人 Agent（Personal Agent）** 是能跨工具完成多步骤工作的助手。你先说明目标，它先查资料、写草稿，再拿回来请你确认。这类产品把模型、工具与权限放在一起。产品名称不是底层模型名称，也不是新的升级等级。
+
+- [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持续工作的云助手，有自己的云电脑与浏览器。你关掉电脑后仍能继续。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)说明了逐步开放。Pro 100、Pro 200、Pro 500 限超过 18 岁。也限在欧洲经济区、英国与瑞士以外。Business Premium、Enterprise 在全球逐步开放。Enterprise 须由管理员启用。符合方案不代表账号已经获得功能。
+- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的云电脑跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)确认美国与加拿大可用。也加入商务 skills 与 connectors。Meta 表示发布、发送与花费须先取得你的批准。Muse 是产品；Muse Spark 是模型。Muse Code 是在终端工作的 coding agent。
+- [Grok Bot](https://docs.x.ai/grok-bot/overview)：使用持续保留状态的云电脑。它能用浏览器、文件与终端做事。需付费 Cursor 方案或连接符合资格的 SuperGrok 方案。同一账号的 Bots 共享电脑、文件、浏览器会话与 App 登录。不能把它们当成彼此隔离。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 public beta。此 public beta 支持 Teams 与 Enterprise 方案。可共享 skills、工具并在 Slack 协作。Grok Bot 是产品，不是 Grok 模型名称。也不是用于编程的 [Grok Build](https://docs.x.ai/build/overview)。
+
+第一次仍用上面的虚构消息，先不要连接账号。需要跨工具时，再限定它能读取什么、能修改什么，以及何时必须停下来请你批准。发出、发布、删除文件或付款前保留 **Approval Gate**。“持续工作”不代表可以跳过人工检查。
 
 <a id="必修阅读"></a>
 ## 📖 必读
@@ -101,7 +111,7 @@
 <a id="-精选-projects"></a>
 ## ⭐ 精选 Projects 与学习资源
 
-星级是本项目依“初学者价值、文档质量与安全边界”给出的编辑评分，不是 GitHub stars。状态与限制核查于 `2026-08-29 UTC`。
+星级依“初学者价值、文档质量与安全边界”给分。不是 GitHub stars。其他资源的状态与限制核查于 `2026-08-29 UTC`。个人 Agent 三个入口核查于 `2026-10-02 UTC`。三星代表可选的具体产品示例，适合互相对照。它们是未实测的参考／对照示例，不是必修工具。评分依官方文档的教学价值，不代表产品的实测质量。
 
 <table>
   <thead><tr><th scope="col">分类</th><th scope="col">入口／项目</th><th scope="col">它是什么</th><th scope="col">适合做什么</th><th scope="col">状态／授权</th><th scope="col">先知道的限制</th><th scope="col">评分</th></tr></thead>
@@ -110,6 +120,11 @@
     <tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>云端 Chat surface</td><td>一般问答、语音与多种工作入口</td><td>正式可用；商业云服务</td><td>仍会出错；高影响结果要 Human Review</td><td>⭐⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://gemini.google.com">Gemini</a></td><td>Google 的云端 Chat surface</td><td>问答与符合资格的 Google 服务连接</td><td>正式可用；商业云服务</td><td>先看 activity 与人工审查设置，不放机密数据</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://perplexity.ai">Perplexity</a></td><td>带来源入口的云端搜索助手</td><td>找候选来源并建立查证起点</td><td>正式可用；商业云服务</td><td>引用不等于内容正确；要逐一打开来源</td><td>⭐⭐⭐⭐</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3">个人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想学持续任务与批准边界的日常用户。教什么：先用虚构数据学习目标、工具与批准边界。</td><td>逐步开放；商业云服务</td><td>依方案、年龄、地区与管理员设置；账号可能尚未开放</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>个人 Agent 产品／官方介绍</td><td>适合谁：想练跨 App 草拟的日常用户与小商家。教什么：学跨 App 草拟与行动前人工批准。</td><td>限区可用；商业云服务</td><td>美国与加拿大；Meta 表示发布、发送与花费须批准</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想比较持续任务与共享数据的日常用户。教什么：学持续任务与共享电脑的数据边界。</td><td>符合资格方案可用；商业云服务</td><td>需符合资格的付费方案；同账号 Bots 共享文件与登录</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">官方入门与安全指南</th><td><a href="https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively">OpenAI Prompt Guide</a></td><td>ChatGPT 官方指南</td><td>学清楚、具体与逐步改写 Prompt</td><td>现行；官方指南</td><td>好 Prompt 不能保证正确，仍要查证</td><td>⭐⭐⭐⭐⭐</td></tr>
@@ -190,6 +205,7 @@ CLI Agent 的安全起手式：
 - [ ] 我知道 AI 会生成 Hallucination，会回到 Source 做 Human Review。
 - [ ] 我不会把 Private Data 直接贴进数据政策不清楚的服务。
 - [ ] 寄出、改档、执行命令或其他高影响动作前，我会保留 Approval Gate。
+- [ ] 我能分清个人 Agent 产品与模型，也会检查可用性及共享数据范围。
 
 下一站依你的需要选：
 
