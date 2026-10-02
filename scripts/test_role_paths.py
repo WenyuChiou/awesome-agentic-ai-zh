@@ -162,6 +162,9 @@ RESOURCE_PAIRS = {
         ("https://chatgpt.com", "⭐⭐⭐⭐⭐"),
         ("https://gemini.google.com", "⭐⭐⭐⭐"),
         ("https://perplexity.ai", "⭐⭐⭐⭐"),
+        ("https://learn.chatgpt.com/docs/dots", "⭐⭐⭐"),
+        ("https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/", "⭐⭐⭐"),
+        ("https://docs.x.ai/grok-bot/overview", "⭐⭐⭐"),
         ("https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively", "⭐⭐⭐⭐⭐"),
         ("https://support.claude.com/en/articles/8114491-get-started-with-claude", "⭐⭐⭐⭐⭐"),
         ("https://help.openai.com/en/articles/11487775-connectors-in", "⭐⭐⭐⭐⭐"),
@@ -181,7 +184,7 @@ ROWGROUPS = {
     "developer": (4, 6, 2, 2),
     "teacher": (3, 3, 3, 3),
     "knowledge-worker": (4, 4, 2, 3, 2),
-    "everyday-user": (4, 4, 4, 2, 1),
+    "everyday-user": (4, 3, 4, 4, 2, 1),
 }
 
 VISIBLE_STARTING_URLS = {
@@ -298,10 +301,13 @@ VISIBLE_LANDMARKS = {
     "developer": ("## 📌", "## 🎯", "## 🧩", "## 🛠", "## 📚", "## 📖", "## ⭐", "## ✅"),
     "teacher": ("## 📌", "## 🎯", "## 🧩", "## 🛡", "## 🛠", "## 📚", "## ⭐", "## ✅"),
     "knowledge-worker": ("## 📌", "## 🎯", "## 🧩", "## 🛠", "## 📚", "## 📖", "## ⭐", "## ✅"),
-    "everyday-user": ("## 📌", "## 🎯", "## 🧩", "## 🛠", "## 🚪", "## 📖", "## ⭐", "## ✅"),
+    "everyday-user": ("## 📌", "## 🎯", "## 🧩", "## 🛠", "## 🚪", "## 🧑", "## 📖", "## ⭐", "## ✅"),
 }
 
 RESOURCE_STATUS = {
+    "https://learn.chatgpt.com/docs/dots": "commercial",
+    "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/": "limited",
+    "https://docs.x.ai/grok-bot/overview": "commercial",
     "https://notebooklm.google.com/": "available",
     "https://www.zotero.org/": "available",
     "https://github.com/Future-House/paper-qa": "active",
@@ -383,6 +389,9 @@ STATUS_TOKENS = {
 }
 
 RESOURCE_LICENSE_OR_SERVICE = {
+    "https://learn.chatgpt.com/docs/dots": {"zh-TW": "商業雲端服務", "en": "commercial cloud service", "zh-Hans": "商业云服务"},
+    "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/": {"zh-TW": "商業雲端服務", "en": "commercial cloud service", "zh-Hans": "商业云服务"},
+    "https://docs.x.ai/grok-bot/overview": {"zh-TW": "商業雲端服務", "en": "commercial cloud service", "zh-Hans": "商业云服务"},
     "https://notebooklm.google.com/": {"zh-TW": "雲端服務", "en": "cloud service", "zh-Hans": "云服务"},
     "https://www.zotero.org/": {"zh-TW": "桌面", "en": "desktop", "zh-Hans": "桌面"},
     "https://github.com/Future-House/paper-qa": "Apache-2.0",
@@ -455,6 +464,9 @@ RESOURCE_LICENSE_OR_SERVICE = {
 }
 
 RESOURCE_LIMIT_TOKENS = {
+    "https://learn.chatgpt.com/docs/dots": {"zh-TW": "方案", "en": "plan", "zh-Hans": "方案"},
+    "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/": {"zh-TW": "批准", "en": "approval", "zh-Hans": "批准"},
+    "https://docs.x.ai/grok-bot/overview": {"zh-TW": "共用", "en": "share", "zh-Hans": "共享"},
     "https://notebooklm.google.com/": {"zh-TW": "citation", "en": "citations", "zh-Hans": "引用"},
     "https://www.zotero.org/": {"zh-TW": "研究品質", "en": "research quality", "zh-Hans": "研究质量"},
     "https://github.com/Future-House/paper-qa": {"zh-TW": "評測", "en": "evaluate", "zh-Hans": "评测"},
@@ -1027,14 +1039,115 @@ def test_everyday_user_uses_four_job_based_doors_not_an_upgrade_ladder(locale: s
         assert url in visible
 
 
-@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
-def test_everyday_user_explains_muse_product_separately_from_models(locale: str) -> None:
+def _personal_agent_section(locale: str) -> str:
     visible = _without_details(PAGES["everyday-user"][locale].read_text(encoding="utf-8"))
-    assert "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/" in visible
-    for term in ("Muse", "Muse Spark", "Muse Code"):
-        assert term in visible
-    assert re.search(r"美國|美国|United States|U.S.", visible, re.IGNORECASE)
-    assert re.search(r"逐步|rollout|rolling", visible, re.IGNORECASE)
+    return visible[visible.index("## 🧑"):visible.index("## 📖")]
+
+
+def _personal_agent_bullet(locale: str, provider_url: str) -> str:
+    section = _personal_agent_section(locale)
+    bullets = [line for line in section.splitlines() if line.startswith("- [") and f"]({provider_url})" in line]
+    assert len(bullets) == 1, (locale, provider_url)
+    return bullets[0]
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
+def test_everyday_user_personal_agents_are_visible_products_with_scoped_verification(locale: str) -> None:
+    text = PAGES["everyday-user"][locale].read_text(encoding="utf-8")
+    section = _personal_agent_section(locale)
+    for term in ("Personal Agent", "dots", "Muse", "Muse Spark", "Muse Code", "Grok Bot", "Grok Build", "Approval Gate", "2026-10-02 UTC"):
+        assert term in section, (locale, term)
+    for url in (
+        "https://learn.chatgpt.com/docs/dots",
+        "https://learn.chatgpt.com/docs/whats-new/devday-2026",
+        "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
+        "https://about.fb.com/news/2026/09/introducing-muse-small-business/",
+        "https://docs.x.ai/grok-bot/overview",
+        "https://docs.x.ai/build/overview",
+        "https://x.ai/news/team-bots",
+    ):
+        assert url in section, (locale, url)
+    assert FRESHNESS["everyday-user"] in text
+    assert "2026-09-22" not in text
+    assert "GraphBOT" not in text and "GraphBot" not in text
+    localized = {
+        "zh-TW": ("產品", "模型", "虛構", "先不要連接帳號"),
+        "en": ("products", "model", "fictional", "without connecting accounts"),
+        "zh-Hans": ("产品", "模型", "虚构", "先不要连接账号"),
+    }[locale]
+    assert all(term in section for term in localized)
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
+def test_everyday_user_dots_keeps_rollout_plan_age_region_and_admin_limits(locale: str) -> None:
+    bullet = _personal_agent_bullet(locale, "https://learn.chatgpt.com/docs/dots")
+    for term in ("Pro 100", "Pro 200", "Pro 500", "Business Premium", "Enterprise"):
+        assert term in bullet, (locale, term)
+    required = {
+        "zh-TW": (
+            "持續工作的雲端助手", "自己的雲端電腦與瀏覽器", "逐步開放",
+            "限超過 18 歲", "在歐洲經濟區、英國與瑞士以外",
+            "Business Premium、Enterprise 在全球逐步開放",
+            "Enterprise 須由管理員啟用", "符合方案不代表帳號已收到功能",
+        ),
+        "en": (
+            "always-on cloud assistant", "own cloud computer and browser", "gradual rollout",
+            "require users over 18 outside the European Economic Area, United Kingdom, and Switzerland",
+            "Business Premium and Enterprise are rolling out worldwide",
+            "Enterprise needs administrator enablement", "An eligible plan does not mean your account has access yet",
+        ),
+        "zh-Hans": (
+            "持续工作的云助手", "自己的云电脑与浏览器", "逐步开放",
+            "限超过 18 岁", "在欧洲经济区、英国与瑞士以外",
+            "Business Premium、Enterprise 在全球逐步开放",
+            "Enterprise 须由管理员启用", "符合方案不代表账号已经获得功能",
+        ),
+    }[locale]
+    assert all(term in bullet for term in required), locale
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
+def test_everyday_user_muse_keeps_canada_business_update_and_action_approval(locale: str) -> None:
+    bullet = _personal_agent_bullet(locale, "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/")
+    for term in ("2026-09-29", "Muse for Small Business", "skills", "connectors"):
+        assert term in bullet, (locale, term)
+    required = {
+        "zh-TW": ("確認美國與加拿大可用", "Meta 表示發布、傳送與花費須先取得你的批准", "Muse 是產品；Muse Spark 是模型", "Muse Code 是在終端機工作的 coding agent"),
+        "en": ("confirms US and Canada access", "Meta says publishing, sending, and spending require your approval", "Muse is the product; Muse Spark is a model", "Muse Code is a terminal coding agent"),
+        "zh-Hans": ("确认美国与加拿大可用", "Meta 表示发布、发送与花费须先取得你的批准", "Muse 是产品；Muse Spark 是模型", "Muse Code 是在终端工作的 coding agent"),
+    }[locale]
+    assert all(term in bullet for term in required), locale
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
+def test_everyday_user_grok_bot_keeps_shared_computer_and_team_beta_boundaries(locale: str) -> None:
+    bullet = _personal_agent_bullet(locale, "https://docs.x.ai/grok-bot/overview")
+    required = {
+        "zh-TW": (
+            "持續保留狀態的雲端電腦", "瀏覽器、檔案與終端機",
+            "需付費 Cursor 方案或連結符合資格的 SuperGrok 方案",
+            "同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入，不能當成彼此隔離",
+            "2026-09-28 Team Bots 更新", "Teams、Enterprise 的 public beta", "共用 skills、工具並在 Slack 協作",
+            "Grok Bot 是產品，不是 Grok 模型名稱", "不是寫程式用的 [Grok Build]",
+        ),
+        "en": (
+            "browser, files, and terminal on a persistent cloud computer",
+            "access needs a paid Cursor plan or an eligible linked SuperGrok plan",
+            "Bots on the same account share the computer, files, browser sessions, and app logins, so do not treat them as isolated from one another",
+            "2026-09-28 Team Bots update", "public beta for Teams and Enterprise", "shared skills and tools and Slack collaboration",
+            "Grok Bot is a product, not a Grok model name or the coding agent [Grok Build]",
+        ),
+        "zh-Hans": (
+            "持续保留状态的云电脑", "浏览器、文件与终端",
+            "需付费 Cursor 方案或连接符合资格的 SuperGrok 方案",
+            "同一账号的 Bots 共享电脑、文件、浏览器会话与 App 登录，不能把它们当成彼此隔离",
+            "2026-09-28 Team Bots 更新", "Teams、Enterprise 的 public beta", "共享 skills、工具并在 Slack 协作",
+            "Grok Bot 是产品，不是 Grok 模型名称", "不是用于编程的 [Grok Build]",
+        ),
+    }[locale]
+    assert all(term in bullet for term in required), locale
+    row = _row_for_url(PAGES["everyday-user"][locale].read_text(encoding="utf-8"), "https://docs.x.ai/grok-bot/overview")
+    assert "beta" not in row.casefold()  # The September update qualifies Team Bots specifically.
 
 
 @pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
