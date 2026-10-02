@@ -148,3 +148,12 @@ tr {
 .table-scroll-region {
   overflow: visible;
 }
+
+/* Wide source tables keep their original font and natural column widths. */
+@page release-wide {
+  size: A4 landscape;
+}
+
+table.release-wide-table {
+  page: release-wide;
+}
