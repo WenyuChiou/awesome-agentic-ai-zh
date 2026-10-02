@@ -373,7 +373,7 @@ courses_fact_pack:
     hugging_face_agents: 'https://huggingface.co/learn/agents-course'
     microsoft_agents_for_beginners: 'https://github.com/microsoft/ai-agents-for-beginners'
     deeplearning_ai_agentic_ai: 'https://www.deeplearning.ai/courses/agentic-ai/'
-    wandb_agents: 'https://wandb.ai/site/courses/agents/'
+    # W&B Agents temporarily removed 2026-10-02: old URL returned 404; replacement could not be opened.
     claude_academy: 'https://academy.claude.com/'
     claude_academy_faq: 'https://academy.claude.com/help/faq'
     langchain_academy: 'https://academy.langchain.com/courses/intro-to-langgraph'

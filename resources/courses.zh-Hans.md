@@ -28,7 +28,6 @@
 | 想看大量可执行代码 | [Microsoft AI Agents for Beginners](https://github.com/microsoft/ai-agents-for-beginners) | 每课都有文字、视频和代码；但示例偏向 Microsoft Agent Framework。 |
 | 想读完整的中文教材 | [Datawhale Hello-Agents](https://github.com/datawhalechina/hello-agents) | 从原理一路讲到 RAG、Multi-Agent、MCP 和部署。 |
 | 想先学不绑定框架的设计方法 | [DeepLearning.AI Agentic AI](https://www.deeplearning.ai/courses/agentic-ai/) | 从零实践 reflection、tool use、planning、eval 和 multi-agent。 |
-| 想补上观测和评估 | [W&B AI Engineering: Agents](https://wandb.ai/site/courses/agents/) | 把 accuracy、latency 和 cost 一起放进可重复运行的 Eval。 |
 | 已经决定使用 Claude／LangGraph | [Claude Academy](https://academy.claude.com/)／[LangChain Academy](https://academy.langchain.com/courses/intro-to-langgraph) | 直接学习供应商的现行工具；记得把通用概念和产品按钮分开。 |
 | 主要目标是系列证书 | [IBM](https://www.coursera.org/professional-certificates/ibm-rag-and-agentic-ai)／[Vanderbilt](https://www.coursera.org/specializations/ai-agents) | 这是较长的付费系列课程；先确认费用、语言和项目是否符合需要。 |
 
@@ -46,8 +45,7 @@
     <tr><td><a href="https://github.com/datawhalechina/hello-agents">Datawhale — Hello-Agents</a></td><td>简体中文；免费开源</td><td>从 Agent 原理和经典 pattern，一路做到 RAG、记忆、Multi-Agent、MCP 和完整项目。</td><td>没有 Certificate of Completion；章节很多，请按自己的问题选读，不必一次读完。</td><td>⭐⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">构建与上线</th><td><a href="https://www.deeplearning.ai/courses/agentic-ai/">DeepLearning.AI — Agentic AI</a></td><td>英文；视频可免费旁听</td><td>从零实践 reflection、tool use、planning、Multi-Agent、错误分析和 component Eval。</td><td>测验、graded assignments 和证书需要 Pro；免费旁听不包含证书。</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://wandb.ai/site/courses/agents/">Weights &amp; Biases — AI Engineering: Agents</a></td><td>英文；免费</td><td>制作 deterministic workflow、单 Agent、记忆、Multi-Agent 和 accuracy／latency／cost Eval。</td><td>约两小时；当前公开页面没有明确说明证书条件，注册前不要先假定一定会发证。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">构建与上线</th><td><a href="https://www.deeplearning.ai/courses/agentic-ai/">DeepLearning.AI — Agentic AI</a></td><td>英文；视频可免费旁听</td><td>从零实践 reflection、tool use、planning、Multi-Agent、错误分析和 component Eval。</td><td>测验、graded assignments 和证书需要 Pro；免费旁听不包含证书。</td><td>⭐⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://academy.claude.com/">Claude Academy</a></td><td>英文；免费</td><td>按需要学习 Claude API、Claude Code、MCP、Agent Skills 和 Subagents。</td><td>通过课程 quiz 可以取得免费完成徽章；这是 Claude 产品路线，不取代通用 Agent 基础。</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://academy.langchain.com/courses/intro-to-langgraph">LangChain Academy — Introduction to LangGraph</a></td><td>英文；免费</td><td>实践 graph、state、memory、HITL、subgraph、deployment 和 long-term memory。</td><td>偏向 LangGraph／LangSmith；当前公开课程页面没有清楚列出证书门槛。</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://www.kaggle.com/learn-guide/5-day-agents">Google × Kaggle — 5-Day AI Agents Intensive</a></td><td>英文；免费自学</td><td>通过模型、工具、orchestration、memory 和 Eval 理解 Agent，然后完成 capstone。</td><td>原本是限时 intensive，现在作为自学 guide 使用；不要把 cohort 活动资格当成永久证书。</td><td>⭐⭐⭐⭐</td></tr>
@@ -97,6 +95,8 @@ Agent 可以使用的工具：
 - 不列入只有营销页面、无法确认课程大纲，或把一般完成证书包装成执照的项目。
 - repository 的 stars 只用来发现社区关注度，不写进正文；维护状态要看是否封存、最近更新和现行文档。
 - 费用、证书或 cohort 发生变化时，三种语言和测试要一起更新。
+
+- 2026-10-02：W&B AI Engineering: Agents 暂时移出现行推荐。旧入口返回 404，新入口目前无法打开。这不代表永久停课；确认可用的官方课程入口后再评估。
 
 </details>
 

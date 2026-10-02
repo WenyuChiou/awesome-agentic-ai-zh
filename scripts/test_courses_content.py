@@ -31,7 +31,6 @@ COURSE_PAIRS = (
     ("https://github.com/microsoft/ai-agents-for-beginners", "⭐⭐⭐⭐⭐"),
     ("https://github.com/datawhalechina/hello-agents", "⭐⭐⭐⭐⭐"),
     ("https://www.deeplearning.ai/courses/agentic-ai/", "⭐⭐⭐⭐⭐"),
-    ("https://wandb.ai/site/courses/agents/", "⭐⭐⭐⭐"),
     ("https://academy.claude.com/", "⭐⭐⭐⭐"),
     ("https://academy.langchain.com/courses/intro-to-langgraph", "⭐⭐⭐⭐"),
     ("https://www.kaggle.com/learn-guide/5-day-agents", "⭐⭐⭐⭐"),
@@ -51,7 +50,6 @@ EXTERNAL_URLS = (
     "https://github.com/microsoft/ai-agents-for-beginners",
     "https://github.com/datawhalechina/hello-agents",
     "https://www.deeplearning.ai/courses/agentic-ai/",
-    "https://wandb.ai/site/courses/agents/",
     "https://academy.claude.com/",
     "https://academy.langchain.com/courses/intro-to-langgraph",
     "https://www.coursera.org/professional-certificates/ibm-rag-and-agentic-ai",
@@ -155,12 +153,12 @@ def test_two_secondary_disclosures_are_closed_and_render_markdown(page: Path) ->
     assert not re.search(r"<details\b[^>]*\bopen\b", text)
 
 
-def test_course_table_has_twelve_rated_rows_and_four_real_rowgroups() -> None:
+def test_course_table_has_eleven_rated_rows_and_four_real_rowgroups() -> None:
     for page in PAGES.values():
         table = _course_table(page.read_text(encoding="utf-8"))
         groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
         assert len(groups) == 4
-        for group, row_count in zip(groups, (3, 5, 2, 2)):
+        for group, row_count in zip(groups, (3, 4, 2, 2)):
             assert len(re.findall(r"<tr>", group)) == row_count
             assert group.count('scope="rowgroup"') == 1
             assert f'rowspan="{row_count}"' in group
@@ -189,7 +187,6 @@ def test_course_certificate_and_availability_facts_remain_honest(locale: str) ->
             "Unit 1 測驗達 80%",
             "沒有完成證書；現行範例偏 Microsoft Agent Framework",
             "測驗、graded assignments 與證書需要 Pro",
-            "現行公開頁未明示證書條件",
             "通過課程 quiz 可取得免費完成徽章",
             "目前可免費啟用",
             "需符合官方列出的身分文件條件",
@@ -200,7 +197,6 @@ def test_course_certificate_and_availability_facts_remain_honest(locale: str) ->
             "A score of 80% on the Unit 1 quiz",
             "No Certificate of Completion; the current examples lean toward Microsoft Agent Framework",
             "the certificate require Pro",
-            "current public page does not clearly state certificate requirements",
             "Passing the course quiz can earn a free completion badge",
             "currently available to activate for free",
             "identity-document conditions listed by the official site",
@@ -211,7 +207,6 @@ def test_course_certificate_and_availability_facts_remain_honest(locale: str) ->
             "Unit 1 测验达到 80%",
             "没有 Certificate of Completion；现行示例偏向 Microsoft Agent Framework",
             "测验、graded assignments 和证书需要 Pro",
-            "当前公开页面没有明确说明证书条件",
             "通过课程 quiz 可以取得免费完成徽章",
             "目前可以免费启用",
             "需符合官方网站列出的身份证明文件条件",
@@ -289,10 +284,42 @@ def test_readme_router_and_maintainer_docs_describe_the_new_course_shape() -> No
 
     design = (ROOT / "stages/DESIGN.md").read_text(encoding="utf-8")
     assert "### 課程地圖固定結構" in design
-    assert "`3／5／2／2`" in design
+    assert "`3／4／2／2`" in design
     assert "一列只放一個主課程 URL" in design
     assert "不做證書排行榜" in design
 
     testing_plan = (ROOT / "docs/TESTING_PLAN.md").read_text(encoding="utf-8")
     assert "### Course map — learn first, certificate second" in testing_plan
     assert "`scripts/test_courses_content.py`" in testing_plan
+
+
+@pytest.mark.parametrize("locale", PAGES)
+def test_unavailable_wandb_course_is_not_an_active_recommendation(locale: str) -> None:
+    text = PAGES[locale].read_text(encoding="utf-8")
+    visible = _without_details(text)
+    assert "W&B AI Engineering: Agents" not in visible
+    assert "Weights &amp; Biases — AI Engineering: Agents" not in visible
+    assert "https://wandb.ai/site/courses/agents/" not in text
+    assert "https://www.wandb.courses/courses/agents" not in text
+    # Retain the temporary access qualification in the existing maintenance disclosure.
+    note = {
+        "zh-TW": "這不代表永久停課",
+        "en": "This does not establish permanent discontinuation",
+        "zh-Hans": "这不代表永久停课",
+    }[locale]
+    assert "2026-10-02" in text and note in text
+    assert "W&B AI Engineering: Agents" in text
+
+
+def test_course_fact_pack_does_not_recommend_unavailable_wandb_portal() -> None:
+    config = yaml.safe_load(
+        (ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8"))
+    pack = config["courses_fact_pack"]
+    assert "wandb_agents" not in pack["official_sources"]
+    assert pack["verified_on"] == "2026-08-29"
+
+    ux = yaml.safe_load((ROOT / "scripts/reader-ux-pages.yml").read_text(encoding="utf-8"))
+    page = next(page for page in ux["pages"] if page["canonical"] == "resources/courses.md")
+    assert page["visible_section_minimums"]["chooser"] == {"min_links": 8}
+    assert page["visible_section_minimums"]["courses"] == {"min_links": 12, "min_ratings": 11}
+    assert page["resource_group_rowspans"] == [3, 4, 2, 2]
