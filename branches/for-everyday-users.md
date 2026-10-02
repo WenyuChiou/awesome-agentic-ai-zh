@@ -86,13 +86,13 @@
 
 <small>個人 Agent 產品查核：2026-10-02 UTC</small>
 
-**個人 Agent（Personal Agent）** 是你交代目標後，能跨工具做多步驟工作的助手，像先查資料、寫草稿，再拿回來給你確認。這類產品把模型、工具與權限放在一起；產品名稱不是底層模型名稱，也不是新的升級等級。
+**個人 Agent（Personal Agent）** 是能跨工具做多步驟工作的助手。你先交代目標，它先查資料、寫草稿，再拿回來給你確認。這類產品把模型、工具與權限放在一起。產品名稱不是底層模型名稱，也不是新的升級等級。
 
-- [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持續工作的雲端助手，有自己的雲端電腦與瀏覽器；你關掉電腦後仍能繼續。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)列出逐步開放。Pro 100、Pro 200、Pro 500 限超過 18 歲，且在歐洲經濟區、英國與瑞士以外；Business Premium、Enterprise 在全球逐步開放，Enterprise 須由管理員啟用。符合方案不代表帳號已收到功能。
-- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的雲端電腦跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)確認美國與加拿大可用，並加入商務 skills 與 connectors；Meta 表示發布、傳送與花費須先取得你的批准。Muse 是產品；Muse Spark 是模型，Muse Code 是在終端機工作的 coding agent。
-- [Grok Bot](https://docs.x.ai/grok-bot/overview)：在持續保留狀態的雲端電腦上用瀏覽器、檔案與終端機做事；需付費 Cursor 方案或連結符合資格的 SuperGrok 方案。同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入，不能當成彼此隔離。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 Teams、Enterprise 的 public beta，可共用 skills、工具並在 Slack 協作。Grok Bot 是產品，不是 Grok 模型名稱，也不是寫程式用的 [Grok Build](https://docs.x.ai/build/overview)。
+- [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持續工作的雲端助手，有自己的雲端電腦與瀏覽器。你關掉電腦後仍能繼續。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)列出逐步開放。Pro 100、Pro 200、Pro 500 限超過 18 歲。也限在歐洲經濟區、英國與瑞士以外。Business Premium、Enterprise 在全球逐步開放。Enterprise 須由管理員啟用。符合方案不代表帳號已收到功能。
+- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的雲端電腦跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)確認美國與加拿大可用。也加入商務 skills 與 connectors。Meta 表示發布、傳送與花費須先取得你的批准。Muse 是產品；Muse Spark 是模型。Muse Code 是在終端機工作的 coding agent。
+- [Grok Bot](https://docs.x.ai/grok-bot/overview)：使用持續保留狀態的雲端電腦。它能用瀏覽器、檔案與終端機做事。需付費 Cursor 方案或連結符合資格的 SuperGrok 方案。同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入。不能當成彼此隔離。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 public beta。此 public beta 支援 Teams 與 Enterprise 方案。可共用 skills、工具並在 Slack 協作。Grok Bot 是產品，不是 Grok 模型名稱。也不是寫程式用的 [Grok Build](https://docs.x.ai/build/overview)。
 
-第一次仍用上面的虛構訊息，先不要連接帳號。需要跨工具時，再限定它能讀什麼、能改什麼，以及何時必須停下來請你批准。寄出、發布、刪檔或付款前保留 **Approval Gate**；「持續工作」不代表可以跳過人工檢查。
+第一次仍用上面的虛構訊息，先不要連接帳號。需要跨工具時，再限定它能讀什麼、能改什麼，以及何時必須停下來請你批准。寄出、發布、刪檔或付款前保留 **Approval Gate**。「持續工作」不代表可以跳過人工檢查。
 
 <a id="必修閱讀"></a>
 ## 📖 必修閱讀
@@ -111,7 +111,7 @@
 <a id="-精選-projects"></a>
 ## ⭐ 精選 Projects 與學習資源
 
-星等是本專案依「初學者價值、文件品質與安全邊界」給的編輯評分，不是 GitHub stars。其他資源的狀態與限制查核於 `2026-08-29 UTC`；個人 Agent 三筆入口查核於 `2026-10-02 UTC`，評為三星是因為它們提供具體產品範例，不是必修工具。
+星等依「初學者價值、文件品質與安全邊界」給分。不是 GitHub stars。其他資源的狀態與限制查核於 `2026-08-29 UTC`。個人 Agent 三筆入口查核於 `2026-10-02 UTC`。三星代表可選的具體產品範例，適合互相對照。它們是未實測的參考／對照範例，不是必修工具。評分依官方文件的教學價值，不代表實測產品品質。
 
 <table>
   <thead><tr><th scope="col">分類</th><th scope="col">入口／專案</th><th scope="col">它是什麼</th><th scope="col">適合做什麼</th><th scope="col">狀態／授權</th><th scope="col">先知道的限制</th><th scope="col">評分</th></tr></thead>
@@ -122,9 +122,9 @@
     <tr><td><a href="https://perplexity.ai">Perplexity</a></td><td>帶來源入口的雲端搜尋助手</td><td>找候選來源與建立查證起點</td><td>正式可用；商業雲端服務</td><td>引用不等於內容正確；要逐一打開來源</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">個人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>個人 Agent 產品／官方文件</td><td>先用虛構資料學目標、工具與核准邊界</td><td>逐步開放；商業雲端服務</td><td>依方案、年齡、地區與管理員設定；帳號可能尚未開放</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>個人 Agent 產品／官方介紹</td><td>學跨 App 草擬與行動前人工批准</td><td>限區可用；商業雲端服務</td><td>美國與加拿大；Meta 表示發布、傳送與花費須批准</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>個人 Agent 產品／官方文件</td><td>學持續任務與共用電腦的資料邊界</td><td>符合資格方案可用；商業雲端服務</td><td>需符合資格的付費方案；同帳號 Bots 共用檔案與登入</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">個人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>個人 Agent 產品／官方文件</td><td>適合誰：想學持續任務與核准邊界的日常使用者。教什麼：先用虛構資料學目標、工具與核准邊界。</td><td>逐步開放；商業雲端服務</td><td>依方案、年齡、地區與管理員設定；帳號可能尚未開放</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>個人 Agent 產品／官方介紹</td><td>適合誰：想練跨 App 草擬的日常使用者與小商家。教什麼：學跨 App 草擬與行動前人工批准。</td><td>限區可用；商業雲端服務</td><td>美國與加拿大；Meta 表示發布、傳送與花費須批准</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>個人 Agent 產品／官方文件</td><td>適合誰：想比較持續任務與共用資料的日常使用者。教什麼：學持續任務與共用電腦的資料邊界。</td><td>符合資格方案可用；商業雲端服務</td><td>需符合資格的付費方案；同帳號 Bots 共用檔案與登入</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">官方入門與安全指南</th><td><a href="https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively">OpenAI Prompt Guide</a></td><td>ChatGPT 官方指引</td><td>學清楚、具體與逐步改寫 Prompt</td><td>現行；官方指引</td><td>好 Prompt 不能保證正確，仍要查證</td><td>⭐⭐⭐⭐⭐</td></tr>

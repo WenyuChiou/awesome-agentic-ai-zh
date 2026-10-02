@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from html import unescape
 from pathlib import Path
 
 import pytest
@@ -1126,8 +1127,8 @@ def test_everyday_user_grok_bot_keeps_shared_computer_and_team_beta_boundaries(l
         "zh-TW": (
             "持續保留狀態的雲端電腦", "瀏覽器、檔案與終端機",
             "需付費 Cursor 方案或連結符合資格的 SuperGrok 方案",
-            "同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入，不能當成彼此隔離",
-            "2026-09-28 Team Bots 更新", "Teams、Enterprise 的 public beta", "共用 skills、工具並在 Slack 協作",
+            "同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入。不能當成彼此隔離",
+            "2026-09-28 Team Bots 更新", "加入 public beta", "public beta 支援 Teams 與 Enterprise 方案", "共用 skills、工具並在 Slack 協作",
             "Grok Bot 是產品，不是 Grok 模型名稱", "不是寫程式用的 [Grok Build]",
         ),
         "en": (
@@ -1140,14 +1141,105 @@ def test_everyday_user_grok_bot_keeps_shared_computer_and_team_beta_boundaries(l
         "zh-Hans": (
             "持续保留状态的云电脑", "浏览器、文件与终端",
             "需付费 Cursor 方案或连接符合资格的 SuperGrok 方案",
-            "同一账号的 Bots 共享电脑、文件、浏览器会话与 App 登录，不能把它们当成彼此隔离",
-            "2026-09-28 Team Bots 更新", "Teams、Enterprise 的 public beta", "共享 skills、工具并在 Slack 协作",
+            "同一账号的 Bots 共享电脑、文件、浏览器会话与 App 登录。不能把它们当成彼此隔离",
+            "2026-09-28 Team Bots 更新", "加入 public beta", "public beta 支持 Teams 与 Enterprise 方案", "共享 skills、工具并在 Slack 协作",
             "Grok Bot 是产品，不是 Grok 模型名称", "不是用于编程的 [Grok Build]",
         ),
     }[locale]
     assert all(term in bullet for term in required), locale
     row = _row_for_url(PAGES["everyday-user"][locale].read_text(encoding="utf-8"), "https://docs.x.ai/grok-bot/overview")
     assert "beta" not in row.casefold()  # The September update qualifies Team Bots specifically.
+
+
+PERSONAL_AGENT_RESOURCE_URLS = (
+    "https://learn.chatgpt.com/docs/dots",
+    "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
+    "https://docs.x.ai/grok-bot/overview",
+)
+
+
+def _visible_chinese_sentences(text: str) -> list[str]:
+    """Count rendered prose, retaining code/identifier text and punctuation."""
+    sentences: list[str] = []
+    # A wrapped Markdown line is still one sentence. Paragraphs and list items
+    # are separate blocks; a semicolon is not a sentence-ending punctuation mark.
+    for block in re.split(r"\n\s*\n|\n(?=- \[)", text):
+        code_spans: dict[str, str] = {}
+
+        def protect_code(match: re.Match[str]) -> str:
+            token = f"\x00CODE{len(code_spans)}\x00"
+            code_spans[token] = match.group(2)
+            return token
+
+        visible = re.sub(r"(`+)(.*?)\1", protect_code, block, flags=re.DOTALL)
+        visible = re.sub(r"\[([^]]+)\]\([^)]+\)", r"\1", visible)
+        visible = re.sub(r"<[^>]+>", "", visible)
+        visible = re.sub(r"\*\*(.+?)\*\*", r"\1", visible, flags=re.DOTALL)
+        visible = re.sub(r"^\s*(?:#{1,6}|[-*])\s+", "", visible, flags=re.MULTILINE)
+        visible = re.sub(r"\s+", " ", unescape(visible)).strip()
+        for token, literal in code_spans.items():
+            visible = visible.replace(token, literal)
+        sentences.extend(
+            sentence.strip()
+            for sentence in re.findall(r"[^。！？]+[。！？]?", visible)
+            if sentence.strip()
+        )
+    return sentences
+
+
+def test_personal_agent_sentence_counter_strips_markup_but_preserves_exact_identifiers() -> None:
+    source = '<small>**請保留** [設定](https://example.com/' + 'x' * 100 + ') `OLLAMA_NO_CLOUD=1` 與 `Pro 100`。</small>'
+    expected = "請保留 設定 OLLAMA_NO_CLOUD=1 與 Pro 100。"
+    assert _visible_chinese_sentences(source) == [expected]
+    assert len(_visible_chinese_sentences("甲" * 59 + "。" )[0]) == 60
+    assert len(_visible_chinese_sentences("甲" * 60 + "。" )[0]) == 61
+
+
+def test_personal_agent_sentence_counter_does_not_hide_wrapped_or_semicolon_clauses() -> None:
+    assert _visible_chinese_sentences("甲" * 30 + "；\n" + "乙" * 30 + "。") == ["甲" * 30 + "； " + "乙" * 30 + "。"]
+    assert len(_visible_chinese_sentences("甲" * 30 + "；\n" + "乙" * 30 + "。")[0]) > 60
+    assert _visible_chinese_sentences("請保留 `A__B  C`。") == ["請保留 A__B  C。"]
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
+@pytest.mark.parametrize("url", PERSONAL_AGENT_RESOURCE_URLS)
+def test_personal_agent_resource_rows_name_an_audience_and_teaching_role(locale: str, url: str) -> None:
+    row = _row_for_url(PAGES["everyday-user"][locale].read_text(encoding="utf-8"), url)
+    audience, teaching, ordinary_users, official_form = {
+        "zh-TW": ("適合誰：", "教什麼：", "日常使用者", "官方"),
+        "en": ("For ", "Teaches ", "everyday users", "official"),
+        "zh-Hans": ("适合谁：", "教什么：", "日常用户", "官方"),
+    }[locale]
+    for term in (audience, teaching, ordinary_users, official_form, "⭐⭐⭐"):
+        assert term in row, (locale, url, term)
+    if "muse-personal" in url:
+        assert {"zh-TW": "小商家", "en": "small-business owners", "zh-Hans": "小商家"}[locale] in row
+    assert row.count("⭐") == 3
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
+def test_personal_agent_ratings_disclose_untested_comparisons_and_documented_teaching_value(locale: str) -> None:
+    text = _without_details(PAGES["everyday-user"][locale].read_text(encoding="utf-8"))
+    intro = text[text.index("## ⭐"):text.index("<table>", text.index("## ⭐"))]
+    required = {
+        "zh-TW": ("三星代表可選的具體產品範例，適合互相對照", "未實測的參考／對照範例", "評分依官方文件的教學價值，不代表實測產品品質"),
+        "en": ("three stars as optional concrete product examples to compare", "untested reference/comparison examples", "Ratings reflect documented teaching value, not hands-on product quality"),
+        "zh-Hans": ("三星代表可选的具体产品示例，适合互相对照", "未实测的参考／对照示例", "评分依官方文档的教学价值，不代表产品的实测质量"),
+    }[locale]
+    assert all(term in intro for term in required), locale
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "zh-Hans"))
+def test_introduced_personal_agent_chinese_sentences_stay_within_sixty_visible_characters(locale: str) -> None:
+    text = PAGES["everyday-user"][locale].read_text(encoding="utf-8")
+    resource_intro = text[text.index("## ⭐"):text.index("<table>", text.index("## ⭐"))]
+    prose = [_personal_agent_section(locale), resource_intro]
+    for url in PERSONAL_AGENT_RESOURCE_URLS:
+        row = _row_for_url(text, url)
+        prose.extend(re.findall(r"<t[dh]\b[^>]*>(.*?)</t[dh]>", row, re.DOTALL))
+    for source in prose:
+        for sentence in _visible_chinese_sentences(source):
+            assert len(sentence) <= 60, (locale, len(sentence), sentence)
 
 
 @pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
@@ -1429,3 +1521,36 @@ def test_role_pages_drop_known_stale_or_unsafe_claims(page: Path) -> None:
         "“”",
     )
     assert not any(token in text for token in forbidden)
+
+
+def _assert_new_personal_agent_english_sentences_fit_written_style(text: str) -> None:
+    start = text.index("## 🧑 Personal Agent")
+    end = text.index('<a id="required-reading">', start)
+    intro_start = text.index("The stars are this project's")
+    intro_end = text.index("\n\n", intro_start)
+    blocks = [text[start:end], text[intro_start:intro_end]]
+    for block in blocks:
+        visible = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", block)
+        visible = visible.replace("**", "").replace("`", "")
+        visible = re.sub(r"<[^>]+>", "", visible)
+        # Markdown line wrapping does not start a new rendered sentence.
+        for paragraph in re.split(r"\n\s*\n", visible):
+            lines = [line.lstrip("- ").strip() for line in paragraph.splitlines() if not line.startswith("## ")]
+            joined = " ".join(lines)
+            for sentence in re.split(r"(?<=[.!?])\s+", joined):
+                assert len(re.findall(r"\S+", sentence)) <= 30, sentence
+
+
+def test_new_personal_agent_english_sentences_fit_written_style() -> None:
+    text = PAGES["everyday-user"]["en"].read_text(encoding="utf-8")
+    _assert_new_personal_agent_english_sentences_fit_written_style(text)
+
+
+@pytest.mark.parametrize("separator", (" ", "\n"))
+def test_personal_agent_english_length_guard_rejects_wrapped_review_sentence(separator: str) -> None:
+    text = PAGES["everyday-user"]["en"].read_text(encoding="utf-8")
+    fixed = "Other resources retain their `2026-08-29 UTC` status check. The three Personal Agent entries were checked on `2026-10-02 UTC`. They receive three stars as optional concrete product examples to compare, rather than required tools."
+    overlong = "Other resources retain their `2026-08-29 UTC` status check; the three Personal Agent entries were checked on `2026-10-02 UTC`" + separator + "and rated three stars as optional concrete product examples to compare, rather than required tools."
+    assert fixed in text
+    with pytest.raises(AssertionError):
+        _assert_new_personal_agent_english_sentences_fit_written_style(text.replace(fixed, overlong))
