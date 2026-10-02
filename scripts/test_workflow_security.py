@@ -3,6 +3,8 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 
+import yaml
+
 
 SCRIPT = Path(__file__).with_name("check-workflow-security.py")
 SPEC = importlib.util.spec_from_file_location("workflow_security", SCRIPT)
@@ -143,3 +145,20 @@ jobs:
 """
     problems = ws.problems_for_text(Path(".github/workflows/release.yml"), text)
     assert any("unapproved write" in item for item in problems)
+
+
+def test_content_health_tracking_issue_is_updated_only_from_main() -> None:
+    # Static workflow contract. Actual GitHub branch dispatch must also show
+    # this write step skipped while complete diagnostic evidence is uploaded.
+    path = SCRIPT.parent.parent / ".github/workflows/content-health.yml"
+    workflow = yaml.safe_load(path.read_text(encoding="utf-8"))
+    steps = workflow["jobs"]["scan"]["steps"]
+    update = next(step for step in steps if step.get("name") == "Update the single tracking issue")
+    assert update["if"] == (
+        "always() && steps.summary.outputs.ready == 'true' "
+        "&& github.ref == 'refs/heads/main'"
+    )
+    artifact = next(step for step in steps if step.get("name") == "Upload complete evidence")
+    assert artifact["if"] == "always()"
+    assert workflow["permissions"] == {"contents": "read"}
+    assert workflow["jobs"]["scan"]["permissions"] == {"contents": "read", "issues": "write"}
