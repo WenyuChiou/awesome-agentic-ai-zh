@@ -1407,6 +1407,18 @@ pages:
       resource_url_ratings: true
       literals:
         - "2026-09-13"
+        - "2026-10-02"
+        - "Beta"
+        - "Public Preview"
+        - "GPT-6.1 Sol"
+        - "GPT-5.6"
+        - "Gemini 3.8 Flash"
+        - "antigravity-preview-09-2026"
+        - "max_concurrent_subagents"
+        - "max_tool_calls"
+        - "reasoning.summary"
+        - "/responses/compact"
+        - "computer_use"
         - "OpenRouter"
         - "Pi"
         - "OpenCode"
@@ -1520,7 +1532,7 @@ pages:
         zh-Hans: {heading: "✅ Stage 7 之后的自我检查", anchor: -stage-7-之后的自我检查}
     visible_section_minimums:
       required-reading: {min_links: 6}
-      projects: {min_links: 21, min_ratings: 21}
+      projects: {min_links: 23, min_ratings: 23}
     core_terms:
       section_id: core-terms
       first_exercise_section_id: exercise-1
@@ -1602,7 +1614,7 @@ pages:
           zh-TW: {term: Idempotency, label: "Idempotency（冪等）"}
           en: {term: Idempotency, label: Idempotency}
           zh-Hans: {term: Idempotency, label: "Idempotency（幂等）"}
-    resource_group_rowspans: [4, 6, 6, 5]
+    resource_group_rowspans: [5, 6, 7, 5]
 
   - id: stage-07.5
     canonical: stages/07.5-advanced-agentic-concepts.md
