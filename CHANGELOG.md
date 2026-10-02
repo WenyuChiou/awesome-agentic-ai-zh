@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-02
+
+- **content / Stage 1 / model update** · 三語將 Sol 代表型號更新為 `gpt-6.1-sol`，依官方文件改用 US$0.10／百萬快取讀取 token，並明示工具呼叫須用 Responses API。Gemini 詳表加入 4 Argon 的 Fairwind 限制開放、公告輸出上限與未來介紹價，保留目前可實作的 3.8 Flash；不猜公開 API ID，不把供應商評測當本專案結果。GPT／Gemini 個別查核日期、來源與回歸測試同步更新；全表原日期與 Ollama 起點維持不變。
+
 ## 2026-09-28
 
 - **content / Stage 1 / Claude Sonnet 5.5** · 依 Anthropic 官方模型與價格頁，三語選型主線、18 家族詳表和價格練習改用 `claude-sonnet-5-5`（1M context、128K 最大輸出，Claude API 每百萬輸入／輸出 token 為 US$2／US$10，快取讀取 US$0.20）。簡單 API 起點同步更新；跨章工具實作暫留仍可使用的 Sonnet 5，標明升級需先檢查工具指定與參數差異，並改為按區塊類型讀取文字，避免 thinking 區塊造成錯誤。只重新查核 Claude 一列，沒有把全表日期誤寫成今天；fact pack、reader-UX 規則、測試計畫和回歸測試同步更新。同時修正 Content Health issue #286 指出的三語 Llama 官方文件入口誤導向首頁。
