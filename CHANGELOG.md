@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-02
 
+- **release preparation / v2026.10.02** · 三語發布摘要整理已合併的模型、個人 Agent、託管協作與 Memory 更新。也記錄官方來源豁免界線、封存課程提示、Sentry 來源搬移、目前無法使用的 W&B 推薦暫移除與文件建置依賴與寬表格 PDF 修正。未合併的專案提案不列入。本筆是發布準備；正式版本仍須通過完整健康掃描、三語 PDF 查核與 release Environment 批准。
+
 - **release tooling / PDF tables** · 三語 PDF 的八欄以上表格使用 A4 橫向頁，保留原本 8.5pt 表格字級與內容。發布檢查新增每頁文字邊界檢查，阻擋超出紙張的裁切；字格重疊、圖片與閱讀效果仍須看實際渲染。
 
 - **release health / unavailable course entrance** · W&B AI Engineering: Agents 舊入口回傳 404，候選官方入口在查核環境與讀者端目前皆無法開啟。三語選課與資源表暫移除推薦，維護說明保留原因與可重新評估條件，不宣稱永久停課。其餘 11 筆課程的 URL、說明與評分不變；群組 rowspan、fact pack、reader-UX 與回歸測試同步更新，全課程原查核日期不改。
