@@ -18,7 +18,9 @@ labels: suggestion
 
 ## 通過 [策展標準](../../CONTRIBUTING.md#策展標準) 嗎？
 - [ ] 最近 6 個月內有 commit（或明確標示 stable）
-- [ ] 有 hello-world 文件，30 分鐘內能跑起來
+<!-- 入門門檻以下兩項擇一；不得勾選尚未確認的項目 -->
+- [ ] 一般 project：有 hello-world 文件，30 分鐘內能跑起來
+- [ ] 大廠官方工具：符合[30 分鐘例外](../../CONTRIBUTING.md#策展標準)，已揭露實測狀態與限制；未實測時依指南標註
 - [ ] License 明確（MIT / Apache-2 / BSD / 等）
 - [ ] 維護者可信（知名組織 / 個人 / 公司）
 
