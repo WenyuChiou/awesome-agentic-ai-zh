@@ -31,7 +31,7 @@ COURSE_PAIRS = (
     ("https://github.com/microsoft/ai-agents-for-beginners", "⭐⭐⭐⭐⭐"),
     ("https://github.com/datawhalechina/hello-agents", "⭐⭐⭐⭐⭐"),
     ("https://www.deeplearning.ai/courses/agentic-ai/", "⭐⭐⭐⭐⭐"),
-    ("https://wandb.ai/site/courses/agents/", "⭐⭐⭐⭐"),
+    ("https://www.wandb.courses/courses/agents", "⭐⭐⭐⭐"),
     ("https://academy.claude.com/", "⭐⭐⭐⭐"),
     ("https://academy.langchain.com/courses/intro-to-langgraph", "⭐⭐⭐⭐"),
     ("https://www.kaggle.com/learn-guide/5-day-agents", "⭐⭐⭐⭐"),
@@ -51,7 +51,7 @@ EXTERNAL_URLS = (
     "https://github.com/microsoft/ai-agents-for-beginners",
     "https://github.com/datawhalechina/hello-agents",
     "https://www.deeplearning.ai/courses/agentic-ai/",
-    "https://wandb.ai/site/courses/agents/",
+    "https://www.wandb.courses/courses/agents",
     "https://academy.claude.com/",
     "https://academy.langchain.com/courses/intro-to-langgraph",
     "https://www.coursera.org/professional-certificates/ibm-rag-and-agentic-ai",
@@ -296,3 +296,23 @@ def test_readme_router_and_maintainer_docs_describe_the_new_course_shape() -> No
     testing_plan = (ROOT / "docs/TESTING_PLAN.md").read_text(encoding="utf-8")
     assert "### Course map — learn first, certificate second" in testing_plan
     assert "`scripts/test_courses_content.py`" in testing_plan
+
+
+@pytest.mark.parametrize("locale", PAGES)
+def test_wandb_course_uses_current_official_portal(locale: str) -> None:
+    text = PAGES[locale].read_text(encoding="utf-8")
+    current = "https://www.wandb.courses/courses/agents"
+    assert text.count(current) == 2  # chooser and the unchanged four-star row
+    assert "https://wandb.ai/site/courses/agents/" not in text
+    assert "https://site.wandb.ai/courses/agents/" not in text
+    table = _course_table(text)
+    row = next(row for row in re.findall(r"<tr>.*?</tr>", table, re.DOTALL)
+               if current in row)
+    assert "AI Engineering: Agents" in row and "⭐⭐⭐⭐" in row
+
+
+def test_wandb_fact_pack_uses_the_same_current_course_portal() -> None:
+    config = yaml.safe_load(
+        (ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8"))
+    assert config["courses_fact_pack"]["official_sources"]["wandb_agents"] == (
+        "https://www.wandb.courses/courses/agents")

@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-02
 
+- **maintenance / W&B course portal** · 三語課程地圖把 W&B Agents 舊 404 入口改為官方課程 portal。保留既有教學說明、四星評分、時長與證書提示。來源 fact pack 及回歸測試同步更新；不把全課程查核日期改成今天。
+
 - **content / Stage 1 / model update** · 三語將 Sol 代表型號更新為 `gpt-6.1-sol`。依官方文件改用 US$0.10／百萬快取讀取 token。工具呼叫須用 Responses API。Gemini 詳表加入 4 Argon 的 Fairwind 限制開放、公告輸出上限與未來介紹價。保留目前可實作的 3.8 Flash。不猜公開 API ID，也不把供應商評測當本專案結果。GPT／Gemini 個別查核日期、來源與回歸測試同步更新。全表原日期與 Ollama 起點維持不變。
 
 ## 2026-09-28
