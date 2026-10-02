@@ -600,21 +600,21 @@ def test_english_page_has_no_untranslated_cjk() -> None:
 OPTIONAL_READING_CLAUSES = {
     "zh-TW": {
         "openai": (
-            "是 Beta，支援 GPT-6.1 Sol 與所有 GPT-5.6 模型。",
+            "是 Beta。支援 GPT-6.1 Sol 與所有 GPT-5.6 模型。",
             "有各自 context，但共用請求的模型與工具。這不等於 SDK 的 manager／handoff。",
             "`max_concurrent_subagents` 預設為 3，計算整棵樹的活躍 subagent，不含 root。",
             "並行設定、總數與樹深沒有固定上限；分工可能增加 token。",
-            "`max_tool_calls`、`reasoning.summary` 與 `/responses/compact` 不支援；各 Agent 改用獨立的 server-side 自動 compaction。",
+            "`max_tool_calls` 不支援。`reasoning.summary` 與 `/responses/compact` 也不支援。各 Agent 改用獨立的 server-side 自動 compaction。",
             "Hosted collaboration 由 API 執行；自訂 function call 仍由應用程式執行。",
             "Context 分開不代表工具權限隔離；應用程式仍須核准敏感工具，並限制成本與停止條件。",
         ),
         "google": (
             "Antigravity 是 Public Preview。",
             "`antigravity-preview-09-2026` 預設用 Gemini 3.8 Flash。",
-            "跨 interaction 保留的檔案、程式執行、自訂 function 與 remote MCP。",
+            "跨 interaction 保留的檔案。也有程式執行、自訂 function 與 remote MCP。",
             "網路預設不限對外連線；先設 allowlist 與最小工具權限。",
             "搜尋與 URL 擷取不代表 GUI 瀏覽器控制；目前 `computer_use` 不支援。",
-            "Google 文件說明：以 managed credential ID 引用秘密，由 egress proxy 注入，不暴露在 sandbox。",
+            "Google 文件說明：以 managed credential ID 引用秘密。Egress proxy 注入秘密，不暴露在 sandbox。",
             "Agent 能使用所提供 credential 的完整權限範圍；只授予任務需要的最小範圍。",
         ),
     },
@@ -640,21 +640,21 @@ OPTIONAL_READING_CLAUSES = {
     },
     "zh-Hans": {
         "openai": (
-            "是 Beta，支持 GPT-6.1 Sol 与所有 GPT-5.6 模型。",
+            "是 Beta。支持 GPT-6.1 Sol 与所有 GPT-5.6 模型。",
             "有各自 context，但共用请求的模型与工具。这不等于 SDK 的 manager／handoff。",
             "`max_concurrent_subagents` 默认为 3，计算整棵树的活跃 subagent，不含 root。",
             "并行设置、总数与树深没有固定上限；分工可能增加 token。",
-            "`max_tool_calls`、`reasoning.summary` 与 `/responses/compact` 不支持；各 Agent 改用独立的 server-side 自动 compaction。",
+            "`max_tool_calls` 不支持。`reasoning.summary` 与 `/responses/compact` 也不支持。各 Agent 改用独立的 server-side 自动 compaction。",
             "Hosted collaboration 由 API 运行；自定义 function call 仍由应用程序运行。",
             "Context 分开不代表工具权限隔离；应用程序仍须批准敏感工具，并限制成本与停止条件。",
         ),
         "google": (
             "Antigravity 是 Public Preview。",
             "`antigravity-preview-09-2026` 默认用 Gemini 3.8 Flash。",
-            "跨 interaction 保留的文件、程序运行、自定义 function 与 remote MCP。",
+            "跨 interaction 保留的文件。也有程序运行、自定义 function 与 remote MCP。",
             "网络默认不限对外连接；先设 allowlist 与最小工具权限。",
             "搜索与 URL 获取不代表 GUI 浏览器控制；目前 `computer_use` 不支持。",
-            "Google 文档说明：以 managed credential ID 引用秘密，由 egress proxy 注入，不暴露在 sandbox。",
+            "Google 文档说明：以 managed credential ID 引用秘密。Egress proxy 注入秘密，不暴露在 sandbox。",
             "Agent 能使用所提供 credential 的完整权限范围；只授予任务需要的最小范围。",
         ),
     },
@@ -741,3 +741,76 @@ def test_optional_resource_reviews_do_not_relabel_the_full_fact_pack() -> None:
     assert pack["official_sources"]["google_antigravity_agent"] == (
         "https://ai.google.dev/gemini-api/docs/antigravity-agent"
     )
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_new_official_reading_rows_state_audience_and_form(locale: str, page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    audience, form = {
+        "zh-TW": ("已完成單 Agent 者", "官方文件"),
+        "zh-Hans": ("已完成单 Agent 者", "官方文档"),
+        "en": ("Readers with a single-Agent baseline", "official docs"),
+    }[locale]
+    for url in ("https://developers.openai.com/api/docs/guides/responses-multi-agent", "https://ai.google.dev/gemini-api/docs/antigravity-agent"):
+        row = next(line for line in text.splitlines() if "<tr>" in line and f'href="{url}"' in line)
+        assert audience in row
+        assert form in row
+
+
+def _modified_chinese_prose(text: str, locale: str, scope: str) -> str:
+    if scope == "optional-notes":
+        start = text.index("- **" + OPTIONAL_READING_LABELS[locale])
+        return text[start:text.index("\n</details>", start)]
+    if scope == "intro":
+        start = text.index("-->", text.index("<!-- freshness:")) + 3
+        ending = "先記住上線順序" if locale == "zh-TW" else "先记住上线顺序"
+        return text[start:text.index(ending, start)]
+    assert scope == "receipt"
+    return next(paragraph for paragraph in text.split("\n\n") if "**execution receipt" in paragraph)
+
+
+def _assert_short_chinese_sentences(prose: str) -> None:
+    # Count visible sentences, excluding link destinations and Markdown
+    # decoration, while preserving exact technical identifier characters.
+    prose = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", prose)
+    prose = prose.replace("**", "").replace("`", "")
+    for line in prose.splitlines():
+        if line.startswith("#"):
+            continue
+        for sentence in re.split(r"(?<=[。！？])", line.lstrip("- ")):
+            if sentence.strip():
+                assert len(sentence.strip()) <= 60, sentence
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "zh-Hans"))
+@pytest.mark.parametrize("scope", ("optional-notes", "intro", "receipt"))
+def test_modified_chinese_prose_fits_written_sentence_style(locale: str, scope: str) -> None:
+    text = PAGES[locale].read_text(encoding="utf-8")
+    _assert_short_chinese_sentences(_modified_chinese_prose(text, locale, scope))
+
+
+@pytest.mark.parametrize("locale", ("zh-TW", "zh-Hans"))
+@pytest.mark.parametrize("scope", ("intro", "receipt"))
+def test_sentence_style_rejects_rejoined_intro_and_receipt(locale: str, scope: str) -> None:
+    text = PAGES[locale].read_text(encoding="utf-8")
+    prose = _modified_chinese_prose(text, locale, scope)
+    if scope == "intro":
+        boundary = "可恢復。這稱為" if locale == "zh-TW" else "可恢复。这称为"
+    else:
+        boundary = "**。記下" if locale == "zh-TW" else "**。记下"
+    assert boundary in prose
+    with pytest.raises(AssertionError):
+        _assert_short_chinese_sentences(prose.replace(boundary, boundary.replace("。", "，")))
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_new_reading_ratings_are_document_based_and_live_apis_are_untested(locale: str, page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    paragraph = next(line for line in text.splitlines() if "GitHub stars" in line and not line.startswith("<"))
+    basis, untested = {
+        "zh-TW": ("三星依文件教學價值", "未實跑 API"),
+        "zh-Hans": ("三星依文档教学价值", "未实跑 API"),
+        "en": ("Their ratings reflect documented teaching value", "they haven't been run against live APIs"),
+    }[locale]
+    assert basis in paragraph
+    assert untested in paragraph

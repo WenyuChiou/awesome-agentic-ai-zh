@@ -4,7 +4,7 @@
 
 <!-- freshness: canonical=stages/07-multi-agent-production.md; verified_on=2026-09-13; scope=evals,observability,human-approval,persistence,recovery,orchestration,resources; max_age_days=90 -->
 
-Learn to make an AI helper testable, observable, stoppable, and recoverable before sharing it.
+Make an AI helper testable, observable, stoppable, and recoverable before sharing it.
 
 ## 🎯 What This Stage Does (Start Here)
 
@@ -415,7 +415,7 @@ Do not copy one SOTA score into the page as a permanent fact. Release decisions 
 
 ## 🎯 Featured Projects (Templates / SDKs / Tool Collections)
 
-Use these 23 entries as a tool-selection map. Choose one; ratings show teaching fit, not GitHub stars. The two new docs are optional, after a single-Agent baseline.
+Choose by purpose; ratings are not GitHub stars. Compare the two new three-star readings after a single-Agent baseline. Their ratings reflect documented teaching value; they haven't been run against live APIs.
 
 <table>
   <thead>
@@ -424,7 +424,7 @@ Use these 23 entries as a tool-selection map. Choose one; ratings show teaching 
   <tbody>
     <tr><th scope="rowgroup" rowspan="5">Orchestration / Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Learn simple workflows before Agents</td><td>A design guide, not a deployable framework</td></tr>
     <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td>⭐⭐⭐⭐⭐</td><td>Compare manager and handoff patterns</td><td>Examples center on OpenAI Agents SDK</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent (official docs)</a></td><td>⭐⭐⭐</td><td>Optional: model-directed independent tasks</td><td>Beta; separate contexts, shared model/tools; differs from SDK manager / handoff</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent (official docs)</a></td><td>⭐⭐⭐</td><td>Readers with a single-Agent baseline: model-directed independent tasks</td><td>Beta; separate contexts, shared model/tools; differs from SDK manager / handoff</td></tr>
     <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td>⭐⭐⭐⭐</td><td>Sequence, concurrency, handoff, group chat, and approval</td><td>Confirm current package version and preview status</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>⭐⭐⭐⭐⭐</td><td>State, checkpointing, and human-in-the-loop</td><td>More abstraction than a first Agent needs</td></tr>
   </tbody>
@@ -438,7 +438,7 @@ Use these 23 entries as a tool-selection map. Choose one; ratings show teaching 
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="7">Harness / Sandbox / Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>Read tool loops, permissions, and subagent code</td><td>Centers on the Claude runtime</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent (official docs)</a></td><td>⭐⭐⭐</td><td>Optional: managed Linux sandbox, persistent files, and code</td><td>Public Preview; restrict network and tool permissions to manage safety</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent (official docs)</a></td><td>⭐⭐⭐</td><td>Readers with a single-Agent baseline: sandbox, persistent files, and code</td><td>Public Preview; restrict network and tool permissions to manage safety</td></tr>
     <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>Read a plugin-based harness architecture</td><td>Developer preview; breaking changes are possible</td></tr>
      <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td>⭐⭐⭐⭐⭐</td><td>Pause sensitive tools, save RunState, and resume</td><td>Saved state may contain context and runtime metadata; manage it as sensitive data</td></tr>
      <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td>⭐⭐⭐⭐⭐</td><td>Approval, checkpoints, resume, and idempotent side effects</td><td>Production needs a durable checkpointer, not only memory</td></tr>
@@ -454,7 +454,7 @@ Use these 23 entries as a tool-selection map. Choose one; ratings show teaching 
   </tbody>
 </table>
 
-<small>Existing resources reviewed: 2026-09-13 UTC; two new docs reviewed: 2026-10-02 UTC</small>
+<small>Existing resources reviewed: 2026-09-13 UTC; new docs reviewed: 2026-10-02 UTC</small>
 
 ## ✅ Self-Check After Stage 7
 
