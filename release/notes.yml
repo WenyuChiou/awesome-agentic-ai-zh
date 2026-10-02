@@ -1,14 +1,79 @@
 schema_version: 1
-release_version: v2026.09.23
+release_version: v2026.10.02
 
 # One ordered list produces all three language sections.
-# Links are shared so the three summaries cannot silently diverge.
+# Only landed changes belong here; pending project proposals are excluded.
 changes:
-  - id: gpt6-sol-luna-stage1
+  - id: current-model-guidance
     category: learning-content
-    zh-TW: Stage 1 三語補上 GPT-6 Sol 與 Luna 的選型、API ID、context、Standard 價格和長上下文計費。模型詳表仍有 18 個家族；全表與本次 GPT 查核日期分開標示，入門 Ollama 路徑不變。
-    zh-Hans: Stage 1 三语补上 GPT-6 Sol 与 Luna 的选型、API ID、context、Standard 价格和长上下文计费。模型详表仍有 18 个家族；全表与本次 GPT 核查日期分开标明，入门 Ollama 路径不变。
-    en: Stage 1 adds GPT-6 Sol and Luna to the three-language model picker, with API IDs, context, Standard pricing, and long-context billing. The full table still has 18 families; its audit date is separate from this GPT update, and the beginner Ollama path is unchanged.
+    zh-TW: Stage 1 三語更新 GPT-6.1 Sol 與 Claude Sonnet 5.5。補齊 API、價格與工具呼叫限制。Gemini 4 Argon 保留限制開放標示，不猜公開 API ID。Ollama 入門路徑不變。
+    zh-Hans: Stage 1 三语更新 GPT-6.1 Sol 与 Claude Sonnet 5.5。补齐 API、价格与工具调用限制。Gemini 4 Argon 保留限制开放标示，不猜公开 API ID。Ollama 入门路径不变。
+    en: Stage 1 updates GPT-6.1 Sol and Claude Sonnet 5.5 across all three locales. API, pricing and tool-calling limits are stated. Gemini 4 Argon remains restricted, without an invented public API ID. The beginner Ollama route is unchanged.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/280
-      - https://developers.openai.com/api/docs/pricing
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/287
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/293
+  - id: optional-personal-agent-references
+    category: learning-content
+    zh-TW: 日常使用者路線加入 dots 與 Grok Bot，並更新 Meta Muse 存取限制。三語說明帳號、地區、權限與人員確認界線。它們是選讀參考，沒有宣稱本專案已實測。
+    zh-Hans: 日常使用者路线加入 dots 与 Grok Bot，并更新 Meta Muse 访问限制。三语说明账号、地区、权限与人员确认边界。它们是选读参考，没有宣称本项目已实测。
+    en: The everyday-user route adds dots and Grok Bot and refreshes Meta Muse access limits. All locales explain account, region, permission and human-confirmation boundaries. These optional references are not hands-on product benchmarks.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/295
+  - id: managed-orchestration-readings
+    category: learning-content
+    zh-TW: Stage 7 三語補上兩份官方選讀。包含 Responses 原生多 Agent beta 與 Google Managed Agents。區分框架、託管執行、憑證範圍與存取限制。保留單 Agent 優先，不宣稱已實跑 API。
+    zh-Hans: Stage 7 三语补上两份官方选读。包含 Responses 原生多 Agent beta 与 Google Managed Agents。区分框架、托管执行、凭证范围与访问限制。保留单 Agent 优先，不宣称已实跑 API。
+    en: Stage 7 adds optional Responses native Multi-agent beta and Google Managed Agents readings. Framework, hosted-execution, credential-scope and access boundaries remain distinct. Single-agent-first guidance remains; no live API trial is claimed.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/296
+  - id: session-backed-memory-reference
+    category: learning-content
+    zh-TW: 三語 Memory layer 加入 deja-vu。區分預設 BM25 檢索與可選 embedding。說明本機與遠端索引文字傳送界線，並同步資源列數與回歸檢查。
+    zh-Hans: 三语 Memory layer 加入 deja-vu。区分默认 BM25 检索与可选 embedding。说明本机与远程索引文本传送边界，并同步资源行数与回归检查。
+    en: The three-language Memory layer adds deja-vu. Default BM25 retrieval remains distinct from optional embeddings. Local and remote index-text transmission boundaries, resource counts and regressions are updated together.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/284
+  - id: archived-course-and-source-links
+    category: source-maintenance
+    zh-TW: Stage 1–3 三語明示 Anthropic 舊課程已封存。保留歷史入口，並引導讀者對照現行文件。Llama 官方文件連結也已修正。
+    zh-Hans: Stage 1–3 三语明示 Anthropic 旧课程已封存。保留历史入口，并引导读者对照现行文档。Llama 官方文档链接也已修正。
+    en: Stages 1–3 identify archived Anthropic courses across all locales. Historical links remain alongside current documentation routes. The Llama official-documentation link is also corrected.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/288
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/287
+  - id: scoped-official-vendor-exception
+    category: curation-policy
+    zh-TW: 大廠官方 AI 工具與文件只豁免 30 分鐘入門門檻。第三方專案不適用。教學用途、來源、授權、安全與三語檢查仍須完成，未實測狀態也須明寫。
+    zh-Hans: 大厂官方 AI 工具与文档只豁免 30 分钟入门门槛。第三方项目不适用。教学用途、来源、授权、安全与三语检查仍须完成，未实测状态也须明写。
+    en: Official major-vendor AI tools and documents are exempt only from the 30-minute onboarding threshold. Third-party projects are excluded. Teaching, source, license, safety and translation requirements remain, with explicit untested disclosures.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/297
+  - id: locked-markdown-build-dependencies
+    category: build-maintenance
+    zh-TW: 文件建置依賴更新為 Markdown 3.11 與 PyMdown Extensions 12.1。保留歷史 CHANGELOG 程式碼標記，並核對三語 heading anchor 與渲染結果。
+    zh-Hans: 文档构建依赖更新为 Markdown 3.11 与 PyMdown Extensions 12.1。保留历史 CHANGELOG 代码标记，并核对三语 heading anchor 与渲染结果。
+    en: Documentation builds use Markdown 3.11 and PyMdown Extensions 12.1. Historical CHANGELOG code spans are preserved, with trilingual heading-anchor and rendered-output checks.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/292
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/290
+  - id: sentry-canonical-repository
+    category: source-maintenance
+    zh-TW: 三語 MCP 目錄改用 Sentry 的 canonical repo：getsentry/toolkit。保留 Sentry MCP 產品與套件名稱、教學用途及原評分。同步完整 repo 快照，不把無法驗證的連結冒充已通過。
+    zh-Hans: 三语 MCP 目录改用 Sentry 的 canonical repo：getsentry/toolkit。保留 Sentry MCP 产品与包名称、教学用途及原评分。同步完整 repo 快照，不把无法验证的链接冒充已通过。
+    en: The trilingual MCP catalog follows Sentry's canonical repository, getsentry/toolkit. Product/package names, teaching purpose and editorial rating remain. The coherent repository snapshot is refreshed; unverified links are not represented as passed.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/298
+  - id: unavailable-wandb-course
+    category: source-maintenance
+    zh-TW: W&B Agents 舊入口回傳 404，新入口目前無法開啟。三語暫移除這項課程推薦，保留原因與重新評估條件。不宣稱課程永久停辦，也不把首頁冒充課程。其他 11 筆的 URL、說明與評分不變。
+    zh-Hans: W&B Agents 旧入口返回 404，新入口目前无法打开。三语暂时移除这项课程推荐，保留原因与重新评估条件。不宣称课程永久停办，也不把首页冒充课程。其他 11 项的 URL、说明与评分不变。
+    en: The old W&B Agents entrance returned 404 and its replacement could not be opened. All locales temporarily remove this recommendation and retain the reason and reconsideration condition. This does not claim permanent discontinuation or replace the course with a homepage. The other 11 courses keep their URLs, descriptions and ratings.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/300
+  - id: readable-wide-pdf-tables
+    category: release-tooling
+    zh-TW: 三語 PDF 的寬表格改用橫式 A4，保留原本字體大小與內容。新增逐頁文字邊界檢查，超出紙張就停止發布。實際表格、封面與一般頁面已抽查；沒有宣稱全頁都人工看過。
+    zh-Hans: 三语 PDF 的宽表格改用横式 A4，保留原本字体大小与内容。新增逐页文字边界检查，超出纸张就停止发布。实际表格、封面与普通页面已抽查；没有宣称每页都人工看过。
+    en: Wide tables in all three PDFs use A4 landscape pages with their existing font size and content. An every-page text-bounds check blocks off-paper text. Real tables, covers and ordinary pages were sampled; no all-pages manual visual review is claimed.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/301
