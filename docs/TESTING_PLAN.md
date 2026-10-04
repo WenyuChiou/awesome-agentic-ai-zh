@@ -15,8 +15,8 @@ be quoted as the current whole-repository total.
 
 ## Audited first-use terminology
 
-The first-use layer covers 52 manually checked term/page pairs in nine chapter
-families, with 156 locale cases. It does not detect every all-capital token or
+The first-use layer covers 50 manually checked term/page pairs in nine chapter
+families, with 150 locale cases. It does not detect every all-capital token or
 claim every abbreviation in the site has been audited. Each first encounter
 shows its verified full name and a short learner meaning. Existing heading
 anchors, code, source links, product names, original images and resource facts
@@ -30,9 +30,17 @@ It rejects later definitions and names found only in code, comments, closed
 content, hidden elements, attributes or image alt text. An unchanged short heading
 may use its immediately adjacent visible definition. The model-lifecycle training
 fixtures reuse this same helper. Separate image-position cases require visible
-legends before the manually inspected training diagrams and README heroes;
-original-image hashes bind that reviewed inventory but do not prove semantics.
+legends before the manually inspected training diagrams. Original-image hashes
+keep the reviewed training and banner artwork stable but do not prove semantics.
 Human review still checks the meanings and the actual displayed image labels.
+
+The README navigation header is a narrow exception for CLI and MCP: it starts
+with the banner and project title, without detached terminology paragraphs.
+`scripts/test_main_readme_content.py` protects that clean header and its visible
+locale-correct routes to Track A1 and the glossary, including mutation cases that
+put either definition back before or after the banner. CLI in Track A1 and MCP
+in the glossary remain enrolled in the unchanged first-use checks above. The
+other README terms and all teaching-page/image checks keep their prior rules.
 
 The existing reader-UX character counter is unchanged. Stage 1 limits are refreshed
 only from 8197 / 12475 / 8222 to 8569 / 13193 / 8599 (zh-TW / en / zh-Hans),
