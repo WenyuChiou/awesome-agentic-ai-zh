@@ -4,9 +4,6 @@
 
 <div align="center" markdown="1">
 
-**CLI**（Command-Line Interface）：让你在终端机输入文字指令，操作工具。
-
-**MCP**（Model Context Protocol）：让 AI 应用连接工具和数据的协议。
 
 ![从 Stage 0–2 共用基础分流到 CLI 与 Agent 路线，共用 Stage 5、8，再按需选择角色路线](resources/diagrams/banner.zh-Hans.svg)
 
