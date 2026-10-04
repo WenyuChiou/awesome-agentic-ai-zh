@@ -4,9 +4,6 @@
 
 <div align="center" markdown="1">
 
-**CLI** (Command-Line Interface): control tools through terminal text commands.
-
-**MCP** (Model Context Protocol): a shared protocol for AI apps to use tools and data.
 
 ![Stages 0–2 split into CLI and Agent paths, sharing Stages 5 and 8; choose role paths as needed](resources/diagrams/banner.en.svg)
 
