@@ -49,7 +49,9 @@ AUDITED_PAGES = {
     "stages/00-foundations.md": ("API", "JSON"),
     "tracks/cli/A1-cli-intro.md": ("CLI", "LLM", "API"),
     "stages/03-tool-use-and-hello-agent.md": ("JSON",),
-    "README.md": ("LLM", "API", "CLI", "JSON", "CoT", "MCP", "RAG"),
+    # README is a navigation page: CLI/MCP teaching definitions remain in A1
+    # and the glossary. Its banner no longer carries detached term paragraphs.
+    "README.md": ("LLM", "API", "JSON", "CoT", "RAG"),
 }
 LOCALES = ("zh-TW", "en", "zh-Hans")
 HEADING_TAGS = {"h1", "h2", "h3", "h4", "h5", "h6"}
@@ -206,7 +208,6 @@ def test_heading_legend_and_real_table_token_boundaries(text: str, term: str) ->
 # learner legend. They do not perform OCR or claim to detect every image term.
 IMAGE_LEGENDS = {
     "resources/model-training-guide.md": ("model-lifecycle-to-agent", ("SFT", "DPO", "RLHF", "RL", "RAG")),
-    "README.md": ("banner", ("CLI", "MCP")),
 }
 
 

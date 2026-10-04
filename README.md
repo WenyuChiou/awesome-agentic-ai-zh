@@ -4,10 +4,6 @@
 
 <div align="center" markdown="1">
 
-**CLI**（Command-Line Interface）：讓你在終端機輸入文字指令，操作工具。
-
-**MCP**（Model Context Protocol）：讓 AI 應用連接工具與資料的協定。
-
 ![從 Stage 0–2 共用基礎分流到 CLI 與 Agent 路線，共用 Stage 5、8，再依需求選角色路線](resources/diagrams/banner.svg)
 
 # awesome-agentic-ai-zh
@@ -37,7 +33,7 @@
 
 這裡的角色是**學習路線圖 + 精選資源 + 可直接執行的小練習**。需要完整章節時，我們會帶你去官方文件、[Datawhale Hello-Agents](https://github.com/datawhalechina/hello-agents) 或對應的 Cookbook，不重寫另一套百科全書。需要連模型時，每個練習會再說明雲端或本機路徑。
 
-重要技術詞第一次出現時會先用白話說明，再保留正式英文。忘記某個詞時，直接查[名詞表](resources/glossary.md)。
+章節中的重要技術詞第一次出現時會先用白話說明，再保留正式英文。忘記某個詞時，直接查[名詞表](resources/glossary.md)。
 
 ## 🚀 現在就開始
 

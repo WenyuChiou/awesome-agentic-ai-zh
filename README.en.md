@@ -4,10 +4,6 @@
 
 <div align="center" markdown="1">
 
-**CLI** (Command-Line Interface): control tools through terminal text commands.
-
-**MCP** (Model Context Protocol): a shared protocol for AI apps to use tools and data.
-
 ![Stages 0–2 split into CLI and Agent paths, sharing Stages 5 and 8; choose role paths as needed](resources/diagrams/banner.en.svg)
 
 # awesome-agentic-ai-zh
@@ -37,7 +33,7 @@ An **AI Agent** is an AI system that can decide what to do next and take action 
 
 This repo is **a learning roadmap + curated resources + small runnable examples**. For chapter-length depth we point to the official docs, [Datawhale Hello-Agents](https://github.com/datawhalechina/hello-agents), or a cookbook rather than rewriting an encyclopedia. When a model connection is needed, each exercise explains the cloud or local path.
 
-Each important term is explained in plain language the first time it appears. Forgot one? See the [glossary](resources/glossary.en.md).
+Chapters explain important terms in plain language at first use. Forgot one? See the [glossary](resources/glossary.en.md).
 
 ## 🚀 Start now
 

@@ -198,6 +198,55 @@ def _rated_resource_links(text: str, heading: str) -> list[tuple[str, str]]:
     return [(_normalized_internal_target(target), rating) for target, rating in rows]
 
 
+def _assert_clean_navigation_header(text: str, locale: str) -> None:
+    suffix = "" if locale == "zh-TW" else f".{locale}"
+    hero = text.split('<div align="center" markdown="1">', 1)[1].split("</div>", 1)[0]
+    banner = re.search(
+        rf"^!\[[^\n]+\]\(resources/diagrams/banner{re.escape(suffix)}\.svg\)$",
+        hero,
+        flags=re.MULTILINE,
+    )
+    assert banner is not None
+    assert not hero[:banner.start()].strip(), "The banner leads the README header"
+    assert hero[banner.end():].lstrip().startswith("# awesome-agentic-ai-zh\n")
+    for full_name in ("Command-Line Interface", "Model Context Protocol"):
+        assert full_name not in hero, "Definitions belong at the learning destination"
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+def test_navigation_header_starts_with_banner_and_keeps_definition_routes(
+    locale: str, page: Path
+) -> None:
+    text = _text(page)
+    _assert_clean_navigation_header(text, locale)
+    suffix = "" if locale == "zh-TW" else f".{locale}"
+    visible = _without_details(text)
+    targets = re.findall(r'(?:href=|\]\()["\']?([^"\') >]+)', visible)
+    for stem in ("tracks/cli/A1-cli-intro", "resources/glossary"):
+        assert f"{stem}{suffix}.md" in targets
+
+
+@pytest.mark.parametrize("locale,page", PAGES.items())
+@pytest.mark.parametrize("position", ("before_banner", "after_banner", "after_title"))
+@pytest.mark.parametrize("term,full_name", (
+    ("CLI", "Command-Line Interface"),
+    ("MCP", "Model Context Protocol"),
+))
+def test_navigation_header_rejects_restored_definition_paragraphs(
+    locale: str, page: Path, position: str, term: str, full_name: str
+) -> None:
+    text = _text(page)
+    if position == "before_banner":
+        index = text.index('<div align="center" markdown="1">') + len('<div align="center" markdown="1">')
+    elif position == "after_banner":
+        index = text.index("# awesome-agentic-ai-zh")
+    else:
+        index = text.index("# awesome-agentic-ai-zh") + len("# awesome-agentic-ai-zh")
+    mutated = text[:index] + f"\n\n**{term}** ({full_name}): definition.\n\n" + text[index:]
+    with pytest.raises(AssertionError):
+        _assert_clean_navigation_header(mutated, locale)
+
+
 @pytest.mark.parametrize("locale,page", PAGES.items())
 def test_visible_mainline_keeps_reader_decisions_and_resources(locale: str, page: Path) -> None:
     text = _text(page)
