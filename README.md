@@ -5,6 +5,10 @@
 <div align="center" markdown="1">
 
 
+**CLI**（Command-Line Interface）：讓你在終端機輸入文字指令，操作工具。
+
+**MCP**（Model Context Protocol）：讓 AI 應用連接工具與資料的協定。
+
 ![從 Stage 0–2 共用基礎分流到 CLI 與 Agent 路線，共用 Stage 5、8，再依需求選角色路線](resources/diagrams/banner.svg)
 
 # awesome-agentic-ai-zh
