@@ -4,12 +4,14 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import json
 from pathlib import Path
 
 
 def summarize(link: dict, repo: dict, *, freshness_exit: int,
-              freshness_ran: bool, mode: str) -> dict:
+              freshness_ran: bool, mode: str, run_url: str | None = None,
+              source_sha: str | None = None) -> dict:
     repo_errors = sum(item.get("severity") == "error" for item in repo.get("findings", []))
     repo_warnings = sum(item.get("severity") == "warning" for item in repo.get("findings", []))
     repo_unverified = sum(row.get("state") == "unverified" for row in repo.get("records", {}).values())
@@ -20,6 +22,11 @@ def summarize(link: dict, repo: dict, *, freshness_exit: int,
               or bool(freshness_ran and freshness_exit))
     return {
         "mode": mode,
+        "run_url": run_url,
+        "source_sha": source_sha,
+        "repository_warning_codes": dict(sorted(Counter(
+            item.get("code", "unknown") for item in repo.get("findings", [])
+            if item.get("severity") == "warning").items())),
         "state": "hard-failure" if hard else ("review" if review else "healthy"),
         "hard_failures": hard,
         "unverified": unverified,
@@ -36,7 +43,16 @@ def render(payload: dict) -> str:
         "review": "⚠️ 有資料無法由機器確認",
         "hard-failure": "❌ 發現明確問題",
     }[payload["state"]]
-    freshness = "已執行" if payload["freshness_ran"] else "本週不執行（每月或 Release 前執行）"
+    freshness = ("失敗，需檢查" if payload["freshness_failed"] else "通過") if payload["freshness_ran"] else "本週不執行（每月或 Release 前執行）"
+    evidence = []
+    if payload.get("run_url"):
+        evidence.append(f"- 證據 run：[完整掃描與 artifacts]({payload['run_url']})")
+    if payload.get("source_sha"):
+        evidence.append(f"- 掃描 source：`{payload['source_sha']}`")
+    warnings = payload.get("repository_warning_codes", {})
+    if warnings:
+        evidence.append("- Repository 警告分類：" + "、".join(
+            f"`{code}` {count}" for code, count in warnings.items()))
     return "\n".join([
         "# Content health report", "",
         f"- 狀態：**{state}**",
@@ -45,6 +61,7 @@ def render(payload: dict) -> str:
         f"- 無法驗證：**{payload['unverified']}**（其中新出現 {payload['new_unverified']}）",
         f"- Repository 警告：**{payload['repository_warnings']}**",
         f"- 模型／產品 freshness：**{freshness}**",
+        *evidence,
         "",
         "完整明細在同一次 run 的 JSON／Markdown artifacts。Timeout、403、429 只會列為無法驗證，不會冒充 404。",
         "",
@@ -59,6 +76,8 @@ def main() -> int:
     parser.add_argument("--freshness-exit", type=int, required=True)
     parser.add_argument("--freshness-ran", choices=("true", "false"), required=True)
     parser.add_argument("--mode", choices=("weekly", "monthly", "release"), required=True)
+    parser.add_argument("--run-url")
+    parser.add_argument("--source-sha")
     parser.add_argument("--markdown", type=Path, required=True)
     parser.add_argument("--json", type=Path, required=True)
     args = parser.parse_args()
@@ -69,6 +88,8 @@ def main() -> int:
         freshness_exit=args.freshness_exit,
         freshness_ran=args.freshness_ran == "true",
         mode=args.mode,
+        run_url=args.run_url,
+        source_sha=args.source_sha,
     )
     args.markdown.write_text(render(payload), encoding="utf-8")
     args.json.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

@@ -408,10 +408,12 @@ python test.py
 <summary>📊 展開：可參考的 Benchmark 與 production 評測方法</summary>
 
 - [SWE-bench](https://www.swebench.com/)：真實軟體問題。
-- [Terminal-Bench](https://github.com/harbor-framework/terminal-bench-1)：終端機任務。
+- [Terminal-Bench](https://www.tbench.ai/)：終端機任務；從官方入口選資料集與 [Harbor](https://docs.harborframework.com/) 執行方式。[1.x repository](https://github.com/harbor-framework/terminal-bench-1) 是舊版入口，重現舊結果時才依該版本操作。
 - [OSWorld](https://github.com/xlang-ai/OSWorld)：桌面環境操作。
-- [τ²-bench](https://github.com/sierra-research/tau2-bench)：需要工具與多輪互動的任務。
+- [τ-bench](https://github.com/sierra-research/tau2-bench)：工具與多輪互動；同一 repository 已包含 τ³ 的語音與知識任務。先固定 release、domain 與 task split；`banking_knowledge` 在 v1.0.1 修正前後的分數不可直接比較。
 - [GAIA](https://huggingface.co/gaia-benchmark)：一般助理任務。
+
+比較前記錄 dataset／task split、harness commit、grader 版本、模型設定與 trial 次數；版本不同時不要直接拼成同一張排名表。
 
 不要把頁面上的某個 SOTA 分數抄成永久事實。上線判斷應以自己的案例、rubric、完整 trajectory、成本與延遲為主。每次換模型、Prompt、Tool 或 Harness，先重跑 development／reference cases；frozen holdout 不拿來逐次調整，只在 release candidate 或最後驗證時打開。
 
