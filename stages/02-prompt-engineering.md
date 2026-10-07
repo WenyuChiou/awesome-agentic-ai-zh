@@ -272,7 +272,7 @@ Path A 六題兩輪的 API 費用是 `$0`。Path B 先設 `$0.05` 上限；若�
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">跟著範例學</th><td><a href="https://github.com/dair-ai/Prompt-Engineering-Guide">DAIR.AI Prompt Engineering Guide</a></td><td>把它當查詢手冊，不必從頭背完。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></td><td>用網站版快速找一個技巧。</td><td>維護中；網站</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>挑一個 notebook 邊跑邊學。</td><td>維護中；上游未提供 SPDX</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>挑一個 notebook 邊跑邊學。</td><td>自訂非商業授權；商用須另取得書面許可</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php">李宏毅 GenAI-ML（2025 Fall）</a></td><td>需要中文課堂解說時再看。</td><td>2025 Fall 課程網站；不是最新模型文件</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>

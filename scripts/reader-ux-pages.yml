@@ -1366,9 +1366,10 @@ pages:
       en: stages/07-multi-agent-production.en.md
       zh-Hans: stages/07-multi-agent-production.zh-Hans.md
     max_visible_chars:
-      zh-TW: 14130
+      # License safety caveats add exactly 24 / 21 visible Chinese characters.
+      zh-TW: 14154
       en: 25588
-      zh-Hans: 14254
+      zh-Hans: 14275
     max_open_details: 0
     required_details_count: 7
     visible_section_order:

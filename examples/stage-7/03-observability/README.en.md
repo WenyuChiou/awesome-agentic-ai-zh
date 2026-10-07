@@ -109,7 +109,7 @@ Common problems:
 ## 📚 Required reading and learning resources
 
 - ⭐⭐⭐⭐⭐ [Langfuse](https://github.com/langfuse/langfuse): open-source traces, evals, and prompt management.
-- ⭐⭐⭐⭐⭐ [Arize Phoenix](https://github.com/Arize-ai/phoenix): open-source, OpenTelemetry-oriented observability.
+- ⭐⭐⭐⭐⭐ [Arize Phoenix](https://github.com/Arize-ai/phoenix): OpenTelemetry-oriented observability under Elastic License 2.0 (ELv2), with limits on hosted services for third parties.
 - ⭐⭐⭐⭐⭐ [datawhalechina/hello-agents](https://github.com/datawhalechina/hello-agents): Chapter-style Agent material for filling in the full background.
 - ⭐⭐⭐⭐ [LangSmith](https://smith.langchain.com/): useful in the LangChain and LangGraph ecosystem.
 - ⭐⭐⭐⭐ [Helicone](https://www.helicone.ai/): collect LLM request data through a proxy path.

@@ -136,7 +136,7 @@ Ratings represent educational value for this learning map, not a project-quality
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">Pipelines and examples</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></td><td>⭐⭐⭐⭐⭐</td><td>Document-application developers</td><td>retrievers, query engines, evaluation</td><td>MIT; start with the official starter because there are many packages</td></tr>
     <tr><td><a href="https://github.com/deepset-ai/haystack">Haystack</a></td><td>⭐⭐⭐⭐</td><td>People exploring modular pipelines</td><td>components, routing, retrieval</td><td>Apache-2.0; begin with a small pipeline</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>Readers comparing techniques</td><td>runnable notebooks and technique comparisons</td><td>Community learning material; verify facts against official docs</td></tr>
+    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>Readers comparing techniques</td><td>runnable notebooks and technique comparisons</td><td>Custom non-commercial license; commercial use needs written permission; check official docs</td></tr>
     <tr><td><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></td><td>⭐⭐⭐⭐</td><td>Teams studying a full product architecture</td><td>parsing, hybrid retrieval, UI</td><td>Apache-2.0; not a first starter</td></tr>
   </tbody>
   <tbody>

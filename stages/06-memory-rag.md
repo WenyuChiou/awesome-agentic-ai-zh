@@ -227,7 +227,7 @@ RAG 有兩條路：一條先整理資料，一條在問題來時找資料。
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">Vector data</th><td><a href="https://github.com/chroma-core/chroma">Chroma</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次在本機做向量搜尋</td><td>collection、add、query</td><td>Apache-2.0；練習與 production 設定不同</td></tr>
     <tr><td><a href="https://github.com/qdrant/qdrant">Qdrant</a></td><td>⭐⭐⭐⭐⭐</td><td>需要自架或託管服務的團隊</td><td>dense、sparse、hybrid query</td><td>Apache-2.0；需規劃服務與備份</td></tr>
-    <tr><td><a href="https://github.com/weaviate/weaviate">Weaviate</a></td><td>⭐⭐⭐⭐</td><td>需要 schema 與 hybrid search</td><td>BM25 + vector search</td><td>BSD-3-Clause；功能多，先做小型基線</td></tr>
+    <tr><td><a href="https://github.com/weaviate/weaviate">Weaviate</a></td><td>⭐⭐⭐⭐</td><td>需要 schema 與 hybrid search</td><td>BM25 + vector search</td><td>wl/ 以外為 BSD-3-Clause；wl/ 另需企業授權；先做小型基線</td></tr>
     <tr><td><a href="https://github.com/pgvector/pgvector">pgvector</a></td><td>⭐⭐⭐⭐</td><td>已使用 PostgreSQL 的團隊</td><td>SQL 與 vector 同庫</td><td>PostgreSQL extension；仍需索引與查詢調校</td></tr>
   </tbody>
   <tbody>
