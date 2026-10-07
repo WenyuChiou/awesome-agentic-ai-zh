@@ -404,10 +404,12 @@ Ask five questions before trusting a score:
 <summary>📊 Expand: useful Benchmarks and production evaluation</summary>
 
 - [SWE-bench](https://www.swebench.com/): real software issues.
-- [Terminal-Bench](https://github.com/harbor-framework/terminal-bench-1): terminal tasks.
+- [Terminal-Bench](https://www.tbench.ai/): terminal tasks; use the official entry point to select a dataset and the [Harbor](https://docs.harborframework.com/) execution setup. The [1.x repository](https://github.com/harbor-framework/terminal-bench-1) is a legacy entry point for reproducing older results.
 - [OSWorld](https://github.com/xlang-ai/OSWorld): desktop-environment tasks.
-- [τ²-bench](https://github.com/sierra-research/tau2-bench): tasks with tools and multi-turn interaction.
+- [τ-bench](https://github.com/sierra-research/tau2-bench): tools and multi-turn interaction; the same repository now includes τ³ voice and knowledge tasks. Use a fixed release, domain, and task split; `banking_knowledge` scores before and after the v1.0.1 fixes are not directly comparable.
 - [GAIA](https://huggingface.co/gaia-benchmark): general-assistant tasks.
+
+Before comparing, record the dataset/task split, harness commit, grader version, model settings, and trial count; do not combine results from different versions into one ranking.
 
 Do not copy one SOTA score into the page as a permanent fact. Release decisions should use your own cases, rubric, complete trajectories, cost, and latency. Whenever you change the model, Prompt, Tool, or Harness, rerun the development/reference cases first; do not tune repeatedly on the frozen holdout. Open the holdout only for a release candidate or final validation.
 

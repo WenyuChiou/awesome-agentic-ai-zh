@@ -120,6 +120,8 @@ jobs:
             --freshness-exit "$FRESHNESS_EXIT" \
             --freshness-ran "$FRESHNESS_RAN" \
             --mode "$MODE" \
+            --run-url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            --source-sha "$(git rev-parse HEAD)" \
             --markdown /tmp/content-health.md \
             --json /tmp/content-health.json
           code=$?
