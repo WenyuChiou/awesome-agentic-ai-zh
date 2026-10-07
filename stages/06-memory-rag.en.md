@@ -234,7 +234,7 @@ This table keeps only the tools needed for a Stage 6 baseline. Advanced techniqu
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">Vector data</th><td><a href="https://github.com/chroma-core/chroma">Chroma</a></td><td>⭐⭐⭐⭐⭐</td><td>First local vector search</td><td>collections, add, query</td><td>Apache-2.0; practice and production settings differ</td></tr>
     <tr><td><a href="https://github.com/qdrant/qdrant">Qdrant</a></td><td>⭐⭐⭐⭐⭐</td><td>Teams needing self-hosted or managed service</td><td>dense, sparse, hybrid queries</td><td>Apache-2.0; plan service operation and backups</td></tr>
-    <tr><td><a href="https://github.com/weaviate/weaviate">Weaviate</a></td><td>⭐⭐⭐⭐</td><td>Teams needing schema and hybrid search</td><td>BM25 + vector search</td><td>BSD-3-Clause; start with a small baseline</td></tr>
+    <tr><td><a href="https://github.com/weaviate/weaviate">Weaviate</a></td><td>⭐⭐⭐⭐</td><td>Teams needing schema and hybrid search</td><td>BM25 + vector search</td><td>BSD-3-Clause outside wl/; wl/ requires a separate enterprise license; start small</td></tr>
     <tr><td><a href="https://github.com/pgvector/pgvector">pgvector</a></td><td>⭐⭐⭐⭐</td><td>Teams already using PostgreSQL</td><td>SQL and vectors in one database</td><td>PostgreSQL extension; still needs indexes and tuning</td></tr>
   </tbody>
   <tbody>

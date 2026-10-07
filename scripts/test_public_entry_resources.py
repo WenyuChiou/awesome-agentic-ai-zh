@@ -389,7 +389,8 @@ def test_sentry_catalog_uses_canonical_repo_and_preserves_mcp_identity(
     assert text.count(heading) == 1, page
     assert "https://github.com/getsentry/sentry-mcp" not in text, page
     entry = text.split(heading, 1)[1].split("\n### ", 1)[0]
-    assert "| License | NOASSERTION |" in entry
+    assert "| License | FSL-1.1-Apache-2.0 |" in entry
+    assert "Competing Use" in entry
     assert "`getsentry/sentry-mcp`" in entry
     assert "`sentry-mcp`" in entry
     assert "`@sentry/mcp-server`" in entry

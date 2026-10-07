@@ -1,0 +1,51 @@
+[
+  {
+    "repository": "arize-ai/phoenix",
+    "reviewed_on": "2026-10-05",
+    "source_url": "https://github.com/Arize-ai/phoenix/blob/main/LICENSE",
+    "source_blob_sha": "23d3aa7c871a4eb153186073e3d2b72d586f64be",
+    "scope": "License wording review; GitHub SPDX metadata remains unchanged."
+  },
+  {
+    "repository": "weaviate/weaviate",
+    "reviewed_on": "2026-10-05",
+    "source_url": "https://github.com/weaviate/weaviate/blob/main/LICENSE",
+    "source_blob_sha": "0f1793ed2924dc269e88d1991377d448a0c9354e",
+    "scope": "License wording review; GitHub SPDX metadata remains unchanged."
+  },
+  {
+    "repository": "langfuse/langfuse",
+    "reviewed_on": "2026-10-05",
+    "source_url": "https://github.com/langfuse/langfuse/blob/main/LICENSE",
+    "source_blob_sha": "cf2d4abed1de0891f5dd4a20490ee5033f011605",
+    "scope": "License wording review; GitHub SPDX metadata remains unchanged."
+  },
+  {
+    "repository": "nirdiamant/prompt_engineering",
+    "reviewed_on": "2026-10-05",
+    "source_url": "https://github.com/NirDiamant/Prompt_Engineering/blob/main/LICENSE",
+    "source_blob_sha": "c3130d97e64bacdef4c33ac60e94e0b719dbf42e",
+    "scope": "License wording review; GitHub SPDX metadata remains unchanged."
+  },
+  {
+    "repository": "nirdiamant/rag_techniques",
+    "reviewed_on": "2026-10-05",
+    "source_url": "https://github.com/NirDiamant/RAG_Techniques/blob/main/LICENSE",
+    "source_blob_sha": "c3130d97e64bacdef4c33ac60e94e0b719dbf42e",
+    "scope": "License wording review; GitHub SPDX metadata remains unchanged."
+  },
+  {
+    "repository": "anthropics/skills",
+    "reviewed_on": "2026-10-05",
+    "source_url": "https://github.com/anthropics/skills/blob/main/README.md",
+    "source_blob_sha": "eb54ee8b92f2d40b4b26569be0772be3c1e23156",
+    "scope": "License wording review; GitHub SPDX metadata remains unchanged."
+  },
+  {
+    "repository": "getsentry/toolkit",
+    "reviewed_on": "2026-10-05",
+    "source_url": "https://github.com/getsentry/toolkit/blob/main/LICENSE.md",
+    "source_blob_sha": "f97b1d1f628142b825c11675c5c33dd7a747f946",
+    "scope": "License wording review; GitHub SPDX metadata remains unchanged."
+  }
+]

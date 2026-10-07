@@ -136,7 +136,7 @@ GraphRAG 适合“哪些人物共同影响这件事？”或“整批文档有�
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">Pipeline 与示例</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></td><td>⭐⭐⭐⭐⭐</td><td>文档型应用开发者</td><td>retriever、query engine、evaluation</td><td>MIT；套件多，先跟官方 starter</td></tr>
     <tr><td><a href="https://github.com/deepset-ai/haystack">Haystack</a></td><td>⭐⭐⭐⭐</td><td>想看模块化 pipeline</td><td>components、routing、retrieval</td><td>Apache-2.0；先做小型 pipeline</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>想比较技术的读者</td><td>可运行 notebooks 与技术对照</td><td>社区教材；事实回官方文档核对</td></tr>
+    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>想比较技术的读者</td><td>可运行 notebooks 与技术对照</td><td>自定义非商业授权；商用须书面许可；事实回官方文档核对</td></tr>
     <tr><td><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></td><td>⭐⭐⭐⭐</td><td>想读完整产品架构的团队</td><td>解析、hybrid retrieval、UI</td><td>Apache-2.0；不适合当第一个 starter</td></tr>
   </tbody>
   <tbody>

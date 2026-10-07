@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-05
+
+- **content health / license boundaries** · 依七個上游 README／LICENSE 原文修正三語授權界線：Phoenix ELv2、Weaviate 與 Langfuse 的企業目錄、NirDiamant 非商業限制、Anthropic 文件 Skills 的 source-available 條款，以及 Sentry FSL。保留資源、推薦星等與既有 freshness 日期；API 未識別 SPDX 不改寫成「沒有授權」。來源 blob 與三語回歸獨立記錄，不把人工查核冒充完整機器健康通過。
+
 ## 2026-10-02
 
 - **content / first-use terminology** · 三語在九組已查核頁面補齊 52 組術語／頁面組合的首次全稱與簡短意思，包含微調方法、檢索指標及圖中先出現的 CLI／MCP／訓練方法。原標題 anchor、程式碼、來源 URL、圖檔與資源事實保留。新增有限範圍的讀者可見回歸案例；Stage 1 與術語表六個字元上限只提高到實際新增說明的長度，不宣稱全站所有縮寫已查完。

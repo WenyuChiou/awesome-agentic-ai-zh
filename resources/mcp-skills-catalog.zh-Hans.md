@@ -150,7 +150,7 @@
 
 | 栏位 | 内容 |
 |---|---|
-| License | 无 license 文件（上游未提供；使用前请先确认授权） |
+| License | 各 Skill 分别授权；许多为 Apache-2.0，docx／pdf／pptx／xlsx 为 source-available，依各文件夹条款 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**官方示例**） |
 
 **教什么**：Anthropic 官方 Agent Skills 示例仓库，包含 docx / xlsx / pptx / pdf 处理 skill。
@@ -635,13 +635,14 @@
 
 | 栏位 | 内容 |
 |---|---|
-| License | NOASSERTION |
+| License | FSL-1.1-Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐（**Sentry 官方**） |
 
 **教什么**：从 LLM 查 Sentry error event、issue、trace。
 **适合谁**：用 Sentry 接 production error 的工程师。
 **备注**：“上周这个 error 的 stack trace 给我看”直接问 Claude Code。
 原 `getsentry/sentry-mcp` 已改名为 `getsentry/toolkit`。这是同一个项目（2026-10-02 核对）。Sentry MCP 的名称仍是 `sentry-mcp`，软件包仍是 `@sentry/mcp-server`。
+授权限制 Competing Use；不是目前全面采用 Apache-2.0，须按该版本 LICENSE 判断。
 
 ### [winor30/mcp-server-datadog](https://github.com/winor30/mcp-server-datadog) ⭐⭐⭐
 
