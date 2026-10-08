@@ -68,12 +68,14 @@ Not every AI model writes text. A **Typed Decision Model** chooses from answers 
 | Your situation | Start with | Why |
 |---|---|---|
 | Learning the API and iterating at zero cost | **Ollama + `gemma4:e4b`** | Runs locally, so each API call costs $0 and the example can be repeated freely. |
-| Comparing cloud quality when data may be sent out | **Claude Haiku 4.5 / Sonnet 5.5** | The Anthropic SDK (Software Development Kit, a toolkit of developer tools and libraries) path is simple; pricing is based on input and output tokens. |
+| Comparing cloud quality when data may be sent out | **Claude Haiku 5.5 / Sonnet 5.5** | The Anthropic SDK (Software Development Kit, a toolkit of developer tools and libraries) path is simple; pricing is based on input and output tokens. |
 | OpenAI Agent API | **GPT-6.1 Sol / GPT-6 Luna** | Sol for harder work; Luna for simpler, repeated work. Test your task and check pricing. |
 | Very long documents with images or video | **Gemini 3.8 Flash or Kimi K3** | Check the model's context and multimodal support, then test with your own document. |
 | Chinese-language API work with usage control | **DeepSeek V4.1 Flash or GLM-5.3** | Compare official prices, output limits, and availability; do not choose by name alone. |
 | Classification, scoring, or routing with fixed choices that code will use directly | **Jev 1.13 (service in early access)** | Returns probabilities for Choice, Score, or Noul questions; send low-confidence or high-risk actions to a person or another model. |
 | Privacy, offline use, or self-hosting | **Llama 4, Qwen 3.8, Gemma 4, and other open weights** | Estimate hardware and license requirements, then measure real speed with Ollama or another runtime. |
+
+**Haiku 5.5 (released 2026-10-07; checked 2026-10-08)** suits classification, summarization, and narrowly scoped subagents; evaluate Sonnet/Opus for complex coding agents. Its fixed API ID is `claude-haiku-5-5`, without a date suffix or separate alias. Exercises 1 and 3 use 5.5; the temperature exercise and cross-stage examples retain a Haiku 4.5 compatibility baseline. With adaptive thinking enabled by default, select text by block `type`, preserve thinking blocks, and recount tokens; an ID-only swap is insufficient. See the [announcement](https://www.anthropic.com/claude-haiku-5-5) and [Haiku 5.5 migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide).
 
 ## 🚪 Entry Conditions
 
@@ -114,7 +116,7 @@ Read 1–3 before starting the exercises; consult 4–7 when you need model, tok
 
 ### Exercise 1: LLM API (hello world)
 
-**Outcome:** Make a short core call, receive a response, and read output tokens from `usage`. Per-call budget: Ollama $0; Anthropic Haiku: calculate from this call's input/output usage and the official $1/$5 rates. Stage budget: local runs remain $0; add the actual usage from 3–5 cloud runs.
+**Outcome:** Make a short core call, receive a response, and read output tokens from `usage`. Per-call budget: Ollama $0; Anthropic Haiku: calculate from this call's input/output usage and the 5.5 rates of $0.10/$0.50 for prompts up to 100K tokens ($0.50/$2.50 above 100K). Stage budget: local runs remain $0; add the actual usage from 3–5 cloud runs.
 
 <details markdown="1" open>
 <summary>📋 <b>Starter — Path A (local Ollama <code>gemma4:e4b</code>, default)</b> (copy to <code>practice_1.py</code> and run <code>python practice_1.py</code>)</summary>
@@ -166,13 +168,14 @@ import anthropic
 
 client = anthropic.Anthropic()
 msg = client.messages.create(
-    model="claude-haiku-4-5",  # Haiku is cheapest; change this line to use Sonnet
-    max_tokens=100,
+    model="claude-haiku-5-5",
+    max_tokens=4096,
+    output_config={"effort": "low"},
     messages=[{"role": "user", "content": "Introduce yourself in one sentence."}],
 )
 
 # === Self-check ===
-text = msg.content[0].text
+text = "".join(block.text for block in msg.content if block.type == "text")
 print("Response:", text)
 print("usage:", msg.usage)
 
@@ -320,31 +323,38 @@ import anthropic
 
 # Anthropic public pricing (USD per 1M tokens) — recheck before running: https://www.anthropic.com/pricing
 PRICING = {
-    "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
+    "claude-haiku-5-5":   {"input": 0.10, "output":  0.50},
     "claude-sonnet-5-5":  {"input": 2.00, "output": 10.00},
     "claude-opus-5-5":    {"input": 4.00, "output": 20.00},
     "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
 }
 
-client = anthropic.Anthropic()
-MODEL = "claude-haiku-4-5"
+def rates_for(model, input_tokens):
+    if model == "claude-haiku-5-5" and input_tokens > 100_000:
+        return {"input": 0.50, "output": 2.50}
+    return PRICING[model]
 
-msg = client.messages.create(model=MODEL, max_tokens=200,
+client = anthropic.Anthropic()
+MODEL = "claude-haiku-5-5"
+
+msg = client.messages.create(model=MODEL, max_tokens=4096,
+                             output_config={"effort": "low"},
                              messages=[{"role": "user", "content": "Hello! Please introduce yourself."}])
 in_tok, out_tok = msg.usage.input_tokens, msg.usage.output_tokens
-rates = PRICING[MODEL]
+rates = rates_for(MODEL, in_tok)
 cost_one = (in_tok * rates["input"] + out_tok * rates["output"]) / 1_000_000
 
 print(f"model: {MODEL}")
 print(f"single: input={in_tok} output={out_tok} → ${cost_one:.6f}")
-print(f"1000 calls cost across model tiers:")
-for name, r in PRICING.items():
+print("1000-call rate-only illustration (not measured cross-model costs):")
+for name in PRICING:
+    r = rates_for(name, in_tok)
     c = (in_tok * r["input"] + out_tok * r["output"]) / 1_000_000 * 1000
     print(f"  {name:<22} ${c:.4f}")
 
 # === Self-check ===
 assert cost_one > 0, "A cloud LLM call must have a positive cost"
-print(f"\n✅ Exercise 3 passed (Anthropic) — 1000-call costs for Haiku, Sonnet, Opus, and Fable were calculated from actual tokens")
+print(f"\n✅ Exercise 3 passed (Anthropic) — this call is costed; cross-model figures compare rates only and require fresh token measurements")
 ```
 
 </details>
@@ -488,14 +498,14 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 18-family table (official specification entries)</summary>
 
-<small>Full table checked: 2026-09-22 UTC. GPT row updated: 2026-10-02 UTC. Claude row updated: 2026-09-28 UTC. Gemini row updated: 2026-10-02 UTC.</small>
+<small>Full table checked: 2026-09-22 UTC. GPT row updated: 2026-10-02 UTC. Claude row updated: 2026-10-08 UTC. Gemini row updated: 2026-10-02 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 **Cache** is like reusing a note you already read: reading old content and writing new content may have different prices.
 
 | Family | Current recommended models | Status | Context | Price or license | Good for | Limitations | Official source |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5.1 (`claude-fable-5-1`); Mythos 5.1 (`claude-mythos-5-1`); Opus 5.5 (`claude-opus-5-5`); Sonnet 5.5 (`claude-sonnet-5-5`); Haiku 4.5 | Fable/Opus/Sonnet/Haiku: generally available; Mythos: vetted access only | Mostly 1M context / 128K max output; Haiku 200K / 64K | Claude API: Fable/Mythos US$10/$50, Opus US$4/$20, Sonnet US$2/$10, Haiku US$1/$5 per million input/output tokens; Sonnet/Opus cache read US$0.20, Fable/Mythos US$0.25 | Long-form, coding, long-running agent workflows | Mythos 5.1 is limited to vetted cybersecurity and life-science users; Sonnet 5.5 changes forced tool choice and temperature settings, so read the migration guide before upgrading existing code; cloud-partner prices differ | [Claude model overview](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Sonnet 5.5](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) · [Migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) · [Claude API pricing](https://platform.claude.com/docs/en/about-claude/pricing) |
+| Claude | Fable 5.1 (`claude-fable-5-1`); Mythos 5.1 (`claude-mythos-5-1`); Opus 5.5 (`claude-opus-5-5`); Sonnet 5.5 (`claude-sonnet-5-5`); Haiku 5.5 (`claude-haiku-5-5`) | Fable/Opus/Sonnet/Haiku: generally available; Mythos: vetted access only | 1M context / 128K max output | Claude API: Fable/Mythos US$10/$50, Opus US$4/$20, Sonnet US$2/$10, Haiku US$0.10/$0.50 (prompt ≤100K), US$0.50/$2.50 (prompt >100K) per million input/output tokens; Sonnet cache read US$0.10, Opus US$0.20, Fable/Mythos US$0.25 | Long-form, coding, long-running agent workflows | Mythos 5.1 is limited to vetted cybersecurity and life-science users; Sonnet 5.5 changes forced tool choice and temperature settings, so read the migration guide before upgrading existing code; cloud-partner prices differ | [Claude model overview](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Sonnet 5.5](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) · [Migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) · [Haiku 5.5](https://platform.claude.com/docs/en/models/haiku-5-5/overview) · [Haiku 5.5 migration](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide) · [Claude API pricing](https://platform.claude.com/docs/en/about-claude/pricing) |
 | GPT | GPT-6 Astra (`gpt-6-astra`); GPT-6.1 Sol (`gpt-6.1-sol`); GPT-6 Luna (`gpt-6-luna`) | Generally available API models; the Free tier is not supported | 1.05M context / 128K max output | Standard API, US$ per 1M tokens, input/cache read/cache write/output. Astra $10/$1/$12.50/$50. Sol 6.1 $2/$0.10/$2.50/$10. Luna $0.10/$0.01/$0.125/$0.50 | Sol 6.1 for coding and multi-step Agent work; Luna for focused, repeated tasks; evaluate Astra's cost-quality tradeoff on your own tasks | Sol 6.1 tool calling requires Responses API; Chat Completions has no tool calling. Above 272K input, the full request uses 2× input/cache and 1.5× output rates. Batch/Flex are half-price, Fast is 2×. Tools may cost extra | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) · [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) · [OpenAI API pricing](https://developers.openai.com/api/docs/pricing) |
 | Jev (TypeSafe AI) | TypeSafe direct: Jev 1.13 (`jev-1.13.0`), stable alias `jev-latest`; Cloudflare route: `typesafe/jev` | Official model; service remains in early access | TypeSafe direct: 64K per request, 32K for `state` plus the longest question; Cloudflare route: 32K | TypeSafe direct: $0.042 per million input tokens, output is unmetered; Cloudflare route: see the Cloudflare dashboard | Fixed-choice classification, routing, rubric scoring, and guardrail judgments | Does not generate free-form text; probability is not correctness, so your code and Eval must set thresholds, permissions, and fallbacks | [TypeSafe model specs](https://docs.typesafe.ai/models) · [Jev introduction](https://docs.typesafe.ai/introduction) · [Early-access announcement](https://typesafe.ai/blog/introducing-system-one-models-and-jev) · [Cloudflare route](https://developers.cloudflare.com/ai/models/typesafe/jev/) |
 | Gemini | Gemini 3.8 Flash; Gemini 4 Argon (release reference; restricted access) | Flash: generally available; Argon: trusted cyber defenders through Fairwind only | Flash: 1,048,576 context / 65,536 max output. Argon: announced 1M output limit, public API context specification not announced | Flash: introductory $0.75/$3.75 (input/output) through 2026-12-31. Argon: announced future introductory $2/$10, then $4/$20; per 1M tokens | Flash for runnable multimodal and Agent exercises; Argon as an official long-horizon model release reference | Broad Argon API / Google AI Ultra access is still forthcoming; no public API model ID has been announced. It is not this chapter's runnable default | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) · [Gemini 4 Argon announcement](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/) |

@@ -481,3 +481,17 @@ dbe7c91 Stage 4 練習 2 (CrewAI multi-agent)
 ```
 
 All merged into `main` via [`cdb0ae3`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/cdb0ae3). Branch deleted from origin after merge.
+
+
+### Haiku 5.5 current guidance (2026-10-08)
+
+`scripts/test_haiku55_content.py` locks the trilingual current-model row, October 7
+release versus October 8 verification, fixed ID, 1M/128K limits, both prompt-length
+price tiers, Sonnet cache-read correction, and unchanged full-table verification date.
+It executes the Stage 1 first-call snippets with thinking-first mock content and
+checks request settings, text selection, the 100,000/100,001-token pricing boundary,
+and rate-only cross-model cost labels. No paid API calls or live quality claims.
+`scripts/test_haiku_compatibility_notes.py` checks the nine shared examples/Stage 2/3
+notices and existing runnable model defaults. Older Haiku 4.5 examples remain a
+compatibility baseline; a later migration needs framework, token-budget, signed
+thinking replay, append-only conversation, and refusal handling tests.

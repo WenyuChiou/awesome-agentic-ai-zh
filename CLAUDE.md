@@ -52,8 +52,9 @@ If unsure, ask the user to run `ollama list` and verify.
 |---|---|---|
 | **`claude-fable-5-1`** | Highest widely released Claude tier; 1M context, 128K max output, and stronger long-running agentic work | $10 input / $50 output; $0.25 cache read |
 | **`claude-mythos-5-1`** | Same model as Fable 5.1, with access limited to vetted cybersecurity and life-science users | $10 input / $50 output; $0.25 cache read |
-| **`claude-haiku-4-5`** | Cheapest cloud option, OK for all exercises | $1 input / $5 output |
-| **`claude-sonnet-5-5`** | Production default for new work; review the [Sonnet 5.5 migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) before changing existing tool-calling examples | $2 input / $10 output |
+| **`claude-haiku-5-5`** | Current small-model tier for scoped tasks; 1M context / 128K output. Stage 1 exercises 1 and 3 use 5.5; other exercises retain Haiku 4.5 compatibility defaults pending parameter, thinking-block, and token-budget migration | Prompts ≤100K: $0.10 input / $0.50 output; >100K: $0.50 / $2.50 |
+| **`claude-haiku-4-5`** | Existing exercise compatibility baseline, not the latest or cheapest Haiku | $1 input / $5 output |
+| **`claude-sonnet-5-5`** | Production default for new work; review the [Sonnet 5.5 migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) before changing existing tool-calling examples | $2 input / $10 output; $0.10 cache read |
 | **`claude-opus-5-5`** | Current Opus-class default for most workloads; use Fable 5.1 when evals still fall short | $4 input / $20 output; $0.20 cache read |
 
 ## Framing rules (do not violate)
