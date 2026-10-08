@@ -77,7 +77,7 @@ def test_stage01_fact_pack_separates_full_table_and_gpt_update_dates() -> None:
     assert "verified_on: '2026-09-22'" in fact_pack
     assert "gpt: '2026-10-02'" in fact_pack
     assert "gemini: '2026-10-02'" in fact_pack
-    assert "anthropic: '2026-09-28'" in fact_pack
+    assert "anthropic: '2026-10-08'" in fact_pack
     assert "claude_sonnet: 'https://platform.claude.com/docs/en/models/sonnet-5-5/overview'" in fact_pack
     assert "gpt: 'https://developers.openai.com/api/docs/pricing'" in fact_pack
 

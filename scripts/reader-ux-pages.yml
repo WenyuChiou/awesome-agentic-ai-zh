@@ -84,9 +84,10 @@ pages:
       en: stages/01-llm-basics.en.md
       zh-Hans: stages/01-llm-basics.zh-Hans.md
     max_visible_chars:
-      zh-TW: 8569
-      en: 13193
-      zh-Hans: 8599
+      # Haiku 5.5 release/migration boundary and tiered first-call budget, measured 2026-10-08.
+      zh-TW: 8983
+      en: 13856
+      zh-Hans: 9013
     max_open_details: 3
     required_visible_sections:
       core-terms:

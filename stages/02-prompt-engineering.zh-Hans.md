@@ -6,6 +6,8 @@
 
 **Prompt（提示）**不只是一个问题。它是交给模型的一整份任务包，可以放进指令、要处理的资料、范例和输出规则。
 
+> **云端范例兼容性**：现有 Anthropic 范例刻意保留 **Haiku 4.5 兼容性基准**，不代表最新或最低价模型。改用固定 ID `claude-haiku-5-5` 前，先按 [Haiku 5.5 迁移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide) 调整程序，不能只换 model ID：处理默认 adaptive thinking（自适应思考）、按 `type == "text"` 提取文字、移除 `temperature`／`top_p`／`top_k`，并重新计算 tokens、输出上限与预算。工具循环须原样保留 thinking 区块并只追加历史；离线测试通过不代表已验证真实模型质量。
+
 ## 📌 学习目标
 
 完成后，你可以：

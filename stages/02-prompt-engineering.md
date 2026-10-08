@@ -6,6 +6,8 @@
 
 **Prompt（提示）**不是只有一句問題。它是你交給模型的一整份任務包，可以放進指令、要處理的資料、範例，以及輸出規則。
 
+> **雲端範例相容性**：現有 Anthropic 範例刻意保留 **Haiku 4.5 相容性基準**，不代表最新或最低價模型。改用固定 ID `claude-haiku-5-5` 前，先依 [Haiku 5.5 遷移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide) 調整程式，不能只換 model ID：處理預設 adaptive thinking（自適應思考）、依 `type == "text"` 擷取文字、移除 `temperature`／`top_p`／`top_k`，並重新計算 tokens、輸出上限與預算。工具迴圈須原樣保留 thinking 區塊並只追加歷史；離線測試通過不代表已驗證真實模型品質。
+
 ## 📌 學習目標
 
 完成後，你可以：

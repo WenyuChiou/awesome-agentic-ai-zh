@@ -68,12 +68,14 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 | 你的場景 | 先試哪條路 | 選擇理由 |
 |---|---|---|
 | 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`** | 本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
-| 要比較雲端品質、資料可送出 | **Claude Haiku 4.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，開發工具與函式庫的工具包） 路徑簡單；按輸入與輸出 token 計費。 |
+| 要比較雲端品質、資料可送出 | **Claude Haiku 5.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，開發工具與函式庫的工具包） 路徑簡單；按輸入與輸出 token 計費。 |
 | OpenAI Agent API | **GPT-6.1 Sol／GPT-6 Luna** | 難題先試 Sol；大量簡單任務先試 Luna。用自己的任務測，再查價格。 |
 | 文件很長，且要處理圖像或影音 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型號的 context 與多模態支援，再用自己的文件小測試。 |
 | 中文 API 任務，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
 | 固定選項的分類、評分或分流，結果要直接交給程式 | **Jev 1.13（服務 Early access）** | 回傳 Choice、Score 或 Noul 的機率結果；低信心或高風險動作仍要交給人或另一個模型。 |
 | 隱私、離線或需自行部署 | **Llama 4、Qwen 3.8、Gemma 4 等開放權重** | 先估算硬體與授權，再以 Ollama 或其他推論工具測量實際速度。 |
+
+**Haiku 5.5（2026-10-07 發布，2026-10-08 查核）**適合分類、摘要與範圍明確的子代理；複雜程式 Agent 仍先評估 Sonnet／Opus。API ID 是固定的 `claude-haiku-5-5`，沒有日期尾碼或另一個 alias。練習 1、3 改用 5.5；temperature 練習與跨章範例保留 Haiku 4.5 相容基線。5.5 預設 adaptive thinking，須依區塊 `type` 取文字、保留 thinking 區塊並重新計算 token；不能只換 ID。參考 [發布公告](https://www.anthropic.com/claude-haiku-5-5) 與 [Haiku 5.5 遷移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide)。
 
 ## 🚪 進入條件
 
@@ -114,7 +116,7 @@ Path A 需要 [Ollama](https://ollama.com)、`pip install openai`，以及 `olla
 
 ### 練習 1：LLM API（hello world）
 
-**成果：**用五行左右的核心呼叫取得一段回應，並從 `usage` 讀出輸出 token。單次預算：Ollama $0；Anthropic Haiku 請依回應的 input／output usage 與官方 `$1/$5` 費率計算。階段預算：本機反覆跑仍為 $0；雲端依 3–5 次與實際 usage 累計。
+**成果：**用五行左右的核心呼叫取得一段回應，並從 `usage` 讀出輸出 token。單次預算：Ollama $0；Anthropic Haiku 請依回應的 input／output usage 與 5.5 的 `$0.10/$0.50` 短提示費率（提示超過 100K token 時為 `$0.50/$2.50`）計算。階段預算：本機反覆跑仍為 $0；雲端依 3–5 次與實際 usage 累計。
 
 <details markdown="1" open>
 <summary>📋 <b>起手碼 — Path A（本機 Ollama <code>gemma4:e4b</code>、預設）</b>（複製到 <code>practice_1.py</code>、執行 <code>python practice_1.py</code>）</summary>
@@ -166,13 +168,14 @@ import anthropic
 
 client = anthropic.Anthropic()
 msg = client.messages.create(
-    model="claude-haiku-4-5",  # haiku 最便宜；換 sonnet 改這行
-    max_tokens=100,
+    model="claude-haiku-5-5",
+    max_tokens=4096,
+    output_config={"effort": "low"},
     messages=[{"role": "user", "content": "用一句話自我介紹。"}],
 )
 
 # === 自我驗證 ===
-text = msg.content[0].text
+text = "".join(block.text for block in msg.content if block.type == "text")
 print("回應：", text)
 print("usage:", msg.usage)
 
@@ -320,31 +323,38 @@ import anthropic
 
 # Anthropic 公開計價（每 1M token、USD）— 跑前對照 https://www.anthropic.com/pricing
 PRICING = {
-    "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
+    "claude-haiku-5-5":   {"input": 0.10, "output":  0.50},
     "claude-sonnet-5-5":  {"input": 2.00, "output": 10.00},
     "claude-opus-5-5":    {"input": 4.00, "output": 20.00},
     "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
 }
 
-client = anthropic.Anthropic()
-MODEL = "claude-haiku-4-5"
+def rates_for(model, input_tokens):
+    if model == "claude-haiku-5-5" and input_tokens > 100_000:
+        return {"input": 0.50, "output": 2.50}
+    return PRICING[model]
 
-msg = client.messages.create(model=MODEL, max_tokens=200,
+client = anthropic.Anthropic()
+MODEL = "claude-haiku-5-5"
+
+msg = client.messages.create(model=MODEL, max_tokens=4096,
+                             output_config={"effort": "low"},
                              messages=[{"role": "user", "content": "你好！自我介紹一下。"}])
 in_tok, out_tok = msg.usage.input_tokens, msg.usage.output_tokens
-rates = PRICING[MODEL]
+rates = rates_for(MODEL, in_tok)
 cost_one = (in_tok * rates["input"] + out_tok * rates["output"]) / 1_000_000
 
 print(f"model: {MODEL}")
 print(f"single: input={in_tok} output={out_tok} → ${cost_one:.6f}")
-print(f"1000 calls cost across model tiers:")
-for name, r in PRICING.items():
+print("1000-call rate-only illustration (not measured cross-model costs):")
+for name in PRICING:
+    r = rates_for(name, in_tok)
     c = (in_tok * r["input"] + out_tok * r["output"]) / 1_000_000 * 1000
     print(f"  {name:<22} ${c:.4f}")
 
 # === 自我驗證 ===
 assert cost_one > 0, "Cloud LLM 一定有成本"
-print(f"\n✅ 練習 3 通過（Anthropic）— 1000 次 haiku、sonnet、opus 與 fable 的成本已按實際 token 算出")
+print(f"\n✅ 練習 3 通過（Anthropic）— 已計算本次成本；跨模型數字只比較單價，須各自重新量測 token")
 ```
 
 </details>
@@ -488,14 +498,14 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details markdown="1">
 <summary>🌐 完整 18 家族資料表（官方規格入口）</summary>
 
-<small>全表查核：2026-09-22 UTC。GPT 一列更新：2026-10-02 UTC。Claude 一列更新：2026-09-28 UTC。Gemini 一列更新：2026-10-02 UTC。</small>
+<small>全表查核：2026-09-22 UTC。GPT 一列更新：2026-10-02 UTC。Claude 一列更新：2026-10-08 UTC。Gemini 一列更新：2026-10-02 UTC。</small>
 
 沒有可靠公開數字就寫「官方未公布」。價格通常是 USD／每 1M token；供應商若用別的單位，就照官方單位記錄。
 **快取（cache）**像重用已讀過的便條：讀取舊內容與寫入新內容可能有不同價格。
 
 | 家族 | 目前推薦型號 | 狀態 | Context | 價格或授權 | 適合做什麼 | 限制 | 官方來源 |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5.5（`claude-opus-5-5`）；Sonnet 5.5（`claude-sonnet-5-5`）；Haiku 4.5 | Fable／Opus／Sonnet／Haiku：正式可用；Mythos：限核准使用者 | 多數為 1M context／128K 最大輸出；Haiku 為 200K／64K | Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$1/$5（每百萬輸入／輸出 token）；Sonnet／Opus cache read US$0.20，Fable／Mythos US$0.25 | 長文、程式、長時間 Agent 工作流 | Mythos 5.1 限資安與生命科學核准使用者；Sonnet 5.5 的工具指定與 temperature 設定不同於舊版，升級既有程式前先看遷移指南；雲端夥伴平台價格另查 | [Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Sonnet 5.5](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) · [遷移指南](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) · [Claude API 價格](https://platform.claude.com/docs/en/about-claude/pricing) |
+| Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5.5（`claude-opus-5-5`）；Sonnet 5.5（`claude-sonnet-5-5`）；Haiku 5.5 (`claude-haiku-5-5`) | Fable／Opus／Sonnet／Haiku：正式可用；Mythos：限核准使用者 | 1M context／128K 最大輸出 | Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$0.10/$0.50 (prompt ≤100K), US$0.50/$2.50 (prompt >100K)（每百萬輸入／輸出 token）；Sonnet cache read US$0.10，Opus US$0.20，Fable／Mythos US$0.25 | 長文、程式、長時間 Agent 工作流 | Mythos 5.1 限資安與生命科學核准使用者；Sonnet 5.5 的工具指定與 temperature 設定不同於舊版，升級既有程式前先看遷移指南；雲端夥伴平台價格另查 | [Claude 模型總覽](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Sonnet 5.5](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) · [遷移指南](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) · [Haiku 5.5](https://platform.claude.com/docs/en/models/haiku-5-5/overview) · [Haiku 5.5 migration](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide) · [Claude API 價格](https://platform.claude.com/docs/en/about-claude/pricing) |
 | GPT | GPT-6 Astra（`gpt-6-astra`）；GPT-6.1 Sol（`gpt-6.1-sol`）；GPT-6 Luna（`gpt-6-luna`） | 正式 API 模型；免費層不支援 | 1.05M context／128K 最大輸出 | Standard API，每百萬 token，US$ 輸入／cache 讀／cache 寫／輸出。Astra $10/$1/$12.50/$50。Sol 6.1 $2/$0.10/$2.50/$10。Luna $0.10/$0.01/$0.125/$0.50 | Sol 6.1 用於程式與多步 Agent 工作；Luna 用於聚焦、重複任務；Astra 的成本與品質差異要自行評測 | Sol 6.1 的工具呼叫須用 Responses API；Chat Completions 不支援工具呼叫。超過 272K 輸入時，整次請求輸入與 cache 價為 2 倍、輸出為 1.5 倍。Batch／Flex 半價，Fast 為 2 倍。工具可能另計費 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) · [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) · [OpenAI API 價格](https://developers.openai.com/api/docs/pricing) |
 | Jev（TypeSafe AI） | TypeSafe direct：Jev 1.13（`jev-1.13.0`），穩定 alias `jev-latest`；Cloudflare route：`typesafe/jev` | 正式模型；服務仍為 Early access | TypeSafe direct：64K／request，`state` 加最長 question 上限 32K；Cloudflare route：32K | TypeSafe direct：$0.042／百萬 input token，output 不計費；Cloudflare route：以 Cloudflare dashboard 顯示為準 | 固定選項分類、路由、rubric 評分與 guardrail 判斷 | 不產生自由文字；機率不等於正確，門檻、權限與 fallback 要由自己的程式與 Eval 決定 | [TypeSafe 模型規格](https://docs.typesafe.ai/models) · [Jev 入門](https://docs.typesafe.ai/introduction) · [Early access 公告](https://typesafe.ai/blog/introducing-system-one-models-and-jev) · [Cloudflare route](https://developers.cloudflare.com/ai/models/typesafe/jev/) |
 | Gemini | Gemini 3.8 Flash；Gemini 4 Argon（發布參考；限制開放） | Flash：正式可用；Argon：限 Fairwind 可信資安防禦者 | Flash：1,048,576 context／65,536 最大輸出。Argon：公告 1M 輸出上限，公開 API context 規格未公布 | Flash：2026-12-31 前介紹價 $0.75/$3.75（輸入／輸出）。Argon：公告未來介紹價 $2/$10，期滿後 $4/$20；每百萬 token | Flash 用於可實作的多模態與 Agent 練習；Argon 是長任務模型的官方發布參考 | Argon 的一般 API／Google AI Ultra 開放仍待後續發布，公開 API model ID 未公布。不能拿來當本章可執行預設 | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API 定價](https://ai.google.dev/gemini-api/docs/pricing) · [Gemini 4 Argon 公告](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/) |

@@ -6,6 +6,8 @@ This stage does one thing: let the model fill out a “tool work order,” then 
 
 <!-- freshness: canonical=stages/03-tool-use-and-hello-agent.md; verified_on=2026-08-27; scope=models,pricing,tool-apis,security; max_age_days=90 -->
 
+> **Cloud example compatibility**: Existing Anthropic examples deliberately retain a **Haiku 4.5 compatibility baseline**, rather than claiming the latest or lowest-price model. Before adopting the fixed ID `claude-haiku-5-5`, follow the [Haiku 5.5 migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide); changing only the model ID is insufficient. Handle default adaptive thinking, select text using `type == "text"`, omit `temperature`/`top_p`/`top_k`, and recount tokens, output limits, and budget. Tool loops must preserve thinking blocks unchanged and keep history append-only; passing offline tests does not validate live model quality.
+
 ## 📌 Learning Objectives
 
 By the end, you can:
