@@ -441,7 +441,7 @@
         "tag": "v2.1.287",
         "published_at": "2026-10-01T18:00:22Z"
       },
-      "reference_count": 18,
+      "reference_count": 21,
       "sources": [
         "branches/for-everyday-users.en.md",
         "branches/for-everyday-users.md",
@@ -454,7 +454,10 @@
         "stages/05-claude-code-ecosystem.zh-Hans.md",
         "tracks/cli/A1-cli-intro.en.md",
         "tracks/cli/A1-cli-intro.md",
-        "tracks/cli/A1-cli-intro.zh-Hans.md"
+        "tracks/cli/A1-cli-intro.zh-Hans.md",
+        "tracks/cli/A3-cli-production.en.md",
+        "tracks/cli/A3-cli-production.md",
+        "tracks/cli/A3-cli-production.zh-Hans.md"
       ]
     },
     "anthropics/claude-code-action": {
@@ -2235,7 +2238,7 @@
         "tag": "v0.62.0",
         "published_at": "2026-09-29T21:17:07Z"
       },
-      "reference_count": 12,
+      "reference_count": 15,
       "sources": [
         "branches/for-everyday-users.en.md",
         "branches/for-everyday-users.md",
@@ -4525,7 +4528,7 @@
         "tag": "rust-v0.160.0",
         "published_at": "2026-10-01T20:19:13Z"
       },
-      "reference_count": 18,
+      "reference_count": 21,
       "sources": [
         "branches/for-developer.en.md",
         "branches/for-developer.md",
