@@ -181,7 +181,8 @@ Skill 的核心意思可以共用，但資料夾、權限、frontmatter 與安�
 如果沒有範圍、證據或復原方法，就先不要提高權限。這比背很多工具名稱更重要。
 
 > **升級後重驗安全界線：** 在一次性 demo repo 重跑負向案例：資料夾已關閉的 MCP 在 headless session 切換目錄或重新載入 plugin 後仍不啟動；
-> 被拒絕的 managed hook 會終止 turn；唯讀模式不能寫檔；需人工批准的命令不能自動放行（包含 `BASH_ARGV0` 權限案例）。
+> 管理者設定（managed settings）中的 `PreToolUse`（執行工具前）hook 拒絕工具呼叫時，應擋住該呼叫；若也回傳 `"continue": false`，這一回合（turn）必須停止。
+> 只拒絕呼叫時，Claude 仍可選擇其他做法。唯讀模式不能寫檔；需人工批准的命令不能自動放行（包含 `BASH_ARGV0` 權限案例）。
 > Anthropic 的 [Claude Code v2.1.296 release notes（10 月 9 日）](https://github.com/anthropics/claude-code/releases/tag/v2.1.296) 提供 MCP、hook 與 `BASH_ARGV0` 的上游回歸線索；
 > 這不是本 repo 或你安裝版本已通過這些檢查的證據。
 

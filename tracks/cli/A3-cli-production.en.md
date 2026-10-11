@@ -181,7 +181,9 @@ The core idea of a Skill can be shared, but folders, permissions, frontmatter, a
 If you have no scope, evidence, or recovery method, do not increase permissions yet. This matters more than memorizing many tool names.
 
 > **After an upgrade, recheck safety boundaries:** In a disposable demo repo, rerun negative cases: a folder-disabled MCP stays off
-> after a headless directory change or plugin reload; a denied managed hook ends the turn; read-only mode cannot write; and a command
+> after a headless directory change or plugin reload. A `PreToolUse` hook (run before a tool call) in managed settings (administrator settings)
+> must block a call it denies; if it also returns `"continue": false`, the turn must end. Denying only the call lets Claude choose another approach.
+> Read-only mode cannot write, and a command
 > requiring human approval is not auto-approved (include a `BASH_ARGV0` permission case). Anthropic’s [Claude Code v2.1.296 release
 > notes (Oct 9)](https://github.com/anthropics/claude-code/releases/tag/v2.1.296) supply upstream regression cues for MCP, hooks,
 > and `BASH_ARGV0`; they do not show that this repository or your installed version passed these checks.

@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-11
+
+- **content / CLI safety and release channels** · A3 三語補上升級後的安全重驗：拒絕工具呼叫只擋住該呼叫，管理者設定的 `PreToolUse` hook 同時回傳 `"continue": false` 才要求停止回合；並保留 MCP、唯讀與人工批准案例。CLI 指南建議新手選官方穩定版，標明所引用 Codex alpha 與 Gemini nightly 是預發布版本；只局部查核發布通道，不改整表原查核日期，也不宣稱實際工具測試已通過。
+
 ## 2026-10-08
 
 - **content / Haiku 5.5** · 依官方 2026-10-07 公告更新三語模型選擇、規格與分級價格；同步 Sonnet 5.5 快取讀取降價。Stage 1 的首次呼叫與成本練習改用 5.5，按區塊類型取文字並保留思考預算；跨模型成本明示為單價示意。temperature 與跨章工具範例保留 Haiku 4.5 相容基線，附遷移界線，不批次改寫歷史紀錄。只更新 Anthropic 查核日期；未執行付費模型測試。
