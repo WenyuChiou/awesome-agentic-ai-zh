@@ -39,6 +39,11 @@
 
 完整表默认收起；展开后请把“查核日”和你的安装版本一起记下。官方资料查核日：**2026-08-30 UTC**。
 
+> **稳定通道与局部查核（2026-10-11 UTC）：** 新手基线优先选官方 stable release。只有验证特定功能时，才在隔离 demo repo 中试用 alpha、preview 或 nightly；
+> 先读 release notes、固定 exact version，并保留回退方式。官方发布页将 [Codex CLI `0.163.0-alpha.5`](https://github.com/openai/codex/releases/tag/rust-v0.163.0-alpha.5)
+> 与 [Gemini CLI `0.65.0-nightly.20261010.g9b6e0265d`](https://github.com/google-gemini/gemini-cli/releases/tag/v0.65.0-nightly.20261010.g9b6e0265d) 标记为 pre-release，
+> 两者都不作为稳定的新手入门基线。这里只局部核对发布通道；整张表最后一次完整查核仍为 2026-08-30 UTC。
+
 <details markdown="1">
 <summary>展开 9 个 CLI 的安装、认证、provider 和安全事实</summary>
 

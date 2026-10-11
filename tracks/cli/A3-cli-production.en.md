@@ -180,6 +180,12 @@ The core idea of a Skill can be shared, but folders, permissions, frontmatter, a
 
 If you have no scope, evidence, or recovery method, do not increase permissions yet. This matters more than memorizing many tool names.
 
+> **After an upgrade, recheck safety boundaries:** In a disposable demo repo, rerun negative cases: a folder-disabled MCP stays off
+> after a headless directory change or plugin reload; a denied managed hook ends the turn; read-only mode cannot write; and a command
+> requiring human approval is not auto-approved (include a `BASH_ARGV0` permission case). Anthropic’s [Claude Code v2.1.296 release
+> notes (Oct 9)](https://github.com/anthropics/claude-code/releases/tag/v2.1.296) supply upstream regression cues for MCP, hooks,
+> and `BASH_ARGV0`; they do not show that this repository or your installed version passed these checks.
+
 ### 📋 Playbook 4: Dispatching subagents for independent tasks
 
 **Outcome:** first list the agents the current tool really provides, then delegate an independent, verifiable task; do not assume every computer has an agent with the same name.

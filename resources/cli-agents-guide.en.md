@@ -39,6 +39,12 @@ This reference doc organizes 9 terminal CLIs around “what do you want to do no
 
 The full table is collapsed by default; after expanding it, record the “checked on” date alongside your installed version. Official data checked on: **2026-08-30 UTC**.
 
+> **Stable channels and a scoped check (2026-10-11 UTC):** Use an official stable release as the beginner baseline. Use alpha, preview,
+> or nightly only to test a specific capability in an isolated demo repo; read release notes, pin the exact version, and keep a rollback path.
+> The official release pages mark [Codex CLI `0.163.0-alpha.5`](https://github.com/openai/codex/releases/tag/rust-v0.163.0-alpha.5) and
+> [Gemini CLI `0.65.0-nightly.20261010.g9b6e0265d`](https://github.com/google-gemini/gemini-cli/releases/tag/v0.65.0-nightly.20261010.g9b6e0265d) as pre-releases,
+> so neither is a stable beginner baseline. This checks only release-channel labels; the full table’s last complete check remains 2026-08-30 UTC.
+
 <details markdown="1">
 <summary>Expand installation, authentication, provider, and safety facts for the 9 CLIs</summary>
 
