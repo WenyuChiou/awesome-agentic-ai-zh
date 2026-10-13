@@ -347,6 +347,8 @@ Choose only one to start:
 <a id="-recommended-tools-by-use-case"></a>
 <a id="-featured-projects-templates--sdks--tool-collections"></a>
 
+<a id="-21-complete-learning-resources-and-limits"></a>
+
 ## 📚 22 complete learning resources and limits
 
 <small>Content checks: the original 21 entries inherit the 2026-08-28 UTC check date; Cortex's current README claims about typed MCP tools and the gRPC schema limitation were checked on 2026-10-13 UTC. The GitHub repository metadata snapshot was checked separately on 2026-10-13 UTC. Stars are this project's teaching ratings, not GitHub stars.</small>

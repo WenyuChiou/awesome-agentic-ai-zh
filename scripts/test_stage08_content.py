@@ -106,6 +106,11 @@ RESOURCE_HEADINGS = {
     "en": "## 📚 22 complete learning resources and limits",
     "zh-Hans": "## 📚 22 项完整学习资源与限制",
 }
+LEGACY_RESOURCE_ANCHORS = {
+    "zh-TW": "-21-筆完整學習資源與限制",
+    "en": "-21-complete-learning-resources-and-limits",
+    "zh-Hans": "-21-项完整学习资源与限制",
+}
 RESOURCE_DATE_SCOPES = {
     "zh-TW": (
         "原有 21 項沿用 2026-08-28 UTC 查核日期",
@@ -574,6 +579,11 @@ def test_every_old_heading_anchor_still_lands(locale: str) -> None:
     text = PAGES[locale].read_text(encoding="utf-8")
     anchors = checker.collect_anchors(text)
     assert set(LEGACY_ANCHORS[locale]).issubset(anchors)
+    legacy_resource_anchor = f'<a id="{LEGACY_RESOURCE_ANCHORS[locale]}"></a>'
+    assert re.search(
+        rf"{re.escape(legacy_resource_anchor)}\s+{re.escape(RESOURCE_HEADINGS[locale])}",
+        text,
+    ), f"{locale}: the old complete-resources URL must remain immediately above its current heading"
 
 
 def test_six_locale_diagrams_are_distinct_readable_pngs_and_referenced() -> None:

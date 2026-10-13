@@ -361,7 +361,7 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 - **Stage 6**：直接跳過進入條件 section（前面 stage 已隱含 prerequisite）；Stage 7 仍保留可見進入條件，讓讀者先確認 Stage 4／5／6 的必要基礎。
 - **Stage 7 Eval**：先教 **Outcome**，再教完整 **Eval Case**、**Eval Suite** 與 **Reviewed Eval Set**；最後才補充 Golden／Reference Set 等外部常見名稱。Eval Case 至少交代 input、initial state、success criteria、forbidden actions、optional reference answer、grader 與 case metadata。Golden Set 不只是 input，也不等於訓練資料或 Few-shot；Development cases 用來調整，frozen holdout 只在 release candidate／最後驗證使用。報告保留 dataset version、split、trials、grader、Outcome、Trajectory 與 baseline；不能把 20–50 cases 說成所有專案的硬性最低數，也不能因單次隨機失敗直接判定 regression。
 - **Stage 7.5**：reading-map（進階概念 + reading path），沒有 動手練習、只有輕量 self-check——是 production 之後的 frontier 概念地圖，不寫 code
-- **Stage 8**：兩軌共用的 interface 選擇 hub。可見主線先定義 8 個粗體核心詞，再用平行選擇圖分清 Search／Fetch、Browser Use、Computer Use、Sandbox，接著保留四道安全檢查、兩題第一步、五筆精選入口、21 筆完整五星資源與短版 self-check。Computer Use／benchmark、Browser Use、Sandbox、兩軌進階做法、安全案例與未來介面放進 9 個預設關閉選單；完整資源表固定用 `5／5／4／5／2` 五個真正合併的 rowgroup 並保持可見。四張介面卡不是固定升級順序，舊 heading 以空 anchor 保留深連結。
+- **Stage 8**：兩軌共用的 interface 選擇 hub。可見主線先定義 8 個粗體核心詞，再用平行選擇圖分清 Search／Fetch、Browser Use、Computer Use、Sandbox，接著保留四道安全檢查、兩題第一步、五筆精選入口、22 筆完整五星資源與短版 self-check。Computer Use／benchmark、Browser Use、Sandbox、兩軌進階做法、安全案例與未來介面放進 9 個預設關閉選單；完整資源表固定用 `5／6／4／5／2` 五個真正合併的 rowgroup 並保持可見。四張介面卡不是固定升級順序，舊 heading 以空 anchor 保留深連結。
 
 每個 section 的功能：
 

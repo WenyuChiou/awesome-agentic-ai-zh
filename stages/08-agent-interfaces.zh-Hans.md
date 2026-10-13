@@ -348,6 +348,8 @@ Amazon 案件也不能简化成“某 browser 被全面禁止访问 Amazon”。
 <a id="-常用工具推荐按用途分类"></a>
 <a id="-精选项目模板--sdk--工具合集"></a>
 
+<a id="-21-项完整学习资源与限制"></a>
+
 ## 📚 22 项完整学习资源与限制
 
 <small>内容核查：原有 21 项沿用 2026-08-28 UTC 核查日期；Cortex README 中 typed MCP tools 与 gRPC schema 限制的说明于 2026-10-13 UTC 核查。GitHub repository metadata snapshot 另于 2026-10-13 UTC 核查。星号是本项目的教学推荐度，不是 GitHub stars。</small>
