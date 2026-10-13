@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-13
+
+- **metadata / Stage 8 / repository snapshot** · 合併 Cortex 後，以 GitHub API 查核完整 263 筆 repository；保留 Cortex 與主線既有的 `getsentry/toolkit` 記錄，並通過離線 snapshot coverage 驗證。
+
 ## 2026-10-11
 
 - **content / CLI safety and release channels** · A3 三語補上升級後的安全重驗：拒絕工具呼叫只擋住該呼叫，管理者設定的 `PreToolUse` hook 同時回傳 `"continue": false` 才要求停止回合；並保留 MCP、唯讀與人工批准案例。CLI 指南建議新手選官方穩定版，標明所引用 Codex alpha 與 Gemini nightly 是預發布版本；只局部查核發布通道，不改整表原查核日期，也不宣稱實際工具測試已通過。
@@ -29,6 +33,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 - **release health / unavailable course entrance** · W&B AI Engineering: Agents 舊入口回傳 404，候選官方入口在查核環境與讀者端目前皆無法開啟。三語選課與資源表暫移除推薦，維護說明保留原因與可重新評估條件，不宣稱永久停課。其餘 11 筆課程的 URL、說明與評分不變；群組 rowspan、fact pack、reader-UX 與回歸測試同步更新，全課程原查核日期不改。
 
 - **content / Stage 1 / model update** · 三語將 Sol 代表型號更新為 `gpt-6.1-sol`。依官方文件改用 US$0.10／百萬快取讀取 token。工具呼叫須用 Responses API。Gemini 詳表加入 4 Argon 的 Fairwind 限制開放、公告輸出上限與未來介紹價。保留目前可實作的 3.8 Flash。不猜公開 API ID，也不把供應商評測當本專案結果。GPT／Gemini 個別查核日期、來源與回歸測試同步更新。全表原日期與 Ollama 起點維持不變。
+
+## 2026-09-29
+
+- **content / Stage 8 / Cortex** · 三語完整資源表新增 Cortex，說明將 API spec 轉成 typed MCP tools 的用途，並註明 gRPC 只提供 schema 資源、不產生可呼叫方法；維持三星教學推薦度。同步將 reader-UX 標題、連結與評分下限更新為 22 筆，Executor／framework 分組改為 6 筆。
 
 ## 2026-09-28
 

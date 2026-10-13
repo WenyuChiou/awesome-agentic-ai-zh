@@ -274,13 +274,14 @@ Six distinct locale PNGs cover the four parallel advanced choices and the keep�
 
 Stage 8 keeps eight bold core terms, the four parallel interface choices, four safety checks,
 two immediately copyable first actions, all four exercise titles and outcomes, five featured entries,
-the complete 21-entry rated resource table, and a short self-check visible. Nine closed disclosures
+the complete 22-entry rated resource table, and a short self-check visible. Nine closed disclosures
 hold current Computer Use contracts, OSWorld benchmark discipline, Browser Use signals, Sandbox
 terminology, Track A／B depth, security cases, and future interfaces. The four choice
 cards are alternatives chosen by task need; the test rejects wording that turns them into a ladder.
 
 `scripts/test_stage08_content.py` locks the three locales to the same eight terms, nine closed
-disclosures, 21 visible resource URL/rating pairs, five accessible rowgroups (`5／5／4／5／2`), one matching
+disclosures, 22 visible resource URL/rating pairs, scoped content-check dates, the Cortex typed-MCP
+description and gRPC schema-only limitation, five accessible rowgroups (`5／6／4／5／2`), one matching
 freshness marker, all legacy H2／H3 anchors, safe `example.com` exercises, current tool and license
 facts, and identical official-source order. It rejects the old Computer Use preview contract,
 unsupported model rankings, volatile GitHub stars, fixed line/startup claims, blanket Gemini

@@ -86,6 +86,7 @@ RESOURCE_PAIRS = (
     ("https://github.com/anthropics/claude-quickstarts", "⭐⭐⭐⭐⭐"),
     ("https://github.com/browser-use/browser-use", "⭐⭐⭐⭐⭐"),
     ("https://github.com/microsoft/playwright-mcp", "⭐⭐⭐⭐⭐"),
+    ("https://github.com/cortex-docs/cortex", "⭐⭐⭐"),
     ("https://github.com/trycua/cua", "⭐⭐⭐⭐"),
     ("https://github.com/bytedance/UI-TARS-desktop", "⭐⭐⭐⭐"),
     ("https://github.com/e2b-dev/E2B", "⭐⭐⭐⭐⭐"),
@@ -101,9 +102,40 @@ RESOURCE_PAIRS = (
     ("https://research.perplexity.ai/articles/browsesafe", "⭐⭐⭐"),
 )
 RESOURCE_HEADINGS = {
-    "zh-TW": "## 📚 21 筆完整學習資源與限制",
-    "en": "## 📚 21 complete learning resources and limits",
-    "zh-Hans": "## 📚 21 项完整学习资源与限制",
+    "zh-TW": "## 📚 22 筆完整學習資源與限制",
+    "en": "## 📚 22 complete learning resources and limits",
+    "zh-Hans": "## 📚 22 项完整学习资源与限制",
+}
+RESOURCE_DATE_SCOPES = {
+    "zh-TW": (
+        "原有 21 項沿用 2026-08-28 UTC 查核日期",
+        "Cortex README 中 typed MCP tools 與 gRPC schema 限制的說明於 2026-10-13 UTC 查核",
+        "GitHub repository metadata snapshot 另於 2026-10-13 UTC 查核",
+    ),
+    "en": (
+        "the original 21 entries inherit the 2026-08-28 UTC check date",
+        "Cortex's current README claims about typed MCP tools and the gRPC schema limitation were checked on 2026-10-13 UTC",
+        "The GitHub repository metadata snapshot was checked separately on 2026-10-13 UTC",
+    ),
+    "zh-Hans": (
+        "原有 21 项沿用 2026-08-28 UTC 核查日期",
+        "Cortex README 中 typed MCP tools 与 gRPC schema 限制的说明于 2026-10-13 UTC 核查",
+        "GitHub repository metadata snapshot 另于 2026-10-13 UTC 核查",
+    ),
+}
+CORTEX_ROW_CLAIMS = {
+    "zh-TW": (
+        "把 API spec 轉成 typed MCP tools",
+        "gRPC 只提供 schema 資源，不產生可呼叫方法",
+    ),
+    "en": (
+        "Turn API specifications into typed MCP tools",
+        "gRPC exposes schema resources but no callable methods",
+    ),
+    "zh-Hans": (
+        "把 API spec 转成 typed MCP tools",
+        "gRPC 只提供 schema 资源，不生成可调用方法",
+    ),
 }
 DETAIL_TAG = re.compile(r"<details\b[^>]*>|</details>")
 
@@ -381,7 +413,7 @@ def test_resources_keep_ordered_urls_ratings_and_real_rowgroups() -> None:
         assert _detail_depth_at(text, len(text)) == 0
         groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
         assert len(groups) == 5
-        for group, rows in zip(groups, (5, 5, 4, 5, 2)):
+        for group, rows in zip(groups, (5, 6, 4, 5, 2)):
             assert len(re.findall(r"<tr>", group)) == rows
             assert f'scope="rowgroup" rowspan="{rows}"' in group
         pairs = re.findall(
@@ -394,6 +426,25 @@ def test_resources_keep_ordered_urls_ratings_and_real_rowgroups() -> None:
             _detail_depth_at(text, text.index(url, table_index)) == 0
             for url, _rating in RESOURCE_PAIRS
         ), f"{locale}: at least one learning resource is hidden"
+
+
+def test_resource_check_dates_are_scoped_and_cortex_claims_keep_caveat() -> None:
+    for locale, page in PAGES.items():
+        text = page.read_text(encoding="utf-8")
+        date_scope = next(
+            line
+            for line in text.splitlines()
+            if line.startswith("<small>") and "2026-08-28 UTC" in line
+        )
+        for scoped_date in RESOURCE_DATE_SCOPES[locale]:
+            assert scoped_date in date_scope
+        assert "2026-09-29 UTC" not in date_scope
+
+        cortex_row = next(
+            line for line in text.splitlines() if "https://github.com/cortex-docs/cortex" in line
+        )
+        for claim in CORTEX_ROW_CLAIMS[locale]:
+            assert claim in cortex_row
 
 
 def test_three_locales_share_sources_and_freshness_marker() -> None:
