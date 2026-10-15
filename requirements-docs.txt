@@ -2,6 +2,9 @@
 # and for local preview: pip install -r requirements-docs.txt && mkdocs serve
 # Explicit base pin so a future mkdocs 2.x can't silently break CI.
 mkdocs>=1.6.1,<2
+# Share the exact parser already hash-locked by scripts/requirements-reader-ux.txt.
+# Markdown 3.11.1 leaves CJK-adjacent emphasis literal; 3.11 passed Pages.
+Markdown==3.11
 mkdocs-material==9.7.7
 mkdocs-static-i18n==1.2.3
 # Pinned explicitly even though mkdocs-material pulls it in transitively:

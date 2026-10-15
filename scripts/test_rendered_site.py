@@ -14,6 +14,52 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def test_markdown_renderer_pin_matches_reader_ux_lock_and_runtime() -> None:
+    import markdown
+
+    requirements = (ROOT / "requirements-docs.txt").read_text(encoding="utf-8")
+    reader_lock = (ROOT / "scripts" / "requirements-reader-ux.txt").read_text(
+        encoding="utf-8"
+    )
+    pins = [line.strip() for line in requirements.splitlines() if line.startswith("Markdown==")]
+    assert len(pins) == 1, "Pin the shared Markdown renderer used by PR, Pages and release builds"
+    expected = pins[0].split("==", 1)[1]
+    assert f"Markdown=={expected} \\" in reader_lock
+    assert markdown.__version__ == expected
+
+
+@pytest.mark.parametrize(
+    "source,term",
+    [
+        ("**Context（上下文）**是這次能看到的資料。", "Context（上下文）"),
+        ("**Context（上下文）**是这次能看到的资料。", "Context（上下文）"),
+        ("先認識**記憶**，再決定要保存什麼。", "記憶"),
+        ("先认识**记忆**，再决定要保存什么。", "记忆"),
+        ("**Agent Memory** stores approved information.", "Agent Memory"),
+    ],
+)
+@pytest.mark.parametrize("inside_details", [False, True])
+def test_project_markdown_renders_adjacent_core_terms(
+    tmp_path: Path, source: str, term: str, inside_details: bool
+) -> None:
+    import markdown
+    from mkdocs.config import load_config
+
+    config = load_config(str(ROOT / "mkdocs.yml"), docs_dir=str(tmp_path))
+    if inside_details:
+        source = '<details markdown="1">\n<summary>More</summary>\n\n' + source + "\n\n</details>"
+    rendered = markdown.markdown(
+        source,
+        extensions=config["markdown_extensions"],
+        extension_configs=config["mdx_configs"],
+    )
+    assert f"<strong>{term}</strong>" in rendered
+    assert "**" not in rendered
+    if inside_details:
+        assert "<details>" in rendered
+        assert "<details open" not in rendered
+
+
 def _load(name: str):
     path = ROOT / "scripts" / f"{name}.py"
     spec = importlib.util.spec_from_file_location(name.replace("-", "_"), path)
