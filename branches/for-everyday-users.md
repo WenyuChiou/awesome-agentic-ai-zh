@@ -88,7 +88,7 @@
 
 **個人 Agent（Personal Agent）** 是能跨工具做多步驟工作的助手。你先交代目標，它先查資料、寫草稿，再拿回來給你確認。這類產品把模型、工具與權限放在一起。產品名稱不是底層模型名稱，也不是新的升級等級。
 
-也納入訊息式個人代理：看它是否保留個人情境、連接日常工具並持續追蹤。下表加入新創出身的 Instinct、Tab、Tomo 與 Poke；Poke 已加入 Cognition，不再列為獨立團隊。聊天陪伴、單一提醒工具與企業工作流平台不一定符合這個範圍。可用性與隱私細節見下方「帳號、資料、權限與費用」。
+也納入訊息式個人代理：看它是否保留個人情境、連接日常工具並持續追蹤。下表加入新創出身的 Instinct、Tab、Tomo 與 Poke。Poke 已加入 Cognition，不再列為獨立團隊。聊天陪伴、單一提醒工具與企業工作流平台不一定符合這個範圍。可用性與隱私細節見下方「帳號、資料、權限與費用」。
 
 第一次仍用上面的虛構訊息，先不要連接帳號。需要跨工具時，再限定它能讀什麼、能改什麼，以及何時必須停下來請你批准。寄出、發布、刪檔或付款前保留 **Approval Gate**。「持續工作」不代表可以跳過人工檢查。
 
@@ -124,7 +124,7 @@
     <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>個人 Agent 產品／官方介紹</td><td>適合誰：想練跨 App 草擬的日常使用者與小商家。教什麼：學跨 App 草擬與行動前人工批准。</td><td>限區可用；商業雲端服務</td><td>美國與加拿大；Meta 表示發布、傳送與花費須批准</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>個人 Agent 產品／官方文件</td><td>適合誰：想比較持續任務與共用資料的日常使用者。教什麼：學持續任務與共用電腦的資料邊界。</td><td>符合資格方案可用；商業雲端服務</td><td>需符合資格的付費方案；同帳號 Bots 共用檔案與登入</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://instinct.com/">Instinct</a></td><td>訊息／通話式個人代理</td><td>適合誰：比較生活任務委派的使用者。教什麼：模型訓練與授權範圍。</td><td>商業服務；資格須查帳號</td><td>18 歲以上；訓練退出有例外</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://tab.bot/">Tab</a></td><td>訊息式個人代理</td><td>適合誰：比較跨工具委派的使用者。教什麼：候補、付款核准與帳密隔離。</td><td>Private beta；商業服務</td><td>候補不保證開放；付款限部分測試用戶</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://tab.bot/">Tab</a></td><td>訊息式個人代理</td><td>適合誰：比較跨工具委派的使用者。教什麼：候補、付款核准與帳密隔離。</td><td>Private beta；商業服務</td><td>候補不保證開放；付款限部分測試使用者</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://www.tomo.ai/about">Tomo</a></td><td>Mapo Labs 個人 AI</td><td>適合誰：追蹤目標與日常安排的使用者。教什麼：長期情境與群聊資料邊界。</td><td>付費方案；商業服務</td><td>授權人員可能審閱對話；群聊涉及他人資料</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://poke.com/">Poke</a></td><td>新創出身的訊息式個人代理</td><td>適合誰：比較郵件與行事曆自動化的使用者。教什麼：主動提醒、方案及產品歸屬變化。</td><td>免費／付費方案；已加入 Cognition</td><td>核對用量與額外費用；檢查 Maximum Privacy</td><td>⭐⭐⭐</td></tr>
   </tbody>
@@ -164,8 +164,8 @@
 - [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的雲端電腦跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)確認美國與加拿大可用。也加入商務 skills 與 connectors。Meta 表示發布、傳送與花費須先取得你的批准。另有 Sentinel 代理審核對外連網動作；Muse 提供活動稽核軌跡。密碼與付款資料分開存放於安全儲存，Muse 本身看不到。Muse 是產品；Muse Spark 是模型。Muse Code 是在終端機工作的 coding agent。
 - [Grok Bot](https://docs.x.ai/grok-bot/overview)：使用持續保留狀態的雲端電腦。它能用瀏覽器、檔案與終端機做事。需付費 Cursor 方案或連結符合資格的 SuperGrok 方案，用量每週重置。同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入。不能當成彼此隔離。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 public beta。此 public beta 支援 Teams 與 Enterprise 方案。可共用 skills、工具並在 Slack 協作。Grok Bot 是產品，不是 Grok 模型名稱。也不是寫程式用的 [Grok Build](https://docs.x.ai/build/overview)。
 - [Instinct](https://instinct.com/)（Spear Street Technology）：透過文字或通話交代生活任務，官方展示購物與訂票等用途。[條款](https://instinct.com/terms)要求年滿 18 歲；公開入口未列完整價格與地區資格，應以帳號當下資訊為準。[隱私政策](https://instinct.com/privacy-policy)允許部分資料用於模型訓練，提供退出設定但有例外；不要假設每個對外動作都會自動停下來確認。
-- [Tab](https://tab.bot/)（Terrasoft）：在訊息裡委派工作，保留前次情境，使用自己的電腦、瀏覽器與已連接帳號，也能代打電話。[目前為 private beta](https://tab.bot/terms)，候補不保證開放時間、價格或功能；付款功能只限部分測試用戶。[官方安全說明](https://tab.bot/security)要求付款綁定具體交易與批准，密碼及卡號走獨立流程，不貼在訊息裡。
-- [Tomo](https://www.tomo.ai/about)（Mapo Labs）：小團隊的個人 AI，記住對話情境、主動提醒，並連接郵件與行事曆，適合比較目標追蹤及日常安排。提供付費方案，價格與訊息額度可能因用戶而異。[隱私政策](https://www.tomo.ai/privacy)說明授權人員可能審閱對話；加入群聊也會處理其他參與者的資料，先確認分享範圍。
+- [Tab](https://tab.bot/)（Terrasoft）：在訊息裡委派工作，保留前次情境，使用自己的電腦、瀏覽器與已連接帳號，也能代打電話。[目前為 private beta](https://tab.bot/terms)，候補不保證開放時間、價格或功能；付款功能只限部分測試使用者。[官方安全說明](https://tab.bot/security)要求付款綁定具體交易與批准，密碼及卡號走獨立流程，不貼在訊息裡。
+- [Tomo](https://www.tomo.ai/about)（Mapo Labs）：小團隊的個人 AI，記住對話情境、主動提醒，並連接郵件與行事曆，適合比較目標追蹤及日常安排。提供付費方案，價格與訊息額度可能因使用者而異。[隱私政策](https://www.tomo.ai/privacy)說明授權人員可能審閱對話；加入群聊也會處理其他參與者的資料，先確認分享範圍。
 - [Poke](https://poke.com/)（The Interaction Company，已[加入 Cognition](https://cognition.com/blog/interaction)）：在訊息介面使用個人情境、連接服務與主動提醒，可處理郵件、行事曆及自動化。[方案](https://poke.com/pricing)有免費與付費層級，用量限制與額外費用要另查。[隱私政策](https://poke.com/privacy)提供 Maximum Privacy 的模型訓練排除設定；先看設定再連接私人帳號。
 
 </details>

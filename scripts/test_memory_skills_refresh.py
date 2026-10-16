@@ -24,6 +24,8 @@ CATALOG = (
 HINDSIGHT = "https://github.com/vectorize-io/hindsight"
 OPENVIKING = "https://github.com/volcengine/OpenViking"
 OPENVIKING_LICENSE = f"{OPENVIKING}/blob/main/LICENSE"
+TENCENT_MEMORY = "https://github.com/TencentCloud/TencentDB-Agent-Memory"
+TENCENT_REVIEWED_COMMIT = "e9a82935b52741e0c798c75326e90b7144eb4d5f"
 VERCEL_SKILLS = "https://github.com/vercel-labs/skills"
 REVIEWED_COMMIT = "13e4063a1cf913f5606d57d42ab83a86f5001e04"
 VERCEL_COMMIT = f"{VERCEL_SKILLS}/commit/{REVIEWED_COMMIT}"
@@ -70,27 +72,39 @@ def test_memory_entries_have_equivalent_url_order_and_unique_repo_urls() -> None
         assert _entry_urls(body, HINDSIGHT, "</tbody>") == [
             HINDSIGHT,
             OPENVIKING,
+            TENCENT_MEMORY,
         ]
         assert OPENVIKING_LICENSE in body.split("</table>")[-1]
         assert body.count(HINDSIGHT) == 1
         assert body.count(OPENVIKING) == 2  # repo row plus the distinct LICENSE URL
+        assert body.count(TENCENT_MEMORY) == 5  # row plus four pinned source links
 
 
-def test_memory_table_keeps_a_real_seven_row_memory_group() -> None:
+def test_memory_table_keeps_a_real_eight_row_memory_group() -> None:
     for path in MEMORY:
         body = _body(path)
         assert re.search(
-            r'<th scope="rowgroup" rowspan="7">Memory layer</th>', body
+            r'<th scope="rowgroup" rowspan="8">Memory layer</th>', body
         )
         first_tbody = re.search(r"<tbody>(.*?)</tbody>", body, re.DOTALL)
         assert first_tbody is not None
-        assert first_tbody.group(1).count("<tr>") == 7
+        assert first_tbody.group(1).count("<tr>") == 8
         tables = _rendered_tables(path)
         assert any(
-            tag == "th" and attrs == {"scope": "rowgroup", "rowspan": "7"}
+            tag == "th" and attrs == {"scope": "rowgroup", "rowspan": "8"}
             for table in tables
             for tag, attrs in table
         )
+
+
+def test_tencent_memory_keeps_its_teaching_role_and_pinned_source_evidence() -> None:
+    for path in MEMORY:
+        body = _body(path)
+        row = next(row for row in re.findall(r"<tr>.*?</tr>", body)
+                   if f'href="{TENCENT_MEMORY}"' in row)
+        assert all(term in row for term in ("Chat Memory", "Skill", "LLM-Wiki", "CodeGraph", "MIT", "SQLite"))
+        for source in ("README.md", "LICENSE", "deploy/global-images/.env.example", "MemoryKnowledge/src/middleware/auth.ts"):
+            assert f"{TENCENT_MEMORY}/blob/{TENCENT_REVIEWED_COMMIT}/{source}" in body
 
 
 def test_hindsight_reflect_answers_from_memory_not_background_consolidation() -> None:
