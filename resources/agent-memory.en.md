@@ -116,6 +116,8 @@ Save one non-sensitive preference only, such as “give the short version first.
 4. Wrong memory: retain source and confidence, let users correct it, and never treat model inference as fact.
 5. Incomplete deletion: trace deletion through the primary store, index, cache, event stream, and backups.
 
+**TencentDB reading note (this entry checked: 2026-10-16 UTC):** Chat Memory extracts facts and experience; Skill stores reusable procedures; LLM-Wiki organizes documents; CodeGraph indexes code relationships. Wiki and CodeGraph are knowledge-retrieval assets, not necessarily personal memory. Complete the minimal exercise first. <a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/README.md">Reviewed README</a> / <a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/LICENSE">MIT license</a>.
+
 </details>
 
 ## 🎯 Curated projects and learning resources
@@ -131,13 +133,14 @@ Also test user/workspace isolation and whether malicious content can poison futu
 <table>
   <thead><tr><th scope="col">Category</th><th scope="col">Project/resource</th><th scope="col">Editorial rating</th><th scope="col">Best for</th><th scope="col">What you can learn</th><th scope="col">Status/limits</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="7">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>First cross-session memory</td><td>library, server, cloud, and search lifecycle</td><td>Apache-2.0; distinguish OSS from managed capabilities</td></tr>
+    <tr><th scope="rowgroup" rowspan="8">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>First cross-session memory</td><td>library, server, cloud, and search lifecycle</td><td>Apache-2.0; distinguish OSS from managed capabilities</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/langmem">LangMem</a></td><td>⭐⭐⭐⭐</td><td>Teams already using LangGraph</td><td>hot-path/background memory</td><td>MIT; understand the LangGraph store first</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta">Letta project entry</a></td><td>⭐⭐⭐⭐</td><td>Understanding the Letta product boundary first</td><td>current installation, docs, and source locations</td><td>Landing page; the retired V1 server remains only on the archive branch</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta-code">Letta Code</a></td><td>⭐⭐⭐⭐</td><td>Building a stateful agent or App Server</td><td>agent harness, git-backed MemFS, persistent identity</td><td>Current source; a product-oriented harness, not a general memory database</td></tr>
     <tr><td><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></td><td>⭐⭐⭐⭐</td><td>Using the memory that already exists on disk</td><td>episodic memory built from coding-agent session files; lexical (BM25) retrieval with no embeddings by default, plus optional semantic recall through <code>deja embed</code></td><td>MIT; local by default. A configured remote embedding endpoint receives the indexed text, with credentials already redacted; a local Ollama or LM Studio keeps it on the machine</td></tr>
     <tr><td><a href="https://github.com/vectorize-io/hindsight">Hindsight</a></td><td>⭐⭐⭐⭐</td><td>Readers comparing explicit memory operations</td><td><code>retain</code>/<code>recall</code>/<code>reflect</code>: store, retrieve, and reason over memories to answer</td><td>MIT; do not treat vendor benchmarks as your own quality evidence</td></tr>
     <tr><td><a href="https://github.com/volcengine/OpenViking">OpenViking</a></td><td>⭐⭐⭐ (advanced)</td><td>Teams organizing large agent contexts</td><td>Filesystem-like organization for resources, memories, and skills</td><td>Main project: AGPL-3.0. CLI/examples are separately licensed. The README adds rewriting language.</td></tr>
+    <tr><td><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory">TencentDB Agent Memory</a></td><td>⭐⭐⭐⭐</td><td>Memory-governance readers</td><td>Chat Memory, Skill, LLM-Wiki, CodeGraph; owners, versions, visibility, agent bindings</td><td>MIT; SQLite by default; extraction uses a model endpoint. Check network and data access</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="3">Time and relationships</th><td><a href="https://github.com/getzep/graphiti">Graphiti</a></td><td>⭐⭐⭐⭐⭐</td><td>Applications whose relationships change over time</td><td>bi-temporal facts, temporal graphs</td><td>Apache-2.0; requires a graph database and governance</td></tr>
@@ -152,7 +155,9 @@ Also test user/workspace isolation and whether malicious content can poison futu
   </tbody>
 </table>
 
-Read OpenViking's [LICENSE](https://github.com/volcengine/OpenViking/blob/main/LICENSE) before integration.
+Self-hosting does not guarantee offline use: extraction/Proxy use configured models; Tencent Cloud is optional. The Docker example disables Gateway Bearer auth; some read-only Knowledge routes need no service key. Avoid untrusted networks; check consent, providers, and retention/deletion before imports. <a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/deploy/global-images/.env.example">deployment configuration</a> / <a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/MemoryKnowledge/src/middleware/auth.ts">service authentication boundaries</a>. Docs/config reviewed; performance and isolation untested.
+
+Read OpenViking's <a href="https://github.com/volcengine/OpenViking/blob/main/LICENSE">LICENSE</a> before integration.
 
 ## ✅ Self-check
 

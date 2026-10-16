@@ -1359,7 +1359,7 @@ pages:
     visible_section_minimums:
       required-reading: {min_links: 5}
       projects: {min_links: 14, min_ratings: 14}
-    resource_group_rowspans: [7, 3, 4]
+    resource_group_rowspans: [8, 3, 4]
 
   - id: stage-07
     canonical: stages/07-multi-agent-production.md
@@ -3014,7 +3014,7 @@ pages:
           zh-TW: {term: Approval Gate, label: "Approval Gate（人工核准關卡）"}
           en: {term: Approval Gate, label: Approval Gate}
           zh-Hans: {term: Approval Gate, label: "Approval Gate（人工批准关卡）"}
-    resource_group_rowspans: [4, 3, 4, 4, 2, 1]
+    resource_group_rowspans: [4, 7, 4, 4, 2, 1]
 
   - id: public-resources
     canonical: RESOURCES.md

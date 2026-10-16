@@ -84,13 +84,11 @@
 
 ## 🧑 个人 Agent：先说明目标与边界
 
-<small>个人 Agent 产品核查：2026-10-02 UTC；2026-10-16 复核确认仍有效</small>
+<small>个人 Agent 产品查核：2026-10-02 UTC；新增与复核：2026-10-16 UTC</small>
 
 **个人 Agent（Personal Agent）** 是能跨工具完成多步骤工作的助手。你先说明目标，它先查资料、写草稿，再拿回来请你确认。这类产品把模型、工具与权限放在一起。产品名称不是底层模型名称，也不是新的升级等级。
 
-- [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持续工作的云助手，有自己的云电脑与浏览器，底层模型为 GPT-6 Astra。你关掉电脑后仍能继续；它会记住偏好与待办、在后台并行工作，分享私人对话信息给他人前须先取得你的允许。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)说明了逐步开放。Pro 100、Pro 200、Pro 500 限超过 18 岁。也限在欧洲经济区、英国与瑞士以外。Business Premium、Enterprise 在全球逐步开放。Enterprise 须由管理员启用。符合方案不代表账号已经获得功能。
-- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的云电脑跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)确认美国与加拿大可用。也加入商务 skills 与 connectors。Meta 表示发布、发送与花费须先取得你的批准。另有 Sentinel 代理审核对外联网动作；Muse 提供活动审计轨迹。密码与付款资料分开存放于安全存储，Muse 本身看不到。Muse 是产品；Muse Spark 是模型。Muse Code 是在终端工作的 coding agent。
-- [Grok Bot](https://docs.x.ai/grok-bot/overview)：使用持续保留状态的云电脑。它能用浏览器、文件与终端做事。需付费 Cursor 方案或连接符合资格的 SuperGrok 方案，用量每周重置。同一账号的 Bots 共享电脑、文件、浏览器会话与 App 登录。不能把它们当成彼此隔离。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 public beta。此 public beta 支持 Teams 与 Enterprise 方案。可共享 skills、工具并在 Slack 协作。Grok Bot 是产品，不是 Grok 模型名称。也不是用于编程的 [Grok Build](https://docs.x.ai/build/overview)。
+这里也纳入消息式个人代理：看它是否保留个人情境、连接日常工具并持续跟进。下表加入初创公司出身的 Instinct、Tab、Tomo 与 Poke；Poke 已加入 Cognition，不再列为独立团队。聊天陪伴、单一提醒工具与企业工作流平台不一定符合这个范围。可用性与隐私细节见下方“账号、数据、权限与费用”。
 
 第一次仍用上面的虚构消息，先不要连接账号。需要跨工具时，再限定它能读取什么、能修改什么，以及何时必须停下来请你批准。发出、发布、删除文件或付款前保留 **Approval Gate**。“持续工作”不代表可以跳过人工检查。
 
@@ -111,7 +109,7 @@
 <a id="-精选-projects"></a>
 ## ⭐ 精选 Projects 与学习资源
 
-星级依“初学者价值、文档质量与安全边界”给分。不是 GitHub stars。其他资源的状态与限制核查于 `2026-08-29 UTC`。个人 Agent 三个入口核查于 `2026-10-02 UTC`。三星代表可选的具体产品示例，适合互相对照。它们是未实测的参考／对照示例，不是必修工具。评分依官方文档的教学价值，不代表产品的实测质量。
+星级依“初学者价值、文档质量与安全边界”给分。不是 GitHub stars。其他资源的状态与限制核查于 `2026-08-29 UTC`。个人 Agent 入口新增与复核于 `2026-10-16 UTC`。三星代表可选的具体产品示例，适合互相对照。它们是未实测的参考／对照示例，不是必修工具。评分依官方文档的教学价值，不代表产品的实测质量。
 
 <table>
   <thead><tr><th scope="col">分类</th><th scope="col">入口／项目</th><th scope="col">它是什么</th><th scope="col">适合做什么</th><th scope="col">状态／授权</th><th scope="col">先知道的限制</th><th scope="col">评分</th></tr></thead>
@@ -122,9 +120,13 @@
     <tr><td><a href="https://perplexity.ai">Perplexity</a></td><td>带来源入口的云端搜索助手</td><td>找候选来源并建立查证起点</td><td>正式可用；商业云服务</td><td>引用不等于内容正确；要逐一打开来源</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">个人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想学持续任务与批准边界的日常用户。教什么：先用虚构数据学习目标、工具与批准边界。</td><td>逐步开放；商业云服务</td><td>依方案、年龄、地区与管理员设置；账号可能尚未开放</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="7">个人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想学持续任务与批准边界的日常用户。教什么：先用虚构数据学习目标、工具与批准边界。</td><td>逐步开放；商业云服务</td><td>依方案、年龄、地区与管理员设置；账号可能尚未开放</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>个人 Agent 产品／官方介绍</td><td>适合谁：想练跨 App 草拟的日常用户与小商家。教什么：学跨 App 草拟与行动前人工批准。</td><td>限区可用；商业云服务</td><td>美国与加拿大；Meta 表示发布、发送与花费须批准</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想比较持续任务与共享数据的日常用户。教什么：学持续任务与共享电脑的数据边界。</td><td>符合资格方案可用；商业云服务</td><td>需符合资格的付费方案；同账号 Bots 共享文件与登录</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://instinct.com/">Instinct</a></td><td>消息／通话式个人代理</td><td>适合谁：比较生活任务委派的用户。教什么：模型训练与授权范围。</td><td>商业服务；资格须查账号</td><td>18 岁以上；训练退出有例外</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://tab.bot/">Tab</a></td><td>消息式个人代理</td><td>适合谁：比较跨工具委派的用户。教什么：候补、付款批准与账号密码隔离。</td><td>Private beta；商业服务</td><td>候补不保证开放；付款限部分测试用户</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://www.tomo.ai/about">Tomo</a></td><td>Mapo Labs 个人 AI</td><td>适合谁：跟进目标与日常安排的用户。教什么：长期情境与群聊数据边界。</td><td>付费方案；商业服务</td><td>授权人员可能审阅对话；群聊涉及他人数据</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://poke.com/">Poke</a></td><td>初创公司出身的消息式个人代理</td><td>适合谁：比较邮件与日历自动化的用户。教什么：主动提醒、方案及产品归属变化。</td><td>免费／付费方案；已加入 Cognition</td><td>核对用量与额外费用；检查 Maximum Privacy</td><td>⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">官方入门与安全指南</th><td><a href="https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively">OpenAI Prompt Guide</a></td><td>ChatGPT 官方指南</td><td>学清楚、具体与逐步改写 Prompt</td><td>现行；官方指南</td><td>好 Prompt 不能保证正确，仍要查证</td><td>⭐⭐⭐⭐⭐</td></tr>
@@ -155,6 +157,16 @@
 - 搜索和草拟通常是低影响动作；发信、改日历、删除文件或购买是写入动作，必须保留 Approval Gate 与人工确认。
 - 云端产品的免费额度、订阅与 API 费用会变；操作前直接看产品目前显示的方案，不在教材保存固定价格。
 - 不确定能不能上传时，先不要上传。公开可读也不等于你有权把别人的内容交给第三方服务处理。
+
+个人 Agent 产品细节（2026-10-16 UTC；文档查核，未实测）：
+
+- [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持续工作的云助手，有自己的云电脑与浏览器，底层模型为 GPT-6 Astra。你关掉电脑后仍能继续；它会记住偏好与待办、在后台并行工作，分享私人对话信息给他人前须先取得你的允许。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)说明了逐步开放。Pro 100、Pro 200、Pro 500 限超过 18 岁。也限在欧洲经济区、英国与瑞士以外。Business Premium、Enterprise 在全球逐步开放。Enterprise 须由管理员启用。符合方案不代表账号已经获得功能。
+- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的云电脑跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)确认美国与加拿大可用。也加入商务 skills 与 connectors。Meta 表示发布、发送与花费须先取得你的批准。另有 Sentinel 代理审核对外联网动作；Muse 提供活动审计轨迹。密码与付款资料分开存放于安全存储，Muse 本身看不到。Muse 是产品；Muse Spark 是模型。Muse Code 是在终端工作的 coding agent。
+- [Grok Bot](https://docs.x.ai/grok-bot/overview)：使用持续保留状态的云电脑。它能用浏览器、文件与终端做事。需付费 Cursor 方案或连接符合资格的 SuperGrok 方案，用量每周重置。同一账号的 Bots 共享电脑、文件、浏览器会话与 App 登录。不能把它们当成彼此隔离。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 public beta。此 public beta 支持 Teams 与 Enterprise 方案。可共享 skills、工具并在 Slack 协作。Grok Bot 是产品，不是 Grok 模型名称。也不是用于编程的 [Grok Build](https://docs.x.ai/build/overview)。
+- [Instinct](https://instinct.com/)（Spear Street Technology）：通过文字或通话交代生活任务，官方展示购物与订票等用途。[条款](https://instinct.com/terms)要求年满 18 岁；公开入口未列完整价格与地区资格，应以账号当下信息为准。[隐私政策](https://instinct.com/privacy-policy)允许部分数据用于模型训练，提供退出设置但有例外；不要假设每个对外动作都会自动停下来确认。
+- [Tab](https://tab.bot/)（Terrasoft）：在消息里委派工作，保留此前情境，使用自己的电脑、浏览器与已连接账号，也能代打电话。[目前为 private beta](https://tab.bot/terms)，候补不保证开放时间、价格或功能；付款功能只限部分测试用户。[官方安全说明](https://tab.bot/security)要求付款绑定具体交易与批准，密码及卡号走独立流程，不贴在消息里。
+- [Tomo](https://www.tomo.ai/about)（Mapo Labs）：小团队的个人 AI，记住对话情境、主动提醒，并连接邮件与日历，适合比较目标跟进及日常安排。提供付费方案，价格与消息额度可能因用户而异。[隐私政策](https://www.tomo.ai/privacy)说明授权人员可能审阅对话；加入群聊也会处理其他参与者的数据，先确认分享范围。
+- [Poke](https://poke.com/)（The Interaction Company，已[加入 Cognition](https://cognition.com/blog/interaction)）：在消息界面使用个人情境、连接服务与主动提醒，可处理邮件、日历及自动化。[方案](https://poke.com/pricing)有免费与付费层级，用量限制与额外费用要另查。[隐私政策](https://poke.com/privacy)提供 Maximum Privacy 的模型训练排除设置；先看设置再连接私人账号。
 
 </details>
 

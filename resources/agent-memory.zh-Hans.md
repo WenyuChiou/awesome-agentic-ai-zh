@@ -116,6 +116,8 @@
 4. 记错：保留来源与信心，让用户能修改，不把模型推测直接当事实。
 5. 删不干净：追踪主库、索引、cache、事件串流与备份的删除路径。
 
+**TencentDB 阅读提示（仅此项核查：2026-10-16 UTC）：**Chat Memory 保存对话中提取的事实与经验；Skill 保存可复用步骤；LLM-Wiki 整理文档；CodeGraph 建立代码符号与调用关系。后两者主要是知识检索资产，不宜全部等同个人长期记忆。先完成上面的最小练习，再观察团队如何管理这四种资产。<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/README.md">核查版本 README</a>／<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/LICENSE">MIT 许可</a>。
+
 </details>
 
 ## 🎯 精选 Projects 与学习资源
@@ -131,13 +133,14 @@
 <table>
   <thead><tr><th scope="col">分类</th><th scope="col">项目／资源</th><th scope="col">编辑评分</th><th scope="col">适合谁</th><th scope="col">能学什么</th><th scope="col">状态／限制</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="7">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次做跨 session memory</td><td>library、server、cloud 与搜索生命周期</td><td>Apache-2.0；OSS 与 managed 能力分开看</td></tr>
+    <tr><th scope="rowgroup" rowspan="8">Memory layer</th><td><a href="https://github.com/mem0ai/mem0">Mem0</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次做跨 session memory</td><td>library、server、cloud 与搜索生命周期</td><td>Apache-2.0；OSS 与 managed 能力分开看</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/langmem">LangMem</a></td><td>⭐⭐⭐⭐</td><td>已使用 LangGraph 的团队</td><td>hot-path／background memory</td><td>MIT；先理解 LangGraph store</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta">Letta 项目入口</a></td><td>⭐⭐⭐⭐</td><td>先分清 Letta 的产品范围</td><td>现行安装、文档与 source 去向</td><td>landing page；退役 V1 server 只留在 archive branch</td></tr>
     <tr><td><a href="https://github.com/letta-ai/letta-code">Letta Code</a></td><td>⭐⭐⭐⭐</td><td>建立 stateful agent 或 App Server</td><td>agent harness、git-backed MemFS、长期 identity</td><td>现行 source；产品型 agent harness，不是通用 memory DB</td></tr>
     <tr><td><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></td><td>⭐⭐⭐⭐</td><td>先用磁盘上已经存在的记忆</td><td>从 coding agent 的 session 文件做 episodic memory；默认是词汇检索（BM25），不需要 embedding；可选的 <code>deja embed</code> 另外提供语义召回</td><td>MIT；默认只在本机。若配置远程 embedding 端点，会把已脱敏凭据的索引文本发送过去；用本机 Ollama 或 LM Studio 则不离开本机</td></tr>
     <tr><td><a href="https://github.com/vectorize-io/hindsight">Hindsight</a></td><td>⭐⭐⭐⭐</td><td>想比较明确 memory 操作的读者</td><td><code>retain</code>／<code>recall</code>／<code>reflect</code>：保存、检索、根据记忆推理并回答</td><td>MIT；不要把供应商 benchmark 当作自己的质量证据</td></tr>
     <tr><td><a href="https://github.com/volcengine/OpenViking">OpenViking</a></td><td>⭐⭐⭐（进阶）</td><td>要整理大量 agent context 的团队</td><td>用类文件系统组织 resource、memory 与 skill</td><td>主项目 AGPL-3.0。CLI／examples 分别授权。README 另有重写限制文字。</td></tr>
+    <tr><td><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory">TencentDB Agent Memory</a></td><td>⭐⭐⭐⭐</td><td>想研究跨 Agent 记忆共享与治理的团队</td><td>Chat Memory、Skill、LLM-Wiki、CodeGraph 的分工；资产所有者、版本、可见性与 Agent 绑定</td><td>MIT；可自托管，默认 SQLite；记忆提取仍需模型端点。完整部署较重，先检查网络、权限与数据流</td></tr>
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="3">时间与关系</th><td><a href="https://github.com/getzep/graphiti">Graphiti</a></td><td>⭐⭐⭐⭐⭐</td><td>关系会随时间改变的应用</td><td>bi-temporal facts、temporal graph</td><td>Apache-2.0；需要图数据库与治理</td></tr>
@@ -151,6 +154,8 @@
     <tr><td><a href="https://github.com/mem0ai/memory-benchmarks">Mem0 Memory Benchmarks</a></td><td>⭐⭐⭐⭐</td><td>要测 memory quality 的开发者</td><td>数据集与可重复运行评测入口</td><td>供应商维护；自行加入 isolation／deletion 测试</td></tr>
   </tbody>
 </table>
+
+自托管不等于离线：默认存储在本机，提取与 Proxy 仍使用配置的模型端点，不强制使用腾讯云。完整 Docker 示例的 Gateway Bearer 验证默认关闭，Knowledge 部分只读端点也不要求服务密钥；不要直接对不可信网络开放。导入聊天、文档或代码前，先确认数据授权、模型供应商与保存／删除范围。参阅<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/deploy/global-images/.env.example">部署配置</a>与<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/MemoryKnowledge/src/middleware/auth.ts">服务验证边界</a>。本项是文档与配置核查，未验证性能或隔离保证。
 
 集成 OpenViking 前先读 [LICENSE](https://github.com/volcengine/OpenViking/blob/main/LICENSE)。
 
