@@ -84,13 +84,13 @@
 
 ## 🧑 個人 Agent：先交代目標與邊界
 
-<small>個人 Agent 產品查核：2026-10-02 UTC</small>
+<small>個人 Agent 產品查核：2026-10-02 UTC；2026-10-16 複核確認仍有效</small>
 
 **個人 Agent（Personal Agent）** 是能跨工具做多步驟工作的助手。你先交代目標，它先查資料、寫草稿，再拿回來給你確認。這類產品把模型、工具與權限放在一起。產品名稱不是底層模型名稱，也不是新的升級等級。
 
-- [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持續工作的雲端助手，有自己的雲端電腦與瀏覽器。你關掉電腦後仍能繼續。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)列出逐步開放。Pro 100、Pro 200、Pro 500 限超過 18 歲。也限在歐洲經濟區、英國與瑞士以外。Business Premium、Enterprise 在全球逐步開放。Enterprise 須由管理員啟用。符合方案不代表帳號已收到功能。
-- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的雲端電腦跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)確認美國與加拿大可用。也加入商務 skills 與 connectors。Meta 表示發布、傳送與花費須先取得你的批准。Muse 是產品；Muse Spark 是模型。Muse Code 是在終端機工作的 coding agent。
-- [Grok Bot](https://docs.x.ai/grok-bot/overview)：使用持續保留狀態的雲端電腦。它能用瀏覽器、檔案與終端機做事。需付費 Cursor 方案或連結符合資格的 SuperGrok 方案。同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入。不能當成彼此隔離。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 public beta。此 public beta 支援 Teams 與 Enterprise 方案。可共用 skills、工具並在 Slack 協作。Grok Bot 是產品，不是 Grok 模型名稱。也不是寫程式用的 [Grok Build](https://docs.x.ai/build/overview)。
+- [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持續工作的雲端助手，有自己的雲端電腦與瀏覽器，底層模型為 GPT-6 Astra。你關掉電腦後仍能繼續；它會記住偏好與待辦、在背景平行工作，分享私人對話資訊給他人前須先取得你的允許。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)列出逐步開放。Pro 100、Pro 200、Pro 500 限超過 18 歲。也限在歐洲經濟區、英國與瑞士以外。Business Premium、Enterprise 在全球逐步開放。Enterprise 須由管理員啟用。符合方案不代表帳號已收到功能。
+- [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的雲端電腦跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)確認美國與加拿大可用。也加入商務 skills 與 connectors。Meta 表示發布、傳送與花費須先取得你的批准。另有 Sentinel 代理審核對外連網動作；Muse 提供活動稽核軌跡。密碼與付款資料分開存放於安全儲存，Muse 本身看不到。Muse 是產品；Muse Spark 是模型。Muse Code 是在終端機工作的 coding agent。
+- [Grok Bot](https://docs.x.ai/grok-bot/overview)：使用持續保留狀態的雲端電腦。它能用瀏覽器、檔案與終端機做事。需付費 Cursor 方案或連結符合資格的 SuperGrok 方案，用量每週重置。同一帳號的 Bots 共用電腦、檔案、瀏覽器工作階段與 App 登入。不能當成彼此隔離。[2026-09-28 Team Bots 更新](https://x.ai/news/team-bots)加入 public beta。此 public beta 支援 Teams 與 Enterprise 方案。可共用 skills、工具並在 Slack 協作。Grok Bot 是產品，不是 Grok 模型名稱。也不是寫程式用的 [Grok Build](https://docs.x.ai/build/overview)。
 
 第一次仍用上面的虛構訊息，先不要連接帳號。需要跨工具時，再限定它能讀什麼、能改什麼，以及何時必須停下來請你批准。寄出、發布、刪檔或付款前保留 **Approval Gate**。「持續工作」不代表可以跳過人工檢查。
 
