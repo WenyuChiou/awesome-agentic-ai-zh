@@ -8,6 +8,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-16
 
+- **content / Personal Agents** · 三語日常使用者路線新增 Instinct、Tab、Tomo 與 Poke，個人 Agent 表由 3 筆增為 7 筆；補充可用資格、隱私與動作核准邊界，產品細節移入收合區。查核依官方文件，未實測產品（#328）。 (cd2f4eb)
+
+- **resources / TencentDB Agent Memory** · 三語 Memory 資源加入 TencentDB Agent Memory，15 筆依 `8／3／4` 分組；說明四種資產的分工、固定版本授權來源、自架連網與服務驗證限制。同步更新 267 筆 GitHub API 快照，保留 API 的 `NOASSERTION` 授權值；未實測效能或隔離（#328）。 (cd2f4eb)
+
 - **release / optional PDFs / v2026.10.16** · 依維護者決定，Release 預設只發布繁中、簡中與英文版本說明；新增預設關閉的 `include_pdf`，只在需要時建置、驗證並上傳完整三語 PDF。正文、健康掃描、人工批准與 SHA 鎖定仍是必要關卡。本版不附 PDF，也不把先前取消的候選版算成正式發布。
 
 ## 2026-10-15
