@@ -99,34 +99,36 @@ fictional meeting note：
 <a id="對知識工作者有用的-mcp-server"></a>
 <strong>MCP Server：</strong>先從官方 Registry 看來源，再檢查程式碼、權限、憑證與會執行的 action。
 
+<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="資源表（分類、用途與限制）">
 <table>
-<thead><tr><th scope="col">類型</th><th scope="col">工具／入口</th><th scope="col">適合做什麼</th><th scope="col">狀態／授權</th><th scope="col">使用前先知道</th><th scope="col">評分</th></tr></thead>
+<thead><tr><th scope="col">類型</th><th scope="col">資源、用途與限制</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">AI 工作空間與組織內 App</th><td><a href="https://help.openai.com/en/articles/11487775-connectors-in">ChatGPT Apps</a></td><td>在 ChatGPT 內搜尋來源或執行已允許的動作</td><td>商業；商業雲端服務</td><td>功能依方案、地區與管理員而異；外部動作保留人工確認</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory">Claude directory</a></td><td>尋找 Skills、Connectors 與 Plugins</td><td>商業；商業雲端服務</td><td>三者用途不同；組織資料先由管理員核准</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://support.google.com/gemini/answer/14959807?co=GENIE.Platform%3DDesktop&hl=en">Gemini Connected Apps</a></td><td>在 Gemini 使用 Gmail、Drive、Calendar 等工作來源</td><td>商業；商業雲端服務</td><td>可用性依帳號與管理員；回答仍要回到來源核對</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://support.microsoft.com/en-us/microsoft-365-copilot/understand-copilot-connectors">Microsoft 365 Copilot connectors</a></td><td>搜尋 Microsoft 365 與組織核准的外部內容</td><td>商業；商業雲端服務</td><td>只應看到原本有權限的內容；需授權與管理員設定</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4">AI 工作空間與組織內 App</th><td><p data-field="entry"><strong><a href="https://help.openai.com/en/articles/11487775-connectors-in">ChatGPT Apps</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">在 ChatGPT 內搜尋來源或執行已允許的動作</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">功能依方案、地區與管理員而異；外部動作保留人工確認</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory">Claude directory</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">尋找 Skills、Connectors 與 Plugins</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">三者用途不同；組織資料先由管理員核准</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://support.google.com/gemini/answer/14959807?co=GENIE.Platform%3DDesktop&hl=en">Gemini Connected Apps</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">在 Gemini 使用 Gmail、Drive、Calendar 等工作來源</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">可用性依帳號與管理員；回答仍要回到來源核對</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://support.microsoft.com/en-us/microsoft-365-copilot/understand-copilot-connectors">Microsoft 365 Copilot connectors</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">搜尋 Microsoft 365 與組織核准的外部內容</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">只應看到原本有權限的內容；需授權與管理員設定</p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">工作流自動化</th><td><a href="https://github.com/n8n-io/n8n">n8n</a></td><td>自架或雲端串接多個服務與 AI 步驟</td><td>活躍；Sustainable Use License</td><td>不是一般 MIT；自架安全、更新、備份與憑證由你負責</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://academy.make.com/courses/FoundationC01?pc=workflow">Make</a></td><td>用視覺化 scenario 串接雲端服務</td><td>商業；商業雲端服務</td><td>先用測試資料；執行量、錯誤重跑與費用都要監看</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://learn.microsoft.com/en-us/training/powerplatform/power-automate">Power Automate</a></td><td>在 Microsoft 生態建立 trigger 與 action</td><td>商業；商業雲端服務</td><td>方案、connector 與資料政策由組織管理員控制</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://help.zapier.com/hc/en-us/articles/22234847450893-Zap-workflows-quick-start-guide">Zapier</a></td><td>快速建立雲端 App 間的重複流程</td><td>商業；商業雲端服務</td><td>發布前逐步測試；寫回 trigger 來源可能造成無限迴圈</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4">工作流自動化</th><td><p data-field="entry"><strong><a href="https://github.com/n8n-io/n8n">n8n</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">自架或雲端串接多個服務與 AI 步驟</p><p data-field="status">活躍；Sustainable Use License</p><p data-field="limits">不是一般 MIT；自架安全、更新、備份與憑證由你負責</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://academy.make.com/courses/FoundationC01?pc=workflow">Make</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">用視覺化 scenario 串接雲端服務</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">先用測試資料；執行量、錯誤重跑與費用都要監看</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://learn.microsoft.com/en-us/training/powerplatform/power-automate">Power Automate</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">在 Microsoft 生態建立 trigger 與 action</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">方案、connector 與資料政策由組織管理員控制</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://help.zapier.com/hc/en-us/articles/22234847450893-Zap-workflows-quick-start-guide">Zapier</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">快速建立雲端 App 間的重複流程</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">發布前逐步測試；寫回 trigger 來源可能造成無限迴圈</p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">視覺化 AI builder</th><td><a href="https://github.com/langflow-ai/langflow">Langflow</a></td><td>把 AI、資料與工具流程畫成節點</td><td>活躍；MIT</td><td>Demo 能跑不等於 production 安全；仍要做 auth、secret 與監控</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/langgenius/dify">Dify</a></td><td>用介面建立 AI workflow、知識庫與應用</td><td>活躍；修改版 Apache-2.0</td><td>多租戶與移除品牌等情境有額外商用條件</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2">視覺化 AI builder</th><td><p data-field="entry"><strong><a href="https://github.com/langflow-ai/langflow">Langflow</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">把 AI、資料與工具流程畫成節點</p><p data-field="status">活躍；MIT</p><p data-field="limits">Demo 能跑不等於 production 安全；仍要做 auth、secret 與監控</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://github.com/langgenius/dify">Dify</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">用介面建立 AI workflow、知識庫與應用</p><p data-field="status">活躍；修改版 Apache-2.0</p><p data-field="limits">多租戶與移除品牌等情境有額外商用條件</p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">知識工作空間</th><td><a href="https://github.com/khoj-ai/khoj">Khoj</a></td><td>自架個人知識助理與文件問答</td><td>活躍；AGPL-3.0</td><td>先確認 AGPL 與資料設定；自架後仍要管理模型與備份</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/lobehub/lobehub">LobeHub</a></td><td>部署聊天、知識庫與團隊 AI workspace</td><td>活躍；LobeHub Community License</td><td>開發並散布衍生作品前要確認商業授權條件</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/Mintplex-Labs/anything-llm">AnythingLLM</a></td><td>自架文件問答、workspace 與 agent</td><td>活躍；MIT</td><td>資料是否外送仍取決於模型供應商、embedder 與 connector 設定</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="3">知識工作空間</th><td><p data-field="entry"><strong><a href="https://github.com/khoj-ai/khoj">Khoj</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">自架個人知識助理與文件問答</p><p data-field="status">活躍；AGPL-3.0</p><p data-field="limits">先確認 AGPL 與資料設定；自架後仍要管理模型與備份</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://github.com/lobehub/lobehub">LobeHub</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">部署聊天、知識庫與團隊 AI workspace</p><p data-field="status">活躍；LobeHub Community License</p><p data-field="limits">開發並散布衍生作品前要確認商業授權條件</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://github.com/Mintplex-Labs/anything-llm">AnythingLLM</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">自架文件問答、workspace 與 agent</p><p data-field="status">活躍；MIT</p><p data-field="limits">資料是否外送仍取決於模型供應商、embedder 與 connector 設定</p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Skill 與協定入口</th><td><a href="https://github.com/obra/superpowers">obra/superpowers</a></td><td>把腦力激盪、規劃與檢查做成可重用 Skill</td><td>活躍；MIT</td><td>範例偏開發流程；它不是公司的 Approval Gate，使用前要改成你的規則</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://modelcontextprotocol.io/registry/about">官方 MCP Registry</a></td><td>查公開 MCP Server 的標準化 metadata</td><td>Preview；官方 metadata 服務</td><td>驗證 namespace 不等於安全；它不是安全審查或推薦榜</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2">Skill 與協定入口</th><td><p data-field="entry"><strong><a href="https://github.com/obra/superpowers">obra/superpowers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">把腦力激盪、規劃與檢查做成可重用 Skill</p><p data-field="status">活躍；MIT</p><p data-field="limits">範例偏開發流程；它不是公司的 Approval Gate，使用前要改成你的規則</p></td></tr>
+<tr><td><p data-field="entry"><strong><a href="https://modelcontextprotocol.io/registry/about">官方 MCP Registry</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">查公開 MCP Server 的標準化 metadata</p><p data-field="status">Preview；官方 metadata 服務</p><p data-field="limits">驗證 namespace 不等於安全；它不是安全審查或推薦榜</p></td></tr>
 </tbody>
 </table>
+</div>
 
 <a id="可以建的流程按使用頻率"></a>
 <details markdown="1">

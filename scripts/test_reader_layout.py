@@ -9,9 +9,19 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 FIELDS = ("entry", "identity", "use", "status", "limits")
+ROLE_LAYOUTS = {
+    "developer": ((4, 6, 2, 2), ("entry", "identity", "surface", "use", "status")),
+    "researcher": ((3, 4, 5, 2, 1), ("entry", "use", "status", "limits")),
+    "teacher": ((3, 3, 3, 3), ("entry", "use", "status", "limits")),
+    "knowledge-worker": ((4, 4, 2, 3, 2), ("entry", "use", "status", "limits")),
+}
 
 
-def compact_catalog(text: str) -> str:
+def compact_catalog(
+    text: str,
+    group_sizes: tuple[int, ...] = (4, 8, 4, 4, 2, 1),
+    field_names: tuple[str, ...] = FIELDS,
+) -> str:
     match = re.search(
         r'<div class="reader-resource-catalog" role="region" tabindex="0" '
         r'aria-label="[^"]+">\s*(<table>.*?</table>)\s*</div>', text, re.S,
@@ -21,20 +31,95 @@ def compact_catalog(text: str) -> str:
     assert len(re.findall(r'<th scope="col">', table)) == 2
     assert "<details" not in table, "Resource facts must stay visible"
     groups = re.findall(r"<tbody>(.*?)</tbody>", table, re.S)
-    assert len(groups) == 6
-    for group, count in zip(groups, (4, 8, 4, 4, 2, 1)):
+    assert len(groups) == len(group_sizes)
+    for group, count in zip(groups, group_sizes):
         assert f'scope="rowgroup" rowspan="{count}"' in group
         rows = re.findall(r"<tr>(.*?)</tr>", group, re.S)
         assert len(rows) == count
         for row in rows:
             assert row.count("<td>") == 1
             fields = re.findall(r'<p data-field="([^"]+)">(.*?)</p>', row, re.S)
-            assert tuple(name for name, _ in fields) == FIELDS
-            assert all(re.sub(r"<[^>]+>", "", value).strip() for _, value in fields)
+            assert tuple(name for name, _ in fields) == field_names
+            for name, value in fields:
+                if name != "entry":
+                    assert "⭐" not in value, "Rating duplicated into resource facts"
+                if name in ("identity", "surface") and "surface" in field_names:
+                    assert re.match(r"<strong>[^<]+</strong>", value)
+                    value = re.sub(r"^<strong>[^<]+</strong>\s*", "", value)
+                assert re.sub(r"<[^>]+>", "", value).strip(), f"Empty {name}"
             entry = fields[0][1]
             assert "<strong><a href=" in entry
             assert re.search(r'<span data-field="rating">⭐{3,5}</span>', entry)
     return table
+
+
+@pytest.mark.parametrize("role", ROLE_LAYOUTS)
+@pytest.mark.parametrize("suffix", ("", ".en", ".zh-Hans"))
+def test_role_catalogs_are_complete_grouped_and_visible(role: str, suffix: str) -> None:
+    group_sizes, field_names = ROLE_LAYOUTS[role]
+    text = (ROOT / f"branches/for-{role}{suffix}.md").read_text(encoding="utf-8")
+    table = compact_catalog(text, group_sizes, field_names)
+    assert len(re.findall(r'<p data-field="entry">', table)) == sum(group_sizes)
+    assert len(re.findall(r'<a href="', table)) == sum(group_sizes)
+    prefix = text[:text.index(table)]
+    assert prefix.count("<details") == prefix.count("</details>")
+    assert "## ⭐" in prefix
+    visible = re.sub(r"<details\b.*?</details>", "", text, flags=re.S)
+    assert table in visible, "Important resource fields were collapsed"
+
+
+@pytest.mark.parametrize(
+    ("role", "field"),
+    [(role, field) for role, (_, fields) in ROLE_LAYOUTS.items() for field in fields[1:]],
+)
+def test_role_catalog_rejects_a_dropped_field(role: str, field: str) -> None:
+    group_sizes, field_names = ROLE_LAYOUTS[role]
+    text = (ROOT / f"branches/for-{role}.md").read_text(encoding="utf-8")
+    changed, count = re.subn(rf'<p data-field="{field}">.*?</p>', "", text, count=1, flags=re.S)
+    assert count == 1
+    with pytest.raises(AssertionError):
+        compact_catalog(changed, group_sizes, field_names)
+
+
+@pytest.mark.parametrize("role", ROLE_LAYOUTS)
+def test_role_catalog_rejects_a_rating_copied_into_status(role: str) -> None:
+    group_sizes, field_names = ROLE_LAYOUTS[role]
+    text = (ROOT / f"branches/for-{role}.md").read_text(encoding="utf-8")
+    changed, count = re.subn(
+        r'(<p data-field="status">.*?)</p>', r'\1 ⭐⭐⭐⭐⭐</p>', text, count=1, flags=re.S,
+    )
+    assert count == 1
+    with pytest.raises(AssertionError, match="Rating duplicated"):
+        compact_catalog(changed, group_sizes, field_names)
+
+
+@pytest.mark.parametrize("role", ROLE_LAYOUTS)
+def test_role_catalog_mirrors_keep_urls_ratings_and_group_order(role: str) -> None:
+    group_sizes, field_names = ROLE_LAYOUTS[role]
+    observations = []
+    for suffix in ("", ".en", ".zh-Hans"):
+        text = (ROOT / f"branches/for-{role}{suffix}.md").read_text(encoding="utf-8")
+        table = compact_catalog(text, group_sizes, field_names)
+        observations.append((
+            re.findall(r'<a href="([^"]+)"', table),
+            re.findall(r'<span data-field="rating">(⭐+)</span>', table),
+            re.findall(r'rowspan="(\d+)"', table),
+        ))
+    assert observations[0] == observations[1] == observations[2]
+
+
+@pytest.mark.parametrize(
+    ("suffix", "identity", "surface"),
+    (("", "核心身分：", "主要 Surface："),
+     (".en", "Core identity:", "Main Surface:"),
+     (".zh-Hans", "核心身份：", "主要 Surface：")),
+)
+def test_developer_identity_and_surface_are_visibly_distinct(
+    suffix: str, identity: str, surface: str,
+) -> None:
+    text = (ROOT / f"branches/for-developer{suffix}.md").read_text(encoding="utf-8")
+    assert text.count(f'<p data-field="identity"><strong>{identity}</strong>') == 14
+    assert text.count(f'<p data-field="surface"><strong>{surface}</strong>') == 14
 
 
 @pytest.mark.parametrize("suffix", ("", ".en", ".zh-Hans"))
