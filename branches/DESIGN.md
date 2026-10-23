@@ -57,7 +57,7 @@ audience 切太細會：
 
 白話只能降低理解門檻，不能刪掉專業詞。研究人員頁要保留 Source、Claim、Citation、Source Verification、Literature RAG、Reproducibility、Private Data 與 Human Review；第一個任務固定教「公開 paper → 三個問題 → 逐 citation 對原文 → 未支持就標出」。開發者頁要保留 IDE／Surface、Coding Agent／Harness、Provider／Router、Model／Runtime、Sandbox、Approval、Diff／Rollback 與 Eval／Observability，而且成對列出不代表它們是同義詞；第一個任務固定教 `read-only plan → 人工批准 → 小改 → diff → test → 人工 review → rollback`，且不授權 push、merge 或 deploy。教師頁要保留 Learning Objective、Scaffolding、Rubric、Formative Assessment、AI Literacy、Student Data、Human Review 與 Academic Integrity；第一個任務固定使用虛構課堂資料，教「目標 → AI 草稿 → 教師檢查隱私／事實／偏見 → 學生使用 → 教師觀察並修改」。
 
-開發工具的「核心身分」和「surface」必須分欄。Coding agent 可以同時有 CLI、IDE、desktop、cloud、CI 或 SDK surface；IDE／CLI 不是互斥產品分類。OpenRouter 是 API Router，Ollama 是 local model runtime，OpenCode／Pi 等才是 coding agent／harness，不能因名字相近而混在一起。
+開發工具的「核心身分」和「Surface」必須分開說明。兩欄資源表以有標籤的獨立段落呈現這兩個欄位，不能把它們合成一種工具分類。Coding agent 可以同時有 CLI、IDE、desktop、cloud、CI 或 SDK surface；IDE／CLI 不是互斥產品分類。OpenRouter 是 API Router，Ollama 是 local model runtime，OpenCode／Pi 等才是 coding agent／harness，不能因名字相近而混在一起。
 
 完整資源表保留五星編輯評分，但不保存 GitHub stars。研究人員頁固定 15 筆、`3／4／5／2／1` 五組；開發者頁固定 14 筆、`4／6／2／2` 四組，補齊現行 Codex 與 GitHub Copilot，並把 Continue、Roo Code 放在維護／歷史組；教師頁固定 12 筆、`3／3／3／3` 四組；知識工作者頁固定 15 筆、`4／4／2／3／2` 五組；日常使用者頁現為 23 筆、`4／8／4／4／2／1` 六組，其中 8 筆是個人 Agent 產品。五頁的必修閱讀、精選工具及學習資源預設可見，因為安全入口與工具身分直接影響第一個練習。每組使用獨立 `<tbody>` 與真正 `rowspan`；三語的 URL、順序、評分、狀態、授權與安全限制要結構化比對。已封存的 `open_deep_research` 與 Roo Code 只能放歷史組；已封存的 Flowise 不放進知識工作者現行推薦組。Gemini Notebook 第一次出現時可附舊名 NotebookLM 幫助辨識。教師頁不能把一般消費者帳號寫成學校已核准方案；地區、資格與資料條款不確定時要明說。
 
@@ -70,6 +70,12 @@ audience 切太細會：
 連接前的「讀什麼、送去哪、能改什麼、怎麼收回」四問放在核心詞後，保持展開。個人 Agent 的資格、候補狀態與重要資料限制也不能只藏在補充選單。Claude Duet 是產品，不是新的模型家族；只更新它自己的查核日期，不重標未複查的其他產品。來源與星等說明必須明示文件查核不等於實測。
 
 日常使用者的完整資源表採兩欄：「分類」與「資源、用途與限制」。每筆依序顯示名稱與星等、工具身分、用途、狀態／授權、限制；只搬排，不刪除原有欄位資訊。分類仍以六個 `<tbody>` 和真正 `rowspan` 合併。外層 `reader-resource-catalog` 使用有名稱、可鍵盤聚焦的 region；手機直接向下讀，不把重要資訊藏進收合區，也不把七欄硬縮成窄字柱。
+
+其餘四條角色路線沿用相同兩欄容器。研究人員、教師與知識工作者每筆依序保留名稱與星等、用途、狀態／授權、限制；開發者另外保留有標籤的「核心身分」與「主要 Surface」兩段，最後一段保留原有狀態、授權與限制，不拆出未查證的新結論。四頁各自的分類名稱、資源順序與分組數量維持上列契約；不能用刪列、藏欄、縮小字體或重複星等來假裝變短。搬排時逐格比較原始內容，三語核對 URL、星等、欄位順序與安全限制，再以手機與桌面實際建置頁確認。
+
+這四頁的 repo 連結優先顯示專案短名稱，省略作者／組織前綴；完整 `owner/repo` 保留在 URL，不在名稱裡插入 `<br>` 強制換行。已有清楚的產品名稱就沿用，三語保持同一專案與連結。英文研究者的分類以 `Repeatable research and evidence` 對應「可重現與證據」，避免長單字撐寬分類欄；正式名詞仍由正文解釋。GitHub 原生 Markdown 不載入本站 CSS；驗收時檢查 table 的 `scrollWidth`，不能只看外框寬度便宣稱沒有裁切，也不靠不可見字元或被過濾的 `<wbr>` 補救。
+
+文件站在 600 px 以下改為「分類橫向標題 → 全寬資源」，不再替左側分類保留整欄。桌面仍用原有兩欄與真正 `rowspan`；兩種畫面共用同一份內容。必讀、名稱、星等、用途、工具身分、授權與限制不隱藏、不截斷，也不縮字。驗收須量測手機資源欄至少占表格寬度 90%，分類在內容上方；只驗沒有 overflow 不代表好讀。GitHub 原生預覽另行檢查，但不宣稱它能套用文件站 CSS。
 
 ---
 

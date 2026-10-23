@@ -345,6 +345,7 @@ This rule applies to the entire learning map. The goal is for a five-year-old to
 - Merge only a genuinely shared category. Do not merge unrelated groups merely because their status, context, or other text happens to match.
 - Preserve the resource count, order, links, and three-locale correspondence, then verify the rendered result with MkDocs.
 - Keep short tables without repeated categories in Markdown to avoid needless maintenance cost.
+- Wrap two-column resource tables in `reader-resource-catalog`. Below 600 px, the documentation site places each category above full-width resource descriptions; desktop keeps merged categories. Do not shorten the phone layout by deleting fields, collapsing important information, truncating text, or shrinking type. Measure resource cells at no less than 90% of the table width. Native GitHub previews do not load site CSS and need separate verification.
 
 Pages containing models, prices, context limits, licenses, or lifecycle states render the verification date as small text beside the affected table or section. Let it follow a disclosure only when that content is itself supplemental. Keep only the invisible machine marker near the page top:
 
