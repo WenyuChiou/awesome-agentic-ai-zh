@@ -11,6 +11,7 @@ CATALOGS = {
     "resources/advanced-rag": ((4, 4, 4), ("entry", "audience", "learn", "status")),
     "resources/agent-memory": ((8, 3, 4), ("entry", "audience", "learn", "status")),
     "stages/06-memory-rag": ((3, 4, 2), ("entry", "audience", "learn", "status")),
+    "resources/courses": ((3, 6, 2, 2), ("entry", "cost", "outcome", "limits")),
 }
 SUFFIXES = ("", ".en", ".zh-Hans")
 
@@ -77,7 +78,8 @@ def test_catalog_mirrors_keep_url_order_ratings_names_and_group_order(stem):
 def test_catalog_validation_rejects_lost_or_hidden_information(stem, mutation):
     text = (ROOT / f"{stem}.md").read_text(encoding="utf-8")
     if mutation == "field":
-        changed = re.sub(r'<p data-field="status">.*?</p>', "", text, count=1, flags=re.S)
+        last_field = CATALOGS[stem][1][-1]
+        changed = re.sub(rf'<p data-field="{last_field}">.*?</p>', "", text, count=1, flags=re.S)
     elif mutation == "rating":
         changed = re.sub(r'<span data-field="rating">.*?</span>', "", text, count=1, flags=re.S)
     elif mutation == "category":
@@ -91,4 +93,17 @@ def test_catalog_validation_rejects_lost_or_hidden_information(stem, mutation):
         changed = re.sub(r'(<p data-field="entry"><strong>.*?)(</a>)', r'\1<br>\2', text, count=1)
     assert changed != text, "Mutation must exercise the intended guard"
     with pytest.raises(AssertionError):
+        resource_catalog(changed, stem)
+
+
+@pytest.mark.parametrize("suffix", SUFFIXES)
+def test_course_cost_cannot_be_misplaced_as_a_rating(suffix):
+    stem = "resources/courses"
+    text = (ROOT / f"{stem}{suffix}.md").read_text(encoding="utf-8")
+    cost = re.search(r'<p data-field="cost"><strong>[^<]+</strong> (.*?)</p>', text, re.S)
+    assert cost
+    changed = re.sub(r'(<span data-field="rating">).*?(</span>)',
+                     lambda match: match[1] + cost[1] + match[2], text, count=1)
+    assert changed != text
+    with pytest.raises(AssertionError, match="editorial rating"):
         resource_catalog(changed, stem)
