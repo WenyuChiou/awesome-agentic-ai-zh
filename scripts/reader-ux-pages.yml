@@ -2309,9 +2309,11 @@ pages:
       en: resources/cli-agents-guide.en.md
       zh-Hans: resources/cli-agents-guide.zh-Hans.md
     max_visible_chars:
-      zh-TW: 2550
-      en: 4050
-      zh-Hans: 2600
+      # The existing nine-tool catalog is now visible, with repeated field labels.
+      # Measured before/after:1956/3888,3596/7001,2012/3969; prior headroom retained.
+      zh-TW: 4482
+      en: 7455
+      zh-Hans: 4557
     max_open_details: 0
     required_visible_sections:
       comparison:

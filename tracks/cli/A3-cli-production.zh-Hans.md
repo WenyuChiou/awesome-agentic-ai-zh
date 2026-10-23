@@ -211,39 +211,39 @@ Skill 的核心意思可以共用，但文件夹、权限、frontmatter 和安�
 
 推荐度是本学习地图的编辑建议，不是 GitHub stars。`⭐⭐⭐⭐⭐` 表示这条学习路径的必读／必做入口；它不代表工具永远安全，也不代表 production 可以跳过自己的 threat model。
 
+<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="CLI 工具与学习资源">
 <table>
-<thead>
-<tr><th scope="col">类型</th><th scope="col">资源</th><th scope="col">先看什么</th><th scope="col">何时使用</th><th scope="col">推荐度</th><th scope="col">来源</th></tr>
-</thead>
+<thead><tr><th scope="col">类型</th><th scope="col">资源、用途与限制</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">安全连接 MCP</th><td>MCP Connect to local servers</td><td>allowed directories 和明确授权</td><td>第一次连接本地 server</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">官方文档</a></td></tr>
-<tr><td>MCP Security Best Practices</td><td>least privilege、scope 和 token handling</td><td>要连接账户或远程服务前</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">官方文档</a></td></tr>
-<tr><td><code>github/github-mcp-server</code></td><td><code>--read-only</code>、toolsets 和 tools allow-list</td><td>要读取 GitHub PR／issue</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/github/github-mcp-server">GitHub repo</a></td></tr>
-<tr><td><code>modelcontextprotocol/servers</code></td><td>reference implementation 和非 production-ready 警告</td><td>学习协议或阅读示例代码</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">安全连接 MCP</th><td><p data-field="entry"><strong>MCP Connect to local servers</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> allowed directories 和明确授权</p><p data-field="when"><strong>何时使用：</strong> 第一次连接本地 server</p><p data-field="sources"><strong>来源：</strong> <a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">官方文档</a></p></td></tr>
+<tr><td><p data-field="entry"><strong>MCP Security Best Practices</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> least privilege、scope 和 token handling</p><p data-field="when"><strong>何时使用：</strong> 要连接账户或远程服务前</p><p data-field="sources"><strong>来源：</strong> <a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">官方文档</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>github-mcp-server</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> <code>--read-only</code>、toolsets 和 tools allow-list</p><p data-field="when"><strong>何时使用：</strong> 要读取 GitHub PR／issue</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/github/github-mcp-server">GitHub repo</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>servers</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> reference implementation 和非 production-ready 警告</p><p data-field="when"><strong>何时使用：</strong> 学习协议或阅读示例代码</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">CI 与 PR review</th><td>GitHub Actions Secure Use</td><td>最小权限、不可信输入、pin SHA</td><td>编写任何带 secrets 的 workflow 前</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://docs.github.com/en/actions/reference/security/secure-use">官方文档</a></td></tr>
-<tr><td>Claude Code GitHub Actions</td><td>官方 setup、permissions 和 troubleshooting</td><td>使用 Claude Code 运行 CI</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/github-actions">官方文档</a></td></tr>
-<tr><td><code>anthropics/claude-code-action</code></td><td>官方示例和 action inputs</td><td>从可执行模板开始</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></td></tr>
-<tr><td>Codex GitHub Action</td><td>permission profile、trigger 和输出</td><td>使用 Codex 运行 CI</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://learn.chatgpt.com/docs/github-action">OpenAI 官方文档</a></td></tr>
-<tr><td><code>openai/codex-action</code></td><td><code>:read-only</code> 和 safety strategy</td><td>核对最新 inputs 和示例</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/openai/codex-action">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="5">CI 与 PR review</th><td><p data-field="entry"><strong>GitHub Actions Secure Use</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> 最小权限、不可信输入、pin SHA</p><p data-field="when"><strong>何时使用：</strong> 编写任何带 secrets 的 workflow 前</p><p data-field="sources"><strong>来源：</strong> <a href="https://docs.github.com/en/actions/reference/security/secure-use">官方文档</a></p></td></tr>
+<tr><td><p data-field="entry"><strong>Claude Code GitHub Actions</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> 官方 setup、permissions 和 troubleshooting</p><p data-field="when"><strong>何时使用：</strong> 使用 Claude Code 运行 CI</p><p data-field="sources"><strong>来源：</strong> <a href="https://code.claude.com/docs/en/github-actions">官方文档</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>claude-code-action</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> 官方示例和 action inputs</p><p data-field="when"><strong>何时使用：</strong> 从可执行模板开始</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></p></td></tr>
+<tr><td><p data-field="entry"><strong>Codex GitHub Action</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> permission profile、trigger 和输出</p><p data-field="when"><strong>何时使用：</strong> 使用 Codex 运行 CI</p><p data-field="sources"><strong>来源：</strong> <a href="https://learn.chatgpt.com/docs/github-action">OpenAI 官方文档</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>codex-action</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> <code>:read-only</code> 和 safety strategy</p><p data-field="when"><strong>何时使用：</strong> 核对最新 inputs 和示例</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/openai/codex-action">GitHub repo</a></p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">观察与评估</th><td><code>langfuse/langfuse</code></td><td>traces、usage 和 eval</td><td>想把多次运行放在一起看</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/langfuse/langfuse">GitHub repo</a></td></tr>
-<tr><td><code>Arize-ai/phoenix</code></td><td>tracing 和 evaluation</td><td>想在本机观察 AI 系统</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></td></tr>
-<tr><td><code>Helicone/helicone</code></td><td>proxy／gateway 的数据流与隐私边界</td><td>想从 gateway 收集 request 记录</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/Helicone/helicone">GitHub repo</a></td></tr>
-<tr><td><code>promptfoo/promptfoo</code></td><td>eval cases 和 CI regression</td><td>要比较改动前后是否退步</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="4">观察与评估</th><td><p data-field="entry"><strong><code>langfuse</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> traces、usage 和 eval</p><p data-field="when"><strong>何时使用：</strong> 想把多次运行放在一起看</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/langfuse/langfuse">GitHub repo</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>phoenix</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> tracing 和 evaluation</p><p data-field="when"><strong>何时使用：</strong> 想在本机观察 AI 系统</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>helicone</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> proxy／gateway 的数据流与隐私边界</p><p data-field="when"><strong>何时使用：</strong> 想从 gateway 收集 request 记录</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/Helicone/helicone">GitHub repo</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>promptfoo</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> eval cases 和 CI regression</p><p data-field="when"><strong>何时使用：</strong> 要比较改动前后是否退步</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">分享 Skill／plugin</th><td>Claude Code Plugins</td><td>plugin 结构、安装和 marketplace</td><td>要为 Claude Code 打包</td><td>⭐⭐⭐⭐</td><td><a href="https://code.claude.com/docs/en/plugins">官方文档</a></td></tr>
-<tr><td><code>anthropics/claude-plugins-official</code></td><td>官方管理的 plugin 目录</td><td>寻找可读的正式示例</td><td>⭐⭐⭐⭐⭐</td><td><a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers-marketplace</code></td><td>最小 marketplace 外壳</td><td>理解 curator-only 结构</td><td>⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="3">分享 Skill／plugin</th><td><p data-field="entry"><strong>Claude Code Plugins</strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> plugin 结构、安装和 marketplace</p><p data-field="when"><strong>何时使用：</strong> 要为 Claude Code 打包</p><p data-field="sources"><strong>来源：</strong> <a href="https://code.claude.com/docs/en/plugins">官方文档</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>claude-plugins-official</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> 官方管理的 plugin 目录</p><p data-field="when"><strong>何时使用：</strong> 寻找可读的正式示例</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>superpowers-marketplace</code></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> 最小 marketplace 外壳</p><p data-field="when"><strong>何时使用：</strong> 理解 curator-only 结构</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">目录与完整示例</th><td><code>wong2/awesome-mcp-servers</code></td><td>先分类，再逐一检查来源和权限</td><td>官方资源没有需要的 server 时</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></td></tr>
-<tr><td><code>obra/superpowers</code></td><td>Skill、规则和 workflow 如何组合</td><td>完成最小流程后看完整示例</td><td>⭐⭐⭐⭐</td><td><a href="https://github.com/obra/superpowers">GitHub repo</a></td></tr>
+<tr><th scope="rowgroup" rowspan="2">目录与完整示例</th><td><p data-field="entry"><strong><code>awesome-mcp-servers</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> 先分类，再逐一检查来源和权限</p><p data-field="when"><strong>何时使用：</strong> 官方资源没有需要的 server 时</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></p></td></tr>
+<tr><td><p data-field="entry"><strong><code>superpowers</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什么：</strong> Skill、规则和 workflow 如何组合</p><p data-field="when"><strong>何时使用：</strong> 完成最小流程后看完整示例</p><p data-field="sources"><strong>来源：</strong> <a href="https://github.com/obra/superpowers">GitHub repo</a></p></td></tr>
 </tbody>
 </table>
+</div>
 
 目录只帮你“找到候选项”，不替候选项保证安全。安装任何 MCP、Action、Skill 或 plugin 前，都要再查看 source、权限、最近维护状态和移除方法。
 ## ✅ Track A 完成检查
