@@ -89,7 +89,10 @@ def test_course_table_keeps_four_real_rowgroups_and_thirteen_ratings(page: Path)
         assert group.count("<tr>") == expected_rows
         assert group.count('scope="rowgroup"') == 1
         assert f'rowspan="{expected_rows}"' in group
-    assert len(re.findall(r"<td>⭐{3,5}</td>", table)) == 13
+    assert len(re.findall(r'<span data-field="rating">⭐{3,5}</span>', table)) == 13
+    assert len(re.findall(r'<th scope="col">', table)) == 2
+    for field in ("entry", "cost", "outcome", "limits"):
+        assert table.count(f'<p data-field="{field}">') == 13
     assert '<th scope="rowgroup"></th>' not in table
 
 
@@ -159,8 +162,8 @@ def test_new_rows_define_technical_terms_and_keep_four_star_elective_scope(
     assert "最小代理迴圈" not in context_row
     assert "最小 Agent 循环" not in context_row
     assert "<strong>Todo list (" in deep_agents_row or "<strong>Todo list（" in deep_agents_row
-    assert context_row.endswith("<td>⭐⭐⭐⭐</td></tr>")
-    assert deep_agents_row.endswith("<td>⭐⭐⭐⭐</td></tr>")
+    assert '<span data-field="rating">⭐⭐⭐⭐</span>' in context_row
+    assert '<span data-field="rating">⭐⭐⭐⭐</span>' in deep_agents_row
 
 
 def test_nvidia_reference_url_is_fixed_and_setup_mirrors_stay_in_sync() -> None:
