@@ -301,15 +301,39 @@ body[data-md-color-scheme="slate"] {
   .md-typeset details.model-family table[data-model-family] td {
     padding: .6em .65em;
   }
-  .md-typeset .reader-resource-catalog thead th:first-child {
-    width: 29%;
-  }
   .md-typeset .reader-resource-catalog th,
   .md-typeset .reader-resource-catalog td {
     padding: .6em .65em;
   }
-  .md-typeset .reader-resource-catalog tbody th {
-    font-size: .75rem;
-    overflow-wrap: normal;
+}
+/* Phone catalogs: category heading, then full-width resources. */
+@media (max-width: 600px) {
+  .md-typeset .reader-resource-catalog table:not([class]),
+  .md-typeset .reader-resource-catalog tbody,
+  .md-typeset .reader-resource-catalog tr,
+  .md-typeset .reader-resource-catalog th[scope="rowgroup"],
+  .md-typeset .reader-resource-catalog td {
+    display: block;
+    inline-size: 100%;
+    box-sizing: border-box;
+  }
+  /* Keep column labels available to assistive technology, not in a side column. */
+  .md-typeset .reader-resource-catalog thead {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .md-typeset .reader-resource-catalog th[scope="rowgroup"] {
+    background: var(--md-code-bg-color);
+    text-align: start;
+    font-size: inherit;
+  }
+  .md-typeset .reader-resource-catalog td {
+    border-inline: 0;
+  }
+  .md-typeset .reader-resource-catalog p[data-field="identity"] {
+    font-size: inherit;
   }
 }

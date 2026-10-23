@@ -194,3 +194,17 @@ def test_layout_rules_do_not_shrink_or_hide_important_content() -> None:
     catalog_rules = css[css.index("/* Resource facts stay visible"):]
     assert "display: none" not in catalog_rules
     assert "white-space: nowrap" not in catalog_rules
+
+
+def test_phone_catalogs_use_full_width_instead_of_a_category_column() -> None:
+    css = (ROOT / "docs/stylesheets/extra.css").read_text(encoding="utf-8")
+    phone = css[css.index("/* Phone catalogs: category heading, then full-width resources. */"):]
+    assert "@media (max-width: 600px)" in phone
+    for selector in ("table:not([class])", "tbody", "tr", 'th[scope="rowgroup"]', "td"):
+        assert f".reader-resource-catalog {selector}" in phone
+    assert "display: block" in phone and "inline-size: 100%" in phone
+    assert "box-sizing: border-box" in phone
+    assert "clip-path: inset(50%)" in phone  # column labels remain accessible
+    assert 'p[data-field="identity"]' in phone and "font-size: inherit" in phone
+    assert "width: 29%" not in phone
+    assert "display: none" not in phone
