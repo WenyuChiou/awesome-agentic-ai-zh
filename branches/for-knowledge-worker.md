@@ -124,7 +124,7 @@ fictional meeting note：
 <tr><td><p data-field="entry"><strong><a href="https://github.com/Mintplex-Labs/anything-llm">AnythingLLM</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">自架文件問答、workspace 與 agent</p><p data-field="status">活躍；MIT</p><p data-field="limits">資料是否外送仍取決於模型供應商、embedder 與 connector 設定</p></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Skill 與協定入口</th><td><p data-field="entry"><strong><a href="https://github.com/obra/superpowers">obra/superpowers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">把腦力激盪、規劃與檢查做成可重用 Skill</p><p data-field="status">活躍；MIT</p><p data-field="limits">範例偏開發流程；它不是公司的 Approval Gate，使用前要改成你的規則</p></td></tr>
+<tr><th scope="rowgroup" rowspan="2">Skill 與協定入口</th><td><p data-field="entry"><strong><a href="https://github.com/obra/superpowers">obra/<br>superpowers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">把腦力激盪、規劃與檢查做成可重用 Skill</p><p data-field="status">活躍；MIT</p><p data-field="limits">範例偏開發流程；它不是公司的 Approval Gate，使用前要改成你的規則</p></td></tr>
 <tr><td><p data-field="entry"><strong><a href="https://modelcontextprotocol.io/registry/about">官方 MCP Registry</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">查公開 MCP Server 的標準化 metadata</p><p data-field="status">Preview；官方 metadata 服務</p><p data-field="limits">驗證 namespace 不等於安全；它不是安全審查或推薦榜</p></td></tr>
 </tbody>
 </table>

@@ -50,6 +50,12 @@ def compact_catalog(
             entry = fields[0][1]
             assert "<strong><a href=" in entry
             assert re.search(r'<span data-field="rating">⭐{3,5}</span>', entry)
+            label = re.search(r'<a href="https://github.com/[^"]+">(.*?)</a>', entry)
+            if label and ("surface" in field_names or "identity" not in field_names):
+                plain = label[1].replace("<br>", "")
+                if len(plain) > 14 and re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", plain):
+                    owner, repo = plain.split("/", 1)
+                    assert label[1] == f"{owner}/<br>{repo}", "Long repository label needs a native line break"
     return table
 
 
@@ -90,6 +96,16 @@ def test_role_catalog_rejects_a_rating_copied_into_status(role: str) -> None:
     )
     assert count == 1
     with pytest.raises(AssertionError, match="Rating duplicated"):
+        compact_catalog(changed, group_sizes, field_names)
+
+
+@pytest.mark.parametrize("role", ROLE_LAYOUTS)
+def test_role_catalog_rejects_removing_long_repo_name_break(role: str) -> None:
+    group_sizes, field_names = ROLE_LAYOUTS[role]
+    text = (ROOT / f"branches/for-{role}.md").read_text(encoding="utf-8")
+    changed, count = re.subn(r"/<br>", "/", text, count=1)
+    assert count == 1
+    with pytest.raises(AssertionError, match="native line break"):
         compact_catalog(changed, group_sizes, field_names)
 
 
