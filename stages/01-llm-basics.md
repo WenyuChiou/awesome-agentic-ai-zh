@@ -61,9 +61,9 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 
 ## 場景式模型選擇器
 
-先看任務的限制，再看模型；不必先背排行榜。
+**Typed Decision Model（型別化決策模型）**只從預設答案中選擇、評分或回傳機率。TypeSafe AI 的 **Jev** 屬於這類，不能用來聊天、摘要或寫程式。
 
-不是每種 AI 模型都會寫文章。**Typed Decision Model（型別化決策模型）**只從你先定好的答案中選擇、評分或回傳機率。TypeSafe AI 的 **Jev** 就是這一類；它不能代替聊天、摘要或寫程式的 LLM。
+**判斷不是授權**：程式仍須檢查權限；寄信、付款或刪檔前先請人確認。
 
 | 你的場景 | 先試哪條路 | 選擇理由 |
 |---|---|---|
@@ -503,7 +503,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details markdown="1">
 <summary>🌐 完整 18 家族資料表（官方規格入口）</summary>
 
-<small>全表查核：2026-09-22 UTC。GPT 一列更新：2026-10-02 UTC。Claude 一列更新：2026-10-08 UTC。Gemini／Muse／Mistral／Jev 與 GPT 選讀更新：2026-10-15 UTC。</small>
+<small>全表查核：2026-09-22 UTC。GPT 一列更新：2026-10-02 UTC。Claude 一列更新：2026-10-08 UTC。Gemini／Muse／Mistral／Jev 與 GPT 選讀更新：2026-10-15 UTC。DeepSeek／Decisions／Clef 選讀更新：2026-10-23 UTC。</small>
 
 沒有可靠公開數字就寫「官方未公布」。價格通常是 USD／每 1M token；供應商若用別的單位，就照官方單位記錄。
 **快取（cache）**像重用已讀過的便條：讀取舊內容與寫入新內容可能有不同價格。
@@ -645,26 +645,26 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <table data-model-family="DeepSeek">
   <thead><tr><th scope="col">欄位</th><th scope="col">內容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">目前推薦型號</th><td>V4.1 Flash（<code>deepseek-flash</code>）</td></tr>
-    <tr><td>V4 Pro（<code>deepseek-v4-pro</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">目前推薦型號</th><td>V4.1 Flash 1017（<code>deepseek-flash</code>）</td></tr>
+    <tr><td>V4 Pro 0813（<code>deepseek-v4-pro</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">狀態</th><td>兩者 API 仍可用；舊 V4 Flash 已退役</td></tr>
+    <tr><th scope="row">狀態</th><td>兩者 API 正式可用；Flash 1017 另有開放權重。舊 V4 Flash 已退役。</td></tr>
   </tbody>
   <tbody data-field="context">
     <tr><th scope="row">Context</th><td>1M context／384K 最大輸出</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">價格或授權</th><td>每百萬 token，尖峰／離峰：Flash 輸入 US$0.30/$0.15、輸出 US$1.20/$0.60、cache hit US$0.006/$0.003；Pro 輸入 US$1.32/$0.66、輸出 US$3.96/$1.98、cache hit US$0.044/$0.022</td></tr>
+    <tr><th scope="row">價格或授權</th><td><p>美元（US$）／每百萬 token；以下依尖峰／離峰列。</p><p>Flash 未命中快取輸入 US$0.30/$0.15、輸出 US$1.20/$0.60、快取命中輸入 US$0.006/$0.003。</p><p>Pro 未命中快取輸入 US$1.32/$0.66、輸出 US$3.96/$1.98、快取命中輸入 US$0.044/$0.022。</p><p>Flash 1017 開放權重為 MIT；自架硬體與執行費另計。</p></td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">適合做什麼</th><td>推理、程式與大量 token 任務</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td><code>deepseek-v4-flash</code> 舊名暫時導向 V4.1 Flash，不代表舊模型仍在；Pro 原定下線後官方決定繼續提供。尖峰為週一至週五 UTC 01–04、06–10 時</td></tr>
+    <tr><th scope="row">限制</th><td><p>舊 <code>deepseek-v4-flash</code> 仍導向 Flash 1017。舊 <code>deepseek-v4-flash-vision-exp</code> 同樣導向新版。舊名可用，不代表舊模型仍在服務。</p><p>尖峰：週一至五 UTC 01:00–04:00、06:00–10:00。中國公眾假期不算尖峰；其餘時間為離峰。</p><p>Flash 1017 權重是大型模型，不當作一般筆電的起手式。</p></td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方來源</th><td><a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek 模型與價格</a> · <a href="https://api-docs.deepseek.com/updates/">更新紀錄</a></td></tr>
+    <tr><th scope="row">官方來源</th><td><a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek 模型與價格</a> · <a href="https://api-docs.deepseek.com/updates/">更新紀錄</a> · <a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017">Flash 1017 官方權重</a></td></tr>
   </tbody>
 </table>
 
@@ -1071,10 +1071,15 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 
 想做「聽人說話、立刻用聲音回答」的 Agent，可選讀 [Gemini 3.8 Live](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live)。它是獨立的穩定語音 API 型號，不等於上表的 Gemini 3.8 Flash；費用與功能要看 [Gemini API 價格頁](https://ai.google.dev/gemini-api/docs/pricing)。
 
-**GPT API 選讀**：先完成一般請求，再比較下面兩種用途。
+**API 與決策模型選讀**：完成一般請求後，再依任務需求比較。
 
 - **Ultrafast（加價低延遲服務層）**：讓支援的模型更快回應，不是新模型或免費加速。[官方指南](https://developers.openai.com/api/docs/guides/ultrafast-mode) 列出 GPT-6.1 Sol 的用法；費用依服務層另算。
-- **Decisions API（判斷介面，public beta）**：讓 `gpt-6-luna` 回傳分類、分數或條件成立的機率。[官方指南](https://developers.openai.com/api/docs/guides/decisions) 說明它和一般文字生成的差別；不代替工具呼叫，計費也要分開看。
+<!-- decision-electives:start -->
+- **Decisions API（判斷介面，正式可用）**：讓 `gpt-6-luna` 從固定答案中分類、評分或估計機率。每次請求最多 400 個問題，不會自己執行工具。一般未命中快取輸入為 US$0.10／百萬 token，不收輸出 token 費。快取、長上下文與區域加價另查 [官方指南](https://developers.openai.com/api/docs/guides/decisions)；這不是一般文字生成的價格。
+- **Clef（可自架的決策模型）**：把文字、圖片與固定選項交給它，取回各答案的機率，不用它寫文章。Cloudflare 的 27B 權重採 Apache-2.0；它不是 Jev 的型號，也不是聊天模型。[官方模型卡](https://huggingface.co/Cloudflare/clef) 的實測環境使用 H200，不能據此保證一般筆電可跑。這裡只提供選讀，未實測本機執行。
+
+兩者的分數都不是行動許可。先用自己的案例檢查錯誤，再由程式檢查權限；不確定或高風險時交給人。
+<!-- decision-electives:end -->
 
 </details>
 

@@ -34,6 +34,15 @@
 - **Local LLM／Runtime（本地模型／运行环境）**：让模型在自己的电脑上运行的软件。Runtime 负责运行模型，不等于聊天 App，也不等于 CLI Agent。
 - **Approval Gate（人工批准关卡）**：真正寄信、改文件或执行高影响动作前，先停下来让人确认。
 
+<!-- connector-safety:start -->
+**连接账号前，先问四件事：**
+
+1. **读什么？**只开放这次任务需要的数据。
+2. **送去哪？**先看哪些服务会收到数据。
+3. **能改什么？**寄信、改文件或付款前，保留 **Approval Gate**。
+4. **怎么收回？**找到停止任务、撤销连接与删除已存数据的方法。
+<!-- connector-safety:end -->
+
 ## 🛠 第一个练习：把虚构消息变成可核对的提醒
 
 这题只用**虚构**材料。把下面整段直接贴到你正在使用的聊天工具：
@@ -84,13 +93,15 @@
 
 ## 🧑 个人 Agent：先说明目标与边界
 
-<small>个人 Agent 产品查核：2026-10-02 UTC；新增与复核：2026-10-16 UTC</small>
+<small>个人 Agent 产品查核：2026-10-02 UTC；新增与复核：2026-10-16 UTC。仅 Claude Duet 更新：2026-10-23 UTC。</small>
 
 **个人 Agent（Personal Agent）** 是能跨工具完成多步骤工作的助手。你先说明目标，它先查资料、写草稿，再拿回来请你确认。这类产品把模型、工具与权限放在一起。产品名称不是底层模型名称，也不是新的升级等级。
 
 这里也纳入消息式个人代理：看它是否保留个人情境、连接日常工具并持续跟进。下表加入初创公司出身的 Instinct、Tab、Tomo 与 Poke。Poke 已加入 Cognition，不再列为独立团队。聊天陪伴、单一提醒工具与企业工作流平台不一定符合这个范围。可用性与隐私细节见下方“账号、数据、权限与费用”。
 
 第一次仍用上面的虚构消息，先不要连接账号。需要跨工具时，再限定它能读取什么、能修改什么，以及何时必须停下来请你批准。发出、发布、删除文件或付款前保留 **Approval Gate**。“持续工作”不代表可以跳过人工检查。
+
+**Claude Duet** 是会持续追踪任务的个人 Agent，不是新模型。目前是美国 Pro／Max 的研究预览，仍需候补邀请；Team／Enterprise 尚未开放。官方说明：寄信、付款、签署或删除前会请你批准。撤销 App 连接后，**记忆不会自动删除**。先读[资格与数据限制](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet)，不要直接接私人账号。
 
 <a id="必修阅读"></a>
 ## 📖 必读
@@ -109,7 +120,7 @@
 <a id="-精选-projects"></a>
 ## ⭐ 精选 Projects 与学习资源
 
-星级依“初学者价值、文档质量与安全边界”给分。不是 GitHub stars。其他资源的状态与限制核查于 `2026-08-29 UTC`。个人 Agent 入口新增与复核于 `2026-10-16 UTC`。三星代表可选的具体产品示例，适合互相对照。它们是未实测的参考／对照示例，不是必修工具。评分依官方文档的教学价值，不代表产品的实测质量。
+星级依“初学者价值、文档质量与安全边界”给分。不是 GitHub stars。其他资源的状态与限制核查于 `2026-08-29 UTC`。个人 Agent 入口新增与复核于 `2026-10-16 UTC`。仅 Claude Duet 新增于 `2026-10-23 UTC`。三星代表可选的具体产品示例，适合互相对照。它们是未实测的参考／对照示例，不是必修工具。评分依官方文档的教学价值，不代表产品的实测质量。
 
 <table>
   <thead><tr><th scope="col">分类</th><th scope="col">入口／项目</th><th scope="col">它是什么</th><th scope="col">适合做什么</th><th scope="col">状态／授权</th><th scope="col">先知道的限制</th><th scope="col">评分</th></tr></thead>
@@ -120,7 +131,8 @@
     <tr><td><a href="https://perplexity.ai">Perplexity</a></td><td>带来源入口的云端搜索助手</td><td>找候选来源并建立查证起点</td><td>正式可用；商业云服务</td><td>引用不等于内容正确；要逐一打开来源</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="7">个人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想学持续任务与批准边界的日常用户。教什么：先用虚构数据学习目标、工具与批准边界。</td><td>逐步开放；商业云服务</td><td>依方案、年龄、地区与管理员设置；账号可能尚未开放</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="8">个人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想学持续任务与批准边界的日常用户。教什么：先用虚构数据学习目标、工具与批准边界。</td><td>逐步开放；商业云服务</td><td>依方案、年龄、地区与管理员设置；账号可能尚未开放</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://support.claude.com/en/articles/17631495-get-started-with-claude-duet">Claude Duet</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：比较持续任务的日常用户。教什么：先限制数据，再批准对外动作。</td><td>研究预览；美国 Pro／Max，需候补邀请；商业云服务</td><td>Team／Enterprise 未开放；撤销连接不会自动清除记忆</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>个人 Agent 产品／官方介绍</td><td>适合谁：想练跨 App 草拟的日常用户与小商家。教什么：学跨 App 草拟与行动前人工批准。</td><td>限区可用；商业云服务</td><td>美国与加拿大；Meta 表示发布、发送与花费须批准</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>个人 Agent 产品／官方文档</td><td>适合谁：想比较持续任务与共享数据的日常用户。教什么：学持续任务与共享电脑的数据边界。</td><td>符合资格方案可用；商业云服务</td><td>需符合资格的付费方案；同账号 Bots 共享文件与登录</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://instinct.com/">Instinct</a></td><td>消息／通话式个人代理</td><td>适合谁：比较生活任务委派的用户。教什么：模型训练与授权范围。</td><td>商业服务；资格须查账号</td><td>18 岁以上；训练退出有例外</td><td>⭐⭐⭐</td></tr>
@@ -159,6 +171,8 @@
 - 不确定能不能上传时，先不要上传。公开可读也不等于你有权把别人的内容交给第三方服务处理。
 
 个人 Agent 产品细节（2026-10-16 UTC；文档查核，未实测）：
+
+- [Claude Duet](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet)（仅此项：2026-10-23 UTC）：在自己的云端电脑上工作，使用 Claude Opus 5.5，不能自行选模型。后台工作也计入 Pro／Max 方案用量，不是无限免费 API。现有 Claude 的记忆、Skills 与连接器会延续使用。先检查共享数据与记忆设置；寄信、付款、签署或删除仍需人工批准。参考 [10/21 官方公告](https://claude.com/resources/articles/claude-duet)。
 
 - [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持续工作的云助手，有自己的云电脑与浏览器，底层模型为 GPT-6 Astra。你关掉电脑后仍能继续；它会记住偏好与待办、在后台并行工作，分享私人对话信息给他人前须先取得你的允许。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)说明了逐步开放。Pro 100、Pro 200、Pro 500 限超过 18 岁。也限在欧洲经济区、英国与瑞士以外。Business Premium、Enterprise 在全球逐步开放。Enterprise 须由管理员启用。符合方案不代表账号已经获得功能。
 - [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的云电脑跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)确认美国与加拿大可用。也加入商务 skills 与 connectors。Meta 表示发布、发送与花费须先取得你的批准。另有 Sentinel 代理审核对外联网动作；Muse 提供活动审计轨迹。密码与付款资料分开存放于安全存储，Muse 本身看不到。Muse 是产品；Muse Spark 是模型。Muse Code 是在终端工作的 coding agent。

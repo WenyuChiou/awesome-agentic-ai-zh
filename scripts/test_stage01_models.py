@@ -220,7 +220,9 @@ def test_october_preview_and_product_boundaries(page: Path) -> None:
     assert any(token in mistral[6] for token in ("權重尚未釋出", "权重尚未发布", "weights not yet released"))
     assert "https://developers.openai.com/api/docs/guides/ultrafast-mode" in text
     assert "https://developers.openai.com/api/docs/guides/decisions" in text
-    assert "public beta" in text and "gpt-6-luna" in text
+    decisions = re.search(r"<!-- decision-electives:start -->(.*?)<!-- decision-electives:end -->", text, re.S)
+    assert decisions is not None and "gpt-6-luna" in decisions[1]
+    assert "public beta" not in decisions[1].lower()
 
 
 def test_october_model_rows_keep_identical_urls_and_numbers_across_locales() -> None:

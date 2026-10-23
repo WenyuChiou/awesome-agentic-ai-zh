@@ -34,6 +34,15 @@ After this page, you can:
 - **Local LLM／Runtime**: software that runs a model on your computer. A runtime runs the model; it is not the same thing as a chat app or CLI Agent.
 - **Approval Gate**: a stop where a person confirms before the system sends, edits files, or performs another high-impact action.
 
+<!-- connector-safety:start -->
+**Before connecting an account, ask four questions:**
+
+1. **What will it read?** Grant only the data this task needs.
+2. **Where will it send data?** Check which services will receive it.
+3. **What can it change?** Keep an **Approval Gate** before sending mail, editing files, or paying.
+4. **How do I take it back?** Find how to stop the task, revoke the connection, and delete stored data.
+<!-- connector-safety:end -->
+
 ## 🛠 First exercise: turn a fictional message into a checkable reminder
 
 This exercise uses **fictional** data only. Copy the whole block into the chat tool you already use:
@@ -84,13 +93,15 @@ If you only want to chat, you do not need a CLI Agent or local runtime. Go to [T
 
 ## 🧑 Personal Agents: define the goal and boundaries first
 
-<small>Personal Agent products checked: 2026-10-02 UTC; additions and re-verification: 2026-10-16 UTC</small>
+<small>Personal Agent products checked: 2026-10-02 UTC; additions and re-verification: 2026-10-16 UTC. Only Claude Duet was added on `2026-10-23 UTC`.</small>
 
 A **Personal Agent** can do multi-step work across tools after you give it a goal, like researching, drafting, and returning for approval. These products combine a model, tools, and permissions; a product name is not an underlying model name or a new upgrade level.
 
 Messaging-based personal agents belong here too: look for ongoing personal context, everyday-tool access, and delegated tasks with follow-through. The table adds startup-origin Instinct, Tab, Tomo, and Poke; Poke has joined Cognition and is not listed as independent. Companionship chatbots, standalone reminders, and business workflow platforms do not necessarily fit this scope. See “Accounts, data, permissions, and cost” below for access and privacy details.
 
 Start with the fictional message above, without connecting accounts. When you need multiple tools, specify what the agent may read or change and when it must stop for your approval. Keep an **Approval Gate** before sending, publishing, deleting files, or paying; ongoing work still needs human review.
+
+**Claude Duet** follows tasks, not a new model. It is a US Pro／Max research preview by waitlist invitation; Team／Enterprise is not open. The official guide says it asks approval before sending mail, paying, signing, or deleting. Revoke an App connection; **memory is not automatically deleted**. Read [access and data limits](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet) before connecting.
 
 <a id="required-reading"></a>
 ## 📖 Required reading
@@ -109,7 +120,7 @@ For a systematic introduction to prompts, zero-shot, one-shot, few-shot, and ver
 <a id="-curated-projects"></a>
 ## ⭐ Curated projects and learning resources
 
-The stars are this project's editorial rating for beginner value, documentation, and clear safety boundaries, not GitHub stars. Other resources retain their `2026-08-29 UTC` status check. Personal Agent entries were added or re-verified on `2026-10-16 UTC`. They receive three stars as optional concrete product examples to compare, rather than required tools. These are untested reference/comparison examples. Ratings reflect documented teaching value, not hands-on product quality.
+The stars are this project's editorial rating for beginner value, documentation, and clear safety boundaries, not GitHub stars. Other resources retain their `2026-08-29 UTC` status check. Personal Agent entries were added or re-verified on `2026-10-16 UTC`. They receive three stars as optional concrete product examples to compare, rather than required tools. Only Claude Duet was added on `2026-10-23 UTC`. These are untested reference/comparison examples. Ratings reflect documented teaching value, not hands-on product quality.
 
 <table>
   <thead><tr><th scope="col">Category</th><th scope="col">Entry／project</th><th scope="col">What it is</th><th scope="col">Good for</th><th scope="col">Status／terms</th><th scope="col">Know this first</th><th scope="col">Rating</th></tr></thead>
@@ -120,7 +131,8 @@ The stars are this project's editorial rating for beginner value, documentation,
     <tr><td><a href="https://perplexity.ai">Perplexity</a></td><td>Cloud search assistant with source links</td><td>Finding candidate sources and starting verification</td><td>Available; commercial cloud service</td><td>A citation is not proof; open each source</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="7">Personal Agents</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>Personal Agent product／official docs</td><td>For everyday users learning ongoing tasks and approval boundaries. Teaches goals, tools, and approval boundaries with fictional data.</td><td>Gradual rollout; commercial cloud service</td><td>Plan, age, region, and admin limits; your account may not have access yet</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="8">Personal Agents</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>Personal Agent product／official docs</td><td>For everyday users learning ongoing tasks and approval boundaries. Teaches goals, tools, and approval boundaries with fictional data.</td><td>Gradual rollout; commercial cloud service</td><td>Plan, age, region, and admin limits; your account may not have access yet</td><td>⭐⭐⭐</td></tr>
+    <tr><td><a href="https://support.claude.com/en/articles/17631495-get-started-with-claude-duet">Claude Duet</a></td><td>Personal Agent product／official docs</td><td>For everyday users comparing ongoing tasks. Teaches limiting data before approving external actions.</td><td>Research preview; US Pro／Max, waitlist invitation required; commercial cloud service</td><td>Team／Enterprise not open; revoking a connection does not delete memory automatically</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>Personal Agent product／official introduction</td><td>For everyday users and small-business owners practicing cross-app drafts. Teaches cross-app drafting and human approval before actions.</td><td>Region-limited; commercial cloud service</td><td>US and Canada; Meta says publishing, sending, and spending require approval</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>Personal Agent product／official docs</td><td>For everyday users comparing ongoing tasks and shared data. Teaches ongoing tasks and shared-computer data boundaries.</td><td>Eligible-plan access; commercial cloud service</td><td>Eligible paid plan required; same-account Bots share files and logins</td><td>⭐⭐⭐</td></tr>
     <tr><td><a href="https://instinct.com/">Instinct</a></td><td>Text/call personal agent</td><td>For users comparing everyday delegation. Teaches model-training and permission boundaries.</td><td>Commercial service; check account eligibility</td><td>18+; training opt-out has exceptions</td><td>⭐⭐⭐</td></tr>
@@ -159,6 +171,8 @@ The stars are this project's editorial rating for beginner value, documentation,
 - If you are unsure whether you may upload something, do not upload it. Publicly readable does not mean you have permission to give someone else's content to a third-party service for processing.
 
 Personal Agent product details (2026-10-16 UTC; document checks, not hands-on tests):
+
+- [Claude Duet](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet) (only this item: `2026-10-23 UTC`): works on its own cloud computer, uses Claude Opus 5.5, and does not let you choose the model. Background work counts against Pro／Max plan usage; it is not an unlimited free API. Existing Claude memory, Skills, and connectors continue to apply. Check shared data and memory settings first; sending mail, paying, signing, and deleting still require human approval. See the [10/21 official announcement](https://claude.com/resources/articles/claude-duet).
 
 - [OpenAI dots](https://learn.chatgpt.com/docs/dots): an always-on cloud assistant with its own cloud computer and browser (underlying model: GPT-6 Astra); work can continue while your computer is off. It remembers your preferences and ongoing work, runs background agents in parallel, and must get your permission before sharing private-conversation information with others. The [2026-09-29 update](https://learn.chatgpt.com/docs/whats-new/devday-2026) describes a gradual rollout. Pro 100, Pro 200, and Pro 500 require users over 18 outside the European Economic Area, United Kingdom, and Switzerland. Business Premium and Enterprise are rolling out worldwide; Enterprise needs administrator enablement. An eligible plan does not mean your account has access yet.
 - [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/): works across apps on its own cloud computer. The [2026-09-29 Muse for Small Business update](https://about.fb.com/news/2026/09/introducing-muse-small-business/) confirms US and Canada access and adds business skills and connectors; Meta says publishing, sending, and spending require your approval. A separate Sentinel agent reviews outbound network actions; Muse provides an activity audit trail. Passwords and payment details are stored separately in secure storage that Muse itself cannot see. Muse is the product; Muse Spark is a model, and Muse Code is a terminal coding agent.

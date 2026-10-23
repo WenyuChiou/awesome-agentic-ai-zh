@@ -61,9 +61,9 @@ For comparisons with Distillation and Quantization, open the [optional model tra
 
 ## Scene-Based Model Picker
 
-Start with the task's constraints, then choose a model; you do not need to memorize a leaderboard.
+A **Typed Decision Model** returns a predefined choice, score, or probability. TypeSafe AI's **Jev** is one; it cannot chat, summarize, or write code.
 
-Not every AI model writes text. A **Typed Decision Model** chooses from answers you define and returns a choice, score, or probability. TypeSafe AI's **Jev** does this; it cannot replace an LLM for chat, summaries, or code.
+**Deciding is not authorization**: code must check permissions; ask a person before sending mail, paying, or deleting files.
 
 | Your situation | Start with | Why |
 |---|---|---|
@@ -503,7 +503,7 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 18-family table (official specification entries)</summary>
 
-<small>Full table checked: 2026-09-22 UTC. GPT row updated: 2026-10-02 UTC. Claude row updated: 2026-10-08 UTC. Gemini/Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC.</small>
+<small>Full table checked: 2026-09-22 UTC. GPT row updated: 2026-10-02 UTC. Claude row updated: 2026-10-08 UTC. Gemini/Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 **Cache** is like reusing a note you already read: reading old content and writing new content may have different prices.
@@ -645,26 +645,26 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="DeepSeek">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">Current recommended models</th><td>V4.1 Flash (<code>deepseek-flash</code>)</td></tr>
-    <tr><td>V4 Pro (<code>deepseek-v4-pro</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Current recommended models</th><td>V4.1 Flash 1017 (<code>deepseek-flash</code>)</td></tr>
+    <tr><td>V4 Pro 0813 (<code>deepseek-v4-pro</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">Status</th><td>Both APIs available; old V4 Flash retired</td></tr>
+    <tr><th scope="row">Status</th><td>Both APIs are officially available; Flash 1017 also has released weights. Old V4 Flash is retired.</td></tr>
   </tbody>
   <tbody data-field="context">
     <tr><th scope="row">Context</th><td>1M context / 384K max output</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>Per million tokens, peak/off-peak: Flash input US$0.30/$0.15, output US$1.20/$0.60, cache hit US$0.006/$0.003; Pro input US$1.32/$0.66, output US$3.96/$1.98, cache hit US$0.044/$0.022</td></tr>
+    <tr><th scope="row">Price or license</th><td><p>USD (US$) per million tokens; values below are peak/off-peak.</p><p>Flash cache-miss input US$0.30/$0.15, output US$1.20/$0.60, and cache-hit input US$0.006/$0.003.</p><p>Pro cache-miss input US$1.32/$0.66, output US$3.96/$1.98, and cache-hit input US$0.044/$0.022.</p><p>Flash 1017 released weights are MIT; self-hosted hardware and runtime costs are separate.</p></td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">Good for</th><td>Reasoning, coding, high-token workloads</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>The legacy <code>deepseek-v4-flash</code> name temporarily routes to V4.1 Flash; peak is Mon–Fri UTC 01–04 and 06–10</td></tr>
+    <tr><th scope="row">Limitations</th><td><p>The legacy <code>deepseek-v4-flash</code> name still routes to Flash 1017. The legacy <code>deepseek-v4-flash-vision-exp</code> name also routes to the new version. A legacy name working does not mean the old model is still served.</p><p>Peak: Mon–Fri UTC 01:00–04:00 and 06:00–10:00. Chinese public holidays are not peak; other times are off-peak.</p><p>Flash 1017 weights are a large model; do not treat them as a typical laptop starting point.</p></td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek models and pricing</a> · <a href="https://api-docs.deepseek.com/updates/">Changelog</a></td></tr>
+    <tr><th scope="row">Official source</th><td><a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek models and pricing</a> · <a href="https://api-docs.deepseek.com/updates/">Changelog</a> · <a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017">Flash 1017 official weights</a></td></tr>
   </tbody>
 </table>
 
@@ -1071,10 +1071,15 @@ Open the family you need, then check its models, pricing, and limits.
 
 For an agent that listens and answers immediately by voice, optionally read [Gemini 3.8 Live](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live). It is a separate stable voice API model, not the Gemini 3.8 Flash listed above; check the [Gemini API pricing page](https://ai.google.dev/gemini-api/docs/pricing) for cost and features.
 
-**GPT API electives**: finish a standard request first, then compare these two uses.
+**API and decision-model electives**: finish a standard request first, then compare what your task needs.
 
 - **Ultrafast (a paid lower-latency service tier)**: makes supported models respond faster; it is neither a new model nor free acceleration. The [official guide](https://developers.openai.com/api/docs/guides/ultrafast-mode) covers GPT-6.1 Sol; pricing depends on the service tier.
-- **Decisions API (a judgment interface, public beta)**: asks `gpt-6-luna` for a category, score, or probability that a condition is true. The [official guide](https://developers.openai.com/api/docs/guides/decisions) distinguishes it from text generation. It does not replace tool calling, and its billing is separate.
+<!-- decision-electives:start -->
+- **Decisions API (a judgment interface, generally available)**: asks `gpt-6-luna` to classify, score, or estimate a probability from fixed answers. Each request allows up to 400 questions and does not execute tools. Standard cache-miss input is US$0.10 per million tokens, with no output-token charge. Check the [official guide](https://developers.openai.com/api/docs/guides/decisions) for caching, long-context, and regional surcharges; this is not the price of ordinary text generation.
+- **Clef (a self-hostable decision model)**: gives text, images, and fixed choices a probability per answer; it does not write prose. Cloudflare's 27B weights use Apache-2.0. It is not a Jev model or a chat model. The [official model card](https://huggingface.co/Cloudflare/clef) uses H200 hardware in its test environment, which does not guarantee an ordinary laptop can run it. This is optional reading, not a local-run test.
+
+Neither score is permission to act. Test errors with your own cases, then have code check permissions; hand uncertain or high-risk cases to a person.
+<!-- decision-electives:end -->
 
 </details>
 

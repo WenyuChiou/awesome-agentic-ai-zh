@@ -59,13 +59,15 @@ audience 切太細會：
 
 開發工具的「核心身分」和「surface」必須分欄。Coding agent 可以同時有 CLI、IDE、desktop、cloud、CI 或 SDK surface；IDE／CLI 不是互斥產品分類。OpenRouter 是 API Router，Ollama 是 local model runtime，OpenCode／Pi 等才是 coding agent／harness，不能因名字相近而混在一起。
 
-完整資源表保留五星編輯評分，但不保存 GitHub stars。研究人員頁固定 15 筆、`3／4／5／2／1` 五組；開發者頁固定 14 筆、`4／6／2／2` 四組，補齊現行 Codex 與 GitHub Copilot，並把 Continue、Roo Code 放在維護／歷史組；教師頁固定 12 筆、`3／3／3／3` 四組；知識工作者頁固定 15 筆、`4／4／2／3／2` 五組；日常使用者頁固定 15 筆、`4／4／4／2／1` 五組。五頁的必修閱讀、精選工具及學習資源預設可見，因為安全入口與工具身分直接影響第一個練習。每組使用獨立 `<tbody>` 與真正 `rowspan`；三語的 URL、順序、評分、狀態、授權與安全限制要結構化比對。已封存的 `open_deep_research` 與 Roo Code 只能放歷史組；已封存的 Flowise 不放進知識工作者現行推薦組。Gemini Notebook 第一次出現時可附舊名 NotebookLM 幫助辨識。教師頁不能把一般消費者帳號寫成學校已核准方案；地區、資格與資料條款不確定時要明說。
+完整資源表保留五星編輯評分，但不保存 GitHub stars。研究人員頁固定 15 筆、`3／4／5／2／1` 五組；開發者頁固定 14 筆、`4／6／2／2` 四組，補齊現行 Codex 與 GitHub Copilot，並把 Continue、Roo Code 放在維護／歷史組；教師頁固定 12 筆、`3／3／3／3` 四組；知識工作者頁固定 15 筆、`4／4／2／3／2` 五組；日常使用者頁現為 23 筆、`4／8／4／4／2／1` 六組，其中 8 筆是個人 Agent 產品。五頁的必修閱讀、精選工具及學習資源預設可見，因為安全入口與工具身分直接影響第一個練習。每組使用獨立 `<tbody>` 與真正 `rowspan`；三語的 URL、順序、評分、狀態、授權與安全限制要結構化比對。已封存的 `open_deep_research` 與 Roo Code 只能放歷史組；已封存的 Flowise 不放進知識工作者現行推薦組。Gemini Notebook 第一次出現時可附舊名 NotebookLM 幫助辨識。教師頁不能把一般消費者帳號寫成學校已核准方案；地區、資格與資料條款不確定時要明說。
 
 知識工作者頁的九個核心詞固定為 **Source**、**Action Item**、**Knowledge Base**、**Private Data**、**Human Review**、**App／Connector**、**MCP Server**、**Workflow Automation** 與 **Approval Gate**。第一題只用虛構會議紀錄，固定輸出 `Decision | Action Item | Owner | Due date | Source sentence | Needs confirmation`，缺少人名或日期時要標記確認，不得猜測或直接寫回外部系統。ChatGPT 現行把 Connector 稱為 App，但不同供應商仍可能保留 Connector；App／Connector 是服務內的橋，MCP Server 是協定端點，Workflow Automation 是 trigger／condition／action 的重複流程，三者不能互換。官方 MCP Registry 仍是 Preview，namespace／metadata 驗證不能寫成安全背書。n8n 的 Sustainable Use License、Dify／LobeHub 的額外商用條件，以及自架工具實際資料流都要明寫；固定安裝時間、整合數量與 GitHub stars 不進教材。
 
 教師頁的安全線與新圖都不能暗示 AI 可以自行評分、診斷學生、推測特殊教育需求或用單次輸出判定能力。圖只表達教師把關循環，不取代 Human Review、校方政策或所在地規則；三語版本必須保持相同五步、同一箭頭方向與各自語系文字。
 
 日常使用者頁的九個核心詞固定為 **Prompt**、**Source**、**Private Data**、**Hallucination**、**Human Review**、**App／Connector**、**CLI Agent**、**Local LLM／Runtime** 與 **Approval Gate**。第一題只用虛構訊息，固定輸出 `Draft | Facts copied | Needs confirmation`，不能猜測或自行傳送。Chat surface、App／Connector、CLI Agent、Local LLM Runtime 是按工作選的四扇門，不是由低到高的 Tier；desktop 只是 surface，不代表功能等級。App／Connector 的能力取決於方案、地區、workspace 與原服務權限；CLI Agent 在寫檔／執行命令前要有 preview／diff／approval；Local Runtime 啟用 cloud model、web search 或雲端功能時，不能再宣稱所有資料都留在裝置。
+
+連接前的「讀什麼、送去哪、能改什麼、怎麼收回」四問放在核心詞後，保持展開。個人 Agent 的資格、候補狀態與重要資料限制也不能只藏在補充選單。Claude Duet 是產品，不是新的模型家族；只更新它自己的查核日期，不重標未複查的其他產品。來源與星等說明必須明示文件查核不等於實測。
 
 ---
 

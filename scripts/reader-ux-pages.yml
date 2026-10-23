@@ -3014,7 +3014,7 @@ pages:
           zh-TW: {term: Approval Gate, label: "Approval Gate（人工核准關卡）"}
           en: {term: Approval Gate, label: Approval Gate}
           zh-Hans: {term: Approval Gate, label: "Approval Gate（人工批准关卡）"}
-    resource_group_rowspans: [4, 7, 4, 4, 2, 1]
+    resource_group_rowspans: [4, 8, 4, 4, 2, 1]
 
   - id: public-resources
     canonical: RESOURCES.md
