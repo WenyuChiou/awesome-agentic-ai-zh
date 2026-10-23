@@ -370,7 +370,9 @@ def test_resource_table_uses_real_rowgroups_and_preserves_9_ratings(page: Path) 
     text = page.read_text(encoding="utf-8")
     table = re.search(r"<table>.*?⭐{3,5}.*?</table>", text, flags=re.DOTALL)
     assert table, "missing grouped resource table"
-    assert len(re.findall(r'<th scope="col">', table.group())) == 6
+    assert len(re.findall(r'<th scope="col">', table.group())) == 2
+    for field in ("entry", "audience", "learn", "status"):
+        assert table.group().count(f'<p data-field="{field}">') == 9
     groups = re.findall(r"<tbody>(.*?)</tbody>", table.group(), flags=re.DOTALL)
     assert len(groups) == 3
     expected = [3, 4, 2]

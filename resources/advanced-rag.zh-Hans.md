@@ -131,27 +131,29 @@ GraphRAG 适合“哪些人物共同影响这件事？”或“整批文档有�
 
 <small>资料核查：2026-08-30 UTC</small>
 
+<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="精选项目与学习资源">
 <table>
-  <thead><tr><th scope="col">分类</th><th scope="col">项目／资源</th><th scope="col">编辑评分</th><th scope="col">适合谁</th><th scope="col">能学什么</th><th scope="col">状态／限制</th></tr></thead>
+  <thead><tr><th scope="col">分类</th><th scope="col">资源、用途与限制</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Pipeline 与示例</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></td><td>⭐⭐⭐⭐⭐</td><td>文档型应用开发者</td><td>retriever、query engine、evaluation</td><td>MIT；套件多，先跟官方 starter</td></tr>
-    <tr><td><a href="https://github.com/deepset-ai/haystack">Haystack</a></td><td>⭐⭐⭐⭐</td><td>想看模块化 pipeline</td><td>components、routing、retrieval</td><td>Apache-2.0；先做小型 pipeline</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></td><td>⭐⭐⭐⭐⭐</td><td>想比较技术的读者</td><td>可运行 notebooks 与技术对照</td><td>自定义非商业授权；商用须书面许可；事实回官方文档核对</td></tr>
-    <tr><td><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></td><td>⭐⭐⭐⭐</td><td>想读完整产品架构的团队</td><td>解析、hybrid retrieval、UI</td><td>Apache-2.0；不适合当第一个 starter</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Pipeline 与示例</th><td><p data-field="entry"><strong><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 文档型应用开发者</p><p data-field="learn"><strong>能学什么：</strong> retriever、query engine、evaluation</p><p data-field="status"><strong>状态／限制：</strong> MIT；套件多，先跟官方 starter</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/deepset-ai/haystack">Haystack</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想看模块化 pipeline</p><p data-field="learn"><strong>能学什么：</strong> components、routing、retrieval</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；先做小型 pipeline</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/NirDiamant/RAG_Techniques">RAG_Techniques</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想比较技术的读者</p><p data-field="learn"><strong>能学什么：</strong> 可运行 notebooks 与技术对照</p><p data-field="status"><strong>状态／限制：</strong> 自定义非商业授权；商用须书面许可；事实回官方文档核对</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想读完整产品架构的团队</p><p data-field="learn"><strong>能学什么：</strong> 解析、hybrid retrieval、UI</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；不适合当第一个 starter</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">搜索与图</th><td><a href="https://github.com/qdrant/qdrant">Qdrant</a></td><td>⭐⭐⭐⭐⭐</td><td>要练 dense＋sparse search</td><td>hybrid query、fusion、filter</td><td>Apache-2.0；需规划服务与备份</td></tr>
-    <tr><td><a href="https://github.com/pgvector/pgvector">pgvector</a></td><td>⭐⭐⭐⭐</td><td>已使用 PostgreSQL 的团队</td><td>SQL、全文与 vector 同库</td><td>仍需索引与查询调校</td></tr>
-    <tr><td><a href="https://github.com/microsoft/graphrag">Microsoft GraphRAG</a></td><td>⭐⭐⭐⭐</td><td>研究跨文档关系的读者</td><td>entity graph、local／global search</td><td>MIT；维护模式、indexing 成本高</td></tr>
-    <tr><td><a href="https://github.com/HKUDS/LightRAG">LightRAG</a></td><td>⭐⭐⭐⭐</td><td>比较 graph-based RAG 的读者</td><td>graph＋vector retrieval</td><td>MIT；架构不同于 Microsoft GraphRAG</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">搜索与图</th><td><p data-field="entry"><strong><a href="https://github.com/qdrant/qdrant">Qdrant</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 要练 dense＋sparse search</p><p data-field="learn"><strong>能学什么：</strong> hybrid query、fusion、filter</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；需规划服务与备份</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/pgvector/pgvector">pgvector</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 已使用 PostgreSQL 的团队</p><p data-field="learn"><strong>能学什么：</strong> SQL、全文与 vector 同库</p><p data-field="status"><strong>状态／限制：</strong> 仍需索引与查询调校</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/microsoft/graphrag">Microsoft GraphRAG</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 研究跨文档关系的读者</p><p data-field="learn"><strong>能学什么：</strong> entity graph、local／global search</p><p data-field="status"><strong>状态／限制：</strong> MIT；维护模式、indexing 成本高</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/HKUDS/LightRAG">LightRAG</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 比较 graph-based RAG 的读者</p><p data-field="learn"><strong>能学什么：</strong> graph＋vector retrieval</p><p data-field="status"><strong>状态／限制：</strong> MIT；架构不同于 Microsoft GraphRAG</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">评测与优化</th><td><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></td><td>⭐⭐⭐⭐⭐</td><td>要建立可重复运行 eval 的团队</td><td>datasets、metrics、experiments</td><td>Apache-2.0；LLM metric 仍需人工校准</td></tr>
-    <tr><td><a href="https://github.com/truera/trulens">TruLens</a></td><td>⭐⭐⭐⭐</td><td>需要 tracing 与 evaluation</td><td>feedback functions、记录与比较</td><td>先确认集成与资料保存方式</td></tr>
-    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>⭐⭐⭐⭐⭐</td><td>已有 dataset 与 metric 的开发者</td><td>优化 LLM programs</td><td>MIT；不是初学 RAG 的第一步</td></tr>
-    <tr><td><a href="https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide">Anthropic Contextual Retrieval cookbook</a></td><td>⭐⭐⭐⭐⭐</td><td>已完成 baseline 的读者</td><td>contextual chunks 与评测</td><td>供应商示例；数字只适用其设置</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">评测与优化</th><td><p data-field="entry"><strong><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 要建立可重复运行 eval 的团队</p><p data-field="learn"><strong>能学什么：</strong> datasets、metrics、experiments</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；LLM metric 仍需人工校准</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/truera/trulens">TruLens</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 需要 tracing 与 evaluation</p><p data-field="learn"><strong>能学什么：</strong> feedback functions、记录与比较</p><p data-field="status"><strong>状态／限制：</strong> 先确认集成与资料保存方式</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/stanfordnlp/dspy">DSPy</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 已有 dataset 与 metric 的开发者</p><p data-field="learn"><strong>能学什么：</strong> 优化 LLM programs</p><p data-field="status"><strong>状态／限制：</strong> MIT；不是初学 RAG 的第一步</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide">Anthropic Contextual Retrieval cookbook</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 已完成 baseline 的读者</p><p data-field="learn"><strong>能学什么：</strong> contextual chunks 与评测</p><p data-field="status"><strong>状态／限制：</strong> 供应商示例；数字只适用其设置</p></td></tr>
   </tbody>
 </table>
+</div>
 
 ## ✅ 自我检查
 

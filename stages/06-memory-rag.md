@@ -215,26 +215,26 @@ RAG 有兩條路：一條先整理資料，一條在問題來時找資料。
 
 <small>資料查核：2026-08-30 UTC</small>
 
+<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="精選專案與學習資源">
 <table>
-  <thead>
-    <tr><th scope="col">分類</th><th scope="col">專案</th><th scope="col">編輯評分</th><th scope="col">適合誰</th><th scope="col">能學什麼</th><th scope="col">狀態／限制</th></tr>
-  </thead>
+  <thead><tr><th scope="col">分類</th><th scope="col">資源、用途與限制</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">RAG framework</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></td><td>⭐⭐⭐⭐⭐</td><td>文件型應用初學者</td><td>Index、retriever、query engine</td><td>MIT；套件多，先用官方 starter</td></tr>
-    <tr><td><a href="https://github.com/deepset-ai/haystack">Haystack</a></td><td>⭐⭐⭐⭐</td><td>想比較模組化 pipeline</td><td>components、pipelines、routing</td><td>Apache-2.0；先選一套 framework 練習</td></tr>
-    <tr><td><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></td><td>⭐⭐⭐⭐</td><td>想看完整 Web 產品的團隊</td><td>文件解析、retrieval、UI</td><td>Apache-2.0；部署比教學範例重</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">RAG framework</th><td><p data-field="entry"><strong><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 文件型應用初學者</p><p data-field="learn"><strong>能學什麼：</strong> Index、retriever、query engine</p><p data-field="status"><strong>狀態／限制：</strong> MIT；套件多，先用官方 starter</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/deepset-ai/haystack">Haystack</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 想比較模組化 pipeline</p><p data-field="learn"><strong>能學什麼：</strong> components、pipelines、routing</p><p data-field="status"><strong>狀態／限制：</strong> Apache-2.0；先選一套 framework 練習</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 想看完整 Web 產品的團隊</p><p data-field="learn"><strong>能學什麼：</strong> 文件解析、retrieval、UI</p><p data-field="status"><strong>狀態／限制：</strong> Apache-2.0；部署比教學範例重</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Vector data</th><td><a href="https://github.com/chroma-core/chroma">Chroma</a></td><td>⭐⭐⭐⭐⭐</td><td>第一次在本機做向量搜尋</td><td>collection、add、query</td><td>Apache-2.0；練習與 production 設定不同</td></tr>
-    <tr><td><a href="https://github.com/qdrant/qdrant">Qdrant</a></td><td>⭐⭐⭐⭐⭐</td><td>需要自架或託管服務的團隊</td><td>dense、sparse、hybrid query</td><td>Apache-2.0；需規劃服務與備份</td></tr>
-    <tr><td><a href="https://github.com/weaviate/weaviate">Weaviate</a></td><td>⭐⭐⭐⭐</td><td>需要 schema 與 hybrid search</td><td>BM25 + vector search</td><td>wl/ 以外為 BSD-3-Clause；wl/ 另需企業授權；先做小型基線</td></tr>
-    <tr><td><a href="https://github.com/pgvector/pgvector">pgvector</a></td><td>⭐⭐⭐⭐</td><td>已使用 PostgreSQL 的團隊</td><td>SQL 與 vector 同庫</td><td>PostgreSQL extension；仍需索引與查詢調校</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Vector data</th><td><p data-field="entry"><strong><a href="https://github.com/chroma-core/chroma">Chroma</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 第一次在本機做向量搜尋</p><p data-field="learn"><strong>能學什麼：</strong> collection、add、query</p><p data-field="status"><strong>狀態／限制：</strong> Apache-2.0；練習與 production 設定不同</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/qdrant/qdrant">Qdrant</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 需要自架或託管服務的團隊</p><p data-field="learn"><strong>能學什麼：</strong> dense、sparse、hybrid query</p><p data-field="status"><strong>狀態／限制：</strong> Apache-2.0；需規劃服務與備份</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/weaviate/weaviate">Weaviate</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 需要 schema 與 hybrid search</p><p data-field="learn"><strong>能學什麼：</strong> BM25 + vector search</p><p data-field="status"><strong>狀態／限制：</strong> wl/ 以外為 BSD-3-Clause；wl/ 另需企業授權；先做小型基線</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/pgvector/pgvector">pgvector</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 已使用 PostgreSQL 的團隊</p><p data-field="learn"><strong>能學什麼：</strong> SQL 與 vector 同庫</p><p data-field="status"><strong>狀態／限制：</strong> PostgreSQL extension；仍需索引與查詢調校</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">評測與完整產品</th><td><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></td><td>⭐⭐⭐⭐⭐</td><td>要建立可重跑 eval 的團隊</td><td>datasets、metrics、experiments</td><td>Apache-2.0；metric 仍需人工校準</td></tr>
-    <tr><td><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></td><td>⭐⭐⭐⭐</td><td>想讀完整 AI assistant 架構</td><td>ingest、retrieval、chat、admin</td><td>完整產品很大；當架構參考，不當 starter</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">評測與完整產品</th><td><p data-field="entry"><strong><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 要建立可重跑 eval 的團隊</p><p data-field="learn"><strong>能學什麼：</strong> datasets、metrics、experiments</p><p data-field="status"><strong>狀態／限制：</strong> Apache-2.0；metric 仍需人工校準</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>適合誰：</strong> 想讀完整 AI assistant 架構</p><p data-field="learn"><strong>能學什麼：</strong> ingest、retrieval、chat、admin</p><p data-field="status"><strong>狀態／限制：</strong> 完整產品很大；當架構參考，不當 starter</p></td></tr>
   </tbody>
 </table>
+</div>
 
 ## ✅ 進入 Stage 7 前的自我檢查
 

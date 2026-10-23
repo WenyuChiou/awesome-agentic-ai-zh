@@ -119,6 +119,13 @@ def test_hindsight_reflect_answers_from_memory_not_background_consolidation() ->
                    for operation in ("retain", "recall", "reflect"))
 
 
+def test_memory_operations_have_natural_wrap_opportunities() -> None:
+    for path in MEMORY:
+        row = next(row for row in re.findall(r"<tr>.*?</tr>", _body(path))
+                   if HINDSIGHT in row)
+        assert re.search(r"<code>retain</code> [/／] <code>recall</code> [/／] <code>reflect</code>", row)
+
+
 def test_memory_ratings_licenses_and_safety_boundaries_are_localized() -> None:
     requirements = {
         MEMORY[0]: ("⭐⭐⭐⭐", "⭐⭐⭐（進階）", "更新", "刪除", "隔離", "污染"),
