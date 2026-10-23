@@ -1288,7 +1288,9 @@ pages:
       zh-Hans: resources/agent-memory.zh-Hans.md
     max_visible_chars:
       zh-TW: 6000
-      en: 9800
+      # Same facts; six-column headers become 45 visible row labels.
+      # Measured 9791 -> 10316 chars; preserve the prior 9-char headroom.
+      en: 10325
       zh-Hans: 6000
     max_open_details: 0
     required_details_count: 2
