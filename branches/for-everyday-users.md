@@ -34,6 +34,15 @@
 - **Local LLM／Runtime（本地模型／執行環境）**：讓模型在自己的電腦上執行的軟體。Runtime 負責跑模型，不等於聊天 App，也不等於 CLI Agent。
 - **Approval Gate（人工核准關卡）**：真正寄信、改檔或執行高影響動作前，先停下來讓人確認。
 
+<!-- connector-safety:start -->
+**連接帳號前，先問四件事：**
+
+1. **讀什麼？**只開放這次任務需要的資料。
+2. **送去哪？**先看哪些服務會收到資料。
+3. **能改什麼？**寄信、改檔或付款前，保留 **Approval Gate**。
+4. **怎麼收回？**找到停止任務、撤銷連接與刪除已存資料的方法。
+<!-- connector-safety:end -->
+
 ## 🛠 第一個練習：把虛構訊息變成可核對的提醒
 
 這題只用**虛構**資料。把下面整段直接貼到你正在使用的聊天工具：
@@ -84,13 +93,15 @@
 
 ## 🧑 個人 Agent：先交代目標與邊界
 
-<small>個人 Agent 產品查核：2026-10-02 UTC；新增與複核：2026-10-16 UTC</small>
+<small>個人 Agent 產品查核：2026-10-02 UTC；新增與複核：2026-10-16 UTC。僅 Claude Duet 更新：2026-10-23 UTC。</small>
 
 **個人 Agent（Personal Agent）** 是能跨工具做多步驟工作的助手。你先交代目標，它先查資料、寫草稿，再拿回來給你確認。這類產品把模型、工具與權限放在一起。產品名稱不是底層模型名稱，也不是新的升級等級。
 
 也納入訊息式個人代理：看它是否保留個人情境、連接日常工具並持續追蹤。下表加入新創出身的 Instinct、Tab、Tomo 與 Poke。Poke 已加入 Cognition，不再列為獨立團隊。聊天陪伴、單一提醒工具與企業工作流平台不一定符合這個範圍。可用性與隱私細節見下方「帳號、資料、權限與費用」。
 
 第一次仍用上面的虛構訊息，先不要連接帳號。需要跨工具時，再限定它能讀什麼、能改什麼，以及何時必須停下來請你批准。寄出、發布、刪檔或付款前保留 **Approval Gate**。「持續工作」不代表可以跳過人工檢查。
+
+**Claude Duet** 是會持續追蹤任務的個人 Agent，不是新模型。目前是美國 Pro／Max 的研究預覽，仍需候補邀請；Team／Enterprise 尚未開放。官方說明：寄信、付款、簽署或刪除前會請你批准。撤銷 App 連接後，既有記憶不會自動刪除。先讀 [資格與資料限制](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet)，不要直接接私人帳號。
 
 <a id="必修閱讀"></a>
 ## 📖 必修閱讀
@@ -109,45 +120,48 @@
 <a id="-精選-projects"></a>
 ## ⭐ 精選 Projects 與學習資源
 
-星等依「初學者價值、文件品質與安全邊界」給分。不是 GitHub stars。其他資源的狀態與限制查核於 `2026-08-29 UTC`。個人 Agent 入口新增與複核於 `2026-10-16 UTC`。三星代表可選的具體產品範例，適合互相對照。它們是未實測的參考／對照範例，不是必修工具。評分依官方文件的教學價值，不代表實測產品品質。
+星等依「初學者價值、文件品質與安全邊界」給分。不是 GitHub stars。其他資源的狀態與限制查核於 `2026-08-29 UTC`。個人 Agent 入口新增與複核於 `2026-10-16 UTC`。僅 Claude Duet 新增於 `2026-10-23 UTC`。三星代表可選的具體產品範例，適合互相對照。它們是未實測的參考／對照範例，不是必修工具。評分依官方文件的教學價值，不代表實測產品品質。
 
+<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="資源表（分類、用途與限制）">
 <table>
-  <thead><tr><th scope="col">分類</th><th scope="col">入口／專案</th><th scope="col">它是什麼</th><th scope="col">適合做什麼</th><th scope="col">狀態／授權</th><th scope="col">先知道的限制</th><th scope="col">評分</th></tr></thead>
+  <thead><tr><th scope="col">分類</th><th scope="col">資源、用途與限制</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">聊天介面</th><td><a href="https://claude.ai">Claude</a></td><td>雲端 Chat surface</td><td>閱讀、寫作與反覆討論</td><td>正式可用；商業雲端服務</td><td>功能依方案與地區；重要內容仍要對照 Source</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>雲端 Chat surface</td><td>一般問答、語音與多種工作入口</td><td>正式可用；商業雲端服務</td><td>仍會出錯；高影響結果要 Human Review</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://gemini.google.com">Gemini</a></td><td>Google 的雲端 Chat surface</td><td>問答與符合資格的 Google 服務連接</td><td>正式可用；商業雲端服務</td><td>先看 activity 與人工審查設定，不放機密資料</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://perplexity.ai">Perplexity</a></td><td>帶來源入口的雲端搜尋助手</td><td>找候選來源與建立查證起點</td><td>正式可用；商業雲端服務</td><td>引用不等於內容正確；要逐一打開來源</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">聊天介面</th><td><p data-field="entry"><strong><a href="https://claude.ai">Claude</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">雲端 Chat surface</p><p data-field="use">閱讀、寫作與反覆討論</p><p data-field="status">正式可用；商業雲端服務</p><p data-field="limits">功能依方案與地區；重要內容仍要對照 Source</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://chatgpt.com">ChatGPT</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">雲端 Chat surface</p><p data-field="use">一般問答、語音與多種工作入口</p><p data-field="status">正式可用；商業雲端服務</p><p data-field="limits">仍會出錯；高影響結果要 Human Review</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://gemini.google.com">Gemini</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity">Google 的雲端 Chat surface</p><p data-field="use">問答與符合資格的 Google 服務連接</p><p data-field="status">正式可用；商業雲端服務</p><p data-field="limits">先看 activity 與人工審查設定，不放機密資料</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://perplexity.ai">Perplexity</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity">帶來源入口的雲端搜尋助手</p><p data-field="use">找候選來源與建立查證起點</p><p data-field="status">正式可用；商業雲端服務</p><p data-field="limits">引用不等於內容正確；要逐一打開來源</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="7">個人 Agent</th><td><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></td><td>個人 Agent 產品／官方文件</td><td>適合誰：想學持續任務與核准邊界的日常使用者。教什麼：先用虛構資料學目標、工具與核准邊界。</td><td>逐步開放；商業雲端服務</td><td>依方案、年齡、地區與管理員設定；帳號可能尚未開放</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></td><td>個人 Agent 產品／官方介紹</td><td>適合誰：想練跨 App 草擬的日常使用者與小商家。教什麼：學跨 App 草擬與行動前人工批准。</td><td>限區可用；商業雲端服務</td><td>美國與加拿大；Meta 表示發布、傳送與花費須批准</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></td><td>個人 Agent 產品／官方文件</td><td>適合誰：想比較持續任務與共用資料的日常使用者。教什麼：學持續任務與共用電腦的資料邊界。</td><td>符合資格方案可用；商業雲端服務</td><td>需符合資格的付費方案；同帳號 Bots 共用檔案與登入</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://instinct.com/">Instinct</a></td><td>訊息／通話式個人代理</td><td>適合誰：比較生活任務委派的使用者。教什麼：模型訓練與授權範圍。</td><td>商業服務；資格須查帳號</td><td>18 歲以上；訓練退出有例外</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://tab.bot/">Tab</a></td><td>訊息式個人代理</td><td>適合誰：比較跨工具委派的使用者。教什麼：候補、付款核准與帳密隔離。</td><td>Private beta；商業服務</td><td>候補不保證開放；付款限部分測試使用者</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://www.tomo.ai/about">Tomo</a></td><td>Mapo Labs 個人 AI</td><td>適合誰：追蹤目標與日常安排的使用者。教什麼：長期情境與群聊資料邊界。</td><td>付費方案；商業服務</td><td>授權人員可能審閱對話；群聊涉及他人資料</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://poke.com/">Poke</a></td><td>新創出身的訊息式個人代理</td><td>適合誰：比較郵件與行事曆自動化的使用者。教什麼：主動提醒、方案及產品歸屬變化。</td><td>免費／付費方案；已加入 Cognition</td><td>核對用量與額外費用；檢查 Maximum Privacy</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="8">個人 Agent</th><td><p data-field="entry"><strong><a href="https://learn.chatgpt.com/docs/dots">OpenAI dots</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">個人 Agent 產品／官方文件</p><p data-field="use">適合誰：想學持續任務與核准邊界的日常使用者。教什麼：先用虛構資料學目標、工具與核准邊界。</p><p data-field="status">逐步開放；商業雲端服務</p><p data-field="limits">依方案、年齡、地區與管理員設定；帳號可能尚未開放</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://support.claude.com/en/articles/17631495-get-started-with-claude-duet">Claude Duet</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">個人 Agent 產品／官方文件</p><p data-field="use">適合誰：比較持續任務的日常使用者。教什麼：先限制資料，再核准對外動作。</p><p data-field="status">研究預覽；美國 Pro／Max，需候補邀請；商業雲端服務</p><p data-field="limits">Team／Enterprise 未開放；撤銷連接不會自動清除記憶</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/">Meta Muse</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">個人 Agent 產品／官方介紹</p><p data-field="use">適合誰：想練跨 App 草擬的日常使用者與小商家。教什麼：學跨 App 草擬與行動前人工批准。</p><p data-field="status">限區可用；商業雲端服務</p><p data-field="limits">美國與加拿大；Meta 表示發布、傳送與花費須批准</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://docs.x.ai/grok-bot/overview">Grok Bot</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">個人 Agent 產品／官方文件</p><p data-field="use">適合誰：想比較持續任務與共用資料的日常使用者。教什麼：學持續任務與共用電腦的資料邊界。</p><p data-field="status">符合資格方案可用；商業雲端服務</p><p data-field="limits">需符合資格的付費方案；同帳號 Bots 共用檔案與登入</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://instinct.com/">Instinct</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">訊息／通話式個人代理</p><p data-field="use">適合誰：比較生活任務委派的使用者。教什麼：模型訓練與授權範圍。</p><p data-field="status">商業服務；資格須查帳號</p><p data-field="limits">18 歲以上；訓練退出有例外</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://tab.bot/">Tab</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">訊息式個人代理</p><p data-field="use">適合誰：比較跨工具委派的使用者。教什麼：候補、付款核准與帳密隔離。</p><p data-field="status">Private beta；商業服務</p><p data-field="limits">候補不保證開放；付款限部分測試使用者</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://www.tomo.ai/about">Tomo</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">Mapo Labs 個人 AI</p><p data-field="use">適合誰：追蹤目標與日常安排的使用者。教什麼：長期情境與群聊資料邊界。</p><p data-field="status">付費方案；商業服務</p><p data-field="limits">授權人員可能審閱對話；群聊涉及他人資料</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://poke.com/">Poke</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity">新創出身的訊息式個人代理</p><p data-field="use">適合誰：比較郵件與行事曆自動化的使用者。教什麼：主動提醒、方案及產品歸屬變化。</p><p data-field="status">免費／付費方案；已加入 Cognition</p><p data-field="limits">核對用量與額外費用；檢查 Maximum Privacy</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">官方入門與安全指南</th><td><a href="https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively">OpenAI Prompt Guide</a></td><td>ChatGPT 官方指引</td><td>學清楚、具體與逐步改寫 Prompt</td><td>現行；官方指引</td><td>好 Prompt 不能保證正確，仍要查證</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://support.claude.com/en/articles/8114491-get-started-with-claude">Claude Get Started</a></td><td>Claude 官方入門</td><td>第一次聊天與基本操作</td><td>現行；官方指引</td><td>方案有使用限制；不要假設所有功能都可用</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://help.openai.com/en/articles/11487775-connectors-in">Apps in ChatGPT</a></td><td>App／Connector 官方說明</td><td>了解搜尋、同步與外部 action</td><td>商業；商業雲端服務</td><td>能力與權限不同；高影響 action 保留人工確認</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://support.google.com/gemini/answer/13594961?hl=en">Gemini Privacy Hub</a></td><td>Gemini 官方隱私指引</td><td>連接 Google 或第三方資料前檢查設定</td><td>現行；官方隱私指引</td><td>可能處理敏感內容；不要連接不願交給 reviewer 的機密資料</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">官方入門與安全指南</th><td><p data-field="entry"><strong><a href="https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively">OpenAI Prompt Guide</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">ChatGPT 官方指引</p><p data-field="use">學清楚、具體與逐步改寫 Prompt</p><p data-field="status">現行；官方指引</p><p data-field="limits">好 Prompt 不能保證正確，仍要查證</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://support.claude.com/en/articles/8114491-get-started-with-claude">Claude Get Started</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">Claude 官方入門</p><p data-field="use">第一次聊天與基本操作</p><p data-field="status">現行；官方指引</p><p data-field="limits">方案有使用限制；不要假設所有功能都可用</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://help.openai.com/en/articles/11487775-connectors-in">Apps in ChatGPT</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">App／Connector 官方說明</p><p data-field="use">了解搜尋、同步與外部 action</p><p data-field="status">商業；商業雲端服務</p><p data-field="limits">能力與權限不同；高影響 action 保留人工確認</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://support.google.com/gemini/answer/13594961?hl=en">Gemini Privacy Hub</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">Gemini 官方隱私指引</p><p data-field="use">連接 Google 或第三方資料前檢查設定</p><p data-field="status">現行；官方隱私指引</p><p data-field="limits">可能處理敏感內容；不要連接不願交給 reviewer 的機密資料</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">CLI Agent</th><td><a href="https://github.com/anthropics/claude-code">Claude Code</a></td><td>Anthropic CLI Agent</td><td>在指定工作區讀檔、改檔與執行任務</td><td>活躍；商業服務；repo 未標示標準開源授權</td><td>先設定 permission，批准前先看 command／diff</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/openai/codex">Codex</a></td><td>OpenAI coding agent</td><td>app／CLI／IDE／cloud 工作</td><td>活躍；repo 程式碼為 Apache-2.0，app／cloud 依服務條款</td><td>用 approval 限制寫檔、命令與外部 action</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>可連多種 provider 的 coding agent／harness</td><td>在終端機或 desktop 使用模型做多步驟任務</td><td>活躍；MIT</td><td>provider 仍需帳號／API key；用 permission 與 AGENTS.md 限定範圍</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a></td><td>Google CLI Agent</td><td>在終端機使用 Gemini 與工具</td><td>活躍；Apache-2.0</td><td>修改前看 diff／command；sandbox 只能降低風險</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">CLI Agent</th><td><p data-field="entry"><strong><a href="https://github.com/anthropics/claude-code">Claude Code</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">Anthropic CLI Agent</p><p data-field="use">在指定工作區讀檔、改檔與執行任務</p><p data-field="status">活躍；商業服務；repo 未標示標準開源授權</p><p data-field="limits">先設定 permission，批准前先看 command／diff</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/openai/codex">Codex</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">OpenAI coding agent</p><p data-field="use">app／CLI／IDE／cloud 工作</p><p data-field="status">活躍；repo 程式碼為 Apache-2.0，app／cloud 依服務條款</p><p data-field="limits">用 approval 限制寫檔、命令與外部 action</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/anomalyco/opencode">OpenCode</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">可連多種 provider 的 coding agent／harness</p><p data-field="use">在終端機或 desktop 使用模型做多步驟任務</p><p data-field="status">活躍；MIT</p><p data-field="limits">provider 仍需帳號／API key；用 permission 與 AGENTS.md 限定範圍</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity">Google CLI Agent</p><p data-field="use">在終端機使用 Gemini 與工具</p><p data-field="status">活躍；Apache-2.0</p><p data-field="limits">修改前看 diff／command；sandbox 只能降低風險</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Local LLM Runtime</th><td><a href="https://github.com/ollama/ollama">Ollama</a></td><td>本地模型執行環境</td><td>下載並在自己的電腦執行模型</td><td>活躍；MIT</td><td>確認使用 local model；cloud model 與 web search 不是本機推論</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://lmstudio.ai/">LM Studio</a></td><td>圖形化本地模型執行環境</td><td>用桌面介面載入已下載模型</td><td>商業；商業桌面應用程式</td><td>本地功能可離線；cloud models、搜尋等雲端功能仍會連網</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Local LLM Runtime</th><td><p data-field="entry"><strong><a href="https://github.com/ollama/ollama">Ollama</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity">本地模型執行環境</p><p data-field="use">下載並在自己的電腦執行模型</p><p data-field="status">活躍；MIT</p><p data-field="limits">確認使用 local model；cloud model 與 web search 不是本機推論</p></td></tr>
+    <tr><td><p data-field="entry"><strong><a href="https://lmstudio.ai/">LM Studio</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity">圖形化本地模型執行環境</p><p data-field="use">用桌面介面載入已下載模型</p><p data-field="status">商業；商業桌面應用程式</p><p data-field="limits">本地功能可離線；cloud models、搜尋等雲端功能仍會連網</p></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="1">Prompt 素材</th><td><a href="https://github.com/f/prompts.chat">prompts.chat</a></td><td>社群 Prompt 範例庫</td><td>找句型，再改成自己的任務</td><td>活躍；MIT／CC0</td><td>範例品質不一；不要直接貼 Private Data</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="1">Prompt 素材</th><td><p data-field="entry"><strong><a href="https://github.com/f/prompts.chat">prompts.chat</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity">社群 Prompt 範例庫</p><p data-field="use">找句型，再改成自己的任務</p><p data-field="status">活躍；MIT／CC0</p><p data-field="limits">範例品質不一；不要直接貼 Private Data</p></td></tr>
   </tbody>
 </table>
+</div>
 
 <details markdown="1">
 <summary>🔐 帳號、資料、權限與費用</summary>
@@ -159,6 +173,8 @@
 - 不確定能不能上傳時，先不要上傳。公開可讀也不等於你有權把別人的內容交給第三方服務處理。
 
 個人 Agent 產品細節（2026-10-16 UTC；文件查核，未實測）：
+
+- [Claude Duet](https://support.claude.com/en/articles/17631495-get-started-with-claude-duet)（僅此項：2026-10-23 UTC）：在自己的雲端電腦上工作，使用 Claude Opus 5.5，不能自行選模型。背景工作也計入 Pro／Max 方案用量，不是無限免費 API。現有 Claude 的記憶、Skills 與連接器會延續使用。先檢查共用資料與記憶設定；寄信、付款、簽署或刪除仍須人工批准。參考 [10/21 官方公告](https://claude.com/resources/articles/claude-duet)。
 
 - [OpenAI dots](https://learn.chatgpt.com/docs/dots)：持續工作的雲端助手，有自己的雲端電腦與瀏覽器，底層模型為 GPT-6 Astra。你關掉電腦後仍能繼續；它會記住偏好與待辦、在背景平行工作，分享私人對話資訊給他人前須先取得你的允許。[2026-09-29 更新](https://learn.chatgpt.com/docs/whats-new/devday-2026)列出逐步開放。Pro 100、Pro 200、Pro 500 限超過 18 歲。也限在歐洲經濟區、英國與瑞士以外。Business Premium、Enterprise 在全球逐步開放。Enterprise 須由管理員啟用。符合方案不代表帳號已收到功能。
 - [Meta Muse](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)：用自己的雲端電腦跨 App 工作。[2026-09-29 Muse for Small Business 更新](https://about.fb.com/news/2026/09/introducing-muse-small-business/)確認美國與加拿大可用。也加入商務 skills 與 connectors。Meta 表示發布、傳送與花費須先取得你的批准。另有 Sentinel 代理審核對外連網動作；Muse 提供活動稽核軌跡。密碼與付款資料分開存放於安全儲存，Muse 本身看不到。Muse 是產品；Muse Spark 是模型。Muse Code 是在終端機工作的 coding agent。

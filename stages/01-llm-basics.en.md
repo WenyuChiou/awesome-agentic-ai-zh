@@ -61,9 +61,9 @@ For comparisons with Distillation and Quantization, open the [optional model tra
 
 ## Scene-Based Model Picker
 
-Start with the task's constraints, then choose a model; you do not need to memorize a leaderboard.
+A **Typed Decision Model** returns a predefined choice, score, or probability. TypeSafe AI's **Jev** is one; it cannot chat, summarize, or write code.
 
-Not every AI model writes text. A **Typed Decision Model** chooses from answers you define and returns a choice, score, or probability. TypeSafe AI's **Jev** does this; it cannot replace an LLM for chat, summaries, or code.
+**Deciding is not authorization**: code must check permissions; ask a person before sending mail, paying, or deleting files.
 
 | Your situation | Start with | Why |
 |---|---|---|
@@ -503,7 +503,7 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 18-family table (official specification entries)</summary>
 
-<small>Full table checked: 2026-09-22 UTC. GPT row updated: 2026-10-02 UTC. Claude row updated: 2026-10-08 UTC. Gemini/Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC.</small>
+<small>Full table checked: 2026-09-22 UTC. GPT row updated: 2026-10-02 UTC. Claude row updated: 2026-10-08 UTC. Gemini/Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 **Cache** is like reusing a note you already read: reading old content and writing new content may have different prices.
@@ -516,7 +516,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Claude">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="5">Current recommended models</th><td>Fable 5.1 (<code>claude-fable-5-1</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Models</th><td>Fable 5.1 (<code>claude-fable-5-1</code>)</td></tr>
     <tr><td>Mythos 5.1 (<code>claude-mythos-5-1</code>)</td></tr>
     <tr><td>Opus 5.5 (<code>claude-opus-5-5</code>)</td></tr>
     <tr><td>Sonnet 5.5 (<code>claude-sonnet-5-5</code>)</td></tr>
@@ -535,7 +535,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Long-form, coding, long-running agent workflows</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Mythos 5.1 is limited to vetted cybersecurity and life-science users; Sonnet 5.5 changes forced tool choice and temperature settings, so read the migration guide before upgrading existing code; cloud-partner prices differ</td></tr>
+    <tr><th scope="row">Limits</th><td>Mythos 5.1 is limited to vetted cybersecurity and life-science users; Sonnet 5.5 changes forced tool choice and temperature settings, so read the migration guide before upgrading existing code; cloud-partner prices differ</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://platform.claude.com/docs/en/models/overview">Claude model overview</a> · <a href="https://platform.claude.com/docs/en/models/opus-5-5/overview">Opus 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Sonnet 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide">Migration guide</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview">Haiku 5.5</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide">Haiku 5.5 migration</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude API pricing</a></td></tr>
@@ -550,7 +550,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="GPT">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3">Current recommended models</th><td>GPT-6 Astra (<code>gpt-6-astra</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">Models</th><td>GPT-6 Astra (<code>gpt-6-astra</code>)</td></tr>
     <tr><td>GPT-6.1 Sol (<code>gpt-6.1-sol</code>)</td></tr>
     <tr><td>GPT-6 Luna (<code>gpt-6-luna</code>)</td></tr>
   </tbody>
@@ -567,7 +567,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Sol 6.1 for coding and multi-step Agent work; Luna for focused, repeated tasks; evaluate Astra's cost-quality tradeoff on your own tasks</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Sol 6.1 tool calling requires Responses API; Chat Completions has no tool calling. Above 272K input, the full request uses 2× input/cache and 1.5× output rates. Batch/Flex are half-price, Fast is 2×. Tools may cost extra</td></tr>
+    <tr><th scope="row">Limits</th><td>Sol 6.1 tool calling requires Responses API; Chat Completions has no tool calling. Above 272K input, the full request uses 2× input/cache and 1.5× output rates. Batch/Flex are half-price, Fast is 2×. Tools may cost extra</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol">GPT-6.1 Sol</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI API pricing</a></td></tr>
@@ -582,7 +582,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Jev (TypeSafe AI)">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3">Current recommended models</th><td>TypeSafe direct: stable Jev 1.13 (<code>jev-1.13.0</code> / <code>jev-latest</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">Models</th><td>TypeSafe direct: stable Jev 1.13 (<code>jev-1.13.0</code> / <code>jev-latest</code>)</td></tr>
     <tr><td>Preview Jev 1.14 (<code>jev-1.14.0</code> / <code>jev-preview</code>)</td></tr>
     <tr><td>Cloudflare route: <code>typesafe/jev</code></td></tr>
   </tbody>
@@ -599,7 +599,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Fixed-choice classification, routing, rubric scoring, and guardrail judgments</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Does not generate free-form text; probability is not correctness. Your code and Eval set thresholds, permissions, and fallbacks. 262K long context and images require separate opt-in; experimental, not defaults</td></tr>
+    <tr><th scope="row">Limits</th><td>Does not generate free-form text; probability is not correctness. Your code and Eval set thresholds, permissions, and fallbacks. 262K long context and images require separate opt-in; experimental, not defaults</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://docs.typesafe.ai/models">TypeSafe model specs</a> · <a href="https://docs.typesafe.ai/introduction">Jev introduction</a> · <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">Early-access announcement</a> · <a href="https://developers.cloudflare.com/ai/models/typesafe/jev/">Cloudflare route</a> · <a href="https://docs.typesafe.ai/images">Image limits</a></td></tr>
@@ -614,7 +614,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Gemini">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">Current recommended models</th><td>Gemini 3.8 Flash</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Models</th><td>Gemini 3.8 Flash</td></tr>
     <tr><td>Gemini 4 Argon (<code>gemini-4-argon</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -630,7 +630,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Flash for multimodal and Agent practice. Argon for comparing long tasks and coding outcomes</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Argon has no free tier. Output up to 1M requires long decode, not the default for every request. This chapter still starts with local models</td></tr>
+    <tr><th scope="row">Limits</th><td>Argon has no free tier. Output up to 1M requires long decode, not the default for every request. This chapter still starts with local models</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">Launch announcement</a></td></tr>
@@ -645,26 +645,26 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="DeepSeek">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">Current recommended models</th><td>V4.1 Flash (<code>deepseek-flash</code>)</td></tr>
-    <tr><td>V4 Pro (<code>deepseek-v4-pro</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Models</th><td>V4.1 Flash 1017 (<code>deepseek-flash</code>)</td></tr>
+    <tr><td>V4 Pro 0813 (<code>deepseek-v4-pro</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">Status</th><td>Both APIs available; old V4 Flash retired</td></tr>
+    <tr><th scope="row">Status</th><td>Both APIs are officially available; Flash 1017 also has released weights. Old V4 Flash is retired.</td></tr>
   </tbody>
   <tbody data-field="context">
     <tr><th scope="row">Context</th><td>1M context / 384K max output</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>Per million tokens, peak/off-peak: Flash input US$0.30/$0.15, output US$1.20/$0.60, cache hit US$0.006/$0.003; Pro input US$1.32/$0.66, output US$3.96/$1.98, cache hit US$0.044/$0.022</td></tr>
+    <tr><th scope="row">Price or license</th><td><p>USD (US$) per million tokens; values below are peak/off-peak.</p><p>Flash cache-miss input US$0.30/$0.15, output US$1.20/$0.60, and cache-hit input US$0.006/$0.003.</p><p>Pro cache-miss input US$1.32/$0.66, output US$3.96/$1.98, and cache-hit input US$0.044/$0.022.</p><p>Flash 1017 released weights are MIT; self-hosted hardware and runtime costs are separate.</p></td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">Good for</th><td>Reasoning, coding, high-token workloads</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>The legacy <code>deepseek-v4-flash</code> name temporarily routes to V4.1 Flash; peak is Mon–Fri UTC 01–04 and 06–10</td></tr>
+    <tr><th scope="row">Limits</th><td><p>The legacy <code>deepseek-v4-flash</code> name still routes to Flash 1017. The legacy <code>deepseek-v4-flash-vision-exp</code> name also routes to the new version. A legacy name working does not mean the old model is still served.</p><p>Peak: Mon–Fri UTC 01:00–04:00 and 06:00–10:00. Chinese public holidays are not peak; other times are off-peak.</p><p>Flash 1017 weights are a large model; do not treat them as a typical laptop starting point.</p></td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek models and pricing</a> · <a href="https://api-docs.deepseek.com/updates/">Changelog</a></td></tr>
+    <tr><th scope="row">Official source</th><td><a href="https://api-docs.deepseek.com/quick_start/pricing/">DeepSeek models and pricing</a> · <a href="https://api-docs.deepseek.com/updates/">Changelog</a> · <a href="https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017">Flash 1017 official weights</a></td></tr>
   </tbody>
 </table>
 
@@ -676,7 +676,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Kimi">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td><code>kimi-k3</code></td></tr>
+    <tr><th scope="row">Models</th><td><code>kimi-k3</code></td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Generally available</td></tr>
@@ -691,7 +691,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Chinese long-form, vision input, long context</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>2.8T parameters; deployment and quotas depend on the platform</td></tr>
+    <tr><th scope="row">Limits</th><td>2.8T parameters; deployment and quotas depend on the platform</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://platform.kimi.com/docs/overview">Kimi overview</a> · <a href="https://platform.kimi.com/">Kimi API pricing</a></td></tr>
@@ -706,7 +706,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Hunyuan">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td><code>Hy3</code> (TokenHub)</td></tr>
+    <tr><th scope="row">Models</th><td><code>Hy3</code> (TokenHub)</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Generally available</td></tr>
@@ -721,7 +721,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Chinese reasoning and Tencent Cloud integration</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td><code>hy3-preview</code> shut down on 2026-08-31; Hy4 remains Preview</td></tr>
+    <tr><th scope="row">Limits</th><td><code>hy3-preview</code> shut down on 2026-08-31; Hy4 remains Preview</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://cloud.tencent.com/document/product/1823/130051">TokenHub model list</a> · <a href="https://cloud.tencent.com/document/product/1823/130055">TokenHub pricing</a> · <a href="https://cloud.tencent.com/announce/detail/2391">Hy3 migration notice</a></td></tr>
@@ -736,7 +736,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="MiniMax">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td>MiniMax M3</td></tr>
+    <tr><th scope="row">Models</th><td>MiniMax M3</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Open weights</td></tr>
@@ -751,7 +751,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Text, vision, coding, and self-hosting work</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Promotions and reseller prices may change; not Apache/MIT</td></tr>
+    <tr><th scope="row">Limits</th><td>Promotions and reseller prices may change; not Apache/MIT</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://huggingface.co/MiniMaxAI/MiniMax-M3">MiniMax M3 model card</a> · <a href="https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise">MiniMax API pricing</a></td></tr>
@@ -766,7 +766,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Qwen">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">Current recommended models</th><td>qwen3.8-max (API)</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Models</th><td>qwen3.8-max (API)</td></tr>
     <tr><td>Qwen3.8 open-weight variants</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -782,7 +782,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Chinese tasks, multimodal work, self-hosted workflows</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>API models and open-weight variants must be checked separately for availability and license</td></tr>
+    <tr><th scope="row">Limits</th><td>API models and open-weight variants must be checked separately for availability and license</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://help.aliyun.com/en/model-studio/qwen3-8-max">Qwen 3.8 Max</a></td></tr>
@@ -797,7 +797,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="GLM">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td>GLM-5.3</td></tr>
+    <tr><th scope="row">Models</th><td>GLM-5.3</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Generally available</td></tr>
@@ -812,7 +812,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Chinese agents, tool use, reasoning</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Text-only; reasoning is always enabled</td></tr>
+    <tr><th scope="row">Limits</th><td>Text-only; reasoning is always enabled</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://docs.z.ai/guides/llm/glm-5.3">GLM-5.3 docs</a> · <a href="https://docs.z.ai/guides/overview/pricing">GLM API pricing</a></td></tr>
@@ -827,7 +827,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Yi">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td>Yi-34B / Yi-9B and 200K variants</td></tr>
+    <tr><th scope="row">Models</th><td>Yi-34B / Yi-9B and 200K variants</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Frozen / historical</td></tr>
@@ -842,7 +842,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Reproducing existing Yi experiments and historical self-hosted baselines</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Repository does not establish current maintenance or a frontier successor</td></tr>
+    <tr><th scope="row">Limits</th><td>Repository does not establish current maintenance or a frontier successor</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://github.com/01-ai/Yi">01.AI Yi repository</a></td></tr>
@@ -857,7 +857,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Llama">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">Current recommended models</th><td>Llama 4 Scout / Maverick</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Models</th><td>Llama 4 Scout / Maverick</td></tr>
     <tr><td>Llama 3.3 70B (more practical older baseline)</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -873,7 +873,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Self-hosting, fine-tuning, ecosystem integration</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Scout needs H100-class hardware; license is not Apache/MIT</td></tr>
+    <tr><th scope="row">Limits</th><td>Scout needs H100-class hardware; license is not Apache/MIT</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://dev.meta.ai/llama">Meta Llama docs</a></td></tr>
@@ -888,7 +888,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Muse">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3">Current recommended models</th><td>Muse Wonder (<code>muse-wonder-1.0</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="3">Models</th><td>Muse Wonder (<code>muse-wonder-1.0</code>)</td></tr>
     <tr><td>Muse Spark 1.3 (<code>muse-spark-1.3</code> / <code>muse-spark-1.3-contributor</code>)</td></tr>
     <tr><td>Muse Glimmer 30B</td></tr>
   </tbody>
@@ -905,7 +905,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Wonder for comparing long tasks and multi-file coding. Spark for focused cloud tasks; Glimmer for local agents</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Product Muse, API models, and open weights differ. Wonder API has no Contributor mode. Wonder Full requires specific Muse Code subscriptions, not max effort. Spark 1.3 audio support remains incomplete</td></tr>
+    <tr><th scope="row">Limits</th><td>Product Muse, API models, and open weights differ. Wonder API has no Contributor mode. Wonder Full requires specific Muse Code subscriptions, not max effort. Spark 1.3 audio support remains incomplete</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://dev.meta.ai/docs/models">Meta Model API models</a> · <a href="https://dev.meta.ai/docs/pricing-rate-limits">Pricing and data plans</a> · <a href="https://huggingface.co/meta-models/Muse-Glimmer-30B">Muse Glimmer</a></td></tr>
@@ -920,7 +920,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Grok">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td>Grok 4.7 (<code>grok-4.7</code>)</td></tr>
+    <tr><th scope="row">Models</th><td>Grok 4.7 (<code>grok-4.7</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Generally available</td></tr>
@@ -935,7 +935,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Coding, tool calls, and multi-step agents</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>US regional endpoints add 10%; server-side tool calls may cost extra</td></tr>
+    <tr><th scope="row">Limits</th><td>US regional endpoints add 10%; server-side tool calls may cost extra</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://docs.x.ai/developers/models/grok-4.7">Grok 4.7 specs</a> · <a href="https://docs.x.ai/developers/pricing">xAI pricing</a></td></tr>
@@ -950,7 +950,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="MiMo">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td>MiMo V2.6 Pro (<code>mimo-v2.6-pro</code>)</td></tr>
+    <tr><th scope="row">Models</th><td>MiMo V2.6 Pro (<code>mimo-v2.6-pro</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Generally available API</td></tr>
@@ -965,7 +965,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Long tasks, tool calls, and multimodal agent input</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Confirm account region, quota, and billing; vendor benchmarks are not cross-model rankings</td></tr>
+    <tr><th scope="row">Limits</th><td>Confirm account region, quota, and billing; vendor benchmarks are not cross-model rankings</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://mimo.mi.com/models/en-US/mimo-v2.6-pro">MiMo V2.6 Pro specs and pricing</a> · <a href="https://mimo.mi.com/docs/en-US/api/model/list-models">MiMo API models</a></td></tr>
@@ -980,7 +980,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Gemma">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Current recommended models</th><td>Gemma 4: E2B, E4B, 12B, 26B A4B, 31B</td></tr>
+    <tr><th scope="row">Models</th><td>Gemma 4: E2B, E4B, 12B, 26B A4B, 31B</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">Status</th><td>Open weights</td></tr>
@@ -995,7 +995,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Edge, local use, constrained-hardware experiments</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Read the license terms; hardware needs vary by model</td></tr>
+    <tr><th scope="row">Limits</th><td>Read the license terms; hardware needs vary by model</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://ai.google.dev/gemma/docs/core">Gemma core docs</a> · <a href="https://ai.google.dev/gemma/terms">Gemma Terms</a></td></tr>
@@ -1010,7 +1010,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Mistral">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="5">Current recommended models</th><td>Mistral Large 4 (<code>mistral-large-4</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Models</th><td>Mistral Large 4 (<code>mistral-large-4</code>)</td></tr>
     <tr><td>Medium 3.5 (<code>mistral-medium-3-5</code>)</td></tr>
     <tr><td>Small 4</td></tr>
     <tr><td>Large 3</td></tr>
@@ -1029,7 +1029,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Compare reasoning, vision, coding, and tool use. For self-hosting, choose a model with released weights and license terms</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Large 4 weights not yet released. Promotion lasts 2 weeks after launch, not a permanent rate. Do not treat the whole family as Apache 2.0</td></tr>
+    <tr><th scope="row">Limits</th><td>Large 4 weights not yet released. Promotion lasts 2 weeks after launch, not a permanent rate. Do not treat the whole family as Apache 2.0</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://docs.mistral.ai/models/mistral-large-4-0">Large 4 specs and pricing</a> · <a href="https://docs.mistral.ai/resources/changelogs">Release status</a> · <a href="https://docs.mistral.ai/models/mistral-medium-3-5-26-04">Medium 3.5</a> · <a href="https://docs.mistral.ai/models/mistral-small-4-0-26-03">Small 4</a></td></tr>
@@ -1044,7 +1044,7 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Phi">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">Current recommended models</th><td>Phi-4 14B</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Models</th><td>Phi-4 14B</td></tr>
     <tr><td>Phi-4 mini / multimodal</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -1060,7 +1060,7 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Good for</th><td>Small-model reasoning, multimodal work, edge use</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limitations</th><td>Do not assume fixed RAM; quantization changes hardware needs</td></tr>
+    <tr><th scope="row">Limits</th><td>Do not assume fixed RAM; quantization changes hardware needs</td></tr>
   </tbody>
   <tbody data-field="sources">
     <tr><th scope="row">Official source</th><td><a href="https://azure.microsoft.com/en-us/products/phi">Microsoft Phi</a> · <a href="https://huggingface.co/microsoft/Phi-4-multimodal-instruct">Phi-4 multimodal</a></td></tr>
@@ -1071,10 +1071,15 @@ Open the family you need, then check its models, pricing, and limits.
 
 For an agent that listens and answers immediately by voice, optionally read [Gemini 3.8 Live](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live). It is a separate stable voice API model, not the Gemini 3.8 Flash listed above; check the [Gemini API pricing page](https://ai.google.dev/gemini-api/docs/pricing) for cost and features.
 
-**GPT API electives**: finish a standard request first, then compare these two uses.
+**API and decision-model electives**: finish a standard request first, then compare what your task needs.
 
 - **Ultrafast (a paid lower-latency service tier)**: makes supported models respond faster; it is neither a new model nor free acceleration. The [official guide](https://developers.openai.com/api/docs/guides/ultrafast-mode) covers GPT-6.1 Sol; pricing depends on the service tier.
-- **Decisions API (a judgment interface, public beta)**: asks `gpt-6-luna` for a category, score, or probability that a condition is true. The [official guide](https://developers.openai.com/api/docs/guides/decisions) distinguishes it from text generation. It does not replace tool calling, and its billing is separate.
+<!-- decision-electives:start -->
+- **Decisions API (a judgment interface, generally available)**: asks `gpt-6-luna` to classify, score, or estimate a probability from fixed answers. Each request allows up to 400 questions and does not execute tools. Standard cache-miss input is US$0.10 per million tokens, with no output-token charge. Check the [official guide](https://developers.openai.com/api/docs/guides/decisions) for caching, long-context, and regional surcharges; this is not the price of ordinary text generation.
+- **Clef (a self-hostable decision model)**: gives text, images, and fixed choices a probability per answer; it does not write prose. Cloudflare's 27B weights use Apache-2.0. It is not a Jev model or a chat model. The [official model card](https://huggingface.co/Cloudflare/clef) uses H200 hardware in its test environment, which does not guarantee an ordinary laptop can run it. This is optional reading, not a local-run test.
+
+Neither score is permission to act. Test errors with your own cases, then have code check permissions; hand uncertain or high-risk cases to a person.
+<!-- decision-electives:end -->
 
 </details>
 

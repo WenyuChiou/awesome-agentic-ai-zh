@@ -20,6 +20,9 @@ stage01_fact_pack:
     muse: '2026-10-15'
     mistral: '2026-10-15'
     gpt_features: '2026-10-15'
+    deepseek: '2026-10-23'
+    gpt_decisions: '2026-10-23'
+    cloudflare_clef: '2026-10-23'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
@@ -37,6 +40,7 @@ stage01_fact_pack:
     gpt_pricing: 'https://developers.openai.com/api/docs/pricing'
     gpt_ultrafast: 'https://developers.openai.com/api/docs/guides/ultrafast-mode'
     gpt_decisions: 'https://developers.openai.com/api/docs/guides/decisions'
+    cloudflare_clef: 'https://huggingface.co/Cloudflare/clef'
     typesafe_jev: 'https://docs.typesafe.ai/introduction'
     typesafe_jev_models: 'https://docs.typesafe.ai/models'
     typesafe_jev_images: 'https://docs.typesafe.ai/images'
@@ -47,6 +51,7 @@ stage01_fact_pack:
     gemini_live: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     deepseek_updates: 'https://api-docs.deepseek.com/updates/'
+    deepseek_weights: 'https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017'
     kimi: 'https://platform.kimi.com/docs/overview'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130051'
     minimax: 'https://huggingface.co/MiniMaxAI/MiniMax-M3'
@@ -82,6 +87,17 @@ stage01_fact_pack:
     mimo: 'https://mimo.mi.com/models/en-US/mimo-v2.6-pro'
   migration_sources:
     hunyuan: 'https://cloud.tencent.com/announce/detail/2391'
+
+everyday_user_product_updates:
+  canonical: 'branches/for-everyday-users.md'
+  claude_duet:
+    verified_on: '2026-10-23'
+    scope: ['availability', 'permissions', 'memory', 'usage-limits']
+    official_sources:
+      overview: 'https://claude.com/resources/articles/claude-duet'
+      access_and_limits: 'https://support.claude.com/en/articles/17631495-get-started-with-claude-duet'
+    status: 'research preview; US Pro/Max; waitlist invitation; not Team/Enterprise'
+    note: 'Document check, not hands-on testing; other products keep their earlier dates.'
 
 stage03_fact_pack:
   canonical: 'stages/03-tool-use-and-hello-agent.md'
@@ -570,7 +586,7 @@ current_frontier_models:
     - "Gemini 3.1 Pro Preview"
   deepseek:
     - "DeepSeek-V4-Pro"
-    - "DeepSeek-V4.1-Flash (deepseek-flash)"
+    - "DeepSeek-V4.1-Flash-1017 (deepseek-flash; open weights MIT)"
   moonshot:
     - "Kimi K3"
   tencent:

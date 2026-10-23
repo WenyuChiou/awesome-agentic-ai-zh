@@ -246,9 +246,70 @@ body[data-md-color-scheme="slate"] {
 .md-typeset details.model-family table[data-model-family] td {
   overflow-wrap: anywhere;
 }
+.md-typeset details.model-family table[data-model-family] th {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+/* Resource facts stay visible and read down a page, not across seven columns. */
+.md-typeset .reader-resource-catalog {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+.md-typeset .reader-resource-catalog:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+/* Material's automatic table gutter must not create an inner scroll area. */
+.md-typeset .reader-resource-catalog .md-typeset__scrollwrap {
+  margin: 0;
+}
+.md-typeset .reader-resource-catalog .md-typeset__table {
+  display: block;
+  padding: 0;
+}
+.md-typeset .reader-resource-catalog table:not([class]) {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0;
+}
+.md-typeset .reader-resource-catalog thead th:first-child {
+  width: 20%;
+}
+.md-typeset .reader-resource-catalog th,
+.md-typeset .reader-resource-catalog td {
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.md-typeset .reader-resource-catalog p {
+  margin: .4em 0;
+}
+.md-typeset .reader-resource-catalog p:first-child {
+  margin-top: 0;
+}
+.md-typeset .reader-resource-catalog p:last-child {
+  margin-bottom: 0;
+}
+.md-typeset .reader-resource-catalog [data-field="entry"] {
+  font-weight: 600;
+}
+.md-typeset .reader-resource-catalog [data-field="identity"] {
+  font-size: .75rem;
+}
 @media (max-width: 600px) {
   .md-typeset details.model-family table[data-model-family] th,
   .md-typeset details.model-family table[data-model-family] td {
     padding: .6em .65em;
+  }
+  .md-typeset .reader-resource-catalog thead th:first-child {
+    width: 29%;
+  }
+  .md-typeset .reader-resource-catalog th,
+  .md-typeset .reader-resource-catalog td {
+    padding: .6em .65em;
+  }
+  .md-typeset .reader-resource-catalog tbody th {
+    font-size: .75rem;
+    overflow-wrap: normal;
   }
 }

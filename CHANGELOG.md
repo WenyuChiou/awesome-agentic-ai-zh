@@ -6,6 +6,14 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-23
+
+- **layout / reader UX** · 日常使用者三語資源表由七欄搬排成分類＋完整說明兩欄；保留 23 筆資源、六組合併分類、星等、用途、資格、授權與安全限制，補上可鍵盤聚焦的資源區域。英文模型欄名改為簡短的 Models／Limits，欄名按完整單字換行，模型 ID 與價格仍可安全換行；新增排版回歸測試，不收合重要資訊。
+
+- **content / Personal Agents** · 三語新增 Claude Duet 官方入口，明示美國 Pro／Max 研究預覽與候補邀請。個人 Agent 組增為 8 筆，保留合併分類與編輯星等。連接前四問、方案限制與記憶提醒直接可見；只更新 Duet 查核日期，未實測產品。
+
+- **content / Stage 1 / scoped model refresh** · 三語補上 DeepSeek Flash 1017／Pro 0813 版本、舊 alias 與尖離峰條件，連到官方權重。Decisions 改為正式可用，補上請求數與計費邊界；Clef 作為可自架決策模型選讀。保留 18 家詳表與本機練習預設，不把模型分數當成動作授權；同步來源包、設計與回歸測試。
+
 ## 2026-10-16
 
 - **content / Personal Agents** · 三語日常使用者路線新增 Instinct、Tab、Tomo 與 Poke，個人 Agent 表由 3 筆增為 7 筆；補充可用資格、隱私與動作核准邊界，產品細節移入收合區。查核依官方文件，未實測產品（#328）。 (cd2f4eb)

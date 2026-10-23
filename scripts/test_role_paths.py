@@ -164,6 +164,7 @@ RESOURCE_PAIRS = {
         ("https://gemini.google.com", "⭐⭐⭐⭐"),
         ("https://perplexity.ai", "⭐⭐⭐⭐"),
         ("https://learn.chatgpt.com/docs/dots", "⭐⭐⭐"),
+        ("https://support.claude.com/en/articles/17631495-get-started-with-claude-duet", "⭐⭐⭐"),
         ("https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/", "⭐⭐⭐"),
         ("https://docs.x.ai/grok-bot/overview", "⭐⭐⭐"),
         ("https://instinct.com/", "⭐⭐⭐"),
@@ -189,7 +190,7 @@ ROWGROUPS = {
     "developer": (4, 6, 2, 2),
     "teacher": (3, 3, 3, 3),
     "knowledge-worker": (4, 4, 2, 3, 2),
-    "everyday-user": (4, 7, 4, 4, 2, 1),
+    "everyday-user": (4, 8, 4, 4, 2, 1),
 }
 
 VISIBLE_STARTING_URLS = {
@@ -310,6 +311,7 @@ VISIBLE_LANDMARKS = {
 }
 
 RESOURCE_STATUS = {
+    "https://support.claude.com/en/articles/17631495-get-started-with-claude-duet": "research-preview",
     "https://instinct.com/": "commercial",
     "https://tab.bot/": "commercial",
     "https://www.tomo.ai/about": "commercial",
@@ -396,9 +398,11 @@ STATUS_TOKENS = {
     "current": {"zh-TW": "現行", "en": "Current", "zh-Hans": "现行"},
     "limited": {"zh-TW": "限區可用", "en": "Region-limited", "zh-Hans": "限区可用"},
     "preview": {"zh-TW": "Preview", "en": "Preview", "zh-Hans": "Preview"},
+    "research-preview": {"zh-TW": "研究預覽", "en": "research preview", "zh-Hans": "研究预览"},
 }
 
 RESOURCE_LICENSE_OR_SERVICE = {
+    "https://support.claude.com/en/articles/17631495-get-started-with-claude-duet": {"zh-TW": "商業雲端服務", "en": "commercial cloud service", "zh-Hans": "商业云服务"},
     "https://instinct.com/": {"zh-TW": "商業服務", "en": "commercial service", "zh-Hans": "商业服务"},
     "https://tab.bot/": {"zh-TW": "商業服務", "en": "commercial service", "zh-Hans": "商业服务"},
     "https://www.tomo.ai/about": {"zh-TW": "商業服務", "en": "commercial service", "zh-Hans": "商业服务"},
@@ -478,6 +482,7 @@ RESOURCE_LICENSE_OR_SERVICE = {
 }
 
 RESOURCE_LIMIT_TOKENS = {
+    "https://support.claude.com/en/articles/17631495-get-started-with-claude-duet": {"zh-TW": "記憶", "en": "memory", "zh-Hans": "记忆"},
     "https://instinct.com/": {"zh-TW": "18 歲", "en": "18+", "zh-Hans": "18 岁"},
     "https://tab.bot/": {"zh-TW": "候補", "en": "waitlist", "zh-Hans": "候补"},
     "https://www.tomo.ai/about": {"zh-TW": "群聊", "en": "groups include others’ data", "zh-Hans": "群聊"},
