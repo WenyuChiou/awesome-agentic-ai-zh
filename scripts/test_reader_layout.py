@@ -156,6 +156,13 @@ def test_compact_catalog_rejects_losing_an_original_field(field: str) -> None:
         compact_catalog(changed)
 
 
+def test_english_researcher_category_keeps_short_equivalent_words() -> None:
+    text = (ROOT / "branches/for-researcher.en.md").read_text(encoding="utf-8")
+    table = compact_catalog(text, *ROLE_LAYOUTS["researcher"])
+    assert 'rowspan="5">Repeatable research and evidence</th>' in table
+    assert ">Reproducibility and evidence</th>" not in table
+
+
 def test_english_model_labels_keep_short_equivalent_names() -> None:
     text = (ROOT / "stages/01-llm-basics.en.md").read_text(encoding="utf-8")
     tables = re.findall(r'<table data-model-family="[^"]+">(.*?)</table>', text, re.S)
