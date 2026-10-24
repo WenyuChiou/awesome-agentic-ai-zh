@@ -62,17 +62,31 @@ def test_release_notes_are_trilingual_mirrors() -> None:
 
 
 @pytest.mark.parametrize("locale", rm.LOCALES)
-def test_release_model_notes_keep_current_public_api_ids(locale: str) -> None:
-    """Do not republish the old restricted-Argon or pre-Haiku-5.5 summary."""
+def test_current_model_reference_keeps_public_api_ids(locale: str) -> None:
+    """Keep established API facts without requiring old changes in every release."""
     from model_reference_test_helpers import family_cells
 
-    notes = rm.validate_notes_manifest()
-    guidance = next(change for change in notes["changes"] if change["id"] == "current-model-guidance")
     page = rm.ROOT / f"stages/01-llm-basics{rm.LOCALE_SUFFIX[locale]}.md"
     source = page.read_text(encoding="utf-8")
     for family, model_id in (("Claude", "claude-haiku-5-5"), ("Gemini", "gemini-4-argon")):
         assert model_id in family_cells(source, family)[1]
-        assert model_id in guidance[locale], f"{locale}: release summary omits {model_id}"
+
+
+@pytest.mark.parametrize("locale", rm.LOCALES)
+def test_october_24_notes_cover_only_the_new_release_window(locale: str) -> None:
+    notes = rm.validate_notes_manifest()
+    assert notes["release_version"] == "v2026.10.24"
+    changes = {change["id"]: change for change in notes["changes"]}
+    assert len(changes) == 7
+    guidance = changes["current-model-guidance"][locale]
+    assert all(term in guidance for term in ("1017", "0813", "Decisions", "Clef", "Ollama"))
+    assert all(term in changes["personal-agent-access-and-safety"][locale]
+               for term in ("Instinct", "Tab", "Tomo", "Poke", "Duet", "Pro", "Max"))
+    assert "267" in changes["tencent-memory-reference"][locale]
+    links = {link for change in changes.values() for link in change["links"]}
+    expected_prs = {328, 333, 334, 335, 336, 337, 338}
+    assert links == {f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
+                     for pr in expected_prs}
 
 
 def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:

@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-24
+
+- **release preparation / v2026.10.24** · 依上次正式版 v2026.10.16 至 main 已合併差異更新三語發布摘要，涵蓋個人 Agent、TencentDB Agent Memory、局部模型資訊，以及角色、RAG／Memory、課程與 CLI 資源表的手機閱讀改善。不重複宣稱舊版已發布功能為新增，不納入未合併提案；沿用預設不附 PDF。這是發布準備，正式發布仍須通過完整健康掃描、main／Pages SHA 核對與 release Environment 批准。
+
 ## 2026-10-23
 
 - **layout / CLI learning resources** · CLI 參考指南、A2 與 A3 三語資源表改成分類＋完整說明，每語保留 9／16／18 筆與原有合併分類。repo 名稱省略作者前綴，原有星等、登入、模型、權限、安全限制與來源不變；9 個 CLI 工具資料直接展開，OpenRouter／Ollama 補充另收合。同步調整已展開內容的可見字數基線並加入欄名、短名稱、三語與顯示回歸檢查，查核日期不重標。
