@@ -13,7 +13,8 @@ stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
   verified_on: '2026-09-22'
   provider_updates:
-    gpt: '2026-10-02'
+    gpt: '2026-10-26'
+    kimi: '2026-10-26'
     gemini: '2026-10-15'
     anthropic: '2026-10-08'
     typesafe_jev: '2026-10-15'
@@ -36,6 +37,7 @@ stage01_fact_pack:
     claude_sonnet_migration: 'https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
     gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6.1-sol'
+    gpt_terra: 'https://developers.openai.com/api/docs/models/gpt-6.1-terra'
     gpt_luna: 'https://developers.openai.com/api/docs/models/gpt-6-luna'
     gpt_pricing: 'https://developers.openai.com/api/docs/pricing'
     gpt_ultrafast: 'https://developers.openai.com/api/docs/guides/ultrafast-mode'
@@ -52,7 +54,9 @@ stage01_fact_pack:
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     deepseek_updates: 'https://api-docs.deepseek.com/updates/'
     deepseek_weights: 'https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017'
-    kimi: 'https://platform.kimi.com/docs/overview'
+    kimi: 'https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart'
+    kimi_models: 'https://platform.kimi.ai/docs/models'
+    kimi_cache: 'https://platform.kimi.ai/docs/guide/context-caching'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130051'
     minimax: 'https://huggingface.co/MiniMaxAI/MiniMax-M3'
     qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
@@ -75,7 +79,8 @@ stage01_fact_pack:
     gpt: 'https://developers.openai.com/api/docs/pricing'
     typesafe_jev: 'https://docs.typesafe.ai/models'
     gemini: 'https://ai.google.dev/gemini-api/docs/pricing'
-    kimi: 'https://platform.kimi.com/'
+    kimi: 'https://platform.kimi.ai/'
+    kimi_billing: 'https://platform.kimi.ai/docs/pricing/chat'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130055'
     minimax: 'https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise'
     qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
@@ -575,7 +580,9 @@ current_frontier_models:
     - "Haiku 4.5 (exercise compatibility baseline)"
   openai:
     - "GPT-6 Astra"
-    - "GPT-6 Sol"
+    - "GPT-6.1 Sol"
+    - "GPT-6.1 Terra"
+    - "GPT-6 Sol (previous generation)"
     - "GPT-6 Luna"
     - "GPT-5.6 Sol / Terra / Luna (previous generation; not Stage 01 defaults)"
   typesafe_ai:
@@ -588,7 +595,9 @@ current_frontier_models:
     - "DeepSeek-V4-Pro"
     - "DeepSeek-V4.1-Flash-1017 (deepseek-flash; open weights MIT)"
   moonshot:
-    - "Kimi K3"
+    - "Kimi K3.1 Pro / kimi-k3.1-pro (API available; full weights announced for 2026-11-04)"
+    - "Kimi K3.1 Pro Highspeed / kimi-k3.1-pro-highspeed"
+    - "Kimi K3 (previous generation)"
   tencent:
     - "Hy3"
   minimax:

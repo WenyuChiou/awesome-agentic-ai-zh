@@ -69,8 +69,8 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 |---|---|---|
 | 第一次学 API，想零费用反复试 | **Ollama + `gemma4:e4b`** | 本地运行，单次 API 成本为 $0，可以反复修改示例。 |
 | 想比较云端质量，数据可以发送出去 | **Claude Haiku 5.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，开发工具和库的工具包） 路径简单，按输入和输出 token 计费。 |
-| OpenAI Agent API | **GPT-6.1 Sol／GPT-6 Luna** | 难题先试 Sol；大量简单任务先试 Luna。用自己的任务测试，再查价格。 |
-| 文档很长，还要处理图像或视频 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型号的 context 和多模态支持，再用自己的文档小测。 |
+| OpenAI Agent API | **GPT-6.1 Sol／Terra／GPT-6 Luna** | Sol 写程序；Terra 看图与改写；Luna 做简单任务。先小测，再查价格。 |
+| 文档很长，还要处理图像或视频 | **Gemini 3.8 Flash 或 Kimi K3.1 Pro** | 先查 context 和多模态支持，用你的文档测试。 |
 | 中文 API 任务，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 比较官方价格、输出限制和可用性，不要只看模型名称。 |
 | 固定选项的分类、评分或分流，结果要直接交给程序 | **Jev 1.13（服务 Early access）** | 返回 Choice、Score 或 Noul 的概率结果；低置信度或高风险动作仍要交给人或另一个模型。 |
 | 隐私、离线或需要自部署 | **Llama 4、Qwen 3.8、Gemma 4 等开放权重** | 先估算硬件和授权，再用 Ollama 或其他运行时测量真实速度。 |
@@ -503,7 +503,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details markdown="1">
 <summary>🌐 完整 18 个家族表（官方规格入口）</summary>
 
-<small>全表查核：2026-09-22 UTC。GPT 一行更新：2026-10-02 UTC。Claude 一行更新：2026-10-08 UTC。Gemini／Muse／Mistral／Jev 与 GPT 选读更新：2026-10-15 UTC。DeepSeek／Decisions／Clef 选读更新：2026-10-23 UTC。</small>
+<small>全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一行更新：2026-10-08 UTC。Gemini／Muse／Mistral／Jev 与 GPT 选读更新：2026-10-15 UTC。DeepSeek／Decisions／Clef 选读更新：2026-10-23 UTC。</small>
 
 没有可靠公开数字就写“官方未公布”。价格通常是 USD／每 1M token；供应商若用别的单位，就按官方单位记录。
 **缓存（cache）**就像重复使用读过的便条：读取旧内容和写入新内容可能有不同价格。
@@ -550,8 +550,9 @@ print("💡 本次调用为 $0（不含电费）")
 <table data-model-family="GPT">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3">当前推荐型号</th><td>GPT-6 Astra（<code>gpt-6-astra</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">当前推荐型号</th><td>GPT-6 Astra（<code>gpt-6-astra</code>）</td></tr>
     <tr><td>GPT-6.1 Sol（<code>gpt-6.1-sol</code>）</td></tr>
+    <tr><td>GPT-6.1 Terra（<code>gpt-6.1-terra</code>）</td></tr>
     <tr><td>GPT-6 Luna（<code>gpt-6-luna</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -561,16 +562,20 @@ print("💡 本次调用为 $0（不含电费）")
     <tr><th scope="row">Context</th><td>1.05M context／128K 最大输出</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">价格或授权</th><td>Standard API，每百万 token，US$ 输入／cache 读／cache 写／输出。Astra $10/$1/$12.50/$50。Sol 6.1 $2/$0.10/$2.50/$10。Luna $0.10/$0.01/$0.125/$0.50</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">价格或授权</th><td>Standard API，每百万 token，US$ 输入／cache 读／cache 写（30 分钟）／输出。</td></tr>
+    <tr><td>Astra $10/$1/$12.50/$50。</td></tr>
+    <tr><td>Sol 6.1 $2/$0.10/$2.50/$10。</td></tr>
+    <tr><td>Terra 6.1 $1/$0.05/$1.25/$5；12 小时 cache 写入 $2.50。</td></tr>
+    <tr><td>Luna $0.10/$0.01/$0.125/$0.50。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">适合做什么</th><td>Sol 6.1 用于编程与多步 Agent 工作；Luna 用于聚焦、重复任务；Astra 的成本与质量差异要自行评测</td></tr>
+    <tr><th scope="row">适合做什么</th><td>Sol 6.1 用于编程与多步 Agent 工作。Terra 6.1 看图、操作画面与改写文本。Luna 用于聚焦、重复任务。Astra 的成本与质量差异要自行评测。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td>Sol 6.1 的工具调用须用 Responses API；Chat Completions 不支持工具调用。超过 272K 输入时，整次请求输入与 cache 价格为 2 倍、输出为 1.5 倍。Batch／Flex 半价，Fast 为 2 倍。工具可能另收费</td></tr>
+    <tr><th scope="row">限制</th><td>Sol 6.1 与 Terra 6.1 的工具调用须用 Responses API。Chat Completions 不支持工具调用。超过 272K 输入时，整次请求输入与 cache 价格为 2 倍、输出为 1.5 倍。Batch／Flex 半价，Fast 为 2 倍。工具可能另收费。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方来源</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol">GPT-6.1 Sol</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI API 价格</a></td></tr>
+    <tr><th scope="row">官方来源</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol">GPT-6.1 Sol</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra">GPT-6.1 Terra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI API 价格</a></td></tr>
   </tbody>
 </table>
 
@@ -676,25 +681,30 @@ print("💡 本次调用为 $0（不含电费）")
 <table data-model-family="Kimi">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">当前推荐型号</th><td><code>kimi-k3</code></td></tr>
+    <tr><th scope="rowgroup" rowspan="2">当前推荐型号</th><td>Kimi K3.1 Pro（<code>kimi-k3.1-pro</code>）</td></tr>
+    <tr><td>Kimi K3.1 Pro Highspeed（<code>kimi-k3.1-pro-highspeed</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">状态</th><td>正式可用</td></tr>
+    <tr><th scope="row">状态</th><td>正式可用 API；首次充值至少 US$1 后解锁。完整权重预告 2026-11-04 公布，目前不能当成已可下载。</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>1M</td></tr>
+    <tr><th scope="row">Context</th><td>1,048,576 token。</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">价格或授权</th><td>API：cache hit／输入／输出分别为 CNY 2／20／100，每百万 tokens</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">价格或授权</th><td>国际 API，每百万 token，US$ 输入／cache 读／cache 写（5 分钟）／输出；未含税。</td></tr>
+    <tr><td>Pro $2/$0.20/$2/$10。</td></tr>
+    <tr><td>Highspeed $4/$0.20/$4/$20。</td></tr>
+    <tr><td>重复前缀自动缓存；1 小时保留另有写入费率。API 按量计费，不等于 Kimi 会员或 Kimi Code 订阅。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">适合做什么</th><td>中文长文、视觉输入、长上下文任务</td></tr>
+    <tr><th scope="row">适合做什么</th><td>长编程任务、看图与视频、整理长文档。先用自己的任务测试，不把供应商分数当成成果保证。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td>2.8T 参数；部署与配额取决于平台</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">限制</th><td>固定开启思考。<code>reasoning_effort</code> 可选 <code>low</code>／<code>high</code>／<code>max</code>，默认 <code>max</code>。工具对话须保留完整 assistant 消息。</td></tr>
+    <tr><td>K3 是前一代。K2 系列自 2026-10-31 不再开放新账号，官方计划于 2026 年底退役；不是已全部停用。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方来源</th><td><a href="https://platform.kimi.com/docs/overview">Kimi 平台总览</a> · <a href="https://platform.kimi.com/">Kimi API 定价</a></td></tr>
+    <tr><th scope="row">官方来源</th><td><a href="https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart">K3.1 Pro 指南</a> · <a href="https://platform.kimi.ai/docs/models">型号与迁移</a> · <a href="https://platform.kimi.ai/">国际 API 价格</a> · <a href="https://platform.kimi.ai/docs/pricing/chat">计费说明</a> · <a href="https://platform.kimi.ai/docs/guide/context-caching">缓存计费</a></td></tr>
   </tbody>
 </table>
 

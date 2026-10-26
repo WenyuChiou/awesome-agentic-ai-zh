@@ -69,8 +69,8 @@ A **Typed Decision Model** returns a predefined choice, score, or probability. T
 |---|---|---|
 | Learning the API and iterating at zero cost | **Ollama + `gemma4:e4b`** | Runs locally, so each API call costs $0 and the example can be repeated freely. |
 | Comparing cloud quality when data may be sent out | **Claude Haiku 5.5 / Sonnet 5.5** | The Anthropic SDK (Software Development Kit, a toolkit of developer tools and libraries) path is simple; pricing is based on input and output tokens. |
-| OpenAI Agent API | **GPT-6.1 Sol / GPT-6 Luna** | Sol for harder work; Luna for simpler, repeated work. Test your task and check pricing. |
-| Very long documents with images or video | **Gemini 3.8 Flash or Kimi K3** | Check the model's context and multimodal support, then test with your own document. |
+| OpenAI Agent API | **GPT-6.1 Sol / Terra / GPT-6 Luna** | Sol for coding; Terra for images and writing; Luna for simple tasks. Test first; check pricing. |
+| Very long documents with images or video | **Gemini 3.8 Flash or Kimi K3.1 Pro** | Check context and multimodal support; test with your document. |
 | Chinese-language API work with usage control | **DeepSeek V4.1 Flash or GLM-5.3** | Compare official prices, output limits, and availability; do not choose by name alone. |
 | Classification, scoring, or routing with fixed choices that code will use directly | **Jev 1.13 (service in early access)** | Returns probabilities for Choice, Score, or Noul questions; send low-confidence or high-risk actions to a person or another model. |
 | Privacy, offline use, or self-hosting | **Llama 4, Qwen 3.8, Gemma 4, and other open weights** | Estimate hardware and license requirements, then measure real speed with Ollama or another runtime. |
@@ -503,7 +503,7 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 18-family table (official specification entries)</summary>
 
-<small>Full table checked: 2026-09-22 UTC. GPT row updated: 2026-10-02 UTC. Claude row updated: 2026-10-08 UTC. Gemini/Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
+<small>Full table checked: 2026-09-22 UTC. Scoped GPT/Kimi update: 2026-10-26 UTC. Claude row updated: 2026-10-08 UTC. Gemini/Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 **Cache** is like reusing a note you already read: reading old content and writing new content may have different prices.
@@ -550,8 +550,9 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="GPT">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3">Models</th><td>GPT-6 Astra (<code>gpt-6-astra</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Models</th><td>GPT-6 Astra (<code>gpt-6-astra</code>)</td></tr>
     <tr><td>GPT-6.1 Sol (<code>gpt-6.1-sol</code>)</td></tr>
+    <tr><td>GPT-6.1 Terra (<code>gpt-6.1-terra</code>)</td></tr>
     <tr><td>GPT-6 Luna (<code>gpt-6-luna</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -561,16 +562,20 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Context</th><td>1.05M context / 128K max output</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>Standard API, US$ per 1M tokens, input/cache read/cache write/output. Astra $10/$1/$12.50/$50. Sol 6.1 $2/$0.10/$2.50/$10. Luna $0.10/$0.01/$0.125/$0.50</td></tr>
+    <tr><th scope="rowgroup" rowspan="5">Price or license</th><td>Standard API, US$ per 1M tokens, input/cache read/cache write (30 minutes)/output.</td></tr>
+    <tr><td>Astra $10/$1/$12.50/$50.</td></tr>
+    <tr><td>Sol 6.1 $2/$0.10/$2.50/$10.</td></tr>
+    <tr><td>Terra 6.1 $1/$0.05/$1.25/$5; 12-hour cache writes $2.50.</td></tr>
+    <tr><td>Luna $0.10/$0.01/$0.125/$0.50.</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">Good for</th><td>Sol 6.1 for coding and multi-step Agent work; Luna for focused, repeated tasks; evaluate Astra's cost-quality tradeoff on your own tasks</td></tr>
+    <tr><th scope="row">Good for</th><td>Sol 6.1 for coding and multi-step Agent work. Terra 6.1 for images, screen actions and rewriting. Luna for focused, repeated tasks. Evaluate Astra's cost-quality tradeoff on your own tasks.</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limits</th><td>Sol 6.1 tool calling requires Responses API; Chat Completions has no tool calling. Above 272K input, the full request uses 2× input/cache and 1.5× output rates. Batch/Flex are half-price, Fast is 2×. Tools may cost extra</td></tr>
+    <tr><th scope="row">Limits</th><td>Sol 6.1 and Terra 6.1 tool calling requires Responses API; Chat Completions has no tool calling. Above 272K input, the full request uses 2× input/cache and 1.5× output rates. Batch/Flex are half-price, Fast is 2×. Tools may cost extra.</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol">GPT-6.1 Sol</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI API pricing</a></td></tr>
+    <tr><th scope="row">Official source</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol">GPT-6.1 Sol</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra">GPT-6.1 Terra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI API pricing</a></td></tr>
   </tbody>
 </table>
 
@@ -676,25 +681,30 @@ Open the family you need, then check its models, pricing, and limits.
 <table data-model-family="Kimi">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">Models</th><td><code>kimi-k3</code></td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Models</th><td>Kimi K3.1 Pro (<code>kimi-k3.1-pro</code>)</td></tr>
+    <tr><td>Kimi K3.1 Pro Highspeed (<code>kimi-k3.1-pro-highspeed</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">Status</th><td>Generally available</td></tr>
+    <tr><th scope="row">Status</th><td>Generally available API after a minimum US$1 top-up. Full weights are announced for 2026-11-04; do not treat them as downloadable yet.</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>1M</td></tr>
+    <tr><th scope="row">Context</th><td>1,048,576 tokens.</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>API: CNY 2/20/100 per million tokens for cache hit/input/output</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">Price or license</th><td>International API, US$ per 1M tokens, input/cache read/cache write (5 minutes)/output; excluding taxes.</td></tr>
+    <tr><td>Pro $2/$0.20/$2/$10.</td></tr>
+    <tr><td>Highspeed $4/$0.20/$4/$20.</td></tr>
+    <tr><td>Repeated prefixes are cached automatically; 1-hour retention has separate write rates. API usage billing is separate from Kimi membership or Kimi Code subscriptions.</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">Good for</th><td>Chinese long-form, vision input, long context</td></tr>
+    <tr><th scope="row">Good for</th><td>Long coding tasks, images and video, and long-document work. Test your own tasks; vendor scores do not guarantee outcomes.</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limits</th><td>2.8T parameters; deployment and quotas depend on the platform</td></tr>
+    <tr><th scope="rowgroup" rowspan="2">Limits</th><td>Thinking is always on. <code>reasoning_effort</code> supports <code>low</code>/<code>high</code>/<code>max</code>, default <code>max</code>. Preserve complete assistant messages in tool conversations.</td></tr>
+    <tr><td>K3 is the previous generation. K2-series access closes to new accounts on 2026-10-31; retirement is planned by the end of 2026, not already complete.</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://platform.kimi.com/docs/overview">Kimi overview</a> · <a href="https://platform.kimi.com/">Kimi API pricing</a></td></tr>
+    <tr><th scope="row">Official source</th><td><a href="https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart">K3.1 Pro guide</a> · <a href="https://platform.kimi.ai/docs/models">Models and migration</a> · <a href="https://platform.kimi.ai/">International API pricing</a> · <a href="https://platform.kimi.ai/docs/pricing/chat">Billing guide</a> · <a href="https://platform.kimi.ai/docs/guide/context-caching">Cache billing</a></td></tr>
   </tbody>
 </table>
 

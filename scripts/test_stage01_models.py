@@ -55,7 +55,7 @@ def test_stage01_uses_current_gpt_family(page: Path) -> None:
     cells = family_cells(text, "GPT")
 
     assert len(cells) == 8
-    for model in ("gpt-6-astra", "gpt-6.1-sol", "gpt-6-luna"):
+    for model in ("gpt-6-astra", "gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-luna"):
         assert model in cells[1]
         assert f"https://developers.openai.com/api/docs/models/{model}" in cells[7]
     assert "GPT-5.6" not in cells[1]
@@ -64,19 +64,21 @@ def test_stage01_uses_current_gpt_family(page: Path) -> None:
     assert "Standard" in cells[4]
     assert "$10/$1/$12.50/$50" in cells[4]
     assert "$2/$0.10/$2.50/$10" in cells[4]
+    assert "$1/$0.05/$1.25/$5" in cells[4]
     assert "$0.10/$0.01/$0.125/$0.50" in cells[4]
     assert "272K" in cells[6]
     assert "1.5" in cells[6]
     assert "https://developers.openai.com/api/docs/pricing" in cells[7]
     assert "GPT-6.1 Sol" in text.split("<details", maxsplit=1)[0]
-    assert "2026-10-02 UTC" in text
+    assert "2026-10-26 UTC" in text
     assert "verified_on=2026-09-22" in text
 
 
 def test_stage01_fact_pack_separates_full_table_and_gpt_update_dates() -> None:
     fact_pack = (ROOT / "scripts" / "freshness-models.yml").read_text(encoding="utf-8")
     assert "verified_on: '2026-09-22'" in fact_pack
-    assert "gpt: '2026-10-02'" in fact_pack
+    assert "gpt: '2026-10-26'" in fact_pack
+    assert "kimi: '2026-10-26'" in fact_pack
     assert "gemini: '2026-10-15'" in fact_pack
     for provider in ("typesafe_jev", "muse", "mistral", "gpt_features"):
         assert f"{provider}: '2026-10-15'" in fact_pack
@@ -251,7 +253,7 @@ def test_refreshed_model_row_sentences_fit_written_chinese_style(page: Path) -> 
 @pytest.mark.parametrize("page", [item[0] for item in PAGES if ".en." not in item[0].name])
 def test_refreshed_model_review_date_sentences_fit_written_style(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
-    summary = next(line for line in text.splitlines() if line.startswith("<small>") and "2026-10-02 UTC" in line)
+    summary = next(line for line in text.splitlines() if line.startswith("<small>") and "2026-10-26 UTC" in line)
     visible = re.sub(r"<[^>]+>", "", summary)
     for sentence in re.split(r"(?<=[。！？])", visible):
         if sentence.strip():
@@ -290,8 +292,12 @@ def test_model_reference_uses_closed_family_disclosures_and_two_columns(page: Pa
         assert len(models[0]) == 2
         assert all(len(row) == 1 and row.find("td") is not None for row in models[1:])
         for group in groups[1:]:
-            assert len(group) == 1 and len(group[0]) == 2
-            assert group[0].find("th").attrib["scope"] == "row"
+            field_rows = group.findall("tr")
+            assert field_rows and len(field_rows[0]) == 2
+            field_label = field_rows[0].find("th")
+            assert int(field_label.attrib.get("rowspan", "1")) == len(field_rows)
+            assert field_label.attrib["scope"] == ("rowgroup" if len(field_rows) > 1 else "row")
+            assert all(len(row) == 1 and row.find("td") is not None for row in field_rows[1:])
         assert all("".join(cell.itertext()).strip() for cell in table.iter("td"))
         assert not re.search(r"\[[^\]]+\]\(|`|\*\*", markup)
         assert all(link.attrib.get("href", "").startswith("https://") for link in table.iter("a"))
