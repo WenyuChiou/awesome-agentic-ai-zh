@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-26
+
+- **content / Stage 1 / scoped model refresh** · 三語加入 GPT-6.1 Terra 與 Kimi K3.1 Pro／Highspeed，補上國際 API 價格、快取保留時間及工具呼叫限制。型號與價格分列，重複欄名合併。區分 Kimi API 已可用與完整權重尚待公布，註明 K2 新帳號截止及預定退役。只更新 GPT／Kimi 查核日期，保留其他模型日期、18 家詳表、可見選型主線與本機練習；未呼叫付費 API。
+
 ## 2026-10-24
 
 - **release preparation / v2026.10.24** · 依上次正式版 v2026.10.16 至 main 已合併差異更新三語發布摘要，涵蓋個人 Agent、TencentDB Agent Memory、局部模型資訊，以及角色、RAG／Memory、課程與 CLI 資源表的手機閱讀改善。不重複宣稱舊版已發布功能為新增，不納入未合併提案；沿用預設不附 PDF。這是發布準備，正式發布仍須通過完整健康掃描、main／Pages SHA 核對與 release Environment 批准。
