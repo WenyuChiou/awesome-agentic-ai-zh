@@ -73,20 +73,21 @@ def test_current_model_reference_keeps_public_api_ids(locale: str) -> None:
 
 
 @pytest.mark.parametrize("locale", rm.LOCALES)
-def test_october_24_notes_cover_only_the_new_release_window(locale: str) -> None:
+def test_october_26_notes_cover_only_the_new_release_window(locale: str) -> None:
     notes = rm.validate_notes_manifest()
-    assert notes["release_version"] == "v2026.10.24"
+    assert notes["release_version"] == "v2026.10.26"
     changes = {change["id"]: change for change in notes["changes"]}
-    assert len(changes) == 7
-    guidance = changes["current-model-guidance"][locale]
-    assert all(term in guidance for term in ("1017", "0813", "Decisions", "Clef", "Ollama"))
-    assert all(term in changes["personal-agent-access-and-safety"][locale]
-               for term in ("Instinct", "Tab", "Tomo", "Poke", "Duet", "Pro", "Max"))
-    assert "267" in changes["tencent-memory-reference"][locale]
+    assert set(changes) == {
+        "gpt-terra-model-guidance", "kimi-pro-model-guidance", "python-action-maintenance"
+    }
+    assert "GPT-6.1 Terra" in changes["gpt-terra-model-guidance"][locale]
+    kimi = changes["kimi-pro-model-guidance"][locale]
+    assert all(term in kimi for term in ("Kimi K3.1 Pro", "Highspeed", "K2", "18"))
+    maintenance = changes["python-action-maintenance"][locale]
+    assert all(term in maintenance for term in ("actions/setup-python", "7.0.0", "7.1.0", "PDF"))
     links = {link for change in changes.values() for link in change["links"]}
-    expected_prs = {328, 333, 334, 335, 336, 337, 338}
     assert links == {f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
-                     for pr in expected_prs}
+                     for pr in (340, 341)}
 
 
 def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:
