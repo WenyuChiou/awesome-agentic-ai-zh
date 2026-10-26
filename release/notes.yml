@@ -1,59 +1,27 @@
 schema_version: 1
-release_version: v2026.10.24
+release_version: v2026.10.26
 
 # One ordered list produces all three language sections.
-# Only changes landed after v2026.10.16 belong here.
+# Only changes landed after v2026.10.24 belong here.
 changes:
-  - id: current-model-guidance
+  - id: gpt-terra-model-guidance
     category: learning-content
-    zh-TW: Stage 1 三語更新 DeepSeek Flash 1017／Pro 0813、舊 alias 與尖離峰條件。Decisions 改列正式可用，補上請求與計費界線；Clef 作為自架決策模型選讀。保留 18 家模型詳表與 Ollama 起點，判斷不等於動作授權；未宣稱實跑模型。
-    zh-Hans: Stage 1 三语更新 DeepSeek Flash 1017／Pro 0813、旧 alias 与峰谷时段条件。Decisions 改列正式可用，补上请求与计费边界；Clef 作为自托管决策模型选读。保留 18 家模型详表与 Ollama 起点，判断不等于动作授权；未宣称实际运行模型。
-    en: Stage 1 refreshes DeepSeek Flash 1017 / Pro 0813, legacy aliases and peak/off-peak conditions. Decisions is listed as generally available with request and billing boundaries; Clef is an optional self-hosted decision-model reading. The 18-family reference and Ollama starting point remain. Decisions do not authorize actions; no live model trial is claimed.
+    zh-TW: Stage 1 三語加入 GPT-6.1 Terra 的 API 型號、國際價格、快取與長上下文計費條件，說明工具支援及使用限制。選模型的簡短入口保持展開；完整型號與價格留在收合詳表。
+    zh-Hans: Stage 1 三语加入 GPT-6.1 Terra 的 API 型号、国际价格、缓存与长上下文计费条件，说明工具支持及使用限制。选模型的简短入口保持展开；完整型号与价格留在折叠详表。
+    en: Stage 1 adds GPT-6.1 Terra API IDs, international pricing, caching and long-context billing conditions in all three languages, with tool support and usage limits. The short model-selection guide stays visible; full IDs and pricing remain in the expandable reference.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/333
-  - id: personal-agent-access-and-safety
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/341
+  - id: kimi-pro-model-guidance
     category: learning-content
-    zh-TW: 日常使用者路線新增 Instinct、Tab、Tomo、Poke 與 Claude Duet，個人 Agent 組由 3 筆增為 8 筆。明示資格、隱私與人工核准界線；Duet 限美國 Pro／Max 研究預覽與候補邀請。連接前四問、方案與記憶提醒直接可見；未實測產品。
-    zh-Hans: 日常使用者路线新增 Instinct、Tab、Tomo、Poke 与 Claude Duet，个人 Agent 组由 3 项增为 8 项。明确资格、隐私与人工批准边界；Duet 限美国 Pro／Max 研究预览与候补邀请。连接前四问、方案与记忆提醒直接可见；未实测产品。
-    en: The everyday-user route adds Instinct, Tab, Tomo, Poke and Claude Duet, growing the personal-agent group from 3 to 8 entries. Eligibility, privacy and human-approval boundaries remain explicit; Duet is a US Pro/Max research preview with waitlist invitations. Four pre-connection questions, plan limits and memory reminders stay visible. Products were not hands-on tested.
+    zh-TW: Stage 1 三語更新 Kimi K3.1 Pro／Highspeed 的 API 型號、國際價格、快取及工具呼叫限制。區分 API 已可用與完整權重尚待公布，補上 K2 新帳號截止及預定退役資訊。只更新 GPT／Kimi 查核日期，保留 18 家模型與本機練習；未呼叫付費 API。
+    zh-Hans: Stage 1 三语更新 Kimi K3.1 Pro／Highspeed 的 API 型号、国际价格、缓存及工具调用限制。区分 API 已可用与完整权重尚待公布，补上 K2 新账号截止及预定退役信息。只更新 GPT／Kimi 核查日期，保留 18 家模型与本地练习；未调用付费 API。
+    en: Stage 1 refreshes Kimi K3.1 Pro/Highspeed API IDs, international pricing, caching and tool-calling limits in all three languages. It distinguishes available APIs from full weights that are still pending, and explains the K2 cutoff for new accounts and planned retirement. Only GPT/Kimi verification dates change; all 18 model families and local exercises remain. No paid API calls were made.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/328
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/333
-  - id: tencent-memory-reference
-    category: learning-content
-    zh-TW: 三語 Memory 資源加入 TencentDB Agent Memory，說明四種資產分工、固定版本授權來源與自架連網限制。15 筆資源維持 8／3／4 分組；更新完整 267 筆 repository 快照，保留 API 的 NOASSERTION 值，不宣稱效能或隔離已驗證。
-    zh-Hans: 三语 Memory 资源加入 TencentDB Agent Memory，说明四种资产分工、固定版本授权来源与自托管联网限制。15 项资源保持 8／3／4 分组；更新完整 267 项 repository 快照，保留 API 的 NOASSERTION 值，不宣称性能或隔离已经验证。
-    en: The trilingual Memory catalog adds TencentDB Agent Memory with four asset roles, version-pinned license evidence and self-hosted network limits. Its 15 entries retain 8/3/4 grouping. The complete 267-repository snapshot is refreshed without replacing API NOASSERTION values or claiming verified performance or isolation.
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/341
+  - id: python-action-maintenance
+    category: maintenance
+    zh-TW: GitHub Actions 的 actions/setup-python 由 7.0.0 更新至 7.1.0，固定完整 commit SHA。Python 版本、工作流程觸發條件與權限不變。本版只發布三語說明，不產生或附上 PDF。
+    zh-Hans: GitHub Actions 的 actions/setup-python 从 7.0.0 更新至 7.1.0，固定完整 commit SHA。Python 版本、工作流程触发条件与权限不变。本版只发布三语说明，不生成或附加 PDF。
+    en: GitHub Actions updates actions/setup-python from 7.0.0 to 7.1.0, pinned to a full commit SHA. Python versions, workflow triggers and permissions stay unchanged. This release publishes trilingual notes without generating or attaching PDFs.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/328
-  - id: readable-role-and-mobile-catalogs
-    category: reader-experience
-    zh-TW: 五條角色路線三語資源表改為分類＋完整說明兩欄，保留日常使用者 23 筆與另外四條路線合計 56 筆。文件站手機分類改為橫向標題，每筆用滿閱讀寬度；桌面保留合併分類。用途、星等與限制不收合、不截斷、不縮字；GitHub 原生預覽限制另說明。
-    zh-Hans: 五条角色路线三语资源表改为分类＋完整说明两列，保留日常使用者 23 项与另外四条路线合计 56 项。文档站手机分类改为横向标题，每项用满阅读宽度；桌面保留合并分类。用途、星级与限制不折叠、不截断、不缩字；GitHub 原生预览限制另作说明。
-    en: Five role routes use category-plus-description catalogs in all three languages, preserving 23 everyday-user entries and 56 across the other four routes. On the documentation site, mobile categories become horizontal headings and each resource uses the reading width; desktop grouping remains. Purpose, ratings and limits are not collapsed, clipped or shrunk. Native GitHub preview limitations are documented separately.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/333
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/334
-  - id: readable-rag-and-memory-catalogs
-    category: reader-experience
-    zh-TW: Advanced RAG、Agent Memory 與 Stage 6 三語改為分類＋完整資源說明，保留每語 12／15／9 筆及合併分類。用途、學習內容、星等與限制直接可見；repo 顯示短名稱，原始連結、授權與查核日期不變，並加入逐欄回歸檢查。
-    zh-Hans: Advanced RAG、Agent Memory 与 Stage 6 三语改为分类＋完整资源说明，保留每语 12／15／9 项及合并分类。用途、学习内容、星级与限制直接可见；repo 显示短名称，原始链接、授权与核查日期不变，并加入逐列回归检查。
-    en: Advanced RAG, Agent Memory and Stage 6 adopt category-plus-description catalogs across all locales, preserving 12/15/9 entries and grouped categories per locale. Purpose, learning content, ratings and limits remain visible. Short repository names retain original links, license boundaries and review dates, with column-level regressions.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/335
-  - id: readable-course-catalogs
-    category: reader-experience
-    zh-TW: 三語課程表保留 13 筆與 3／6／2／2 分組，改為分類＋完整說明。語言、費用、學習成果、證書限制與星等直接展開；來源、課名與查核日期不變，新增欄位及三語排版回歸檢查。
-    zh-Hans: 三语课程表保留 13 项与 3／6／2／2 分组，改为分类＋完整说明。语言、费用、学习成果、证书限制与星级直接展开；来源、课程名与核查日期不变，新增列及三语排版回归检查。
-    en: All three course catalogs retain 13 entries in 3/6/2/2 groups while adopting category-plus-description rows. Language, costs, outcomes, certificate limits and ratings remain expanded. Sources, course titles and review dates stay unchanged, with column and trilingual layout regressions.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/336
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/338
-  - id: readable-cli-catalogs
-    category: reader-experience
-    zh-TW: CLI 指南、A2 與 A3 三語保留每語 9／16／18 筆與合併分類，改為分類＋完整說明。9 個 CLI 工具直接展開，OpenRouter／Ollama 補充另收合。保留星等、登入、模型、權限、安全界線與原來源；同步可見字數基線與排版回歸檢查。
-    zh-Hans: CLI 指南、A2 与 A3 三语保留每语 9／16／18 项与合并分类，改为分类＋完整说明。9 个 CLI 工具直接展开，OpenRouter／Ollama 补充另行折叠。保留星级、登录、模型、权限、安全边界与原来源；同步可见字数基线与排版回归检查。
-    en: The CLI guide, A2 and A3 retain 9/16/18 entries and grouped categories per locale in category-plus-description catalogs. All 9 CLI tools stay expanded; supplementary OpenRouter/Ollama details are separate. Ratings, login, model, permission and safety boundaries and original sources remain, alongside updated visible-text baselines and layout regressions.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/337
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/338
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/340
