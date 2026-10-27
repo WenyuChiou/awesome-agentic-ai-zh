@@ -22,6 +22,8 @@
 
 ## ⚡ 先選一條，不要全部一起讀
 
+<div class="reader-course-picker" markdown="1">
+
 | 你現在想做什麼 | 先選這個 | 為什麼 |
 |---|---|---|
 | 完全不知道從哪開始 | [Hugging Face AI Agents Course](https://huggingface.co/learn/agents-course) | 免費，先教 Agent、工具與基本框架，再做挑戰。 |
@@ -32,6 +34,8 @@
 | 想整理程式代理拿到的規則與工具 | [Hugging Face Context Course](https://huggingface.co/learn/context-course/unit0/introduction) | 用**情境工程（context engineering）**整理知識，讓代理在需要時找到正確內容。 |
 | 已會 Agent 基礎，想練較深的工作拆分 | [LangChain Project: Deep Agents](https://academy.langchain.com/courses/deep-agents-with-langgraph) | 用工作清單、檔案與**子代理（Subagents）**完成一個較完整的 Agent。 |
 | 主要目標是系列證書 | [IBM](https://www.coursera.org/professional-certificates/ibm-rag-and-agentic-ai)／[Vanderbilt](https://www.coursera.org/specializations/ai-agents) | 是較長的付費系列課；先確認費用、語言與專案是否符合需要。 |
+
+</div>
 
 ## 🎯 精選課程與學習路線
 

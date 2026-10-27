@@ -22,6 +22,8 @@
 
 ## ⚡ 先选一条，不要全部一起读
 
+<div class="reader-course-picker" markdown="1">
+
 | 你现在想做什么 | 先选这个 | 为什么 |
 |---|---|---|
 | 完全不知道从哪里开始 | [Hugging Face AI Agents Course](https://huggingface.co/learn/agents-course) | 免费，先教 Agent、工具和基本框架，再做挑战。 |
@@ -32,6 +34,8 @@
 | 想整理编程 Agent 拿到的规则与工具 | [Hugging Face Context Course](https://huggingface.co/learn/context-course/unit0/introduction) | 用**上下文工程（context engineering）**整理知识，让 Agent 在需要时找到正确内容。 |
 | 已经掌握 Agent 基础，想练更深入的任务拆分 | [LangChain Project: Deep Agents](https://academy.langchain.com/courses/deep-agents-with-langgraph) | 用工作清单、文件和**子 Agent（Subagents）**完成一个更完整的 Agent。 |
 | 主要目标是系列证书 | [IBM](https://www.coursera.org/professional-certificates/ibm-rag-and-agentic-ai)／[Vanderbilt](https://www.coursera.org/specializations/ai-agents) | 这是较长的付费系列课程；先确认费用、语言和项目是否符合需要。 |
+
+</div>
 
 ## 🎯 精选课程与学习路线
 
