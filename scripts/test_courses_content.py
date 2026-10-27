@@ -333,22 +333,30 @@ def test_course_fact_pack_does_not_recommend_unavailable_wandb_portal() -> None:
 def test_course_picker_renders_all_eight_choices_outside_disclosures(locale: str) -> None:
     """The phone layout must retain each complete choice and its original links."""
     import markdown
-    from bs4 import BeautifulSoup
+    import xml.etree.ElementTree as ET
 
     source = PAGES[locale].read_text(encoding="utf-8")
-    rendered = markdown.markdown(source, extensions=["md_in_html", "tables", "fenced_code"])
-    soup = BeautifulSoup(rendered, "html.parser")
-    pickers = soup.select("div.reader-course-picker")
+    pickers = re.findall(
+        r'<div class="reader-course-picker" markdown="1">.*?</div>',
+        source,
+        flags=re.DOTALL,
+    )
     assert len(pickers) == 1, "Course chooser needs its own responsive layout"
-    picker = pickers[0]
-    assert picker.find_parent("details") is None
-    assert len(picker.select("thead th")) == 3
-    rows = picker.select("tbody tr")
+    assert pickers[0] in _without_details(source)
+    rendered = markdown.markdown(
+        pickers[0], extensions=["md_in_html", "tables", "fenced_code"]
+    )
+    picker = ET.fromstring(rendered)
+    assert len(picker.findall("./table/thead/tr/th")) == 3
+    rows = picker.findall("./table/tbody/tr")
     assert len(rows) == 8
     for row in rows:
-        cells = row.find_all("td", recursive=False)
+        cells = row.findall("td")
         assert len(cells) == 3
-        assert all(cell.get_text(strip=True) for cell in cells)
-        assert cells[1].find("a", href=True)
-        assert not row.find(["br", "details"])
-    assert [link["href"] for link in picker.select("a[href]")] == list(EXTERNAL_URLS[:10])
+        assert all("".join(cell.itertext()).strip() for cell in cells)
+        assert cells[1].find(".//a[@href]") is not None
+        assert row.find(".//br") is None
+        assert row.find(".//details") is None
+    assert [link.attrib["href"] for link in picker.findall(".//a[@href]")] == list(
+        EXTERNAL_URLS[:10]
+    )
