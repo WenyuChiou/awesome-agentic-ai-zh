@@ -1111,7 +1111,7 @@ LLM 每一步都会预测下一个 token 的概率分布，再按设置选出候
 
 **第三方 benchmark**
 
-[Artificial Analysis](https://artificialanalysis.ai/)、[Arena AI](https://arena.ai/leaderboard/text)、[Vellum leaderboard](https://www.vellum.ai/llm-leaderboard)、[Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard) 和 [SuperCLUE](https://www.superclueai.com/) 可作为个人任务的评测工具。它们不是供应商官方规格，也不能取代用自己的数据、提示和延迟进行测试。
+[Artificial Analysis](https://artificialanalysis.ai/)、[Arena AI](https://arena.ai/leaderboard/chat/text)、[Vellum leaderboard](https://www.vellum.ai/llm-leaderboard)、[Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard) 和 [SuperCLUE](https://www.superclueai.com/) 可作为个人任务的评测工具。它们不是供应商官方规格，也不能取代用自己的数据、提示和延迟进行测试。
 
 </details>
 

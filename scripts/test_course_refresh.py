@@ -28,7 +28,7 @@ COURSE_PAIRS = (
     ("https://huggingface.co/learn/agents-course", "⭐⭐⭐⭐⭐"),
     ("https://github.com/microsoft/ai-agents-for-beginners", "⭐⭐⭐⭐⭐"),
     ("https://github.com/datawhalechina/hello-agents", "⭐⭐⭐⭐⭐"),
-    ("https://www.deeplearning.ai/courses/agentic-ai/", "⭐⭐⭐⭐⭐"),
+    ("https://www.deeplearning.ai/courses/agentic-ai", "⭐⭐⭐⭐⭐"),
     ("https://academy.claude.com/", "⭐⭐⭐⭐"),
     (CONTEXT_URL, "⭐⭐⭐⭐"),
     ("https://academy.langchain.com/courses/intro-to-langgraph", "⭐⭐⭐⭐"),

@@ -1111,7 +1111,7 @@ At each step an LLM predicts a probability distribution for the next token, then
 
 **Third-party benchmarks**
 
-[Artificial Analysis](https://artificialanalysis.ai/), [Arena AI](https://arena.ai/leaderboard/text), [Vellum leaderboard](https://www.vellum.ai/llm-leaderboard), [Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard), and [SuperCLUE](https://www.superclueai.com/) are tools for evaluating your task. They are not official provider specifications and cannot replace tests with your own data, prompts, and latency.
+[Artificial Analysis](https://artificialanalysis.ai/), [Arena AI](https://arena.ai/leaderboard/chat/text), [Vellum leaderboard](https://www.vellum.ai/llm-leaderboard), [Hugging Face Open LLM Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard), and [SuperCLUE](https://www.superclueai.com/) are tools for evaluating your task. They are not official provider specifications and cannot replace tests with your own data, prompts, and latency.
 
 </details>
 
