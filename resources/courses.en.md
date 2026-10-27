@@ -22,6 +22,8 @@ To follow this project and build step by step, return to the [main learning path
 
 ## ⚡ Pick one path first—do not read everything at once
 
+<div class="reader-course-picker" markdown="1">
+
 | What you want to do now | Start with this | Why |
 |---|---|---|
 | You have no idea where to start | [Hugging Face AI Agents Course](https://huggingface.co/learn/agents-course) | Free; it teaches Agent, tools, and basic frameworks first, then gives you a challenge. |
@@ -32,6 +34,8 @@ To follow this project and build step by step, return to the [main learning path
 | You want to organize the rules and tools given to a coding agent | [Hugging Face Context Course](https://huggingface.co/learn/context-course/unit0/introduction) | Use **context engineering**—organizing knowledge so an agent can find the right material when needed. |
 | You know Agent foundations and want deeper task decomposition | [LangChain Project: Deep Agents](https://academy.langchain.com/courses/deep-agents-with-langgraph) | Use a work list, files, and **Subagents**—agents assigned part of a larger job—to complete a fuller Agent. |
 | Your main goal is a certificate series | [IBM](https://www.coursera.org/professional-certificates/ibm-rag-and-agentic-ai) / [Vanderbilt](https://www.coursera.org/specializations/ai-agents) | These are longer paid course series; first confirm that the cost, language, and projects fit your needs. |
+
+</div>
 
 ## 🎯 Selected courses and learning paths
 

@@ -250,6 +250,64 @@ body[data-md-color-scheme="slate"] {
   overflow-wrap: normal;
   word-break: normal;
 }
+/* Course choices stay in three columns on desktop and read down on phones. */
+.md-typeset .reader-course-picker .md-typeset__scrollwrap {
+  margin: 0;
+}
+.md-typeset .reader-course-picker .md-typeset__table {
+  display: block;
+  padding: 0;
+}
+.md-typeset .reader-course-picker table:not([class]) {
+  width: 100%;
+  min-width: 0;
+}
+.md-typeset .reader-course-picker th,
+.md-typeset .reader-course-picker td,
+.md-typeset .reader-course-picker a {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+@media (max-width: 600px) {
+  .md-typeset .reader-course-picker table:not([class]),
+  .md-typeset .reader-course-picker tbody,
+  .md-typeset .reader-course-picker tr,
+  .md-typeset .reader-course-picker td {
+    display: block;
+    inline-size: 100%;
+    box-sizing: border-box;
+  }
+  /* Preserve the column headers for assistive technology. */
+  .md-typeset .reader-course-picker thead {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .md-typeset .reader-course-picker tr + tr {
+    border-block-start: 1px solid var(--md-typeset-table-color);
+  }
+  .md-typeset .reader-course-picker table:not([class]) td {
+    border: 0;
+    padding: .35em .8em;
+  }
+  .md-typeset .reader-course-picker table:not([class]) td:first-child {
+    font-weight: 600;
+    padding-block-start: .8em;
+  }
+  .md-typeset .reader-course-picker table:not([class]) td:nth-child(2) {
+    font-weight: 600;
+  }
+  .md-typeset .reader-course-picker td:nth-child(2) a {
+    align-items: center;
+    display: inline-flex;
+    min-block-size: 44px;
+  }
+  .md-typeset .reader-course-picker table:not([class]) td:last-child {
+    padding-block-end: .8em;
+  }
+}
 /* Resource facts stay visible and read down a page, not across seven columns. */
 .md-typeset .reader-resource-catalog {
   max-inline-size: 100%;
