@@ -2,16 +2,16 @@
 
 > [繁體中文](./00-foundations.md) | **English** | [简体中文](./00-foundations.zh-Hans.md)
 
-This stage checks four tools that you will use later. If you already know them, skip ahead. If not, no problem: do the small practice below once.
+This stage checks four tools that you will use later. If you already know them, skip ahead. If not, try the practice below once.
 
 ## When to skip this stage
 
 Check these four things. You do not need to memorize commands. You do need to find information and finish each task yourself:
 
-- [ ] Use Python to get public data from an API (Application Programming Interface, an interface through which programs request a service) (an entry that lets a program get data), then find one value in the JSON (JavaScript Object Notation, a text format commonly used to exchange data).
-- [ ] Use Git to copy a project (`clone`), create a work line (`branch`), save a version (`commit`), and send it online (`push`). When two changes collide, know what a merge conflict is and what to keep.
-- [ ] Use the command line (text commands typed in a terminal) to change folders, create files, and run a Python script.
-- [ ] Read YAML and JSON. Both are text formats for saving data.
+- [ ] Use **Python** to get public data from an **API** (Application Programming Interface), then find a value in the **JSON** (JavaScript Object Notation).
+- [ ] Use **Git** to copy a project (`clone`), create a work line (**branch**), save a version (**commit**), and send it online (**push**). When two changes collide, know what a **merge conflict** is and what to keep.
+- [ ] Use a **CLI (command-line interface)** to change folders, create files, and run a Python script.
+- [ ] Read **YAML** and JSON. Both are text formats for saving data.
 
 If all four are easy, go straight to [Stage 1 — LLM Basics](01-llm-basics.en.md). If one is uncertain, do the main practice here. Open the extra sections only when you need them.
 
@@ -20,13 +20,73 @@ If all four are easy, go straight to [Stage 1 — LLM Basics](01-llm-basics.en.m
 After this stage, you can:
 
 - Get data from an API with Python and read the needed part of the JSON.
-- Run a program from a terminal and find the file it created.
-- Save a version with Git and return to that version when needed.
-- Recognize YAML, JSON, and an API token (secret text that lets a program sign in), and know what must not be shared.
+- Run a program from a **terminal** and find the file it created.
+- Recognize a project **repository**, inspect its version history, and save a version with Git.
+- Recognize YAML, JSON, and an **API token** (secret text that lets a program sign in), and know what must not be shared.
+
+## 🔑 Core Terms
+
+First learn the tools for running programs and exchanging data. Then see how projects save and share changes online.
+
+<div class="reader-core-terms" role="region" tabindex="0" aria-label="Foundations core terms">
+<table align="center">
+  <thead><tr><th scope="col">Group</th><th scope="col">Term</th><th scope="col">Plain explanation</th><th scope="col">Use or boundary in this chapter</th></tr></thead>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Programs and execution</th><td><strong>Python</strong></td><td>A programming language used to write instructions and run programs.</td><td>The main exercise uses Python to get data.</td></tr>
+    <tr><td><strong>Terminal</strong></td><td>A window for entering and viewing text commands.</td><td>Run the main exercise here.</td></tr>
+    <tr><td><strong>CLI (Command-Line Interface)</strong></td><td>An interface for interacting with a program using text commands.</td><td>For example, enter a Python command.</td></tr>
+    <tr><td><strong>Shell</strong></td><td>A command interpreter, such as PowerShell or Bash, that interprets and runs commands.</td><td>It usually runs in a terminal.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Data and interfaces</th><td><strong>API (Application Programming Interface)</strong></td><td>An interface that lets programs interact with another program or service according to rules.</td><td>Not limited to websites.</td></tr>
+    <tr><td><strong>JSON (JavaScript Object Notation)</strong></td><td>A text format for structured data.</td><td>The exercise reads API data in JSON; it is not a script.</td></tr>
+    <tr><td><strong>YAML (YAML Ain’t Markup Language)</strong></td><td>Another text data format, often used for configuration.</td><td>Indentation matters; it is not a script.</td></tr>
+    <tr><td><strong>API token</strong></td><td>A secret credential, like a key, that lets a program prove its identity.</td><td>Do not publish or upload it; the main exercise needs none.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Platform and project</th><td><strong>GitHub</strong></td><td>A platform for sharing code, tools, teaching materials, and online resources; many open-source projects collaborate there.</td><td>Public does not always mean open source; read the use permissions.</td></tr>
+    <tr><td><strong>Git</strong></td><td>A tool that records file versions and can run on your own computer.</td><td>Git and GitHub are different things.</td></tr>
+    <tr><td><strong>Repository (Repo)</strong></td><td>A place holding a project's files and version history.</td><td>This project is a repository.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Explore a project</th><td><strong>README</strong></td><td>An introductory document that usually explains a project and how to start.</td><td>Read it first to find your starting point.</td></tr>
+    <tr><td><strong>License</strong></td><td>A document explaining how others may use, change, or share a work.</td><td>Check its terms and whether it is open source.</td></tr>
+    <tr><td><strong>Issue</strong></td><td>A project page for discussing a problem, suggestion, or task.</td><td>Observe first; you need not post.</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Changes and collaboration</th><td><strong>Branch</strong></td><td>A separate line of work; <strong>main</strong> is often the shared main line.</td><td>You can make changes on your own line first.</td></tr>
+    <tr><td><strong>Commit</strong></td><td>Like a labeled project snapshot: it saves selected changes with an author, time, message, and identifier (hash).</td><td>Saving in an editor is not a commit; history can branch.</td></tr>
+    <tr><td><strong>Push</strong></td><td>Send local version records to the corresponding branch on GitHub.</td><td>This does not automatically merge into main.</td></tr>
+    <tr><td><strong>Pull Request (PR)</strong></td><td>Propose changes for others to review and discuss whether to accept.</td><td>Opening a PR does not mean it has been merged.</td></tr>
+    <tr><td><strong>Merge</strong></td><td>Combine changes from one line of work into another.</td><td>After review and agreement, changes can be merged into main.</td></tr>
+  </tbody>
+</table>
+</div>
+
+**History** is the project's saved version record; it can branch and is not necessarily a straight timeline. A **Diff** compares content before and after changes. A commit's author name, time, message, and identifier help trace it, but the author label alone does not prove identity.
+
+For example: fix a typo on a branch → make a local commit → push the branch to GitHub → open a PR for review → merge into main after agreement. Each step has a different purpose; a PR does not automatically merge.
+
+![Git and GitHub change flow: Branch and Commit save local changes, Push uploads them, PR requests review, and Merge combines them; each Commit leaves a traceable record.](../resources/diagrams/github-change-flow.en.png)
+
+For more, see [GitHub's introduction](https://docs.github.com/en/get-started/using-github/hello-world), [licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository), and [Git version history](https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History).
+
+### Read a real change
+
+This project merged [PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343), leaving [Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18). The six boxes are teaching labels; the original GitHub screen remains below them.
+
+![The real merge record for this project's PR 343, with labels for commit ID, author, time, message, changed files, and Diff.](../resources/diagrams/github-commit-example.en.png)
+
+- **ID**: `2956dc0` is a short form of the full ID. Open the original commit to see the full value.
+- **Author and time**: the author links to a GitHub account. The time is recorded in the commit; it is not necessarily the time of a push.
+- **Message**: this one says it merges PR #343. Open the PR to read its discussion and merged status.
+- **Files and Diff**: this example changes 10 files, adding 15 lines and deleting 13. Green plus signs mean additions; red minus signs mean deletions. Open a file to compare the changes.
 
 ## 🛠 Hands-on Practice: Build a Small GitHub Data Tool
 
 **Outcome:** Have Python get public data from GitHub, show it on screen, write it to a file, and save the result with Git. This main practice needs no account, API token, or paid service.
+
+First spend five minutes observing in a browser: [open this project](https://github.com/WenyuChiou/awesome-agentic-ai-zh), find its README, License, and Issues, then open its commit history. Choose a commit and inspect its author, time, message, identifier, and diff. A publicly displayed author email is a label in the record, not a login credential, and cannot alone verify the author’s identity. You do not need to create an Issue or PR.
 
 ### 1. Create the program
 
@@ -72,13 +132,13 @@ git add github_profile.py result.txt
 git commit -m "Add GitHub profile checker"
 ```
 
-A commit is one saved Git version with a short note. If Git asks for your name or email the first time, follow the prompt and run `git commit` again. This information is an author label for the version, not a password.
+If Git asks for your name or email the first time, follow the prompt and run `git commit` again. This information is an author label for the version, not a password.
 
 ## ✅ Completion Check
 
 - [ ] The terminal shows a GitHub account and follower count.
 - [ ] `result.txt` contains the same result.
-- [ ] `git log --oneline` shows the commit you just made.
+- [ ] `git log --oneline` shows the commit you just made, and you can find a change and its Diff in the project History.
 - [ ] The program and commit contain no password or API token.
 
 When all four are done, go to [Stage 1 — LLM Basics](01-llm-basics.en.md). If you are stuck, open the section below that matches the problem. You do not need to read everything.
@@ -181,33 +241,33 @@ Use an entry that matches the skill you need. You do not need to read all 18 res
 
 `Recommendation` is the learning priority, not a GitHub popularity number. Under the project rules, ⭐⭐⭐⭐⭐ means “you will get stuck without it”; everything below is supplemental, so it honestly uses ⭐⭐⭐⭐ (strongly recommended) or ⭐⭐⭐ (solid reference), without fake five-star ratings.
 
-<table>
+<table align="center">
   <thead><tr><th scope="col">Topic</th><th scope="col">Resource</th><th scope="col">Who it's for</th><th scope="col">Recommendation</th><th scope="col">Why recommended / Notes</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>Want to follow a book from the beginning</td><td>⭐⭐⭐⭐</td><td>Code and exercises are free; the complete book must be purchased.</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>Want to follow a book from the beginning</td><td>⭐⭐⭐⭐</td><td>Code and exercises are free; the complete book must be purchased.</td></tr>
     <tr><td><a href="https://realpython.com/">Real Python</a></td><td>Know a little and want to look up one topic</td><td>⭐⭐⭐⭐</td><td>Articles are grouped by topic, so they are easy to find when needed.</td></tr>
     <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>Like English videos</td><td>⭐⭐⭐</td><td>Uses videos to move from basic syntax to practical use.</td></tr>
     <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>Like learning by doing</td><td>⭐⭐⭐</td><td>Some content is free; the complete backend path is paid.</td></tr>
     <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python official Traditional Chinese tutorial</a></td><td>Finished the first exercise and want correct syntax</td><td>⭐⭐⭐⭐</td><td>Official reference material; it expects some programming knowledge.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>Want to understand Git fully</td><td>⭐⭐⭐⭐</td><td>Free, complete reference book.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>Want to understand Git fully</td><td>⭐⭐⭐⭐</td><td>Free, complete reference book.</td></tr>
     <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>Want to understand branch, merge, and work order with pictures</td><td>⭐⭐⭐⭐</td><td>Common workflows explained with diagrams.</td></tr>
     <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Made a Git mistake and want to recover safely</td><td>⭐⭐⭐⭐</td><td>Explains which actions can lose data before showing how to recover.</td></tr>
     <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>Need more answers than the basics give</td><td>⭐⭐⭐</td><td>Collects more Git problems and ways to handle them.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">CLI / Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>Want to learn the command line in order</td><td>⭐⭐⭐⭐</td><td>Goes from beginner commands to more advanced use.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI / Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>Want to learn the command line in order</td><td>⭐⭐⭐⭐</td><td>Goes from beginner commands to more advanced use.</td></tr>
     <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>Use Windows and want to start from the first step</td><td>⭐⭐⭐⭐</td><td>Microsoft's official PowerShell beginner course.</td></tr>
     <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>Only want to see how one command is used</td><td>⭐⭐⭐⭐</td><td>Short, copyable examples explain common commands.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>Want to know how an API sends data</td><td>⭐⭐⭐⭐</td><td>Mozilla's maintained reference for HTTP.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>Want to know how an API sends data</td><td>⭐⭐⭐⭐</td><td>Mozilla's maintained reference for HTTP.</td></tr>
     <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>Want to try an API with a graphical tool</td><td>⭐⭐⭐⭐</td><td>See sent requests and received data without writing code first.</td></tr>
     <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>Want to call an API from the command line</td><td>⭐⭐⭐</td><td>Commands are often easier to read than raw curl commands.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">YAML / JSON</th><td><a href="https://yaml.org/">YAML official site</a></td><td>Need to check the correct YAML syntax</td><td>⭐⭐⭐</td><td>Official entry point for syntax and the formal specification.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML / JSON</th><td><a href="https://yaml.org/">YAML official site</a></td><td>Need to check the correct YAML syntax</td><td>⭐⭐⭐</td><td>Official entry point for syntax and the formal specification.</td></tr>
     <tr><td><a href="https://www.json.org/json-en.html">JSON introduction</a></td><td>Meeting JSON for the first time</td><td>⭐⭐⭐⭐</td><td>Short examples explain how JSON holds data.</td></tr>
     <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>Want to organize JSON from the command line</td><td>⭐⭐⭐⭐</td><td>Filters and organizes data returned by an API.</td></tr>
   </tbody>

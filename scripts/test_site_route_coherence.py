@@ -782,3 +782,39 @@ def test_how_to_use_teaches_run_change_one_thing_and_retest() -> None:
     time = text[text.index('<summary>⏱️ 查看練習時間安排</summary>') :]
     assert "固定小時" in time
     assert not re.search(r"<details[^>]*\sopen(?:\s|>)", text)
+
+
+@pytest.mark.parametrize("suffix", ["", ".en", ".zh-Hans"])
+def test_stage0_explains_foundations_before_its_figure_and_practice(suffix):
+    import markdown
+    from html.parser import HTMLParser
+
+    class VisibleText(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.text = []
+            self.bold = 0
+
+        def handle_starttag(self, tag, attrs):
+            if tag == "strong":
+                self.bold += 1
+
+        def handle_data(self, data):
+            self.text.append(data)
+
+    source = (ROOT / f"stages/00-foundations{suffix}.md").read_text(encoding="utf-8")
+    core = source.index("## 🔑")
+    image = source.index("../resources/diagrams/github-change-flow")
+    practice = source.index("## 🛠")
+    assert source.index("## 📌") < core < image < practice
+    explanation = source[core:image]
+    assert "<details" not in explanation
+    for term in ("Python", "Terminal", "CLI", "Shell", "API", "JSON", "YAML",
+                 "API token", "GitHub", "Git", "Repository", "README", "License",
+                 "Issue", "Branch", "Commit", "Push", "Pull Request", "Merge",
+                 "History", "Diff"):
+        assert term in explanation, term
+    rendered = VisibleText()
+    rendered.feed(markdown.markdown(explanation))
+    assert rendered.bold >= 21
+    assert "**" not in "".join(rendered.text)

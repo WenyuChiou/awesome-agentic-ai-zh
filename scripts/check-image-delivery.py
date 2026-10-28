@@ -18,16 +18,15 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DIAGRAM_DIR = Path("resources/diagrams")
-# Stage 7.5 replaces six legacy diagrams with one focused trilingual set,
-# lowering the measured inventory to 67 PNGs. These ceilings use the resulting
-# inventory plus at most about 2% headroom; this is not free capacity for
-# unrelated images.
-MAX_PNG_COUNT = 68
-MAX_TOTAL_BYTES = 83_206_445
+# Stage 0 adds a trilingual concept figure and real commit example (73 PNGs total).
+# 84,556,340 measured bytes plus 2% headroom. Existing per-image/per-page
+# ceilings stay fixed; all three new diagrams are lazy-loaded.
+MAX_PNG_COUNT = 74
+MAX_TOTAL_BYTES = 86_247_467
 MAX_SINGLE_BYTES = 1_551_629
 MAX_PAGE_BYTES = 3_242_406
-EXPECTED_RENDERED_DIAGRAMS = 72
-EXPECTED_RENDERED_LAZY = 69
+EXPECTED_RENDERED_DIAGRAMS = 78
+EXPECTED_RENDERED_LAZY = 75
 EXPECTED_RENDERED_EAGER = 3
 
 IMAGE_LINK = re.compile(
