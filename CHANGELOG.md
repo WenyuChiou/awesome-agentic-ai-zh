@@ -6,6 +6,11 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-10-28
+
+- **content / Stage 0** · 學習目標後補上程式／命令列、資料格式與 GitHub 協作的可見核心詞表，區分 Terminal、CLI、Shell 與 Commit／Push／PR／Merge。新增同一構圖的三語圖解，說明版本作者、時間、說明與識別碼如何配合 History／Diff 追查修改；先觀察公開專案，不要求建立帳號或公開練習 Issue／PR。補上 PR #343 真實合併 Commit 截圖與三語標註，區分 Commit 與 Push 時間。保留原有整合程式及 18 筆評分資源；新增圖採無損壓縮，圖庫按實測總量加 2% 設定上限，單圖與單頁上限不變。
+
+
 ## 2026-10-27
 
 - **layout / mobile course picker** · 三語課程選路表在手機改為每條需求、課程與理由依序用滿寬度，英文按完整單字換行；桌面保留三欄比較。保留 8 條選路、10 個入口、13 筆精選課程、原有星等、費用限制、用詞與查核日期；重要資訊不收合。新增實際 Markdown 輸出回歸檢查，樣式只作用於課程選路表。

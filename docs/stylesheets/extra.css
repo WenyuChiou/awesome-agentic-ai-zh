@@ -395,3 +395,23 @@ body[data-md-color-scheme="slate"] {
     font-size: inherit;
   }
 }
+
+/* Stage 0: grouped definitions on desktop, full-width short entries on phones. */
+.md-typeset .reader-core-terms table:not([class]) { margin-inline: auto; width: 100%; }
+.md-typeset .reader-core-terms th[scope="rowgroup"] { text-align: center; vertical-align: middle; }
+.md-typeset .reader-core-terms table:not([class]) td { overflow-wrap: break-word; vertical-align: top; }
+@media (max-width: 600px) {
+  .md-typeset .reader-core-terms table:not([class]),
+  .md-typeset .reader-core-terms tbody,
+  .md-typeset .reader-core-terms tr,
+  .md-typeset .reader-core-terms th[scope="rowgroup"],
+  .md-typeset .reader-core-terms table:not([class]) td {
+    box-sizing: border-box; display: block; inline-size: 100%; min-inline-size: 0;
+  }
+  .md-typeset .reader-core-terms thead {
+    position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%);
+  }
+  .md-typeset .reader-core-terms th[scope="rowgroup"] { background: var(--md-code-bg-color); padding: .5em .65em; }
+  .md-typeset .reader-core-terms table:not([class]) td { border: 0; padding: .15em .65em; }
+  .md-typeset .reader-core-terms tr { border-bottom: 1px solid var(--md-typeset-table-color); padding: .35em 0 .45em; }
+}

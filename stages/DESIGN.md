@@ -360,7 +360,7 @@ Banner 由 `scripts/build-banner.py` 在原版插圖上加動畫，不重畫文�
 
 **已知例外**：
 
-- **Stage 0**：prerequisite gateway，使用可見的跳過判斷、單一整合練習、18 筆五星學習資源與短版完成檢查；時間、環境、補充練習與名詞預設收合（見「Stage 0 為什麼可以 skip」）
+- **Stage 0**：prerequisite gateway，學習目標後先放可見核心名詞、概念圖與真實 Commit 範例，再做單一整合練習、短版完成檢查與 18 筆評分學習資源；只有時間、環境與補充練習預設收合（見「Stage 0 為什麼可以 skip」）
 - **Stage 5**：分 7 個核心 sub-stage（5.1-5.7）+ 5.8 SDK（選修、包成產品或服務才需要），每個 sub-stage 各有自己的 學習目標 / 必修閱讀 / 動手練習 / 精選 Projects
 - **Stage 6**：直接跳過進入條件 section（前面 stage 已隱含 prerequisite）；Stage 7 仍保留可見進入條件，讓讀者先確認 Stage 4／5／6 的必要基礎。
 - **Stage 7 Eval**：先教 **Outcome**，再教完整 **Eval Case**、**Eval Suite** 與 **Reviewed Eval Set**；最後才補充 Golden／Reference Set 等外部常見名稱。Eval Case 至少交代 input、initial state、success criteria、forbidden actions、optional reference answer、grader 與 case metadata。Golden Set 不只是 input，也不等於訓練資料或 Few-shot；Development cases 用來調整，frozen holdout 只在 release candidate／最後驗證使用。報告保留 dataset version、split、trials、grader、Outcome、Trajectory 與 baseline；不能把 20–50 cases 說成所有專案的硬性最低數，也不能因單次隨機失敗直接判定 regression。
@@ -529,7 +529,7 @@ Stage 0 不是 stage——它是 prerequisite gateway。
 - Python / git / CLI / JSON 已經會的人 → 直接 Stage 1
 - 不會的人 → 用一個不需帳號或 token 的小工具，同時練 Python、API、JSON、CLI 與 Git
 
-Stage 0 的可見主線固定為「skip 條件 → 4 個學習目標 → 1 個整合練習 → 18 筆五星學習資源 → 短版完成檢查」。時間、環境、分項補充與名詞放進預設收合的 `<details>`。它存在是為了**讓真的初學者不會在後面 stage 卡住**，但不把這個 repo 變成完整的 Python 或 Git 教科書。
+Stage 0 的可見主線固定為「skip 條件 → 4 個學習目標 → 核心名詞 → Git／GitHub 概念圖與真實 Commit 範例 → 1 個整合練習 → 短版完成檢查 → 18 筆評分學習資源」。時間、環境與分項補充放進預設收合的 `<details>`。核心名詞依程式與執行、資料與介面、平台與專案、認識專案、修改與協作分成 `4／4／3／3／5` 組；先區分 Python、Terminal、CLI、Shell，再解釋 API、資料格式及 GitHub 協作。圖前須定義 History／Diff。Commit 保存本機版本，Push 上傳工作線，PR 提出檢查，Merge 合併；作者、時間、說明與識別碼可供追查，但作者標籤不等於身分驗證。公開不代表開源，使用前要查看 License。瀏覽器觀察不要求帳號或建立公開 Issue／PR。它存在是為了**讓真的初學者不會在後面 stage 卡住**，但不把這個 repo 變成完整的 Python 或 Git 教科書。
 
 ---
 

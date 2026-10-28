@@ -8,10 +8,10 @@
 
 看看下面四件事。你不需要背指令。但你要能自己查资料并完成：
 
-- [ ] 用 Python 从 API（Application Programming Interface，让程序调用服务的接口）（给程序取数据的入口）获取公开数据，再从 JSON（JavaScript Object Notation，程序交换数据常用的文本格式） 里找出一个值。
-- [ ] 用 Git 复制项目（`clone`）、创建工作线（`branch`）、保存版本（`commit`），再把版本发送到网上（`push`）。两次修改碰到一起时，知道什么是合并冲突，也知道要保留什么。
-- [ ] 用命令行（在终端输入的文字指令）切换文件夹、创建文件并运行 Python script。
-- [ ] 看懂 YAML 和 JSON。它们都是用文本保存数据的格式。
+- [ ] 用 **Python** 向 **API** (Application Programming Interface) 拿公开资料，再从 **JSON** (JavaScript Object Notation) 里找出一个值。
+- [ ] 用 **Git** 复制专案（clone）、开工作线（**branch**）、保存版本（**commit**），再把版本送到网络上（**push**）。两次修改撞在一起时，知道要留下什么（合并冲突）。
+- [ ] 用 **CLI（命令行界面）**切换资料夹、建立文件并执行 Python 程序。
+- [ ] 看懂 **YAML** 与 JSON。它们都是用文字保存资料的格式。
 
 四项都能做到，就直接前往 [Stage 1 — LLM 基础](01-llm-basics.zh-Hans.md)。只要有一项不确定，就完成本页的主要练习。需要时再展开补充内容。
 
@@ -21,12 +21,72 @@
 
 - 让 Python 从 API 获取数据，再读出 JSON 里需要的部分。
 - 从终端运行程序，并找到程序创建的文件。
-- 用 Git 保存一个版本，需要时可以回到这个版本。
-- 认出 YAML、JSON 和 API token（让程序登录的秘密文字），知道哪些内容不能公开。
+- 认出项目仓库、查看版本历史，并用 Git 保存一个版本。
+- 认出 YAML、JSON 和 **API token**（让程序登录的秘密文字），知道哪些内容不能公开。
+
+## 🔑 核心名词
+
+先认识执行程序和交换资料的工具，再看项目网站如何保存及分享修改。
+
+<div class="reader-core-terms" role="region" tabindex="0" aria-label="基础核心名词">
+<table align="center">
+  <thead><tr><th scope="col">分类</th><th scope="col">名词</th><th scope="col">白话解释</th><th scope="col">本章用途或界线</th></tr></thead>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">程序与执行</th><td><strong>Python</strong></td><td>程序语言；用它写出指令，再执行程序。</td><td>主练习用 Python 取得资料。</td></tr>
+    <tr><td><strong>Terminal（终端）</strong></td><td>让你输入和查看文字指令的视窗。</td><td>在这里执行主练习。</td></tr>
+    <tr><td><strong>CLI（Command-Line Interface，命令行界面）</strong></td><td>用文字指令与程序互动的介面。</td><td>例如输入 Python 指令。</td></tr>
+    <tr><td><strong>Shell（命令解释器）</strong></td><td>解读并执行输入的指令，例如 PowerShell 或 Bash。</td><td>它通常在终端中运作。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">资料与介面</th><td><strong>API（Application Programming Interface，应用程序接口）</strong></td><td>让程序依规则与另一个程序或服务互动的介面。</td><td>不只用于网站。</td></tr>
+    <tr><td><strong>JSON（JavaScript Object Notation）</strong></td><td>以文字表示结构化资料的格式。</td><td>主练习读取 API 回传的资料；不是程序脚本。</td></tr>
+    <tr><td><strong>YAML（YAML Ain’t Markup Language）</strong></td><td>另一种文字资料格式，常用于设定。</td><td>缩排有意义；不是程序脚本。</td></tr>
+    <tr><td><strong>API token</strong></td><td>让程序证明身份的秘密凭证，像一把钥匙。</td><td>不要公开或上传；主练习不需要。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">平台与项目</th><td><strong>GitHub</strong></td><td>分享程序码、工具、教材与线上资源的平台，许多开源项目在这里协作。</td><td>公开不代表一定是开源；要查看授权。</td></tr>
+    <tr><td><strong>Git</strong></td><td>记录文件版本的工具，可以在自己的电脑上使用。</td><td>Git 与 GitHub 是不同的东西。</td></tr>
+    <tr><td><strong>Repository（Repo）</strong></td><td>存放一个项目文件及版本记录的地方，也叫仓库。</td><td>本页项目就是一个 repository。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">认识项目</th><td><strong>README</strong></td><td>项目的介绍文件，通常说明用途和如何开始。</td><td>先读它，找到学习入口。</td></tr>
+    <tr><td><strong>License</strong></td><td>授权文件，说明别人可以如何使用、修改或分享作品。</td><td>是否开源与使用条件要看实际授权。</td></tr>
+    <tr><td><strong>Issue</strong></td><td>项目中用来讨论问题、建议或待办事项的页面。</td><td>先观察，不必发表。</td></tr>
+  </tbody>
+  <tbody>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">修改与协作</th><td><strong>Branch</strong></td><td>一条独立的修改工作线；<strong>main</strong> 常是大家共用的主要工作线。</td><td>可先在自己的工作线修改。</td></tr>
+    <tr><td><strong>Commit</strong></td><td>像替项目拍一张有说明的快照，保存选定的修改与作者、时间、说明、识别码（hash）。</td><td>编辑器的储存不等于 commit；历史可以分支。</td></tr>
+    <tr><td><strong>Push</strong></td><td>把本机的版本记录送到 GitHub 上对应的工作线。</td><td>送出不会自动合并到 main。</td></tr>
+    <tr><td><strong>Pull Request（PR）</strong></td><td>提出一组修改，让其他人检查并讨论是否接受。</td><td>提出 PR 不代表修改已合并。</td></tr>
+    <tr><td><strong>Merge</strong></td><td>把一条工作线的修改合并到另一条工作线。</td><td>检查并同意后，才能将修改合进 main。</td></tr>
+  </tbody>
+</table>
+</div>
+
+**History（版本历史）**是项目保存的版本记录；它可以分支，不一定是一条依时间排列的直线。**Diff（差异）**比较修改前后的内容。Commit 中的作者名称、时间、说明与识别码有助追查，但作者标签本身不能证明身份。
+
+例如：在 branch 修正一个错字 → 在本机做 commit → push 到 GitHub 的 branch → 提出 PR 请人检查 → 同意后 merge 进 main。每一步有不同用途；PR 不会因此自动合并。
+
+![Git 与 GitHub 的修改流程：Branch 和 Commit 在本机保存修改，Push 上传，PR 请人检查，Merge 合并；每笔 Commit 留下可追查的记录。](../resources/diagrams/github-change-flow.zh-Hans.png)
+
+想继续查阅，可看 [GitHub 官方入门](https://docs.github.com/en/get-started/using-github/hello-world)、[授权说明](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)与 [Git 版本历史](https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History)。
+
+### 看一笔真实修改
+
+这是本项目已合并的 [PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)，以及它留下的 [Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)。上方六格是教学标注，下方保留 GitHub 真实画面。
+
+![本项目 PR 343 的真实合并记录，标示版本标识码、作者、时间、修改说明、更改文件数与 Diff。](../resources/diagrams/github-commit-example.zh-Hans.png)
+
+- **标识码**：`2956dc0` 是完整编号的短版，打开原始 Commit 可看完整编号。
+- **作者与时间**：作者栏链接到 GitHub 账号；时间是 Commit 记录的时间，不一定是 Push 到网站的时间。
+- **修改说明**：这笔写着合并 PR #343；打开 PR 可查看讨论与已合并状态。
+- **文件与差异**：本例改了 10 个文件，新增 15 行、删除 13 行。绿色加号代表新增，红色减号代表删除；打开文件查看前后对照。
 
 ## 🛠 动手练习：做一个 GitHub 数据小工具
 
 **成果：**让 Python 从 GitHub 获取公开数据，把结果显示在屏幕上、写入文件，再用 Git 保存。这项主要练习不需要账号、API token 或付费服务。
+
+先花五分钟用浏览器观察：[打开本项目](https://github.com/WenyuChiou/awesome-agentic-ai-zh)，找出 README、License 和 Issues，再打开 commit 历史，选一笔查看作者、时间、说明、识别码与 diff。公开显示的作者 email 是记录中的标签，不是登入凭证，也不能单凭它验证作者身份。不需要建立 Issue 或 PR。
 
 ### 1. 创建程序
 
@@ -72,13 +132,13 @@ git add github_profile.py result.txt
 git commit -m "Add GitHub profile checker"
 ```
 
-Commit 是 Git 保存的一个版本，旁边会有一句说明。如果 Git 第一次要求姓名或 email，按屏幕提示设置后，再运行一次 `git commit`。这些信息是版本的作者标签，不是密码。
+如果 Git 第一次要求姓名或 email，按屏幕提示设置后，再运行一次 `git commit`。这些信息是版本的作者标签，不是密码。
 
 ## ✅ 完成检查
 
 - [ ] 终端显示 GitHub 账号和关注者数量。
 - [ ] `result.txt` 中有相同结果。
-- [ ] `git log --oneline` 能看到刚才的 commit。
+- [ ] `git log --oneline` 能看到刚才的 commit，也能在项目的 History 找到一笔修改及其 Diff。
 - [ ] 程序和 commit 中没有密码或 API token。
 
 四项都完成后，就可以前往 [Stage 1 — LLM 基础](01-llm-basics.zh-Hans.md)。如果卡住，展开下面最接近问题的部分。不必一次读完。
@@ -181,33 +241,33 @@ Token 就像程序使用的临时钥匙。拿到它的人可能以你的身份�
 
 `推荐度` 是学习优先顺序，不是 GitHub 的热门数字。按照项目规则，⭐⭐⭐⭐⭐ 代表“没有它就会卡住”；下面都是补充资源，所以诚实使用 ⭐⭐⭐⭐（强烈推荐）或 ⭐⭐⭐（扎实参考），不用假五星。
 
-<table>
+<table align="center">
   <thead><tr><th scope="col">主题</th><th scope="col">资源</th><th scope="col">适合谁</th><th scope="col">推荐度</th><th scope="col">为什么推荐／备注</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>想跟着一本书从头练习</td><td>⭐⭐⭐⭐</td><td>代码免费并配有练习；完整教材需要购买书籍。</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>想跟着一本书从头练习</td><td>⭐⭐⭐⭐</td><td>代码免费并配有练习；完整教材需要购买书籍。</td></tr>
     <tr><td><a href="https://realpython.com/">Real Python</a></td><td>学过一点，想查一个问题</td><td>⭐⭐⭐⭐</td><td>文章按主题分开，遇到问题时容易查找。</td></tr>
     <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>喜欢看英文视频</td><td>⭐⭐⭐</td><td>用视频从基础语法讲到实际应用。</td></tr>
     <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>喜欢一边操作一边学</td><td>⭐⭐⭐</td><td>部分内容免费；完整后端路线需要付费。</td></tr>
     <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python 官方繁体中文教程</a></td><td>做完第一次练习，想查正确语法</td><td>⭐⭐⭐⭐</td><td>官方参考资料；它预期你已经懂一点编程。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>想完整理解 Git</td><td>⭐⭐⭐⭐</td><td>免费的完整参考书。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>想完整理解 Git</td><td>⭐⭐⭐⭐</td><td>免费的完整参考书。</td></tr>
     <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>想用图看懂 branch、merge 和操作顺序</td><td>⭐⭐⭐⭐</td><td>用图解说明常见工作流程。</td></tr>
     <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Git 操作出错，想安全恢复</td><td>⭐⭐⭐⭐</td><td>先说明哪些操作可能丢失资料，再教你如何恢复。</td></tr>
     <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>基本方法不够，想查更多问题</td><td>⭐⭐⭐</td><td>收录更多 Git 问题与处理方式。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">CLI／Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>想有顺序地学命令行</td><td>⭐⭐⭐⭐</td><td>从新手指令一路介绍到较进阶的操作。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI／Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>想有顺序地学命令行</td><td>⭐⭐⭐⭐</td><td>从新手指令一路介绍到较进阶的操作。</td></tr>
     <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>使用 Windows，想从第一步开始</td><td>⭐⭐⭐⭐</td><td>Microsoft 官方的 PowerShell 入门教材。</td></tr>
     <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>只想先看一个指令怎么用</td><td>⭐⭐⭐⭐</td><td>用短小、可复制的例子解释常用指令。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>想知道 API 背后怎么传资料</td><td>⭐⭐⭐⭐</td><td>Mozilla 维护的 HTTP 参考资料。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>想知道 API 背后怎么传资料</td><td>⭐⭐⭐⭐</td><td>Mozilla 维护的 HTTP 参考资料。</td></tr>
     <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>想用图形界面试 API</td><td>⭐⭐⭐⭐</td><td>不用先写程序，也能看到发送的内容和收到的资料。</td></tr>
     <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>想从命令行调用 API</td><td>⭐⭐⭐</td><td>指令通常比原始 curl 写法更容易阅读。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">YAML／JSON</th><td><a href="https://yaml.org/">YAML 官网</a></td><td>需要查 YAML 的正确写法</td><td>⭐⭐⭐</td><td>语法和正式规范的官方入口。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML／JSON</th><td><a href="https://yaml.org/">YAML 官网</a></td><td>需要查 YAML 的正确写法</td><td>⭐⭐⭐</td><td>语法和正式规范的官方入口。</td></tr>
     <tr><td><a href="https://www.json.org/json-en.html">JSON 介绍</a></td><td>第一次接触 JSON</td><td>⭐⭐⭐⭐</td><td>用短例子说明 JSON 怎么装资料。</td></tr>
     <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>想从命令行整理 JSON</td><td>⭐⭐⭐⭐</td><td>可以筛选和整理 API 返回的资料。</td></tr>
   </tbody>

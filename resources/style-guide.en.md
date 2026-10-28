@@ -357,7 +357,7 @@ Pages containing models, prices, context limits, licenses, or lifecycle states r
 
 State only the checked scope and date; do not repeat generic permanence disclaimers. All three locale markers must be identical; `canonical` always points to the Traditional Chinese source page. If an official source does not publish a field, write “not published by the official source” instead of inferring it from a third-party leaderboard. Third-party benchmarks may only teach readers how to run their own evaluation.
 
-**Stage 0 exception**: it may omit `Curated Projects` and `Entry Conditions` because it is a prerequisite gateway. The visible path keeps the skip check, four learning goals, one integrated practice, all 18 rated learning resources, and a short completion check. Time, environment, extra practice, and terms stay collapsed by default.
+**Stage 0 exception**: it may omit `Curated Projects` and `Entry Conditions` because it is a prerequisite gateway. Keep the skip check, four goals, visible core terms, a concept figure and real commit example, one integrated practice, completion check, and all 18 rated resources in that order. Only time, environment and supplementary practice are collapsed.
 
 ---
 

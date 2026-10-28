@@ -6501,7 +6501,7 @@
         "tag": "v2026.10.16",
         "published_at": "2026-10-16T01:19:10Z"
       },
-      "reference_count": 122,
+      "reference_count": 131,
       "sources": [
         ".github/outreach/_send-day-packages.md",
         ".github/outreach/awesome-claude-code.md",
@@ -6544,7 +6544,10 @@
         "examples/stage-5/tool-calling-tutor/translations/SKILL.zh-Hans.md",
         "resources/style-guide.en.md",
         "resources/style-guide.md",
-        "resources/style-guide.zh-Hans.md"
+        "resources/style-guide.zh-Hans.md",
+        "stages/00-foundations.en.md",
+        "stages/00-foundations.md",
+        "stages/00-foundations.zh-Hans.md"
       ]
     },
     "wenyuchiou/awesome-mcp-servers": {
