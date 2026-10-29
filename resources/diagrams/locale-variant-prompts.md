@@ -123,13 +123,17 @@ maturity ladder），彼此之間沒有箭頭。底部固定保留 permission、
 `resources/diagrams/` 的慣例是 `NAME.png` = zh-TW、`NAME.en.png`、`NAME.zh-Hans.png`。
 處理前有 5 張圖缺 9 個變體，導致 `.en.md` / `.zh-Hans.md` 頁面**alt text 已在地化、圖檔還是繁中**。
 
+<div align="center" markdown="1">
+
 | 圖 | 結果 |
-|---|---|
+|:---|:---|
 | `multi-llm-delegation-composition` | 補上 `.zh-Hans`，忠實比照既有的 `.png` / `.en.png`（深色霓虹＋廠商 logo） |
 | `teacher-ai-use-cases-overview` | 三語重產，**升級為 house style**（彩色卡片＋線條 icon） |
 | `teacher-ai-classroom-use-cases` | 三語重產，**升級為 house style**（五欄卡片式） |
 | `rag-pipeline-overview` | 三語重產，淺色卡片流程圖（**未達 house style**，見下方） |
 | `chunking-strategies` | 三語重產，淺色卡片流程圖（**未達 house style**，見下方） |
+
+</div>
 
 副檔名同時從 `.jpg` 改為 `.png`（house style 那 20 張都是 png，線條插圖＋密集文字用 jpeg 會有壓縮雜訊），
 `stages/06-memory-rag` 與 `branches/for-teacher` 共 12 處引用一併更新。
@@ -151,12 +155,16 @@ maturity ladder），彼此之間沒有箭頭。底部固定保留 permission、
 
 ### 1. delegate 回報 `success` 不等於做對了 —— 這批四次假成功
 
+<div align="center" markdown="1">
+
 | 事件 | 實際狀況 |
-|---|---|
+|:---|:---|
 | `chunking-strategies.zh-Hans` 第 1 次 | 殘留繁體 `種` / `純`，回報 success |
 | 同上第 2 次 | 修好 `純`→`纯`，**`種` 仍是繁體**，又回報 success |
 | rag/chunking house style 第 3 次 | 修好乾淨度但**整個丟掉 house style** |
 | 同上第 4 次 | **根本沒改寫檔案**（時間戳未變），卻列出一串「已執行的驗證指令」 |
+
+</div>
 
 **驗收必須是委派者自己看原始產出**，而且要有能分辨的方法。
 

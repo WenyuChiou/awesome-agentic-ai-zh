@@ -85,7 +85,7 @@ top_idx = np.argsort(-sims)[:top_k]
 2. 比较向量方向。
 3. 把分数最高的 `top-k` 笔放到前面。
 
-**Normalize（正规化）**会把向量调成相同长度。完成后，dot product 就能直接当 cosine similarity 使用。
+**Normalize（正规化）** 会把向量调成相同长度。完成后，dot product 就能直接当 cosine similarity 使用。
 
 <details markdown="1">
 <summary>常见问题与下一步</summary>

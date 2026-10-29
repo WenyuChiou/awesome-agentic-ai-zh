@@ -4,14 +4,14 @@
 
 # 核心练习：用 Eval 检查 Agent
 
-**Eval（评测）**像一张固定考卷：每次改 Prompt、模型或程序后，都用同一批题目再考一次。
+**Eval（评测）** 像一张固定考卷：每次改 Prompt、模型或程序后，都用同一批题目再考一次。
 
 对应 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 1。
 
 ## 🎯 学习目标
 
 - 说清楚 **Eval case**：一题输入、预期结果和评分方法。
-- 把 5 题 **development split（开发组）**和 3 题 **holdout set（保留考卷）**分开。
+- 把 5 题 **development split（开发组）** 和 3 题 **holdout set（保留考卷）** 分开。
 - 保存 **Baseline（基准）**，看下一版是进步、相同，还是 **Regression（退步）**。
 - 先用固定规则评分；需要 **LLM-as-judge** 时，只接受完整的 `PASS`／`FAIL`。
 
@@ -95,7 +95,7 @@ Haiku 4.5 的单价是 input `$1 / 1M` tokens、output `$5 / 1M` tokens：
 - **Baseline（基准）**：改东西以前保存的成绩单，而且要记住数据版本、split、模型与每题结果。
 - **Regression（退步）**：新版本在同一份考卷上比基准差；先看失败题与多次 trials，再决定是否阻挡发布。
 
-**Deterministic evaluator（固定规则评分器）**对同一输出会给同一分数，例如 substring、exact match 或正规表示式。**LLM-as-judge**能评开放式答案，但可能有偏差或格式错误，所以仍要人工抽查。
+**Deterministic evaluator（固定规则评分器）** 对同一输出会给同一分数，例如 substring、exact match 或正规表示式。**LLM-as-judge**能评开放式答案，但可能有偏差或格式错误，所以仍要人工抽查。
 
 | 题目形状 | 先用什么 | 为什么 |
 |---|---|---|

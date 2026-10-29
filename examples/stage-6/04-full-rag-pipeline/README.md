@@ -6,12 +6,12 @@
 
 ← 回到 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.md#練習-4完整-rag-流水線)
 
-**RAG（Retrieval-Augmented Generation，檢索增強生成）**會先找資料，再讓模型看著資料回答。它像開卷考試：先翻到對的頁，再作答。
+**RAG（Retrieval-Augmented Generation，檢索增強生成）** 會先找資料，再讓模型看著資料回答。它像開卷考試：先翻到對的頁，再作答。
 
 ## 📌 學習目標
 
 - 把 **chunk → embed → retrieve → generate** 四步接起來。
-- 看懂 **grounding（依據資料回答）**與 `top_k`。
+- 看懂 **grounding（依據資料回答）** 與 `top_k`。
 - 用假的 LLM 回覆離線測完整流程。
 - 分清楚「找錯資料」和「看對資料卻答錯」兩種故障。
 

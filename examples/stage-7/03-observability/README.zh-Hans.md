@@ -4,7 +4,7 @@
 
 # 核心练习：看见 Agent 里面发生什么
 
-**Observability（可观测性）**像帮 Agent 装仪表板：它慢了、错了或花太多 token 时，你知道是哪一步。
+**Observability（可观测性）** 像帮 Agent 装仪表板：它慢了、错了或花太多 token 时，你知道是哪一步。
 
 对应 [Stage 7 — Agent 上线工程：可测、可看、可停、可恢复](../../../stages/07-multi-agent-production.zh-Hans.md) 核心练习 2。
 

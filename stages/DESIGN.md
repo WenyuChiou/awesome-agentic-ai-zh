@@ -44,13 +44,17 @@ README、PROGRESS、CAPSTONE、章節頁首、章末下一站與路線圖必須�
 
 **初版草稿（A1-A5）→ 合併後（A1-A3）**：
 
+<div align="center" markdown="1">
+
 | 草稿 | 草稿主題 | 最終歸屬 |
-|---|---|---|
+|:---|:---|:---|
 | A1 | CLI 入門 + 選擇 | → 最終 A1 |
 | A2 | Workflow（project instructions / Skill / 任務拆解 / portable prompt） | → 最終 A2 |
 | A3 | MCP 接 CLI | → 最終 A3 |
 | A4 | 多 CLI 並用 | → 移到最終 A1／A2 的工具比較與 portable prompt |
 | A5 | Production CLI workflow（CI / cost / observability / team sharing） | → 最終 A3 |
+
+</div>
 
 合併邏輯：
 
@@ -110,12 +114,16 @@ Stage 5（Claude Code 生態）兩條軌都會碰到：
 
 ### Track A 跟 Track B 的 entry curation 差別
 
+<div align="center" markdown="1">
+
 | | Track A（A1-A3） | Track B（Stage 3-8） |
-|---|---|---|
+|:---|:---|:---|
 | **entry 結構** | 大量 cross-link 到 Stage 5 / Stage 8 / cli-agents-guide | 完整獨立 entry（每個都有 schema 表格）|
 | **entry 數** | ~24 個（多為 cross-link） | ~80 個（多為獨立 entry） |
 | **新增 entry 標準** | 必須是 CLI agent 直接相關的工具 | framework / library / agent component |
 | **更新頻率** | 高（CLI 工具迭代快） | 中（framework 更新慢一些） |
+
+</div>
 
 **判準**：Track A entry 出現的條件是「對 CLI workflow 有直接幫助」；Track B entry 出現的條件是「教讀者一個 agent design pattern」。
 
