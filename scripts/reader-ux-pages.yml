@@ -301,12 +301,11 @@ pages:
       en: stages/01-llm-basics.en.md
       zh-Hans: stages/01-llm-basics.zh-Hans.md
     max_visible_chars:
-      # Carbon's visible access warning adds 181/323/181 reader-gate characters;
-      # existing headroom absorbs 1/33/1. Pin measured totals (2026-10-29).
-      # Other content, disclosure and resource/rating limits are unchanged.
-      zh-TW: 9375
-      en: 14315
-      zh-Hans: 9401
+      # Required first-use definitions add 211/466/211 measured characters.
+      # Pin the observed totals; no extra headroom or hidden core content.
+      zh-TW: 9586
+      en: 14781
+      zh-Hans: 9612
     max_open_details: 3
     required_visible_sections:
       core-terms:
@@ -2386,7 +2385,7 @@ pages:
         - "GITHUB_TOKEN"
         - 'permission-profile: ":read-only"'
         - "@v1"
-        - "input tokens × input price + output tokens × output price"
+        - "(input tokens ÷ 1,000,000 × input price) + (output tokens ÷ 1,000,000 × output price)"
         - "provider spend limit"
         - "job timeout"
     required_visible_sections:

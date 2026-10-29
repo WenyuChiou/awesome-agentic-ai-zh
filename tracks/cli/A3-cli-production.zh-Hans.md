@@ -132,9 +132,9 @@ GitHub 建议 production workflow 把第三方 Action pin 到完整 commit SHA�
 
 **成果：** 你留下 provider／model、input usage、output usage、时间和结果；拿不到的字段会清楚写“未确认”，不会猜。
 
-先分清你用的是订阅方案，还是按 API usage 计费。如果官方提供 token 和单价，成本才使用这个算式：
+先分清订阅费与 API 用量费。下面只估算普通输入／输出 token 的费用，两种单价都按“每百万 token”计；其他收费另查供应商规则。
 
-`input tokens × input price + output tokens × output price`
+`(input tokens ÷ 1,000,000 × input price) + (output tokens ÷ 1,000,000 × output price)`
 
 <details markdown="1">
 <summary>展开 CLI-11 的记录卡、停止规则与 observability</summary>

@@ -22,11 +22,11 @@ By the end of this stage, you can:
 
 ### 1. **Token**
 
-A Token is a unit a model reads and writes; APIs often charge by token. Think of a sentence cut into small blocks: a word may be one block or several, and one Chinese character is not always one block. In Exercise 2, read actual input/output token counts to estimate cost. Character counts are not exact because tokenizers differ.
+A Token is a unit a model reads and writes; APIs often charge by token. Think of a sentence cut into small blocks: a word may be one block or several, and one Chinese character is not always one block. In Exercise 2, read actual input/output token counts to estimate cost. Character counts are not exact because tokenizers (text-splitting tools) differ.
 
 ### 2. **Context Window**
 
-A Context Window is the token space for one request. Think of a desk: your prompt and chat history take space, and the model needs room for its answer. The maximum-output limit may be smaller, so check both numbers. Use them to decide when to trim, summarize, or split a long document.
+A Context Window is the token space for one request. Think of a desk: instructions, data, and chat history take space, and the model needs room for its answer. The maximum-output limit may be smaller, so check both numbers. Use them to decide when to trim, summarize, or split a long document.
 
 ### 3. **Temperature**
 
@@ -34,30 +34,37 @@ Temperature controls how much sampling varies. Imagine choosing the next block f
 
 ## How a Model Moves from Data to an Agent
 
-Keep this main path in mind:
-
-`Data → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent system`
-
-- **Pre-training**: the model learns patterns from large amounts of text, images, or code. This changes the model weights.
+- **Pre-training**: the model learns patterns from large amounts of text, images, or code. This changes model weights, the values learned inside the model.
+- **Base Model**: a pretrained model that learns to continue content; it may not yet follow instructions.
 - **Post-training**: demonstrations, preferences, or feedback teach the model to follow instructions and act more safely. This also changes weights. Common methods include:
-  - **SFT** (Supervised Fine-Tuning): teach the model to imitate good inputs and answers.
-  - **DPO** (Direct Preference Optimization): teach preferences using pairs of better and worse answers.
-  - **RLHF** (Reinforcement Learning from Human Feedback): use human feedback in reinforcement learning.
-  - **RL** (Reinforcement Learning): learn from rewards, which can also come from rules.
+    - **SFT** (Supervised Fine-Tuning): teach the model to imitate good inputs and answers.
+    - **DPO** (Direct Preference Optimization): teach preferences using pairs of better and worse answers.
+    - **RLHF** (Reinforcement Learning from Human Feedback): use human feedback in reinforcement learning.
+    - **RL** (Reinforcement Learning): learn from rewards, which can also come from rules.
+- **Instruct Model**: a model further adapted to follow instructions.
 - **Fine-tuning**: smaller, specialized data is used to continue changing model weights. Post-training is the broad later-training stage; Fine-tuning is one common kind of it.
 - **Inference**: after training, the model receives one input and produces one result. This uses the model; it does not retrain it.
 
 **RAG** (Retrieval-Augmented Generation): retrieve relevant material, then answer using it.
 
+An **Agent** is not the next model version. At runtime it uses a model to choose the next step, and may use RAG and these parts to complete work. These parts usually do not change model weights.
+
+- **Prompt**: tells the model the task and rules.
+- **Memory**: saves information for later use.
+- **Tools**: let the system find information or take actions.
+- **Harness**: manages tools, rules, and stopping conditions.
+
+`Data → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent system`
+
 ![Data passes through Pre-training and Post-training to make a model ready for Inference; Prompt, RAG, Memory, Tools, and Harness surround the model in an Agent system and usually do not change its weights](../resources/diagrams/model-lifecycle-to-agent.en.png)
 
-**Agent** is not the next model checkpoint in the training process. It is a system that connects a model with Prompt, RAG, Memory, Tools, and Harness. These parts usually work outside the model and do not change its weights.
+The next three methods are advanced electives; beginners only need to recognize their names:
 
 - **GRPO** (Group Relative Policy Optimization): compare several answers to the same question and learn from their relative results.
 - **LoRA** (Low-Rank Adaptation): freeze the original weights and train added low-rank matrices.
 - **PEFT** (Parameter-Efficient Fine-Tuning): a group of methods that trains fewer parameters.
 
-For comparisons with Distillation and Quantization, open the [optional model training and adaptation guide](../resources/model-training-guide.en.md). Beginners do not need to train a model in this stage.
+To compare Distillation (learning from another model) and Quantization (reducing numerical precision), open the [optional model training and adaptation guide](../resources/model-training-guide.en.md). Beginners do not need to train a model in this stage.
 
 ## Scene-Based Model Picker
 
