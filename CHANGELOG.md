@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
-- **CI / authenticated release date** · 正式發布讀取 GitHub API 日期時使用既有唯讀 token，避免未認證請求遇到 403；保留日期、main SHA、完整內容檢查及 Environment 批准，補上認證請求回歸檢查。
+- **CI / authenticated release date** · 正式發布讀取 GitHub API 日期時使用既有唯讀 token，避免未認證請求遇到 403。保留日期、main SHA、完整內容檢查及 Environment 批准。補上認證請求回歸檢查。
 
 - **release / v2026.10.29-3** · 依 v2026.10.29-2 之後的三批差異整理三語發布說明：進階 RAG 名詞與 A／B／C 比較、Stage 5／6／8 的權限及本機操作界線、Stage 1 圖前定義與 A3 每百萬 token 計價公式。保留重要內容展開與推薦評分；本版只發布三語說明，不產生或附上 PDF，沿用完整內容／連結檢查、main SHA 鎖定及 Environment 批准。
 
