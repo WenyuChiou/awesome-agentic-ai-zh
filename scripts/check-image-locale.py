@@ -44,8 +44,8 @@ DIAGRAM_DIR = REPO_ROOT / "resources" / "diagrams"
 # ![alt](path) — relative paths only; skip external URLs and data: URIs.
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\((?!https?:|data:)([^)\s]+)\)")
 # Approved direct fallback links count as references; unrelated links stay
-# unchanged. The top banner no longer exposes a duplicate PNG link, so its
-# generated SVG -> PNG fallback is accounted for separately below.
+# unchanged. Banner and role animations use generated SVG -> PNG fallbacks
+# even when the README does not expose a duplicate PNG link.
 BANNER_FALLBACK_RE = re.compile(
     r"(?<!!)\[[^\]]*\]\(((?:\.\./)*resources/diagrams/(?:banner|branch-decision-tree)(?:\.en|\.zh-Hans)?\.png)\)"
 )
@@ -53,6 +53,9 @@ GENERATED_SVG_PNG_FALLBACKS = {
     "banner.svg",
     "banner.en.svg",
     "banner.zh-Hans.svg",
+    "branch-decision-tree.svg",
+    "branch-decision-tree.en.svg",
+    "branch-decision-tree.zh-Hans.svg",
 }
 LOCALE_SUFFIXES = {".en.md": "en", ".zh-Hans.md": "zh-Hans"}
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
