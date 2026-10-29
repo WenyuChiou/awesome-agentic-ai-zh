@@ -19,6 +19,8 @@
 ![GitHub stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=flat&logo=github)
 [![Docs site](https://img.shields.io/badge/線上閱讀-立即開始-2ea44f?style=flat)](https://wenyuchiou.github.io/awesome-agentic-ai-zh/)
 
+[![Star History global rank](https://api.star-history.com/badge?repo=WenyuChiou/awesome-agentic-ai-zh&type=rank)](https://www.star-history.com/wenyuchiou/awesome-agentic-ai-zh)
+
 </div>
 
 > 📱 On a phone, read the [docs site](https://wenyuchiou.github.io/awesome-agentic-ai-zh/).
@@ -141,8 +143,6 @@ The timeline is a planning aid. Finish the step in front of you; no need to read
 
 ![Research, development, teaching, knowledge work, and everyday use are five options; choose what you need, not every path](resources/diagrams/branch-decision-tree.en.svg)
 
-[Static image](resources/diagrams/branch-decision-tree.en.png)
-
 <div class="reader-route-table" role="region" tabindex="0" aria-label="Choose a route by role">
 <table align="center">
 <thead><tr><th scope="col">Route</th><th scope="col">Who it fits</th><th scope="col">What you will handle</th></tr></thead>
@@ -163,8 +163,6 @@ The timeline is a planning aid. Finish the step in front of you; no need to read
 3. **Copy the first command as-is**: run the offline test first, don't retype a blank file.
 4. **Change one thing at a time**: rerun the test right after, so you know what caused the result.
 5. **Meet the completion check before moving on**: understanding is not the same as doing.
-
-Every `starter.py` is a runnable reference. Read the task and success condition, change one place, rerun the test. Full method: [how to use this material](docs/HOW_TO_USE.md).
 
 ## 📚 Learning entrances to bookmark
 
@@ -235,6 +233,10 @@ Full roles and rules are in [CONTRIBUTORS.md](CONTRIBUTORS.md).
 This learning map is MIT-licensed and stays free and public. Use an Issue for questions; for private contact, email [wenyuchiou12@gmail.com](mailto:wenyuchiou12@gmail.com).
 
 If this map helped you, a ⭐ Star is welcome, or [buy the author a coffee](https://www.buymeacoffee.com/wenyuchiou).
+
+## ⭐ Star History
+
+[![GitHub star history for this project](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)
 
 ## License
 

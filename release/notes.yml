@@ -1,27 +1,41 @@
 schema_version: 1
-release_version: v2026.10.26
+release_version: v2026.10.29
 
 # One ordered list produces all three language sections.
-# Only changes landed after v2026.10.24 belong here.
+# Only changes landed after v2026.10.26 belong here.
 changes:
-  - id: gpt-terra-model-guidance
-    category: learning-content
-    zh-TW: Stage 1 三語加入 GPT-6.1 Terra 的 API 型號、國際價格、快取與長上下文計費條件，說明工具支援及使用限制。選模型的簡短入口保持展開；完整型號與價格留在收合詳表。
-    zh-Hans: Stage 1 三语加入 GPT-6.1 Terra 的 API 型号、国际价格、缓存与长上下文计费条件，说明工具支持及使用限制。选模型的简短入口保持展开；完整型号与价格留在折叠详表。
-    en: Stage 1 adds GPT-6.1 Terra API IDs, international pricing, caching and long-context billing conditions in all three languages, with tool support and usage limits. The short model-selection guide stays visible; full IDs and pricing remain in the expandable reference.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/341
-  - id: kimi-pro-model-guidance
-    category: learning-content
-    zh-TW: Stage 1 三語更新 Kimi K3.1 Pro／Highspeed 的 API 型號、國際價格、快取及工具呼叫限制。區分 API 已可用與完整權重尚待公布，補上 K2 新帳號截止及預定退役資訊。只更新 GPT／Kimi 查核日期，保留 18 家模型與本機練習；未呼叫付費 API。
-    zh-Hans: Stage 1 三语更新 Kimi K3.1 Pro／Highspeed 的 API 型号、国际价格、缓存及工具调用限制。区分 API 已可用与完整权重尚待公布，补上 K2 新账号截止及预定退役信息。只更新 GPT／Kimi 核查日期，保留 18 家模型与本地练习；未调用付费 API。
-    en: Stage 1 refreshes Kimi K3.1 Pro/Highspeed API IDs, international pricing, caching and tool-calling limits in all three languages. It distinguishes available APIs from full weights that are still pending, and explains the K2 cutoff for new accounts and planned retirement. Only GPT/Kimi verification dates change; all 18 model families and local exercises remain. No paid API calls were made.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/341
-  - id: python-action-maintenance
+  - id: verified-course-and-leaderboard-links
     category: maintenance
-    zh-TW: GitHub Actions 的 actions/setup-python 由 7.0.0 更新至 7.1.0，固定完整 commit SHA。Python 版本、工作流程觸發條件與權限不變。本版只發布三語說明，不產生或附上 PDF。
-    zh-Hans: GitHub Actions 的 actions/setup-python 从 7.0.0 更新至 7.1.0，固定完整 commit SHA。Python 版本、工作流程触发条件与权限不变。本版只发布三语说明，不生成或附加 PDF。
-    en: GitHub Actions updates actions/setup-python from 7.0.0 to 7.1.0, pinned to a full commit SHA. Python versions, workflow triggers and permissions stay unchanged. This release publishes trilingual notes without generating or attaching PDFs.
+    zh-TW: 複查上版 11 個無法驗證的連結，區分可讀頁面、登入入口與反爬蟲阻擋，未發現確定失效。三語改用 Arena 現行路徑及 DeepLearning.AI 課程 canonical URL；不把受阻連結改列成功，也不放寬掃描基線。
+    zh-Hans: 复查上版 11 个无法验证的链接，区分可读页面、登录入口与反爬虫阻挡，未发现确定失效。三语改用 Arena 当前路径及 DeepLearning.AI 课程 canonical URL；不把受阻链接改列成功，也不放宽扫描基线。
+    en: Rechecks the previous release's 11 unverified links, distinguishing readable pages, sign-in pages and anti-bot blocks; none was confirmed broken. All three languages use current Arena paths and canonical DeepLearning.AI course URLs. Blocked links are not relabeled as verified, and scan baselines are not relaxed.
     links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/340
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343
+  - id: mobile-course-picker
+    category: reader-experience
+    zh-TW: 三語課程選路表在手機逐項使用完整寬度，英文按完整單字換行；桌面保留三欄比較。保留所有選路、課程入口、13 筆精選課程、原有星等、費用限制與查核日期，重要資訊維持展開。
+    zh-Hans: 三语课程选路表在手机逐项使用完整宽度，英文按完整单词换行；桌面保留三栏比较。保留所有选路、课程入口、13 笔精选课程、原有星级、费用限制与核查日期，重要信息保持展开。
+    en: The trilingual course picker uses full-width entries on phones and wraps English at whole-word boundaries; desktop keeps a three-column comparison. All routes, course entrances, 13 curated courses, ratings, cost limits and verification dates remain, with important information visible.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/344
+  - id: stage-zero-github-foundations
+    category: learning-content
+    zh-TW: Stage 0 學習目標後新增可見核心詞表，白話區分 Python、Terminal、CLI、Shell、資料格式與 GitHub，以及 Commit、Push、PR、Merge。三語圖解和本專案真實 Commit 截圖說明作者、時間、訊息、SHA、History 與 Diff，並區分 Commit 和 Push 時間。保留整合練習及 18 筆評分資源。
+    zh-Hans: Stage 0 学习目标后新增可见核心词表，白话区分 Python、Terminal、CLI、Shell、数据格式与 GitHub，以及 Commit、Push、PR、Merge。三语图解和本项目真实 Commit 截图说明作者、时间、消息、SHA、History 与 Diff，并区分 Commit 和 Push 时间。保留综合练习及 18 笔评分资源。
+    en: Stage 0 adds a visible glossary after its learning goals, explaining Python, Terminal, CLI, Shell, data formats, GitHub, Commit, Push, PR and Merge in plain language. Trilingual diagrams and a real project commit screenshot explain author, date, message, SHA, History and Diff, distinguishing commit time from push time. The integrated exercise and 18 rated resources remain.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/346
+  - id: readable-tables-and-bold
+    category: reader-experience
+    zh-TW: 三語資源表置中、說明靠左、同類分類合併，repo 只顯示專案名稱。主頁與角色入口留足名稱欄，文件站手機及平板逐項閱讀，桌面保留多欄比較。全站 Markdown 掃描後修正粗體星號外露；章名、來源、星等、限制與重要資訊維持可見。
+    zh-Hans: 三语资源表居中、说明靠左、同类分类合并，repo 只显示项目名称。主页与角色入口留足名称栏，文档站手机及平板逐项阅读，桌面保留多栏比较。全站 Markdown 扫描后修正粗体星号外露；章节名、来源、星级、限制与重要信息保持可见。
+    en: Trilingual resource tables are centered, explanatory text is left-aligned, matching categories are merged, and repository labels show project names. Homepage and role-entry tables give names enough space; the docs site stacks entries on phones and tablets while preserving desktop comparisons. A repository-wide Markdown scan fixes exposed bold markers. Full chapter names, sources, ratings, limits and important information remain visible.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/347
+  - id: readme-cleanup-and-star-history
+    category: reader-experience
+    zh-TW: 三語 README 移除角色圖旁獨立的「靜態圖」連結及重複的 starter.py 操作段落，保留角色圖、文件站停止動畫功能與完整使用指南。動態全球排名徽章放在 README 頂部徽章區附近；可點擊的 Star History 曲線圖放在支持與聯絡之後、License 之前。本版只發布三語說明，不產生或附上 PDF。
+    zh-Hans: 三语 README 移除角色图旁独立的「静态图」链接及重复的 starter.py 操作段落，保留角色图、文档站停止动画功能与完整使用指南。动态全球排名徽章放在 README 顶部徽章区附近；可点击的 Star History 曲线图放在支持与联系之后、License 之前。本版只发布三语说明，不生成或附加 PDF。
+    en: The three READMEs remove the standalone static-image link beside the role diagram and the repeated starter.py instructions, keeping the role diagram, docs-site pause control and full usage guide. The dynamic global-rank badge sits near the README header badges; the clickable Star History chart follows support/contact and precedes License. This release publishes trilingual notes without generating or attaching PDFs.
+    links:
+      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/README.md

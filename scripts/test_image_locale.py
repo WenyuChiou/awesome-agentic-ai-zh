@@ -184,6 +184,38 @@ def test_referenced_diagram_is_clean():
     assert rc == 0, out
 
 
+def test_generated_motion_fallbacks_match_site_hook():
+    spec = importlib.util.spec_from_file_location(
+        "motion_fallback_hooks", SCRIPT.with_name("mkdocs_hooks.py")
+    )
+    hooks = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(hooks)
+    assert cil.GENERATED_SVG_PNG_FALLBACKS == (
+        hooks._ANIMATED_BANNERS | hooks._ANIMATED_ROLE_DIAGRAMS
+    )
+
+
+def test_referenced_animations_keep_only_their_matching_static_fallbacks():
+    for stem in ("banner", "branch-decision-tree"):
+        for suffix in ("", ".en", ".zh-Hans"):
+            svg = f"resources/diagrams/{stem}{suffix}.svg"
+            png = f"resources/diagrams/{stem}{suffix}.png"
+            rc, out = _run(
+                {f"README{suffix}.md": f"![route]({svg})\n"},
+                assets=[svg, png], args=["--strict"],
+            )
+            assert rc == 0, out
+
+
+def test_arbitrary_svg_does_not_hide_an_orphan_png():
+    rc, out = _run(
+        {"page.md": "![route](resources/diagrams/other.svg)\n"},
+        assets=["resources/diagrams/other.svg", "resources/diagrams/other.png"],
+    )
+    assert rc == 1, out
+    assert "unreferenced diagram: resources/diagrams/other.png" in out
+
+
 def _run_all():
     fns = [v for k, v in sorted(globals().items())
            if k.startswith("test_") and callable(v)]
