@@ -89,7 +89,7 @@ cd awesome-agentic-ai-zh
 
 ### Track A：使用 CLI Agent 把工作做完
 
-正式順序是 `A1 → A2 → Stage 5 → A3 → Stage 8`。
+正式順序是 `A1 → A2 → Stage 5 → A3 → Stage 8`。 Stage 8 建議接著學，不擋 Track A Capstone。
 
 <div class="reader-route-table" role="region" tabindex="0" aria-label="Track A 路線比較">
 <table align="center">
@@ -121,11 +121,11 @@ cd awesome-agentic-ai-zh
 </table>
 </div>
 
-Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 7 再加入 Eval、觀測、批准與復原，讓同一張工作圖可以穩定運作。
+Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 7 加入 Eval、觀測、批准與復原，讓流程穩定運作。
 
 > 🔭 **學習順序**：Stage 2 Prompt → Stage 3 **Agent Loop** → Stage 4 **Workflow Graph**／Framework → Stage 5 工具與規則 → Stage 6 **Context Engineering** → Stage 7 production。Prompt、Context、Harness、Loop、Graph 會一起工作；它們不是五層，也不是互相取代的產品世代。
 
-完成 A3 或 Stage 7 後，可以開始 [Capstone 專案](CAPSTONE.md)；想記錄進度可使用 [PROGRESS.md](PROGRESS.md)。
+Track A 完成 A3 後，可開始 [Capstone 專案](CAPSTONE.md)。Track B 則先完成 Stage 8（含 Stage 7.5）。用 [PROGRESS.md](PROGRESS.md) 記錄進度。
 
 <details markdown="1">
 <summary>⏱️ 查看時間估算（安排參考，不是截止日期）</summary>

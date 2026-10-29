@@ -8,10 +8,15 @@
 每個練習 folder 裡的 **`starter.py`** 是一份可以直接執行的起點。它不是空白作業紙，
 也不是只能偷看的答案。它的工作是先給你一個「真的會動」的小系統，讓你有東西可以改。
 
-你第一次打開一題時，只做這些事：
+先在專案根目錄進入練習資料夾：
 
 ```powershell
 cd examples/stage-3/03-react-from-scratch
+```
+
+依[該題 README](../examples/stage-3/03-react-from-scratch/README.md) 安裝需求，下載並啟動 Ollama 模型。準備好後，先跑離線測試，再跑程式：
+
+```powershell
 python test.py
 python starter.py
 ```

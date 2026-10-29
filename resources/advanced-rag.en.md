@@ -38,6 +38,13 @@ By the end of this page, you can:
 
 ## 🩺 Start with the symptom, then choose a method
 
+Use a fixed set of questions and mark the relevant material for each one. `k` is how many top results to inspect: `k = 5` means the first five.
+
+- <strong>Recall@k</strong>: the share of all relevant material retrieved in the first k results.
+- <strong>Hit rate</strong>: the share of questions with at least one relevant result in the first k results.
+
+For example, a question has four relevant documents. Finding two in the first five gives Recall@5 of 50%; that question also counts as a hit.
+
 <div align="center" markdown="1">
 
 | Problem you see | Measure first | First method to try | Do not do this first |

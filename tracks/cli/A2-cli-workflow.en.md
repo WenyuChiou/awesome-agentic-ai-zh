@@ -69,7 +69,7 @@ The common part is what you need to explain; filenames, search locations, permis
 
 **Outcome:** Every time the CLI agent enters the repo, it knows what the project does, what it must not touch, how to verify changes, and what to report when finished.
 
-First choose the project-instructions file for your tool from the comparison above, then add these four things:
+Expand “the project-instructions and Skill locations for four CLIs” above. Find your tool, then put these four things in its instructions file:
 
 ```markdown
 # Project rules

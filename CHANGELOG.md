@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
+- **reader UX / beginner flow** · 三語統一 Capstone 入口與 Track A 的 Stage 8 選讀界線；補齊練習根目錄、環境準備與存檔位置，處理全對時的替代步驟及收合表格指引。先解釋 Recall@k／命中率與分母，再看 RAG 選路表；Stage 6 導覽改按症狀引路，完整名詞留在進階頁。統一 Subagent 平行任務的要求與狀態確認，將 Examples 遷移細節收合並保留可見預算／相容性提醒；同步相關內容測試。
+
 - **content / Stage 0 / GitHub screenshot guides** · 三語以七句短說明串起改文件、記錄、上傳與合併；指令及次要差別收合，紅框標註改為一句話；將舊 Commit 上方標籤換成實際欄位紅框與編號，另補本專案 PR #343／Issue #314 的三語導讀。保留原始畫面與來源連結、可見逐號說明、主練習及五星資源；以明確 HTML 粗體避免 GitHub 中文括號顯示 `**`，同步本專案連結的引用索引（保留原查核時間與事實）；明分暫存區、Commit、Push、Merge、Review／Checks 與 Closed 的意義。
 
 - **review / Greptile curriculum rules** · 新增共用教材審查規則，檢查三語語意、重要內容展開、白話核心詞、官方來源與局部查核日期，以及 GitHub／文件站的手機與桌面排版證據。明確關閉自動批准，保留 status check 與人工合併；PR 開啟與新增 commit 觸發審查，不覆寫審查等級或 PR 說明。引用既有 CLAUDE／DESIGN／style guide，另加設定與本機 context 範圍測試；未驗證的來源或畫面必須明示限制。

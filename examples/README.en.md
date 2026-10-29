@@ -10,7 +10,14 @@
 
 A Stage page first explains what an idea means. This folder lets you run it once. You do not need to install every model or read every line of code before starting.
 
-> **Cloud example compatibility**: Existing Anthropic examples deliberately retain a **Haiku 4.5 compatibility baseline**, rather than claiming the latest or lowest-price model. Before adopting the fixed ID `claude-haiku-5-5`, follow the [Haiku 5.5 migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide); changing only the model ID is insufficient. Handle default adaptive thinking, select text using `type == "text"`, omit `temperature`/`top_p`/`top_k`, and recount tokens, output limits, and budget. Tool loops must preserve thinking blocks unchanged and keep history append-only; passing offline tests does not validate live model quality.
+> **Cloud example compatibility**: Examples keep the Haiku 4.5 compatibility baseline. Check the exercise budget before using the cloud; a model upgrade needs more than a new ID. Offline tests do not validate live model quality.
+
+<details markdown="1">
+<summary>What to check before switching to Haiku 5.5</summary>
+
+**Cloud example compatibility**: Existing Anthropic examples deliberately retain a **Haiku 4.5 compatibility baseline**, rather than claiming the latest or lowest-price model. Before adopting the fixed ID `claude-haiku-5-5`, follow the [Haiku 5.5 migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide); changing only the model ID is insufficient. Handle default adaptive thinking, select text using `type == "text"`, omit `temperature`/`top_p`/`top_k`, and recount tokens, output limits, and budget. Tool loops must preserve thinking blocks unchanged and keep history append-only; passing offline tests does not validate live model quality.
+
+</details>
 
 ## 📌 First, separate five terms
 

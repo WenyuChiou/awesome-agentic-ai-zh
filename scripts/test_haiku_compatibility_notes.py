@@ -41,7 +41,21 @@ EXPECTED_MODELS = {'examples/stage-1/04-cross-provider/starter.py': ['claude-hai
 def test_compatibility_notice_is_visible_and_actionable(base: str, locale: str) -> None:
     text = (ROOT / f"{base}{locale}.md").read_text(encoding="utf-8")
     visible = re.sub(r"<details\b[^>]*>.*?</details>", "", text, flags=re.S)
-    notice = next(line for line in visible.splitlines() if GUIDE in line)
+    if base == "examples/README":
+        # A short visible warning must lead to the detailed migration checklist.
+        warning = next(line for line in visible.splitlines() if line.startswith("> **") and "Haiku 4.5" in line)
+        required = {
+            "": ("相容性基準", "預算", "不能只改型號", "離線測試不代表真實模型品質"),
+            ".en": ("compatibility baseline", "budget", "more than a new ID", "Offline tests do not validate live model quality"),
+            ".zh-Hans": ("兼容性基准", "预算", "不能只改型号", "离线测试不代表真实模型质量"),
+        }
+        assert all(term in warning for term in required[locale])
+        blocks = re.findall(r"<details\b[^>]*>.*?</details>", text, flags=re.S)
+        migration = next(block for block in blocks if GUIDE in block)
+        assert not re.search(r"<details[^>]*\sopen(?:\s|>)", migration)
+        notice = next(line for line in migration.splitlines() if GUIDE in line)
+    else:
+        notice = next(line for line in visible.splitlines() if GUIDE in line)
     for term in ("Haiku 4.5", "claude-haiku-5-5", "adaptive thinking", 'type == "text"',
                  "temperature", "top_p", "top_k", "tokens"):
         assert term in notice
