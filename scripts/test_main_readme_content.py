@@ -408,6 +408,14 @@ def test_homepage_is_shorter_without_deleting_key_terms(page: Path) -> None:
     ):
         assert measured.count(delivery_url) == 1
         measured = measured.replace(delivery_url, "star-history-url")
+    # The requested Greptile badge adds image/attribution URLs, not teaching
+    # prose. Match both exact URLs once; retain the alt text and existing caps.
+    for delivery_url in (
+        "https://www.greptile.com/badge.svg",
+        "https://www.greptile.com/?utm_source=oss_badge&utm_medium=readme&utm_campaign=greptile_for_open_source",
+    ):
+        assert measured.count(delivery_url) == 1
+        measured = measured.replace(delivery_url, "greptile-url")
     content = measured[measured.index("# awesome-agentic-ai-zh"):]
     assert len(measured) - len(content) <= 550
     assert len(content) <= (14_277 if page == PAGES["en"] else 14_000)

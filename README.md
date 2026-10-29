@@ -234,6 +234,8 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 
 
 如果這份地圖幫到你，歡迎給一個 ⭐ Star，或[請作者喝杯咖啡](https://www.buymeacoffee.com/wenyuchiou)。
 
+[![Greptile: The War on Bugs](https://www.greptile.com/badge.svg)](https://www.greptile.com/?utm_source=oss_badge&utm_medium=readme&utm_campaign=greptile_for_open_source)
+
 ## ⭐ Star 歷史
 
 [![此專案的 GitHub Star 歷史圖](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)
