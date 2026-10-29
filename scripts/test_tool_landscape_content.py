@@ -58,7 +58,8 @@ def test_examples_keep_required_reading_index_and_rated_resources_visible(locale
     assert "## 🧭" in visible
     assert _rowspans(visible) == [2, 2, 2]
     assert len(re.findall(r"<td\b[^>]*>⭐{3,5}</td>", visible)) == 6
-    assert len(re.findall(r"^<details markdown=\"1\">$", text, flags=re.MULTILINE)) == 2
+    # Two optional workflow blocks plus the cloud-model migration checklist.
+    assert len(re.findall(r"^<details markdown=\"1\">$", text, flags=re.MULTILINE)) == 3
     assert not re.search(r"<details[^>]*\sopen(?:\s|>)", text)
 
 

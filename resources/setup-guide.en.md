@@ -206,6 +206,8 @@ mkdir my-first-llm
 cd my-first-llm
 ```
 
+Use a text editor, such as VS Code, to create the following files in `my-first-llm`. Keep the exact filenames when saving; do not add `.txt`.
+
 ### 2. Create `.gitignore` First
 
 Create a file named `.gitignore` and paste in:

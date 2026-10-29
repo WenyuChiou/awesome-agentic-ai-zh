@@ -171,13 +171,14 @@ Ollama 练习先从 LangGraph 或 CrewAI 路线开始。不要因为工具清单
 
 ## 🛠 动手练习
 
-每题先安装该文件夹的 requirements，再运行离线测试。看到成功后，再按同一文件夹里的 README 选择 Ollama Path A 或 Anthropic Path B。
+每题先回到项目根目录，再安装该题的 requirements 并运行离线测试。通过后，按该题 README 选择 Ollama Path A 或 Anthropic Path B。
 
 ### 练习 1：同一个 agent、两个 framework
 
 **成果**：同一个搜索加摘要任务各走 LangGraph 与 CrewAI，说出两者藏起来的工作有什么不同。
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/01-same-agent-two-frameworks
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -190,6 +191,7 @@ py -3.11 test.py
 **成果**：让 researcher、writer 与 reviewer 各做一件清楚的事，并看见每次交接的输出。
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/02-multi-agent-roles
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -202,6 +204,7 @@ py -3.11 test.py
 **成果**：在 LangGraph 建立分支、checkpoint 与 HITL 暂停点，再从保存位置继续。
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/03-graph-workflow
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -216,6 +219,7 @@ py -3.11 test.py
 **成果**：用同一题比较受限 CodeAct 与 JSON tool call，说出哪一条更容易验证。
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/04-codeact-vs-json-tool
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -230,6 +234,7 @@ py -3.11 test.py
 **成果**：让 Pydantic AI 返回 `answer`、`confidence` 与 `sources`，并亲眼看到不合规数据被拒绝。
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/05-typed-agent
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py

@@ -206,6 +206,8 @@ mkdir my-first-llm
 cd my-first-llm
 ```
 
+用文本编辑器（例如 VS Code）在 `my-first-llm` 文件夹建立以下文件。保存时保留完整文件名，别加 `.txt`。
+
 ### 2. 先建立 `.gitignore`
 
 建立名为 `.gitignore` 的文件，贴上：

@@ -222,7 +222,7 @@ These are advanced Stage 6 branches, not new prerequisites. Complete the basic e
 
 ### [Advanced RAG: find the broken step before adding new techniques](../resources/advanced-rag.en.md)
 
-For people who have built a minimal RAG system but face missed documents, bad ranking, or hard cross-document relationships. It explains **Hybrid Search**, **Reranking**, **HyDE**, **Multi-Query**, **RAG Fusion**, **Contextual Retrieval**, **GraphRAG**, **Self-RAG**, **CRAG** (Corrective Retrieval Augmented Generation, correct the query or source when retrieval is inadequate), **Adaptive RAG**, **Agentic RAG**, **RAPTOR**, and **DSPy**, with required reading and the rated resource table kept visible.
+Built a minimal RAG system, but documents are missing, ranked badly, or hard to connect across sources? Start with the symptom, then choose a method. The advanced page keeps the full technical terms, required reading, and rated resources.
 
 ### [Agent Memory: save only what is useful, permitted, and removable](../resources/agent-memory.en.md)
 

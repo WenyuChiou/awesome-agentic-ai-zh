@@ -224,11 +224,12 @@ Don't make the change yet — just the impact analysis.
 
 **Subagent**：`general-purpose` × N（同时 spawn 多个）
 
-> 💡 **怎么“同时 spawn 多个”**：在 Claude Code 对话框内，**连续输入下面的 prompt 4 次**（每次换 `<file-path>`）。Claude Code 会自动并行跑，不需要等第一个 subagent 结束才能输入第二个——这就是“parallel spawn”的实际操作方式。
+> 💡 **怎么并行处理**：把四个文件放在同一条 prompt，请 Claude 分给不同 subagent。发送后查看运行状态；提出要求不代表已经并行运行。
 
-**Prompt 模板**（每次换 `<file-path>`）：
+**Prompt 模板**（换成你的四个文件路径）：
 ```
-Audit `<file-path>` for academic-style issues: (1) over-engineering
+Use separate subagents to audit these files in parallel: A.md, B.md, C.md, D.md.
+Each subagent reports on one file. Check: (1) over-engineering
 jargon without first-use explanation, (2) clarity (long sentences,
 vague pronouns), (3) unsupported % claims, (4) persona-fit (wrong
 technical level for the file's stated target audience — see the

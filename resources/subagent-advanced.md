@@ -120,7 +120,7 @@ description: Use PROACTIVELY before commits touching auth or payment code. Check
 - 4 個 file 都要做同樣的 audit（spawn 4 個 `general-purpose`）
 - 同時跑「code review」+「找相關 paper」+「寫 changelog」3 個獨立任務
 
-**怎麼跑**：在**一個 prompt 裡**列出 N 個獨立任務（譬如「請同時 audit 這 4 個檔案：A.md / B.md / C.md / D.md」）——Claude 在單一 turn 內多次呼叫 **Agent tool**、自動並行。**不是**連續輸入 N 個 prompt（那是 sequential、要等前一個結束）。要長時間獨立背景跑用 `/bg`。
+**怎麼跑**：在同一則 prompt 列出獨立任務，請 Claude 用不同 subagent 平行處理。再查看執行狀態，確認是否真的同時進行。連續送出多則訊息不保證平行；能同時跑多少個，依工具與設定而定。
 
 **成本**：低（不需 coordination）
 

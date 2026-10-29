@@ -214,7 +214,7 @@ RAG 有两条路：一条先整理数据，一条在问题来时找资料。
 
 ### [进阶 RAG：先找出哪一步坏了，再加新技巧](../resources/advanced-rag.zh-Hans.md)
 
-适合已经做出最小 RAG、但遇到“找不到、排序错、跨文档关系难找”的人。页面会完整解释 **Hybrid Search**、**Reranking**、**HyDE**、**Multi-Query**、**RAG Fusion**、**Contextual Retrieval**、**GraphRAG**、**Self-RAG**、**CRAG**（Corrective Retrieval Augmented Generation，检索不够好时修正查询或来源）、**Adaptive RAG**、**Agentic RAG**、**RAPTOR** 与 **DSPy**，并保持必读与五星资源表直接可见。
+已做出最小 RAG，却遇到“找不到、排序错、跨文档关系难找”？到这里先看症状，再选方法。完整技术术语、必读与五星资源都在进阶页。
 
 ### [Agent Memory：只记值得记、允许记、能删掉的事](../resources/agent-memory.zh-Hans.md)
 

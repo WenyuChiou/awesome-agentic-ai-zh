@@ -89,7 +89,7 @@ The map has **8 topic stages + the Stage 0 readiness check + the Stage 7.5 advan
 
 ### Track A: get work done with a CLI agent
 
-The intended order is `A1 → A2 → Stage 5 → A3 → Stage 8`.
+Route: `A1 → A2 → Stage 5 → A3 → Stage 8`. Stage 8 is recommended, not required for Track A Capstone.
 
 <div class="reader-route-table" role="region" tabindex="0" aria-label="Track A route comparison">
 <table align="center">
@@ -121,11 +121,11 @@ The intended order is `A1 → A2 → Stage 5 → A3 → Stage 8`.
 </table>
 </div>
 
-Stage 4 first explains the **Workflow Graph**, then uses a framework to build it. Stage 7 adds Eval, observability, approval, and recovery so the same work map can run reliably.
+Stage 4 first explains the **Workflow Graph**, then uses a framework to build it. Stage 7 adds Eval, observability, approval, and recovery for reliability.
 
 > 🔭 **Learning order**: Stage 2 Prompt → Stage 3 **Agent Loop** → Stage 4 **Workflow Graph** / framework → Stage 5 tools and rules → Stage 6 **Context Engineering** → Stage 7 production. Prompt, Context, Harness, Loop, and Graph work together; they are not five layers or product generations that replace one another.
 
-After A3 or Stage 7, start the [Capstone project](CAPSTONE.en.md); track your progress in [PROGRESS.en.md](PROGRESS.en.md).
+Start the [Capstone](CAPSTONE.en.md) after A3 (Track A) or Stage 8, including 7.5 (Track B). [Track progress](PROGRESS.en.md).
 
 <details markdown="1">
 <summary>⏱️ View time estimates (planning aid, not a deadline)</summary>

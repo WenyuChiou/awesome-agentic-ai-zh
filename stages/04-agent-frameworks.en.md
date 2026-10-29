@@ -171,13 +171,14 @@ These three approaches do not necessarily require a framework. A framework's val
 
 ## 🛠 Hands-on Exercises
 
-Install the folder's requirements first, then run its offline test. After you see success, use the README in the same folder to choose Ollama Path A or Anthropic Path B.
+Start each exercise at the repository root. Install that folder's requirements and run its offline test. Once it passes, follow its README to choose Ollama Path A or Anthropic Path B.
 
 ### Exercise 1: Same Agent, Two Frameworks
 
 **Outcome**: run the same search-and-summarize task through LangGraph and CrewAI, then explain what work each framework hides.
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/01-same-agent-two-frameworks
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -190,6 +191,7 @@ Budget: Path A has a `$0` API charge per run; Path B uses `$1 / $5` per million 
 **Outcome**: give the researcher, writer, and reviewer one clear job each, and see the output from every handoff.
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/02-multi-agent-roles
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -202,6 +204,7 @@ Budget: Path A has a `$0` API charge per run; Path B uses the same formula. More
 **Outcome**: create branches, checkpoints, and an HITL pause point in LangGraph, then continue from the saved point.
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/03-graph-workflow
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -216,6 +219,7 @@ Budget: Path A has a `$0` API charge per run; Path B is calculated from actual t
 **Outcome**: compare constrained CodeAct with a JSON tool call on the same problem, and explain which route is easier to validate.
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/04-codeact-vs-json-tool
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py
@@ -230,6 +234,7 @@ Budget: Path A has a `$0` API charge per run; Path B is calculated from actual t
 **Outcome**: have Pydantic AI return `answer`, `confidence`, and `sources`, and watch invalid data be rejected.
 
 ```powershell
+Set-Location (git rev-parse --show-toplevel)
 Set-Location examples/stage-4/05-typed-agent
 py -3.11 -m pip install -r requirements.txt
 py -3.11 test.py

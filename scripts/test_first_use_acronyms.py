@@ -44,7 +44,7 @@ AUDITED_PAGES = {
     "resources/model-training-guide.md": ("SFT", "DPO", "RLHF", "RL", "GRPO", "PEFT", "LoRA", "RAG", "GPU", "LLM"),
     "stages/01-llm-basics.md": ("SFT", "DPO", "RLHF", "RL", "GRPO", "PEFT", "LoRA", "LLM", "RAG", "API", "SDK"),
     "resources/glossary.md": ("RLHF", "RL", "GRPO", "PEFT", "LoRA", "RAG", "MCP", "LLM", "API"),
-    "stages/06-memory-rag.md": ("RAG", "CRAG"),
+    "stages/06-memory-rag.md": ("RAG",),
     "resources/advanced-rag.md": ("RAG", "CRAG", "LLM", "MRR", "nDCG", "HyDE", "RAPTOR"),
     "stages/00-foundations.md": ("API", "JSON"),
     "tracks/cli/A1-cli-intro.md": ("CLI", "LLM", "API"),
@@ -170,6 +170,16 @@ def assert_first_reader_expansion(text: str, term: str, full_name: str) -> None:
 @pytest.mark.parametrize("canonical,term", [(p, t) for p, terms in AUDITED_PAGES.items() for t in terms])
 def test_audited_pages_define_first_reader_encounter(canonical: str, term: str, locale: str) -> None:
     assert_first_reader_expansion(locale_path(canonical, locale).read_text(encoding="utf-8"), term, FULL_NAMES[term])
+    if canonical == "stages/06-memory-rag.md":
+        # The entry paragraph routes to depth; keep its full terminology there.
+        advanced = locale_path("resources/advanced-rag.md", locale)
+        stage = locale_path(canonical, locale).read_text(encoding="utf-8")
+        assert f"../resources/{advanced.name}" in stage
+        detail = advanced.read_text(encoding="utf-8")
+        for name in ("Hybrid Search", "Reranking", "HyDE", "Multi-Query", "RAG Fusion",
+                     "Contextual Retrieval", "GraphRAG", "Self-RAG", "CRAG",
+                     "Adaptive RAG", "Agentic RAG", "RAPTOR", "DSPy"):
+            assert name in detail, f"advanced route lost {name}"
 
 
 @pytest.mark.parametrize("text", [

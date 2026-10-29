@@ -224,11 +224,12 @@ Don't make the change yet — just the impact analysis.
 
 **Subagent**: `general-purpose` × N (spawn several at the same time)
 
-> 💡 **How to spawn several at the same time**: in the Claude Code conversation, **enter the prompt below 4 times in a row** (changing `<file-path>` each time). Claude Code will run them in parallel automatically. You do not need to wait for the first subagent to finish before entering the second prompt. That is the practical workflow for “parallel spawn.”
+> 💡 **How to request parallel work**: Put all four files in one prompt and ask Claude to assign them to separate subagents. Check the run status after sending it; requesting parallel work does not prove it ran in parallel.
 
-**Prompt Template** (change `<file-path>` each time):
+**Prompt Template** (replace these with your four file paths):
 ```
-Audit `<file-path>` for academic-style issues: (1) over-engineering
+Use separate subagents to audit these files in parallel: A.md, B.md, C.md, D.md.
+Each subagent reports on one file. Check: (1) over-engineering
 jargon without first-use explanation, (2) clarity (long sentences,
 vague pronouns), (3) unsupported % claims, (4) persona-fit (wrong
 technical level for the file's stated target audience — see the
