@@ -100,6 +100,10 @@ def test_stage6_copyable_commands_only_run_the_local_path() -> None:
             assert f"cd examples/stage-6/{folder}" in command
             assert "python starter.py" in command
             assert "starter_anthropic.py" not in command
+            install = "python -m pip install -r requirements.txt"
+            assert command.index(f"cd examples/stage-6/{folder}") < command.index(install)
+            assert command.index(install) < command.index("python starter.py")
+            assert (ROOT / "examples/stage-6" / folder / "requirements.txt").is_file()
             # Both paths remain available in each linked exercise guide.
             suffix = page.name.removeprefix("06-memory-rag")
             guide = ROOT / "examples/stage-6" / folder / f"README{suffix}"
