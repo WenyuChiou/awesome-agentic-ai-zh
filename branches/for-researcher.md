@@ -61,14 +61,37 @@
 <a id="層級建議"></a>
 ## 📚 先選一個入口
 
-<div align="center" markdown="1">
-
-| 你現在想做的事 | 先用什麼 | 為什麼 | 推薦度 |
-|:---|:---|:---|:---|
-| 用瀏覽器問一篇 paper | [Gemini Notebook（原 NotebookLM）](https://notebooklm.google.com/) | 上傳來源後可從 citation 回到原文，最容易開始 | ⭐⭐⭐⭐⭐ |
-| 整理自己的文獻庫 | [Zotero](https://www.zotero.org/) | 先把 PDF、作者、年份與筆記放好，再談 AI | ⭐⭐⭐⭐⭐ |
-| 用 Python 做可重跑的文獻 RAG | [PaperQA2](https://github.com/Future-House/paper-qa) | 回答以科學文件和引用為中心，適合學程式化流程 | ⭐⭐⭐⭐⭐ |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="研究入口比較">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">你現在想做的事</th>
+<th scope="col" align="left" width="340">先用什麼</th>
+<th scope="col" align="left">為什麼</th>
+<th scope="col" align="left">推薦度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">用瀏覽器問一篇 paper</td>
+<td align="left"><a href="https://notebooklm.google.com/">Gemini Notebook</a>（原 NotebookLM）</td>
+<td align="left">上傳來源後可從 citation 回到原文，最容易開始</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td align="left">整理自己的文獻庫</td>
+<td align="left"><a href="https://www.zotero.org/">Zotero</a></td>
+<td align="left">先把 PDF、作者、年份與筆記放好，再談 AI</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td align="left">用 Python 做可重跑的文獻 RAG</td>
+<td align="left"><a href="https://github.com/Future-House/paper-qa">PaperQA2</a></td>
+<td align="left">回答以科學文件和引用為中心，適合學程式化流程</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 Gemini Notebook 是 Google 在 2026-07-16 對 NotebookLM 使用的現行名稱；舊名稱只保留來幫你辨識。citation 是查證入口，不是「答案一定正確」的保證。

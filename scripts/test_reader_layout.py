@@ -28,7 +28,7 @@ def compact_catalog(
     )
     assert match, "Missing named, keyboard-focusable catalog region"
     table = match[1]
-    assert len(re.findall(r'<th scope="col">', table)) == 5
+    assert len(re.findall(r'<th scope="col"(?: width="300")?>', table)) == 5
     assert "<details" not in table, "Resource facts must stay visible"
     groups = re.findall(r"<tbody>(.*?)</tbody>", table, re.S)
     assert len(groups) == len(group_sizes)

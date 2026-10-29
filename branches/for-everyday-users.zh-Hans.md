@@ -72,6 +72,7 @@
 
 **这四扇门不是等级。需要哪一扇才开哪一扇。** 多数单次任务只要第一扇；不是工具越多，结果就越好。
 
+<div class="reader-route-table" role="region" tabindex="0" aria-label="聊天与连接器入口比较">
 <table align="center">
   <thead><tr><th>入口</th><th>五岁也懂的说法</th><th>适合什么</th><th>动手前先做什么</th></tr></thead>
   <tbody>
@@ -79,8 +80,10 @@
     <tr><td><strong>App／Connector</strong></td><td>帮聊天工具开一扇通往其他服务的门</td><td>搜索已授权的邮件、文件或日历</td><td>看清读取与写入权限；写入动作保留人工确认</td></tr>
   </tbody>
 </table>
+</div>
 
 <a id="tier-2--cli-agent愿意学命令行的进阶用户"></a>
+<div class="reader-route-table" role="region" tabindex="0" aria-label="CLI 与本地模型入口比较">
 <table align="center">
   <thead><tr><th>入口</th><th>五岁也懂的说法</th><th>适合什么</th><th>动手前先做什么</th></tr></thead>
   <tbody>
@@ -88,6 +91,7 @@
     <tr><td><strong>Local LLM／Runtime</strong></td><td>模型在自己的电脑里运行</td><td>离线实验，或不想把指定数据交给云端模型</td><td>确认选的是 local model；cloud model、web search 或云端功能仍会联网</td></tr>
   </tbody>
 </table>
+</div>
 
 如果你只想聊天，不需要安装 CLI Agent 或本地 Runtime。想学命令行时再去 [Track A 第一站](../tracks/cli/A1-cli-intro.zh-Hans.md)；想了解模型时再去 [Stage 1](../stages/01-llm-basics.zh-Hans.md)。
 

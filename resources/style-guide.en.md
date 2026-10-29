@@ -508,3 +508,5 @@ Current maintainer: [@WenyuChiou](https://github.com/WenyuChiou).
 - Site CSS does not apply on GitHub. Inspect GitHub Markdown and the built site separately on desktop and phone widths, checking internal scrolling, column width, whitespace, wrapping, original facts, and visible important content. Check readability even when the whole page fits.
 
 Prefer five columns for desktop resource comparisons: category, project or document, rating, use, and limits. Merge categories with real rowspan. Do not invent ratings or limits; navigation and definition tables keep the columns they need. Left-align explanatory text; categories and ratings may be centered. Keep GitHub Markdown useful for comparison, while site CSS may stack the same facts at phone and tablet widths.
+
+Route and entry tables must leave enough room for complete names. Choose name-column widths from GitHub measurements rather than applying one width everywhere. Keep full titles, file names, and legacy-name hints visible; stack the same fields at full width on the mobile site.

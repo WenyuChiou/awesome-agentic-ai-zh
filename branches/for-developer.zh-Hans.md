@@ -71,16 +71,43 @@ git diff -- README.md
 <a id="推荐工具"></a><a id="tier-升级路径"></a>
 ## 📚 先选一个入口
 
-<div align="center" markdown="1">
-
-| 想做什么 | 先看什么 | 为什么 |
-|:---|:---|:---|
-| 学完整的权限与 sandbox 流程 | [Claude Code](https://code.claude.com/docs/en/overview) | 文档把权限、隔离与多种 Surface 分开说明 |
-| 使用 app、CLI、IDE 或 cloud 工作 | [OpenAI Codex](https://github.com/openai/codex) | 同一 Coding Agent 可从多个入口工作 |
-| 把 GitHub issue 交给 cloud agent | [GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | 理解 cloud agent 与 IDE agent mode 的区别 |
-| 使用开源、可替换 Provider 的工具 | [OpenCode](https://github.com/anomalyco/opencode) | 分开理解 Coding Agent、Provider 与 Router |
-| 从 IDE 开始并逐步批准 | [Cline](https://github.com/cline/cline) | 练习逐步批准工具、文件与浏览器操作 |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="开发者入口比较">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">想做什么</th>
+<th scope="col" align="left">先看什么</th>
+<th scope="col" align="left">为什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">学完整的权限与 sandbox 流程</td>
+<td align="left"><a href="https://code.claude.com/docs/en/overview">Claude Code</a></td>
+<td align="left">文档把权限、隔离与多种 Surface 分开说明</td>
+</tr>
+<tr>
+<td align="left">使用 app、CLI、IDE 或 cloud 工作</td>
+<td align="left"><a href="https://github.com/openai/codex">OpenAI Codex</a></td>
+<td align="left">同一 Coding Agent 可从多个入口工作</td>
+</tr>
+<tr>
+<td align="left">把 GitHub issue 交给 cloud agent</td>
+<td align="left"><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot cloud agent</a></td>
+<td align="left">理解 cloud agent 与 IDE agent mode 的区别</td>
+</tr>
+<tr>
+<td align="left">使用开源、可替换 Provider 的工具</td>
+<td align="left"><a href="https://github.com/anomalyco/opencode">OpenCode</a></td>
+<td align="left">分开理解 Coding Agent、Provider 与 Router</td>
+</tr>
+<tr>
+<td align="left">从 IDE 开始并逐步批准</td>
+<td align="left"><a href="https://github.com/cline/cline">Cline</a></td>
+<td align="left">练习逐步批准工具、文件与浏览器操作</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 不要只问“哪个最强”。先问它能看到哪些文件、能运行哪些命令、是否可联网、谁批准高风险操作，以及失败时如何回滚。

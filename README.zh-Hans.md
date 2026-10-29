@@ -43,14 +43,15 @@
 
 走 Track A 或 Track B 前，先确认 Stage 0–2；只走日常用户路线的人可以直接打开角色指南。
 
-<div align="center" markdown="1">
-
-| 你现在想做什么？ | 建议路线 | 路线入口 |
-|:---|:---|:---|
-| 用 Claude Code、Codex、OpenCode 等 CLI Agent 完成工作 | **Track A — CLI Power User** | [A1：选一个 CLI Agent](tracks/cli/A1-cli-intro.zh-Hans.md) |
-| 自己写 Agent、工具循环、Workflow 与服务 | **Track B — Agent Builder** | [Stage 3：第一个 Agent Loop](stages/03-tool-use-and-hello-agent.zh-Hans.md) |
-| 只想在日常生活安全使用 AI，暂时不写程序 | **日常用户路线** | [日常用户指南](branches/for-everyday-users.zh-Hans.md) |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="按需求选择路线">
+<table align="center">
+<thead><tr><th scope="col">你现在想做什么？</th><th scope="col">建议路线</th><th scope="col">路线入口</th></tr></thead>
+<tbody>
+<tr><td>用 Claude Code、Codex、OpenCode 等 CLI Agent 完成工作</td><td><strong>Track A — CLI Power User</strong></td><td><a href="tracks/cli/A1-cli-intro.zh-Hans.md">A1：选一个 CLI Agent</a></td></tr>
+<tr><td>自己写 Agent、工具循环、Workflow 与服务</td><td><strong>Track B — Agent Builder</strong></td><td><a href="stages/03-tool-use-and-hello-agent.zh-Hans.md">Stage 3：第一个 Agent Loop</a></td></tr>
+<tr><td>只想在日常生活安全使用 AI，暂时不写程序</td><td><strong>日常用户路线</strong></td><td><a href="branches/for-everyday-users.zh-Hans.md">日常用户指南</a></td></tr>
+</tbody>
+</table>
 </div>
 
 <details markdown="1">
@@ -73,46 +74,49 @@ cd awesome-agentic-ai-zh
 
 ### 共用基础：Stage 0–2
 
-<div align="center" markdown="1">
-
-| Stage | 这一步解决什么？ | 完成后你能做什么？ |
-|:---|:---|:---|
-| **0** · [基础准备](stages/00-foundations.zh-Hans.md) | 电脑与基本工具准备好了吗？ | 用 Python 调用公开 API、读 JSON（JavaScript Object Notation，程序交换数据常用的文本格式），并用 Git 保存成果 |
-| **1** · [LLM 基础](stages/01-llm-basics.zh-Hans.md) | LLM、Token、Context 与模型差在哪里？ | 调用一个 LLM，并依需求选云端或本机模型 |
-| **2** · [Prompt 设计](stages/02-prompt-engineering.zh-Hans.md) | 怎么把目标、数据、规则与输出说清楚？ | 用固定案例比较 Zero-Shot、One-Shot、Few-Shot 与 CoT（Chain-of-Thought，用中间步骤处理问题的推理提示方法） 的边界 |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="共用基础路线比较">
+<table align="center">
+<thead><tr><th scope="col" width="260">Stage</th><th scope="col">这一步解决什么？</th><th scope="col">完成后你能做什么？</th></tr></thead>
+<tbody>
+<tr><td><strong>0</strong> · <a href="stages/00-foundations.zh-Hans.md">基础准备</a></td><td>电脑与基本工具准备好了吗？</td><td>用 Python 调用公开 API、读 JSON（JavaScript Object Notation，程序交换数据常用的文本格式），并用 Git 保存成果</td></tr>
+<tr><td><strong>1</strong> · <a href="stages/01-llm-basics.zh-Hans.md">LLM 基础</a></td><td>LLM、Token、Context 与模型差在哪里？</td><td>调用一个 LLM，并依需求选云端或本机模型</td></tr>
+<tr><td><strong>2</strong> · <a href="stages/02-prompt-engineering.zh-Hans.md">Prompt 设计</a></td><td>怎么把目标、数据、规则与输出说清楚？</td><td>用固定案例比较 Zero-Shot、One-Shot、Few-Shot 与 CoT（Chain-of-Thought，用中间步骤处理问题的推理提示方法） 的边界</td></tr>
+</tbody>
+</table>
 </div>
 
 ### Track A：使用 CLI Agent 把工作做完
 
 正式顺序是 `A1 → A2 → Stage 5 → A3 → Stage 8`。
 
-<div align="center" markdown="1">
-
-| 顺序 | 这一步解决什么？ | 完成后你能做什么？ |
-|:---|:---|:---|
-| **A1** · [选一个 CLI Agent](tracks/cli/A1-cli-intro.zh-Hans.md) | OpenRouter、OpenCode、Pi、Ollama 分别是什么？ | 选对工具并完成第一个小任务 |
-| **A2** · [建立可重复流程](tracks/cli/A2-cli-workflow.zh-Hans.md) | 怎么把规则与步骤留给下一次使用？ | 写 Project Instructions、Skill 与可重用工作流程 |
-| **5** · [Claude Code 生态](stages/05-claude-code-ecosystem.zh-Hans.md) | MCP、Skills、Plugins、Hooks 与 Subagents 怎么分？ | 先读核心 5.1–5.4；5.5–5.8 依工作需要选读 |
-| **A3** · [接进真实工作](tracks/cli/A3-cli-production.zh-Hans.md) | 怎么安全连接外部工具、CI 与团队流程？ | 用最小权限、人工检查与记录完成集成 |
-| **8** · [Agent 操作界面](stages/08-agent-interfaces.zh-Hans.md) | Agent 怎么操作浏览器、画面与 Sandbox？ | 判断任务该用 CLI、Browser、Computer Use 还是 API |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Track A 路线比较">
+<table align="center">
+<thead><tr><th scope="col" width="260">顺序</th><th scope="col">这一步解决什么？</th><th scope="col">完成后你能做什么？</th></tr></thead>
+<tbody>
+<tr><td><strong>A1</strong> · <a href="tracks/cli/A1-cli-intro.zh-Hans.md">选一个 CLI Agent</a></td><td>OpenRouter、OpenCode、Pi、Ollama 分别是什么？</td><td>选对工具并完成第一个小任务</td></tr>
+<tr><td><strong>A2</strong> · <a href="tracks/cli/A2-cli-workflow.zh-Hans.md">建立可重复流程</a></td><td>怎么把规则与步骤留给下一次使用？</td><td>写 Project Instructions、Skill 与可重用工作流程</td></tr>
+<tr><td><strong>5</strong> · <a href="stages/05-claude-code-ecosystem.zh-Hans.md">Claude Code 生态</a></td><td>MCP、Skills、Plugins、Hooks 与 Subagents 怎么分？</td><td>先读核心 5.1–5.4；5.5–5.8 依工作需要选读</td></tr>
+<tr><td><strong>A3</strong> · <a href="tracks/cli/A3-cli-production.zh-Hans.md">接进真实工作</a></td><td>怎么安全连接外部工具、CI 与团队流程？</td><td>用最小权限、人工检查与记录完成集成</td></tr>
+<tr><td><strong>8</strong> · <a href="stages/08-agent-interfaces.zh-Hans.md">Agent 操作界面</a></td><td>Agent 怎么操作浏览器、画面与 Sandbox？</td><td>判断任务该用 CLI、Browser、Computer Use 还是 API</td></tr>
+</tbody>
+</table>
 </div>
 
 ### Track B：从零打造 Agent
 
-<div align="center" markdown="1">
-
-| 顺序 | 这一步解决什么？ | 完成后你能做什么？ |
-|:---|:---|:---|
-| **3** · [工具使用与第一个 Agent Loop](stages/03-tool-use-and-hello-agent.zh-Hans.md) | 模型怎么安全调用工具并重复下一步？ | 做出有最大轮数、会验证参数的 Agent Loop |
-| **4** · [Workflow Graph 与 Agent 框架](stages/04-agent-frameworks.zh-Hans.md) | 怎么把多个步骤画成工作地图？ | 选择 Workflow、Agent、Graph 与 Framework |
-| **5** · [Claude Code 生态](stages/05-claude-code-ecosystem.zh-Hans.md) | MCP、Skills、Plugins、Hooks 与 Subagents 怎么合作？ | 组合工具、规则与可重用能力 |
-| **6** · [Memory · RAG（Retrieval-Augmented Generation，先找相关资料，再依资料回答）](stages/06-memory-rag.zh-Hans.md) | Agent 怎么查文件、保存与取回重要信息？ | 建立最小 RAG、long-term memory 与 contextual retrieval 流程 |
-| **7** · [Agent 上线工程：可测、可看、可停、可恢复](stages/07-multi-agent-production.zh-Hans.md) | Agent 怎么在真实环境稳定运作？ | 加入 Eval、观测、预算、Human-in-the-loop（HITL，人工批准）与恢复 |
-| **7.5** · [进阶 Agentic 概念地图](stages/07.5-advanced-agentic-concepts.zh-Hans.md) | 还有哪些进阶 Pattern 值得认得？ | 从 12 个概念选读 PAR loop、agent-as-judge 等需要的主题 |
-| **8** · [Agent 操作界面](stages/08-agent-interfaces.zh-Hans.md) | Agent 怎么操作 API 以外的真实环境？ | 选择 Computer Use、Browser Use 或 Code Sandbox |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Track B 路线比较">
+<table align="center">
+<thead><tr><th scope="col">顺序</th><th scope="col">这一步解决什么？</th><th scope="col">完成后你能做什么？</th></tr></thead>
+<tbody>
+<tr><td><strong>3</strong> · <a href="stages/03-tool-use-and-hello-agent.zh-Hans.md">工具使用与第一个 Agent Loop</a></td><td>模型怎么安全调用工具并重复下一步？</td><td>做出有最大轮数、会验证参数的 Agent Loop</td></tr>
+<tr><td><strong>4</strong> · <a href="stages/04-agent-frameworks.zh-Hans.md">Workflow Graph 与 Agent 框架</a></td><td>怎么把多个步骤画成工作地图？</td><td>选择 Workflow、Agent、Graph 与 Framework</td></tr>
+<tr><td><strong>5</strong> · <a href="stages/05-claude-code-ecosystem.zh-Hans.md">Claude Code 生态</a></td><td>MCP、Skills、Plugins、Hooks 与 Subagents 怎么合作？</td><td>组合工具、规则与可重用能力</td></tr>
+<tr><td><strong>6</strong> · <a href="stages/06-memory-rag.zh-Hans.md">Memory · RAG（Retrieval-Augmented Generation，先找相关资料，再依资料回答）</a></td><td>Agent 怎么查文件、保存与取回重要信息？</td><td>建立最小 RAG、long-term memory 与 contextual retrieval 流程</td></tr>
+<tr><td><strong>7</strong> · <a href="stages/07-multi-agent-production.zh-Hans.md">Agent 上线工程：可测、可看、可停、可恢复</a></td><td>Agent 怎么在真实环境稳定运作？</td><td>加入 Eval、观测、预算、Human-in-the-loop（HITL，人工批准）与恢复</td></tr>
+<tr><td><strong>7.5</strong> · <a href="stages/07.5-advanced-agentic-concepts.zh-Hans.md">进阶 Agentic 概念地图</a></td><td>还有哪些进阶 Pattern 值得认得？</td><td>从 12 个概念选读 PAR loop、agent-as-judge 等需要的主题</td></tr>
+<tr><td><strong>8</strong> · <a href="stages/08-agent-interfaces.zh-Hans.md">Agent 操作界面</a></td><td>Agent 怎么操作 API 以外的真实环境？</td><td>选择 Computer Use、Browser Use 或 Code Sandbox</td></tr>
+</tbody>
+</table>
 </div>
 
 Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来；Stage 7 再加入 Eval、观测、批准与恢复，让同一张工作图可以稳定运行。
@@ -139,16 +143,17 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来；Stage 
 
 [静态图](resources/diagrams/branch-decision-tree.zh-Hans.png)
 
-<div align="center" markdown="1">
-
-| 路线 | 适合谁 | 你会处理什么？ |
-|:---|:---|:---|
-| 🔬 [研究人员](branches/for-researcher.zh-Hans.md) | 研究生、博后、PI | 文献证据、可重现流程、Multi-Agent Review |
-| 💻 [开发者](branches/for-developer.zh-Hans.md) | 软件工程师 | CLI Delegation、Code Review、测试与回滚 |
-| 🎓 [教师](branches/for-teacher.zh-Hans.md) | 老师、讲师 | 备课、反馈、隐私与教学 Prompt |
-| 📊 [知识工作者](branches/for-knowledge-worker.zh-Hans.md) | 顾问、PM、分析师 | Email、会议与报告工作流程 |
-| 👥 [日常用户](branches/for-everyday-users.zh-Hans.md) | 不一定写程序的 AI 用户 | 写作、学习、隐私与安全使用 |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="按身份选择路线">
+<table align="center">
+<thead><tr><th scope="col">路线</th><th scope="col">适合谁</th><th scope="col">你会处理什么？</th></tr></thead>
+<tbody>
+<tr><td>🔬 <a href="branches/for-researcher.zh-Hans.md">研究人员</a></td><td>研究生、博后、PI</td><td>文献证据、可重现流程、Multi-Agent Review</td></tr>
+<tr><td>💻 <a href="branches/for-developer.zh-Hans.md">开发者</a></td><td>软件工程师</td><td>CLI Delegation、Code Review、测试与回滚</td></tr>
+<tr><td>🎓 <a href="branches/for-teacher.zh-Hans.md">教师</a></td><td>老师、讲师</td><td>备课、反馈、隐私与教学 Prompt</td></tr>
+<tr><td>📊 <a href="branches/for-knowledge-worker.zh-Hans.md">知识工作者</a></td><td>顾问、PM、分析师</td><td>Email、会议与报告工作流程</td></tr>
+<tr><td>👥 <a href="branches/for-everyday-users.zh-Hans.md">日常用户</a></td><td>不一定写程序的 AI 用户</td><td>写作、学习、隐私与安全使用</td></tr>
+</tbody>
+</table>
 </div>
 
 ## 💡 怎么学才不容易卡住？

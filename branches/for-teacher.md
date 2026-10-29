@@ -93,7 +93,7 @@ AI 可以先做草稿，教師負責決定能不能用。這條路教你用 AI �
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="資源表（分類、用途與限制）">
 <table align="center">
-<thead><tr><th scope="col">分類</th><th scope="col">專案／文件</th><th scope="col">評分</th><th scope="col">用途</th><th scope="col">限制</th></tr></thead>
+<thead><tr><th scope="col">分類</th><th scope="col" width="300">專案／文件</th><th scope="col">評分</th><th scope="col">用途</th><th scope="col">限制</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">安全與政策</th><td><div data-field="entry"><strong><a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research?hub=387">UNESCO GenAI 教育指引</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">建立以人為中心的校內原則</div></td><td><div data-field="status">現行；官方指引</div><div data-field="limits">全球原則仍要配合所在地規則與年齡要求</div></td></tr>
 <tr><td><div data-field="entry"><strong><a href="https://education.ec.europa.eu/focus-topics/digital-education/actions/plan/ethical-guidelines-for-educators-on-using-artificial-intelligence">European Commission 教師倫理指引</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">檢查資料、透明度與課堂風險</div></td><td><div data-field="status">現行；官方指引</div><div data-field="limits">AI Act／GDPR 說明以歐盟情境為主</div></td></tr>

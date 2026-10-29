@@ -45,14 +45,37 @@
 
 <a id="层级建议"></a>
 ## 📚 先选一个入口
-<div align="center" markdown="1">
-
-| 你想做什么 | 先用什么 | 为什么 | 推荐度 |
-|:---|:---|:---|:---|
-| 用浏览器问一篇 paper | [Gemini Notebook（原 NotebookLM）](https://notebooklm.google.com/) | 上传来源后可从 citation 回到原文 | ⭐⭐⭐⭐⭐ |
-| 整理自己的文献库 | [Zotero](https://www.zotero.org/) | 先整理 PDF、作者、年份和笔记 | ⭐⭐⭐⭐⭐ |
-| 用 Python 做可重跑的文献 RAG | [PaperQA2](https://github.com/Future-House/paper-qa) | 以科学文件和引用为中心 | ⭐⭐⭐⭐⭐ |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="研究入口比较">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">你想做什么</th>
+<th scope="col" align="left" width="340">先用什么</th>
+<th scope="col" align="left">为什么</th>
+<th scope="col" align="left">推荐度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">用浏览器问一篇 paper</td>
+<td align="left"><a href="https://notebooklm.google.com/">Gemini Notebook</a>（原 NotebookLM）</td>
+<td align="left">上传来源后可从 citation 回到原文</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td align="left">整理自己的文献库</td>
+<td align="left"><a href="https://www.zotero.org/">Zotero</a></td>
+<td align="left">先整理 PDF、作者、年份和笔记</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td align="left">用 Python 做可重跑的文献 RAG</td>
+<td align="left"><a href="https://github.com/Future-House/paper-qa">PaperQA2</a></td>
+<td align="left">以科学文件和引用为中心</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 Gemini Notebook 是 Google 于 2026-07-16 为 NotebookLM 使用的现行名称；旧名称仅用于辨识。citation 是查证入口，不保证答案正确。

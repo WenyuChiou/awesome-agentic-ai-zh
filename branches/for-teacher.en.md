@@ -98,7 +98,7 @@ Read your own school policy first, then the three documents above. Official guid
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="Resources by category, use and limits">
 <table align="center">
-<thead><tr><th scope="col">Group</th><th scope="col">Project / document</th><th scope="col">Rating</th><th scope="col">Use</th><th scope="col">Limits</th></tr></thead>
+<thead><tr><th scope="col">Group</th><th scope="col" width="300">Project / document</th><th scope="col">Rating</th><th scope="col">Use</th><th scope="col">Limits</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">Safety and policy</th><td><div data-field="entry"><strong><a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research?hub=387">UNESCO GenAI education guidance</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">Establish human-centered principles in school</div></td><td><div data-field="status">Current; official guidance</div><div data-field="limits">Global principles still need local rules and age requirements</div></td></tr>
 <tr><td><div data-field="entry"><strong><a href="https://education.ec.europa.eu/focus-topics/digital-education/actions/plan/ethical-guidelines-for-educators-on-using-artificial-intelligence">European Commission ethical guidelines for educators</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">Check data, transparency, and classroom risks</div></td><td><div data-field="status">Current; official guidance</div><div data-field="limits">AI Act/GDPR explanation is mainly framed for the EU</div></td></tr>

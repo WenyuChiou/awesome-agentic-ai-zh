@@ -8,24 +8,69 @@ Think of this folder as a tool cabinet. When you get stuck, take only the card y
 
 ## 🧭 What are you stuck on?
 
-<div align="center" markdown="1">
-
-| What you want to do now | Open this first |
-|:---|:---|
-| I have never coded and do not know where to start | [`setup-guide.en.md`](setup-guide.en.md) |
-| I want to follow the complete learning map | [Home](../README.en.md) → [Stage 0](../stages/00-foundations.en.md) |
-| I cannot tell how models learn, how they are adapted, and when they are only producing an answer | [`model-training-guide.en.md`](model-training-guide.en.md) |
-| I see a term but do not know what it means | [Term lookup](glossary.en.md) |
-| I cannot tell these names apart: OpenRouter = unified model API/router; Ollama = local model runtime; OpenCode/Pi = coding agents/toolkits | [`cli-agents-guide.en.md`](cli-agents-guide.en.md) |
-| I want to build my first action card (Skill), tool connector (MCP server), or document workflow | [Hands-on recipes](cookbook.en.md) |
-| I wrote a tool description (tool schema), but the model keeps choosing the wrong tool | [`schema-design-cheatsheet.en.md`](schema-design-cheatsheet.en.md) |
-| I need a tool for Notion, Office, a database, or a browser | [`mcp-skills-catalog.en.md`](mcp-skills-catalog.en.md) |
-| I want to choose a course or check whether a certificate helps | [`courses.en.md`](courses.en.md) |
-| I want to know whether an agent works in a terminal, editor, cloud, or my own device | [`agent-paradigms.en.md`](agent-paradigms.en.md) |
-| I want a helper-agent (subagent) dispatch example I can copy now | [`subagent-cookbook.en.md`](subagent-cookbook.en.md) |
-| I want to design, combine, or debug helper agents (subagents) | [`subagent-advanced.en.md`](subagent-advanced.en.md) |
-| I want to write content or send a PR to this project | [`style-guide.en.md`](style-guide.en.md) |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Choose a resource by need">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">What you want to do now</th>
+<th scope="col" align="left" width="340">Open this first</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">I have never coded and do not know where to start</td>
+<td align="left"><a href="setup-guide.en.md"><code>setup-guide.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I want to follow the complete learning map</td>
+<td align="left"><a href="../README.en.md">Home</a> → <a href="../stages/00-foundations.en.md">Stage 0</a></td>
+</tr>
+<tr>
+<td align="left">I cannot tell how models learn, how they are adapted, and when they are only producing an answer</td>
+<td align="left"><a href="model-training-guide.en.md"><code>model-training-guide.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I see a term but do not know what it means</td>
+<td align="left"><a href="glossary.en.md">Term lookup</a></td>
+</tr>
+<tr>
+<td align="left">I cannot tell these names apart: OpenRouter = unified model API/router; Ollama = local model runtime; OpenCode/Pi = coding agents/toolkits</td>
+<td align="left"><a href="cli-agents-guide.en.md"><code>cli-agents-guide.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I want to build my first action card (Skill), tool connector (MCP server), or document workflow</td>
+<td align="left"><a href="cookbook.en.md">Hands-on recipes</a></td>
+</tr>
+<tr>
+<td align="left">I wrote a tool description (tool schema), but the model keeps choosing the wrong tool</td>
+<td align="left"><a href="schema-design-cheatsheet.en.md"><code>schema-design-cheatsheet.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I need a tool for Notion, Office, a database, or a browser</td>
+<td align="left"><a href="mcp-skills-catalog.en.md"><code>mcp-skills-catalog.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I want to choose a course or check whether a certificate helps</td>
+<td align="left"><a href="courses.en.md"><code>courses.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I want to know whether an agent works in a terminal, editor, cloud, or my own device</td>
+<td align="left"><a href="agent-paradigms.en.md"><code>agent-paradigms.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I want a helper-agent (subagent) dispatch example I can copy now</td>
+<td align="left"><a href="subagent-cookbook.en.md"><code>subagent-cookbook.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I want to design, combine, or debug helper agents (subagents)</td>
+<td align="left"><a href="subagent-advanced.en.md"><code>subagent-advanced.en.md</code></a></td>
+</tr>
+<tr>
+<td align="left">I want to write content or send a PR to this project</td>
+<td align="left"><a href="style-guide.en.md"><code>style-guide.en.md</code></a></td>
+</tr>
+</tbody>
+</table>
 </div>
 
 ## 🧩 Five words to know first
@@ -42,7 +87,7 @@ The left column merges resources of the same type. This table stays visible beca
 
 <div class="reader-reference-table" role="region" tabindex="0" aria-label="Learning resource comparison">
 <table align="center">
-<thead><tr><th scope="col">Type</th><th scope="col">File</th><th scope="col">Best time to read it</th><th scope="col">What it does not do</th></tr></thead>
+<thead><tr><th scope="col">Type</th><th scope="col" width="340">File</th><th scope="col">Best time to read it</th><th scope="col">What it does not do</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Start and choose</th><td><a href="setup-guide.en.md">setup-guide.en.md</a></td><td>Your first choice among Web, Desktop, IDE, CLI, and API</td><td>Does not replace each product’s current installation page</td></tr>
 <tr><td><a href="glossary.en.md">glossary.en.md</a></td><td>Look up one term in 30 seconds</td><td>Does not replace a full chapter or practice</td></tr>

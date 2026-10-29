@@ -43,14 +43,15 @@
 
 走 Track A 或 Track B 前，先確認 Stage 0–2；只走日常使用者路線的人可以直接打開角色指南。
 
-<div align="center" markdown="1">
-
-| 你現在想做什麼？ | 建議路線 | 路線入口 |
-|:---|:---|:---|
-| 用 Claude Code、Codex、OpenCode 等 CLI Agent 完成工作 | **Track A — CLI Power User** | [A1：選一個 CLI Agent](tracks/cli/A1-cli-intro.md) |
-| 自己寫 Agent、工具迴圈、Workflow 與服務 | **Track B — Agent Builder** | [Stage 3：第一個 Agent Loop](stages/03-tool-use-and-hello-agent.md) |
-| 只想在日常生活安全使用 AI，暫時不寫程式 | **日常使用者路線** | [日常使用者指南](branches/for-everyday-users.md) |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="依需求選擇路線">
+<table align="center">
+<thead><tr><th scope="col">你現在想做什麼？</th><th scope="col">建議路線</th><th scope="col">路線入口</th></tr></thead>
+<tbody>
+<tr><td>用 Claude Code、Codex、OpenCode 等 CLI Agent 完成工作</td><td><strong>Track A — CLI Power User</strong></td><td><a href="tracks/cli/A1-cli-intro.md">A1：選一個 CLI Agent</a></td></tr>
+<tr><td>自己寫 Agent、工具迴圈、Workflow 與服務</td><td><strong>Track B — Agent Builder</strong></td><td><a href="stages/03-tool-use-and-hello-agent.md">Stage 3：第一個 Agent Loop</a></td></tr>
+<tr><td>只想在日常生活安全使用 AI，暫時不寫程式</td><td><strong>日常使用者路線</strong></td><td><a href="branches/for-everyday-users.md">日常使用者指南</a></td></tr>
+</tbody>
+</table>
 </div>
 
 <details markdown="1">
@@ -73,46 +74,49 @@ cd awesome-agentic-ai-zh
 
 ### 共用基礎：Stage 0–2
 
-<div align="center" markdown="1">
-
-| Stage | 這一步解決什麼？ | 完成後你能做什麼？ |
-|:---|:---|:---|
-| **0** · [基礎準備](stages/00-foundations.md) | 電腦與基本工具準備好了嗎？ | 用 Python 呼叫公開 API、讀 JSON（JavaScript Object Notation，程式交換資料常用的文字格式），並用 Git 保存成果 |
-| **1** · [LLM 基礎](stages/01-llm-basics.md) | LLM、Token、Context 與模型差在哪裡？ | 呼叫一個 LLM，並依需求選雲端或本機模型 |
-| **2** · [Prompt 設計](stages/02-prompt-engineering.md) | 怎麼把目標、資料、規則與輸出說清楚？ | 用固定案例比較 Zero-Shot、One-Shot、Few-Shot 與 CoT（Chain-of-Thought，以中間步驟處理問題的推理提示方法） 的邊界 |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="共用基礎路線比較">
+<table align="center">
+<thead><tr><th scope="col" width="260">Stage</th><th scope="col">這一步解決什麼？</th><th scope="col">完成後你能做什麼？</th></tr></thead>
+<tbody>
+<tr><td><strong>0</strong> · <a href="stages/00-foundations.md">基礎準備</a></td><td>電腦與基本工具準備好了嗎？</td><td>用 Python 呼叫公開 API、讀 JSON（JavaScript Object Notation，程式交換資料常用的文字格式），並用 Git 保存成果</td></tr>
+<tr><td><strong>1</strong> · <a href="stages/01-llm-basics.md">LLM 基礎</a></td><td>LLM、Token、Context 與模型差在哪裡？</td><td>呼叫一個 LLM，並依需求選雲端或本機模型</td></tr>
+<tr><td><strong>2</strong> · <a href="stages/02-prompt-engineering.md">Prompt 設計</a></td><td>怎麼把目標、資料、規則與輸出說清楚？</td><td>用固定案例比較 Zero-Shot、One-Shot、Few-Shot 與 CoT（Chain-of-Thought，以中間步驟處理問題的推理提示方法） 的邊界</td></tr>
+</tbody>
+</table>
 </div>
 
 ### Track A：使用 CLI Agent 把工作做完
 
 正式順序是 `A1 → A2 → Stage 5 → A3 → Stage 8`。
 
-<div align="center" markdown="1">
-
-| 順序 | 這一步解決什麼？ | 完成後你能做什麼？ |
-|:---|:---|:---|
-| **A1** · [選一個 CLI Agent](tracks/cli/A1-cli-intro.md) | OpenRouter、OpenCode、Pi、Ollama 分別是什麼？ | 選對工具並完成第一個小任務 |
-| **A2** · [建立可重複流程](tracks/cli/A2-cli-workflow.md) | 怎麼把規則與步驟留給下一次使用？ | 寫 Project Instructions、Skill 與可重用工作流程 |
-| **5** · [Claude Code 生態](stages/05-claude-code-ecosystem.md) | MCP、Skills、Plugins、Hooks 與 Subagents 怎麼分？ | 先讀核心 5.1–5.4；5.5–5.8 依工作需要選讀 |
-| **A3** · [接進真實工作](tracks/cli/A3-cli-production.md) | 怎麼安全連接外部工具、CI 與團隊流程？ | 用最小權限、人工檢查與紀錄完成整合 |
-| **8** · [Agent 操作介面](stages/08-agent-interfaces.md) | Agent 怎麼操作瀏覽器、畫面與 Sandbox？ | 判斷任務該用 CLI、Browser、Computer Use 還是 API |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Track A 路線比較">
+<table align="center">
+<thead><tr><th scope="col" width="260">順序</th><th scope="col">這一步解決什麼？</th><th scope="col">完成後你能做什麼？</th></tr></thead>
+<tbody>
+<tr><td><strong>A1</strong> · <a href="tracks/cli/A1-cli-intro.md">選一個 CLI Agent</a></td><td>OpenRouter、OpenCode、Pi、Ollama 分別是什麼？</td><td>選對工具並完成第一個小任務</td></tr>
+<tr><td><strong>A2</strong> · <a href="tracks/cli/A2-cli-workflow.md">建立可重複流程</a></td><td>怎麼把規則與步驟留給下一次使用？</td><td>寫 Project Instructions、Skill 與可重用工作流程</td></tr>
+<tr><td><strong>5</strong> · <a href="stages/05-claude-code-ecosystem.md">Claude Code 生態</a></td><td>MCP、Skills、Plugins、Hooks 與 Subagents 怎麼分？</td><td>先讀核心 5.1–5.4；5.5–5.8 依工作需要選讀</td></tr>
+<tr><td><strong>A3</strong> · <a href="tracks/cli/A3-cli-production.md">接進真實工作</a></td><td>怎麼安全連接外部工具、CI 與團隊流程？</td><td>用最小權限、人工檢查與紀錄完成整合</td></tr>
+<tr><td><strong>8</strong> · <a href="stages/08-agent-interfaces.md">Agent 操作介面</a></td><td>Agent 怎麼操作瀏覽器、畫面與 Sandbox？</td><td>判斷任務該用 CLI、Browser、Computer Use 還是 API</td></tr>
+</tbody>
+</table>
 </div>
 
 ### Track B：從零打造 Agent
 
-<div align="center" markdown="1">
-
-| 順序 | 這一步解決什麼？ | 完成後你能做什麼？ |
-|:---|:---|:---|
-| **3** · [工具使用與第一個 Agent Loop](stages/03-tool-use-and-hello-agent.md) | 模型怎麼安全呼叫工具並重複下一步？ | 做出有最大輪數、會驗證參數的 Agent Loop |
-| **4** · [Workflow Graph 與 Agent 框架](stages/04-agent-frameworks.md) | 怎麼把多個步驟畫成工作地圖？ | 選擇 Workflow、Agent、Graph 與 Framework |
-| **5** · [Claude Code 生態](stages/05-claude-code-ecosystem.md) | MCP、Skills、Plugins、Hooks 與 Subagents 怎麼合作？ | 組合工具、規則與可重用能力 |
-| **6** · [Memory · RAG（Retrieval-Augmented Generation，先找相關資料，再依資料回答）](stages/06-memory-rag.md) | Agent 怎麼查文件、保存與取回重要資訊？ | 建立最小 RAG、long-term memory 與 contextual retrieval 流程 |
-| **7** · [Agent 上線工程：可測、可看、可停、可恢復](stages/07-multi-agent-production.md) | Agent 怎麼在真實環境穩定運作？ | 加入 Eval、觀測、預算、Human-in-the-loop（HITL，人工批准）與復原 |
-| **7.5** · [進階 Agentic 概念地圖](stages/07.5-advanced-agentic-concepts.md) | 還有哪些進階 Pattern 值得認得？ | 從 12 個概念選讀 PAR loop、agent-as-judge 等需要的主題 |
-| **8** · [Agent 操作介面](stages/08-agent-interfaces.md) | Agent 怎麼操作 API 以外的真實環境？ | 選擇 Computer Use、Browser Use 或 Code Sandbox |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Track B 路線比較">
+<table align="center">
+<thead><tr><th scope="col">順序</th><th scope="col">這一步解決什麼？</th><th scope="col">完成後你能做什麼？</th></tr></thead>
+<tbody>
+<tr><td><strong>3</strong> · <a href="stages/03-tool-use-and-hello-agent.md">工具使用與第一個 Agent Loop</a></td><td>模型怎麼安全呼叫工具並重複下一步？</td><td>做出有最大輪數、會驗證參數的 Agent Loop</td></tr>
+<tr><td><strong>4</strong> · <a href="stages/04-agent-frameworks.md">Workflow Graph 與 Agent 框架</a></td><td>怎麼把多個步驟畫成工作地圖？</td><td>選擇 Workflow、Agent、Graph 與 Framework</td></tr>
+<tr><td><strong>5</strong> · <a href="stages/05-claude-code-ecosystem.md">Claude Code 生態</a></td><td>MCP、Skills、Plugins、Hooks 與 Subagents 怎麼合作？</td><td>組合工具、規則與可重用能力</td></tr>
+<tr><td><strong>6</strong> · <a href="stages/06-memory-rag.md">Memory · RAG（Retrieval-Augmented Generation，先找相關資料，再依資料回答）</a></td><td>Agent 怎麼查文件、保存與取回重要資訊？</td><td>建立最小 RAG、long-term memory 與 contextual retrieval 流程</td></tr>
+<tr><td><strong>7</strong> · <a href="stages/07-multi-agent-production.md">Agent 上線工程：可測、可看、可停、可恢復</a></td><td>Agent 怎麼在真實環境穩定運作？</td><td>加入 Eval、觀測、預算、Human-in-the-loop（HITL，人工批准）與復原</td></tr>
+<tr><td><strong>7.5</strong> · <a href="stages/07.5-advanced-agentic-concepts.md">進階 Agentic 概念地圖</a></td><td>還有哪些進階 Pattern 值得認得？</td><td>從 12 個概念選讀 PAR loop、agent-as-judge 等需要的主題</td></tr>
+<tr><td><strong>8</strong> · <a href="stages/08-agent-interfaces.md">Agent 操作介面</a></td><td>Agent 怎麼操作 API 以外的真實環境？</td><td>選擇 Computer Use、Browser Use 或 Code Sandbox</td></tr>
+</tbody>
+</table>
 </div>
 
 Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 7 再加入 Eval、觀測、批准與復原，讓同一張工作圖可以穩定運作。
@@ -139,16 +143,17 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 
 
 [靜態圖](resources/diagrams/branch-decision-tree.png)
 
-<div align="center" markdown="1">
-
-| 路線 | 適合誰 | 你會處理什麼？ |
-|:---|:---|:---|
-| 🔬 [研究人員](branches/for-researcher.md) | 研究生、博後、PI | 文獻證據、可重現流程、Multi-Agent Review |
-| 💻 [開發者](branches/for-developer.md) | 軟體工程師 | CLI Delegation、Code Review、測試與回復 |
-| 🎓 [教師](branches/for-teacher.md) | 老師、講師 | 備課、回饋、隱私與教學 Prompt |
-| 📊 [知識工作者](branches/for-knowledge-worker.md) | 顧問、PM、分析師 | Email、會議與報告工作流程 |
-| 👥 [日常使用者](branches/for-everyday-users.md) | 不一定寫程式的 AI 使用者 | 寫作、學習、隱私與安全使用 |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="依身分選擇路線">
+<table align="center">
+<thead><tr><th scope="col">路線</th><th scope="col">適合誰</th><th scope="col">你會處理什麼？</th></tr></thead>
+<tbody>
+<tr><td>🔬 <a href="branches/for-researcher.md">研究人員</a></td><td>研究生、博後、PI</td><td>文獻證據、可重現流程、Multi-Agent Review</td></tr>
+<tr><td>💻 <a href="branches/for-developer.md">開發者</a></td><td>軟體工程師</td><td>CLI Delegation、Code Review、測試與回復</td></tr>
+<tr><td>🎓 <a href="branches/for-teacher.md">教師</a></td><td>老師、講師</td><td>備課、回饋、隱私與教學 Prompt</td></tr>
+<tr><td>📊 <a href="branches/for-knowledge-worker.md">知識工作者</a></td><td>顧問、PM、分析師</td><td>Email、會議與報告工作流程</td></tr>
+<tr><td>👥 <a href="branches/for-everyday-users.md">日常使用者</a></td><td>不一定寫程式的 AI 使用者</td><td>寫作、學習、隱私與安全使用</td></tr>
+</tbody>
+</table>
 </div>
 
 ## 💡 怎麼學才不容易卡住？

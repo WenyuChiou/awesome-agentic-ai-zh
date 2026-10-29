@@ -48,14 +48,33 @@ Compare every Source sentence. If AI invents Lin’s deadline or the email decis
 
 <a id="tier-recommendations"></a>
 ## 📚 Choose an entry point
-<div align="center" markdown="1">
-
-| Need | Start with | Upgrade when |
-|:---|:---|:---|
-| Occasionally organize approved text | **One-off chat** | The same task repeats |
-| Search company Gmail, Drive, Slack, or Microsoft 365 | Approved **App／Connector** | Existing bridges cannot do it and an administrator approves a custom connection |
-| Run the same steps for each new email/form | **Workflow Automation** | Test data works and you can add an Approval Gate |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Knowledge worker entry points">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">Need</th>
+<th scope="col" align="left">Start with</th>
+<th scope="col" align="left">Upgrade when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Occasionally organize approved text</td>
+<td align="left"><strong>One-off chat</strong></td>
+<td align="left">The same task repeats</td>
+</tr>
+<tr>
+<td align="left">Search company Gmail, Drive, Slack, or Microsoft 365</td>
+<td align="left">Approved <strong>App／Connector</strong></td>
+<td align="left">Existing bridges cannot do it and an administrator approves a custom connection</td>
+</tr>
+<tr>
+<td align="left">Run the same steps for each new email/form</td>
+<td align="left"><strong>Workflow Automation</strong></td>
+<td align="left">Test data works and you can add an Approval Gate</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 Do not install MCP just because you see it. Ask whether an in-service App／Connector is safe enough; use [Stage 5.2 — MCP](../stages/05-claude-code-ecosystem.en.md#52--mcp-model-context-protocol--foundation) only for custom tools or reuse across clients.

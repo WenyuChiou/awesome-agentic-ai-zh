@@ -47,14 +47,37 @@ Then open each citation, read answer and original text together, and mark unsupp
 
 <a id="tier-recommendations"></a>
 ## 📚 Choose an entry point
-<div align="center" markdown="1">
-
-| What you want | Start with | Why | Rating |
-|:---|:---|:---|:---|
-| Ask about one paper in a browser | [Gemini Notebook (formerly NotebookLM)](https://notebooklm.google.com/) | Return from source uploads to citations | ⭐⭐⭐⭐⭐ |
-| Organize your literature library | [Zotero](https://www.zotero.org/) | Organize PDFs, authors, years, and notes first | ⭐⭐⭐⭐⭐ |
-| Build rerunnable literature RAG in Python | [PaperQA2](https://github.com/Future-House/paper-qa) | Science-document and citation-centered workflow | ⭐⭐⭐⭐⭐ |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Research entry point comparison">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">What you want</th>
+<th scope="col" align="left" width="340">Start with</th>
+<th scope="col" align="left">Why</th>
+<th scope="col" align="left">Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Ask about one paper in a browser</td>
+<td align="left"><a href="https://notebooklm.google.com/">Gemini Notebook</a> (formerly NotebookLM)</td>
+<td align="left">Return from source uploads to citations</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td align="left">Organize your literature library</td>
+<td align="left"><a href="https://www.zotero.org/">Zotero</a></td>
+<td align="left">Organize PDFs, authors, years, and notes first</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td align="left">Build rerunnable literature RAG in Python</td>
+<td align="left"><a href="https://github.com/Future-House/paper-qa">PaperQA2</a></td>
+<td align="left">Science-document and citation-centered workflow</td>
+<td align="left">⭐⭐⭐⭐⭐</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 Gemini Notebook is Google’s current name for NotebookLM as of 2026-07-16; the old name remains for recognition. A citation is an entry point for checking, not a guarantee.

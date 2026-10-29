@@ -8,24 +8,69 @@
 
 ## 🧭 你现在卡在哪里？
 
-<div align="center" markdown="1">
-
-| 你现在想做什么 | 先打开这一份 |
-|:---|:---|
-| 我完全没写过 code，不知道怎么开始 | [`setup-guide.zh-Hans.md`](setup-guide.zh-Hans.md) |
-| 我想按完整学习地图开始 | [主页](../README.zh-Hans.md) → [Stage 0](../stages/00-foundations.zh-Hans.md) |
-| 我分不清模型怎么学会、怎么被调整、什么时候只是在生成答案 | [`model-training-guide.zh-Hans.md`](model-training-guide.zh-Hans.md) |
-| 我看到一个词，但不知道意思 | [查词卡](glossary.zh-Hans.md) |
-| 我分不清这四个名字：OpenRouter＝统一模型 API／router；Ollama＝本地模型 runtime；OpenCode／Pi＝coding agent／toolkit | [`cli-agents-guide.zh-Hans.md`](cli-agents-guide.zh-Hans.md) |
-| 我想做出第一个操作卡（Skill）、工具接头（MCP server）或文档流程 | [实践食谱](cookbook.zh-Hans.md) |
-| 我写了工具说明（tool schema），但模型一直选错工具 | [`schema-design-cheatsheet.zh-Hans.md`](schema-design-cheatsheet.zh-Hans.md) |
-| 我想找能接 Notion、Office、数据库或浏览器的工具 | [`mcp-skills-catalog.zh-Hans.md`](mcp-skills-catalog.zh-Hans.md) |
-| 我想选一门课，或先看证书有没有用 | [`courses.zh-Hans.md`](courses.zh-Hans.md) |
-| 我想知道 agent 是在终端、编辑器、云端还是自己的设备里工作 | [`agent-paradigms.zh-Hans.md`](agent-paradigms.zh-Hans.md) |
-| 我想直接复制一个小助手 agent（subagent）派遣范例 | [`subagent-cookbook.zh-Hans.md`](subagent-cookbook.zh-Hans.md) |
-| 我想自己设计、组合或排查小助手 agent（subagent） | [`subagent-advanced.zh-Hans.md`](subagent-advanced.zh-Hans.md) |
-| 我想替这个项目写内容或提交 PR | [`style-guide.zh-Hans.md`](style-guide.zh-Hans.md) |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="依需求选择资源">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">你现在想做什么</th>
+<th scope="col" align="left" width="340">先打开这一份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">我完全没写过 code，不知道怎么开始</td>
+<td align="left"><a href="setup-guide.zh-Hans.md"><code>setup-guide.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想按完整学习地图开始</td>
+<td align="left"><a href="../README.zh-Hans.md">主页</a> → <a href="../stages/00-foundations.zh-Hans.md">Stage 0</a></td>
+</tr>
+<tr>
+<td align="left">我分不清模型怎么学会、怎么被调整、什么时候只是在生成答案</td>
+<td align="left"><a href="model-training-guide.zh-Hans.md"><code>model-training-guide.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我看到一个词，但不知道意思</td>
+<td align="left"><a href="glossary.zh-Hans.md">查词卡</a></td>
+</tr>
+<tr>
+<td align="left">我分不清这四个名字：OpenRouter＝统一模型 API／router；Ollama＝本地模型 runtime；OpenCode／Pi＝coding agent／toolkit</td>
+<td align="left"><a href="cli-agents-guide.zh-Hans.md"><code>cli-agents-guide.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想做出第一个操作卡（Skill）、工具接头（MCP server）或文档流程</td>
+<td align="left"><a href="cookbook.zh-Hans.md">实践食谱</a></td>
+</tr>
+<tr>
+<td align="left">我写了工具说明（tool schema），但模型一直选错工具</td>
+<td align="left"><a href="schema-design-cheatsheet.zh-Hans.md"><code>schema-design-cheatsheet.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想找能接 Notion、Office、数据库或浏览器的工具</td>
+<td align="left"><a href="mcp-skills-catalog.zh-Hans.md"><code>mcp-skills-catalog.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想选一门课，或先看证书有没有用</td>
+<td align="left"><a href="courses.zh-Hans.md"><code>courses.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想知道 agent 是在终端、编辑器、云端还是自己的设备里工作</td>
+<td align="left"><a href="agent-paradigms.zh-Hans.md"><code>agent-paradigms.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想直接复制一个小助手 agent（subagent）派遣范例</td>
+<td align="left"><a href="subagent-cookbook.zh-Hans.md"><code>subagent-cookbook.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想自己设计、组合或排查小助手 agent（subagent）</td>
+<td align="left"><a href="subagent-advanced.zh-Hans.md"><code>subagent-advanced.zh-Hans.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想替这个项目写内容或提交 PR</td>
+<td align="left"><a href="style-guide.zh-Hans.md"><code>style-guide.zh-Hans.md</code></a></td>
+</tr>
+</tbody>
+</table>
 </div>
 
 ## 🧩 先分清五个词
@@ -42,7 +87,7 @@
 
 <div class="reader-reference-table" role="region" tabindex="0" aria-label="学习资源比较">
 <table align="center">
-<thead><tr><th scope="col">类型</th><th scope="col">文件</th><th scope="col">最适合什么时候看</th><th scope="col">它不负责什么</th></tr></thead>
+<thead><tr><th scope="col">类型</th><th scope="col" width="340">文件</th><th scope="col">最适合什么时候看</th><th scope="col">它不负责什么</th></tr></thead>
 <tbody>
 <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">开始与选择</th><td><a href="setup-guide.zh-Hans.md">setup-guide.zh-Hans.md</a></td><td>第一次选择 Web、Desktop、IDE、CLI 或 API</td><td>不取代每个产品的最新官方安装页</td></tr>
 <tr><td><a href="glossary.zh-Hans.md">glossary.zh-Hans.md</a></td><td>30 秒查一个名词</td><td>不取代完整章节与实践</td></tr>

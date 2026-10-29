@@ -48,14 +48,33 @@ fictional meeting note：“团队决定周五先发布说明页。小林会整�
 
 <a id="层级建议"></a>
 ## 📚 先选一个入口
-<div align="center" markdown="1">
-
-| 你的需求 | 先用什么 | 何时升级 |
-|:---|:---|:---|
-| 偶尔整理公开或已核准的文字 | **一次性聊天** | 同一件事开始反复做时 |
-| 从公司 Gmail、Drive、Slack 或 Microsoft 365 找来源 | 组织核准的 **App／Connector** | 现成连接器做不到且管理员同意自定义连接时 |
-| 每次新 Email／表单都跑相同步骤 | **Workflow Automation** | 测试数据跑通后加入 Approval Gate |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="知识工作者入口比较">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">你的需求</th>
+<th scope="col" align="left">先用什么</th>
+<th scope="col" align="left">何时升级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">偶尔整理公开或已核准的文字</td>
+<td align="left"><strong>一次性聊天</strong></td>
+<td align="left">同一件事开始反复做时</td>
+</tr>
+<tr>
+<td align="left">从公司 Gmail、Drive、Slack 或 Microsoft 365 找来源</td>
+<td align="left">组织核准的 <strong>App／Connector</strong></td>
+<td align="left">现成连接器做不到且管理员同意自定义连接时</td>
+</tr>
+<tr>
+<td align="left">每次新 Email／表单都跑相同步骤</td>
+<td align="left"><strong>Workflow Automation</strong></td>
+<td align="left">测试数据跑通后加入 Approval Gate</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 不要因为看见 MCP 就先安装 MCP。先问：“现有服务里的 App／Connector 能不能安全完成？”只有需要自定义工具或跨 client 复用时，才进入 [Stage 5.2 — MCP 基础](../stages/05-claude-code-ecosystem.zh-Hans.md#52--mcpmodel-context-protocol-基础)。

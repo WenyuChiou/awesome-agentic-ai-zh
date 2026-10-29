@@ -43,14 +43,15 @@ Chapters explain important terms in plain language at first use. Forgot one? See
 
 Before Track A or Track B, check Stage 0–2. If you only want everyday AI use, go straight to the role guide.
 
-<div align="center" markdown="1">
-
-| What do you want to do? | Route | Route entrance |
-|:---|:---|:---|
-| Get work done with a CLI agent — Claude Code, Codex, OpenCode | **Track A — CLI Power User** | [A1: Pick a CLI agent](tracks/cli/A1-cli-intro.en.md) |
-| Write your own agent, tool loop, workflow, and service | **Track B — Agent Builder** | [Stage 3: First agent loop](stages/03-tool-use-and-hello-agent.en.md) |
-| Use AI safely in daily life, no coding for now | **Everyday user route** | [Everyday user guide](branches/for-everyday-users.en.md) |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Choose a route by need">
+<table align="center">
+<thead><tr><th scope="col">What do you want to do?</th><th scope="col">Route</th><th scope="col">Route entrance</th></tr></thead>
+<tbody>
+<tr><td>Get work done with a CLI agent — Claude Code, Codex, OpenCode</td><td><strong>Track A — CLI Power User</strong></td><td><a href="tracks/cli/A1-cli-intro.en.md">A1: Pick a CLI agent</a></td></tr>
+<tr><td>Write your own agent, tool loop, workflow, and service</td><td><strong>Track B — Agent Builder</strong></td><td><a href="stages/03-tool-use-and-hello-agent.en.md">Stage 3: First agent loop</a></td></tr>
+<tr><td>Use AI safely in daily life, no coding for now</td><td><strong>Everyday user route</strong></td><td><a href="branches/for-everyday-users.en.md">Everyday user guide</a></td></tr>
+</tbody>
+</table>
 </div>
 
 <details markdown="1">
@@ -73,46 +74,49 @@ The map has **8 topic stages + the Stage 0 readiness check + the Stage 7.5 advan
 
 ### Shared foundations: Stages 0–2
 
-<div align="center" markdown="1">
-
-| Stage | What it settles | What you can do after |
-|:---|:---|:---|
-| **0** · [Foundations](stages/00-foundations.en.md) | Machine and tools ready? | Call a public API in Python, read JSON (JavaScript Object Notation, a text data-exchange format), save with Git |
-| **1** · [LLM fundamentals](stages/01-llm-basics.en.md) | What are LLM, token, context; how do models differ? | Call an LLM and pick a cloud or local model |
-| **2** · [Prompt design](stages/02-prompt-engineering.en.md) | How to state goal, data, rules, output clearly? | Compare Zero-Shot, One-Shot, Few-Shot, and the boundary of CoT (Chain-of-Thought, reason through intermediate steps) |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Shared foundations route comparison">
+<table align="center">
+<thead><tr><th scope="col" width="260">Stage</th><th scope="col">What it settles</th><th scope="col">What you can do after</th></tr></thead>
+<tbody>
+<tr><td><strong>0</strong> · <a href="stages/00-foundations.en.md">Foundations</a></td><td>Machine and tools ready?</td><td>Call a public API in Python, read JSON (JavaScript Object Notation, a text data-exchange format), save with Git</td></tr>
+<tr><td><strong>1</strong> · <a href="stages/01-llm-basics.en.md">LLM fundamentals</a></td><td>What are LLM, token, context; how do models differ?</td><td>Call an LLM and pick a cloud or local model</td></tr>
+<tr><td><strong>2</strong> · <a href="stages/02-prompt-engineering.en.md">Prompt design</a></td><td>How to state goal, data, rules, output clearly?</td><td>Compare Zero-Shot, One-Shot, Few-Shot, and the boundary of CoT (Chain-of-Thought, reason through intermediate steps)</td></tr>
+</tbody>
+</table>
 </div>
 
 ### Track A: get work done with a CLI agent
 
 The intended order is `A1 → A2 → Stage 5 → A3 → Stage 8`.
 
-<div align="center" markdown="1">
-
-| Order | What it settles | What you can do after |
-|:---|:---|:---|
-| **A1** · [Pick a CLI agent](tracks/cli/A1-cli-intro.en.md) | What are OpenRouter, OpenCode, Pi, Ollama? | Pick a tool and finish one small task |
-| **A2** · [Build a repeatable process](tracks/cli/A2-cli-workflow.en.md) | How to keep rules and steps for next time? | Write project instructions, a Skill, a reusable workflow |
-| **5** · [Claude Code ecosystem](stages/05-claude-code-ecosystem.en.md) | How do MCP, Skills, Plugins, Hooks, Subagents differ? | Read core 5.1–5.4; choose 5.5–5.8 only when your work needs them |
-| **A3** · [Plug into real work](tracks/cli/A3-cli-production.en.md) | How to safely connect tools, CI, and team process? | Integrate with least privilege, human checks, a record |
-| **8** · [Agent interfaces](stages/08-agent-interfaces.en.md) | How does an agent drive a browser, screen, sandbox? | Decide if a task needs CLI, browser, Computer Use, or API |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Track A route comparison">
+<table align="center">
+<thead><tr><th scope="col" width="260">Order</th><th scope="col">What it settles</th><th scope="col">What you can do after</th></tr></thead>
+<tbody>
+<tr><td><strong>A1</strong> · <a href="tracks/cli/A1-cli-intro.en.md">Pick a CLI agent</a></td><td>What are OpenRouter, OpenCode, Pi, Ollama?</td><td>Pick a tool and finish one small task</td></tr>
+<tr><td><strong>A2</strong> · <a href="tracks/cli/A2-cli-workflow.en.md">Build a repeatable process</a></td><td>How to keep rules and steps for next time?</td><td>Write project instructions, a Skill, a reusable workflow</td></tr>
+<tr><td><strong>5</strong> · <a href="stages/05-claude-code-ecosystem.en.md">Claude Code ecosystem</a></td><td>How do MCP, Skills, Plugins, Hooks, Subagents differ?</td><td>Read core 5.1–5.4; choose 5.5–5.8 only when your work needs them</td></tr>
+<tr><td><strong>A3</strong> · <a href="tracks/cli/A3-cli-production.en.md">Plug into real work</a></td><td>How to safely connect tools, CI, and team process?</td><td>Integrate with least privilege, human checks, a record</td></tr>
+<tr><td><strong>8</strong> · <a href="stages/08-agent-interfaces.en.md">Agent interfaces</a></td><td>How does an agent drive a browser, screen, sandbox?</td><td>Decide if a task needs CLI, browser, Computer Use, or API</td></tr>
+</tbody>
+</table>
 </div>
 
 ### Track B: build an agent from scratch
 
-<div align="center" markdown="1">
-
-| Order | What it settles | What you can do after |
-|:---|:---|:---|
-| **3** · [Tool Use & Your First Agent Loop](stages/03-tool-use-and-hello-agent.en.md) | How does a model call tools safely and continue? | Build an agent loop with a turn limit and validated arguments |
-| **4** · [Workflow Graphs & Agent Frameworks](stages/04-agent-frameworks.en.md) | How to draw several steps as one map? | Choose between workflow, agent, graph, framework |
-| **5** · [Claude Code ecosystem](stages/05-claude-code-ecosystem.en.md) | How do MCP, Skills, Plugins, Hooks, Subagents work together? | Combine tools, rules, reusable capabilities |
-| **6** · [Memory · RAG (Retrieval-Augmented Generation, retrieve information before answering)](stages/06-memory-rag.en.md) | How does an agent search, save, and get back what matters? | Build a minimal RAG, long-term memory, and contextual retrieval flow |
-| **7** · [Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable](stages/07-multi-agent-production.en.md) | How does an agent stay stable in production? | Add Eval, observability, budget, Human-in-the-loop approval, recovery |
-| **7.5** · [Advanced agentic concept map](stages/07.5-advanced-agentic-concepts.en.md) | Which advanced patterns are worth knowing? | Pick what you need from 12 concepts such as PAR loop and agent-as-judge |
-| **8** · [Agent interfaces](stages/08-agent-interfaces.en.md) | How does an agent work beyond the API? | Choose Computer Use, Browser Use, or a code sandbox |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Track B route comparison">
+<table align="center">
+<thead><tr><th scope="col">Order</th><th scope="col">What it settles</th><th scope="col">What you can do after</th></tr></thead>
+<tbody>
+<tr><td><strong>3</strong> · <a href="stages/03-tool-use-and-hello-agent.en.md">Tool Use &amp; Your First Agent Loop</a></td><td>How does a model call tools safely and continue?</td><td>Build an agent loop with a turn limit and validated arguments</td></tr>
+<tr><td><strong>4</strong> · <a href="stages/04-agent-frameworks.en.md">Workflow Graphs &amp; Agent Frameworks</a></td><td>How to draw several steps as one map?</td><td>Choose between workflow, agent, graph, framework</td></tr>
+<tr><td><strong>5</strong> · <a href="stages/05-claude-code-ecosystem.en.md">Claude Code ecosystem</a></td><td>How do MCP, Skills, Plugins, Hooks, Subagents work together?</td><td>Combine tools, rules, reusable capabilities</td></tr>
+<tr><td><strong>6</strong> · <a href="stages/06-memory-rag.en.md">Memory · RAG (Retrieval-Augmented Generation, retrieve information before answering)</a></td><td>How does an agent search, save, and get back what matters?</td><td>Build a minimal RAG, long-term memory, and contextual retrieval flow</td></tr>
+<tr><td><strong>7</strong> · <a href="stages/07-multi-agent-production.en.md">Agent Production Engineering: Testable, Observable, Stoppable, and Recoverable</a></td><td>How does an agent stay stable in production?</td><td>Add Eval, observability, budget, Human-in-the-loop approval, recovery</td></tr>
+<tr><td><strong>7.5</strong> · <a href="stages/07.5-advanced-agentic-concepts.en.md">Advanced agentic concept map</a></td><td>Which advanced patterns are worth knowing?</td><td>Pick what you need from 12 concepts such as PAR loop and agent-as-judge</td></tr>
+<tr><td><strong>8</strong> · <a href="stages/08-agent-interfaces.en.md">Agent interfaces</a></td><td>How does an agent work beyond the API?</td><td>Choose Computer Use, Browser Use, or a code sandbox</td></tr>
+</tbody>
+</table>
 </div>
 
 Stage 4 first explains the **Workflow Graph**, then uses a framework to build it. Stage 7 adds Eval, observability, approval, and recovery so the same work map can run reliably.
@@ -139,16 +143,17 @@ The timeline is a planning aid. Finish the step in front of you; no need to read
 
 [Static image](resources/diagrams/branch-decision-tree.en.png)
 
-<div align="center" markdown="1">
-
-| Route | Who it fits | What you will handle |
-|:---|:---|:---|
-| 🔬 [Researcher](branches/for-researcher.en.md) | Grad students, postdocs, PIs | Literature evidence, reproducible pipelines, multi-agent review |
-| 💻 [Developer](branches/for-developer.en.md) | Software engineers | CLI delegation, code review, tests and rollback |
-| 🎓 [Teacher](branches/for-teacher.en.md) | Teachers, instructors | Lesson prep, feedback, privacy, teaching prompts |
-| 📊 [Knowledge worker](branches/for-knowledge-worker.en.md) | Consultants, PMs, analysts | Email, meeting, reporting workflows |
-| 👥 [Everyday user](branches/for-everyday-users.en.md) | AI users who may not code | Writing, learning, privacy, safe use |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Choose a route by role">
+<table align="center">
+<thead><tr><th scope="col">Route</th><th scope="col">Who it fits</th><th scope="col">What you will handle</th></tr></thead>
+<tbody>
+<tr><td>🔬 <a href="branches/for-researcher.en.md">Researcher</a></td><td>Grad students, postdocs, PIs</td><td>Literature evidence, reproducible pipelines, multi-agent review</td></tr>
+<tr><td>💻 <a href="branches/for-developer.en.md">Developer</a></td><td>Software engineers</td><td>CLI delegation, code review, tests and rollback</td></tr>
+<tr><td>🎓 <a href="branches/for-teacher.en.md">Teacher</a></td><td>Teachers, instructors</td><td>Lesson prep, feedback, privacy, teaching prompts</td></tr>
+<tr><td>📊 <a href="branches/for-knowledge-worker.en.md">Knowledge worker</a></td><td>Consultants, PMs, analysts</td><td>Email, meeting, reporting workflows</td></tr>
+<tr><td>👥 <a href="branches/for-everyday-users.en.md">Everyday user</a></td><td>AI users who may not code</td><td>Writing, learning, privacy, safe use</td></tr>
+</tbody>
+</table>
 </div>
 
 ## 💡 How do you learn without getting stuck?

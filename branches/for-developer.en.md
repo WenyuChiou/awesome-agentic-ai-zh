@@ -71,16 +71,43 @@ If wrong, confirm README.md has no other work and Rollback only this exercise’
 <a id="recommended-tools"></a><a id="tier-progression"></a>
 ## 📚 Choose an entry point
 
-<div align="center" markdown="1">
-
-| What you want | Start with | Why |
-|:---|:---|:---|
-| Learn permission and sandbox workflows | [Claude Code](https://code.claude.com/docs/en/overview) | Its docs separate permissions, isolation, and Surfaces |
-| Work through app, CLI, IDE, or cloud | [OpenAI Codex](https://github.com/openai/codex) | One Coding Agent works across multiple entry points |
-| Give a GitHub issue to a cloud agent | [GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | Understand cloud-agent versus IDE-agent mode |
-| Use an open, Provider-flexible tool | [OpenCode](https://github.com/anomalyco/opencode) | Keep Agent, Provider, and Router distinct |
-| Start in an IDE with step-by-step Approval | [Cline](https://github.com/cline/cline) | Practice approving tools, files, and browser actions |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Developer entry points">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">What you want</th>
+<th scope="col" align="left">Start with</th>
+<th scope="col" align="left">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Learn permission and sandbox workflows</td>
+<td align="left"><a href="https://code.claude.com/docs/en/overview">Claude Code</a></td>
+<td align="left">Its docs separate permissions, isolation, and Surfaces</td>
+</tr>
+<tr>
+<td align="left">Work through app, CLI, IDE, or cloud</td>
+<td align="left"><a href="https://github.com/openai/codex">OpenAI Codex</a></td>
+<td align="left">One Coding Agent works across multiple entry points</td>
+</tr>
+<tr>
+<td align="left">Give a GitHub issue to a cloud agent</td>
+<td align="left"><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot cloud agent</a></td>
+<td align="left">Understand cloud-agent versus IDE-agent mode</td>
+</tr>
+<tr>
+<td align="left">Use an open, Provider-flexible tool</td>
+<td align="left"><a href="https://github.com/anomalyco/opencode">OpenCode</a></td>
+<td align="left">Keep Agent, Provider, and Router distinct</td>
+</tr>
+<tr>
+<td align="left">Start in an IDE with step-by-step Approval</td>
+<td align="left"><a href="https://github.com/cline/cline">Cline</a></td>
+<td align="left">Practice approving tools, files, and browser actions</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 Do not ask only “which is strongest?” Ask what files and commands it can access, whether it can connect to the network, who approves high-risk actions, and how failure is reversed.

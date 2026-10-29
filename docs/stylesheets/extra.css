@@ -488,5 +488,40 @@ body[data-md-color-scheme="slate"] {
 
 /* Give desktop resource comparisons room without widening unrelated pages. */
 @media (min-width: 1200px) {
-  .md-main__inner.md-grid:has(.reader-resource-catalog) { max-width: 76rem; }
+  .md-main__inner.md-grid:has(.reader-resource-catalog, .reader-route-table) { max-width: 76rem; }
+}
+
+/* Route names need room; stack the same questions and outcomes on smaller screens. */
+.md-typeset .reader-route-table { max-inline-size: 100%; overflow-x: auto; }
+.md-typeset .reader-route-table .md-typeset__scrollwrap { margin: 0; }
+.md-typeset .reader-route-table .md-typeset__table { display: block; padding: 0; }
+.md-typeset .reader-route-table table:not([class]) { width: 100%; min-width: 0; }
+.md-typeset .reader-route-table table:not([class]) th,
+.md-typeset .reader-route-table table:not([class]) td {
+  text-align: left; word-break: normal; overflow-wrap: break-word;
+}
+@media (max-width: 900px) {
+  .md-typeset .reader-route-table table:not([class]),
+  .md-typeset .reader-route-table tbody,
+  .md-typeset .reader-route-table tr,
+  .md-typeset .reader-route-table td {
+    display: block; inline-size: 100%; min-inline-size: 0; box-sizing: border-box;
+  }
+  .md-typeset .reader-route-table thead {
+    position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%);
+  }
+  .md-typeset .reader-route-table tr { border-bottom: 1px solid var(--md-typeset-table-color); padding: .4em 0; }
+  .md-typeset .reader-route-table table:not([class]) td { border: 0; padding: .25em .65em; }
+  .md-typeset .reader-route-table td:first-child { font-weight: 600; }
+}
+
+/* Institutional document titles can need more room than short repository names. */
+@media (min-width: 901px) {
+  .md-typeset .reader-resource-catalog table:has(thead th:nth-child(2)[width="300"]) thead th:nth-child(2) { width: 30%; }
+  .md-typeset .reader-resource-catalog table:has(thead th:nth-child(2)[width="300"]) thead th:nth-child(4),
+  .md-typeset .reader-resource-catalog table:has(thead th:nth-child(2)[width="300"]) thead th:nth-child(5) { width: 23%; }
+}
+
+@media (min-width: 901px) {
+  .md-typeset .reader-route-table table:not([class]) th[width="260"] { width: 300px; min-width: 300px; }
 }

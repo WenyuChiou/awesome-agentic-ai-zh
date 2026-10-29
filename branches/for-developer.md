@@ -86,16 +86,43 @@ git diff -- README.md
 
 ## 📚 先選一個入口
 
-<div align="center" markdown="1">
-
-| 你現在想做的事 | 先看什麼 | 為什麼 |
-|:---|:---|:---|
-| 學完整的 permission 與 sandbox 流程 | [Claude Code](https://code.claude.com/docs/en/overview) | 文件把權限、隔離與多種 Surface 分開說清楚 |
-| 使用 app、CLI、IDE 或 cloud 工作 | [OpenAI Codex](https://github.com/openai/codex) | 同一個 Coding Agent 可以在多個入口工作 |
-| 把 GitHub issue 交給 cloud agent | [GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | 可以看懂 cloud agent 與 IDE agent mode 的差別 |
-| 使用開源、可換 Provider 的工具 | [OpenCode](https://github.com/anomalyco/opencode) | 適合把 Coding Agent、Provider 與 Router 分開理解 |
-| 從 IDE 開始並逐步批准 | [Cline](https://github.com/cline/cline) | 可以練習逐步批准工具、檔案與 browser 操作 |
-
+<div class="reader-route-table" role="region" tabindex="0" aria-label="開發者入口比較">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">你現在想做的事</th>
+<th scope="col" align="left">先看什麼</th>
+<th scope="col" align="left">為什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">學完整的 permission 與 sandbox 流程</td>
+<td align="left"><a href="https://code.claude.com/docs/en/overview">Claude Code</a></td>
+<td align="left">文件把權限、隔離與多種 Surface 分開說清楚</td>
+</tr>
+<tr>
+<td align="left">使用 app、CLI、IDE 或 cloud 工作</td>
+<td align="left"><a href="https://github.com/openai/codex">OpenAI Codex</a></td>
+<td align="left">同一個 Coding Agent 可以在多個入口工作</td>
+</tr>
+<tr>
+<td align="left">把 GitHub issue 交給 cloud agent</td>
+<td align="left"><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot cloud agent</a></td>
+<td align="left">可以看懂 cloud agent 與 IDE agent mode 的差別</td>
+</tr>
+<tr>
+<td align="left">使用開源、可換 Provider 的工具</td>
+<td align="left"><a href="https://github.com/anomalyco/opencode">OpenCode</a></td>
+<td align="left">適合把 Coding Agent、Provider 與 Router 分開理解</td>
+</tr>
+<tr>
+<td align="left">從 IDE 開始並逐步批准</td>
+<td align="left"><a href="https://github.com/cline/cline">Cline</a></td>
+<td align="left">可以練習逐步批准工具、檔案與 browser 操作</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 不要只問「哪個最強」。先問：它能看到哪些檔案、能跑哪些命令、是否能連網、誰批准高風險動作，以及失敗時怎麼回復。

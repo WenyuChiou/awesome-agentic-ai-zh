@@ -72,6 +72,7 @@ Then check three things yourself:
 
 **These four doors are not levels. Open only the door the job needs.** Most one-off tasks need only the first door; more tools do not automatically make a better result.
 
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Chat and connector entry comparison">
 <table align="center">
   <thead><tr><th>Door</th><th>Plain explanation</th><th>Good for</th><th>Before it acts</th></tr></thead>
   <tbody>
@@ -79,8 +80,10 @@ Then check three things yourself:
     <tr><td><strong>App／Connector</strong></td><td>Open a door from chat to another service</td><td>Searching authorized mail, files, or calendars</td><td>Check read and write permissions; keep human confirmation for every write action</td></tr>
   </tbody>
 </table>
+</div>
 
 <a id="tier-2--cli-agents-advanced-users-willing-to-learn-the-command-line"></a>
+<div class="reader-route-table" role="region" tabindex="0" aria-label="CLI and local model entry comparison">
 <table align="center">
   <thead><tr><th>Door</th><th>Plain explanation</th><th>Good for</th><th>Before it acts</th></tr></thead>
   <tbody>
@@ -88,6 +91,7 @@ Then check three things yourself:
     <tr><td><strong>Local LLM／Runtime</strong></td><td>The model runs on your own computer</td><td>Offline experiments or data you chose not to send to a cloud model</td><td>Choose a local model; cloud models, web search, and cloud features still use the network</td></tr>
   </tbody>
 </table>
+</div>
 
 If you only want to chat, you do not need a CLI Agent or local runtime. Go to [Track A1](../tracks/cli/A1-cli-intro.en.md) when you want the command line, or [Stage 1](../stages/01-llm-basics.en.md) when you want to understand models.
 
