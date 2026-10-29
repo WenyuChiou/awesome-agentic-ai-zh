@@ -1,49 +1,30 @@
 schema_version: 1
-release_version: v2026.10.29-2
+release_version: v2026.10.29-3
 changes:
-- id: gemini-carbon-access-and-pricing
-  category: model-information
-  zh-TW: Stage 1 補上 Gemini Carbon 的受限開放狀態與官方價格條件，區分模型公告、指定夥伴存取與一般 API 可用。未知欄位明確標示，三語一致。
-  zh-Hans: Stage 1 补上 Gemini Carbon 的受限开放状态与官方价格条件，区分模型公告、指定伙伴访问与一般 API 可用。未知字段明确标注，三语一致。
-  en: Stage 1 adds Gemini Carbon access limits and official pricing conditions, distinguishing the announcement, selected-partner access
-    and general API availability. Unknown fields are labeled explicitly in all three languages.
-  links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/349
-- id: greptile-curriculum-review
-  category: review-governance
-  zh-TW: 三語 README 在支持與聯絡附近加入 Greptile 徽章。教材審查規則檢查三語意思、重要資訊展開、來源與手機／桌面排版證據；不自動批准或合併，最終判斷仍由維護者決定。
-  zh-Hans: 三语 README 在支持与联系附近加入 Greptile 徽章。教材审查规则检查三语含义、重要信息展开、来源与手机／桌面排版证据；不自动批准或合并，最终判断仍由维护者决定。
-  en: The three READMEs add a Greptile badge near support and contact. Curriculum review rules check matching meaning, visible important
-    material, sources and mobile/desktop layout evidence. Reviews do not automatically approve or merge; the maintainer makes the final
-    decision.
-  links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/350
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/351
-- id: numbered-github-guides
-  category: learning-content
-  zh-TW: Stage 0 用七個短步驟說明改文件、Commit、Push、PR 與 Merge。使用本專案真實 Commit、PR 與 Issue 截圖，以紅框和編號指認欄位；三語各有標註版本。核心詞、主練習及 18 筆評分資源維持展開。
-  zh-Hans: Stage 0 用七个短步骤说明改文档、Commit、Push、PR 与 Merge。使用本项目真实 Commit、PR 与 Issue 截图，以红框和编号指认字段；三语各有标注版本。核心术语、主练习及 18 条评分资源保持展开。
-  en: Stage 0 uses seven short steps to explain document edits, Commit, Push, PR and Merge. Real project Commit, PR and Issue screenshots
-    use red boxes and numbers, with a labeled version for each language. Core terms, the main exercise and 18 rated resources remain
-    visible.
-  links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/353
-- id: beginner-flow-and-advanced-routes
+- id: rag-search-terms-and-comparisons
   category: reader-experience
-  zh-TW: 修正十處閱讀卡點：統一 Capstone 入口、補齊環境與資料夾步驟，說明練習全對時怎麼繼續，並指明要展開哪張表。先解釋 Recall@k 與命中率，再使用指標；進階 RAG 按症狀選路，保留完整名詞。Subagent 教法提醒確認實際平行狀態，雲端遷移細節收合，但預算與安全提醒保持可見。
-  zh-Hans: 修正十处阅读卡点：统一 Capstone 入口、补齐环境与文件夹步骤，说明练习全对时怎么继续，并指明要展开哪张表。先解释 Recall@k 与命中率，再使用指标；进阶 RAG 按症状选路，保留完整术语。Subagent 教法提醒确认实际并行状态，云端迁移细节折叠，但预算与安全提醒保持可见。
-  en: 'Fixes ten reader-flow problems: align Capstone entry rules, fill in environment and folder steps, explain how to continue after
-    all answers are correct, and identify which table to expand. Recall@k and hit rate are explained before use; advanced RAG routes
-    start with symptoms and retain the full terminology. Subagent guidance asks readers to verify actual parallel execution. Cloud migration
-    details are collapsed while budget and safety warnings remain visible.'
+  zh-TW: 進階 RAG 先解釋 BM25、向量搜尋與候選資料，再依症狀選方法。用同一批題目比較基線、混合搜尋與加重新排序，記錄 Recall@5、命中率、延遲與成本。保留 13 項方法、6 筆必讀及 12 筆評分資源，並修正手機核心詞排版與 GitHub 粗體。
+  zh-Hans: 进阶 RAG 先解释 BM25、向量搜索与候选资料，再按症状选方法。用同一批题目比较基线、混合搜索与加重新排序，记录 Recall@5、命中率、延迟与成本。保留 13 项方法、6 条必读及 12 条评分资源，并修正手机核心术语排版与 GitHub 粗体。
+  en: Advanced RAG explains BM25, vector search and candidates before choosing a method by symptom. Compare baseline, hybrid search and added
+    reranking on the same questions, recording Recall@5, hit rate, latency and cost. All 13 methods, six required readings and 12 rated resources
+    remain visible; mobile core-term layout and GitHub bold rendering are corrected.
   links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/354
-- id: permanent-notes-only-releases
-  category: release-policy
-  zh-TW: 今後正式 Release 只發布繁體中文、簡體中文與英文說明，不產生或附上 PDF。移除 PDF 開關、建置及上傳步驟，發布前後確認附件清單為空；內容與連結檢查、main SHA 鎖定及 Environment 批准照常保留。手動匯出工具獨立保留。
-  zh-Hans: 今后正式 Release 只发布繁体中文、简体中文与英文说明，不生成或附加 PDF。移除 PDF 开关、构建及上传步骤，发布前后确认附件列表为空；内容与链接检查、main SHA 锁定及 Environment 批准照常保留。手动导出工具独立保留。
-  en: Future releases publish Traditional Chinese, Simplified Chinese and English notes without generating or attaching PDFs. The PDF
-    option, build and upload steps are removed; empty asset lists are verified before and after publishing. Content and link checks,
-    the main SHA lock and Environment approval remain. Standalone manual export tools are retained.
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/356
+- id: execution-and-isolation-boundaries
+  category: learning-safety
+  zh-TW: Stage 5 將 MCP 限制限定於該 server，Stage 8 說明沙箱範圍取決於設定。Stage 6 每題先回專案根目錄，再進入本題資料夾安裝套件與跑本機 Path A；練習 4、5 先準備 Ollama。Path B 為選用，先確認是否使用雲端、供應商、金鑰與費用。
+  zh-Hans: Stage 5 将 MCP 限制限定于该 server，Stage 8 说明沙箱范围取决于设置。Stage 6 每题先回项目根目录，再进入本题文件夹安装软件包与跑本机 Path A；练习 4、5 先准备 Ollama。Path B 为选用，先确认是否使用云端、供应商、密钥与费用。
+  en: Stage 5 scopes MCP limits to that server; Stage 8 explains that sandbox boundaries depend on configuration. For each Stage 6 exercise, return
+    to the repository root, then enter its folder to install packages and run local Path A. Prepare Ollama first for exercises 4 and 5. Path B is optional; check whether it uses cloud services, its provider,
+    key setup and costs first.
   links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/.github/workflows/release.yml
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/357
+- id: model-terms-and-token-price-units
+  category: learning-content
+  zh-TW: Stage 1 在流程與圖示前解釋 Base Model、Instruct Model、模型權重及 Agent 零件，保留訓練方法並標明進階選修。A3 明定輸入與輸出單價皆按每百萬 token 計，兩項 token 數各除以一百萬，並提醒另查其他收費。
+  zh-Hans: Stage 1 在流程与图示前解释 Base Model、Instruct Model、模型权重及 Agent 组件，保留训练方法并标明进阶选修。A3 明定输入与输出单价均按每百万 token 计，两项 token 数各除以一百万，并提醒另查其他收费。
+  en: Stage 1 explains Base Model, Instruct Model, model weights and Agent components before the flow and diagram, retaining training methods
+    and marking advanced electives. A3 declares both input and output rates per million tokens, divides each token count by one million, and notes
+    that other charges must be checked separately.
+  links:
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/358

@@ -73,30 +73,26 @@ def test_current_model_reference_keeps_public_api_ids(locale: str) -> None:
 
 
 @pytest.mark.parametrize("locale", rm.LOCALES)
-def test_october_29_second_notes_cover_only_the_new_release_window(locale: str) -> None:
+def test_october_29_third_notes_cover_only_the_new_release_window(locale: str) -> None:
     notes = rm.validate_notes_manifest()
-    assert notes["release_version"] == "v2026.10.29-2"
+    assert notes["release_version"] == "v2026.10.29-3"
     changes = {change["id"]: change for change in notes["changes"]}
     assert set(changes) == {
-        "gemini-carbon-access-and-pricing", "greptile-curriculum-review",
-        "numbered-github-guides", "beginner-flow-and-advanced-routes",
-        "permanent-notes-only-releases",
+        "rag-search-terms-and-comparisons", "execution-and-isolation-boundaries",
+        "model-terms-and-token-price-units",
     }
-    assert "Carbon" in changes["gemini-carbon-access-and-pricing"][locale]
-    assert "Greptile" in changes["greptile-curriculum-review"][locale]
-    foundation = changes["numbered-github-guides"][locale]
-    assert all(term in foundation for term in ("Commit", "Push", "PR", "Merge", "18"))
-    assert "Recall@k" in changes["beginner-flow-and-advanced-routes"][locale]
-    policy = changes["permanent-notes-only-releases"][locale]
-    assert all(term in policy for term in ("PDF", "main SHA", "Environment"))
-    assert {"zh-TW": "今後", "zh-Hans": "今后", "en": "Future"}[locale] in policy
+    rag = changes["rag-search-terms-and-comparisons"][locale]
+    assert all(term in rag for term in ("BM25", "Recall@5", "13", "12"))
+    safety = changes["execution-and-isolation-boundaries"][locale]
+    assert all(term in safety for term in ("Stage 5", "Stage 6", "Stage 8", "Path A", "Path B"))
+    models = changes["model-terms-and-token-price-units"][locale]
+    assert all(term in models for term in ("Base Model", "Instruct Model", "A3", "token"))
+    assert {"zh-TW": "每百萬", "zh-Hans": "每百万", "en": "per million"}[locale] in models
     links = {link for change in changes.values() for link in change["links"]}
     assert links == {
-        *(f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
-          for pr in (349, 350, 351, 353, 354)),
-        "https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/.github/workflows/release.yml",
+        f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
+        for pr in (356, 357, 358)
     }
-
 
 def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:
     calls: list[object] = []
