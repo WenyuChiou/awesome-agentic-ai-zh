@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
+- **content / Gemini Carbon and browser link verification** · 三語 Stage 1 區分 Carbon 公告、指定夥伴分批開放與一般 API；補上公告優惠價、優惠後價格、快取折扣及未公布欄位。Flash／Argon 仍為可用推薦，同類規格與價格以真正合併欄位分行；只更新 Gemini 查核日期。可見字數基線只按新增存取提醒調整，不收合重要限制。瀏覽器複查上版 10 個受阻連結：9 個正常內容、1 個正常登入入口，沒有替換 URL 或放寬連結掃描基線。
+
 - **images / generated fallbacks** · 圖片孤兒檢查依文件站實際使用的六張動畫 SVG，追蹤對應同語系 PNG 備援；移除主頁多餘的靜態圖連結後，仍保留停止動畫與減少動態效果。新增與網站 hook 對照及正反向回歸檢查，其他 SVG 不會自動豁免同名 PNG，未增加忽略清單。
 
 - **readme / release preparation / v2026.10.29** · 三語主頁移除角色圖旁多餘的獨立靜態圖連結及重複 starter.py 操作段落，保留完整指南與文件站停止動畫功能；恢復動態全球排名徽章於頂部徽章區附近，Star History 曲線圖放在支持與聯絡之後、License 之前。依 v2026.10.26 之後已合併差異整理三語發布說明，涵蓋連結複查、課程手機選路、Stage 0 GitHub 基礎與全站表格／粗體修正；本版不產生或附上 PDF。

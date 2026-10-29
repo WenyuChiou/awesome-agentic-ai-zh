@@ -299,10 +299,12 @@ pages:
       en: stages/01-llm-basics.en.md
       zh-Hans: stages/01-llm-basics.zh-Hans.md
     max_visible_chars:
-      # Stage 1 Path A response guards; visible source measured 2026-10-12.
-      zh-TW: 9195
-      en: 14025
-      zh-Hans: 9221
+      # Carbon's visible access warning adds 181/323/181 reader-gate characters;
+      # existing headroom absorbs 1/33/1. Pin measured totals (2026-10-29).
+      # Other content, disclosure and resource/rating limits are unchanged.
+      zh-TW: 9375
+      en: 14315
+      zh-Hans: 9401
     max_open_details: 3
     required_visible_sections:
       core-terms:

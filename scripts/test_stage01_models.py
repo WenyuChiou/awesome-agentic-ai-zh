@@ -79,7 +79,7 @@ def test_stage01_fact_pack_separates_full_table_and_gpt_update_dates() -> None:
     assert "verified_on: '2026-09-22'" in fact_pack
     assert "gpt: '2026-10-26'" in fact_pack
     assert "kimi: '2026-10-26'" in fact_pack
-    assert "gemini: '2026-10-15'" in fact_pack
+    assert "gemini: '2026-10-29'" in fact_pack
     for provider in ("typesafe_jev", "muse", "mistral", "gpt_features"):
         assert f"{provider}: '2026-10-15'" in fact_pack
     assert "anthropic: '2026-10-08'" in fact_pack

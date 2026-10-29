@@ -15,7 +15,7 @@ stage01_fact_pack:
   provider_updates:
     gpt: '2026-10-26'
     kimi: '2026-10-26'
-    gemini: '2026-10-15'
+    gemini: '2026-10-29'
     anthropic: '2026-10-08'
     typesafe_jev: '2026-10-15'
     muse: '2026-10-15'
@@ -50,6 +50,8 @@ stage01_fact_pack:
     typesafe_jev_cloudflare: 'https://developers.cloudflare.com/ai/models/typesafe/jev/'
     gemini: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash'
     gemini_argon: 'https://ai.google.dev/gemini-api/docs/models/gemini-4-argon'
+    gemini_carbon_announcement: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/'
+    gemini_model_list: 'https://ai.google.dev/gemini-api/docs/models'
     gemini_live: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     deepseek_updates: 'https://api-docs.deepseek.com/updates/'
@@ -90,6 +92,33 @@ stage01_fact_pack:
     mistral_large4: 'https://docs.mistral.ai/models/mistral-large-4-0'
     grok: 'https://docs.x.ai/developers/pricing'
     mimo: 'https://mimo.mi.com/models/en-US/mimo-v2.6-pro'
+  announced_models:
+    gemini_carbon:
+      verified_on: '2026-10-29'
+      announced_on: '2026-10-28'
+      status: 'Preview'
+      availability: 'restricted-phased-rollout'
+      public_api_available: false
+      api_model_id: null
+      input_context_tokens: null
+      max_output_tokens: null
+      general_access_date: null
+      tool_support: null
+      pricing_is_announcement: true
+      currency: 'USD'
+      unit: 'per-1M-tokens'
+      introductory_input: 2
+      introductory_output: 10
+      cached_input_discount_percent: 95
+      introductory_cached_input_calculated: 0.10
+      introductory_end_date: null
+      post_introductory_input: 4
+      post_introductory_output: 20
+      official_sources:
+        - 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/'
+        - 'https://ai.google.dev/gemini-api/docs/models'
+        - 'https://ai.google.dev/gemini-api/docs/pricing'
+        - 'https://ai.google.dev/gemini-api/docs/changelog'
   migration_sources:
     hunyuan: 'https://cloud.tencent.com/announce/detail/2391'
 
