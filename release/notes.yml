@@ -12,10 +12,10 @@ changes:
   - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/356
 - id: execution-and-isolation-boundaries
   category: learning-safety
-  zh-TW: Stage 5 將 MCP 限制限定於該 server，Stage 8 說明沙箱範圍取決於設定。Stage 6 每題先回專案根目錄完成安裝，再跑本機 Path A；雲端 Path B 為選用，先從各題說明確認供應商、金鑰與費用。
-  zh-Hans: Stage 5 将 MCP 限制限定于该 server，Stage 8 说明沙箱范围取决于设置。Stage 6 每题先回项目根目录完成安装，再跑本机 Path A；云端 Path B 为选用，先从各题说明确认供应商、密钥与费用。
+  zh-TW: Stage 5 將 MCP 限制限定於該 server，Stage 8 說明沙箱範圍取決於設定。Stage 6 每題先回專案根目錄，再進入本題資料夾安裝套件與跑本機 Path A；練習 4、5 先準備 Ollama。Path B 為選用，先確認是否使用雲端、供應商、金鑰與費用。
+  zh-Hans: Stage 5 将 MCP 限制限定于该 server，Stage 8 说明沙箱范围取决于设置。Stage 6 每题先回项目根目录，再进入本题文件夹安装软件包与跑本机 Path A；练习 4、5 先准备 Ollama。Path B 为选用，先确认是否使用云端、供应商、密钥与费用。
   en: Stage 5 scopes MCP limits to that server; Stage 8 explains that sandbox boundaries depend on configuration. For each Stage 6 exercise, return
-    to the repository root and complete setup before running local Path A. Cloud Path B is optional; check the exercise guide for its provider,
+    to the repository root, then enter its folder to install packages and run local Path A. Prepare Ollama first for exercises 4 and 5. Path B is optional; check whether it uses cloud services, its provider,
     key setup and costs first.
   links:
   - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/357
