@@ -2,7 +2,9 @@
 
 > 這份是給 maintainer / 第一個跑各個 build 的人看的。**誠實地說明哪些 code 真的跑過、哪些只是 syntax check、哪些完全沒測**。
 
-最後更新：2026-08-31
+歷史執行紀錄基準：2026-08-31。發布規則更新：2026-10-29。
+
+**目前發布方式**：正式 Release 只包含繁體中文、簡體中文與英文說明，不產生或附上 PDF。下列舊表格保留當時驗證紀錄；其中 PDF candidate／附件待辦已由本規則取代。手動 PDF 匯出工具保留，獨立於 Release。
 
 ---
 
@@ -52,7 +54,7 @@
 
 如果你是第一個真的要跑某個 build / workflow 的人：
 
-1. **正式發布 PDF**：優先手動啟動 `Trilingual Release`；下載 candidate artifact，實際打開三份 PDF 檢查 CJK、表格、圖片與分頁，再批准 `release` Environment
+1. **正式發布**：手動啟動 `Trilingual Release`；確認三語 notes、內容健康報告、鎖定的 main SHA 與空附件清單，再批准 `release` Environment。流程不提供 PDF 開關。
 2. **跑 `bash scripts/build-mdbook.sh` 之前**：先 `cargo install mdbook mdbook-mermaid` 並在 repo root 跑 `mdbook-mermaid install .`；推上去前先本地 `--serve` 看一下
 3. **試 walkthrough 的 Python**：建議用一個全新環境（venv），照 Stage 0 的一次性 install 跑完，遇到任何 import / API 不符的，**請開 issue + PR**——因為這就是「第一手實測」價值最高的時刻
 4. **觸發 CI lint workflow**：開個 throwaway PR 改 `stages/01-llm-basics.md`，故意加 `教程` 這個禁用詞，看 banned-words job 有沒有正常 fail。如果沒抓到，調整 grep 邏輯
@@ -64,7 +66,7 @@
 
 老實說：
 
-- **三語 PDF 工具鏈**：正式路徑使用 Pandoc + WeasyPrint + Poppler + Noto CJK，並列入 Release blocking gate。2026-08-31 已用 Ubuntu 24.04 容器實際產生繁中／簡中／英文三份 PDF，逐份抽字驗證 28 個正文頁面；第一次 GitHub Actions candidate run 仍須下載三份 artifact 做最後目視檢查
+- **三語 PDF 工具鏈（歷史；現為手動匯出）**：使用 Pandoc + WeasyPrint + Poppler + Noto CJK，已退出 Release gate。2026-08-31 已用 Ubuntu 24.04 容器實際產生繁中／簡中／英文三份 PDF，逐份抽字驗證 28 個正文頁面；第一次 GitHub Actions candidate run 仍須下載三份 artifact 做最後目視檢查
 - ~~**AI walkthrough 的 LangGraph / Chroma 等套件**：版本日新月異…所以選擇用「對著官方 API 文件寫」的策略~~——**Stage 1-6 已不成立**（2026-08-04 實跑，見上表）。版本會過期這件事本身仍然成立：這次就抓到 `create_react_agent` 已被 LangGraph V1.0 標記棄用、`langfuse.decorators` 已移除
 - **CI workflow**：~~在真 PR 上才會觸發；沒第一個外部 PR 之前看不出來~~——**已不成立**（2026-08-04）。三個 gate（`lint` / `anchor-validator` / `stage-template-check`）都已在真實 PR 上跑過，且同日移除 paths 過濾、三個都補上 `push: [main]`，所以**每個 PR 與每次直接推 main 都會觸發**——後者是 2026-06-07 → 08-04 的 109 個 commit 裡的 95 個。`lint.yml` 的 push 側已有實際執行紀錄；另外兩個的 push trigger 是當天才加的，尚未累積紀錄
 

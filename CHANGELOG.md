@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
+- **release / v2026.10.29-2 / notes only** · 依 v2026.10.29 之後的實際差異整理三語發布說明，涵蓋 Gemini Carbon、Greptile 徽章與教材審查規則、Stage 0 編號截圖導讀及十處新手閱讀修正。正式 Release 永久移除 PDF 選項、建置與上傳，只發布三語說明；發布前後驗證附件清單為空，保留內容／連結 gate、main SHA 鎖定與 Environment 批准。手動匯出工具保留，同步發布測試與維護文件。
+
 - **reader UX / beginner flow** · 三語統一 Capstone 入口與 Track A 的 Stage 8 選讀界線；補齊練習根目錄、環境準備與存檔位置，處理全對時的替代步驟及收合表格指引。先解釋 Recall@k／命中率與分母，再看 RAG 選路表；Stage 6 導覽改按症狀引路，完整名詞留在進階頁。統一 Subagent 平行任務的要求與狀態確認，將 Examples 遷移細節收合並保留可見預算／相容性提醒；同步相關內容測試。
 
 - **content / Stage 0 / GitHub screenshot guides** · 三語以七句短說明串起改文件、記錄、上傳與合併；指令及次要差別收合，紅框標註改為一句話；將舊 Commit 上方標籤換成實際欄位紅框與編號，另補本專案 PR #343／Issue #314 的三語導讀。保留原始畫面與來源連結、可見逐號說明、主練習及五星資源；以明確 HTML 粗體避免 GitHub 中文括號顯示 `**`，同步本專案連結的引用索引（保留原查核時間與事實）；明分暫存區、Commit、Push、Merge、Review／Checks 與 Closed 的意義。

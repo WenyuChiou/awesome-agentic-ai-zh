@@ -53,10 +53,10 @@ README source ceilings remain 14000. Every other page cap and the existing
 disclosure/resource/heading ratchets stay unchanged.
 This is a bounded contract refresh for the newly required visible definitions,
 not a claim that the old size metric is unchanged or a measure of reading quality.
-Rebuild all three PDFs and inspect representative new legends, definitions and
-existing wide tables, in addition to every-page text/bounds checks, before release.
+Releases publish Traditional Chinese, Simplified Chinese, and English notes without
+generating or attaching PDFs. The PDF checks below apply only to standalone manual exports.
 
-## Release PDF layout checks
+## Standalone PDF export layout checks (outside releases)
 
 `scripts/build-pdf.sh` marks generated tables with eight or more header columns for
 A4 landscape pages. Curriculum text, URLs, natural column widths, and the existing

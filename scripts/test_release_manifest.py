@@ -73,26 +73,28 @@ def test_current_model_reference_keeps_public_api_ids(locale: str) -> None:
 
 
 @pytest.mark.parametrize("locale", rm.LOCALES)
-def test_october_29_notes_cover_only_the_new_release_window(locale: str) -> None:
+def test_october_29_second_notes_cover_only_the_new_release_window(locale: str) -> None:
     notes = rm.validate_notes_manifest()
-    assert notes["release_version"] == "v2026.10.29"
+    assert notes["release_version"] == "v2026.10.29-2"
     changes = {change["id"]: change for change in notes["changes"]}
     assert set(changes) == {
-        "verified-course-and-leaderboard-links", "mobile-course-picker",
-        "stage-zero-github-foundations", "readable-tables-and-bold",
-        "readme-cleanup-and-star-history",
+        "gemini-carbon-access-and-pricing", "greptile-curriculum-review",
+        "numbered-github-guides", "beginner-flow-and-advanced-routes",
+        "permanent-notes-only-releases",
     }
-    assert "11" in changes["verified-course-and-leaderboard-links"][locale]
-    assert "13" in changes["mobile-course-picker"][locale]
-    foundation = changes["stage-zero-github-foundations"][locale]
+    assert "Carbon" in changes["gemini-carbon-access-and-pricing"][locale]
+    assert "Greptile" in changes["greptile-curriculum-review"][locale]
+    foundation = changes["numbered-github-guides"][locale]
     assert all(term in foundation for term in ("Commit", "Push", "PR", "Merge", "18"))
-    assert "Star History" in changes["readme-cleanup-and-star-history"][locale]
-    assert "PDF" in changes["readme-cleanup-and-star-history"][locale]
+    assert "Recall@k" in changes["beginner-flow-and-advanced-routes"][locale]
+    policy = changes["permanent-notes-only-releases"][locale]
+    assert all(term in policy for term in ("PDF", "main SHA", "Environment"))
+    assert {"zh-TW": "今後", "zh-Hans": "今后", "en": "Future"}[locale] in policy
     links = {link for change in changes.values() for link in change["links"]}
     assert links == {
         *(f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
-          for pr in (343, 344, 346, 347)),
-        "https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/README.md",
+          for pr in (349, 350, 351, 353, 354)),
+        "https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/.github/workflows/release.yml",
     }
 
 
