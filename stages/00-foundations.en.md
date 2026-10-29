@@ -73,7 +73,7 @@ For more, see [GitHub's introduction](https://docs.github.com/en/get-started/usi
 
 ### Put your edited document on GitHub
 
-You edited a document. How do you share the change?
+You want to edit a document. How do you share the change?
 
 1. <strong>Branch</strong>: start your own line of changes.
 2. <strong>Edit and save</strong>: change the document, save it, and check it.
