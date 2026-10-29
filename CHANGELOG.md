@@ -10,7 +10,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 - **reader UX / model terms and cost units** · 三語 Stage 1 先解釋 Base／Instruct Model、模型權重、分詞工具及 Prompt／Memory／Tools／Harness，再展示生命週期流程與圖；明分 Agent 系統與模型版本，保留訓練方法並標出進階選修。A3 成本公式明定輸入／輸出單價皆為每百萬 token，兩項用量各除以一百萬，其他收費另查規則。補上圖前定義與計價單位回歸檢查；Stage 1 可見字數僅依必要定義的實測增量更新，無新增餘裕，所有重要資訊保持展開。
 
-- **reader UX / execution and isolation boundaries** · 三語 Stage 5 改為核對單一 MCP server 的資料夾與工具權限，避免誤稱 Claude 全部工具都受同一限制；Stage 8 明說沙箱依實際設定隔離。Stage 6 五題先回專案根目錄、依本題說明安裝後只跑本機 Path A，雲端 Path B 保留在各題完整說明，先確認供應商、金鑰與費用；同步複製命令與雙路徑入口回歸檢查。
+- **reader UX / execution and isolation boundaries** · 三語 Stage 5 改為核對單一 MCP server 的資料夾與工具權限，避免誤稱 Claude 全部工具都受同一限制；Stage 8 明說沙箱依實際設定隔離。Stage 6 五題先回專案根目錄，再進入各題資料夾安裝套件與跑本機 Path A，雲端 Path B 保留在各題完整說明，先確認供應商、金鑰與費用；同步複製命令與雙路徑入口回歸檢查。
 
 - **reader UX / RAG terminology and flow** · 三語進階 RAG 先解釋資料片段、向量表示、BM25 與候選資料，再依症狀選修法；以產品保固例子串起搜尋、排序與回答，把裸英文資源用途改為白話。保留十三項進階方法、六筆必讀、十二筆專案與評分；小實驗明列基線 → 混合搜尋 → 加重新排序，三組都記錄 Recall@5、命中率、延遲與成本。同步 Stage 6 首次出現的 BM25／SQL 解釋及名詞順序回歸測試；核心詞表沿用既有手機直向排版，桌面維持表格；修正中文括號後接文字時的 GitHub 粗體標記；未更新專案狀態查核日期，也未放寬閱讀字數上限。
 
