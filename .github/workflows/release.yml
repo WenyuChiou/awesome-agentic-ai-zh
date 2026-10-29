@@ -60,7 +60,7 @@ jobs:
           set -euo pipefail
           test "$DISPATCH_REF" = refs/heads/main
           python scripts/release_manifest.py validate-version --version "$INPUT_VERSION"
-          api_date="$(curl -fsSI --retry 3 https://api.github.com/ | tr -d '\r' | sed -n 's/^[Dd]ate: //p' | head -1)"
+          api_date="$(curl -fsSI --retry 3 -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/ | tr -d '\r' | sed -n 's/^[Dd]ate: //p' | head -1)"
           test -n "$api_date"
           official_version="v$(date -u -d "$api_date" +%Y.%m.%d)"
           version_day="${INPUT_VERSION%%-*}"
