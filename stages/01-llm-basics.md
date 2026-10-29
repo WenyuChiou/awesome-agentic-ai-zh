@@ -22,11 +22,11 @@
 
 ### 1. **Token（詞元）**
 
-Token 是模型讀寫文字時使用的計算單位，也常是 API 計價單位。可以把它想成句子被切成的一小塊積木；一個英文單字可能是一塊，也可能被切成幾塊，中文一個字也不保證只是一塊。本章會在練習 2 讀取實際 input／output token，再用它估算成本；數量要看 tokenizer，不能用字數精確猜測。
+Token 是模型讀寫文字時使用的計算單位，也常是 API 計價單位。可以把它想成句子被切成的一小塊積木；一個英文單字可能是一塊，也可能被切成幾塊，中文一個字也不保證只是一塊。本章會在練習 2 讀取實際 input／output token，再用它估算成本；數量要看 Tokenizer（分詞工具），不能用字數精確猜測。
 
 ### 2. **Context Window（上下文視窗）**
 
-Context Window 是模型處理一次請求時可用的 token 空間。它像桌面：你的 prompt 和歷史對話先占位子，模型還要留位子寫答案；型號也可能另設較小的最大輸出上限，所以兩個數字都要查。本章會用它判斷長文件何時要刪減、摘要或分批。
+Context Window 是模型處理一次請求時可用的 token 空間。它像桌面：指令、資料和歷史對話先占位子，模型還要留位子寫答案；型號也可能另設較小的最大輸出上限，所以兩個數字都要查。本章會用它判斷長文件何時要刪減、摘要或分批。
 
 ### 3. **Temperature（溫度）**
 
@@ -34,30 +34,37 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 
 ## 模型怎麼從資料走到 Agent？
 
-先記住一條主線：
-
-`資料 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系統`
-
-- **Pre-training（預訓練）**：模型先從大量資料學習文字、圖片或程式碼裡的模式。這一步會改變模型權重。
+- **Pre-training（預訓練）**：模型先從大量資料學習文字、圖片或程式碼裡的模式。這會改變模型權重（模型內部學到的數值）。
+- **Base Model（基礎模型）**：完成預訓練的模型，學會接續內容，但還不一定會照指令回答。
 - **Post-training（後訓練）**：再教模型怎麼照指令、比較偏好，並更安全地完成任務。這一步也會改變權重。常見方法如下。
-  - **SFT**（Supervised Fine-Tuning）：用好輸入和好答案教模型模仿。
-  - **DPO**（Direct Preference Optimization）：用較好、較差的答案配對教模型學偏好。
-  - **RLHF**（Reinforcement Learning from Human Feedback）：把人類回饋用於強化學習。
-  - **RL**（Reinforcement Learning）：讓模型依獎勵學習；獎勵也可以來自規則。
+    - **SFT**（Supervised Fine-Tuning）：用好輸入和好答案教模型模仿。
+    - **DPO**（Direct Preference Optimization）：用較好、較差的答案配對教模型學偏好。
+    - **RLHF**（Reinforcement Learning from Human Feedback）：把人類回饋用於強化學習。
+    - **RL**（Reinforcement Learning）：讓模型依獎勵學習；獎勵也可以來自規則。
+- **Instruct Model（指令模型）**：再針對遵循指令做事調整過的模型。
 - **Fine-tuning（微調）**：拿較小、較專門的資料繼續調整模型權重。Post-training 是廣義的後續訓練階段；Fine-tuning 是其中常見的一類做法。
 - **Inference（推論）**：訓練完成後，模型收到這次輸入並產生這次結果。這是在使用模型，不是在重新訓練它。
 
 **RAG**（Retrieval-Augmented Generation）：先找相關資料，再依資料回答。
 
+**Agent** 不是下一個模型版本。它在執行時用模型判斷下一步，可搭配 RAG 和下列零件完成工作；這些零件通常不改模型權重。
+
+- **Prompt（提示詞）**：告訴模型任務與規則。
+- **Memory（記憶）**：保存之後要用的資訊。
+- **Tools（工具）**：讓系統查資料或執行動作。
+- **Harness（執行架構）**：管理工具、規則與停止條件。
+
+`資料 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系統`
+
 ![資料經過 Pre-training 與 Post-training 變成可供 Inference 使用的模型；Prompt、RAG、Memory、Tools 與 Harness 在 Agent 系統中包住模型，通常不改模型權重](../resources/diagrams/model-lifecycle-to-agent.png)
 
-**Agent** 不是訓練流程的下一個模型版本。它是把模型、Prompt、RAG、Memory、Tools 與 Harness 接在一起的系統。這些零件通常在模型外面工作，不會改變模型權重。
+以下三項是進階訓練選修，初學可先認得名字：
 
 - **GRPO**（Group Relative Policy Optimization）：比較同一題的多個答案，再依相對表現學習。
 - **LoRA**（Low-Rank Adaptation）：凍結原本權重，再訓練新增的低秩矩陣。
 - **PEFT**（Parameter-Efficient Fine-Tuning）：只訓練較少參數的一組方法。
 
-想知道這些方法與 Distillation、Quantization 的差別，請打開[模型訓練與調整選修指南](../resources/model-training-guide.md)。初學本章不用自己訓練模型。
+想比較模型教模型的 Distillation（蒸餾），或降低數值精度的 Quantization（量化），請打開[模型訓練與調整選修指南](../resources/model-training-guide.md)。初學本章不用自己訓練模型。
 
 ## 場景式模型選擇器
 

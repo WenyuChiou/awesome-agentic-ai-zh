@@ -22,11 +22,11 @@
 
 ### 1. **Token（词元）**
 
-Token 是模型读写文字时使用的计算单位，也常是 API 的计价单位。可以把它想成句子被切成的一小块积木；一个英文单词可能是一块，也可能被切成几块，中文一个字也不保证只是一块。本章会在练习 2 读取实际 input／output token，再用它估算成本；数量要看 tokenizer，不能用字数精确猜测。
+Token 是模型读写文字时使用的计算单位，也常是 API 的计价单位。可以把它想成句子被切成的一小块积木；一个英文单词可能是一块，也可能被切成几块，中文一个字也不保证只是一块。本章会在练习 2 读取实际 input／output token，再用它估算成本；数量要看 Tokenizer（分词工具），不能用字数精确猜测。
 
 ### 2. **Context Window（上下文窗口）**
 
-Context Window 是模型处理一次请求时可用的 token 空间。它像桌面：你的 prompt 和历史对话先占位置，模型还要留位置写答案；型号也可能另设较小的最大输出上限，所以两个数字都要查。本章会用它判断长文档何时要删减、摘要或分批。
+Context Window 是模型处理一次请求时可用的 token 空间。它像桌面：指令、资料和历史对话先占位置，模型还要留位置写答案；型号也可能另设较小的最大输出上限，所以两个数字都要查。本章会用它判断长文档何时要删减、摘要或分批。
 
 ### 3. **Temperature（温度）**
 
@@ -34,30 +34,37 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 
 ## 模型如何从数据走到 Agent？
 
-先记住这条主线：
-
-`数据 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系统`
-
-- **Pre-training（预训练）**：模型先从大量文字、图像或代码中学习模式。这一步会改变模型权重。
+- **Pre-training（预训练）**：模型先从大量文字、图像或代码中学习模式。这会改变模型权重（模型内部学到的数值）。
+- **Base Model（基础模型）**：完成预训练的模型，学会接续内容，但还不一定会遵循指令回答。
 - **Post-training（后训练）**：再用示范、偏好或反馈，教模型遵循指令并更安全地完成任务。这一步也会改变权重。常见方法如下。
-  - **SFT**（Supervised Fine-Tuning）：用好的输入和答案教模型模仿。
-  - **DPO**（Direct Preference Optimization）：用较好、较差的答案配对教模型学习偏好。
-  - **RLHF**（Reinforcement Learning from Human Feedback）：把人类反馈用于强化学习。
-  - **RL**（Reinforcement Learning）：让模型依据奖励学习；奖励也可以来自规则。
+    - **SFT**（Supervised Fine-Tuning）：用好的输入和答案教模型模仿。
+    - **DPO**（Direct Preference Optimization）：用较好、较差的答案配对教模型学习偏好。
+    - **RLHF**（Reinforcement Learning from Human Feedback）：把人类反馈用于强化学习。
+    - **RL**（Reinforcement Learning）：让模型依据奖励学习；奖励也可以来自规则。
+- **Instruct Model（指令模型）**：再针对遵循指令做事调整过的模型。
 - **Fine-tuning（微调）**：用较小、较专门的数据继续改变模型权重。Post-training 是广义的后续训练阶段；Fine-tuning 是其中一种常见做法。
 - **Inference（推理）**：训练完成后，模型收到一次输入并产生一次结果。这是在使用模型，不是在重新训练它。
 
 **RAG**（Retrieval-Augmented Generation）：先找相关资料，再依资料回答。
 
+**Agent** 不是下一个模型版本。它在运行时用模型判断下一步，可搭配 RAG 和下列组件完成工作；这些组件通常不改模型权重。
+
+- **Prompt（提示词）**：告诉模型任务与规则。
+- **Memory（记忆）**：保存之后要用的信息。
+- **Tools（工具）**：让系统查资料或执行动作。
+- **Harness（执行框架）**：管理工具、规则与停止条件。
+
+`数据 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系统`
+
 ![数据经过 Pre-training 和 Post-training，变成可用于 Inference 的模型；Prompt、RAG、Memory、Tools 和 Harness 在 Agent 系统中包住模型，通常不改变模型权重](../resources/diagrams/model-lifecycle-to-agent.zh-Hans.png)
 
-**Agent** 不是训练流程中的下一个模型检查点。它是把模型、Prompt、RAG、Memory、Tools 和 Harness 连接起来的系统。这些部分通常在模型外部工作，不会改变模型权重。
+以下三项是进阶训练选修，初学者可先认识名字：
 
 - **GRPO**（Group Relative Policy Optimization）：比较同一问题的多个答案，再根据相对表现学习。
 - **LoRA**（Low-Rank Adaptation）：冻结原来的权重，再训练新增的低秩矩阵。
 - **PEFT**（Parameter-Efficient Fine-Tuning）：只训练较少参数的一组方法。
 
-想了解这些方法与 Distillation、Quantization 的区别，请打开[模型训练与调整选修指南](../resources/model-training-guide.zh-Hans.md)。初学者不需要在本阶段自己训练模型。
+想比较模型教模型的 Distillation（蒸馏），或降低数值精度的 Quantization（量化），请打开[模型训练与调整选修指南](../resources/model-training-guide.zh-Hans.md)。初学者不需要在本阶段自己训练模型。
 
 ## 场景式模型选择器
 

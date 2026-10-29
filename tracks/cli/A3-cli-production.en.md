@@ -132,9 +132,9 @@ GitHub recommends pinning third-party Actions in production workflows to a full 
 
 **Outcome:** you record the provider/model, input usage, output usage, time, and result; fields you cannot obtain are clearly marked “unconfirmed” instead of guessed.
 
-First distinguish whether you use a subscription plan or pay by API usage. When the official source provides token counts and prices, calculate cost only with this formula:
+Separate subscription fees from API usage fees. This estimates ordinary input/output token costs, with both prices quoted per million tokens. Check provider rules for other charges.
 
-`input tokens × input price + output tokens × output price`
+`(input tokens ÷ 1,000,000 × input price) + (output tokens ÷ 1,000,000 × output price)`
 
 <details markdown="1">
 <summary>Expand for the CLI-11 record card, stop rules, and observability</summary>
