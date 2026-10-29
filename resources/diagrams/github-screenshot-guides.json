@@ -1,0 +1,395 @@
+{
+  "captured_on": "2026-10-29",
+  "viewport": [
+    1440,
+    1100
+  ],
+  "method": "Public GitHub screenshots with HTML/CSS red boxes and numbered labels; GitHub interface text is unchanged.",
+  "guides": [
+    {
+      "stem": "github-commit-example",
+      "source": "https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18",
+      "raw": "commit",
+      "crop": [
+        16,
+        184,
+        1384,
+        552
+      ],
+      "titles": [
+        "Commit：這次修改留下什麼紀錄？",
+        "Commit: what does a saved version record?",
+        "Commit：这次修改留下什么记录？"
+      ],
+      "annotations": [
+        {
+          "rect": [
+            115,
+            193,
+            101,
+            37
+          ],
+          "badge": [
+            239,
+            208
+          ],
+          "labels": [
+            "版本編號（SHA）",
+            "Commit ID (SHA)",
+            "版本编号（SHA）"
+          ],
+          "notes": [
+            "2956dc0 是短版；可追查這一筆版本。",
+            "2956dc0 is the short ID for this version.",
+            "2956dc0 是短版；可追查这一笔版本。"
+          ]
+        },
+        {
+          "rect": [
+            49,
+            237,
+            220,
+            27
+          ],
+          "badge": [
+            432,
+            249
+          ],
+          "labels": [
+            "作者與時間",
+            "Author and time",
+            "作者与时间"
+          ],
+          "notes": [
+            "這裡顯示作者；時間不是 Push 上傳時間。",
+            "Shows the author; this is not the push time.",
+            "这里显示作者；时间不是 Push 上传时间。"
+          ]
+        },
+        {
+          "rect": [
+            31,
+            283,
+            593,
+            48
+          ],
+          "badge": [
+            650,
+            303
+          ],
+          "labels": [
+            "修改說明（Message）",
+            "Commit message",
+            "修改说明（Message）"
+          ],
+          "notes": [
+            "這一筆寫著：合併 PR #343 的修改。",
+            "This record says it merges PR #343.",
+            "这一笔写着：合并 PR #343 的修改。"
+          ]
+        },
+        {
+          "rect": [
+            61,
+            349,
+            89,
+            28
+          ],
+          "badge": [
+            305,
+            363
+          ],
+          "labels": [
+            "分支（Branch）",
+            "Branch",
+            "分支（Branch）"
+          ],
+          "notes": [
+            "這裡顯示 main，旁邊可開啟相關 PR。",
+            "Shows main and a link to the related PR.",
+            "这里显示 main，旁边可打开相关 PR。"
+          ]
+        },
+        {
+          "rect": [
+            31,
+            391,
+            114,
+            29
+          ],
+          "badge": [
+            172,
+            405
+          ],
+          "labels": [
+            "變更檔案數",
+            "Changed files",
+            "更改文件数"
+          ],
+          "notes": [
+            "10 個檔案有修改；不代表做了 10 次 Commit。",
+            "10 files changed, not 10 commits.",
+            "10 个文件有修改；不代表做了 10 次 Commit。"
+          ]
+        },
+        {
+          "rect": [
+            325,
+            657,
+            1070,
+            75
+          ],
+          "badge": [
+            298,
+            688
+          ],
+          "labels": [
+            "前後差異（Diff）",
+            "Before/after differences (Diff)",
+            "前后差异（Diff）"
+          ],
+          "notes": [
+            "這格是綠色＋新增行；紅色−刪除行見完整 Diff。",
+            "This box shows green + additions; see the full diff for red − deletions.",
+            "这格是绿色＋新增行；红色−删除行见完整 Diff。"
+          ]
+        }
+      ]
+    },
+    {
+      "stem": "github-pr-example",
+      "source": "https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343",
+      "raw": "pr",
+      "crop": [
+        92,
+        184,
+        1240,
+        462
+      ],
+      "titles": [
+        "PR：哪條分支的修改，要合進哪裡？",
+        "PR: which branch is being merged into which?",
+        "PR：哪条分支的修改，要合进哪里？"
+      ],
+      "annotations": [
+        {
+          "rect": [
+            102,
+            195,
+            896,
+            39
+          ],
+          "badge": [
+            1025,
+            213
+          ],
+          "labels": [
+            "PR 標題與編號",
+            "PR title and number",
+            "PR 标题与编号"
+          ],
+          "notes": [
+            "#343 是這個修改提案的編號，不是 Commit 編號。",
+            "#343 identifies the proposal, not a commit.",
+            "#343 是这个修改提案的编号，不是 Commit 编号。"
+          ]
+        },
+        {
+          "rect": [
+            510,
+            244,
+            246,
+            28
+          ],
+          "badge": [
+            905,
+            258
+          ],
+          "labels": [
+            "來源分支（from）",
+            "Source branch (from)",
+            "来源分支（from）"
+          ],
+          "notes": [
+            "修改原本在這條分支；Push 先把版本送到這裡。",
+            "The uploaded changes came from this branch.",
+            "修改原本在这条分支；Push 先把版本送到这里。"
+          ]
+        },
+        {
+          "rect": [
+            433,
+            244,
+            43,
+            28
+          ],
+          "badge": [
+            455,
+            280
+          ],
+          "labels": [
+            "目標分支（into）",
+            "Target branch (into)",
+            "目标分支（into）"
+          ],
+          "notes": [
+            "這裡是 main：通過檢查後要合入的工作線。",
+            "Here it is main, the intended destination.",
+            "这里是 main：通过检查后要合入的工作线。"
+          ],
+          "badge_size": 24
+        },
+        {
+          "rect": [
+            105,
+            289,
+            584,
+            42
+          ],
+          "badge": [
+            716,
+            311
+          ],
+          "labels": [
+            "討論、版本、檢查、差異",
+            "Discussion, commits, checks, files",
+            "讨论、版本、检查、差异"
+          ],
+          "notes": [
+            "先看修改與檢查結果；Checks 數字不等於全部通過。",
+            "Inspect changes and results; a check count is not a pass.",
+            "先看修改与检查结果；Checks 数字不等于全部通过。"
+          ]
+        },
+        {
+          "rect": [
+            104,
+            240,
+            95,
+            37
+          ],
+          "badge": [
+            70,
+            258
+          ],
+          "labels": [
+            "已合併（Merged）",
+            "Merged",
+            "已合并（Merged）"
+          ],
+          "notes": [
+            "紫色 Merged 表示已接受；只有提出 PR 還不算。",
+            "Merged means accepted, beyond merely opening a PR.",
+            "紫色 Merged 表示已接受；只有提出 PR 还不算。"
+          ]
+        }
+      ]
+    },
+    {
+      "stem": "github-issue-example",
+      "source": "https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314",
+      "raw": "issue",
+      "crop": [
+        92,
+        184,
+        1240,
+        462
+      ],
+      "titles": [
+        "Issue：把遇到的問題說清楚",
+        "Issue: explain the problem you encountered",
+        "Issue：把遇到的问题说清楚"
+      ],
+      "annotations": [
+        {
+          "rect": [
+            96,
+            195,
+            897,
+            75
+          ],
+          "badge": [
+            1020,
+            214
+          ],
+          "labels": [
+            "問題標題與編號",
+            "Issue title and number",
+            "问题标题与编号"
+          ],
+          "notes": [
+            "#314 是這個問題的編號；標題先說哪裡出問題。",
+            "#314 identifies this issue; its title names the problem.",
+            "#314 是这个问题的编号；标题先说哪里出问题。"
+          ]
+        },
+        {
+          "rect": [
+            95,
+            280,
+            90,
+            38
+          ],
+          "badge": [
+            211,
+            300
+          ],
+          "labels": [
+            "狀態（Closed）",
+            "Status (Closed)",
+            "状态（Closed）"
+          ],
+          "notes": [
+            "已結束追蹤；為何關閉，要讀回覆或時間線。",
+            "Tracking is closed; read the discussion for the reason.",
+            "已结束跟踪；为何关闭，要读回复或时间线。"
+          ]
+        },
+        {
+          "rect": [
+            109,
+            393,
+            889,
+            99
+          ],
+          "badge": [
+            1020,
+            402
+          ],
+          "labels": [
+            "問題描述",
+            "Problem description",
+            "问题描述"
+          ],
+          "notes": [
+            "說明做了什麼、發生什麼，讓別人能理解。",
+            "Describe what you did and what happened.",
+            "说明做了什么、发生什么，让别人能理解。"
+          ]
+        },
+        {
+          "rect": [
+            109,
+            510,
+            889,
+            127
+          ],
+          "badge": [
+            1020,
+            519
+          ],
+          "labels": [
+            "受影響的檔案",
+            "Affected files",
+            "受影响的文件"
+          ],
+          "notes": [
+            "指出檔案與位置；Issue 本身不會更改這些檔案。",
+            "Name the files; an issue itself does not change them.",
+            "指出文件与位置；Issue 本身不会更改这些文件。"
+          ]
+        }
+      ]
+    }
+  ]
+}

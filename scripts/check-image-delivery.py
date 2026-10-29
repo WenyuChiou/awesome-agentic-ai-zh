@@ -18,15 +18,16 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DIAGRAM_DIR = Path("resources/diagrams")
-# Stage 0 adds a trilingual concept figure and real commit example (73 PNGs total).
-# 84,556,340 measured bytes plus 2% headroom. Existing per-image/per-page
-# ceilings stay fixed; all three new diagrams are lazy-loaded.
-MAX_PNG_COUNT = 74
-MAX_TOTAL_BYTES = 86_247_467
+# Stage 0 adds six localized PR/Issue screenshots and replaces three Commit
+# screenshots with cropped red-box guides (79 PNGs). The 86,477,406 measured
+# bytes use nearly all of the old allowance; only 252,533 extra bytes (0.30%)
+# are admitted for this explicit six-image addition. No other ceiling changes.
+MAX_PNG_COUNT = 79
+MAX_TOTAL_BYTES = 86_500_000
 MAX_SINGLE_BYTES = 1_551_629
 MAX_PAGE_BYTES = 3_242_406
-EXPECTED_RENDERED_DIAGRAMS = 78
-EXPECTED_RENDERED_LAZY = 75
+EXPECTED_RENDERED_DIAGRAMS = 84
+EXPECTED_RENDERED_LAZY = 81
 EXPECTED_RENDERED_EAGER = 3
 
 IMAGE_LINK = re.compile(

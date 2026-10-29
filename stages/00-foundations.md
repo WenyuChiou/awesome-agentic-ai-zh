@@ -71,16 +71,51 @@
 
 想繼續查閱，可看 [GitHub 官方入門](https://docs.github.com/en/get-started/using-github/hello-world)、[授權說明](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)與 [Git 版本歷史](https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History)。
 
+### 把改好的文件放上 GitHub
+
+假設你要修改自己的 `README.md`。先在自己的練習儲存庫操作；[GitHub 官方入門](https://docs.github.com/en/get-started/using-github/hello-world)會帶你建立儲存庫。**Clone（複製專案）**會把專案檔案與版本歷史下載到電腦。以下從已複製到電腦、目前位於 `main` 的練習儲存庫開始；先依 [GitHub 官方 Git 設定](https://docs.github.com/en/get-started/git-basics/set-up-git)安裝 Git 並完成驗證，再依[複製專案教學](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)取得練習儲存庫。在終端機切到該專案資料夾後再輸入指令。
+
+1. **開自己的工作線。** 輸入 `git switch -c docs/my-first-update`，建立並切換到新分支。**Branch（分支）**像從同一份版本開始的一條修改線，不是另外複製一份資料夾；`docs/my-first-update` 是你取的分支名稱。
+2. **修改、存檔、檢查。** 改好 `README.md`，儲存檔案並完成專案要求的檢查。用 `git status` 看哪些檔案有變，再用 `git diff` 看具體差異。此時還沒有新的 Commit。
+3. **選出這次要記錄的檔案。** 輸入 `git add README.md`。**暫存區（Staging Area）**是「下一筆 Commit 要放哪些修改」的清單。這個指令選入目前的修改；如果之後又改了檔案，要重新選入。
+4. **在電腦留下紀錄。** 輸入 `git commit -m "docs: clarify the introduction"`。這會把暫存區中的修改存成一筆 **Commit**；引號內是修改說明。它仍在你的電腦，尚未上傳。
+5. **上傳這條分支。** 輸入 `git push -u origin docs/my-first-update`。**origin** 是這個例子中 GitHub 遠端儲存庫的名稱；`-u` 記住本機分支與遠端分支的對應。**Push** 把版本送到該分支，還沒有合進 `main`。
+6. **提出 PR，等人檢查。** 到 GitHub 開 Pull Request，來源選 `docs/my-first-update`，目標選 `main`。**Review（審查）**就是看差異、提問並檢查結果；依專案規則完成檢查與批准後，再由有權限的人 **Merge**。自己的練習儲存庫可以自行檢查並合併；合作專案先讀貢獻說明。
+7. **把合併結果帶回電腦。** 確認 PR 已合併，並用 `git status` 確認工作區乾淨，再依序輸入 `git switch main` 和 `git pull --ff-only`。**Pull（取得遠端更新）**讓本機 `main` 跟上 GitHub；如果失敗，先讀錯誤，別強行覆蓋。
+
+要修改別人的專案，卻沒有寫入權限時，通常先 **Fork（建立自己帳號下的專案副本）**，再從自己的副本提出 PR，見 [Fork 官方教學](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。**Issue** 是問題與建議的討論頁，不是每次修改的必經步驟。
+
 ### 看一筆真實修改
 
-這是本專案已合併的 [PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)，以及它留下的 [Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)。上方六格是教學標註，下方保留 GitHub 真實畫面。
+下面用本專案的歷史紀錄導讀。每個紅框都有編號，對照圖下說明；手機上可開啟原圖放大。三語標註各有自己的版本，GitHub 的原始介面文字保持原樣。
 
-![本專案 PR 343 的真實合併紀錄，標示版本識別碼、作者、時間、修改說明、變更檔案數與 Diff。](../resources/diagrams/github-commit-example.png)
+**1. Commit：看這一筆記錄了什麼。** [開啟 Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)。這是合併 PR #343 留下的紀錄；一般 Commit 也能記錄尚未合併的修改。
 
-- **識別碼**：`2956dc0` 是完整編號的短版，點原始 Commit 可看完整編號。
-- **作者與時間**：作者欄連到 GitHub 帳號；時間是 Commit 記錄的時間，不一定是 Push 到網站的時間。
-- **修改說明**：這筆寫著合併 PR #343；開啟 PR 可查看討論與已合併狀態。
-- **檔案與差異**：本例改了 10 個檔案，新增 15 行、刪除 13 行。綠色加號代表新增，紅色減號代表刪除；點檔案看前後對照。
+![真實 Commit 截圖：紅框 1 版本編號、2 作者與時間、3 修改說明、4 分支、5 變更檔案數、6 Diff。](../resources/diagrams/github-commit-example.png)
+
+- **① 版本編號（SHA）**：`2956dc0` 是短版識別碼；原始頁面可看完整編號。
+- **② 作者與時間**：畫面顯示作者；Git 也記錄提交者（Committer），兩者可能不同。Commit 時間不是 Push 時間，作者名稱本身也不能證明身分。
+- **③ 修改說明**：這一筆寫著合併 PR #343；點連結可追到提案。
+- **④ 分支**：這裡顯示 `main`；分支是工作線，Commit 是其中一筆版本紀錄。
+- **⑤ 檔案數量**：這筆變更涉及 10 個檔案，不是 10 次 Commit。
+- **⑥ Diff（差異）**：本例共新增 15 行、刪除 13 行；⑥ 圈的是綠色加號的新增行。開啟完整 Diff 可找紅色減號的刪除行；紅色方框只是教學標記。
+
+**2. PR 與 Merge：看修改從哪裡合到哪裡。** [開啟 PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)。
+
+![真實 PR 截圖：紅框 1 標題與編號、2 來源分支、3 目標 main、4 討論與檢查分頁、5 已合併狀態。](../resources/diagrams/github-pr-example.png)
+
+- **① PR 編號**：`#343` 代表這個修改提案，與 Commit 的版本編號不同。
+- **② 來源（from）與 ③ 目標（into）**：這次把 `codex/verify-release-links-20261026` 的修改合進 `main`。
+- **④ 檢查入口**：Conversation 看討論，Commits 看版本紀錄，Checks 看自動檢查結果，Files changed 看差異。Checks 的數量不代表全部通過。
+- **⑤ Merged（已合併）**：紫色狀態表示已合併；只有 Push 或開 PR 還沒到這一步。Review 是人的檢查，Checks 通常是自動檢查。
+
+**3. Issue：先把問題說清楚。** [開啟 Issue #314](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314)。這是一筆過去的錯誤回報，這裡只看它如何描述問題。
+
+![真實 Issue 截圖：紅框 1 問題標題與編號、2 Closed 狀態、3 問題描述、4 受影響的檔案。](../resources/diagrams/github-issue-example.png)
+
+- **① 標題與編號**：先說哪裡出問題，別人就能用 `#314` 找回這次討論。
+- **② Closed（已關閉）**：表示結束追蹤；要讀回覆或時間線才知道原因，不一定代表已修好。
+- **③ 描述與 ④ 檔案位置**：寫出做了什麼、發生什麼、預期結果及相關檔案，幫助別人理解或重現。往下可看回覆與處理紀錄；Issue 本身不會修改檔案。
 
 ## 🛠 動手練習：做一個 GitHub 資料小工具
 

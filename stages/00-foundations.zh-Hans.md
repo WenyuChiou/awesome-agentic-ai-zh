@@ -71,16 +71,51 @@
 
 想继续查阅，可看 [GitHub 官方入门](https://docs.github.com/en/get-started/using-github/hello-world)、[授权说明](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)与 [Git 版本历史](https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History)。
 
+### 把改好的文件放上 GitHub
+
+假设你要修改自己的 `README.md`。先在自己的练习仓库操作；[GitHub 官方入门](https://docs.github.com/en/get-started/using-github/hello-world)会带你创建仓库。**Clone（克隆项目）**会把项目文件与版本历史下载到电脑。以下从已克隆到电脑、当前位于 `main` 的练习仓库开始；先按 [GitHub 官方 Git 设置](https://docs.github.com/en/get-started/git-basics/set-up-git)安装 Git 并完成验证，再按[克隆项目教程](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)获取练习仓库。在终端切到该项目文件夹后再输入命令。
+
+1. **开自己的工作线。** 输入 `git switch -c docs/my-first-update`，创建并切换到新分支。**Branch（分支）**像从同一份版本开始的一条修改线，不是另外复制一份文件夹；`docs/my-first-update` 是你取的分支名称。
+2. **修改、保存、检查。** 改好 `README.md`，保存文件并完成项目要求的检查。用 `git status` 看哪些文件有变化，再用 `git diff` 看具体差异。此时还没有新的 Commit。
+3. **选出这次要记录的文件。** 输入 `git add README.md`。**暂存区（Staging Area）**是“下一笔 Commit 要放哪些修改”的清单。这个命令选入当前的修改；如果之后又改了文件，要重新选入。
+4. **在电脑留下记录。** 输入 `git commit -m "docs: clarify the introduction"`。这会把暂存区中的修改存成一笔 **Commit**；引号内是修改说明。它仍在你的电脑，尚未上传。
+5. **上传这条分支。** 输入 `git push -u origin docs/my-first-update`。**origin** 是这个例子中 GitHub 远程仓库的名称；`-u` 记住本地分支与远程分支的对应。**Push** 把版本送到该分支，还没有合进 `main`。
+6. **提出 PR，等人检查。** 到 GitHub 开 Pull Request，来源选 `docs/my-first-update`，目标选 `main`。**Review（审查）**就是看差异、提问并检查结果；按项目规则完成检查与批准后，再由有权限的人 **Merge**。自己的练习仓库可以自行检查并合并；合作项目先读贡献说明。
+7. **把合并结果带回电脑。** 确认 PR 已合并，并用 `git status` 确认工作区干净，再依次输入 `git switch main` 和 `git pull --ff-only`。**Pull（获取远程更新）**让本地 `main` 跟上 GitHub；如果失败，先读错误，别强行覆盖。
+
+要修改别人的项目，却没有写入权限时，通常先 **Fork（创建自己账号下的项目副本）**，再从自己的副本提出 PR，见 [Fork 官方教程](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。**Issue** 是问题与建议的讨论页，不是每次修改的必经步骤。
+
 ### 看一笔真实修改
 
-这是本项目已合并的 [PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)，以及它留下的 [Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)。上方六格是教学标注，下方保留 GitHub 真实画面。
+下面用本项目的历史记录导读。每个红框都有编号，对照图下说明；手机上可打开原图放大。三语标注各有自己的版本，GitHub 的原始界面文字保持原样。
 
-![本项目 PR 343 的真实合并记录，标示版本标识码、作者、时间、修改说明、更改文件数与 Diff。](../resources/diagrams/github-commit-example.zh-Hans.png)
+**1. Commit：看这一笔记录了什么。** [打开 Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)。这是合并 PR #343 留下的记录；普通 Commit 也能记录尚未合并的修改。
 
-- **标识码**：`2956dc0` 是完整编号的短版，打开原始 Commit 可看完整编号。
-- **作者与时间**：作者栏链接到 GitHub 账号；时间是 Commit 记录的时间，不一定是 Push 到网站的时间。
-- **修改说明**：这笔写着合并 PR #343；打开 PR 可查看讨论与已合并状态。
-- **文件与差异**：本例改了 10 个文件，新增 15 行、删除 13 行。绿色加号代表新增，红色减号代表删除；打开文件查看前后对照。
+![真实 Commit 截图：红框 1 版本编号、2 作者与时间、3 修改说明、4 分支、5 更改文件数、6 Diff。](../resources/diagrams/github-commit-example.zh-Hans.png)
+
+- **① 版本编号（SHA）**：`2956dc0` 是短版标识码；原始页面可看完整编号。
+- **② 作者与时间**：画面显示作者；Git 也记录提交者（Committer），两者可能不同。Commit 时间不是 Push 时间，作者名称本身也不能证明身份。
+- **③ 修改说明**：这一笔写着合并 PR #343；点击链接可追到提案。
+- **④ 分支**：这里显示 `main`；分支是工作线，Commit 是其中一笔版本记录。
+- **⑤ 文件数量**：这笔更改涉及 10 个文件，不是 10 次 Commit。
+- **⑥ Diff（差异）**：本例共新增 15 行、删除 13 行；⑥ 圈的是绿色加号的新增行。打开完整 Diff 可找红色减号的删除行；红色方框只是教学标记。
+
+**2. PR 与 Merge：看修改从哪里合到哪里。** [打开 PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)。
+
+![真实 PR 截图：红框 1 标题与编号、2 来源分支、3 目标 main、4 讨论与检查分页、5 已合并状态。](../resources/diagrams/github-pr-example.zh-Hans.png)
+
+- **① PR 编号**：`#343` 代表这个修改提案，与 Commit 的版本编号不同。
+- **② 来源（from）与 ③ 目标（into）**：这次把 `codex/verify-release-links-20261026` 的修改合进 `main`。
+- **④ 检查入口**：Conversation 看讨论，Commits 看版本记录，Checks 看自动检查结果，Files changed 看差异。Checks 的数量不代表全部通过。
+- **⑤ Merged（已合并）**：紫色状态表示已合并；只有 Push 或开 PR 还没到这一步。Review 是人的检查，Checks 通常是自动检查。
+
+**3. Issue：先把问题说清楚。** [打开 Issue #314](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314)。这是一笔过去的错误报告，这里只看它如何描述问题。
+
+![真实 Issue 截图：红框 1 问题标题与编号、2 Closed 状态、3 问题描述、4 受影响的文件。](../resources/diagrams/github-issue-example.zh-Hans.png)
+
+- **① 标题与编号**：先说哪里出问题，别人就能用 `#314` 找回这次讨论。
+- **② Closed（已关闭）**：表示结束跟踪；要读回复或时间线才知道原因，不一定代表已修好。
+- **③ 描述与 ④ 文件位置**：写出做了什么、发生什么、预期结果及相关文件，帮助别人理解或复现。往下可看回复与处理记录；Issue 本身不会修改文件。
 
 ## 🛠 动手练习：做一个 GitHub 数据小工具
 

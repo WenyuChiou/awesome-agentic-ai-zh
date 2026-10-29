@@ -25,10 +25,12 @@ pages:
     mirrors:
       en: stages/00-foundations.en.md
       zh-Hans: stages/00-foundations.zh-Hans.md
+    # User-requested seven-step document-upload guide plus three visible,
+    # numbered screenshot explanations. Only Stage 0 is re-baselined.
     max_visible_chars:
-      zh-TW: 5440
-      en: 10028
-      zh-Hans: 5493
+      zh-TW: 8100
+      en: 15000
+      zh-Hans: 8200
     max_open_details: 0
     required_visible_sections:
       learning-goals:
