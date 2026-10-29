@@ -19,6 +19,8 @@
 ![GitHub stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=flat&logo=github)
 [![在线文档站](https://img.shields.io/badge/線上閱讀-立即開始-2ea44f?style=flat)](https://wenyuchiou.github.io/awesome-agentic-ai-zh/)
 
+[![Star History 全球排名](https://api.star-history.com/badge?repo=WenyuChiou/awesome-agentic-ai-zh&type=rank)](https://www.star-history.com/wenyuchiou/awesome-agentic-ai-zh)
+
 </div>
 
 > 📱 手机阅读请使用[在线文档站](https://wenyuchiou.github.io/awesome-agentic-ai-zh/)。
@@ -232,12 +234,10 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来；Stage 
 
 如果这份地图帮到你，欢迎给一个 ⭐ Star，或[请作者喝杯咖啡](https://www.buymeacoffee.com/wenyuchiou)。
 
+## ⭐ Star 历史
+
+[![本项目的 GitHub Star 历史图](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)
+
 ## License
 
 MIT。Maintained by [@WenyuChiou](https://github.com/WenyuChiou)。
-
-## ⭐ Star 历史
-
-[![Star History 全球排名](https://api.star-history.com/badge?repo=WenyuChiou/awesome-agentic-ai-zh&type=rank)](https://www.star-history.com/wenyuchiou/awesome-agentic-ai-zh)
-
-[![本项目的 GitHub Star 历史图](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)

@@ -34,8 +34,8 @@ changes:
       - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/347
   - id: readme-cleanup-and-star-history
     category: reader-experience
-    zh-TW: 三語 README 移除角色圖旁獨立的「靜態圖」連結及重複的 starter.py 操作段落，保留角色圖、文件站停止動畫功能與完整使用指南。在 README 最下方恢復可點擊的 Star History 曲線圖與動態全球排名徽章。本版只發布三語說明，不產生或附上 PDF。
-    zh-Hans: 三语 README 移除角色图旁独立的「静态图」链接及重复的 starter.py 操作段落，保留角色图、文档站停止动画功能与完整使用指南。在 README 最下方恢复可点击的 Star History 曲线图与动态全球排名徽章。本版只发布三语说明，不生成或附加 PDF。
-    en: The three READMEs remove the standalone static-image link beside the role diagram and the repeated starter.py instructions, keeping the role diagram, docs-site pause control and full usage guide. A clickable Star History chart and dynamic global-rank badge return at the bottom of each README. This release publishes trilingual notes without generating or attaching PDFs.
+    zh-TW: 三語 README 移除角色圖旁獨立的「靜態圖」連結及重複的 starter.py 操作段落，保留角色圖、文件站停止動畫功能與完整使用指南。動態全球排名徽章放在 README 頂部徽章區附近；可點擊的 Star History 曲線圖放在支持與聯絡之後、License 之前。本版只發布三語說明，不產生或附上 PDF。
+    zh-Hans: 三语 README 移除角色图旁独立的「静态图」链接及重复的 starter.py 操作段落，保留角色图、文档站停止动画功能与完整使用指南。动态全球排名徽章放在 README 顶部徽章区附近；可点击的 Star History 曲线图放在支持与联系之后、License 之前。本版只发布三语说明，不生成或附加 PDF。
+    en: The three READMEs remove the standalone static-image link beside the role diagram and the repeated starter.py instructions, keeping the role diagram, docs-site pause control and full usage guide. The dynamic global-rank badge sits near the README header badges; the clickable Star History chart follows support/contact and precedes License. This release publishes trilingual notes without generating or attaching PDFs.
     links:
       - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/README.md

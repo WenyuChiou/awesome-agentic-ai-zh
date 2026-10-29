@@ -19,6 +19,8 @@
 ![GitHub stars](https://img.shields.io/github/stars/WenyuChiou/awesome-agentic-ai-zh?style=flat&logo=github)
 [![Docs site](https://img.shields.io/badge/線上閱讀-立即開始-2ea44f?style=flat)](https://wenyuchiou.github.io/awesome-agentic-ai-zh/)
 
+[![Star History global rank](https://api.star-history.com/badge?repo=WenyuChiou/awesome-agentic-ai-zh&type=rank)](https://www.star-history.com/wenyuchiou/awesome-agentic-ai-zh)
+
 </div>
 
 > 📱 On a phone, read the [docs site](https://wenyuchiou.github.io/awesome-agentic-ai-zh/).
@@ -232,12 +234,10 @@ This learning map is MIT-licensed and stays free and public. Use an Issue for qu
 
 If this map helped you, a ⭐ Star is welcome, or [buy the author a coffee](https://www.buymeacoffee.com/wenyuchiou).
 
+## ⭐ Star History
+
+[![GitHub star history for this project](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)
+
 ## License
 
 MIT. Maintained by [@WenyuChiou](https://github.com/WenyuChiou).
-
-## ⭐ Star History
-
-[![Star History global rank](https://api.star-history.com/badge?repo=WenyuChiou/awesome-agentic-ai-zh&type=rank)](https://www.star-history.com/wenyuchiou/awesome-agentic-ai-zh)
-
-[![GitHub star history for this project](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)
