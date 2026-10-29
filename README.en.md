@@ -234,6 +234,8 @@ This learning map is MIT-licensed and stays free and public. Use an Issue for qu
 
 If this map helped you, a ⭐ Star is welcome, or [buy the author a coffee](https://www.buymeacoffee.com/wenyuchiou).
 
+[![Greptile: The War on Bugs](https://www.greptile.com/badge.svg)](https://www.greptile.com/?utm_source=oss_badge&utm_medium=readme&utm_campaign=greptile_for_open_source)
+
 ## ⭐ Star History
 
 [![GitHub star history for this project](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)
