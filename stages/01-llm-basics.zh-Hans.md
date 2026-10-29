@@ -79,6 +79,8 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 
 </div>
 
+**Gemini 4 Carbon** 已公告，但一般开发者还不能直接用。Google 先逐步开放给指定的电脑安全团队与可信伙伴；先选已开放的模型练习。[官方公告](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/)。
+
 **Haiku 5.5（2026-10-07 发布，2026-10-08 核查）** 适合分类、摘要和范围明确的子代理；复杂编程 Agent 仍先评估 Sonnet／Opus。API ID 是固定的 `claude-haiku-5-5`，没有日期后缀或另一个 alias。练习 1、3 改用 5.5；temperature 练习和跨章示例保留 Haiku 4.5 兼容基线。5.5 默认 adaptive thinking，须按区块 `type` 取文本、保留 thinking 区块并重新计算 token；不能只换 ID。参考 [发布公告](https://www.anthropic.com/claude-haiku-5-5) 和 [Haiku 5.5 迁移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide)。
 
 ## 🚪 进入条件
@@ -507,7 +509,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details markdown="1">
 <summary>🌐 完整 18 个家族表（官方规格入口）</summary>
 
-<small>全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一行更新：2026-10-08 UTC。Gemini／Muse／Mistral／Jev 与 GPT 选读更新：2026-10-15 UTC。DeepSeek／Decisions／Clef 选读更新：2026-10-23 UTC。</small>
+<small>全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一行更新：2026-10-08 UTC。Gemini 一行更新：2026-10-29 UTC。Muse／Mistral／Jev 与 GPT 选读更新：2026-10-15 UTC。DeepSeek／Decisions／Clef 选读更新：2026-10-23 UTC。</small>
 
 没有可靠公开数字就写“官方未公布”。价格通常是 USD／每 1M token；供应商若用别的单位，就按官方单位记录。
 **缓存（cache）** 就像重复使用读过的便条：读取旧内容和写入新内容可能有不同价格。
@@ -621,28 +623,38 @@ print("💡 本次调用为 $0（不含电费）")
 <summary>Gemini</summary>
 
 <table data-model-family="Gemini" align="center">
-  <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
+  <thead><tr><th scope="col">字段</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>Gemini 3.8 Flash</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">目前推荐型号</th><td>Gemini 3.8 Flash</td></tr>
     <tr><td>Gemini 4 Argon（<code>gemini-4-argon</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">状态</th><td>Flash／Argon：正式可用</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">状态</th><td>Flash／Argon：正式可用。</td></tr>
+    <tr><td>Gemini 4 Carbon：Preview；限指定伙伴逐步开放，一般 API 尚未开放。</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>Flash：1,048,576 context／65,536 最大输出。Argon：1,048,576 输入与输出合计；同步输出默认 65,536</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Context</th><td>Flash：1,048,576 context／65,536 最大输出。</td></tr>
+    <tr><td>Argon：1,048,576 输入与输出合计；同步输出缺省 65,536。</td></tr>
+    <tr><td>Carbon：输入 context 与最大输出官方未公布。</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">价格或授权</th><td>每百万 token，US$。Flash：2026-12-31 前输入／输出 $0.75/$3.75。Argon Standard 输入／cache／输出：2026-11-30 前 $2/$0.10/$10。2026-12-01 起 $4/$0.20/$20</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">价格或授权</th><td>每百万 token，US$。Flash：2026-12-31 前输入／输出 $0.75/$3.75。</td></tr>
+    <tr><td>Argon Standard 输入／cache／输出：2026-11-30 前 $2/$0.10/$10。2026-12-01 起 $4/$0.20/$20。</td></tr>
+    <tr><td>Carbon 公告优惠价：输入／输出 $2/$10。缓存输入为当期输入价的 5%（优惠期 $0.10）。</td></tr>
+    <tr><td>Carbon 公告优惠后价格：输入／输出 $4/$20。优惠结束日期官方未公布。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">适合做什么</th><td>Flash 用于多模态与 Agent 练习。Argon 可比较长任务与编程成果</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">适合做什么</th><td>Flash 用于多模态与 Agent 练习。Argon 可比较长任务与编程成果。</td></tr>
+    <tr><td>Carbon 的公告方向是长时间编程任务与电脑安全防御；尚不作一般入门推荐。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td>Argon 无免费层。输出到 1M 须使用 long decode，不是每次请求的默认。本章仍先用本地模型练习</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">限制</th><td>Argon 无免费层。输出到 1M 须使用 long decode，不是每次请求的缺省。</td></tr>
+    <tr><td>Carbon 的 API ID、工具支持与正式开放日期官方未公布。公告价格不表示现在就能调用 API。</td></tr>
+    <tr><td>本章仍先用本机模型练习。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方来源</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API 定价</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon 规格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">发布公告</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">官方来源</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API 定价</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon 规格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">发布公告</a></td></tr>
+    <tr><td><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">Carbon 公告与价格预告</a> · <a href="https://ai.google.dev/gemini-api/docs/models">一般开发者模型清单</a></td></tr>
   </tbody>
 </table>
 

@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "verified_on_utc": "2026-10-29",
+  "source_release_run": 40811105958,
+  "method": "Playwright Chromium; rendered page text plus visual screenshot review",
+  "scope": "Landing-page availability only. No login, enrollment, paid content or video playback tested. A manual observation does not override automated scanner outcomes or baselines.",
+  "scanner_results_overridden": false,
+  "findings_sha256": "e8360e208de46f1ddafe8804912e1690bb1ba7d75d14d04c7a6451308c8f3636",
+  "records": [
+    {
+      "url": "https://space.bilibili.com/88461692",
+      "httpStatus": 200,
+      "finalUrl": "https://space.bilibili.com/zh-Hant/88461692",
+      "title": "{視頻0}的個人空間-3Blue1Brown個人主頁-嗶哩嗶哩$",
+      "classification": "valid",
+      "reason": "3Blue1Brown official profile and account identifier appear; video playback not tested."
+    },
+    {
+      "url": "https://www.w3.org/International/",
+      "httpStatus": 200,
+      "finalUrl": "https://www.w3.org/International/",
+      "title": "Internationalization Activity Blog",
+      "classification": "valid",
+      "reason": "W3C Internationalization activity page describes its work and resources."
+    },
+    {
+      "url": "https://academy.make.com/courses/FoundationC01?pc=workflow",
+      "httpStatus": 200,
+      "finalUrl": "https://academy.make.com/courses/FoundationC01?pc=workflow",
+      "title": "Setting Up My First Scenario | Make Academy",
+      "classification": "valid",
+      "reason": "Make Academy course “Setting up my first scenario” displays overview and seven lessons."
+    },
+    {
+      "url": "https://claude.ai",
+      "httpStatus": 200,
+      "finalUrl": "https://claude.ai/login",
+      "title": "Sign in - Claude",
+      "classification": "login expected",
+      "reason": "Redirects to Claude sign-in with provider and email options; no login attempted."
+    },
+    {
+      "url": "https://academy.langchain.com/",
+      "httpStatus": 200,
+      "finalUrl": "https://academy.langchain.com/",
+      "title": "LangChain Academy",
+      "classification": "valid",
+      "reason": "LangChain Academy landing page lists courses and learning stages."
+    },
+    {
+      "url": "https://arena.ai/leaderboard/chat/text",
+      "httpStatus": 200,
+      "finalUrl": "https://arena.ai/leaderboard/chat/text",
+      "title": "Text Arena: LLM Rankings & AI Model Benchmarks",
+      "classification": "valid",
+      "reason": "Text Arena page renders filters and current model-ranking content."
+    },
+    {
+      "url": "https://www.deeplearning.ai/courses/agentic-ai",
+      "httpStatus": 200,
+      "finalUrl": "https://www.deeplearning.ai/courses/agentic-ai",
+      "title": "Agentic AI - DeepLearning.AI",
+      "classification": "valid",
+      "reason": "Agentic AI course page identifies Andrew Ng and displays course outline."
+    },
+    {
+      "url": "https://academy.langchain.com/courses/intro-to-langgraph",
+      "httpStatus": 200,
+      "finalUrl": "https://academy.langchain.com/courses/intro-to-langgraph",
+      "title": "Introduction to LangGraph - Python",
+      "classification": "valid",
+      "reason": "Introduction to LangGraph – Python shows course curriculum and enrollment information."
+    },
+    {
+      "url": "https://academy.langchain.com/courses/deep-agents-with-langgraph",
+      "httpStatus": 200,
+      "finalUrl": "https://academy.langchain.com/courses/deep-agents-with-langgraph",
+      "title": "Project: Deep Agents",
+      "classification": "valid",
+      "reason": "Project: Deep Agents shows course overview and curriculum; its URL does resolve to this named course."
+    },
+    {
+      "url": "https://www.w3.org/International/articles/language-tags/",
+      "httpStatus": 200,
+      "finalUrl": "https://www.w3.org/International/articles/language-tags/",
+      "title": "Language tags in HTML and XML",
+      "classification": "valid",
+      "reason": "W3C article “Language tags in HTML and XML” displays overview and article sections."
+    }
+  ]
+}

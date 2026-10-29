@@ -79,6 +79,8 @@ A **Typed Decision Model** returns a predefined choice, score, or probability. T
 
 </div>
 
+**Gemini 4 Carbon** has been announced, but it is not yet available to general developers. Google is gradually opening access to selected teams that protect computer systems and trusted partners. Start with an available model; see the [official announcement](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/).
+
 **Haiku 5.5 (released 2026-10-07; checked 2026-10-08)** suits classification, summarization, and narrowly scoped subagents; evaluate Sonnet/Opus for complex coding agents. Its fixed API ID is `claude-haiku-5-5`, without a date suffix or separate alias. Exercises 1 and 3 use 5.5; the temperature exercise and cross-stage examples retain a Haiku 4.5 compatibility baseline. With adaptive thinking enabled by default, select text by block `type`, preserve thinking blocks, and recount tokens; an ID-only swap is insufficient. See the [announcement](https://www.anthropic.com/claude-haiku-5-5) and [Haiku 5.5 migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide).
 
 ## 🚪 Entry Conditions
@@ -507,7 +509,7 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 18-family table (official specification entries)</summary>
 
-<small>Full table checked: 2026-09-22 UTC. Scoped GPT/Kimi update: 2026-10-26 UTC. Claude row updated: 2026-10-08 UTC. Gemini/Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
+<small>Full table checked: 2026-09-22 UTC. Scoped GPT/Kimi update: 2026-10-26 UTC. Claude row updated: 2026-10-08 UTC. Gemini row updated: 2026-10-29 UTC. Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 **Cache** is like reusing a note you already read: reading old content and writing new content may have different prices.
@@ -627,22 +629,32 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><td>Gemini 4 Argon (<code>gemini-4-argon</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">Status</th><td>Flash/Argon: generally available</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Status</th><td>Flash/Argon: generally available.</td></tr>
+    <tr><td>Gemini 4 Carbon: Preview; phased access for selected partners, not a generally available API.</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>Flash: 1,048,576 context / 65,536 max output. Argon: 1,048,576 combined input/output; default synchronous output 65,536</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Context</th><td>Flash: 1,048,576 context / 65,536 max output.</td></tr>
+    <tr><td>Argon: 1,048,576 combined input/output; default synchronous output 65,536.</td></tr>
+    <tr><td>Carbon: input context and maximum output not published by the official source.</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>US$ per million tokens. Flash: $0.75/$3.75 input/output through 2026-12-31. Argon Standard input/cache/output: $2/$0.10/$10 through 2026-11-30. $4/$0.20/$20 from 2026-12-01</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Price or license</th><td>US$ per million tokens. Flash: $0.75/$3.75 input/output through 2026-12-31.</td></tr>
+    <tr><td>Argon Standard input/cache/output: $2/$0.10/$10 through 2026-11-30. $4/$0.20/$20 from 2026-12-01.</td></tr>
+    <tr><td>Carbon announced introductory input/output: $2/$10. Cached input is 5% of the current input price ($0.10 during the introductory period).</td></tr>
+    <tr><td>Carbon announced post-introductory input/output: $4/$20. The introductory end date has not been published.</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">Good for</th><td>Flash for multimodal and Agent practice. Argon for comparing long tasks and coding outcomes</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Good for</th><td>Flash for multimodal and Agent practice. Argon for comparing long tasks and coding outcomes.</td></tr>
+    <tr><td>Carbon is announced for sustained coding and computer-security defense; it is not yet a general beginner recommendation.</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limits</th><td>Argon has no free tier. Output up to 1M requires long decode, not the default for every request. This chapter still starts with local models</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Limits</th><td>Argon has no free tier. Output up to 1M requires long decode, not the default for every request.</td></tr>
+    <tr><td>Carbon API ID, tool support and general-access date have not been published. Announced pricing does not mean the API can be called now.</td></tr>
+    <tr><td>This chapter still starts with local models.</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">Launch announcement</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Official source</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">Launch announcement</a></td></tr>
+    <tr><td><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">Carbon announcement and advertised pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models">General developer model list</a></td></tr>
   </tbody>
 </table>
 
