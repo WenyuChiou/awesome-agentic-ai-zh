@@ -243,7 +243,7 @@ Get-Content .claude/hooks/events.jsonl
 
 ### 练习 4：连接受限的 MCP server
 
-完成后，Claude 只能读取你指定的示例文件夹，不能访问整台电脑。
+先核对这个 MCP server 可操作的文件夹与工具。这些限制只管它；Claude 的其他工具仍按各自权限运行。
 
 ```text
 我要连接一个 filesystem MCP server。请先解释它能看到哪个目录、有哪些 tools、如何移除，然后等我批准；不要直接安装。

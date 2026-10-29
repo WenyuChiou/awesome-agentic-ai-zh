@@ -90,7 +90,7 @@ No option is always best. Evaluate using your own data, questions, and success c
 <a id="-hands-on-exercises-illustrative-basics"></a>
 ## 🛠 Hands-on exercises
 
-Each exercise has a starter. Copy the commands and run them; you do not need to write an empty answer from scratch.
+Before each exercise, return to the repository root (the folder with README.md). Follow that exercise’s setup, then run the local Path A below. Cloud Path B is optional; check its provider, key setup, and costs in the exercise instructions first.
 
 <a id="exercise-1-embeddings"></a>
 ### Exercise 1: Turn two sentences into embeddings
@@ -100,10 +100,9 @@ Each exercise has a starter. Copy the commands and run them; you do not need to 
 ```powershell
 cd examples/stage-6/01-embeddings
 python starter.py
-python starter_anthropic.py
 ```
 
-[Open the full instructions and checks](../examples/stage-6/01-embeddings/README.en.md). Start with only a few sentences to avoid unnecessary API costs.
+[Open setup, checks, and optional Path B](../examples/stage-6/01-embeddings/README.en.md). Start with only a few sentences to avoid unnecessary API costs.
 
 <a id="exercise-2-vector-db"></a>
 ### Exercise 2: Put embeddings in a vector database
@@ -113,10 +112,9 @@ python starter_anthropic.py
 ```powershell
 cd examples/stage-6/02-vector-db
 python starter.py
-python starter_anthropic.py
 ```
 
-[Open the full instructions and checks](../examples/stage-6/02-vector-db/README.en.md). Exercise data must not contain secrets or personal information.
+[Open setup, checks, and optional Path B](../examples/stage-6/02-vector-db/README.en.md). Exercise data must not contain secrets or personal information.
 
 <a id="exercise-3-chunking-comparison"></a>
 ### Exercise 3: Compare three chunking methods
@@ -126,10 +124,9 @@ python starter_anthropic.py
 ```powershell
 cd examples/stage-6/03-chunking-comparison
 python starter.py
-python starter_anthropic.py
 ```
 
-[Open the full instructions and checks](../examples/stage-6/03-chunking-comparison/README.en.md). Do not memorize a “standard size”; begin with document structure and test results.
+[Open setup, checks, and optional Path B](../examples/stage-6/03-chunking-comparison/README.en.md). Do not memorize a “standard size”; begin with document structure and test results.
 
 <a id="exercise-4-full-rag-pipeline"></a>
 ### Exercise 4: Connect a complete RAG pipeline
@@ -139,10 +136,9 @@ python starter_anthropic.py
 ```powershell
 cd examples/stage-6/04-full-rag-pipeline
 python starter.py
-python starter_anthropic.py
 ```
 
-[Open the full instructions and checks](../examples/stage-6/04-full-rag-pipeline/README.en.md). Start with a small dataset; “the program runs” does not mean the answer is correct.
+[Open setup, checks, and optional Path B](../examples/stage-6/04-full-rag-pipeline/README.en.md). Start with a small dataset; “the program runs” does not mean the answer is correct.
 
 <a id="exercise-5-long-term-memory"></a>
 ### Exercise 5: Remember a preference
@@ -152,10 +148,9 @@ python starter_anthropic.py
 ```powershell
 cd examples/stage-6/05-long-term-memory
 python starter.py
-python starter_anthropic.py
 ```
 
-[Open the full instructions and checks](../examples/stage-6/05-long-term-memory/README.en.md). Save only data needed to finish a task and provide ways to view, change, and delete it.
+[Open setup, checks, and optional Path B](../examples/stage-6/05-long-term-memory/README.en.md). Save only data needed to finish a task and provide ways to view, change, and delete it.
 
 ### Recommended mini-project: an assistant that retrieves and remembers
 
