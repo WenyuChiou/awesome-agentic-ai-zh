@@ -73,21 +73,27 @@ def test_current_model_reference_keeps_public_api_ids(locale: str) -> None:
 
 
 @pytest.mark.parametrize("locale", rm.LOCALES)
-def test_october_26_notes_cover_only_the_new_release_window(locale: str) -> None:
+def test_october_29_notes_cover_only_the_new_release_window(locale: str) -> None:
     notes = rm.validate_notes_manifest()
-    assert notes["release_version"] == "v2026.10.26"
+    assert notes["release_version"] == "v2026.10.29"
     changes = {change["id"]: change for change in notes["changes"]}
     assert set(changes) == {
-        "gpt-terra-model-guidance", "kimi-pro-model-guidance", "python-action-maintenance"
+        "verified-course-and-leaderboard-links", "mobile-course-picker",
+        "stage-zero-github-foundations", "readable-tables-and-bold",
+        "readme-cleanup-and-star-history",
     }
-    assert "GPT-6.1 Terra" in changes["gpt-terra-model-guidance"][locale]
-    kimi = changes["kimi-pro-model-guidance"][locale]
-    assert all(term in kimi for term in ("Kimi K3.1 Pro", "Highspeed", "K2", "18"))
-    maintenance = changes["python-action-maintenance"][locale]
-    assert all(term in maintenance for term in ("actions/setup-python", "7.0.0", "7.1.0", "PDF"))
+    assert "11" in changes["verified-course-and-leaderboard-links"][locale]
+    assert "13" in changes["mobile-course-picker"][locale]
+    foundation = changes["stage-zero-github-foundations"][locale]
+    assert all(term in foundation for term in ("Commit", "Push", "PR", "Merge", "18"))
+    assert "Star History" in changes["readme-cleanup-and-star-history"][locale]
+    assert "PDF" in changes["readme-cleanup-and-star-history"][locale]
     links = {link for change in changes.values() for link in change["links"]}
-    assert links == {f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
-                     for pr in (340, 341)}
+    assert links == {
+        *(f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
+          for pr in (343, 344, 346, 347)),
+        "https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/README.md",
+    }
 
 
 def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:

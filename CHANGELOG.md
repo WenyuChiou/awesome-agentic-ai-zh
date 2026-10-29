@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
+- **readme / release preparation / v2026.10.29** · 三語主頁移除角色圖旁多餘的獨立靜態圖連結及重複 starter.py 操作段落，保留完整指南與文件站停止動畫功能；最下方恢復 Star History 曲線圖與動態全球排名徽章。依 v2026.10.26 之後已合併差異整理三語發布說明，涵蓋連結複查、課程手機選路、Stage 0 GitHub 基礎與全站表格／粗體修正；本版不產生或附上 PDF。
+
 - **layout / route and entry names** · 三語主頁的五張路線／角色選擇表改為可控制欄寬的 HTML；共用基礎與 Track A 留足名稱欄，Track B 保留自動欄寬。同步調整研究人員入口、資源索引檔名及教師文件名稱欄，並讓開發者、知識工作者與日常使用者的入口表支援手機直向閱讀，保留完整章名、舊名提示、所有說明與評分；文件站手機以滿寬直向閱讀，文字靠左。
 
 - **audit / all Markdown** · 將全部 288 份 Markdown 納入來源與 GitHub 渲染掃描；補修 18 份範例／參考文件的 26 處粗體外露、歷史 CHANGELOG 的六處粗體，以及兩份維護文件的四張表格置中。保留原文、歷史日期、URL、評分與程式範例，僅調整標記與排版。

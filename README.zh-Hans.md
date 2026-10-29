@@ -141,8 +141,6 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来；Stage 
 
 ![研究、开发、教学、知识工作与日常使用是五种选择，按需选读，不必全部走完](resources/diagrams/branch-decision-tree.zh-Hans.svg)
 
-[静态图](resources/diagrams/branch-decision-tree.zh-Hans.png)
-
 <div class="reader-route-table" role="region" tabindex="0" aria-label="按身份选择路线">
 <table align="center">
 <thead><tr><th scope="col">路线</th><th scope="col">适合谁</th><th scope="col">你会处理什么？</th></tr></thead>
@@ -163,8 +161,6 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来；Stage 
 3. **直接复制第一个命令**：先跑不连网的测试，不必抄一份空白文件。
 4. **一次只改一件事**：改完立刻再跑测试，才知道是哪个改动造成结果。
 5. **做到完成条件再往下走**：看懂不等于做得到。
-
-每个 `starter.py` 都是可执行参考。先看题目与成功条件，再修改一个地方并重跑测试。完整方法见[如何使用这份教材](docs/HOW_TO_USE.md)。
 
 ## 📚 先收藏的学习入口
 
@@ -239,3 +235,9 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出来；Stage 
 ## License
 
 MIT。Maintained by [@WenyuChiou](https://github.com/WenyuChiou)。
+
+## ⭐ Star 历史
+
+[![Star History 全球排名](https://api.star-history.com/badge?repo=WenyuChiou/awesome-agentic-ai-zh&type=rank)](https://www.star-history.com/wenyuchiou/awesome-agentic-ai-zh)
+
+[![本项目的 GitHub Star 历史图](https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date)](https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date)

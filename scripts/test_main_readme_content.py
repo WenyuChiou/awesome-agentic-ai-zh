@@ -397,6 +397,17 @@ def test_homepage_is_shorter_without_deleting_key_terms(page: Path) -> None:
     )
     measured = measured.replace('<table align="center">', '<table>')
     measured = measured.replace(' align="center" valign="middle"', '')
+    # Star History embeds add delivery URLs, not reading material. Keep their
+    # headings/alt text in the original prose budget and validate each exact URL;
+    # do not shorten teaching text merely to fit third-party image metadata.
+    for delivery_url in (
+        "https://api.star-history.com/svg?repos=WenyuChiou/awesome-agentic-ai-zh&type=Date",
+        "https://www.star-history.com/#WenyuChiou/awesome-agentic-ai-zh&Date",
+        "https://api.star-history.com/badge?repo=WenyuChiou/awesome-agentic-ai-zh&type=rank",
+        "https://www.star-history.com/wenyuchiou/awesome-agentic-ai-zh",
+    ):
+        assert measured.count(delivery_url) == 1
+        measured = measured.replace(delivery_url, "star-history-url")
     content = measured[measured.index("# awesome-agentic-ai-zh"):]
     assert len(measured) - len(content) <= 550
     assert len(content) <= (14_277 if page == PAGES["en"] else 14_000)
