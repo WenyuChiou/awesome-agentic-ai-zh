@@ -29,39 +29,37 @@ def test_only_environment_guarded_publish_job_can_write() -> None:
     assert jobs["publish"]["needs"] == "prepare"
 
 
-def test_pdf_is_an_explicit_opt_in_not_a_release_requirement() -> None:
+def test_releases_publish_notes_only_without_pdf_controls() -> None:
     workflow = load_workflow()
-    setting = workflow["on"]["workflow_dispatch"]["inputs"]["include_pdf"]
-    assert setting["type"] == "boolean"
-    assert setting["default"] == "false"
-    pdf_steps = [step for step in workflow["jobs"]["prepare"]["steps"]
-                 if step["name"] in {
-                     "Install PDF build dependencies",
-                     "Test the installed PDF reader with all three locales",
-                     "Build all three PDFs from the same page order",
-                     "Verify PDF text, coverage, and filenames",
-                 }]
-    assert len(pdf_steps) == 4
-    assert all(step["if"] == "${{ inputs.include_pdf }}" for step in pdf_steps)
+    assert set(workflow["on"]["workflow_dispatch"]["inputs"]) == {"version"}
+    text = WORKFLOW.read_text(encoding="utf-8")
+    for removed in ("include_pdf", "INCLUDE_PDF", "build-pdf.sh", "validate-pdfs",
+                    "weasyprint", "gh release upload", "pdf-validation.json"):
+        assert removed not in text
     for name in ("Run blocking repository gates", "Run the full release content-health scan",
                  "Render one trilingual Release body"):
         step = next(step for step in workflow["jobs"]["prepare"]["steps"] if step["name"] == name)
         assert "if" not in step
 
 
-def test_optional_asset_guards_cover_check_upload_and_exact_draft_inventory() -> None:
-    publish = load_workflow()["jobs"]["publish"]
-    assert publish["env"]["INCLUDE_PDF"] == "${{ inputs.include_pdf }}"
+def test_notes_only_candidate_and_exact_empty_asset_inventory() -> None:
+    workflow = load_workflow()
+    collect = next(step["run"] for step in workflow["jobs"]["prepare"]["steps"]
+                   if step["name"] == "Collect release candidates and evidence")
+    assert "release-candidate/evidence" in collect
+    assert "release-body.md" in collect
+    assert "dist" not in collect
+    publish = workflow["jobs"]["publish"]
+    assert "env" not in publish
     steps = {step["name"]: step for step in publish["steps"]}
-    check = steps["Recheck main and requested assets before writing"]["run"]
-    assert 'if [ "$INCLUDE_PDF" = true ]; then' in check
-    assert check.index('if [ "$INCLUDE_PDF" = true ]; then') < check.index('for locale in zh-TW zh-Hans en')
-    upload = steps["Create or refresh a Draft Release"]["run"]
-    assert upload.index('if [ "$INCLUDE_PDF" = true ]; then') < upload.index('gh release upload')
+    assert "test -s candidate/release-body.md" in steps["Recheck main and release body before writing"]["run"]
     verify = steps["Verify the Draft Release before publishing"]["run"]
+    # Expected inventory stays empty; any asset, including a PDF, blocks publish.
     assert ': > /tmp/expected-assets.txt' in verify
-    assert 'if [ "$INCLUDE_PDF" = true ]; then' in verify
+    assert verify.count("/tmp/expected-assets.txt") == 2
+    assert "jq -r '.assets[].name'" in verify
     assert 'diff -u /tmp/expected-assets.txt /tmp/actual-assets.txt' in verify
+    assert "test \"$(jq '.assets | length' /tmp/published-release.json)\" -eq 0" in steps["Publish and verify the Release"]["run"]
 
 
 def test_prepare_locks_main_and_builds_all_locales() -> None:
@@ -73,8 +71,7 @@ def test_prepare_locks_main_and_builds_all_locales() -> None:
     assert 'environment_json="$(gh api "repos/$REPOSITORY/environments/release")"' in text
     assert "required_reviewers" in text
     assert "test \"$sha\" = \"$remote_main\"" in text
-    assert "for locale in zh-TW zh-Hans en" in text
-    assert "validate-pdfs" in text
+    assert "python -m mkdocs build" in text
     assert "--mode release" in text
 
 
@@ -106,8 +103,8 @@ def test_publish_rechecks_sha_and_verifies_draft_before_publish() -> None:
         publish,
     )
     assert publish_command < tag_fetch
-    for locale in ("zh-TW", "zh-Hans", "en"):
-        assert f'awesome-agentic-ai-zh-$RELEASE_VERSION-{locale}.pdf' in text
+    for heading in ("## 繁體中文", "## 简体中文", "## English"):
+        assert heading in text
 
 
 def test_pdf_builder_reads_manifest_instead_of_hardcoding_pages() -> None:

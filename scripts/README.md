@@ -141,9 +141,11 @@ python scripts/release_manifest.py validate-pdfs \
 
 1. 用 GitHub API UTC 日期驗證 calendar tag，鎖定當下 `main` SHA。
 2. 跑完整內容、連結、repository、freshness、圖片、三語網站與 tests。
-3. 建立三份 PDF candidate、抽字驗證，並上傳可下載的 Actions artifact。
+3. 產生同一份變更清單的三語說明，並上傳說明與檢查報告作為 Actions artifact。
 4. 在 `release` Environment 等待人工批准。
-5. 再確認 `main` 沒有前進，先建 Draft Release、驗證 tag／三份附件／三語 body，最後才發布。
+5. 再確認 `main` 沒有前進，先建 Draft Release；驗證 tag、三語說明與空附件清單，最後才發布。
+
+正式 Release 不產生或附上 PDF，也沒有 PDF 開關。上面的 PDF 工具只供另外手動匯出。
 
 同一天第二次發布使用 `vYYYY.MM.DD-2`。Workflow 不由 push 或 PR 自動發布，也不會略過人工 Environment 關卡。
 
@@ -167,4 +169,4 @@ bash scripts/build-mdbook.sh --serve   # 建好後本機開 server (port 3000)
 ## 網站與 Release 流程
 
 1. 推 main → `docs.yml` 自動 build mkdocs（`/` 首頁）+ mdBook（`/book/`）並 deploy 到 `https://wenyuchiou.github.io/awesome-agentic-ai-zh/`
-2. Release：手動啟動 `release.yml`，先下載並檢查 candidate artifact，再通過 `release` Environment 發布三語 PDF 與三語 Release Notes
+2. Release：手動啟動 `release.yml`，先檢查 candidate 的三語說明與報告，再通過 `release` Environment 發布三語 Release Notes；附件清單必須為空。

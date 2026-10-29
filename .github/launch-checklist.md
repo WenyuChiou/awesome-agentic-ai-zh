@@ -22,8 +22,7 @@
     - 📚 Stage discussion — 每個 stage 一個 thread
     - 🎯 Show & tell — 走完 stage 的人 share 自己的成果
 - [x] **`release` Environment**：已建立並要求 `WenyuChiou` 人工批准；workflow 也會在缺少 required reviewer 時 fail closed
-- [ ] **第一次三語 PDF Release**：從 Actions 手動啟動 `Trilingual Release`，下載 candidate artifact，確認繁中／簡中／英文三份 PDF 後才批准 `release` Environment
-- [ ] **Calendar Release**：使用 `vYYYY.MM.DD`（同日第二版加 `-2`）；一個 Release 同時放三語 notes 與三份固定命名 PDF
+- [ ] **Calendar Release**：使用 `vYYYY.MM.DD`（同日第二版加 `-2`）；一個 Release 同時放三語 notes，不產生或附上 PDF；核對 tag、main SHA 與文件站部署
 
 ## 🟢 Soft launch（小範圍宣傳）
 

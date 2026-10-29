@@ -1,41 +1,49 @@
 schema_version: 1
-release_version: v2026.10.29
-
-# One ordered list produces all three language sections.
-# Only changes landed after v2026.10.26 belong here.
+release_version: v2026.10.29-2
 changes:
-  - id: verified-course-and-leaderboard-links
-    category: maintenance
-    zh-TW: 複查上版 11 個無法驗證的連結，區分可讀頁面、登入入口與反爬蟲阻擋，未發現確定失效。三語改用 Arena 現行路徑及 DeepLearning.AI 課程 canonical URL；不把受阻連結改列成功，也不放寬掃描基線。
-    zh-Hans: 复查上版 11 个无法验证的链接，区分可读页面、登录入口与反爬虫阻挡，未发现确定失效。三语改用 Arena 当前路径及 DeepLearning.AI 课程 canonical URL；不把受阻链接改列成功，也不放宽扫描基线。
-    en: Rechecks the previous release's 11 unverified links, distinguishing readable pages, sign-in pages and anti-bot blocks; none was confirmed broken. All three languages use current Arena paths and canonical DeepLearning.AI course URLs. Blocked links are not relabeled as verified, and scan baselines are not relaxed.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343
-  - id: mobile-course-picker
-    category: reader-experience
-    zh-TW: 三語課程選路表在手機逐項使用完整寬度，英文按完整單字換行；桌面保留三欄比較。保留所有選路、課程入口、13 筆精選課程、原有星等、費用限制與查核日期，重要資訊維持展開。
-    zh-Hans: 三语课程选路表在手机逐项使用完整宽度，英文按完整单词换行；桌面保留三栏比较。保留所有选路、课程入口、13 笔精选课程、原有星级、费用限制与核查日期，重要信息保持展开。
-    en: The trilingual course picker uses full-width entries on phones and wraps English at whole-word boundaries; desktop keeps a three-column comparison. All routes, course entrances, 13 curated courses, ratings, cost limits and verification dates remain, with important information visible.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/344
-  - id: stage-zero-github-foundations
-    category: learning-content
-    zh-TW: Stage 0 學習目標後新增可見核心詞表，白話區分 Python、Terminal、CLI、Shell、資料格式與 GitHub，以及 Commit、Push、PR、Merge。三語圖解和本專案真實 Commit 截圖說明作者、時間、訊息、SHA、History 與 Diff，並區分 Commit 和 Push 時間。保留整合練習及 18 筆評分資源。
-    zh-Hans: Stage 0 学习目标后新增可见核心词表，白话区分 Python、Terminal、CLI、Shell、数据格式与 GitHub，以及 Commit、Push、PR、Merge。三语图解和本项目真实 Commit 截图说明作者、时间、消息、SHA、History 与 Diff，并区分 Commit 和 Push 时间。保留综合练习及 18 笔评分资源。
-    en: Stage 0 adds a visible glossary after its learning goals, explaining Python, Terminal, CLI, Shell, data formats, GitHub, Commit, Push, PR and Merge in plain language. Trilingual diagrams and a real project commit screenshot explain author, date, message, SHA, History and Diff, distinguishing commit time from push time. The integrated exercise and 18 rated resources remain.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/346
-  - id: readable-tables-and-bold
-    category: reader-experience
-    zh-TW: 三語資源表置中、說明靠左、同類分類合併，repo 只顯示專案名稱。主頁與角色入口留足名稱欄，文件站手機及平板逐項閱讀，桌面保留多欄比較。全站 Markdown 掃描後修正粗體星號外露；章名、來源、星等、限制與重要資訊維持可見。
-    zh-Hans: 三语资源表居中、说明靠左、同类分类合并，repo 只显示项目名称。主页与角色入口留足名称栏，文档站手机及平板逐项阅读，桌面保留多栏比较。全站 Markdown 扫描后修正粗体星号外露；章节名、来源、星级、限制与重要信息保持可见。
-    en: Trilingual resource tables are centered, explanatory text is left-aligned, matching categories are merged, and repository labels show project names. Homepage and role-entry tables give names enough space; the docs site stacks entries on phones and tablets while preserving desktop comparisons. A repository-wide Markdown scan fixes exposed bold markers. Full chapter names, sources, ratings, limits and important information remain visible.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/347
-  - id: readme-cleanup-and-star-history
-    category: reader-experience
-    zh-TW: 三語 README 移除角色圖旁獨立的「靜態圖」連結及重複的 starter.py 操作段落，保留角色圖、文件站停止動畫功能與完整使用指南。動態全球排名徽章放在 README 頂部徽章區附近；可點擊的 Star History 曲線圖放在支持與聯絡之後、License 之前。本版只發布三語說明，不產生或附上 PDF。
-    zh-Hans: 三语 README 移除角色图旁独立的「静态图」链接及重复的 starter.py 操作段落，保留角色图、文档站停止动画功能与完整使用指南。动态全球排名徽章放在 README 顶部徽章区附近；可点击的 Star History 曲线图放在支持与联系之后、License 之前。本版只发布三语说明，不生成或附加 PDF。
-    en: The three READMEs remove the standalone static-image link beside the role diagram and the repeated starter.py instructions, keeping the role diagram, docs-site pause control and full usage guide. The dynamic global-rank badge sits near the README header badges; the clickable Star History chart follows support/contact and precedes License. This release publishes trilingual notes without generating or attaching PDFs.
-    links:
-      - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/README.md
+- id: gemini-carbon-access-and-pricing
+  category: model-information
+  zh-TW: Stage 1 補上 Gemini Carbon 的受限開放狀態與官方價格條件，區分模型公告、指定夥伴存取與一般 API 可用。未知欄位明確標示，三語一致。
+  zh-Hans: Stage 1 补上 Gemini Carbon 的受限开放状态与官方价格条件，区分模型公告、指定伙伴访问与一般 API 可用。未知字段明确标注，三语一致。
+  en: Stage 1 adds Gemini Carbon access limits and official pricing conditions, distinguishing the announcement, selected-partner access
+    and general API availability. Unknown fields are labeled explicitly in all three languages.
+  links:
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/349
+- id: greptile-curriculum-review
+  category: review-governance
+  zh-TW: 三語 README 在支持與聯絡附近加入 Greptile 徽章。教材審查規則檢查三語意思、重要資訊展開、來源與手機／桌面排版證據；不自動批准或合併，最終判斷仍由維護者決定。
+  zh-Hans: 三语 README 在支持与联系附近加入 Greptile 徽章。教材审查规则检查三语含义、重要信息展开、来源与手机／桌面排版证据；不自动批准或合并，最终判断仍由维护者决定。
+  en: The three READMEs add a Greptile badge near support and contact. Curriculum review rules check matching meaning, visible important
+    material, sources and mobile/desktop layout evidence. Reviews do not automatically approve or merge; the maintainer makes the final
+    decision.
+  links:
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/350
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/351
+- id: numbered-github-guides
+  category: learning-content
+  zh-TW: Stage 0 用七個短步驟說明改文件、Commit、Push、PR 與 Merge。使用本專案真實 Commit、PR 與 Issue 截圖，以紅框和編號指認欄位；三語各有標註版本。核心詞、主練習及 18 筆評分資源維持展開。
+  zh-Hans: Stage 0 用七个短步骤说明改文档、Commit、Push、PR 与 Merge。使用本项目真实 Commit、PR 与 Issue 截图，以红框和编号指认字段；三语各有标注版本。核心术语、主练习及 18 条评分资源保持展开。
+  en: Stage 0 uses seven short steps to explain document edits, Commit, Push, PR and Merge. Real project Commit, PR and Issue screenshots
+    use red boxes and numbers, with a labeled version for each language. Core terms, the main exercise and 18 rated resources remain
+    visible.
+  links:
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/353
+- id: beginner-flow-and-advanced-routes
+  category: reader-experience
+  zh-TW: 修正十處閱讀卡點：統一 Capstone 入口、補齊環境與資料夾步驟，說明練習全對時怎麼繼續，並指明要展開哪張表。先解釋 Recall@k 與命中率，再使用指標；進階 RAG 按症狀選路，保留完整名詞。Subagent 教法提醒確認實際平行狀態，雲端遷移細節收合，但預算與安全提醒保持可見。
+  zh-Hans: 修正十处阅读卡点：统一 Capstone 入口、补齐环境与文件夹步骤，说明练习全对时怎么继续，并指明要展开哪张表。先解释 Recall@k 与命中率，再使用指标；进阶 RAG 按症状选路，保留完整术语。Subagent 教法提醒确认实际并行状态，云端迁移细节折叠，但预算与安全提醒保持可见。
+  en: 'Fixes ten reader-flow problems: align Capstone entry rules, fill in environment and folder steps, explain how to continue after
+    all answers are correct, and identify which table to expand. Recall@k and hit rate are explained before use; advanced RAG routes
+    start with symptoms and retain the full terminology. Subagent guidance asks readers to verify actual parallel execution. Cloud migration
+    details are collapsed while budget and safety warnings remain visible.'
+  links:
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/354
+- id: permanent-notes-only-releases
+  category: release-policy
+  zh-TW: 今後正式 Release 只發布繁體中文、簡體中文與英文說明，不產生或附上 PDF。移除 PDF 開關、建置及上傳步驟，發布前後確認附件清單為空；內容與連結檢查、main SHA 鎖定及 Environment 批准照常保留。手動匯出工具獨立保留。
+  zh-Hans: 今后正式 Release 只发布繁体中文、简体中文与英文说明，不生成或附加 PDF。移除 PDF 开关、构建及上传步骤，发布前后确认附件列表为空；内容与链接检查、main SHA 锁定及 Environment 批准照常保留。手动导出工具独立保留。
+  en: Future releases publish Traditional Chinese, Simplified Chinese and English notes without generating or attaching PDFs. The PDF
+    option, build and upload steps are removed; empty asset lists are verified before and after publishing. Content and link checks,
+    the main SHA lock and Environment approval remain. Standalone manual export tools are retained.
+  links:
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/blob/main/.github/workflows/release.yml
