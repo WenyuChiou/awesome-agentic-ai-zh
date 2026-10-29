@@ -166,6 +166,9 @@ The timeline is a planning aid. Finish the step in front of you; no need to read
 
 ## 📚 Learning entrances to bookmark
 
+<details markdown="1">
+<summary>Extra resources</summary>
+
 Only the most-used entrances are here; the full list is in [RESOURCES.en.md](RESOURCES.en.md). Stars mean **learning priority**, not a ranking.
 
 <div class="reader-reference-table" role="region" tabindex="0" aria-label="Learning resource comparison">
@@ -189,6 +192,8 @@ Only the most-used entrances are here; the full list is in [RESOURCES.en.md](RES
   </tbody>
 </table>
 </div>
+
+</details>
 
 ## 🤝 Help improve this map
 
