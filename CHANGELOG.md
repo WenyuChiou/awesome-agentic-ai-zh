@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
+- **review / Greptile curriculum rules** · 新增共用教材審查規則，檢查三語語意、重要內容展開、白話核心詞、官方來源與局部查核日期，以及 GitHub／文件站的手機與桌面排版證據。明確關閉自動批准，保留 status check 與人工合併；PR 開啟與新增 commit 觸發審查，不覆寫審查等級或 PR 說明。引用既有 CLAUDE／DESIGN／style guide，另加設定與本機 context 範圍測試；未驗證的來源或畫面必須明示限制。
+
 - **readme / Greptile badge** · 三語 README 在支持與聯絡段落加入相同的 Greptile 官方開源計畫徽章與連結，保持展開；頂部徽章與學習入口不變，Star History 仍在 License 之前。字數檢查只正規化兩個精確的徽章網址，保留可讀文字與原本上限。
 
 - **content / Gemini Carbon and browser link verification** · 三語 Stage 1 區分 Carbon 公告、指定夥伴分批開放與一般 API；補上公告優惠價、優惠後價格、快取折扣及未公布欄位。Flash／Argon 仍為可用推薦，同類規格與價格以真正合併欄位分行；只更新 Gemini 查核日期。可見字數基線只按新增存取提醒調整，不收合重要限制。瀏覽器複查上版 10 個受阻連結：9 個正常內容、1 個正常登入入口，沒有替換 URL 或放寬連結掃描基線。
