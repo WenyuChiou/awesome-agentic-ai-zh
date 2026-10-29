@@ -90,7 +90,7 @@ No option is always best. Evaluate using your own data, questions, and success c
 <a id="-hands-on-exercises-illustrative-basics"></a>
 ## 🛠 Hands-on exercises
 
-Before each exercise, return to the repository root (the folder with README.md). Follow that exercise’s setup, then run the local Path A below. Cloud Path B is optional; check its provider, key setup, and costs in the exercise instructions first.
+Before each exercise, return to the repository root (the folder with README.md). The commands below enter the exercise folder, install its packages, then run local Path A. For exercises 4 and 5, first follow their guides to set up Ollama, download `qwen2.5:3b`, and start the service. Path B is optional; check whether it uses cloud services, its provider, key setup, and costs first.
 
 <a id="exercise-1-embeddings"></a>
 ### Exercise 1: Turn two sentences into embeddings
@@ -99,6 +99,7 @@ Before each exercise, return to the repository root (the folder with README.md).
 
 ```powershell
 cd examples/stage-6/01-embeddings
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -111,6 +112,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/02-vector-db
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -123,6 +125,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/03-chunking-comparison
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -135,6 +138,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/04-full-rag-pipeline
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -147,6 +151,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/05-long-term-memory
+python -m pip install -r requirements.txt
 python starter.py
 ```
 

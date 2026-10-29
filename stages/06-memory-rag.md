@@ -89,7 +89,7 @@
 <a id="-動手練習基礎-illustrative-練習"></a>
 ## 🛠 動手練習
 
-每題先回專案根目錄（放著 README.md 的那層），依本題說明完成安裝，再跑下面的本機 Path A。雲端 Path B 是選用；先看本題說明中的供應商、金鑰設定與費用。
+每題先回專案根目錄（放著 README.md 的那層）。下面會依序進入本題資料夾、安裝套件，再跑本機 Path A。練習 4、5 先依本題說明準備 Ollama、下載 `qwen2.5:3b` 並啟動服務。Path B 是選用；先看本題是否使用雲端、供應商、金鑰與費用。
 
 <a id="練習-1embeddings"></a>
 ### 練習 1：把兩句話變成 Embedding
@@ -98,6 +98,7 @@
 
 ```powershell
 cd examples/stage-6/01-embeddings
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -110,6 +111,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/02-vector-db
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -122,6 +124,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/03-chunking-comparison
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -134,6 +137,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/04-full-rag-pipeline
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -146,6 +150,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/05-long-term-memory
+python -m pip install -r requirements.txt
 python starter.py
 ```
 

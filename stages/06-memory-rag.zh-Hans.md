@@ -89,7 +89,7 @@
 <a id="-动手练习基础示例性练习"></a>
 ## 🛠 动手练习
 
-每题先回项目根目录（放着 README.md 的那层），按本题说明完成安装，再跑下面的本机 Path A。云端 Path B 是选用；先看本题说明中的供应商、密钥设置与费用。
+每题先回项目根目录（放着 README.md 的那层）。下面会依次进入本题文件夹、安装软件包，再跑本机 Path A。练习 4、5 先依本题说明准备 Ollama、下载 `qwen2.5:3b` 并启动服务。Path B 是选用；先看本题是否使用云端、供应商、密钥与费用。
 
 <a id="练习-1embeddings"></a>
 ### 练习 1：把两句话变成 Embedding
@@ -98,6 +98,7 @@
 
 ```powershell
 cd examples/stage-6/01-embeddings
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -110,6 +111,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/02-vector-db
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -122,6 +124,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/03-chunking-comparison
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -134,6 +137,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/04-full-rag-pipeline
+python -m pip install -r requirements.txt
 python starter.py
 ```
 
@@ -146,6 +150,7 @@ python starter.py
 
 ```powershell
 cd examples/stage-6/05-long-term-memory
+python -m pip install -r requirements.txt
 python starter.py
 ```
 

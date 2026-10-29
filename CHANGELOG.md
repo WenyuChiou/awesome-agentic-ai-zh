@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
-- **reader UX / execution and isolation boundaries** · 三語 Stage 5 改為核對單一 MCP server 的資料夾與工具權限，避免誤稱 Claude 全部工具都受同一限制；Stage 8 明說沙箱依實際設定隔離。Stage 6 五題先回專案根目錄、依本題說明安裝後只跑本機 Path A，雲端 Path B 保留在各題完整說明，先確認供應商、金鑰與費用；同步複製命令與雙路徑入口回歸檢查。
+- **reader UX / execution and isolation boundaries** · 三語 Stage 5 改為核對單一 MCP server 的資料夾與工具權限，避免誤稱 Claude 全部工具都受同一限制；Stage 8 明說沙箱依實際設定隔離。Stage 6 五題先回專案根目錄，再進入各題資料夾安裝套件與跑本機 Path A，雲端 Path B 保留在各題完整說明，先確認供應商、金鑰與費用；同步複製命令與雙路徑入口回歸檢查。
 
 - **reader UX / RAG terminology and flow** · 三語進階 RAG 先解釋資料片段、向量表示、BM25 與候選資料，再依症狀選修法；以產品保固例子串起搜尋、排序與回答，把裸英文資源用途改為白話。保留十三項進階方法、六筆必讀、十二筆專案與評分；小實驗明列基線 → 混合搜尋 → 加重新排序，三組都記錄 Recall@5、命中率、延遲與成本。同步 Stage 6 首次出現的 BM25／SQL 解釋及名詞順序回歸測試；核心詞表沿用既有手機直向排版，桌面維持表格；修正中文括號後接文字時的 GitHub 粗體標記；未更新專案狀態查核日期，也未放寬閱讀字數上限。
 
