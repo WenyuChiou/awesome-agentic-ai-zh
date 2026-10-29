@@ -182,6 +182,23 @@ def test_audited_pages_define_first_reader_encounter(canonical: str, term: str, 
             assert name in detail, f"advanced route lost {name}"
 
 
+@pytest.mark.parametrize("locale,meaning", [
+    ("zh-TW", "關鍵字排名方法"),
+    ("en", "keyword ranking method"),
+    ("zh-Hans", "关键词排名方法"),
+])
+def test_advanced_rag_explains_bm25_before_combining_searches(locale: str, meaning: str) -> None:
+    """BM25 needs a useful meaning, not merely an acronym expansion or late glossary."""
+    text = locale_path("resources/advanced-rag.md", locale).read_text(encoding="utf-8")
+    parsed = reader_blocks(text)
+    first = next(block for block in parsed.blocks if _token("BM25").search(" ".join(block.parts)))
+    assert meaning in " ".join(first.parts)
+    visible = "\n".join(" ".join(block.parts) for block in parsed.blocks)
+    assert visible.index("Embedding") < visible.index("Vector Search") < visible.index("BM25")
+    assert visible.index("BM25") < visible.index("Hybrid Search") < visible.index("Reranking")
+    assert "AB-123" in visible
+
+
 @pytest.mark.parametrize("text", [
     "API is an interface.\n\nAPI (Application Programming Interface) requests data.",
     "API is an interface.\n\n```text\nAPI (Application Programming Interface)\n```",

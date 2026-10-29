@@ -78,6 +78,27 @@ def test_retrieval_is_not_reduced_to_vector_database() -> None:
             assert term.casefold() in detail.casefold()
 
 
+def test_bm25_has_a_plain_meaning_at_the_stage6_encounter() -> None:
+    meanings = {"zh-TW": "按字詞匹配排序的方法", "en": "keyword ranking method",
+                "zh-Hans": "按字词匹配排序的方法"}
+    for locale, page in PAGES.items():
+        detail = _basic_pipeline_detail(page.read_text(encoding="utf-8"))
+        # Match the first term's meaning regardless of Markdown/HTML emphasis.
+        first = re.match(r"BM25\s*[（(]([^）)]+)[）)]", detail[detail.index("BM25"):])
+        assert first is not None
+        assert meanings[locale] in first.group(1)
+
+
+def test_advanced_experiment_compares_three_cumulative_runs() -> None:
+    for page in ADVANCED_PAGES.values():
+        text = page.read_text(encoding="utf-8")
+        experiment = text.split("## 🛠", 1)[1].split("<details", 1)[0]
+        assert re.search(r"2\. \*\*A[：:]", experiment)
+        assert re.search(r"3\. \*\*B[：:]", experiment)
+        assert re.search(r"4\. \*\*C[：:]", experiment)
+        assert all(term in experiment for term in ("BM25", "Recall@5"))
+
+
 def test_current_hybrid_search_sources_and_graphrag_status_are_locked() -> None:
     langchain = "https://docs.langchain.com/oss/python/deepagents/retrieval"
     old_langchain = "https://docs.langchain.com/oss/python/langchain/retrieval"

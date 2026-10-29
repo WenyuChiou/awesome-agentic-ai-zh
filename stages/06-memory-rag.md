@@ -186,7 +186,7 @@ RAG 有兩條路：一條先整理資料，一條在問題來時找資料。
 
 </div>
 
-**Retriever** 是「收到問題後，回傳相關文件」的介面。它不一定使用 vector database；BM25、SQL、網站搜尋與混合搜尋也能成為 retriever。
+<strong>Retriever（檢索器）</strong>依問題找相關文件，不一定使用向量資料庫（vector database）。也能用 <strong>BM25（按字詞匹配排序的方法）</strong>找產品編號，用 <strong>SQL（查詢資料庫的語言）</strong>查表格，或使用網站搜尋、混合搜尋。
 
 </details>
 

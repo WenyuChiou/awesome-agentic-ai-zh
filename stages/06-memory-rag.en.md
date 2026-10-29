@@ -187,7 +187,7 @@ Start with **2-step RAG**: every question retrieves first and answers second, so
 
 </div>
 
-A **Retriever** returns related documents for a question. It need not use a vector database: BM25, SQL, web search, and hybrid search can also be retrievers.
+A **Retriever** finds documents for a question. It need not use a vector database: **BM25 (keyword ranking method)** can find product IDs; **SQL (a language for querying databases)** can search tables. Web search and hybrid search are other options.
 **Citations** show which sources support the answer.
 
 </details>

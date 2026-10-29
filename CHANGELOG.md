@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
+- **reader UX / RAG terminology and flow** · 三語進階 RAG 先解釋資料片段、向量表示、BM25 與候選資料，再依症狀選修法；以產品保固例子串起搜尋、排序與回答，把裸英文資源用途改為白話。保留十三項進階方法、六筆必讀、十二筆專案與評分；小實驗明列基線 → 混合搜尋 → 加重新排序，三組都記錄 Recall@5、命中率、延遲與成本。同步 Stage 6 首次出現的 BM25／SQL 解釋及名詞順序回歸測試；核心詞表沿用既有手機直向排版，桌面維持表格；修正中文括號後接文字時的 GitHub 粗體標記；未更新專案狀態查核日期，也未放寬閱讀字數上限。
+
 - **release / v2026.10.29-2 / notes only** · 依 v2026.10.29 之後的實際差異整理三語發布說明，涵蓋 Gemini Carbon、Greptile 徽章與教材審查規則、Stage 0 編號截圖導讀及十處新手閱讀修正。正式 Release 永久移除 PDF 選項、建置與上傳，只發布三語說明；發布前後驗證附件清單為空，保留內容／連結 gate、main SHA 鎖定與 Environment 批准。手動匯出工具保留，同步發布測試與維護文件。
 
 - **reader UX / beginner flow** · 三語統一 Capstone 入口與 Track A 的 Stage 8 選讀界線；補齊練習根目錄、環境準備與存檔位置，處理全對時的替代步驟及收合表格指引。先解釋 Recall@k／命中率與分母，再看 RAG 選路表；Stage 6 導覽改按症狀引路，完整名詞留在進階頁。統一 Subagent 平行任務的要求與狀態確認，將 Examples 遷移細節收合並保留可見預算／相容性提醒；同步相關內容測試。
