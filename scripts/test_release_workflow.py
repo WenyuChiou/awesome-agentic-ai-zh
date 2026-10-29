@@ -75,6 +75,18 @@ def test_prepare_locks_main_and_builds_all_locales() -> None:
     assert "--mode release" in text
 
 
+def test_release_date_request_uses_existing_authenticated_read_token() -> None:
+    workflow = load_workflow()
+    step = next(step for step in workflow["jobs"]["prepare"]["steps"]
+                if step["name"] == "Lock the release version and source commit")
+    assert step["env"]["GH_TOKEN"] == "${{ github.token }}"
+    request = next(line for line in step["run"].splitlines() if 'api_date="$(curl' in line)
+    assert '-H "Authorization: Bearer $GH_TOKEN"' in request
+    assert "curl -fsSI --retry 3" in request
+    assert "https://api.github.com/" in request
+    assert 'test -n "$api_date"' in step["run"]
+
+
 def test_publish_rechecks_sha_and_verifies_draft_before_publish() -> None:
     text = WORKFLOW.read_text(encoding="utf-8")
     assert text.count('test "$current_main" = "$LOCKED_SHA"') == 2
