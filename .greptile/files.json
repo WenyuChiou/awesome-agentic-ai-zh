@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "description": "Repository scope, trilingual publishing, local/cloud exercise paths and review contract."
+    },
+    {
+      "path": "stages/DESIGN.md",
+      "description": "Teaching sequence, visible learning material, deep links and reader-experience contracts."
+    },
+    {
+      "path": "resources/style-guide.md",
+      "description": "First-use terminology, grouped tables, diagram conventions, scoped verification dates and locale rules."
+    }
+  ]
+}

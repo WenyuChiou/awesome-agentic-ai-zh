@@ -1,0 +1,8 @@
+{
+  "autoReview": ["open", "push"],
+  "statusCheck": true,
+  "shouldUpdateDescription": false,
+  "autoApprove": {
+    "enabled": false
+  }
+}
