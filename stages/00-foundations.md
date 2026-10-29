@@ -73,49 +73,96 @@
 
 ### 把改好的文件放上 GitHub
 
-假設你要修改自己的 `README.md`。先在自己的練習儲存庫操作；[GitHub 官方入門](https://docs.github.com/en/get-started/using-github/hello-world)會帶你建立儲存庫。<strong>Clone（複製專案）</strong>會把專案檔案與版本歷史下載到電腦。以下從已複製到電腦、目前位於 `main` 的練習儲存庫開始；先依 [GitHub 官方 Git 設定](https://docs.github.com/en/get-started/git-basics/set-up-git)安裝 Git 並完成驗證，再依[複製專案教學](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)取得練習儲存庫。在終端機切到該專案資料夾後再輸入指令。
+你改好一份文件，接下來怎麼讓別人看到？
 
-1. **開自己的工作線。** 輸入 `git switch -c docs/my-first-update`，建立並切換到新分支。<strong>Branch（分支）</strong>像從同一份版本開始的一條修改線，不是另外複製一份資料夾；`docs/my-first-update` 是你取的分支名稱。
-2. **修改、存檔、檢查。** 改好 `README.md`，儲存檔案並完成專案要求的檢查。用 `git status` 看哪些檔案有變，再用 `git diff` 看具體差異。此時還沒有新的 Commit。
-3. **選出這次要記錄的檔案。** 輸入 `git add README.md`。<strong>暫存區（Staging Area）</strong>是「下一筆 Commit 要放哪些修改」的清單。這個指令選入目前的修改；如果之後又改了檔案，要重新選入。
-4. **在電腦留下紀錄。** 輸入 `git commit -m "docs: clarify the introduction"`。這會把暫存區中的修改存成一筆 **Commit**；引號內是修改說明。它仍在你的電腦，尚未上傳。
-5. **上傳這條分支。** 輸入 `git push -u origin docs/my-first-update`。<strong>origin</strong> 是這個例子中 GitHub 遠端儲存庫的名稱；`-u` 記住本機分支與遠端分支的對應。**Push** 把版本送到該分支，還沒有合進 `main`。
-6. **提出 PR，等人檢查。** 到 GitHub 開 Pull Request，來源選 `docs/my-first-update`，目標選 `main`。<strong>Review（審查）</strong>就是看差異、提問並檢查結果；依專案規則完成檢查與批准後，再由有權限的人 **Merge**。自己的練習儲存庫可以自行檢查並合併；合作專案先讀貢獻說明。
-7. **把合併結果帶回電腦。** 確認 PR 已合併，並用 `git status` 確認工作區乾淨，再依序輸入 `git switch main` 和 `git pull --ff-only`。<strong>Pull（取得遠端更新）</strong>讓本機 `main` 跟上 GitHub；如果失敗，先讀錯誤，別強行覆蓋。
+1. <strong>Branch（分支）</strong>：開一條自己的修改工作線。
+2. <strong>修改與存檔</strong>：改好文件，存檔並檢查。
+3. <strong>git add／Staging Area（暫存區）</strong>：選出這次要記錄的修改。
+4. <strong>Commit（版本紀錄）</strong>：在電腦留下一筆修改紀錄。
+5. <strong>Push（上傳）</strong>：把版本送到 GitHub 的分支。
+6. <strong>PR → Review → Merge</strong>：提出修改、檢查，確認後合進 `main`。
+7. <strong>Pull（取得更新）</strong>：把 GitHub 的更新帶回電腦。
 
-要修改別人的專案，卻沒有寫入權限時，通常先 <strong>Fork（建立自己帳號下的專案副本）</strong>，再從自己的副本提出 PR，見 [Fork 官方教學](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。**Issue** 是問題與建議的討論頁，不是每次修改的必經步驟。
+<details markdown="1">
+<summary>想自己試一次？看指令</summary>
+
+先在自己的[練習專案](https://docs.github.com/en/get-started/using-github/hello-world)操作，照[設定指南](https://docs.github.com/en/get-started/git-basics/set-up-git)裝好 Git 並連上 GitHub。
+
+<strong>Clone（複製專案）</strong>：把檔案與版本歷史下載到電腦，見[官方步驟](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)。
+
+<strong>origin</strong> 是這個例子中 GitHub 儲存庫的名稱。先在終端機進入專案資料夾，從 `main` 開始。
+
+```bash
+git switch -c docs/my-first-update
+```
+
+開好分支後，修改 `README.md` 並存檔，再依序執行：
+
+```bash
+git status
+git diff
+git add README.md
+git commit -m "docs: clarify the introduction"
+git push -u origin docs/my-first-update
+```
+
+到 GitHub 開 PR：來源選 `docs/my-first-update`，目標選 `main`。<strong>Review（審查）</strong>就是檢查修改。自己的練習專案可自行檢查；合作專案依它的批准規則。
+
+PR 合併後，用 `git status` 確認沒有未提交的修改，再執行：
+
+```bash
+git switch main
+git pull --ff-only
+```
+
+沒有別人專案的寫入權限？先 <strong>Fork</strong>，在自己帳號建立副本，見[官方教學](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。
+
+</details>
 
 ### 看一筆真實修改
 
-下面用本專案的歷史紀錄導讀。每個紅框都有編號，對照圖下說明；手機上可開啟原圖放大。三語標註各有自己的版本，GitHub 的原始介面文字保持原樣。
+看本專案的截圖，照紅框編號找位置。手機可開原圖放大。
 
-**1. Commit：看這一筆記錄了什麼。** [開啟 Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)。這是合併 PR #343 留下的紀錄；一般 Commit 也能記錄尚未合併的修改。
+**1. Commit：一筆修改紀錄。** [Commit 原頁](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)
 
-![真實 Commit 截圖：紅框 1 版本編號、2 作者與時間、3 修改說明、4 分支、5 變更檔案數、6 Diff。](../resources/diagrams/github-commit-example.png)
+![Commit：一筆修改紀錄](../resources/diagrams/github-commit-example.png)
 
-- **① 版本編號（SHA）**：`2956dc0` 是短版識別碼；原始頁面可看完整編號。
-- **② 作者與時間**：畫面顯示作者；Git 也記錄提交者（Committer），兩者可能不同。Commit 時間不是 Push 時間，作者名稱本身也不能證明身分。
-- **③ 修改說明**：這一筆寫著合併 PR #343；點連結可追到提案。
-- **④ 分支**：這裡顯示 `main`；分支是工作線，Commit 是其中一筆版本紀錄。
-- **⑤ 檔案數量**：這筆變更涉及 10 個檔案，不是 10 次 Commit。
-- **⑥ Diff（差異）**：本例共新增 15 行、刪除 13 行；⑥ 圈的是綠色加號的新增行。開啟完整 Diff 可找紅色減號的刪除行；紅色方框只是教學標記。
+- <strong>① 版本編號（SHA）</strong>：找回這一筆版本。
+- <strong>② 作者與撰寫時間</strong>：作者欄記下的名字與日期。
+- <strong>③ 修改說明（Message）</strong>：這次改了什麼。
+- <strong>④ 分支（Branch）</strong>：這裡顯示 main 分支。
+- <strong>⑤ 變更檔案數</strong>：這筆改了 10 個檔案。
+- <strong>⑥ 前後差異（Diff）</strong>：綠色＋是新增的文字。
 
-**2. PR 與 Merge：看修改從哪裡合到哪裡。** [開啟 PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)。
+**2. PR：請人檢查修改。** [PR #343 原頁](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)
 
-![真實 PR 截圖：紅框 1 標題與編號、2 來源分支、3 目標 main、4 討論與檢查分頁、5 已合併狀態。](../resources/diagrams/github-pr-example.png)
+![PR：請人檢查修改](../resources/diagrams/github-pr-example.png)
 
-- **① PR 編號**：`#343` 代表這個修改提案，與 Commit 的版本編號不同。
-- **② 來源（from）與 ③ 目標（into）**：這次把 `codex/verify-release-links-20261026` 的修改合進 `main`。
-- **④ 檢查入口**：Conversation 看討論，Commits 看版本紀錄，Checks 看自動檢查結果，Files changed 看差異。Checks 的數量不代表全部通過。
-- **⑤ Merged（已合併）**：紫色狀態表示已合併；只有 Push 或開 PR 還沒到這一步。Review 是人的檢查，Checks 通常是自動檢查。
+- <strong>① PR 標題與編號</strong>：這個修改提案的編號。
+- <strong>② 來源分支（from）</strong>：修改從這條分支來。
+- <strong>③ 目標分支（into）</strong>：修改要合進 main。
+- <strong>④ 討論、版本、檢查、差異</strong>：看討論、版本、檢查和差異。
+- <strong>⑤ 已合併（Merged）</strong>：紫色 Merged：已合併。
 
-**3. Issue：先把問題說清楚。** [開啟 Issue #314](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314)。這是一筆過去的錯誤回報，這裡只看它如何描述問題。
+**3. Issue：提出問題。** [Issue #314 原頁](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314)
 
-![真實 Issue 截圖：紅框 1 問題標題與編號、2 Closed 狀態、3 問題描述、4 受影響的檔案。](../resources/diagrams/github-issue-example.png)
+![Issue：提出問題](../resources/diagrams/github-issue-example.png)
 
-- **① 標題與編號**：先說哪裡出問題，別人就能用 `#314` 找回這次討論。
-- **② Closed（已關閉）**：表示結束追蹤；要讀回覆或時間線才知道原因，不一定代表已修好。
-- **③ 描述與 ④ 檔案位置**：寫出做了什麼、發生什麼、預期結果及相關檔案，幫助別人理解或重現。往下可看回覆與處理紀錄；Issue 本身不會修改檔案。
+- <strong>① 問題標題與編號</strong>：用一句話說出問題。
+- <strong>② 狀態（Closed）</strong>：已結束追蹤，不一定修好了。
+- <strong>③ 問題描述</strong>：做了什麼？發生什麼？
+- <strong>④ 受影響的檔案</strong>：指出出問題的檔案。
+
+<details markdown="1">
+<summary>再認識幾個小差別</summary>
+
+- <strong>作者（Author）</strong>是修改的作者；<strong>提交者（Committer）</strong>是記錄版本的人，兩者可能不同。
+- Commit 時間不是 Push 上傳時間。
+- 紅框是教學標記；Diff 的紅色減號才表示刪除。
+- Checks 看自動檢查；Conversation 看討論；Files changed 看差異。
+- PR 編號與 Commit 的版本編號是不同的東西。
+
+</details>
 
 ## 🛠 動手練習：做一個 GitHub 資料小工具
 

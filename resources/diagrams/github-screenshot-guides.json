@@ -17,9 +17,9 @@
         552
       ],
       "titles": [
-        "Commit：這次修改留下什麼紀錄？",
-        "Commit: what does a saved version record?",
-        "Commit：这次修改留下什么记录？"
+        "Commit：一筆修改紀錄",
+        "Commit: one version record",
+        "Commit：一笔修改记录"
       ],
       "annotations": [
         {
@@ -39,9 +39,9 @@
             "版本编号（SHA）"
           ],
           "notes": [
-            "2956dc0 是短版；可追查這一筆版本。",
-            "2956dc0 is the short ID for this version.",
-            "2956dc0 是短版；可追查这一笔版本。"
+            "找回這一筆版本。",
+            "Find this recorded version.",
+            "找回这一笔版本。"
           ]
         },
         {
@@ -56,14 +56,14 @@
             249
           ],
           "labels": [
-            "作者與時間",
-            "Author and time",
-            "作者与时间"
+            "作者與撰寫時間",
+            "Author / authored date",
+            "作者与编写时间"
           ],
           "notes": [
-            "這裡顯示作者；時間不是 Push 上傳時間。",
-            "Shows the author; this is not the push time.",
-            "这里显示作者；时间不是 Push 上传时间。"
+            "作者欄記下的名字與日期。",
+            "The author name and authored date.",
+            "作者栏记录的名字与日期。"
           ]
         },
         {
@@ -83,9 +83,9 @@
             "修改说明（Message）"
           ],
           "notes": [
-            "這一筆寫著：合併 PR #343 的修改。",
-            "This record says it merges PR #343.",
-            "这一笔写着：合并 PR #343 的修改。"
+            "這次改了什麼。",
+            "What changed this time.",
+            "这次改了什么。"
           ]
         },
         {
@@ -105,9 +105,9 @@
             "分支（Branch）"
           ],
           "notes": [
-            "這裡顯示 main，旁邊可開啟相關 PR。",
-            "Shows main and a link to the related PR.",
-            "这里显示 main，旁边可打开相关 PR。"
+            "這裡顯示 main 分支。",
+            "This shows the main branch.",
+            "这里显示 main 分支。"
           ]
         },
         {
@@ -127,9 +127,9 @@
             "更改文件数"
           ],
           "notes": [
-            "10 個檔案有修改；不代表做了 10 次 Commit。",
-            "10 files changed, not 10 commits.",
-            "10 个文件有修改；不代表做了 10 次 Commit。"
+            "這筆改了 10 個檔案。",
+            "This record changes 10 files.",
+            "这笔改了 10 个文件。"
           ]
         },
         {
@@ -149,9 +149,9 @@
             "前后差异（Diff）"
           ],
           "notes": [
-            "這格是綠色＋新增行；紅色−刪除行見完整 Diff。",
-            "This box shows green + additions; see the full diff for red − deletions.",
-            "这格是绿色＋新增行；红色−删除行见完整 Diff。"
+            "綠色＋是新增的文字。",
+            "Green + shows added text.",
+            "绿色＋是新增的文字。"
           ]
         }
       ]
@@ -167,9 +167,9 @@
         462
       ],
       "titles": [
-        "PR：哪條分支的修改，要合進哪裡？",
-        "PR: which branch is being merged into which?",
-        "PR：哪条分支的修改，要合进哪里？"
+        "PR：請人檢查修改",
+        "PR: ask for changes to be checked",
+        "PR：请人检查修改"
       ],
       "annotations": [
         {
@@ -189,9 +189,9 @@
             "PR 标题与编号"
           ],
           "notes": [
-            "#343 是這個修改提案的編號，不是 Commit 編號。",
-            "#343 identifies the proposal, not a commit.",
-            "#343 是这个修改提案的编号，不是 Commit 编号。"
+            "這個修改提案的編號。",
+            "The number of this change proposal.",
+            "这个修改提案的编号。"
           ]
         },
         {
@@ -211,9 +211,9 @@
             "来源分支（from）"
           ],
           "notes": [
-            "修改原本在這條分支；Push 先把版本送到這裡。",
-            "The uploaded changes came from this branch.",
-            "修改原本在这条分支；Push 先把版本送到这里。"
+            "修改從這條分支來。",
+            "Changes come from this branch.",
+            "修改从这条分支来。"
           ]
         },
         {
@@ -233,9 +233,9 @@
             "目标分支（into）"
           ],
           "notes": [
-            "這裡是 main：通過檢查後要合入的工作線。",
-            "Here it is main, the intended destination.",
-            "这里是 main：通过检查后要合入的工作线。"
+            "修改要合進 main。",
+            "Changes go into main.",
+            "修改要合进 main。"
           ],
           "badge_size": 24
         },
@@ -256,9 +256,9 @@
             "讨论、版本、检查、差异"
           ],
           "notes": [
-            "先看修改與檢查結果；Checks 數字不等於全部通過。",
-            "Inspect changes and results; a check count is not a pass.",
-            "先看修改与检查结果；Checks 数字不等于全部通过。"
+            "看討論、版本、檢查和差異。",
+            "See discussion, commits, checks, and changes.",
+            "看讨论、版本、检查和差异。"
           ]
         },
         {
@@ -278,9 +278,9 @@
             "已合并（Merged）"
           ],
           "notes": [
-            "紫色 Merged 表示已接受；只有提出 PR 還不算。",
-            "Merged means accepted, beyond merely opening a PR.",
-            "紫色 Merged 表示已接受；只有提出 PR 还不算。"
+            "紫色 Merged：已合併。",
+            "Purple Merged: changes were merged.",
+            "紫色 Merged：已合并。"
           ]
         }
       ]
@@ -296,9 +296,9 @@
         462
       ],
       "titles": [
-        "Issue：把遇到的問題說清楚",
-        "Issue: explain the problem you encountered",
-        "Issue：把遇到的问题说清楚"
+        "Issue：提出問題",
+        "Issue: report a problem",
+        "Issue：提出问题"
       ],
       "annotations": [
         {
@@ -318,9 +318,9 @@
             "问题标题与编号"
           ],
           "notes": [
-            "#314 是這個問題的編號；標題先說哪裡出問題。",
-            "#314 identifies this issue; its title names the problem.",
-            "#314 是这个问题的编号；标题先说哪里出问题。"
+            "用一句話說出問題。",
+            "Name the problem in one sentence.",
+            "用一句话说出问题。"
           ]
         },
         {
@@ -340,9 +340,9 @@
             "状态（Closed）"
           ],
           "notes": [
-            "已結束追蹤；為何關閉，要讀回覆或時間線。",
-            "Tracking is closed; read the discussion for the reason.",
-            "已结束跟踪；为何关闭，要读回复或时间线。"
+            "已結束追蹤，不一定修好了。",
+            "Tracking ended; not always fixed.",
+            "已结束跟踪，不一定修好了。"
           ]
         },
         {
@@ -362,9 +362,9 @@
             "问题描述"
           ],
           "notes": [
-            "說明做了什麼、發生什麼，讓別人能理解。",
-            "Describe what you did and what happened.",
-            "说明做了什么、发生什么，让别人能理解。"
+            "做了什麼？發生什麼？",
+            "What did you do? What happened?",
+            "做了什么？发生了什么？"
           ]
         },
         {
@@ -384,9 +384,9 @@
             "受影响的文件"
           ],
           "notes": [
-            "指出檔案與位置；Issue 本身不會更改這些檔案。",
-            "Name the files; an issue itself does not change them.",
-            "指出文件与位置；Issue 本身不会更改这些文件。"
+            "指出出問題的檔案。",
+            "Name the affected files.",
+            "指出出问题的文件。"
           ]
         }
       ]

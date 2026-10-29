@@ -17,25 +17,26 @@ GUIDES = json.loads((DIAGRAMS / "github-screenshot-guides.json").read_text(encod
 @pytest.mark.parametrize("suffix", ["", ".en", ".zh-Hans"])
 def test_document_workflow_keeps_local_and_remote_steps_visible(suffix: str) -> None:
     source = (ROOT / f"stages/00-foundations{suffix}.md").read_text(encoding="utf-8")
-    story = source[source.index("git switch -c docs/my-first-update") : source.index("## 🛠")]
+    start = source.index("### Put your edited" if suffix == ".en" else "### 把改好的文件")
+    end = source.index("## 🛠", start)
+    guide = source[start:end]
+    visible = guide[:guide.index("<details")]
+    assert len(re.findall(r"^\d\. <strong>", visible, re.MULTILINE)) == 7
+    for term in ("Branch", "Staging Area", "Commit", "Push", "PR", "Review", "Merge", "Pull"):
+        assert term in visible
     commands = [
         "git switch -c docs/my-first-update", "git status", "git diff",
         "git add README.md", 'git commit -m "docs: clarify the introduction"',
         "git push -u origin docs/my-first-update", "git switch main", "git pull --ff-only",
     ]
-    positions = [story.index(command) for command in commands]
+    positions = [guide.index(command) for command in commands]
     assert positions == sorted(positions)
-    assert "<details" not in story
-    # CJK punctuation beside Markdown ** can stay literal on GitHub even
-    # when the MkDocs renderer makes it bold. Explicit HTML keeps both aligned.
-    labels = re.findall(r"<strong>(.*?)</strong>", story)
-    for term in ("Branch", "Staging Area", "origin", "Review", "Pull", "Fork"):
+    assert '<details markdown="1">' in guide
+    assert not re.search(r"<details\b[^>]*\bopen(?:\s|=|>)", guide)
+    labels = re.findall(r"<strong>(.*?)</strong>", guide)
+    for term in ("Branch", "Staging Area", "origin", "Review", "Pull", "Fork", "Committer"):
         assert any(term in label for label in labels), term
-    for term in ("Staging Area", "origin", "Fork", "Review", "Committer", "Checks", "Closed"):
-        assert term in story
-    start = source.rfind("\n1. **", 0, source.index("git switch -c docs/my-first-update"))
-    end = source.index("\n### ", start)
-    assert len(re.findall(r"^\d\. \*\*", source[start:end], re.MULTILINE)) == 7
+
 
 
 @pytest.mark.parametrize("suffix", ["", ".en", ".zh-Hans"])

@@ -73,49 +73,96 @@ For more, see [GitHub's introduction](https://docs.github.com/en/get-started/usi
 
 ### Put your edited document on GitHub
 
-Suppose you want to edit your own `README.md`. Use your own practice repository; [GitHub's Hello World guide](https://docs.github.com/en/get-started/using-github/hello-world) helps you create one. <strong>Clone</strong> means downloading the project files and version history to your computer. The steps below start in a cloned practice repository on `main`; first follow [GitHub’s Git setup guide](https://docs.github.com/en/get-started/git-basics/set-up-git) to install Git and authenticate, then [clone your practice repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository). In the terminal, move into that project folder before entering commands.
+You edited a document. How do you share the change?
 
-1. **Start your own line of work.** Run `git switch -c docs/my-first-update` to create and switch to a branch. A <strong>Branch</strong> is a line of changes starting from a shared version, rather than another copy of the folder; `docs/my-first-update` is its name.
-2. **Edit, save, and check.** Edit `README.md`, save the file, and run the project's required checks. Use `git status` to see which files changed and `git diff` to inspect the changes. You have not made a new commit yet.
-3. **Select what to record.** Run `git add README.md`. The <strong>Staging Area</strong> is the list of changes selected for your next commit. This selects the current changes; if you edit the file again, stage those new changes again.
-4. **Record a version on your computer.** Run `git commit -m "docs: clarify the introduction"`. This saves the staged changes as a **Commit**; the quoted text is its message. It is still on your computer and has not been uploaded.
-5. **Upload this branch.** Run `git push -u origin docs/my-first-update`. <strong>origin</strong> is the name of the remote GitHub repository in this example; `-u` remembers the link between the local and remote branches. **Push** sends versions to that branch, without merging them into `main`.
-6. **Open a PR for review.** On GitHub, open a Pull Request with `docs/my-first-update` as the source and `main` as the target. <strong>Review</strong> means inspecting differences, asking questions, and checking results; complete the project’s required checks and approvals before someone with permission performs **Merge**. You can check and merge your own practice repository yourself; read the contribution guide for a shared project.
-7. **Bring the merged result back to your computer.** Once the PR is merged and `git status` shows a clean working tree, run `git switch main`, then `git pull --ff-only`. <strong>Pull</strong> brings remote updates into your local `main`. If it fails, read the error before trying to overwrite anything.
+1. <strong>Branch</strong>: start your own line of changes.
+2. <strong>Edit and save</strong>: change the document, save it, and check it.
+3. <strong>git add / Staging Area</strong>: select changes for the next record.
+4. <strong>Commit</strong>: save a version record on your computer.
+5. <strong>Push</strong>: upload versions to a GitHub branch.
+6. <strong>PR → Review → Merge</strong>: propose changes, check them, then merge into `main`.
+7. <strong>Pull</strong>: bring GitHub updates back to your computer.
 
-To change someone else's project without write permission, you usually <strong>Fork</strong>, creating a copy under your account, and open a PR from that copy. See [GitHub's contribution guide](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project). An **Issue** is a discussion about a problem or suggestion; it is not required for every edit.
+<details markdown="1">
+<summary>Want to try it? See the commands</summary>
+
+Use your own [practice repository](https://docs.github.com/en/get-started/using-github/hello-world). Follow the [setup guide](https://docs.github.com/en/get-started/git-basics/set-up-git) to install Git and connect to GitHub.
+
+<strong>Clone</strong>: download the files and version history to your computer; follow the [official steps](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+
+<strong>origin</strong> names the GitHub repository in this example. In your terminal, enter the project folder and start on `main`.
+
+```bash
+git switch -c docs/my-first-update
+```
+
+After creating the branch, edit and save `README.md`, then run:
+
+```bash
+git status
+git diff
+git add README.md
+git commit -m "docs: clarify the introduction"
+git push -u origin docs/my-first-update
+```
+
+On GitHub, open a PR from `docs/my-first-update` into `main`. <strong>Review</strong> means checking the changes. You can check your own practice project yourself; follow the approval rules for a shared project.
+
+After the PR is merged, use `git status` to check for uncommitted changes. If there are none, run:
+
+```bash
+git switch main
+git pull --ff-only
+```
+
+No write permission on someone else’s project? <strong>Fork</strong> it to create a copy under your account; see the [official guide](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project).
+
+</details>
 
 ### Read a real change
 
-These are historical records from this project. Match each numbered red box to the explanation below its image; on a phone, open the original image to zoom. Each language has its own annotations; the original GitHub interface text is unchanged.
+Find the numbered red boxes in our project screenshots. On a phone, open the full-size image to zoom.
 
-**1. Commit: see what this version records.** [Open Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18). This record came from merging PR #343; ordinary commits can also record changes that have not been merged.
+**1. Commit: one version record.** [Original commit](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)
 
-![Real commit screenshot: red boxes 1 version ID, 2 author and time, 3 message, 4 branch, 5 changed-file count, 6 diff.](../resources/diagrams/github-commit-example.en.png)
+![Commit: one version record](../resources/diagrams/github-commit-example.en.png)
 
-- **① Commit ID (SHA)**: `2956dc0` is the short ID; the original page shows the full value.
-- **② Author and time**: the screen shows the author. Git also records a Committer, who may be different. Commit time is not push time, and an author name alone does not prove identity.
-- **③ Message**: this record says it merges PR #343; follow the link to the proposal.
-- **④ Branch**: the screen shows `main`. A branch is a line of work; a commit is one recorded version.
-- **⑤ File count**: this change touches 10 files, not 10 commits.
-- **⑥ Diff**: this example adds 15 lines and removes 13 in total. Box ⑥ shows added lines with green +. Open the full diff to find removed lines with red −; red rectangles are only teaching annotations.
+- <strong>① Commit ID (SHA)</strong>: Find this recorded version.
+- <strong>② Author / authored date</strong>: The author name and authored date.
+- <strong>③ Commit message</strong>: What changed this time.
+- <strong>④ Branch</strong>: This shows the main branch.
+- <strong>⑤ Changed files</strong>: This record changes 10 files.
+- <strong>⑥ Before/after differences (Diff)</strong>: Green + shows added text.
 
-**2. PR and Merge: see where the changes came from and went.** [Open PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343).
+**2. PR: ask for changes to be checked.** [Original PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)
 
-![Real PR screenshot: red boxes 1 title and number, 2 source branch, 3 target main, 4 discussion and check tabs, 5 merged status.](../resources/diagrams/github-pr-example.en.png)
+![PR: ask for changes to be checked](../resources/diagrams/github-pr-example.en.png)
 
-- **① PR number**: `#343` identifies this proposal, separately from a commit ID.
-- **② Source (from) and ③ target (into)**: this merged changes from `codex/verify-release-links-20261026` into `main`.
-- **④ Inspection tabs**: Conversation shows discussion, Commits shows version records, Checks shows automated results, and Files changed shows differences. The number of checks does not mean they all passed.
-- **⑤ Merged**: the purple status means the changes were merged; pushing or opening a PR alone does not do this. Review is human inspection; Checks are usually automated.
+- <strong>① PR title and number</strong>: The number of this change proposal.
+- <strong>② Source branch (from)</strong>: Changes come from this branch.
+- <strong>③ Target branch (into)</strong>: Changes go into main.
+- <strong>④ Discussion, commits, checks, files</strong>: See discussion, commits, checks, and changes.
+- <strong>⑤ Merged</strong>: Purple Merged: changes were merged.
 
-**3. Issue: explain the problem first.** [Open Issue #314](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314). This is a past bug report; here we only study how it describes a problem.
+**3. Issue: report a problem.** [Original issue #314](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314)
 
-![Real issue screenshot: red boxes 1 title and number, 2 Closed status, 3 problem description, 4 affected files.](../resources/diagrams/github-issue-example.en.png)
+![Issue: report a problem](../resources/diagrams/github-issue-example.en.png)
 
-- **① Title and number**: name the problem first so others can find the discussion again using `#314`.
-- **② Closed**: tracking has ended. Read the replies or timeline to learn why; it does not always mean the problem was fixed.
-- **③ Description and ④ file locations**: describe what you did, what happened, what you expected, and the relevant files so others can understand or reproduce it. Scroll down for replies and actions; an issue itself does not edit files.
+- <strong>① Issue title and number</strong>: Name the problem in one sentence.
+- <strong>② Status (Closed)</strong>: Tracking ended; not always fixed.
+- <strong>③ Problem description</strong>: What did you do? What happened?
+- <strong>④ Affected files</strong>: Name the affected files.
+
+<details markdown="1">
+<summary>A few useful differences</summary>
+
+- The <strong>Author</strong> wrote the change; the <strong>Committer</strong> recorded the version. They may be different.
+- Commit time is not push time.
+- Red boxes are teaching marks; a red minus in a diff means deletion.
+- Checks shows automated results; Conversation shows discussion; Files changed shows differences.
+- A PR number and a commit ID identify different things.
+
+</details>
 
 ## 🛠 Hands-on Practice: Build a Small GitHub Data Tool
 
