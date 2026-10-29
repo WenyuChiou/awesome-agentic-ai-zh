@@ -71,16 +71,98 @@
 
 想繼續查閱，可看 [GitHub 官方入門](https://docs.github.com/en/get-started/using-github/hello-world)、[授權說明](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)與 [Git 版本歷史](https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History)。
 
+### 把改好的文件放上 GitHub
+
+你想修改一份文件，怎麼讓別人看到？
+
+1. <strong>Branch（分支）</strong>：開一條自己的修改工作線。
+2. <strong>修改與存檔</strong>：改好文件，存檔並檢查。
+3. <strong>git add／Staging Area（暫存區）</strong>：選出這次要記錄的修改。
+4. <strong>Commit（版本紀錄）</strong>：在電腦留下一筆修改紀錄。
+5. <strong>Push（上傳）</strong>：把版本送到 GitHub 的分支。
+6. <strong>PR → Review → Merge</strong>：提出修改、檢查，確認後合進 `main`。
+7. <strong>Pull（取得更新）</strong>：把 GitHub 的更新帶回電腦。
+
+<details markdown="1">
+<summary>想自己試一次？看指令</summary>
+
+先在自己的[練習專案](https://docs.github.com/en/get-started/using-github/hello-world)操作，照[設定指南](https://docs.github.com/en/get-started/git-basics/set-up-git)裝好 Git 並連上 GitHub。
+
+<strong>Clone（複製專案）</strong>：把檔案與版本歷史下載到電腦，見[官方步驟](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)。
+
+<strong>origin</strong> 是這個例子中 GitHub 儲存庫的名稱。先在終端機進入專案資料夾，從 `main` 開始。
+
+```bash
+git switch -c docs/my-first-update
+```
+
+開好分支後，修改 `README.md` 並存檔，再依序執行：
+
+```bash
+git status
+git diff
+git add README.md
+git commit -m "docs: clarify the introduction"
+git push -u origin docs/my-first-update
+```
+
+到 GitHub 開 PR：來源選 `docs/my-first-update`，目標選 `main`。<strong>Review（審查）</strong>就是檢查修改。自己的練習專案可自行檢查；合作專案依它的批准規則。
+
+PR 合併後，用 `git status` 確認沒有未提交的修改，再執行：
+
+```bash
+git switch main
+git pull --ff-only
+```
+
+沒有別人專案的寫入權限？先 <strong>Fork</strong>，在自己帳號建立副本，見[官方教學](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。
+
+</details>
+
 ### 看一筆真實修改
 
-這是本專案已合併的 [PR #343](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)，以及它留下的 [Commit `2956dc0`](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)。上方六格是教學標註，下方保留 GitHub 真實畫面。
+看本專案的截圖，照紅框編號找位置。手機可開原圖放大。
 
-![本專案 PR 343 的真實合併紀錄，標示版本識別碼、作者、時間、修改說明、變更檔案數與 Diff。](../resources/diagrams/github-commit-example.png)
+**1. Commit：一筆修改紀錄。** [Commit 原頁](https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18)
 
-- **識別碼**：`2956dc0` 是完整編號的短版，點原始 Commit 可看完整編號。
-- **作者與時間**：作者欄連到 GitHub 帳號；時間是 Commit 記錄的時間，不一定是 Push 到網站的時間。
-- **修改說明**：這筆寫著合併 PR #343；開啟 PR 可查看討論與已合併狀態。
-- **檔案與差異**：本例改了 10 個檔案，新增 15 行、刪除 13 行。綠色加號代表新增，紅色減號代表刪除；點檔案看前後對照。
+![Commit：一筆修改紀錄](../resources/diagrams/github-commit-example.png)
+
+- <strong>① 版本編號（SHA）</strong>：找回這一筆版本。
+- <strong>② 作者與撰寫時間</strong>：作者欄記下的名字與日期。
+- <strong>③ 修改說明（Message）</strong>：這次改了什麼。
+- <strong>④ 分支（Branch）</strong>：這裡顯示 main 分支。
+- <strong>⑤ 變更檔案數</strong>：這筆改了 10 個檔案。
+- <strong>⑥ 前後差異（Diff）</strong>：綠色＋是新增的文字。
+
+**2. PR：請人檢查修改。** [PR #343 原頁](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343)
+
+![PR：請人檢查修改](../resources/diagrams/github-pr-example.png)
+
+- <strong>① PR 標題與編號</strong>：這個修改提案的編號。
+- <strong>② 來源分支（from）</strong>：修改從這條分支來。
+- <strong>③ 目標分支（into）</strong>：修改要合進 main。
+- <strong>④ 討論、版本、檢查、差異</strong>：看討論、版本、檢查和差異。
+- <strong>⑤ 已合併（Merged）</strong>：紫色 Merged：已合併。
+
+**3. Issue：提出問題。** [Issue #314 原頁](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314)
+
+![Issue：提出問題](../resources/diagrams/github-issue-example.png)
+
+- <strong>① 問題標題與編號</strong>：用一句話說出問題。
+- <strong>② 狀態（Closed）</strong>：已結束追蹤，不一定修好了。
+- <strong>③ 問題描述</strong>：做了什麼？發生什麼？
+- <strong>④ 受影響的檔案</strong>：指出出問題的檔案。
+
+<details markdown="1">
+<summary>再認識幾個小差別</summary>
+
+- <strong>作者（Author）</strong>是修改的作者；<strong>提交者（Committer）</strong>是記錄版本的人，兩者可能不同。
+- Commit 時間不是 Push 上傳時間。
+- 紅框是教學標記；Diff 的紅色減號才表示刪除。
+- Checks 看自動檢查；Conversation 看討論；Files changed 看差異。
+- PR 編號與 Commit 的版本編號是不同的東西。
+
+</details>
 
 ## 🛠 動手練習：做一個 GitHub 資料小工具
 

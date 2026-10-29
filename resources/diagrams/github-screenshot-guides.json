@@ -1,0 +1,395 @@
+{
+  "captured_on": "2026-10-29",
+  "viewport": [
+    1440,
+    1100
+  ],
+  "method": "Public GitHub screenshots with HTML/CSS red boxes and numbered labels; GitHub interface text is unchanged.",
+  "guides": [
+    {
+      "stem": "github-commit-example",
+      "source": "https://github.com/WenyuChiou/awesome-agentic-ai-zh/commit/2956dc0b4960f6fecf5d3ab00f8b89bacc886e18",
+      "raw": "commit",
+      "crop": [
+        16,
+        184,
+        1384,
+        552
+      ],
+      "titles": [
+        "Commit：一筆修改紀錄",
+        "Commit: one version record",
+        "Commit：一笔修改记录"
+      ],
+      "annotations": [
+        {
+          "rect": [
+            115,
+            193,
+            101,
+            37
+          ],
+          "badge": [
+            239,
+            208
+          ],
+          "labels": [
+            "版本編號（SHA）",
+            "Commit ID (SHA)",
+            "版本编号（SHA）"
+          ],
+          "notes": [
+            "找回這一筆版本。",
+            "Find this recorded version.",
+            "找回这一笔版本。"
+          ]
+        },
+        {
+          "rect": [
+            49,
+            237,
+            220,
+            27
+          ],
+          "badge": [
+            432,
+            249
+          ],
+          "labels": [
+            "作者與撰寫時間",
+            "Author / authored date",
+            "作者与编写时间"
+          ],
+          "notes": [
+            "作者欄記下的名字與日期。",
+            "The author name and authored date.",
+            "作者栏记录的名字与日期。"
+          ]
+        },
+        {
+          "rect": [
+            31,
+            283,
+            593,
+            48
+          ],
+          "badge": [
+            650,
+            303
+          ],
+          "labels": [
+            "修改說明（Message）",
+            "Commit message",
+            "修改说明（Message）"
+          ],
+          "notes": [
+            "這次改了什麼。",
+            "What changed this time.",
+            "这次改了什么。"
+          ]
+        },
+        {
+          "rect": [
+            61,
+            349,
+            89,
+            28
+          ],
+          "badge": [
+            305,
+            363
+          ],
+          "labels": [
+            "分支（Branch）",
+            "Branch",
+            "分支（Branch）"
+          ],
+          "notes": [
+            "這裡顯示 main 分支。",
+            "This shows the main branch.",
+            "这里显示 main 分支。"
+          ]
+        },
+        {
+          "rect": [
+            31,
+            391,
+            114,
+            29
+          ],
+          "badge": [
+            172,
+            405
+          ],
+          "labels": [
+            "變更檔案數",
+            "Changed files",
+            "更改文件数"
+          ],
+          "notes": [
+            "這筆改了 10 個檔案。",
+            "This record changes 10 files.",
+            "这笔改了 10 个文件。"
+          ]
+        },
+        {
+          "rect": [
+            325,
+            657,
+            1070,
+            75
+          ],
+          "badge": [
+            298,
+            688
+          ],
+          "labels": [
+            "前後差異（Diff）",
+            "Before/after differences (Diff)",
+            "前后差异（Diff）"
+          ],
+          "notes": [
+            "綠色＋是新增的文字。",
+            "Green + shows added text.",
+            "绿色＋是新增的文字。"
+          ]
+        }
+      ]
+    },
+    {
+      "stem": "github-pr-example",
+      "source": "https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/343",
+      "raw": "pr",
+      "crop": [
+        92,
+        184,
+        1240,
+        462
+      ],
+      "titles": [
+        "PR：請人檢查修改",
+        "PR: ask for changes to be checked",
+        "PR：请人检查修改"
+      ],
+      "annotations": [
+        {
+          "rect": [
+            102,
+            195,
+            896,
+            39
+          ],
+          "badge": [
+            1025,
+            213
+          ],
+          "labels": [
+            "PR 標題與編號",
+            "PR title and number",
+            "PR 标题与编号"
+          ],
+          "notes": [
+            "這個修改提案的編號。",
+            "The number of this change proposal.",
+            "这个修改提案的编号。"
+          ]
+        },
+        {
+          "rect": [
+            510,
+            244,
+            246,
+            28
+          ],
+          "badge": [
+            905,
+            258
+          ],
+          "labels": [
+            "來源分支（from）",
+            "Source branch (from)",
+            "来源分支（from）"
+          ],
+          "notes": [
+            "修改從這條分支來。",
+            "Changes come from this branch.",
+            "修改从这条分支来。"
+          ]
+        },
+        {
+          "rect": [
+            433,
+            244,
+            43,
+            28
+          ],
+          "badge": [
+            455,
+            280
+          ],
+          "labels": [
+            "目標分支（into）",
+            "Target branch (into)",
+            "目标分支（into）"
+          ],
+          "notes": [
+            "修改要合進 main。",
+            "Changes go into main.",
+            "修改要合进 main。"
+          ],
+          "badge_size": 24
+        },
+        {
+          "rect": [
+            105,
+            289,
+            584,
+            42
+          ],
+          "badge": [
+            716,
+            311
+          ],
+          "labels": [
+            "討論、版本、檢查、差異",
+            "Discussion, commits, checks, files",
+            "讨论、版本、检查、差异"
+          ],
+          "notes": [
+            "看討論、版本、檢查和差異。",
+            "See discussion, commits, checks, and changes.",
+            "看讨论、版本、检查和差异。"
+          ]
+        },
+        {
+          "rect": [
+            104,
+            240,
+            95,
+            37
+          ],
+          "badge": [
+            70,
+            258
+          ],
+          "labels": [
+            "已合併（Merged）",
+            "Merged",
+            "已合并（Merged）"
+          ],
+          "notes": [
+            "紫色 Merged：已合併。",
+            "Purple Merged: changes were merged.",
+            "紫色 Merged：已合并。"
+          ]
+        }
+      ]
+    },
+    {
+      "stem": "github-issue-example",
+      "source": "https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/314",
+      "raw": "issue",
+      "crop": [
+        92,
+        184,
+        1240,
+        462
+      ],
+      "titles": [
+        "Issue：提出問題",
+        "Issue: report a problem",
+        "Issue：提出问题"
+      ],
+      "annotations": [
+        {
+          "rect": [
+            96,
+            195,
+            897,
+            75
+          ],
+          "badge": [
+            1020,
+            214
+          ],
+          "labels": [
+            "問題標題與編號",
+            "Issue title and number",
+            "问题标题与编号"
+          ],
+          "notes": [
+            "用一句話說出問題。",
+            "Name the problem in one sentence.",
+            "用一句话说出问题。"
+          ]
+        },
+        {
+          "rect": [
+            95,
+            280,
+            90,
+            38
+          ],
+          "badge": [
+            211,
+            300
+          ],
+          "labels": [
+            "狀態（Closed）",
+            "Status (Closed)",
+            "状态（Closed）"
+          ],
+          "notes": [
+            "已結束追蹤，不一定修好了。",
+            "Tracking ended; not always fixed.",
+            "已结束跟踪，不一定修好了。"
+          ]
+        },
+        {
+          "rect": [
+            109,
+            393,
+            889,
+            99
+          ],
+          "badge": [
+            1020,
+            402
+          ],
+          "labels": [
+            "問題描述",
+            "Problem description",
+            "问题描述"
+          ],
+          "notes": [
+            "做了什麼？發生什麼？",
+            "What did you do? What happened?",
+            "做了什么？发生了什么？"
+          ]
+        },
+        {
+          "rect": [
+            109,
+            510,
+            889,
+            127
+          ],
+          "badge": [
+            1020,
+            519
+          ],
+          "labels": [
+            "受影響的檔案",
+            "Affected files",
+            "受影响的文件"
+          ],
+          "notes": [
+            "指出出問題的檔案。",
+            "Name the affected files.",
+            "指出出问题的文件。"
+          ]
+        }
+      ]
+    }
+  ]
+}

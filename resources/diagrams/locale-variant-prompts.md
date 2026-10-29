@@ -349,4 +349,10 @@ PNG 僅進行無損 IDAT 重壓縮，驗證解壓後掃描列位元組完全相�
 
 ### 真實 Commit 截圖（同批追加）
 
-`github-commit-example.png`、`.en.png`、`.zh-Hans.png` 使用 PR #343 的合併 Commit `2956dc0b4960f6fecf5d3ab00f8b89bacc886e18`。以 Chromium 擷取未登入的公開 GitHub 頁面，再於獨立 HTML 版面上方加六格三語教學標註；原畫面沒有重繪或更改。這是瀏覽器截圖，不是生成式重製的 GitHub 介面。實際 API 核對作者、完整編號、10 個檔案、+15／-13 與兩個父版本；時間說明不把 Commit 時間當 Push 時間。原始頁面 URL 保留在正文。
+`github-commit-example.png`、`.en.png`、`.zh-Hans.png` 使用 PR #343 的合併 Commit `2956dc0b4960f6fecf5d3ab00f8b89bacc886e18`。2026-10-29 重新用 Chromium 擷取本專案公開頁面，改成直接圈選欄位的紅框與編號；新增 `github-pr-example*`（PR #343）與 `github-issue-example*`（Issue #314）各三語。九張圖用同一份 `github-screenshot-guides.json` 保存來源 URL、取景、框的位置、編號與三語標註；採 HTML/CSS 疊加標記後截圖，未用生成式工具重製 GitHub 介面。
+
+原畫面僅裁切；來源文字、作者、時間、狀態與統計不改寫。Commit 畫面保留 10 個變更檔案、+15／-13 及兩個父版本；時間不是 Push 時間。英文／簡中版替換教學標註，公開紀錄原有的中英文仍照原樣保留。Diff 的教學紅框不代表刪除；Closed 不保證已修好，Checks 數量也不代表通過。原始頁面 URL 與逐號說明在三語正文保持可見。
+
+截圖先作完整尺寸與手機／桌面呈現檢查，再無損重壓縮 IDAT；解壓後的掃描列位元組一致。三份舊 Commit 大圖由精簡取景版本取代；六份新增 PR／Issue 圖使 PNG 數為 79。容量只依本批實測小幅調整總上限，單圖、單頁上限保持原值。
+
+維護者回饋後，九張圖的標註各縮成一句短說明；保留同一取景、紅框與編號。正文七個步驟各一句，操作指令與次要差別預設收合，逐號文字說明仍可見。

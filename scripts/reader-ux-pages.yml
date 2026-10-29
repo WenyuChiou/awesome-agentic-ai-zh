@@ -25,10 +25,12 @@ pages:
     mirrors:
       en: stages/00-foundations.en.md
       zh-Hans: stages/00-foundations.zh-Hans.md
+    # Short visible steps and numbered labels; commands and secondary
+    # details are closed. Lowered after the maintainer readability review.
     max_visible_chars:
-      zh-TW: 5440
-      en: 10028
-      zh-Hans: 5493
+      zh-TW: 6050
+      en: 11000
+      zh-Hans: 6120
     max_open_details: 0
     required_visible_sections:
       learning-goals:
