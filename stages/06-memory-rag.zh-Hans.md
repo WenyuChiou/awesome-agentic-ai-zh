@@ -89,7 +89,7 @@
 <a id="-动手练习基础示例性练习"></a>
 ## 🛠 动手练习
 
-每题都有 starter。直接复制命令执行，不需要先抄一份空白答案。
+每题先回项目根目录（放着 README.md 的那层）。下面会依次进入本题文件夹、安装软件包，再跑本机 Path A。练习 4、5 先依本题说明准备 Ollama、下载 `qwen2.5:3b` 并启动服务。Path B 是选用；先看本题是否使用云端、供应商、密钥与费用。
 
 <a id="练习-1embeddings"></a>
 ### 练习 1：把两句话变成 Embedding
@@ -98,11 +98,11 @@
 
 ```powershell
 cd examples/stage-6/01-embeddings
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打开完整说明与检查方式](../examples/stage-6/01-embeddings/README.zh-Hans.md)。先用很少的句子，避免不必要的 API 费用。
+[打开安装、检查与选用 Path B 说明](../examples/stage-6/01-embeddings/README.zh-Hans.md)。先用很少的句子，避免不必要的 API 费用。
 
 <a id="练习-2vector-db"></a>
 ### 练习 2：把 Embedding 放进 Vector Database
@@ -111,11 +111,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/02-vector-db
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打开完整说明与检查方式](../examples/stage-6/02-vector-db/README.zh-Hans.md)。练习资料不得包含秘密或个人资料。
+[打开安装、检查与选用 Path B 说明](../examples/stage-6/02-vector-db/README.zh-Hans.md)。练习资料不得包含秘密或个人资料。
 
 <a id="练习-3chunking-对照"></a>
 ### 练习 3：比较三种 Chunking 方法
@@ -124,11 +124,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/03-chunking-comparison
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打开完整说明与检查方式](../examples/stage-6/03-chunking-comparison/README.zh-Hans.md)。不要先背一个“标准大小”；先看文档结构与测试结果。
+[打开安装、检查与选用 Path B 说明](../examples/stage-6/03-chunking-comparison/README.zh-Hans.md)。不要先背一个“标准大小”；先看文档结构与测试结果。
 
 <a id="练习-4完整-rag-流水线"></a>
 ### 练习 4：串起完整 RAG
@@ -137,11 +137,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/04-full-rag-pipeline
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打开完整说明与检查方式](../examples/stage-6/04-full-rag-pipeline/README.zh-Hans.md)。先用小型数据集；不要把“程序能跑”当成“回答一定正确”。
+[打开安装、检查与选用 Path B 说明](../examples/stage-6/04-full-rag-pipeline/README.zh-Hans.md)。先用小型数据集；不要把“程序能跑”当成“回答一定正确”。
 
 <a id="练习-5long-term-memory"></a>
 ### 练习 5：记住一项偏好
@@ -150,11 +150,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/05-long-term-memory
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打开完整说明与检查方式](../examples/stage-6/05-long-term-memory/README.zh-Hans.md)。只保存完成任务需要的资料，并提供查看、修改与删除的方法。
+[打开安装、检查与选用 Path B 说明](../examples/stage-6/05-long-term-memory/README.zh-Hans.md)。只保存完成任务需要的资料，并提供查看、修改与删除的方法。
 
 ### 推荐小项目：会查资料、也会记偏好的助理
 

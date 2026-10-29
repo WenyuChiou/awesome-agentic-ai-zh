@@ -89,7 +89,7 @@
 <a id="-動手練習基礎-illustrative-練習"></a>
 ## 🛠 動手練習
 
-每題都已經有 starter。直接複製命令執行，不需要先抄一份空白答案。
+每題先回專案根目錄（放著 README.md 的那層）。下面會依序進入本題資料夾、安裝套件，再跑本機 Path A。練習 4、5 先依本題說明準備 Ollama、下載 `qwen2.5:3b` 並啟動服務。Path B 是選用；先看本題是否使用雲端、供應商、金鑰與費用。
 
 <a id="練習-1embeddings"></a>
 ### 練習 1：把兩句話變成 Embedding
@@ -98,11 +98,11 @@
 
 ```powershell
 cd examples/stage-6/01-embeddings
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打開完整說明與檢查方式](../examples/stage-6/01-embeddings/README.md)。先用很少的句子，避免不必要的 API 費用。
+[打開安裝、檢查與選用 Path B 說明](../examples/stage-6/01-embeddings/README.md)。先用很少的句子，避免不必要的 API 費用。
 
 <a id="練習-2vector-db"></a>
 ### 練習 2：把 Embedding 放進 Vector Database
@@ -111,11 +111,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/02-vector-db
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打開完整說明與檢查方式](../examples/stage-6/02-vector-db/README.md)。練習資料不得包含秘密或個資。
+[打開安裝、檢查與選用 Path B 說明](../examples/stage-6/02-vector-db/README.md)。練習資料不得包含秘密或個資。
 
 <a id="練習-3chunking-對照"></a>
 ### 練習 3：比較三種 Chunking 方法
@@ -124,11 +124,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/03-chunking-comparison
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打開完整說明與檢查方式](../examples/stage-6/03-chunking-comparison/README.md)。不要先背一個「標準大小」；先看文件結構與測試結果。
+[打開安裝、檢查與選用 Path B 說明](../examples/stage-6/03-chunking-comparison/README.md)。不要先背一個「標準大小」；先看文件結構與測試結果。
 
 <a id="練習-4完整-rag-流水線"></a>
 ### 練習 4：串起完整 RAG
@@ -137,11 +137,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/04-full-rag-pipeline
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打開完整說明與檢查方式](../examples/stage-6/04-full-rag-pipeline/README.md)。先用小型資料集；不要把「程式能跑」當成「回答一定正確」。
+[打開安裝、檢查與選用 Path B 說明](../examples/stage-6/04-full-rag-pipeline/README.md)。先用小型資料集；不要把「程式能跑」當成「回答一定正確」。
 
 <a id="練習-5long-term-memory"></a>
 ### 練習 5：記住一項偏好
@@ -150,11 +150,11 @@ python starter_anthropic.py
 
 ```powershell
 cd examples/stage-6/05-long-term-memory
+python -m pip install -r requirements.txt
 python starter.py
-python starter_anthropic.py
 ```
 
-[打開完整說明與檢查方式](../examples/stage-6/05-long-term-memory/README.md)。只保存完成任務需要的資料，並提供查看、修改與刪除的方法。
+[打開安裝、檢查與選用 Path B 說明](../examples/stage-6/05-long-term-memory/README.md)。只保存完成任務需要的資料，並提供查看、修改與刪除的方法。
 
 ### 推薦小專案：會翻資料、也會記偏好的助理
 
