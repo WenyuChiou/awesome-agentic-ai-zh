@@ -59,8 +59,10 @@
 
 <a id="-7-layer-architecture-map先看这张图再读-51-57"></a>
 
+<div align="center" markdown="1">
+
 | 你的问题 | 先用什么 | 先不要做什么 |
-|---|---|---|
+|:---|:---|:---|
 | 每次都要记住同一条项目规则 | `CLAUDE.md` | 把整本手册塞进去 |
 | 只在特定场景需要一套流程 | Skill | 每次都粘贴同一大段 prompt |
 | 要连接 GitHub、数据库或浏览器 | MCP | 直接把未审查 server 接到高权限账户 |
@@ -69,6 +71,8 @@
 | 多项工作会修改同一仓库 | Worktree | 让多个代理共享未提交文件 |
 | 要与团队共享配置 | Plugin | 第一题就自建 marketplace |
 | 要把代理嵌进产品 | Agent SDK | 把 CLI 已能完成的工作重写成服务 |
+
+</div>
 
 > 想分清 OpenRouter、Pi、OpenCode 和 Ollama？OpenRouter 是 **Router**，Ollama 是 **本地运行时**，Claude Code、OpenCode 和 Pi 是 **编码代理／harness**。完整选择表见 [Track A1](../tracks/cli/A1-cli-intro.zh-Hans.md)。
 
@@ -304,12 +308,16 @@ Subagent 由现行 `Agent` tool 派遣。它有独立的 context 与权限设置
 
 Claude Code 可在 CLI、Desktop、VS Code 与 JetBrains 等 surface 使用。它能操作文件和工具，但仍受 permission、sandbox、Hook 与组织策略限制；“能执行 shell”不等于“应授予全部权限”。
 
+<div align="center" markdown="1">
+
 | Scope | 常见位置 | 适合放什么 |
-|---|---|---|
+|:---|:---|:---|
 | Managed | 操作系统的管理路径 | 组织策略 |
 | User | `~/.claude/CLAUDE.md` | 个人跨项目偏好 |
 | Project | `./CLAUDE.md` 或 `./.claude/CLAUDE.md` | 团队共享规则 |
 | Local | `./CLAUDE.local.md` | 不提交 Git 的本地配置 |
+
+</div>
 
 `.claude/rules/*.md` 可按 `paths` 延后加载；`.claude/skills/<name>/SKILL.md` 是按需知识或流程。旧 `.claude/commands/*.md` 仍可生成 slash command，但新内容优先教 Skills。
 
@@ -400,12 +408,16 @@ my-plugin/
 <details markdown="1">
 <summary>展开 5.5：内置类型、Skill 差异、权限、费用与常见错误</summary>
 
+<div align="center" markdown="1">
+
 | | Skill | Subagent |
-|---|---|---|
+|:---|:---|:---|
 | 核心用途 | 重用知识或流程 | 隔离一段工作 |
 | Context | 通常在当前对话加载；也可设置 fork | 默认新建独立 context |
 | 结果 | 改变 Claude 处理任务的方式 | 返回结果或摘要 |
 | 适合 | 规则、参考资料、固定流程 | 大量搜索、并行分析、专业 worker |
+
+</div>
 
 自定义 Subagent 的 `description` 是路由提示，不是代码层的 `if`。prompt 应自足，明确任务、范围、工具、输出和停止条件。现行官方还支持 `skills`、`mcpServers`、permissions、hooks 与 `isolation: worktree` 等设置；只在确有需要时添加。
 
@@ -424,14 +436,18 @@ my-plugin/
 <details markdown="1">
 <summary>展开 5.6：Subagent、agent view、agent teams、Dynamic workflows、Worktree 与 /batch</summary>
 
+<div align="center" markdown="1">
+
 | 做法 | 谁协调 | 适合什么 | 当前状态／边界 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | Subagent | 主对话 | 隔离搜索或专业任务 | 同一 session 内返回结果 |
 | Agent view | 用户 | 监看多个独立后台 session | Research preview |
 | Agent teams | Lead 与 teammates | Workers 要共享任务并互相传讯 | Experimental，默认关闭 |
 | [**Dynamic workflows**](https://code.claude.com/docs/en/workflows) | 协调脚本／运行时 | 大型审计、迁移或交叉核验研究 | 可读、可重跑的 JavaScript 编排；会增加 token 用量 |
 | Worktree | Git／用户 | 隔离同一仓库的文件修改 | 不负责代理通信 |
 | `/batch` | Claude 规划后分派 | 5–30 个可切开的机械改动 | 每个 worker 都要独立范围与 review |
+
+</div>
 
 Worktree 解决“不要改同一份文件”；Subagent/team 解决“谁做哪件事”。两者可一起使用，但不是同一功能。Agent teams 不会自动为每个 teammate 建 Worktree，所以仍要清楚划分文件 ownership。
 
@@ -508,54 +524,54 @@ SDK 会执行命令并保存 session state，不能把它当普通 stateless tex
 
 <small>资料查核：2026-08-29 UTC</small>
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">主题</th><th scope="col">资源</th><th scope="col">评分</th><th scope="col">适合谁／读什么</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Claude Code 基础</th><td><a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a></td><td>⭐⭐⭐⭐⭐</td><td>跟踪官方 releases、issues 与现行功能。</td></tr>
-<tr><td><a href="https://code.claude.com/docs/en/overview">Claude Code 官方文档</a></td><td>⭐⭐⭐⭐⭐</td><td>设置、权限与命令问题的第一来源。</td></tr>
-<tr><td><a href="https://github.com/hesreallyhim/awesome-claude-code">awesome-claude-code</a></td><td>⭐⭐⭐⭐</td><td>完成官方 quickstart 后探索社区扩展。</td></tr>
-<tr><td><a href="https://github.com/KimYx0207/AI-Coding-Guide-Zh">AI-Coding-Guide-Zh</a></td><td>⭐⭐⭐⭐</td><td>适合想配合简体中文逐步导读的读者。</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Claude Code 基础</th><td><a href="https://github.com/anthropics/claude-code">claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>跟踪官方 releases、issues 与现行功能。</td></tr>
+<tr><td><a href="https://code.claude.com/docs/en/overview">Claude Code 官方文档</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>设置、权限与命令问题的第一来源。</td></tr>
+<tr><td><a href="https://github.com/hesreallyhim/awesome-claude-code">awesome-claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>完成官方 quickstart 后探索社区扩展。</td></tr>
+<tr><td><a href="https://github.com/KimYx0207/AI-Coding-Guide-Zh">AI-Coding-Guide-Zh</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>适合想配合简体中文逐步导读的读者。</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="8">MCP</th><td><a href="https://github.com/modelcontextprotocol/servers">modelcontextprotocol/servers</a></td><td>⭐⭐⭐⭐⭐</td><td>官方 reference implementations；用于读协议，不是生产保证。</td></tr>
-<tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">modelcontextprotocol/python-sdk</a></td><td>⭐⭐⭐⭐⭐</td><td>用 Python 写 client/server，先对照现行 spec revision。</td></tr>
-<tr><td><a href="https://github.com/modelcontextprotocol/typescript-sdk">modelcontextprotocol/typescript-sdk</a></td><td>⭐⭐⭐⭐</td><td>TypeScript 路线的官方 SDK。</td></tr>
-<tr><td><a href="https://github.com/wong2/awesome-mcp-servers">wong2/awesome-mcp-servers</a></td><td>⭐⭐⭐⭐⭐</td><td>写 server 前先找现成选项；逐个审查 publisher 与权限。</td></tr>
-<tr><td><a href="https://github.com/punkpeye/awesome-mcp-servers">punkpeye/awesome-mcp-servers</a></td><td>⭐⭐⭐⭐</td><td>用不同分类交叉找 server；收录不是安全背书。</td></tr>
-<tr><td><a href="https://github.com/github/github-mcp-server">github/github-mcp-server</a></td><td>⭐⭐⭐⭐</td><td>阅读大型官方 MCP server 的工具与权限设计。</td></tr>
-<tr><td><a href="https://github.com/21st-dev/magic-mcp">21st-dev/magic-mcp</a></td><td>⭐⭐⭐</td><td>生成 UI 的非平凡 MCP 案例；使用前另查 license 与维护状态。</td></tr>
-<tr><td><a href="https://github.com/yamadashy/repomix">yamadashy/repomix</a></td><td>⭐⭐⭐⭐⭐</td><td>学习仓库打包、敏感数据过滤与 MCP mode 的边界。</td></tr>
+<tr><th scope="rowgroup" rowspan="8" align="center" valign="middle">MCP</th><td><a href="https://github.com/modelcontextprotocol/servers">servers</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>官方 reference implementations；用于读协议，不是生产保证。</td></tr>
+<tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">python-sdk</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>用 Python 写 client/server，先对照现行 spec revision。</td></tr>
+<tr><td><a href="https://github.com/modelcontextprotocol/typescript-sdk">typescript-sdk</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>TypeScript 路线的官方 SDK。</td></tr>
+<tr><td><a href="https://github.com/wong2/awesome-mcp-servers">awesome-mcp-servers</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>写 server 前先找现成选项；逐个审查 publisher 与权限。</td></tr>
+<tr><td><a href="https://github.com/punkpeye/awesome-mcp-servers">awesome-mcp-servers</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用不同分类交叉找 server；收录不是安全背书。</td></tr>
+<tr><td><a href="https://github.com/github/github-mcp-server">github-mcp-server</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>阅读大型官方 MCP server 的工具与权限设计。</td></tr>
+<tr><td><a href="https://github.com/21st-dev/magic-mcp">magic-mcp</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>生成 UI 的非平凡 MCP 案例；使用前另查 license 与维护状态。</td></tr>
+<tr><td><a href="https://github.com/yamadashy/repomix">repomix</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>学习仓库打包、敏感数据过滤与 MCP mode 的边界。</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="8">Skills</th><td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td><td>⭐⭐⭐⭐⭐</td><td>官方模板、规范与文档处理 Skills；写自己的 Skill 前先读。</td></tr>
-<tr><td><a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a></td><td>⭐⭐⭐⭐</td><td>跟踪 Claude Code 对 Skills 的现行支持。</td></tr>
-<tr><td><a href="https://github.com/mattpocock/skills">mattpocock/skills</a></td><td>⭐⭐⭐⭐</td><td>观察短小、任务导向的社区 Skill 写法。</td></tr>
-<tr><td><a href="https://github.com/obra/superpowers">obra/superpowers</a></td><td>⭐⭐⭐⭐</td><td>学习 TDD、debugging 与 plan 类 Skills 的组合。</td></tr>
-<tr><td><a href="https://github.com/wshobson/agents">wshobson/agents</a></td><td>⭐⭐⭐⭐</td><td>看 Skills 与 Subagents 如何分工；不要照搬权限。</td></tr>
-<tr><td><a href="https://github.com/travisvn/awesome-claude-skills">awesome-claude-skills</a></td><td>⭐⭐⭐⭐</td><td>社区 Skill 入口，安装前逐项审查。</td></tr>
-<tr><td><a href="https://github.com/VoltAgent/awesome-agent-skills">awesome-agent-skills</a></td><td>⭐⭐⭐</td><td>比较多家工具对 Agent Skills 的兼容范围。</td></tr>
-<tr><td><a href="https://github.com/alirezarezvani/claude-skills">alirezarezvani/claude-skills</a></td><td>⭐⭐⭐</td><td>寻找领域案例；当作案例库，不是官方标准。</td></tr>
+<tr><th scope="rowgroup" rowspan="8" align="center" valign="middle">Skills</th><td><a href="https://github.com/anthropics/skills">skills</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>官方模板、规范与文档处理 Skills；写自己的 Skill 前先读。</td></tr>
+<tr><td><a href="https://github.com/anthropics/claude-code">claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>跟踪 Claude Code 对 Skills 的现行支持。</td></tr>
+<tr><td><a href="https://github.com/mattpocock/skills">skills</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>观察短小、任务导向的社区 Skill 写法。</td></tr>
+<tr><td><a href="https://github.com/obra/superpowers">superpowers</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>学习 TDD、debugging 与 plan 类 Skills 的组合。</td></tr>
+<tr><td><a href="https://github.com/wshobson/agents">agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>看 Skills 与 Subagents 如何分工；不要照搬权限。</td></tr>
+<tr><td><a href="https://github.com/travisvn/awesome-claude-skills">awesome-claude-skills</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>社区 Skill 入口，安装前逐项审查。</td></tr>
+<tr><td><a href="https://github.com/VoltAgent/awesome-agent-skills">awesome-agent-skills</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>比较多家工具对 Agent Skills 的兼容范围。</td></tr>
+<tr><td><a href="https://github.com/alirezarezvani/claude-skills">claude-skills</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>寻找领域案例；当作案例库，不是官方标准。</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">Plugins／Marketplaces</th><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td>⭐⭐⭐⭐⭐</td><td>官方 plugin 与 marketplace 结构的第一范本。</td></tr>
-<tr><td><a href="https://github.com/anthropics/knowledge-work-plugins">knowledge-work-plugins</a></td><td>⭐⭐⭐⭐⭐</td><td>看多领域 bundles 如何分工与打包。</td></tr>
-<tr><td><a href="https://github.com/obra/superpowers-marketplace">superpowers-marketplace</a></td><td>⭐⭐⭐⭐</td><td>学习只负责策展、plugin 放在外部仓库的最小 marketplace。</td></tr>
-<tr><td><a href="https://github.com/trailofbits/skills-curated">trailofbits/skills-curated</a></td><td>⭐⭐⭐</td><td>观察 marketplace 如何加入人工安全审查与信任说明。</td></tr>
-<tr><td><a href="https://github.com/rohitg00/awesome-claude-code-toolkit">awesome-claude-code-toolkit</a></td><td>⭐⭐⭐</td><td>探索 agents、skills、hooks 与 templates 的社区入口。</td></tr>
-<tr><td><a href="https://github.com/anthropics/life-sciences">anthropics/life-sciences</a></td><td>⭐⭐⭐</td><td>读单领域 marketplace 的结构；内容偏生命科学。</td></tr>
-<tr><td><a href="https://github.com/anthropics/claude-for-legal">anthropics/claude-for-legal</a></td><td>⭐⭐⭐⭐</td><td>看大型 vertical suite 的 Skills、Agents、MCP 与责任边界。</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Plugins／Marketplaces</th><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>官方 plugin 与 marketplace 结构的第一范本。</td></tr>
+<tr><td><a href="https://github.com/anthropics/knowledge-work-plugins">knowledge-work-plugins</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>看多领域 bundles 如何分工与打包。</td></tr>
+<tr><td><a href="https://github.com/obra/superpowers-marketplace">superpowers-marketplace</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>学习只负责策展、plugin 放在外部仓库的最小 marketplace。</td></tr>
+<tr><td><a href="https://github.com/trailofbits/skills-curated">skills-curated</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>观察 marketplace 如何加入人工安全审查与信任说明。</td></tr>
+<tr><td><a href="https://github.com/rohitg00/awesome-claude-code-toolkit">awesome-claude-code-toolkit</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>探索 agents、skills、hooks 与 templates 的社区入口。</td></tr>
+<tr><td><a href="https://github.com/anthropics/life-sciences">life-sciences</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>读单领域 marketplace 的结构；内容偏生命科学。</td></tr>
+<tr><td><a href="https://github.com/anthropics/claude-for-legal">claude-for-legal</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>看大型 vertical suite 的 Skills、Agents、MCP 与责任边界。</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Subagents</th><td><a href="https://github.com/anthropics/claude-cookbooks">anthropics/claude-cookbooks</a></td><td>⭐⭐⭐⭐⭐</td><td>阅读官方 tool-use 与 orchestration notebooks。</td></tr>
-<tr><td><a href="https://github.com/wshobson/agents">wshobson/agents</a></td><td>⭐⭐⭐⭐⭐</td><td>看大量 agent 定义的命名与分工；先从少量文件开始。</td></tr>
-<tr><td><a href="https://github.com/obra/superpowers">obra/superpowers</a></td><td>⭐⭐⭐⭐</td><td>比较何时用 Skill、何时隔离成 worker。</td></tr>
-<tr><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td>⭐⭐⭐⭐</td><td>看 Plugin 如何打包 Agents。</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Subagents</th><td><a href="https://github.com/anthropics/claude-cookbooks">claude-cookbooks</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>阅读官方 tool-use 与 orchestration notebooks。</td></tr>
+<tr><td><a href="https://github.com/wshobson/agents">agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>看大量 agent 定义的命名与分工；先从少量文件开始。</td></tr>
+<tr><td><a href="https://github.com/obra/superpowers">superpowers</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>比较何时用 Skill、何时隔离成 worker。</td></tr>
+<tr><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>看 Plugin 如何打包 Agents。</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Agent loop／SDK</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">claude-agent-sdk-python</a></td><td>⭐⭐⭐⭐⭐</td><td>Python SDK client、message types 与 options；不是完整 runtime source。</td></tr>
-<tr><td><a href="https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding">harness-engineering-from-cc-to-ai-coding</a></td><td>⭐⭐⭐⭐</td><td>中文 harness 解读；事实仍需与官方文档核对。</td></tr>
-<tr><td><a href="https://github.com/ai-boost/awesome-harness-engineering">awesome-harness-engineering</a></td><td>⭐⭐⭐⭐</td><td>扩展到 eval、memory、observability 与 runtime 资源。</td></tr>
-<tr><td><a href="https://github.com/wshobson/agents">wshobson/agents</a></td><td>⭐⭐⭐⭐</td><td>从实际 Agent 定义观察 harness 的可读性与权限表面。</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Agent loop／SDK</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">claude-agent-sdk-python</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Python SDK client、message types 与 options；不是完整 runtime source。</td></tr>
+<tr><td><a href="https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding">harness-engineering-from-cc-to-ai-coding</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>中文 harness 解读；事实仍需与官方文档核对。</td></tr>
+<tr><td><a href="https://github.com/ai-boost/awesome-harness-engineering">awesome-harness-engineering</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>扩展到 eval、memory、observability 与 runtime 资源。</td></tr>
+<tr><td><a href="https://github.com/wshobson/agents">agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>从实际 Agent 定义观察 harness 的可读性与权限表面。</td></tr>
 </tbody>
 </table>
 

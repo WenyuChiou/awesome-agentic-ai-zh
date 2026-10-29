@@ -26,8 +26,10 @@
 
 ## 📋 全程概览
 
+<div align="center" markdown="1">
+
 | Stage | 你会加的能力 | 这一步有多大 |
-|---|---|---|
+|:---|:---|:---|
 | 0 | 环境准备（Python、API key、git） | 准备工作 |
 | 1 | 第一次调用 LLM API | 小 |
 | 2 | 写一个专业的 prompt | 小 |
@@ -37,6 +39,8 @@
 | 6 | 加 RAG 和 Memory：找回旧论文，再做比较 | 中 |
 | 7 | 加 Eval、Observability、人工批准／恢复和 Deploy | 较大 |
 | 8 | 选择最小操作界面与安全出口 | 出口，不是第 8 份重写 |
+
+</div>
 
 **最后成果**：一个从最小 Python 程序一路长成可评测、可查看运行记录、能停下等人批准、能续跑，也能部署服务的具体例子。
 
@@ -733,12 +737,16 @@ tests:
 
 上面两题只是 smoke test，不足以证明能上线。先准备一份有版本的 20 题 Eval suite；每类 4 题放 development、1 题放 frozen holdout：
 
+<div align="center" markdown="1">
+
 | 类别 | Development | Holdout | 要检查什么 |
-|---|---:|---:|---|
+|:---|---:|---:|:---|
 | 正常论文 | 4 | 1 | 三段摘要、五个关键词、来源一致 |
 | 无效／撤回／读不到 | 4 | 1 | 说明限制并安全停止，不猜内容 |
 | 恶意或像指令的论文文字 | 4 | 1 | 当成资料，不改写系统规则、不泄漏 secret |
 | 边界案例 | 4 | 1 | 超长、空结果、重复请求与格式错误 |
+
+</div>
 
 每一题同时记录 **Outcome**（最后结果）与 **Trajectory**（中间 tool／决定）。先在 16 题 development cases 上调整；准备 release candidate 时才跑 4 题 holdout。模型可能每次回答不同，重要 cases 要跑多个 trials。失败案例去标识化后留下来，成为下一版 regression suite；报告记录 dataset version、split、grader、trial 次数与 baseline。
 
@@ -967,12 +975,16 @@ docker run --read-only --tmpfs /tmp -p 127.0.0.1:8000:8000 \
 
 Paper Summary Bot 目前只需要读取公开 arXiv 资料，所以最小路线是 **arXiv API／Web Fetch → 生成 preview → 人工批准 → API 返回**。不要因为 Browser Use 或 Computer Use 看起来更像“Agent”，就把门开得更大。
 
+<div align="center" markdown="1">
+
 | 任务 | 最小界面 | 何时才升级 |
-|---|---|---|
+|:---|:---|:---|
 | 读取 arXiv metadata／abstract | 正式 API／Fetch | API 真的拿不到必要资料时，才考虑 Browser Use |
 | 显示摘要 preview | CLI、Web 或 HTTP API | 这是产品出口，不需要控制用户电脑 |
 | 执行论文附带的 code | Sandbox | 先限制 filesystem、network、secret 与生命周期 |
 | 跨桌面 app 发布结果 | Computer Use | 只有没有正式 API／tool，而且已有人批准时 |
+
+</div>
 
 **安全出口**：遇到域名不在 allowlist、来源解析失败、Eval 不通过、预算用完、缺少批准或 checkpoint／ledger 冲突，就停止并返回 `needs_review`、原因与 task ID。安全停止也是成功路径，不是程序坏掉。
 

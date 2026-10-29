@@ -38,12 +38,16 @@ AI 程式助手像一位會讀檔案、改程式、跑指令的隊友。它做�
 
 ### OpenCode、Pi、OpenRouter、Ollama 差在哪裡？
 
+<div align="center" markdown="1">
+
 | 名稱 | 核心身分 | 白話說法 |
-|---|---|---|
+|:---|:---|:---|
 | OpenCode | Coding Agent／Harness | 會在程式專案裡讀、改、測 |
 | Pi | Coding Agent／Harness | 從小核心加 extensions、skills 或 RPC |
 | OpenRouter | API Router | 把模型請求送到 Provider；不會替你改 repo |
 | Ollama | Local Model Runtime | 在本機提供模型執行與 API；本身不是 Coding Agent |
+
+</div>
 
 記法很簡單：**OpenCode／Pi 負責做事，OpenRouter 負責帶路，Ollama 負責讓本機模型跑起來。**
 
@@ -82,13 +86,44 @@ git diff -- README.md
 
 ## 📚 先選一個入口
 
-| 你現在想做的事 | 先看什麼 | 為什麼 |
-|---|---|---|
-| 學完整的 permission 與 sandbox 流程 | [Claude Code](https://code.claude.com/docs/en/overview) | 文件把權限、隔離與多種 Surface 分開說清楚 |
-| 使用 app、CLI、IDE 或 cloud 工作 | [OpenAI Codex](https://github.com/openai/codex) | 同一個 Coding Agent 可以在多個入口工作 |
-| 把 GitHub issue 交給 cloud agent | [GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | 可以看懂 cloud agent 與 IDE agent mode 的差別 |
-| 使用開源、可換 Provider 的工具 | [OpenCode](https://github.com/anomalyco/opencode) | 適合把 Coding Agent、Provider 與 Router 分開理解 |
-| 從 IDE 開始並逐步批准 | [Cline](https://github.com/cline/cline) | 可以練習逐步批准工具、檔案與 browser 操作 |
+<div class="reader-route-table" role="region" tabindex="0" aria-label="開發者入口比較">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">你現在想做的事</th>
+<th scope="col" align="left">先看什麼</th>
+<th scope="col" align="left">為什麼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">學完整的 permission 與 sandbox 流程</td>
+<td align="left"><a href="https://code.claude.com/docs/en/overview">Claude Code</a></td>
+<td align="left">文件把權限、隔離與多種 Surface 分開說清楚</td>
+</tr>
+<tr>
+<td align="left">使用 app、CLI、IDE 或 cloud 工作</td>
+<td align="left"><a href="https://github.com/openai/codex">OpenAI Codex</a></td>
+<td align="left">同一個 Coding Agent 可以在多個入口工作</td>
+</tr>
+<tr>
+<td align="left">把 GitHub issue 交給 cloud agent</td>
+<td align="left"><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot cloud agent</a></td>
+<td align="left">可以看懂 cloud agent 與 IDE agent mode 的差別</td>
+</tr>
+<tr>
+<td align="left">使用開源、可換 Provider 的工具</td>
+<td align="left"><a href="https://github.com/anomalyco/opencode">OpenCode</a></td>
+<td align="left">適合把 Coding Agent、Provider 與 Router 分開理解</td>
+</tr>
+<tr>
+<td align="left">從 IDE 開始並逐步批准</td>
+<td align="left"><a href="https://github.com/cline/cline">Cline</a></td>
+<td align="left">可以練習逐步批准工具、檔案與 browser 操作</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 不要只問「哪個最強」。先問：它能看到哪些檔案、能跑哪些命令、是否能連網、誰批准高風險動作，以及失敗時怎麼回復。
 
@@ -111,29 +146,29 @@ git diff -- README.md
 <small>工具身分、Surface、授權與 repository 狀態於 2026-08-29 UTC 依官方文件與 GitHub API 查核。推薦度是本學習地圖的編輯評分，不是 GitHub stars 或效能排名。</small>
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="資源表（分類、用途與限制）">
-<table>
-<thead><tr><th scope="col">分類</th><th scope="col">資源、用途與限制</th></tr></thead>
+<table align="center">
+<thead><tr><th scope="col">分類</th><th scope="col">專案／文件</th><th scope="col">評分</th><th scope="col">用途</th><th scope="col">限制</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">官方／商業 Coding Agents</th><td><p data-field="entry"><strong><a href="https://code.claude.com/docs/en/overview">Claude Code</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent</p><p data-field="surface"><strong>主要 Surface：</strong>CLI／IDE／desktop／cloud</p><p data-field="use">學 permission、sandbox、project rules 與完整 workflow</p><p data-field="status">商業；permission prompt 要保留，先從小 repo 開始</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/openai/codex">codex</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent</p><p data-field="surface"><strong>主要 Surface：</strong>app／CLI／IDE／cloud</p><p data-field="use">比較同一代理在本機與遠端的不同工作方式</p><p data-field="status">活躍；repo 程式碼為 Apache-2.0，app／cloud 依服務條款；不要關掉必要 Approval 或放大 workspace 權限</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent／code assistant</p><p data-field="surface"><strong>主要 Surface：</strong>GitHub／IDE／CLI／app</p><p data-field="use">從 IDE 協作走到 issue、branch 與 PR</p><p data-field="status">商業；Cloud agent 與 IDE mode 權限不同，產出仍需人工 review</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://cursor.com/docs">Cursor</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent + AI editor</p><p data-field="surface"><strong>主要 Surface：</strong>IDE／CLI／cloud／SDK</p><p data-field="use">比較 editor、background agent 與其他 Surface</p><p data-field="status">商業；每個 Surface 的權限與資料邊界要分開確認</p></td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle" width="80">官方／商業 Coding Agents</th><td><div data-field="entry"><strong><a href="https://code.claude.com/docs/en/overview">Claude Code</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent</div><div data-field="surface"><strong>主要 Surface：</strong>CLI／IDE／desktop／cloud</div><div data-field="use">學 permission、sandbox、project rules 與完整 workflow</div></td><td><div data-field="status">商業；permission prompt 要保留，先從小 repo 開始</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/openai/codex">codex</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent</div><div data-field="surface"><strong>主要 Surface：</strong>app／CLI／IDE／cloud</div><div data-field="use">比較同一代理在本機與遠端的不同工作方式</div></td><td><div data-field="status">活躍；repo 程式碼為 Apache-2.0，app／cloud 依服務條款；不要關掉必要 Approval 或放大 workspace 權限</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent／code assistant</div><div data-field="surface"><strong>主要 Surface：</strong>GitHub／IDE／CLI／app</div><div data-field="use">從 IDE 協作走到 issue、branch 與 PR</div></td><td><div data-field="status">商業；Cloud agent 與 IDE mode 權限不同，產出仍需人工 review</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://cursor.com/docs">Cursor</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent + AI editor</div><div data-field="surface"><strong>主要 Surface：</strong>IDE／CLI／cloud／SDK</div><div data-field="use">比較 editor、background agent 與其他 Surface</div></td><td><div data-field="status">商業；每個 Surface 的權限與資料邊界要分開確認</div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">開源 Coding Agents／Harnesses</th><td><p data-field="entry"><strong><a href="https://github.com/anomalyco/opencode">opencode</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent／harness</p><p data-field="surface"><strong>主要 Surface：</strong>terminal／desktop</p><p data-field="use">切換 Provider 或相容 endpoint</p><p data-field="status">活躍；MIT；<code>AGENTS.md</code> 優先，缺少時才用 <code>CLAUDE.md</code></p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/earendil-works/pi">pi</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent／harness</p><p data-field="surface"><strong>主要 Surface：</strong>terminal／SDK／RPC</p><p data-field="use">從小核心加 extensions、skills 與自訂流程</p><p data-field="status">活躍；MIT；沒有內建 sandbox，要自行隔離</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/Aider-AI/aider">aider</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent／pair programmer</p><p data-field="surface"><strong>主要 Surface：</strong>CLI</p><p data-field="use">用 Git diff、commit 與 undo 管理小改</p><p data-field="status">活躍；Apache-2.0；auto-commit 不代表可以跳過 hook</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/aaif-goose/goose">goose</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding／general agent</p><p data-field="surface"><strong>主要 Surface：</strong>CLI／desktop／API</p><p data-field="use">連接 Providers、MCP 與 extensions</p><p data-field="status">活躍；Apache-2.0；先從低權限 extension 開始</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/cline/cline">cline</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent</p><p data-field="surface"><strong>主要 Surface：</strong>IDE／CLI／SDK</p><p data-field="use">逐步批准工具、檔案與 browser 操作</p><p data-field="status">活躍；Apache-2.0；IDE Surface 本身不是安全保證</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/OpenHands/OpenHands">OpenHands</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>software-development agent platform</p><p data-field="surface"><strong>主要 Surface：</strong>web／CLI／SDK／cloud</p><p data-field="use">在隔離環境中處理較完整的 issue</p><p data-field="status">活躍；MIT；任務越大越需要 checkpoint 與人工 review</p></td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle" width="80">開源 Coding Agents／Harnesses</th><td><div data-field="entry"><strong><a href="https://github.com/anomalyco/opencode">opencode</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent／harness</div><div data-field="surface"><strong>主要 Surface：</strong>terminal／desktop</div><div data-field="use">切換 Provider 或相容 endpoint</div></td><td><div data-field="status">活躍；MIT；<code>AGENTS.md</code> 優先，缺少時才用 <code>CLAUDE.md</code></div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/earendil-works/pi">pi</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent／harness</div><div data-field="surface"><strong>主要 Surface：</strong>terminal／SDK／RPC</div><div data-field="use">從小核心加 extensions、skills 與自訂流程</div></td><td><div data-field="status">活躍；MIT；沒有內建 sandbox，要自行隔離</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/Aider-AI/aider">aider</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent／pair programmer</div><div data-field="surface"><strong>主要 Surface：</strong>CLI</div><div data-field="use">用 Git diff、commit 與 undo 管理小改</div></td><td><div data-field="status">活躍；Apache-2.0；auto-commit 不代表可以跳過 hook</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/aaif-goose/goose">goose</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding／general agent</div><div data-field="surface"><strong>主要 Surface：</strong>CLI／desktop／API</div><div data-field="use">連接 Providers、MCP 與 extensions</div></td><td><div data-field="status">活躍；Apache-2.0；先從低權限 extension 開始</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/cline/cline">cline</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent</div><div data-field="surface"><strong>主要 Surface：</strong>IDE／CLI／SDK</div><div data-field="use">逐步批准工具、檔案與 browser 操作</div></td><td><div data-field="status">活躍；Apache-2.0；IDE Surface 本身不是安全保證</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/OpenHands/OpenHands">OpenHands</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>software-development agent platform</div><div data-field="surface"><strong>主要 Surface：</strong>web／CLI／SDK／cloud</div><div data-field="use">在隔離環境中處理較完整的 issue</div></td><td><div data-field="status">活躍；MIT；任務越大越需要 checkpoint 與人工 review</div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Workflow 支援</th><td><p data-field="entry"><strong><a href="https://github.com/obra/superpowers">superpowers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>workflow collection</p><p data-field="surface"><strong>主要 Surface：</strong>agent plugin／skills</p><p data-field="use">參考 planning、TDD、debug 與 review 流程</p><p data-field="status">活躍；MIT；模板仍要配合自己的 repo gate</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/yamadashy/repomix">repomix</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>repo context packer</p><p data-field="surface"><strong>主要 Surface：</strong>CLI／MCP</p><p data-field="use">整理一次性的 codebase context</p><p data-field="status">活躍；MIT；輸出前仍要排除 secret 與不必要檔案</p></td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle" width="80">Workflow 支援</th><td><div data-field="entry"><strong><a href="https://github.com/obra/superpowers">superpowers</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>workflow collection</div><div data-field="surface"><strong>主要 Surface：</strong>agent plugin／skills</div><div data-field="use">參考 planning、TDD、debug 與 review 流程</div></td><td><div data-field="status">活躍；MIT；模板仍要配合自己的 repo gate</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/yamadashy/repomix">repomix</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>repo context packer</div><div data-field="surface"><strong>主要 Surface：</strong>CLI／MCP</div><div data-field="use">整理一次性的 codebase context</div></td><td><div data-field="status">活躍；MIT；輸出前仍要排除 secret 與不必要檔案</div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">維護／歷史</th><td><p data-field="entry"><strong><a href="https://github.com/continuedev/continue">continue</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent</p><p data-field="surface"><strong>主要 Surface：</strong>CLI／VS Code／JetBrains</p><p data-field="use">閱讀開源 editor-agent 整合的歷史設計</p><p data-field="status">read-only；Apache-2.0；官方 2.0.0 是最後版本，不再積極維護</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/RooCodeInc/Roo-Code">Roo Code</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity"><strong>核心身分：</strong>coding agent</p><p data-field="surface"><strong>主要 Surface：</strong>VS Code extension</p><p data-field="use">閱讀多 mode 代理的設計歷史</p><p data-field="status">已封存；Apache-2.0；新專案請改用仍在維護的工具</p></td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle" width="80">維護／歷史</th><td><div data-field="entry"><strong><a href="https://github.com/continuedev/continue">continue</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent</div><div data-field="surface"><strong>主要 Surface：</strong>CLI／VS Code／JetBrains</div><div data-field="use">閱讀開源 editor-agent 整合的歷史設計</div></td><td><div data-field="status">read-only；Apache-2.0；官方 2.0.0 是最後版本，不再積極維護</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/RooCodeInc/Roo-Code">Roo Code</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐</span></td><td><div data-field="identity"><strong>核心身分：</strong>coding agent</div><div data-field="surface"><strong>主要 Surface：</strong>VS Code extension</div><div data-field="use">閱讀多 mode 代理的設計歷史</div></td><td><div data-field="status">已封存；Apache-2.0；新專案請改用仍在維護的工具</div></td></tr>
 </tbody>
 </table>
 </div>
@@ -190,14 +225,18 @@ CI agent 使用唯讀 token、最小 repository 權限與固定輸入。Issue、
 <details markdown="1">
 <summary>🧯 展開：常見錯誤、替代方案與 rollback</summary>
 
+<div align="center" markdown="1">
+
 | 問題 | 改成什麼 |
-|---|---|
+|:---|:---|
 | 看到 IDE 畫面就以為工具只能在 IDE 用 | 分開看核心身分與所有 Surface |
 | 把 OpenRouter、Ollama、OpenCode 當同一類 | Router、Runtime、Coding Agent 分開選 |
 | 工具說 Test 綠就直接接受 | 自己讀 Diff、確認 Test 覆蓋需求，再人工批准 |
 | 用固定行數判斷安全 | 看範圍、可測性、可回復性與 Diff 是否可讀 |
 | Aider 自動 commit 就跳過 hook | 明確啟用 repo 需要的 verify／hook，再走正常 review gate |
 | 多個工具同時改同一檔案 | 分清 ownership、使用獨立 worktree，最後人工整合 |
+
+</div>
 
 Rollback 前先看 `git status` 和 Diff。只回復已確認的目標，不要用 broad reset 清掉別人的工作。
 

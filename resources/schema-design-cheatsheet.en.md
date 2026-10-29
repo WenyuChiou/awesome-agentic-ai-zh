@@ -31,13 +31,17 @@ Compare:
 
 LLMs are loose with `type: string` and pass arbitrary text. Tighten where possible:
 
+<div align="center" markdown="1">
+
 | Vague | Constrained |
-|---|---|
+|:---|:---|
 | `unit: string` (celsius? fahrenheit? kelvin?) | `unit: enum["celsius", "fahrenheit"]` |
 | `priority: string` (low/medium/HIGH?) | `priority: enum["low", "medium", "high"]` |
 | `count: string` ("five"?) | `count: integer` |
 | `enabled: string` ("true"/"True") | `enabled: boolean` |
 | `tags: string` ("a,b,c"? JSON?) | `tags: array of string` |
+
+</div>
 
 ### Rule 3: Be careful with `required` vs optional
 

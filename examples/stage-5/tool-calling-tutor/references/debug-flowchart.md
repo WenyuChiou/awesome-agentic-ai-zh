@@ -49,7 +49,7 @@ OpenAI-compatible 格式需要 `{"type": "function", "function": {...}}`；Anthr
 
 #### 5. 目前組合沒有可用的 tool-calling 支援
 
-查目前 SDK 與 model 的官方文件，再用一個**固定小測試（fixture）**確認。它像每次都考同一道題。比較時保持 model、設定和問題不變；不要只看 model 名稱或大小猜結果。
+查目前 SDK 與 model 的官方文件，再用一個**固定小測試（fixture）** 確認。它像每次都考同一道題。比較時保持 model、設定和問題不變；不要只看 model 名稱或大小猜結果。
 
 ## Section B — Symptom (b)：tool 被呼叫，但 args 錯
 

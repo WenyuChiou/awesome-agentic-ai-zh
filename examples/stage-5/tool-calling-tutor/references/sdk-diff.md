@@ -18,7 +18,7 @@
 
 ## 兩邊都要有的安全護欄
 
-Schema 是提示，不是防火牆。先做 **allowlist（只准名單）**與參數驗證，再執行工具。
+Schema 是提示，不是防火牆。先做 **allowlist（只准名單）** 與參數驗證，再執行工具。
 
 ```python
 import json

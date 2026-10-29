@@ -497,7 +497,7 @@ def test_stage7_teaches_outcome_trajectory_and_safe_resume(locale: str, page: Pa
     assert positions == sorted(positions)
     assert "20" in section and "Outcome" in section and "Trajectory" in section
     assert section.count("| 4 | 1 |") == 4
-    assert "|---|---:|---:|---|" in section
+    assert "|:---|---:|---:|:---|" in section
     for term in ("dataset version", "split", "grader", "trial", "baseline"):
         assert term.lower() in section.lower()
     assert "development" in section.lower() and "holdout" in section.lower()

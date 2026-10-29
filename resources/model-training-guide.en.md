@@ -28,33 +28,37 @@ This is a path-selection card, not a training course. It helps you tell which me
 
 ## 🧩 Learn the methods without implementing them first
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">Goal</th><th scope="col">Method</th><th scope="col">Plain meaning</th><th scope="col">Does it change weights?</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Teach the model how to act</th><td><strong>SFT (Supervised Fine-Tuning)</strong></td><td>Show the model good questions and answers so it can imitate them.</td><td>Yes</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Teach the model how to act</th><td><strong>SFT (Supervised Fine-Tuning)</strong></td><td>Show the model good questions and answers so it can imitate them.</td><td>Yes</td></tr>
 <tr><td><strong>DPO (Direct Preference Optimization)</strong></td><td>Show two answers and indicate which one is preferred.</td><td>Yes</td></tr>
 <tr><td><strong>RLHF (Reinforcement Learning from Human Feedback) / RL (Reinforcement Learning)</strong></td><td>Use human or rule-based feedback to help the model get better results.</td><td>Yes</td></tr>
 <tr><td><strong>GRPO (Group Relative Policy Optimization)</strong></td><td>Compare several answers to one question, then learn from their relative results.</td><td>Yes</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Adapt with fewer changes</th><td><strong>PEFT (Parameter-Efficient Fine-Tuning)</strong></td><td>Train only a small part of the parameters.</td><td>Only selected or added parameters</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Adapt with fewer changes</th><td><strong>PEFT (Parameter-Efficient Fine-Tuning)</strong></td><td>Train only a small part of the parameters.</td><td>Only selected or added parameters</td></tr>
 <tr><td><strong>LoRA (Low-Rank Adaptation)</strong></td><td>Freeze the original weights and train a smaller low-rank matrix.</td><td>Original weights no; added parameters yes</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Make serving smaller or cheaper</th><td><strong>Distillation</strong></td><td>Teach a smaller Student Model from a larger Teacher Model.</td><td>Trains the Student Model</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Make serving smaller or cheaper</th><td><strong>Distillation</strong></td><td>Teach a smaller Student Model from a larger Teacher Model.</td><td>Trains the Student Model</td></tr>
 <tr><td><strong>Quantization</strong></td><td>Store or compute weights with fewer bits, usually using less memory.</td><td>Usually no retraining of the original model; some methods add adjustment</td></tr>
 </tbody>
 </table>
 
 ## Do not mistake external systems for training
 
+<div align="center" markdown="1">
+
 | Method | What it really does | Usually changes model weights? |
-|---|---|---|
+|:---|:---|:---|
 | **Prompt** | Tells the model what to do this time. | No |
 | **RAG** | Finds outside information and puts evidence into this input. | No |
 | **Memory** | Saves state for later and reads it back when needed. | No |
 | **Tools** | Lets a program search, calculate, or take another action after checks. | No |
 | **Harness** | Manages tools, permissions, state, logs, retries, and stop rules. | No |
+
+</div>
 
 “Usually no” matters. A product may start a separate training job behind the scenes. Check official documentation for training jobs, trainable parameters, or model weights.
 
@@ -62,20 +66,20 @@ This is a path-selection card, not a training course. It helps you tell which me
 
 Read the first two to understand the main path. Use the others when you truly need to train or compress a model. Ratings are editorial guidance, not GitHub stars.
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">Group</th><th scope="col">Resource</th><th scope="col">Rating</th><th scope="col">What you learn</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Understand the main path</th><td><a href="https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/">OpenAI: how models are developed</a></td><td>⭐⭐⭐⭐⭐</td><td>How data, training, and models relate.</td></tr>
-<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google: LLM (Large Language Model, a model that reads and writes language) tuning</a></td><td>⭐⭐⭐⭐⭐</td><td>The boundary between Prompt Engineering, Fine-tuning, and Distillation.</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Understand the main path</th><td><a href="https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/">OpenAI: how models are developed</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>How data, training, and models relate.</td></tr>
+<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google: LLM (Large Language Model, a model that reads and writes language) tuning</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>The boundary between Prompt Engineering, Fine-tuning, and Distillation.</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Learn Post-training</th><td><a href="https://openai.com/index/introducing-gpt-oss/">OpenAI: gpt-oss</a></td><td>⭐⭐⭐⭐</td><td>How one model family describes Pre-training, SFT, and RL.</td></tr>
-<tr><td><a href="https://huggingface.co/docs/trl/quickstart">Hugging Face TRL</a></td><td>⭐⭐⭐⭐</td><td>An entry point for SFT, DPO, GRPO, and other Post-training methods.</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Learn Post-training</th><td><a href="https://openai.com/index/introducing-gpt-oss/">OpenAI: gpt-oss</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>How one model family describes Pre-training, SFT, and RL.</td></tr>
+<tr><td><a href="https://huggingface.co/docs/trl/quickstart">Hugging Face TRL</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>An entry point for SFT, DPO, GRPO, and other Post-training methods.</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">Adapt or compress</th><td><a href="https://huggingface.co/docs/peft/main/methods/overview">Hugging Face PEFT</a></td><td>⭐⭐⭐⭐</td><td>Approaches that train fewer parameters and their limits.</td></tr>
-<tr><td><a href="https://huggingface.co/docs/peft/main/conceptual_guides/lora">Hugging Face LoRA</a></td><td>⭐⭐⭐⭐</td><td>Freeze original weights and train a low-rank matrix.</td></tr>
-<tr><td><a href="https://huggingface.co/docs/transformers/main_classes/quantization">Hugging Face Quantization</a></td><td>⭐⭐⭐</td><td>Use lower precision to reduce memory and compute needs.</td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Adapt or compress</th><td><a href="https://huggingface.co/docs/peft/main/methods/overview">Hugging Face PEFT</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Approaches that train fewer parameters and their limits.</td></tr>
+<tr><td><a href="https://huggingface.co/docs/peft/main/conceptual_guides/lora">Hugging Face LoRA</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Freeze original weights and train a low-rank matrix.</td></tr>
+<tr><td><a href="https://huggingface.co/docs/transformers/main_classes/quantization">Hugging Face Quantization</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Use lower precision to reduce memory and compute needs.</td></tr>
 </tbody>
 </table>
 

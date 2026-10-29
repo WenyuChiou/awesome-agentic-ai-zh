@@ -29,13 +29,17 @@
 <a id="-先分清loopframework-与-graph"></a>
 ## 🧭 先分清：Loop、Graph 与 Framework
 
+<div align="center" markdown="1">
+
 | 名称 | 五岁也懂的说法 | 正确边界与学习位置 |
-|---|---|---|
+|:---|:---|:---|
 | **Agent Loop** | 助手做一步、看结果，再决定下一步 | Stage 3 的一次执行内循环：model → tool call → execute → tool result → model |
 | **Workflow Graph** | 把每一站和道路画出来 | 用 node、edge、branch 与 state 表示工作顺序；格子里可以是 Agent、工具、检查或人工批准 |
 | **Agent Framework** | 一盒帮你接线的工具积木 | 提供 runner、tool、state、handoff、checkpoint 等零件；一个 Agent 也能使用 |
 | **Loop Engineering** | 设计它怎么反复做、怎么验证、何时停 | Stage 7 才加入预算、验证、恢复与人工升级 |
 | **Production orchestration（上线编排）** | 把整张工作地图做成真的能安全运行 | Stage 7 才为多个 loop、工具和人工批准加上观测、恢复与停止规则；新兴文章也可能称为 Graph Engineering |
+
+</div>
 
 **Framework 是工具箱；Workflow Graph 是你画出的工作地图；Production orchestration 是让地图能安全运行的工程工作。** **Graph Engineering** 是新兴但还未统一的称呼，不是 Framework 的另一个名字。**Multi-Agent** 可以放进图里，但不是每张图都需要多个 Agent，也不是每个 node 都必须是 Agent。
 
@@ -78,10 +82,14 @@ Agent framework 是帮一个或多个 Agent 接好模型、工具、state、重�
 <a id="两个维度先分清楚workflow-vs-agent--single-vs-multi"></a>
 ### 两个维度先分清楚（workflow vs agent / single vs multi）
 
+<div align="center" markdown="1">
+
 | | **Workflow**：程序先写好路线 | **Agent**：模型动态选下一步 |
-|---|---|---|
+|:---|:---|:---|
 | **一个 Agent** | 线性流程或固定分支 | Stage 3 写过的工具循环 |
 | **多个 Agent** | 固定角色与顺序 | 动态 handoff、supervisor 或辩论 |
+
+</div>
 
 这四格会重叠。例如 LangGraph 的 conditional edge 可以同时有固定规则与模型决策。表格是帮你问问题，不是把所有系统硬塞进盒子。
 
@@ -111,13 +119,17 @@ Agent framework 是帮一个或多个 Agent 接好模型、工具、state、重�
 
 **Supervisor（主管 Agent）** 像班长，负责拆工作与合并答案。**Worker（工作 Agent）** 像组员，只拿完成自己任务所需的数据与工具。
 
+<div align="center" markdown="1">
+
 | Pattern | 一句话形状 | 适合什么 | 先注意什么 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **Routing／Handoff** | A 判断后交给 B | 客服分类、专家转接 | 交接数据与权限 |
 | **Sequential** | A 做完才轮到 B | 有固定先后的流程 | 前一步错误会往后传 |
 | **Parallel** | 多份工作同时做 | 可独立搜索或检查 | 最慢分支与合并规则 |
 | **Supervisor–Worker** | 一位主管分派多位工作者 | 大任务拆解与汇总 | 主管可能成为瓶颈 |
 | **Debate／Peer Review** | 多个角色互相批评 | 高风险判断与复查 | 角色多不等于事实正确 |
+
+</div>
 
 <details markdown="1">
 <summary>展开完整 pattern、论文与 Claude Code subagent 对照</summary>
@@ -132,13 +144,17 @@ Agent framework 是帮一个或多个 Agent 接好模型、工具、state、重�
 
 ### 依需求选工具
 
+<div align="center" markdown="1">
+
 | 你现在的情况 | 先看什么 | 为什么 |
-|---|---|---|
+|:---|:---|:---|
 | 一个简单工具循环已经够用 | Raw SDK／Stage 3 写法 | 最透明、最容易调试 |
 | 要图式 state、checkpoint、HITL | **LangGraph** | 低阶 orchestration runtime，控制清楚 |
 | 要快速做角色式雏形 | **CrewAI** | Agent、Task、Crew 容易上手；Flows 也支持 persistence 与 human feedback |
 | 已使用 OpenAI 生态、需要 handoff 与 tracing | **OpenAI Agents SDK** | 官方 SDK；Sandbox Agents 当前仍是 beta |
 | Python／.NET 的 Microsoft 团队 | **Microsoft Agent Framework** | 已 stable，并有 AutoGen／Semantic Kernel 迁移指南 |
+
+</div>
 
 Ollama 练习先从 LangGraph 或 CrewAI 路线开始。不要因为工具清单超过某个固定数字就换框架；先用 eval 看 context、选错率与延迟是否真的恶化。
 
@@ -248,7 +264,7 @@ py -3.11 test.py
 
 <small>既有框架信息核查：2026-08-27 UTC；Bifrost：2026-09-03 UTC</small>
 
-<table>
+<table align="center">
   <thead>
     <tr>
       <th scope="col">分类</th>
@@ -259,33 +275,33 @@ py -3.11 test.py
     </tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Production orchestration</th><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>要 state、checkpoint、HITL 与可重播流程。</td><td>维护中；MIT。低阶 runtime，需要自己做较多设计。</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/semantic-kernel">Microsoft Semantic Kernel</a></td><td>既有 .NET／Java／Python Microsoft 技术栈。</td><td>维护中；MIT。Microsoft 另提供迁移到 Agent Framework 的指南。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/agno-agi/agno">Agno</a></td><td>要把 Agent、Team、Workflow 接到 AgentOS 管理。</td><td>维护中；Apache-2.0。平台范围大，先确认是否真的需要整套。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/agent-framework">Microsoft Agent Framework</a></td><td>新建 Python／.NET Microsoft Agent 项目。</td><td>Python 1.x stable；MIT。有 AutoGen／Semantic Kernel 官方迁移路径。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Production orchestration</th><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>要 state、checkpoint、HITL 与可重播流程。</td><td>维护中；MIT。低阶 runtime，需要自己做较多设计。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/semantic-kernel">Microsoft Semantic Kernel</a></td><td>既有 .NET／Java／Python Microsoft 技术栈。</td><td>维护中；MIT。Microsoft 另提供迁移到 Agent Framework 的指南。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/agno-agi/agno">Agno</a></td><td>要把 Agent、Team、Workflow 接到 AgentOS 管理。</td><td>维护中；Apache-2.0。平台范围大，先确认是否真的需要整套。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/agent-framework">Microsoft Agent Framework</a></td><td>新建 Python／.NET Microsoft Agent 项目。</td><td>Python 1.x stable；MIT。有 AutoGen／Semantic Kernel 官方迁移路径。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">快速雏形／多 Agent</th><td><a href="https://github.com/crewAIInc/crewAI">CrewAI</a></td><td>快速做 researcher → writer → reviewer 角色流程。</td><td>维护中；MIT。Flows 已支持 persistence、resume 与 human feedback。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>维护现有 group-chat、辩论或 peer-review 项目。</td><td>Maintenance mode，由社区维护；CC-BY-4.0。现有 Python 项目使用 <code>autogen-agentchat</code> 0.7.x；新的 Microsoft 项目改用 Agent Framework，并避开旧 0.2 教程。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/openai/openai-agents-python">OpenAI Agents SDK</a></td><td>已使用 OpenAI 生态，需要 handoff、guardrail 与 tracing。</td><td>维护中；MIT。Sandbox Agents 是 beta，不等于所有 production 问题已解决。</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/deepagents">Deep Agents</a></td><td>要 planning、filesystem、subagent、memory 与 permissions 的完整 harness。</td><td>维护中；MIT。建在 LangGraph 上；简单 Agent 用它可能太重。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">快速雏形／多 Agent</th><td><a href="https://github.com/crewAIInc/crewAI">CrewAI</a></td><td>快速做 researcher → writer → reviewer 角色流程。</td><td>维护中；MIT。Flows 已支持 persistence、resume 与 human feedback。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>维护现有 group-chat、辩论或 peer-review 项目。</td><td>Maintenance mode，由社区维护；CC-BY-4.0。现有 Python 项目使用 <code>autogen-agentchat</code> 0.7.x；新的 Microsoft 项目改用 Agent Framework，并避开旧 0.2 教程。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/openai/openai-agents-python">OpenAI Agents SDK</a></td><td>已使用 OpenAI 生态，需要 handoff、guardrail 与 tracing。</td><td>维护中；MIT。Sandbox Agents 是 beta，不等于所有 production 问题已解决。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/deepagents">Deep Agents</a></td><td>要 planning、filesystem、subagent、memory 与 permissions 的完整 harness。</td><td>维护中；MIT。建在 LangGraph 上；简单 Agent 用它可能太重。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/openai/swarm">OpenAI Swarm</a></td><td>想读小型 source，理解 Agent 与 handoff。</td><td>冻结／历史教育用途；MIT。官方已由 Agents SDK 取代，不用于新 production 项目。</td><td>⭐⭐⭐⭐（教育）</td></tr>
-    <tr><td><a href="https://github.com/strands-agents/harness-sdk">Strands Agents</a></td><td>AWS／Bedrock 团队，或需要 Python／TypeScript SDK。</td><td>维护中；Apache-2.0。canonical repo 已由旧 <code>sdk-python</code> 移到 <code>harness-sdk</code>。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/strands-agents/harness-sdk">Strands Agents</a></td><td>AWS／Bedrock 团队，或需要 Python／TypeScript SDK。</td><td>维护中；Apache-2.0。canonical repo 已由旧 <code>sdk-python</code> 移到 <code>harness-sdk</code>。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">特殊路线</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>想比较 CodeAct 与 tool calling，或使用 Hugging Face 生态。</td><td>维护中；Apache-2.0。模型生成 code 必须隔离执行。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/pydantic/pydantic-ai">Pydantic AI</a></td><td>重视 typed dependency、structured output 与 validation。</td><td>维护中；MIT。Schema 验证外形，不保证语意正确。</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/letta-ai/letta">Letta</a></td><td>长 session、跨日记忆与 persona-stable 助手。</td><td>维护中；Apache-2.0。Memory-first，完整记忆观念留到 Stage 6。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/vercel/eve">Vercel Eve</a></td><td>TypeScript／Vercel 团队，需要 durable workflow、sandbox 与 approvals。</td><td>Public Preview；Apache-2.0。2026-06 才公开，API 仍可能快速变动。</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">特殊路线</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>想比较 CodeAct 与 tool calling，或使用 Hugging Face 生态。</td><td>维护中；Apache-2.0。模型生成 code 必须隔离执行。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/pydantic/pydantic-ai">Pydantic AI</a></td><td>重视 typed dependency、structured output 与 validation。</td><td>维护中；MIT。Schema 验证外形，不保证语意正确。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/letta-ai/letta">Letta</a></td><td>长 session、跨日记忆与 persona-stable 助手。</td><td>维护中；Apache-2.0。Memory-first，完整记忆观念留到 Stage 6。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/vercel/eve">Vercel Eve</a></td><td>TypeScript／Vercel 团队，需要 durable workflow、sandbox 与 approvals。</td><td>Public Preview；Apache-2.0。2026-06 才公开，API 仍可能快速变动。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">特化</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex Agents</a></td><td>文件密集、retrieval 与知识工作流程。</td><td>维护中；MIT。强项是数据与 retrieval，不是所有 orchestration 场景。</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/agentscope-ai/agentscope">AgentScope</a></td><td>研究多 Agent、需要可视化与 studio 工具。</td><td>维护中；Apache-2.0。先确认社区、部署与语言需求。</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>要模型、retrieval、tool 与 middleware 的高阶积木。</td><td>维护中；MIT。复杂 orchestration 可下沉到 LangGraph。</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">特化</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex Agents</a></td><td>文件密集、retrieval 与知识工作流程。</td><td>维护中；MIT。强项是数据与 retrieval，不是所有 orchestration 场景。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/agentscope-ai/agentscope">AgentScope</a></td><td>研究多 Agent、需要可视化与 studio 工具。</td><td>维护中；Apache-2.0。先确认社区、部署与语言需求。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>要模型、retrieval、tool 与 middleware 的高阶积木。</td><td>维护中；MIT。复杂 orchestration 可下沉到 LangGraph。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">基础设施</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>想自建 gateway，以统一接口连接多家 provider，并练习 routing、fallback 与 load balancing。</td><td>维护中；Apache-2.0。它是 infrastructure，不是 Agent framework；adaptive load balancing、clustering 与部分 guardrails 属于 enterprise 功能。</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>想用 Python SDK 或 OpenAI-compatible proxy 统一切换多家 provider。</td><td>维护中；根目录 LICENSE 说明 enterprise 以外采用 MIT，<code>enterprise/</code> 另有授权。它不是 Agent framework。</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">基础设施</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>想自建 gateway，以统一接口连接多家 provider，并练习 routing、fallback 与 load balancing。</td><td>维护中；Apache-2.0。它是 infrastructure，不是 Agent framework；adaptive load balancing、clustering 与部分 guardrails 属于 enterprise 功能。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>想用 Python SDK 或 OpenAI-compatible proxy 统一切换多家 provider。</td><td>维护中；根目录 LICENSE 说明 enterprise 以外采用 MIT，<code>enterprise/</code> 另有授权。它不是 Agent framework。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 

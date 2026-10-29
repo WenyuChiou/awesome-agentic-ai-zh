@@ -6,7 +6,7 @@
 
 ← 回到 [Stage 6 — Memory & RAG](../../../stages/06-memory-rag.zh-Hans.md#练习-5long-term-memory)
 
-普通聊天记录像写在白板上：程序关掉，白板可能就擦掉了。**Long-term memory（长期记忆）**会把值得保留的事写进磁盘，下次开程序还能找回来。
+普通聊天记录像写在白板上：程序关掉，白板可能就擦掉了。**Long-term memory（长期记忆）** 会把值得保留的事写进磁盘，下次开程序还能找回来。
 
 ## 📌 学习目标
 

@@ -44,13 +44,17 @@ README、PROGRESS、CAPSTONE、章節頁首、章末下一站與路線圖必須�
 
 **初版草稿（A1-A5）→ 合併後（A1-A3）**：
 
+<div align="center" markdown="1">
+
 | 草稿 | 草稿主題 | 最終歸屬 |
-|---|---|---|
+|:---|:---|:---|
 | A1 | CLI 入門 + 選擇 | → 最終 A1 |
 | A2 | Workflow（project instructions / Skill / 任務拆解 / portable prompt） | → 最終 A2 |
 | A3 | MCP 接 CLI | → 最終 A3 |
 | A4 | 多 CLI 並用 | → 移到最終 A1／A2 的工具比較與 portable prompt |
 | A5 | Production CLI workflow（CI / cost / observability / team sharing） | → 最終 A3 |
+
+</div>
 
 合併邏輯：
 
@@ -110,12 +114,16 @@ Stage 5（Claude Code 生態）兩條軌都會碰到：
 
 ### Track A 跟 Track B 的 entry curation 差別
 
+<div align="center" markdown="1">
+
 | | Track A（A1-A3） | Track B（Stage 3-8） |
-|---|---|---|
+|:---|:---|:---|
 | **entry 結構** | 大量 cross-link 到 Stage 5 / Stage 8 / cli-agents-guide | 完整獨立 entry（每個都有 schema 表格）|
 | **entry 數** | ~24 個（多為 cross-link） | ~80 個（多為獨立 entry） |
 | **新增 entry 標準** | 必須是 CLI agent 直接相關的工具 | framework / library / agent component |
 | **更新頻率** | 高（CLI 工具迭代快） | 中（framework 更新慢一些） |
+
+</div>
 
 **判準**：Track A entry 出現的條件是「對 CLI workflow 有直接幫助」；Track B entry 出現的條件是「教讀者一個 agent design pattern」。
 
@@ -539,3 +547,12 @@ Stage 0 的可見主線固定為「skip 條件 → 4 個學習目標 → 核心�
 - **branch 設計理由**：見 [`../branches/DESIGN.md`](../branches/DESIGN.md)
 - **entry schema / 用詞規範**：見 [`../resources/style-guide.md`](../resources/style-guide.md)
 - **跨 stage 範例**：見 [`../walkthroughs/build-first-agent-in-7-steps.md`](../walkthroughs/build-first-agent-in-7-steps.md)
+
+
+### GitHub 原生表格與網站排版
+
+學習資源表同時服務 GitHub Markdown 與文件站。原生 Markdown 表格用置中的 `markdown="1"` 外框，說明欄明確靠左；HTML 表格置中，合併分類與短評分置中。資源欄改用沒有段落預設留白的 `div[data-field]`，保留所有資料、URL、星等與分組。GitHub 會移除 class／data 屬性，所以原生版須靠可接受的 HTML 排版，不能用手機文件站的 CSS 通過來代替驗收。reader UX 量測不把表格對齊冒號算成新增敘述，也不能為了計數而插入改變原始 HTML 巢狀關係的容器。
+
+桌面資源比較優先五欄：分類、專案／文件、推薦度、用途、限制；資料不足不硬湊五欄，也不新增星等。GitHub Markdown 保留多欄比較；文件站在手機／平板可將同一份資料直向排滿寬。說明文字靠左，分類與星等可置中；置中的是整張表，不是所有敘述。
+
+路線與選路表需另做名稱換行驗收：完整章名與入口不能因欄寬留下孤字。依實測選擇名稱欄寬，長名較多的路線保留自動欄寬；手機文件站將同一份資料滿寬直向排列。這不是新增教學內容，也不縮短正式名稱來配合欄位。

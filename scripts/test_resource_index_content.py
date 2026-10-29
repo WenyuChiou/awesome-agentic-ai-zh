@@ -99,7 +99,15 @@ def test_task_router_and_all_twelve_reference_entrances_stay_visible(locale: str
 def test_tool_router_preserves_explicit_product_identity_mappings(locale: str) -> None:
     visible = _without_details(PAGES[locale].read_text(encoding="utf-8"))
     question, destination = TOOL_ROUTER_ROWS[locale]
-    assert f"| {question} | {destination} |" in visible
+    import markdown
+    from html import unescape
+
+    rendered = markdown.markdown(visible, extensions=["extra"])
+    matching = [row for row in re.findall(r"<tr>(.*?)</tr>", rendered, re.DOTALL)
+                if question in unescape(re.sub(r"<[^>]+>", "", row))]
+    assert len(matching) == 1
+    target = re.search(r"\]\(([^)]+)\)", destination)[1]
+    assert f'href="{target}"' in matching[0]
 
     assert question.index("OpenRouter") < question.index("Ollama")
     assert question.index("Ollama") < question.index("OpenCode") < question.index("Pi")
@@ -113,7 +121,10 @@ def test_reference_table_uses_five_real_rowgroups_without_empty_category_cells(
     locale: str,
 ) -> None:
     text = PAGES[locale].read_text(encoding="utf-8")
-    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    tables = re.findall(
+        r'<div class="reader-reference-table"[^>]*>\s*(<table align="center">.*?</table>)\s*</div>',
+        text, flags=re.DOTALL,
+    )
     assert len(tables) == 1
     table = tables[0]
     groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
@@ -151,7 +162,8 @@ def test_public_router_keeps_ordered_destinations_and_ratings_in_locale_parity()
     for locale, page in PUBLIC_PAGES.items():
         visible = _without_details(page.read_text(encoding="utf-8"))
         router = visible.split("## 📌", 1)[1].split("<a id=", 1)[0]
-        rows = re.findall(r"\[[^]]+\]\(([^)]+)\)\s*\|\s*(⭐+)\s*\|", router)
+        rows = re.findall(r"\[[^]]+\]\(([^)]+)\)\s*<br>\s*(⭐+)\s*\|", router)
+        assert len(rows) == 6, "Every destination must retain its own visible rating"
         signatures[locale] = [(_locale_neutral_href(href), rating) for href, rating in rows]
 
     assert signatures["en"] == signatures["zh-TW"]
@@ -166,9 +178,10 @@ def test_resource_hub_keeps_router_and_table_order_in_locale_parity() -> None:
         router = visible.split("## 🧭", 1)[1].split("## 🧩", 1)[0]
         table = visible.split("## 📚", 1)[1].split("## 🔁", 1)[0]
         router_signatures[locale] = [
-            _locale_neutral_href(href)
-            for href in re.findall(r"\]\(([^)]+\.md)\)", router)
+            _locale_neutral_href(markdown_href or html_href)
+            for markdown_href, html_href in re.findall(r'\]\(([^)]+\.md)\)|href="([^"]+\.md)"', router)
         ]
+        assert len(router_signatures[locale]) == 14
         table_signatures[locale] = [
             _locale_neutral_href(href)
             for href in re.findall(r'href="([^"]+\.md)"', table)

@@ -928,6 +928,24 @@ def test_repo_passes_committed_ratchet() -> None:
     assert result.returncode == 0, result.stdout + result.stderr
 
 
+def test_table_alignment_markers_do_not_add_reader_prose() -> None:
+    import re
+    plain = "| Name | Meaning |\n| --- | --- |\n| API | Service entry |\n"
+    limit = len(re.sub(r"\s+", "", _page(plain)))
+    rc, out = _run(plain, config=_config(limit=limit))
+    assert rc == 0, out
+    rc, out = _run(plain.replace("---", ":---"), config=_config(limit=limit))
+    assert rc == 0, out
+
+
+def test_fenced_table_alignment_is_still_visible_code() -> None:
+    import re
+    plain = "```markdown\n| Name | Meaning |\n| --- | --- |\n| API | Service entry |\n```\n"
+    limit = len(re.sub(r"\s+", "", _page(plain)))
+    rc, out = _run(plain.replace("---", ":---"), config=_config(limit=limit))
+    assert rc == 1 and "visible characters" in out, out
+
+
 def _run_all() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")

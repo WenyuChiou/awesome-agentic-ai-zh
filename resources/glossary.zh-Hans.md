@@ -23,7 +23,7 @@
 
 同一个界面可能同时出现模型、Router 和 Agent。先问“它负责哪一件事”，就不会把产品名称混在一起。
 
-<table>
+<table align="center">
 <thead>
 <tr><th>身份</th><th>白话工作</th><th>示例和边界</th></tr>
 </thead>
@@ -41,16 +41,16 @@
 
 这张表用来保持跨 Stage 命名一致。普通读者不用先背。
 
-<table>
+<table align="center">
 <thead>
 <tr><th>类型</th><th>英文术语</th><th>中文理解名</th><th>主要 Stage</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">输入和信息</th><td>Prompt Engineering</td><td>Prompt 设计</td><td>Stage 2</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">输入和信息</th><td>Prompt Engineering</td><td>Prompt 设计</td><td>Stage 2</td></tr>
 <tr><td>Context Engineering</td><td>上下文管理</td><td>Stage 6／7</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="17">Agent 执行</th><td>Agent Production Engineering</td><td>Agent 可用化工程</td><td>Stage 7</td></tr>
+<tr><th scope="rowgroup" rowspan="17" align="center" valign="middle">Agent 执行</th><td>Agent Production Engineering</td><td>Agent 可用化工程</td><td>Stage 7</td></tr>
 <tr><td>Harness Engineering</td><td>Agent 执行系统设计</td><td>Stage 7</td></tr>
 <tr><td>Loop Engineering</td><td>Agent 循环设计</td><td>Stage 7</td></tr>
 <tr><td>Graph Engineering</td><td>Workflow Graph 工程</td><td>Stage 4／7</td></tr>
@@ -69,7 +69,7 @@
 <tr><td>Scaffolding</td><td>支撑架构</td><td>Stage 7</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="9">质量和上线</th><td>Observability</td><td>观测和记录</td><td>Stage 7</td></tr>
+<tr><th scope="rowgroup" rowspan="9" align="center" valign="middle">质量和上线</th><td>Observability</td><td>观测和记录</td><td>Stage 7</td></tr>
 <tr><td>Telemetry</td><td>运行记录</td><td>Stage 7</td></tr>
 <tr><td>Eval</td><td>效果评估</td><td>Stage 7</td></tr>
 <tr><td>Evaluation Harness</td><td>评估框架</td><td>Stage 7</td></tr>
@@ -80,14 +80,14 @@
 <tr><td>Latency</td><td>延迟／等待时间</td><td>Stage 7</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">检索和模型</th><td>Vector DB</td><td>向量数据库</td><td>Stage 6</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">检索和模型</th><td>Vector DB</td><td>向量数据库</td><td>Stage 6</td></tr>
 <tr><td>Retrieval</td><td>检索</td><td>Stage 6</td></tr>
 <tr><td>Reranking</td><td>重排序</td><td>Stage 6</td></tr>
 <tr><td>Long Context</td><td>长上下文</td><td>Stage 6</td></tr>
 <tr><td>Fine-tuning</td><td>模型微调</td><td>Stage 6</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">操作界面</th><td>Agent Interfaces</td><td>Agent 操作界面</td><td>Stage 8</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">操作界面</th><td>Agent Interfaces</td><td>Agent 操作界面</td><td>Stage 8</td></tr>
 <tr><td>Code Sandbox</td><td>隔离代码执行环境</td><td>Stage 8</td></tr>
 <tr><td>Cold Start</td><td>启动延迟</td><td>Stage 8</td></tr>
 <tr><td>Reward Hacking</td><td>钻评分漏洞</td><td>Stage 7／8</td></tr>

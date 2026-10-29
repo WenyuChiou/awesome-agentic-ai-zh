@@ -12,11 +12,15 @@
 
 ## 📌 先分清三条轴
 
+<div align="center" markdown="1">
+
 | 轴 | 五岁也能懂的说法 | 正确问题 |
-|---|---|---|
+|:---|:---|:---|
 | **Identity（身份）** | 这个东西的工作是什么？ | 它是 Coding Agent、Router、Local Runtime、Framework，还是 Chat Gateway？ |
 | **Surface（操作界面）** | 你从哪扇门跟它说话？ | 终端、IDE、桌面、Web、Chat app 还是 API？ |
 | **Deployment（部署位置）** | 它的身体放在哪里？ | 你的电脑、云端主机、边缘设备，还是托管服务？ |
+
+</div>
 
 一个产品可以同时有很多 **Surface**，也可以更换 **Deployment**。这不会改变它的主要 **Identity**。
 
@@ -29,20 +33,26 @@
 
 ## 🧩 身份：它到底负责什么
 
+<div align="center" markdown="1">
+
 | 核心词 | 白话定义 | 例子 | 它不自动负责什么 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **Coding Agent／Harness（程序代理／工作台）** | 能在允许范围内读文件、改文件、跑命令，再回来报告 | Claude Code、Codex、OpenCode、Pi、Aider、goose | 不一定包含模型、Router 或 Sandbox |
 | **Router（路由器）** | 把模型请求转发给不同 Provider | OpenRouter | 不会自己修改 repo，也不管理文件权限 |
 | **Local Runtime（本地模型引擎）** | 在自己的电脑加载并运行模型 | Ollama、vLLM | 不会自己理解任务或操作工作目录 |
 | **Agent Framework（代理框架）** | 给开发者编写状态、步骤、Handoff 和 Workflow 的工具箱 | LangGraph、CrewAI、Microsoft Agent Framework | 不是安装后就能替你完成工作的成品 Agent |
 | **Chat Gateway（聊天入口）** | 把 Agent 连接到 Telegram、Slack 等消息入口 | Hermes Agent 的 gateway／messaging 模式 | 不代表底层模型、权限和部署已经安全 |
 
+</div>
+
 最短识别法：**谁运行模型？谁转发请求？谁能碰文件？谁安排多个步骤？你从哪里说话？**
 
 ## 🧭 常见工具放在哪里
 
+<div align="center" markdown="1">
+
 | 工具 | 主要 Identity | 常见 Surface | 可用 Deployment | 初学者最容易搞错的地方 |
-|---|---|---|---|---|
+|:---|:---|:---|:---|:---|
 | [OpenCode](https://opencode.ai/docs/) | Coding Agent／Harness | 终端、桌面、IDE | OpenCode 程序在本地运行 | 连接云端 Provider 只会发出模型请求，不会把 OpenCode 程序搬到云端；仍要选择模型和 permission |
 | [Pi](https://pi.dev/docs/latest) | Coding Agent／Harness | 终端、SDK、RPC | 本地 | 这里的 Pi 不是 Raspberry Pi；它没有内置 Sandbox |
 | [OpenRouter](https://openrouter.ai/docs/faq) | Router | API | 托管云端服务 | 它不会自己读文件或执行命令 |
@@ -51,6 +61,8 @@
 | [goose](https://block.github.io/goose/) | Coding／general Agent | CLI、桌面、API | 本地 | Extension 权限要单独审查 |
 | [Hermes Agent](https://github.com/NousResearch/hermes-agent) | Agent runtime＋Chat Gateway | CLI、消息平台 | 本地或自己的主机 | Chat 入口不等于 24/7、安全或零维护 |
 | [OpenClaw](https://github.com/openclaw/openclaw) | 可自建的 Agent／assistant 平台 | Web、Chat、CLI，取决于部署 | 本地、云端或 edge | 在 edge 运行不代表没有网络、工具或数据外泄风险 |
+
+</div>
 
 ## 📚 必读阅读
 
@@ -90,10 +102,14 @@ Hermes Agent 这类工具可以连接 Messaging Gateway。你仍要处理主机�
 
 **Subagent（子代理）** 是主 Agent 把一小块任务交给另一个隔离工作者。它回答的是“工作怎么分”，不是“产品运行在哪里”。
 
+<div align="center" markdown="1">
+
 | 路径 | 谁负责建立子代理 | 适合什么 |
-|---|---|---|
+|:---|:---|:---|
 | **Framework-based** | 你的 Python／TypeScript orchestration 程序 | 要自己控制状态、Provider、Handoff 和 Workflow |
 | **Coding-Agent native** | Claude Code、Codex 等 Agent runtime | 在同一个 repo 中拆分研究、实现或审查任务 |
+
+</div>
 
 不论哪条路径，都要给子代理明确范围、输出格式、预算、停止条件和验证方式。主代理仍要读取结果；“使用了多个 Agent”不是正确性的证明。
 
@@ -103,27 +119,27 @@ Hermes Agent 这类工具可以连接 Messaging Gateway。你仍要处理主机�
 
 星星是本学习地图的阅读优先级，不是 GitHub stars，也不是工具总排名。
 
-<table>
+<table align="center">
 <thead><tr><th>分类</th><th>Project／资源</th><th>用它学什么</th><th>限制</th><th>评分</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Coding Agent／Harness</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>Provider 切换、rules、Skills 和 permission</td><td>模型和 Sandbox 仍要另外选择</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>小核心、extensions、SDK 和 RPC</td><td>没有内置 Sandbox</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>Git diff、commit 和 undo 工作流</td><td>先确认 auto-commit 和 hook 设置</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>CLI、桌面、Provider 和 extensions</td><td>先开放最小 extension 权限</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/continuedev/continue">continuedev/continue</a></td><td>IDE／CLI Surface 和 Agent mode</td><td>不同 Surface 的权限要分开看</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Coding Agent／Harness</th><td><a href="https://github.com/anomalyco/opencode">opencode</a></td><td>Provider 切换、rules、Skills 和 permission</td><td>模型和 Sandbox 仍要另外选择</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/earendil-works/pi">pi</a></td><td>小核心、extensions、SDK 和 RPC</td><td>没有内置 Sandbox</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/Aider-AI/aider">aider</a></td><td>Git diff、commit 和 undo 工作流</td><td>先确认 auto-commit 和 hook 设置</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>CLI、桌面、Provider 和 extensions</td><td>先开放最小 extension 权限</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/continuedev/continue">continue</a></td><td>IDE／CLI Surface 和 Agent mode</td><td>不同 Surface 的权限要分开看</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Router／Runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter 官方文档</a></td><td>Router、Provider routing 和 usage</td><td>不是 Coding Agent</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>本地模型下载和兼容 API</td><td>不是 Coding Agent</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Router／Runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter 官方文档</a></td><td>Router、Provider routing 和 usage</td><td>不是 Coding Agent</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/ollama/ollama">ollama</a></td><td>本地模型下载和兼容 API</td><td>不是 Coding Agent</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Messaging／自建</th><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>Agent runtime、Messaging Gateway 和调度</td><td>自建仍要维护并收窄工具权限</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/openclaw/openclaw">openclaw/openclaw</a></td><td>本地／edge／自建 assistant 的部署取舍</td><td>本地不等于零数据风险</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Messaging／自建</th><td><a href="https://github.com/NousResearch/hermes-agent">hermes-agent</a></td><td>Agent runtime、Messaging Gateway 和调度</td><td>自建仍要维护并收窄工具权限</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/openclaw/openclaw">openclaw</a></td><td>本地／edge／自建 assistant 的部署取舍</td><td>本地不等于零数据风险</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">Framework／Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langchain-ai/langgraph</a></td><td>状态、节点、边、Checkpoint 和 Human-in-the-loop</td><td>需要自己编写和测试 Workflow</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/crewAIInc/crewAI">crewAIInc/crewAI</a></td><td>角色、Task 和 Crew orchestration</td><td>角色描述不能替代验证</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/microsoft/agent-framework">microsoft/agent-framework</a></td><td>Microsoft 当前 Agent／Workflow 开发路径</td><td>旧 AutoGen／Swarm 教材只作历史背景</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Framework／Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langgraph</a></td><td>状态、节点、边、Checkpoint 和 Human-in-the-loop</td><td>需要自己编写和测试 Workflow</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>角色、Task 和 Crew orchestration</td><td>角色描述不能替代验证</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/microsoft/agent-framework">agent-framework</a></td><td>Microsoft 当前 Agent／Workflow 开发路径</td><td>旧 AutoGen／Swarm 教材只作历史背景</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
 

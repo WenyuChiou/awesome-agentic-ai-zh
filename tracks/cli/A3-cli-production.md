@@ -17,11 +17,15 @@
 
 ## 🧩 先認識三個核心詞
 
+<div align="center" markdown="1">
+
 | 核心詞 | 它是什麼、像什麼 | A3 怎麼用 | 不是什麼 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **MCP（Model Context Protocol）** | 讓 agent 連外部工具或資料的標準轉接頭 | 只把一個 demo 資料夾或唯讀工具交給 server | 不是自動安全；能碰什麼仍取決於權限 |
 | **CI（Continuous Integration）** | push 或 PR 出現時會自動工作的檢查站 | 讓測試 PR 自動跑一次只讀 review | 不是可以跳過人類 review 的 auto-merge 按鈕 |
 | **Observability（觀測與紀錄）** | 像收據加行車紀錄，留下發生過的事 | 記下 provider、model、usage、時間、結果與失敗原因 | 不是只看一個總 token 或猜出拿不到的成本 |
+
+</div>
 
 三個詞會一起出現，但不是同一件事：MCP 負責「接工具」，CI 負責「何時自動跑」，observability 負責「跑完留下什麼證據」。
 
@@ -137,14 +141,18 @@ GitHub 建議 production workflow 把第三方 Action pin 到完整 commit SHA�
 
 先用一個小 task 填這張卡：
 
+<div align="center" markdown="1">
+
 | 欄位 | 要記什麼 |
-|---|---|
+|:---|:---|
 | Task | 這次請 agent 做什麼 |
 | Provider／model | 實際使用的供應商與型號；拿不到就寫未確認 |
 | Usage | input／output usage；不要只寫模糊的「總 token」 |
 | 時間 | workflow 或 CLI 顯示的實際耗時 |
 | 結果 | `PASS`、問題清單或失敗原因 |
 | 成本 | 只有能對到官方單價時才計算；否則寫計費方式或未確認 |
+
+</div>
 
 再設一個工具真的支援的停止規則，例如 job timeout、最大重試、provider spend limit，或每次進入付費步驟前人工確認。不要發明一個工具不會讀的「通用成本設定」來製造安心感。
 
@@ -212,35 +220,35 @@ Skill 的核心意思可以共用，但資料夾、權限、frontmatter 與安�
 推薦度是本學習地圖的編輯建議，不是 GitHub stars。`⭐⭐⭐⭐⭐` 表示這條學習路徑的必讀／必做入口；它不代表工具永遠安全，也不代表 production 可以跳過自己的 threat model。
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="CLI 工具與學習資源">
-<table>
-<thead><tr><th scope="col">類型</th><th scope="col">資源、用途與限制</th></tr></thead>
+<table align="center">
+<thead><tr><th scope="col">分類</th><th scope="col">專案／文件</th><th scope="col">評分</th><th scope="col">用途</th><th scope="col">來源</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">安全連接 MCP</th><td><p data-field="entry"><strong>MCP Connect to local servers</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> allowed directories 與明確授權</p><p data-field="when"><strong>何時使用：</strong> 第一次接本機 server</p><p data-field="sources"><strong>來源：</strong> <a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">官方文件</a></p></td></tr>
-<tr><td><p data-field="entry"><strong>MCP Security Best Practices</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> least privilege、scope 與 token handling</p><p data-field="when"><strong>何時使用：</strong> 要連帳號或遠端服務前</p><p data-field="sources"><strong>來源：</strong> <a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">官方文件</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>github-mcp-server</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> <code>--read-only</code>、toolsets 與 tools allow-list</p><p data-field="when"><strong>何時使用：</strong> 要讀 GitHub PR／issue</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/github/github-mcp-server">GitHub repo</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>servers</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> reference implementation 與非 production-ready 警告</p><p data-field="when"><strong>何時使用：</strong> 學協定或讀範例程式</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></p></td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle" width="80">安全連接 MCP</th><td><div data-field="entry"><strong>MCP Connect to local servers</strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> allowed directories 與明確授權</div><div data-field="when"><strong>何時使用：</strong> 第一次接本機 server</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-local-servers">官方文件</a></div></td></tr>
+<tr><td><div data-field="entry"><strong>MCP Security Best Practices</strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> least privilege、scope 與 token handling</div><div data-field="when"><strong>何時使用：</strong> 要連帳號或遠端服務前</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices">官方文件</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>github-mcp-server</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> <code>--read-only</code>、toolsets 與 tools allow-list</div><div data-field="when"><strong>何時使用：</strong> 要讀 GitHub PR／issue</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/github/github-mcp-server">GitHub repo</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>servers</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> reference implementation 與非 production-ready 警告</div><div data-field="when"><strong>何時使用：</strong> 學協定或讀範例程式</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/modelcontextprotocol/servers">GitHub repo</a></div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">CI 與 PR review</th><td><p data-field="entry"><strong>GitHub Actions Secure Use</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> 最小權限、不可信輸入、pin SHA</p><p data-field="when"><strong>何時使用：</strong> 寫任何有 secrets 的 workflow 前</p><p data-field="sources"><strong>來源：</strong> <a href="https://docs.github.com/en/actions/reference/security/secure-use">官方文件</a></p></td></tr>
-<tr><td><p data-field="entry"><strong>Claude Code GitHub Actions</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> 官方 setup、permissions 與 troubleshooting</p><p data-field="when"><strong>何時使用：</strong> 使用 Claude Code 跑 CI</p><p data-field="sources"><strong>來源：</strong> <a href="https://code.claude.com/docs/en/github-actions">官方文件</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>claude-code-action</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> 官方範例與 action inputs</p><p data-field="when"><strong>何時使用：</strong> 從可執行範本開始</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></p></td></tr>
-<tr><td><p data-field="entry"><strong>Codex GitHub Action</strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> permission profile、trigger 與輸出</p><p data-field="when"><strong>何時使用：</strong> 使用 Codex 跑 CI</p><p data-field="sources"><strong>來源：</strong> <a href="https://learn.chatgpt.com/docs/github-action">OpenAI 官方文件</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>codex-action</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> <code>:read-only</code> 與 safety strategy</p><p data-field="when"><strong>何時使用：</strong> 核對最新 inputs 與範例</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/openai/codex-action">GitHub repo</a></p></td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle" width="80">CI 與 PR review</th><td><div data-field="entry"><strong>GitHub Actions Secure Use</strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> 最小權限、不可信輸入、pin SHA</div><div data-field="when"><strong>何時使用：</strong> 寫任何有 secrets 的 workflow 前</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://docs.github.com/en/actions/reference/security/secure-use">官方文件</a></div></td></tr>
+<tr><td><div data-field="entry"><strong>Claude Code GitHub Actions</strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> 官方 setup、permissions 與 troubleshooting</div><div data-field="when"><strong>何時使用：</strong> 使用 Claude Code 跑 CI</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://code.claude.com/docs/en/github-actions">官方文件</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>claude-code-action</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> 官方範例與 action inputs</div><div data-field="when"><strong>何時使用：</strong> 從可執行範本開始</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/anthropics/claude-code-action">GitHub repo</a></div></td></tr>
+<tr><td><div data-field="entry"><strong>Codex GitHub Action</strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> permission profile、trigger 與輸出</div><div data-field="when"><strong>何時使用：</strong> 使用 Codex 跑 CI</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://learn.chatgpt.com/docs/github-action">OpenAI 官方文件</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>codex-action</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> <code>:read-only</code> 與 safety strategy</div><div data-field="when"><strong>何時使用：</strong> 核對最新 inputs 與範例</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/openai/codex-action">GitHub repo</a></div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">觀察與評估</th><td><p data-field="entry"><strong><code>langfuse</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> traces、usage 與 eval</p><p data-field="when"><strong>何時使用：</strong> 想把多次執行放在一起看</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/langfuse/langfuse">GitHub repo</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>phoenix</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> tracing 與 evaluation</p><p data-field="when"><strong>何時使用：</strong> 想在本機觀察 AI 系統</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>helicone</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> proxy／gateway 的資料流與隱私邊界</p><p data-field="when"><strong>何時使用：</strong> 想從 gateway 收集 request 紀錄</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/Helicone/helicone">GitHub repo</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>promptfoo</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> eval cases 與 CI regression</p><p data-field="when"><strong>何時使用：</strong> 要比較改動前後是否退步</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></p></td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle" width="80">觀察與評估</th><td><div data-field="entry"><strong><code>langfuse</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> traces、usage 與 eval</div><div data-field="when"><strong>何時使用：</strong> 想把多次執行放在一起看</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/langfuse/langfuse">GitHub repo</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>phoenix</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> tracing 與 evaluation</div><div data-field="when"><strong>何時使用：</strong> 想在本機觀察 AI 系統</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/Arize-ai/phoenix">GitHub repo</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>helicone</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> proxy／gateway 的資料流與隱私邊界</div><div data-field="when"><strong>何時使用：</strong> 想從 gateway 收集 request 紀錄</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/Helicone/helicone">GitHub repo</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>promptfoo</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> eval cases 與 CI regression</div><div data-field="when"><strong>何時使用：</strong> 要比較改動前後是否退步</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/promptfoo/promptfoo">GitHub repo</a></div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">分享 Skill／plugin</th><td><p data-field="entry"><strong>Claude Code Plugins</strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> plugin 結構、安裝與 marketplace</p><p data-field="when"><strong>何時使用：</strong> 要替 Claude Code 打包</p><p data-field="sources"><strong>來源：</strong> <a href="https://code.claude.com/docs/en/plugins">官方文件</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>claude-plugins-official</code></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> 官方管理的 plugin 目錄</p><p data-field="when"><strong>何時使用：</strong> 找可讀的正式範例</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>superpowers-marketplace</code></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> 最小 marketplace 外殼</p><p data-field="when"><strong>何時使用：</strong> 理解 curator-only 結構</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></p></td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">分享 Skill／plugin</th><td><div data-field="entry"><strong>Claude Code Plugins</strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> plugin 結構、安裝與 marketplace</div><div data-field="when"><strong>何時使用：</strong> 要替 Claude Code 打包</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://code.claude.com/docs/en/plugins">官方文件</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>claude-plugins-official</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> 官方管理的 plugin 目錄</div><div data-field="when"><strong>何時使用：</strong> 找可讀的正式範例</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/anthropics/claude-plugins-official">GitHub repo</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>superpowers-marketplace</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> 最小 marketplace 外殼</div><div data-field="when"><strong>何時使用：</strong> 理解 curator-only 結構</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/obra/superpowers-marketplace">GitHub repo</a></div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">目錄與完整範例</th><td><p data-field="entry"><strong><code>awesome-mcp-servers</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> 先分類，再逐一查來源與權限</p><p data-field="when"><strong>何時使用：</strong> 官方資源沒有需要的 server 時</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></p></td></tr>
-<tr><td><p data-field="entry"><strong><code>superpowers</code></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="read"><strong>先看什麼：</strong> Skill、規則與 workflow 如何組在一起</p><p data-field="when"><strong>何時使用：</strong> 完成最小流程後看完整例子</p><p data-field="sources"><strong>來源：</strong> <a href="https://github.com/obra/superpowers">GitHub repo</a></p></td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle" width="80">目錄與完整範例</th><td><div data-field="entry"><strong><code>awesome-mcp-servers</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> 先分類，再逐一查來源與權限</div><div data-field="when"><strong>何時使用：</strong> 官方資源沒有需要的 server 時</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/wong2/awesome-mcp-servers">GitHub repo</a></div></td></tr>
+<tr><td><div data-field="entry"><strong><code>superpowers</code></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="read"><strong>先看什麼：</strong> Skill、規則與 workflow 如何組在一起</div><div data-field="when"><strong>何時使用：</strong> 完成最小流程後看完整例子</div></td><td><div data-field="sources"><strong>來源：</strong> <a href="https://github.com/obra/superpowers">GitHub repo</a></div></td></tr>
 </tbody>
 </table>
 </div>

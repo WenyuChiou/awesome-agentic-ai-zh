@@ -2,10 +2,19 @@ from __future__ import annotations
 
 import hashlib
 import re
+from html import unescape
 import struct
 from pathlib import Path
 
 import pytest
+
+
+def _rendered_link_titles(text: str) -> list[str]:
+    import markdown
+
+    rendered = markdown.markdown(text, extensions=["extra"])
+    return [unescape(re.sub(r"<[^>]+>", "", title))
+            for title in re.findall(r"<a\b[^>]*>(.*?)</a>", rendered, flags=re.DOTALL)]
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -403,8 +412,8 @@ def test_stage3_stage4_titles_match_across_reader_entry_points(
     stage2 = read(locale_path("stages/02-prompt-engineering", suffix))
     examples_index = read(locale_path("examples/README", suffix))
 
-    assert f"[{stage3_topic}]" in readme
-    assert f"[{stage4_topic}]" in readme
+    assert stage3_topic in _rendered_link_titles(readme)
+    assert stage4_topic in _rendered_link_titles(readme)
     assert f"__{stage3_title}__" in index
     assert f"__{stage4_title}__" in index
     assert f"**{stage3_title}**" in progress
@@ -450,7 +459,7 @@ def test_stage7_umbrella_title_matches_all_direct_reader_routes(
     examples_index = read(locale_path("examples/README", suffix))
 
     assert stage7.startswith(f"# {stage7_title}\n")
-    assert f"[{stage7_topic}]" in readme
+    assert stage7_topic in _rendered_link_titles(readme)
     assert f"__{stage7_compact}__" in index
     assert f"**{stage7_title}**" in progress
     assert f"[{stage7_title}]" in stage6

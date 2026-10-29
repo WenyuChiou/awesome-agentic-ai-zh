@@ -151,7 +151,7 @@ def test_four_core_terms_use_one_visible_two_by_two_grouped_table(
     section = visible[section_start:section_end]
 
     assert LEGACY_CORE_ANCHORS[locale] in visible[:section_start]
-    tables = re.findall(r"<table>.*?</table>", section, flags=re.DOTALL)
+    tables = re.findall(r"<table align=\"center\">.*?</table>", section, flags=re.DOTALL)
     assert len(tables) == 1
     table = tables[0]
     header = "".join(
@@ -184,7 +184,7 @@ def test_four_disclosures_are_closed_and_resources_stay_visible(page: Path) -> N
     assert openings == ['<details markdown="1">'] * 4
     assert text.count("</details>") == 4
     assert "<details open" not in text
-    resource_table = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)[-1]
+    resource_table = re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)[-1]
     assert _detail_depth_at(text, text.index(resource_table)) == 0
     assert _detail_depth_at(text, len(text)) == 0
 
@@ -192,7 +192,7 @@ def test_four_disclosures_are_closed_and_resources_stay_visible(page: Path) -> N
 def test_resource_table_preserves_24_urls_ratings_and_true_rowgroups() -> None:
     for locale, page in PAGES.items():
         text = page.read_text(encoding="utf-8")
-        table = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)[-1]
+        table = re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)[-1]
         heading_offset = text.index(RESOURCE_HEADINGS[locale])
         table_offset = text.index(table, heading_offset)
         assert heading_offset < table_offset

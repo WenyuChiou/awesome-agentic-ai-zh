@@ -114,7 +114,7 @@ def _without_details(text: str) -> str:
 
 
 def _course_table(text: str) -> str:
-    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    tables = re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)
     assert len(tables) == 1
     return tables[0]
 
@@ -126,7 +126,7 @@ def test_visible_path_keeps_terms_chooser_courses_portfolio_and_return_route(
     text = PAGES[locale].read_text(encoding="utf-8")
     visible = _without_details(text)
     chooser = visible.index("## ⚡")
-    table = visible.index("<table>")
+    table = visible.index('<table align="center">')
     portfolio = visible.index("## 🧪")
 
     for label in CORE_LABELS[locale]:
@@ -347,8 +347,8 @@ def test_course_picker_renders_all_eight_choices_outside_disclosures(locale: str
         pickers[0], extensions=["md_in_html", "tables", "fenced_code"]
     )
     picker = ET.fromstring(rendered)
-    assert len(picker.findall("./table/thead/tr/th")) == 3
-    rows = picker.findall("./table/tbody/tr")
+    assert len(picker.findall("./div[@align='center']/table/thead/tr/th")) == 3
+    rows = picker.findall("./div[@align='center']/table/tbody/tr")
     assert len(rows) == 8
     for row in rows:
         cells = row.findall("td")

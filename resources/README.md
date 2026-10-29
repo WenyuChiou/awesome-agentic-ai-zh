@@ -8,21 +8,70 @@
 
 ## 🧭 你現在卡在哪裡？
 
-| 你現在想做什麼 | 先打開這一份 |
-|---|---|
-| 我完全沒寫過 code，不知道怎麼開始 | [`setup-guide.md`](setup-guide.md) |
-| 我想照完整學習地圖開始 | [主頁](../README.md) → [Stage 0](../stages/00-foundations.md) |
-| 我分不清模型怎麼學會、怎麼被調整、什麼時候只是在產生答案 | [`model-training-guide.md`](model-training-guide.md) |
-| 我看到一個詞，但不知道意思 | [查詞卡](glossary.md) |
-| 我分不清這四個名字：OpenRouter＝統一模型 API／router；Ollama＝本機模型 runtime；OpenCode／Pi＝coding agent／toolkit | [`cli-agents-guide.md`](cli-agents-guide.md) |
-| 我想做出第一個操作卡（Skill）、工具接頭（MCP server）或文件流程 | [實作食譜](cookbook.md) |
-| 我寫了工具說明（tool schema），但模型一直選錯工具 | [`schema-design-cheatsheet.md`](schema-design-cheatsheet.md) |
-| 我想找能接 Notion、Office、資料庫或瀏覽器的工具 | [`mcp-skills-catalog.md`](mcp-skills-catalog.md) |
-| 我想選一門課，或先看證書有沒有用 | [`courses.md`](courses.md) |
-| 我想知道 agent 是在終端機、編輯器、雲端或自己的裝置裡工作 | [`agent-paradigms.md`](agent-paradigms.md) |
-| 我想直接複製一個小幫手 agent（subagent）派遣範例 | [`subagent-cookbook.md`](subagent-cookbook.md) |
-| 我想自己設計、組合或排查小幫手 agent（subagent） | [`subagent-advanced.md`](subagent-advanced.md) |
-| 我想替這個專案寫內容或送 PR | [`style-guide.md`](style-guide.md) |
+<div class="reader-route-table" role="region" tabindex="0" aria-label="依需求選擇資源">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">你現在想做什麼</th>
+<th scope="col" align="left" width="340">先打開這一份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">我完全沒寫過 code，不知道怎麼開始</td>
+<td align="left"><a href="setup-guide.md"><code>setup-guide.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想照完整學習地圖開始</td>
+<td align="left"><a href="../README.md">主頁</a> → <a href="../stages/00-foundations.md">Stage 0</a></td>
+</tr>
+<tr>
+<td align="left">我分不清模型怎麼學會、怎麼被調整、什麼時候只是在產生答案</td>
+<td align="left"><a href="model-training-guide.md"><code>model-training-guide.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我看到一個詞，但不知道意思</td>
+<td align="left"><a href="glossary.md">查詞卡</a></td>
+</tr>
+<tr>
+<td align="left">我分不清這四個名字：OpenRouter＝統一模型 API／router；Ollama＝本機模型 runtime；OpenCode／Pi＝coding agent／toolkit</td>
+<td align="left"><a href="cli-agents-guide.md"><code>cli-agents-guide.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想做出第一個操作卡（Skill）、工具接頭（MCP server）或文件流程</td>
+<td align="left"><a href="cookbook.md">實作食譜</a></td>
+</tr>
+<tr>
+<td align="left">我寫了工具說明（tool schema），但模型一直選錯工具</td>
+<td align="left"><a href="schema-design-cheatsheet.md"><code>schema-design-cheatsheet.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想找能接 Notion、Office、資料庫或瀏覽器的工具</td>
+<td align="left"><a href="mcp-skills-catalog.md"><code>mcp-skills-catalog.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想選一門課，或先看證書有沒有用</td>
+<td align="left"><a href="courses.md"><code>courses.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想知道 agent 是在終端機、編輯器、雲端或自己的裝置裡工作</td>
+<td align="left"><a href="agent-paradigms.md"><code>agent-paradigms.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想直接複製一個小幫手 agent（subagent）派遣範例</td>
+<td align="left"><a href="subagent-cookbook.md"><code>subagent-cookbook.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想自己設計、組合或排查小幫手 agent（subagent）</td>
+<td align="left"><a href="subagent-advanced.md"><code>subagent-advanced.md</code></a></td>
+</tr>
+<tr>
+<td align="left">我想替這個專案寫內容或送 PR</td>
+<td align="left"><a href="style-guide.md"><code>style-guide.md</code></a></td>
+</tr>
+</tbody>
+</table>
+</div>
 
 ## 🧩 先分清楚五個詞
 
@@ -36,31 +85,33 @@
 
 同一類型已合併在左欄。表格全部保持展開，因為讀者要先看得見有哪些入口。
 
-<table>
-<thead><tr><th scope="col">類型</th><th scope="col">檔案</th><th scope="col">最適合什麼時候看</th><th scope="col">它不負責什麼</th></tr></thead>
+<div class="reader-reference-table" role="region" tabindex="0" aria-label="學習資源比較">
+<table align="center">
+<thead><tr><th scope="col">類型</th><th scope="col" width="340">檔案</th><th scope="col">最適合什麼時候看</th><th scope="col">它不負責什麼</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">開始與選擇</th><td><a href="setup-guide.md">setup-guide.md</a></td><td>第一次選 Web、Desktop、IDE、CLI 或 API</td><td>不取代每個產品的最新官方安裝頁</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">開始與選擇</th><td><a href="setup-guide.md">setup-guide.md</a></td><td>第一次選 Web、Desktop、IDE、CLI 或 API</td><td>不取代每個產品的最新官方安裝頁</td></tr>
 <tr><td><a href="glossary.md">glossary.md</a></td><td>30 秒查一個名詞</td><td>不取代完整章節與實作</td></tr>
 <tr><td><a href="cli-agents-guide.md">cli-agents-guide.md</a></td><td>分清模型、模型入口（router）、執行環境（runtime）與 coding agent</td><td>不替你自動開權限或選付費方案</td></tr>
 <tr><td><a href="courses.md">courses.md</a></td><td>比較課程、練習深度與證書限制</td><td>不保證證書能換到工作</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">動手與排錯</th><td><a href="cookbook.md">cookbook.md</a></td><td>做 Skill、MCP、Office、Gemini Notebook、Zotero 或本機 CLI 工作流</td><td>不把每個主題寫成一本長教材</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">動手與排錯</th><td><a href="cookbook.md">cookbook.md</a></td><td>做 Skill、MCP、Office、Gemini Notebook、Zotero 或本機 CLI 工作流</td><td>不把每個主題寫成一本長教材</td></tr>
 <tr><td><a href="schema-design-cheatsheet.md">schema-design-cheatsheet.md</a></td><td>工具選錯或參數常常傳錯</td><td>不教完整 MCP server 安裝</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">搜尋與定位</th><td><a href="model-training-guide.md">model-training-guide.md</a></td><td>分清 Pre-training、Post-training、Fine-tuning 與 Inference</td><td>不是從零訓練模型的完整課程</td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">搜尋與定位</th><td><a href="model-training-guide.md">model-training-guide.md</a></td><td>分清 Pre-training、Post-training、Fine-tuning 與 Inference</td><td>不是從零訓練模型的完整課程</td></tr>
 <tr><td><a href="mcp-skills-catalog.md">mcp-skills-catalog.md</a></td><td>依工作類型找工具接頭（MCP server）或操作卡（Skill）</td><td>收錄不代表零風險或永遠可用</td></tr>
 <tr><td><a href="agent-paradigms.md">agent-paradigms.md</a></td><td>分清 agent 跑在終端機、編輯器、雲端或自己的裝置</td><td>不是產品排行榜</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Subagent 進階</th><td><a href="subagent-cookbook.md">subagent-cookbook.md</a></td><td>先複製一個小幫手 agent 的派遣範例</td><td>不解釋全部設計原理</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Subagent 進階</th><td><a href="subagent-cookbook.md">subagent-cookbook.md</a></td><td>先複製一個小幫手 agent 的派遣範例</td><td>不解釋全部設計原理</td></tr>
 <tr><td><a href="subagent-advanced.md">subagent-advanced.md</a></td><td>自己設計、組合與排查小幫手 agent</td><td>不適合第一次使用 CLI agent 時先讀</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="1">維護專案</th><td><a href="style-guide.md">style-guide.md</a></td><td>寫 entry、翻譯、表格或送 PR</td><td>不是一般讀者的必修閱讀</td></tr>
+<tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">維護專案</th><td><a href="style-guide.md">style-guide.md</a></td><td>寫 entry、翻譯、表格或送 PR</td><td>不是一般讀者的必修閱讀</td></tr>
 </tbody>
 </table>
+</div>
 
 ## 🔁 看完要回哪裡？
 

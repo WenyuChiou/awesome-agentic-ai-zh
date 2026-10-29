@@ -35,12 +35,16 @@ After this page, you can:
 
 ### Do not mix up OpenCode, Pi, OpenRouter, and Ollama
 
+<div align="center" markdown="1">
+
 | Name | Core identity | Plain-language description |
-|---|---|---|
+|:---|:---|:---|
 | OpenCode | Coding Agent／Harness | Reads, edits, and tests in a code project |
 | Pi | Coding Agent／Harness | Adds extensions, skills, or RPC to a small core |
 | OpenRouter | API Router | Sends model requests to Providers; does not edit your repo |
 | Ollama | Local Model Runtime | Runs models and an API locally; is not itself a Coding Agent |
+
+</div>
 
 **OpenCode／Pi do the work, OpenRouter routes requests, and Ollama runs local models.**
 
@@ -67,13 +71,44 @@ If wrong, confirm README.md has no other work and Rollback only this exercise’
 <a id="recommended-tools"></a><a id="tier-progression"></a>
 ## 📚 Choose an entry point
 
-| What you want | Start with | Why |
-|---|---|---|
-| Learn permission and sandbox workflows | [Claude Code](https://code.claude.com/docs/en/overview) | Its docs separate permissions, isolation, and Surfaces |
-| Work through app, CLI, IDE, or cloud | [OpenAI Codex](https://github.com/openai/codex) | One Coding Agent works across multiple entry points |
-| Give a GitHub issue to a cloud agent | [GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | Understand cloud-agent versus IDE-agent mode |
-| Use an open, Provider-flexible tool | [OpenCode](https://github.com/anomalyco/opencode) | Keep Agent, Provider, and Router distinct |
-| Start in an IDE with step-by-step Approval | [Cline](https://github.com/cline/cline) | Practice approving tools, files, and browser actions |
+<div class="reader-route-table" role="region" tabindex="0" aria-label="Developer entry points">
+<table align="center">
+<thead>
+<tr>
+<th scope="col" align="left">What you want</th>
+<th scope="col" align="left">Start with</th>
+<th scope="col" align="left">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Learn permission and sandbox workflows</td>
+<td align="left"><a href="https://code.claude.com/docs/en/overview">Claude Code</a></td>
+<td align="left">Its docs separate permissions, isolation, and Surfaces</td>
+</tr>
+<tr>
+<td align="left">Work through app, CLI, IDE, or cloud</td>
+<td align="left"><a href="https://github.com/openai/codex">OpenAI Codex</a></td>
+<td align="left">One Coding Agent works across multiple entry points</td>
+</tr>
+<tr>
+<td align="left">Give a GitHub issue to a cloud agent</td>
+<td align="left"><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot cloud agent</a></td>
+<td align="left">Understand cloud-agent versus IDE-agent mode</td>
+</tr>
+<tr>
+<td align="left">Use an open, Provider-flexible tool</td>
+<td align="left"><a href="https://github.com/anomalyco/opencode">OpenCode</a></td>
+<td align="left">Keep Agent, Provider, and Router distinct</td>
+</tr>
+<tr>
+<td align="left">Start in an IDE with step-by-step Approval</td>
+<td align="left"><a href="https://github.com/cline/cline">Cline</a></td>
+<td align="left">Practice approving tools, files, and browser actions</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 Do not ask only “which is strongest?” Ask what files and commands it can access, whether it can connect to the network, who approves high-risk actions, and how failure is reversed.
 
@@ -92,26 +127,26 @@ Read in order, answering one question for each:
 <small>Tool identity, Surface, license, and repository status were checked against official documentation and the GitHub API on 2026-08-29 UTC. Ratings are editorial ratings for this map, not GitHub stars or performance rankings.</small>
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="Resources by category, use and limits">
-<table>
-<thead><tr><th scope="col">Category</th><th scope="col">Resource, use and limits</th></tr></thead>
+<table align="center">
+<thead><tr><th scope="col">Group</th><th scope="col">Project / document</th><th scope="col">Rating</th><th scope="col">Use</th><th scope="col">Limits</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Official / commercial Coding Agents</th><td><p data-field="entry"><strong><a href="https://code.claude.com/docs/en/overview">Claude Code</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent</p><p data-field="surface"><strong>Main Surface:</strong>  CLI／IDE／desktop／cloud</p><p data-field="use">Permissions, sandbox, project rules, and workflow</p><p data-field="status">Commercial; keep permission prompts and start with a small repo</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/openai/codex">codex</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent</p><p data-field="surface"><strong>Main Surface:</strong>  app／CLI／IDE／cloud</p><p data-field="use">Compare local and remote operation</p><p data-field="status">Active; repository code is Apache-2.0, while app/cloud follow their service terms; do not disable required Approval or expand workspace permissions</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent／code assistant</p><p data-field="surface"><strong>Main Surface:</strong>  GitHub／IDE／CLI／app</p><p data-field="use">Move from IDE collaboration to issues, branches, and PRs</p><p data-field="status">Commercial; Cloud Agent and IDE mode have different permissions; output needs human review</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://cursor.com/docs">Cursor</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent + AI editor</p><p data-field="surface"><strong>Main Surface:</strong>  IDE／CLI／cloud／SDK</p><p data-field="use">Compare editor, background agent, and other Surfaces</p><p data-field="status">Commercial; check permissions and data boundaries per Surface</p></td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle" width="80">Official / commercial Coding Agents</th><td><div data-field="entry"><strong><a href="https://code.claude.com/docs/en/overview">Claude Code</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent</div><div data-field="surface"><strong>Main Surface:</strong>  CLI／IDE／desktop／cloud</div><div data-field="use">Permissions, sandbox, project rules, and workflow</div></td><td><div data-field="status">Commercial; keep permission prompts and start with a small repo</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/openai/codex">codex</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent</div><div data-field="surface"><strong>Main Surface:</strong>  app／CLI／IDE／cloud</div><div data-field="use">Compare local and remote operation</div></td><td><div data-field="status">Active; repository code is Apache-2.0, while app/cloud follow their service terms; do not disable required Approval or expand workspace permissions</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">GitHub Copilot</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent／code assistant</div><div data-field="surface"><strong>Main Surface:</strong>  GitHub／IDE／CLI／app</div><div data-field="use">Move from IDE collaboration to issues, branches, and PRs</div></td><td><div data-field="status">Commercial; Cloud Agent and IDE mode have different permissions; output needs human review</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://cursor.com/docs">Cursor</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent + AI editor</div><div data-field="surface"><strong>Main Surface:</strong>  IDE／CLI／cloud／SDK</div><div data-field="use">Compare editor, background agent, and other Surfaces</div></td><td><div data-field="status">Commercial; check permissions and data boundaries per Surface</div></td></tr>
 </tbody><tbody>
-<tr><th scope="rowgroup" rowspan="6">Open-source Coding Agents／Harnesses</th><td><p data-field="entry"><strong><a href="https://github.com/anomalyco/opencode">opencode</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent／harness</p><p data-field="surface"><strong>Main Surface:</strong>  terminal／desktop</p><p data-field="use">Switch Provider or compatible endpoint</p><p data-field="status">Active; MIT; <code>AGENTS.md</code> has priority, with <code>CLAUDE.md</code> used only when absent</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/earendil-works/pi">pi</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent／harness</p><p data-field="surface"><strong>Main Surface:</strong>  terminal／SDK／RPC</p><p data-field="use">Add extensions, skills, and custom workflows to a small core</p><p data-field="status">Active; MIT; no built-in Sandbox, so isolate it yourself</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/Aider-AI/aider">aider</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent／pair programmer</p><p data-field="surface"><strong>Main Surface:</strong>  CLI</p><p data-field="use">Manage small changes with Git diff, commit, and undo</p><p data-field="status">Active; Apache-2.0; auto-commit does not skip hooks</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/aaif-goose/goose">goose</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding／general agent</p><p data-field="surface"><strong>Main Surface:</strong>  CLI／desktop／API</p><p data-field="use">Connect Providers, MCP, and extensions</p><p data-field="status">Active; Apache-2.0; start with low-privilege extensions</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/cline/cline">cline</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent</p><p data-field="surface"><strong>Main Surface:</strong>  IDE／CLI／SDK</p><p data-field="use">Approve tools, files, and browser actions step by step</p><p data-field="status">Active; Apache-2.0; an IDE Surface is not a safety guarantee</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/OpenHands/OpenHands">OpenHands</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> software-development agent platform</p><p data-field="surface"><strong>Main Surface:</strong>  web／CLI／SDK／cloud</p><p data-field="use">Handle a fuller issue in an isolated environment</p><p data-field="status">Active; MIT; larger tasks need checkpoints and human review</p></td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle" width="80">Open-source Coding Agents／Harnesses</th><td><div data-field="entry"><strong><a href="https://github.com/anomalyco/opencode">opencode</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent／harness</div><div data-field="surface"><strong>Main Surface:</strong>  terminal／desktop</div><div data-field="use">Switch Provider or compatible endpoint</div></td><td><div data-field="status">Active; MIT; <code>AGENTS.md</code> has priority, with <code>CLAUDE.md</code> used only when absent</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/earendil-works/pi">pi</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent／harness</div><div data-field="surface"><strong>Main Surface:</strong>  terminal／SDK／RPC</div><div data-field="use">Add extensions, skills, and custom workflows to a small core</div></td><td><div data-field="status">Active; MIT; no built-in Sandbox, so isolate it yourself</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/Aider-AI/aider">aider</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent／pair programmer</div><div data-field="surface"><strong>Main Surface:</strong>  CLI</div><div data-field="use">Manage small changes with Git diff, commit, and undo</div></td><td><div data-field="status">Active; Apache-2.0; auto-commit does not skip hooks</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/aaif-goose/goose">goose</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding／general agent</div><div data-field="surface"><strong>Main Surface:</strong>  CLI／desktop／API</div><div data-field="use">Connect Providers, MCP, and extensions</div></td><td><div data-field="status">Active; Apache-2.0; start with low-privilege extensions</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/cline/cline">cline</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent</div><div data-field="surface"><strong>Main Surface:</strong>  IDE／CLI／SDK</div><div data-field="use">Approve tools, files, and browser actions step by step</div></td><td><div data-field="status">Active; Apache-2.0; an IDE Surface is not a safety guarantee</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/OpenHands/OpenHands">OpenHands</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> software-development agent platform</div><div data-field="surface"><strong>Main Surface:</strong>  web／CLI／SDK／cloud</div><div data-field="use">Handle a fuller issue in an isolated environment</div></td><td><div data-field="status">Active; MIT; larger tasks need checkpoints and human review</div></td></tr>
 </tbody><tbody>
-<tr><th scope="rowgroup" rowspan="2">Workflow support</th><td><p data-field="entry"><strong><a href="https://github.com/obra/superpowers">superpowers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> workflow collection</p><p data-field="surface"><strong>Main Surface:</strong>  agent plugin／skills</p><p data-field="use">Planning, TDD, debugging, and review workflows</p><p data-field="status">Active; MIT; adapt templates to your repo gate</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/yamadashy/repomix">repomix</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> repo context packer</p><p data-field="surface"><strong>Main Surface:</strong>  CLI／MCP</p><p data-field="use">Prepare one-time codebase context</p><p data-field="status">Active; MIT; exclude secrets and unnecessary files before output</p></td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle" width="80">Workflow support</th><td><div data-field="entry"><strong><a href="https://github.com/obra/superpowers">superpowers</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> workflow collection</div><div data-field="surface"><strong>Main Surface:</strong>  agent plugin／skills</div><div data-field="use">Planning, TDD, debugging, and review workflows</div></td><td><div data-field="status">Active; MIT; adapt templates to your repo gate</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/yamadashy/repomix">repomix</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> repo context packer</div><div data-field="surface"><strong>Main Surface:</strong>  CLI／MCP</div><div data-field="use">Prepare one-time codebase context</div></td><td><div data-field="status">Active; MIT; exclude secrets and unnecessary files before output</div></td></tr>
 </tbody><tbody>
-<tr><th scope="rowgroup" rowspan="2">Maintenance / history</th><td><p data-field="entry"><strong><a href="https://github.com/continuedev/continue">continue</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent</p><p data-field="surface"><strong>Main Surface:</strong>  CLI／VS Code／JetBrains</p><p data-field="use">Study the history of open-source editor-agent integration</p><p data-field="status">Read-only; Apache-2.0; official 2.0.0 is the last version and it is no longer actively maintained</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/RooCodeInc/Roo-Code">Roo Code</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="identity"><strong>Core identity:</strong> coding agent</p><p data-field="surface"><strong>Main Surface:</strong>  VS Code extension</p><p data-field="use">Study multi-mode agent design history</p><p data-field="status">Archived; Apache-2.0; use a maintained tool for new projects</p></td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle" width="80">Maintenance / history</th><td><div data-field="entry"><strong><a href="https://github.com/continuedev/continue">continue</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent</div><div data-field="surface"><strong>Main Surface:</strong>  CLI／VS Code／JetBrains</div><div data-field="use">Study the history of open-source editor-agent integration</div></td><td><div data-field="status">Read-only; Apache-2.0; official 2.0.0 is the last version and it is no longer actively maintained</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/RooCodeInc/Roo-Code">Roo Code</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐</span></td><td><div data-field="identity"><strong>Core identity:</strong> coding agent</div><div data-field="surface"><strong>Main Surface:</strong>  VS Code extension</div><div data-field="use">Study multi-mode agent design history</div></td><td><div data-field="status">Archived; Apache-2.0; use a maintained tool for new projects</div></td></tr>
 </tbody></table>
 </div>
 

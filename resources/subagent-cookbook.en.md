@@ -12,12 +12,16 @@
 
 Each recipe uses the same 4-part structure:
 
+<div align="center" markdown="1">
+
 | Section | Content | Why it exists |
-|---|---|---|
+|:---|:---|:---|
 | **Scenario** | A concrete situation you might run into today | Find a recipe from “I have X problem,” not from “I want to use a subagent” |
 | **Subagent** | Which one to use (Claude Code’s built-in name) | Copy the name directly; no guessing |
 | **Prompt Template** | Copy-paste-ready instruction text | No need to invent the prompt yourself |
 | **When Not to Use It** | A better alternative than using a subagent | Avoid overkill |
+
+</div>
 
 > 💡 **How to actually dispatch a subagent**: in your Claude Code terminal conversation, **type or paste the prompt template directly**. That is all. Claude sees the instruction, automatically uses the **Agent tool** (Claude Code’s internal dispatch mechanism) to find the right subagent, runs it, and returns a short summary to the main session. **No slash command or special syntax is required**.
 >
@@ -334,14 +338,18 @@ React Hook Form + Zod>. Include: component code, validation schema,
 
 Not sure which subagent to use? Look it up by **task type**:
 
+<div align="center" markdown="1">
+
 | Subagent | Recipes |
-|---|---|
+|:---|:---|
 | `code-reviewer` | **1** (pre-commit review) / **4** (cross-locale parity) / **8** (release security audit)|
 | `Explore` | **2** (new codebase) / **6** (find symbol) / **11** (cross-repo similar code)|
 | `Plan` | **3** (refactor plan) / **9** (blast radius)|
 | `general-purpose` | **5** (fact-check) / **7** (multi-paper compare) / **10** (parallel multi-target) / **12** (LLM-as-judge eval)|
 | `frontend-developer` | **13** (a11y audit) / **15** (React form)|
 | `claude-code-guide` | **14** (Claude Code feature lookup)|
+
+</div>
 
 ---
 

@@ -4,7 +4,7 @@
 
 這一關只學三件事：**說清楚、給例子、檢查答案**。
 
-**Prompt（提示）**不是只有一句問題。它是你交給模型的一整份任務包，可以放進指令、要處理的資料、範例，以及輸出規則。
+**Prompt（提示）** 不是只有一句問題。它是你交給模型的一整份任務包，可以放進指令、要處理的資料、範例，以及輸出規則。
 
 > **雲端範例相容性**：現有 Anthropic 範例刻意保留 **Haiku 4.5 相容性基準**，不代表最新或最低價模型。改用固定 ID `claude-haiku-5-5` 前，先依 [Haiku 5.5 遷移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide) 調整程式，不能只換 model ID：處理預設 adaptive thinking（自適應思考）、依 `type == "text"` 擷取文字、移除 `temperature`／`top_p`／`top_k`，並重新計算 tokens、輸出上限與預算。工具迴圈須原樣保留 thinking 區塊並只追加歷史；離線測試通過不代表已驗證真實模型品質。
 
@@ -30,7 +30,7 @@
 - **Few-Shot（少量範例）**：先給少量範例，再請模型照著做。沒有通用的固定數字；範例要清楚、彼此一致，並用 eval 確認是否有幫助。
 - **Chain-of-Thought（CoT，思維鏈）**：把問題分步處理的 prompting 技巧。它不等於公開模型的所有內部想法；要核對時，請模型給簡短理由或可驗證步驟。
 
-> **Message Role（訊息角色）**像信封，決定內容來自誰、優先順序多高；**Instruction（指令）**才是信封裡寫的要求。不同 API 會使用 `system`、`developer`、`user` 等不同角色名稱，不能把其中一個角色直接當成「指令」的定義。
+> **Message Role（訊息角色）** 像信封，決定內容來自誰、優先順序多高；**Instruction（指令）** 才是信封裡寫的要求。不同 API 會使用 `system`、`developer`、`user` 等不同角色名稱，不能把其中一個角色直接當成「指令」的定義。
 
 一句口訣：**目標 → 資料 → 規則 → 輸出**。
 
@@ -138,7 +138,7 @@ print(reply.content[0].text)
 
 **第一步**：固定這六筆資料，不要中途換題目。
 
-<table>
+<table align="center">
   <thead>
     <tr><th scope="col">留言</th><th scope="col">正確標籤</th></tr>
   </thead>
@@ -248,7 +248,7 @@ Path A 六題兩輪的 API 費用是 `$0`。Path B 先設 `$0.05` 上限；若�
 
 > 推薦度是本 Stage 的閱讀順序，不是人氣排名：`⭐⭐⭐⭐⭐`＝不做會卡住；`⭐⭐⭐⭐`＝建議優先；`⭐⭐⭐`＝有需要再看；`⭐⭐`＝歷史或少數情境。本表是選修工具箱，所以沒有硬標五星。
 
-<table>
+<table align="center">
   <thead>
     <tr>
       <th scope="col">分類</th>
@@ -259,32 +259,32 @@ Path A 六題兩輪的 API 費用是 `$0`。Path B 先設 `$0.05` 上限；若�
     </tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">官方課程</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>照 notebook 做第一章。</td><td>維護中；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>看舊版 Real World Prompting 與 Prompt Evaluations；實作時對照本表的現行官方文件。</td><td>已封存；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>先讀「何時該改 prompt」。</td><td>官方文件</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>看訊息角色、範例與 eval。</td><td>官方文件</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>看清楚指令與固定結構。</td><td>官方文件</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">官方課程</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>照 notebook 做第一章。</td><td>維護中；上游未提供 SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>看舊版 Real World Prompting 與 Prompt Evaluations；實作時對照本表的現行官方文件。</td><td>已封存；上游未提供 SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>先讀「何時該改 prompt」。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>看訊息角色、範例與 eval。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>看清楚指令與固定結構。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">官方 cookbook</th><td><a href="https://github.com/anthropics/claude-cookbooks">Anthropic Claude Cookbooks</a></td><td>找與你的任務最接近的 notebook。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/openai/openai-cookbook">OpenAI Cookbook</a></td><td>找 eval 與 structured output 範例。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/google-gemini/cookbook">Google Gemini Cookbook</a></td><td>跑一個 prompting quickstart。</td><td>維護中；Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/GoogleCloudPlatform/generative-ai">Google Cloud Generative AI</a></td><td>需要 Vertex AI 時再看。</td><td>維護中；Apache-2.0</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">官方 cookbook</th><td><a href="https://github.com/anthropics/claude-cookbooks">Anthropic Claude Cookbooks</a></td><td>找與你的任務最接近的 notebook。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/openai/openai-cookbook">OpenAI Cookbook</a></td><td>找 eval 與 structured output 範例。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/google-gemini/cookbook">Google Gemini Cookbook</a></td><td>跑一個 prompting quickstart。</td><td>維護中；Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/GoogleCloudPlatform/generative-ai">Google Cloud Generative AI</a></td><td>需要 Vertex AI 時再看。</td><td>維護中；Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">跟著範例學</th><td><a href="https://github.com/dair-ai/Prompt-Engineering-Guide">DAIR.AI Prompt Engineering Guide</a></td><td>把它當查詢手冊，不必從頭背完。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></td><td>用網站版快速找一個技巧。</td><td>維護中；網站</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>挑一個 notebook 邊跑邊學。</td><td>自訂非商業授權；商用須另取得書面許可</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php">李宏毅 GenAI-ML（2025 Fall）</a></td><td>需要中文課堂解說時再看。</td><td>2025 Fall 課程網站；不是最新模型文件</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">跟著範例學</th><td><a href="https://github.com/dair-ai/Prompt-Engineering-Guide">DAIR.AI Prompt Engineering Guide</a></td><td>把它當查詢手冊，不必從頭背完。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></td><td>用網站版快速找一個技巧。</td><td>維護中；網站</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>挑一個 notebook 邊跑邊學。</td><td>自訂非商業授權；商用須另取得書面許可</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php">李宏毅 GenAI-ML（2025 Fall）</a></td><td>需要中文課堂解說時再看。</td><td>2025 Fall 課程網站；不是最新模型文件</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">評估與最佳化</th><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>把六題 eval 搬進可重跑的設定。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/promptflow">Microsoft Promptflow</a></td><td>需要流程與評估介面時再看。</td><td>維護中；MIT</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>想用程式最佳化 prompt 時再看。</td><td>維護中；MIT</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/UKGovernmentBEIS/inspect_ai">Inspect AI</a></td><td>需要正式 eval 套件時再看。</td><td>維護中；MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">評估與最佳化</th><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>把六題 eval 搬進可重跑的設定。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/promptflow">Microsoft Promptflow</a></td><td>需要流程與評估介面時再看。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>想用程式最佳化 prompt 時再看。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/UKGovernmentBEIS/inspect_ai">Inspect AI</a></td><td>需要正式 eval 套件時再看。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="1">歷史資料</th><td><a href="https://github.com/microsoft/prompt-engine">Microsoft Prompt Engine</a></td><td>只用來看早期做法。</td><td>已封存；MIT；不要用於新專案</td><td>⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">歷史資料</th><td><a href="https://github.com/microsoft/prompt-engine">Microsoft Prompt Engine</a></td><td>只用來看早期做法。</td><td>已封存；MIT；不要用於新專案</td><td align="center" valign="middle">⭐⭐</td></tr>
   </tbody>
 </table>
 
@@ -295,11 +295,15 @@ Path A 六題兩輪的 API 費用是 `$0`。Path B 先設 `$0.05` 上限；若�
 
 把它們想成三個不同問題：
 
+<div align="center" markdown="1">
+
 | 層 | 它在管什麼 | 到哪裡學 |
-|---|---|---|
+|:---|:---|:---|
 | Prompt Engineering | 這一次要送進模型的指令怎麼寫 | 本 Stage |
 | Context Engineering | 這一次要把哪些資料放進 context window | [Stage 6](06-memory-rag.md) |
 | Harness Engineering | 模型外面的 loop、retry、sandbox、eval 與觀測 | [Stage 7](07-multi-agent-production.md) |
+
+</div>
 
 它們不能互相代替。資料不夠時，光改 prompt 沒用；流程不可靠時，要修 harness。
 

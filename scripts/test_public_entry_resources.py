@@ -188,7 +188,7 @@ def _without_details(text: str) -> str:
 
 
 def _resource_table(text: str) -> str:
-    marker = '<table class="resource-table">'
+    marker = '<table align="center">'
     start = text.index(marker)
     return text[start : text.index("</table>", start) + len("</table>")]
 
@@ -285,26 +285,27 @@ def test_resources_grouped_highlights_have_exact_trilingual_parity() -> None:
     assert len(set(observed)) == 1
 
 
-def test_resources_keep_the_wide_table_inside_a_keyboard_scroll_region() -> None:
-    labels = {
-        "zh-TW": "精選資源表（可左右捲動）",
-        "en": "Selected resources table (scroll horizontally)",
-        "zh-Hans": "精选资源表（可左右滚动）",
-    }
-    for locale, page in TRIOS["resources"].items():
+def test_resources_keep_complete_compact_tables_inside_visible_named_regions() -> None:
+    for page in TRIOS["resources"].values():
         text = page.read_text(encoding="utf-8")
-        opening = (
-            '<div class="resource-table-scroll" role="region" tabindex="0" '
-            f'aria-label="{labels[locale]}">'
+        opening = re.search(
+            r'<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="[^"]+">',
+            text,
         )
-        assert text.count(opening) == 1
-        assert text.index(opening) < text.index('<table class="resource-table">')
-        assert text.index("</table>") < text.index("</div>", text.index("</table>"))
+        assert opening
+        table = _resource_table(text)
+        assert text.index(opening[0]) < text.index(table)
+        assert len(re.findall(r'<th scope="col">', table)) == 5
+        assert table in _without_details(text)
+        rows = re.findall(r'<tr>(.*?)</tr>', table, re.S)[1:]
+        assert len(rows) == 16
+        for row in rows:
+            fields = re.findall(r'<div data-field="([^"]+)">(.*?)</div>', row, re.S)
+            assert [name for name, _ in fields] == ["entry", "use", "limits"]
+            assert re.search(r'<td\b[^>]*><span data-field="rating">⭐{3,5}</span></td>', row)
+            assert all(re.sub(r'<[^>]+>', '', value).strip() for _, value in fields)
+        assert 'class="resource-table"' not in text
 
-    css = (ROOT / "docs" / "stylesheets" / "extra.css").read_text(encoding="utf-8")
-    assert ".md-typeset .resource-table-scroll" in css
-    assert "overflow-x: auto" in css
-    assert "min-inline-size: 44rem" in css
 
 
 def test_resources_use_current_official_integrations_and_limits() -> None:

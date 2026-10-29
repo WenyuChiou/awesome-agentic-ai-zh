@@ -12,11 +12,15 @@
 
 ## 📌 先分清三條軸
 
+<div align="center" markdown="1">
+
 | 軸 | 五歲也能懂的說法 | 正確問題 |
-|---|---|---|
+|:---|:---|:---|
 | **Identity（身分）** | 這個東西的工作是什麼？ | 它是 Coding Agent、Router、Local Runtime、Framework，還是 Chat Gateway？ |
 | **Surface（操作介面）** | 你從哪扇門跟它說話？ | Terminal、IDE、Desktop、Web、Chat app 或 API？ |
 | **Deployment（部署位置）** | 它的身體放在哪裡？ | 你的電腦、雲端主機、邊緣裝置，還是受管服務？ |
+
+</div>
 
 一個產品可以同時有很多 **Surface**，也可以換 **Deployment**。這不會改變它的主要 **Identity**。
 
@@ -29,20 +33,26 @@
 
 ## 🧩 身分：它到底負責什麼
 
+<div align="center" markdown="1">
+
 | 核心詞 | 白話定義 | 例子 | 它不負責什麼 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **Coding Agent／Harness（程式代理／工作台）** | 能在允許範圍內讀檔、改檔、跑命令，再回來報告 | Claude Code、Codex、OpenCode、Pi、Aider、goose | 不一定包含模型、Router 或 Sandbox |
 | **Router（路由器）** | 把模型請求轉送到不同 Provider | OpenRouter | 不會自己改 repo，也不管理檔案權限 |
 | **Local Runtime（本機模型引擎）** | 在自己的電腦載入並執行模型 | Ollama、vLLM | 不會自己理解任務或操作工作目錄 |
 | **Agent Framework（代理框架）** | 給開發者寫狀態、步驟、Handoff 與 Workflow 的工具箱 | LangGraph、CrewAI、Microsoft Agent Framework | 不是裝好就會替你完成工作的成品 Agent |
 | **Chat Gateway（聊天入口）** | 把 Agent 接到 Telegram、Slack 等訊息入口 | Hermes Agent 的 gateway／messaging 模式 | 不代表底層模型、權限與部署已安全 |
 
+</div>
+
 最短辨識法：**誰跑模型？誰轉送請求？誰能碰檔案？誰安排多步驟？你從哪裡說話？**
 
 ## 🧭 常見工具放在哪裡
 
+<div align="center" markdown="1">
+
 | 工具 | 主要 Identity | 常見 Surface | 可用 Deployment | 初學者最容易搞錯的地方 |
-|---|---|---|---|---|
+|:---|:---|:---|:---|:---|
 | [OpenCode](https://opencode.ai/docs/) | Coding Agent／Harness | Terminal、Desktop、IDE | OpenCode 程式在本機執行 | 連雲端 Provider 只會送出模型請求，不會把 OpenCode 程式搬到雲端；仍要選模型與 permission |
 | [Pi](https://pi.dev/docs/latest) | Coding Agent／Harness | Terminal、SDK、RPC | 本機 | 這裡的 Pi 不是 Raspberry Pi；它沒有內建 Sandbox |
 | [OpenRouter](https://openrouter.ai/docs/faq) | Router | API | 受管雲端服務 | 它不會自己讀檔或執行命令 |
@@ -51,6 +61,8 @@
 | [goose](https://block.github.io/goose/) | Coding／general Agent | CLI、Desktop、API | 本機 | Extension 的權限要分開審查 |
 | [Hermes Agent](https://github.com/NousResearch/hermes-agent) | Agent runtime＋Chat Gateway | CLI、Messaging | 本機或自己的主機 | Chat 入口不等於 24/7、安全或零維護 |
 | [OpenClaw](https://github.com/openclaw/openclaw) | 可自架的 Agent／assistant 平台 | Web、Chat、CLI，依部署而定 | 本機、雲端或 edge | 在 edge 跑不代表沒有網路、工具或資料外流風險 |
+
+</div>
 
 ## 📚 必讀閱讀
 
@@ -90,10 +102,14 @@ Hermes Agent 這類工具可以接 Messaging Gateway。你仍要處理主機更�
 
 **Subagent（子代理）** 是主 Agent 把一小塊任務交給另一個隔離工作者。它回答的是「工作怎麼分」，不是「產品跑在哪裡」。
 
+<div align="center" markdown="1">
+
 | 路徑 | 誰負責建立子代理 | 適合什麼 |
-|---|---|---|
+|:---|:---|:---|
 | **Framework-based** | 你的 Python／TypeScript orchestration 程式 | 要自己控制狀態、Provider、Handoff 與 Workflow |
 | **Coding-Agent native** | Claude Code、Codex 等 Agent runtime | 在同一個 repo 內，把研究、實作或審查拆成小任務 |
+
+</div>
 
 不論哪條路，都要給子代理明確範圍、輸出格式、預算、停止條件與驗證方式。主代理仍要讀結果；「用了多個 Agent」不是正確性的證明。
 
@@ -103,27 +119,27 @@ Hermes Agent 這類工具可以接 Messaging Gateway。你仍要處理主機更�
 
 星星是本學習地圖的閱讀優先度，不是 GitHub stars，也不是工具總排名。
 
-<table>
+<table align="center">
 <thead><tr><th>分類</th><th>Project／資源</th><th>用它學什麼</th><th>限制</th><th>評分</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Coding Agent／Harness</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>Provider 切換、rules、Skills 與 permission</td><td>模型與 Sandbox 仍要另外選</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>小核心、extensions、SDK 與 RPC</td><td>沒有內建 Sandbox</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>Git diff、commit 與 undo 工作流</td><td>先確認 auto-commit 與 hook 設定</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>CLI、Desktop、Provider 與 extensions</td><td>先開最小 extension 權限</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/continuedev/continue">continuedev/continue</a></td><td>IDE／CLI Surface 與 Agent mode</td><td>不同 Surface 的權限要分開看</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Coding Agent／Harness</th><td><a href="https://github.com/anomalyco/opencode">opencode</a></td><td>Provider 切換、rules、Skills 與 permission</td><td>模型與 Sandbox 仍要另外選</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/earendil-works/pi">pi</a></td><td>小核心、extensions、SDK 與 RPC</td><td>沒有內建 Sandbox</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/Aider-AI/aider">aider</a></td><td>Git diff、commit 與 undo 工作流</td><td>先確認 auto-commit 與 hook 設定</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>CLI、Desktop、Provider 與 extensions</td><td>先開最小 extension 權限</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/continuedev/continue">continue</a></td><td>IDE／CLI Surface 與 Agent mode</td><td>不同 Surface 的權限要分開看</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Router／Runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter 官方文件</a></td><td>Router、Provider routing 與 usage</td><td>不是 Coding Agent</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>本機模型下載與相容 API</td><td>不是 Coding Agent</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Router／Runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter 官方文件</a></td><td>Router、Provider routing 與 usage</td><td>不是 Coding Agent</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/ollama/ollama">ollama</a></td><td>本機模型下載與相容 API</td><td>不是 Coding Agent</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Messaging／自架</th><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>Agent runtime、Messaging Gateway 與排程</td><td>自架仍要維運與收斂工具權限</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/openclaw/openclaw">openclaw/openclaw</a></td><td>本機／edge／自架 assistant 的部署取捨</td><td>本機不等於零資料風險</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Messaging／自架</th><td><a href="https://github.com/NousResearch/hermes-agent">hermes-agent</a></td><td>Agent runtime、Messaging Gateway 與排程</td><td>自架仍要維運與收斂工具權限</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/openclaw/openclaw">openclaw</a></td><td>本機／edge／自架 assistant 的部署取捨</td><td>本機不等於零資料風險</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">Framework／Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langchain-ai/langgraph</a></td><td>狀態、節點、邊、Checkpoint 與 Human-in-the-loop</td><td>需要自己寫與測 Workflow</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/crewAIInc/crewAI">crewAIInc/crewAI</a></td><td>角色、Task 與 Crew orchestration</td><td>角色描述不能取代驗證</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/microsoft/agent-framework">microsoft/agent-framework</a></td><td>Microsoft 現行 Agent／Workflow 開發路徑</td><td>舊 AutoGen／Swarm 教材只作歷史脈絡</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Framework／Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langgraph</a></td><td>狀態、節點、邊、Checkpoint 與 Human-in-the-loop</td><td>需要自己寫與測 Workflow</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>角色、Task 與 Crew orchestration</td><td>角色描述不能取代驗證</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/microsoft/agent-framework">agent-framework</a></td><td>Microsoft 現行 Agent／Workflow 開發路徑</td><td>舊 AutoGen／Swarm 教材只作歷史脈絡</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
 

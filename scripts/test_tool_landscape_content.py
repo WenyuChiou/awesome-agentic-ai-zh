@@ -57,7 +57,7 @@ def test_examples_keep_required_reading_index_and_rated_resources_visible(locale
     assert resources in visible
     assert "## 🧭" in visible
     assert _rowspans(visible) == [2, 2, 2]
-    assert len(re.findall(r"<td>⭐{3,5}</td>", visible)) == 6
+    assert len(re.findall(r"<td\b[^>]*>⭐{3,5}</td>", visible)) == 6
     assert len(re.findall(r"^<details markdown=\"1\">$", text, flags=re.MULTILINE)) == 2
     assert not re.search(r"<details[^>]*\sopen(?:\s|>)", text)
 
@@ -167,7 +167,7 @@ def test_paradigms_keep_core_terms_required_reading_subagents_and_resources_visi
     for term in ("**Identity", "**Surface", "**Deployment", "**Coding Agent", "**Router", "**Local Runtime", "**Agent Framework"):
         assert term in visible
     assert _rowspans(visible) == [5, 2, 2, 3]
-    assert len(re.findall(r"<td>⭐{3,5}</td>", visible)) == 12
+    assert len(re.findall(r"<td align=\"center\" valign=\"middle\">⭐{3,5}</td>", visible)) == 12
     assert len(re.findall(r"^<details markdown=\"1\">$", text, flags=re.MULTILINE)) == 1
     assert not re.search(r"<details[^>]*\sopen(?:\s|>)", text)
 

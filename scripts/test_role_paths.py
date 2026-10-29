@@ -825,8 +825,15 @@ def _without_details(text: str) -> str:
     return re.sub(r"<details\b[^>]*>.*?</details>", "", text, flags=re.DOTALL)
 
 
+def _catalog_tables(text: str) -> list[str]:
+    return re.findall(
+        r'<div class="reader-resource-catalog"[^>]*>\s*(<table\b[^>]*>.*?</table>)\s*</div>',
+        text, flags=re.DOTALL,
+    )
+
+
 def _resource_table(text: str, first_url: str) -> str:
-    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    tables = _catalog_tables(text) or re.findall(r"<table\b[^>]*>.*?</table>", text, flags=re.DOTALL)
     matches = [table for table in tables if first_url in table]
     assert len(matches) == 1
     return matches[0]
@@ -840,7 +847,9 @@ def _resource_rows(table: str) -> list[str]:
 
 
 def _row_for_url(text: str, url: str) -> str:
-    rows = [row for row in re.findall(r"<tr>(.*?)</tr>", text, flags=re.DOTALL) if url in row]
+    catalogs = _catalog_tables(text)
+    scope = "\n".join(catalogs) if catalogs else text
+    rows = [row for row in re.findall(r"<tr>(.*?)</tr>", scope, flags=re.DOTALL) if url in row]
     assert len(rows) == 1, (url, len(rows))
     return rows[0]
 
@@ -1302,7 +1311,7 @@ def test_personal_agent_resource_rows_name_an_audience_and_teaching_role(locale:
 @pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
 def test_personal_agent_ratings_disclose_untested_comparisons_and_documented_teaching_value(locale: str) -> None:
     text = _without_details(PAGES["everyday-user"][locale].read_text(encoding="utf-8"))
-    intro = text[text.index("## ⭐"):text.index("<table>", text.index("## ⭐"))]
+    intro = text[text.index("## ⭐"):text.index('<table align="center">', text.index("## ⭐"))]
     required = {
         "zh-TW": ("三星代表可選的具體產品範例，適合互相對照", "未實測的參考／對照範例", "評分依官方文件的教學價值，不代表實測產品品質"),
         "en": ("three stars as optional concrete product examples to compare", "untested reference/comparison examples", "Ratings reflect documented teaching value, not hands-on product quality"),
@@ -1314,7 +1323,7 @@ def test_personal_agent_ratings_disclose_untested_comparisons_and_documented_tea
 @pytest.mark.parametrize("locale", ("zh-TW", "zh-Hans"))
 def test_introduced_personal_agent_chinese_sentences_stay_within_sixty_visible_characters(locale: str) -> None:
     text = PAGES["everyday-user"][locale].read_text(encoding="utf-8")
-    resource_intro = text[text.index("## ⭐"):text.index("<table>", text.index("## ⭐"))]
+    resource_intro = text[text.index("## ⭐"):text.index('<table align="center">', text.index("## ⭐"))]
     prose = [_personal_agent_section(locale), resource_intro]
     for url in PERSONAL_AGENT_RESOURCE_URLS:
         row = _row_for_url(text, url)
@@ -1472,7 +1481,12 @@ def test_freshness_urls_and_legacy_landings_are_mirrored(role: str) -> None:
             assert text.count(anchor_text) == 1
             anchor_at = text.index(anchor_text)
             marker_at = text.index(marker, anchor_at)
-            assert 0 < marker_at - anchor_at < 240, (anchor, marker, marker_at - anchor_at)
+            # Responsive wrapper metadata adds source characters, not landing content.
+            landing_gap = re.sub(
+                r'<div class="reader-route-table" role="region" tabindex="0" aria-label="[^"]+">',
+                '', text[anchor_at:marker_at],
+            )
+            assert 0 < len(landing_gap) < 240, (anchor, marker, len(landing_gap))
             anchor_positions.append(anchor_at)
         assert min(anchor_positions) > text.index("<!-- freshness:")
         assert len(set(anchor_positions)) >= 8
@@ -1576,7 +1590,7 @@ def test_developer_identity_and_surface_are_separate_axes() -> None:
                 assert surface.casefold() in row.casefold()
         assert re.search(
             r"Roo Code.{0,300}(archived|封存|历史|歷史)",
-            text,
+            re.sub(r"<[^>]*>", "", text),
             re.DOTALL | re.IGNORECASE,
         )
         assert re.search(
@@ -1636,3 +1650,14 @@ def test_personal_agent_english_length_guard_rejects_wrapped_review_sentence(sep
     assert fixed in text
     with pytest.raises(AssertionError):
         _assert_new_personal_agent_english_sentences_fit_written_style(text.replace(fixed, overlong))
+
+
+def test_resource_lookup_does_not_confuse_a_chooser_with_its_catalog() -> None:
+    target = "https://example.com/tool"
+    chooser = f'<table><tr><td><a href="{target}">Pick this</a></td></tr></table>'
+    catalog = f'<div class="reader-resource-catalog" role="region"><table align="center"><tbody><tr><td><a href="{target}">Tool</a></td><td>Real limits</td></tr></tbody></table></div>'
+    text = chooser + catalog
+    assert "Real limits" in _row_for_url(text, target)
+    assert "Pick this" not in _resource_table(text, target)
+    with pytest.raises(AssertionError):
+        _row_for_url(chooser + catalog.replace(target, "https://example.com/other"), target)

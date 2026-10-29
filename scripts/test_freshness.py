@@ -340,6 +340,36 @@ def test_verified_page_requires_matching_fact_pack():
     assert 'stages/01.md: matching fact pack is missing' in errors
 
 
+def test_centering_only_wrappers_preserve_nearby_role_qualification():
+    table = "| Name | Role |\n| --- | --- |\n| Ollama | not a coding agent |"
+    summary = "OpenRouter routes requests and Ollama runs local models.\n"
+    plain = table + "\n\n" + summary
+    centered = '<div align="center" markdown="1">\n\n' + table + "\n\n</div>\n\n" + summary
+    assert _scan(plain, _REAL_CFG, "branches/for-developer.en.md") == []
+    assert _scan(centered, _REAL_CFG, "branches/for-developer.en.md") == []
+
+
+def test_unqualified_wrong_roles_still_fail_in_each_locale_with_original_lines():
+    for suffix, claim in [(".en", "OpenRouter is a model and coding agent."),
+                          ("", "OpenRouter 是模型，也是程式代理。"),
+                          (".zh-Hans", "Ollama 是程序代理。")]:
+        text = '<div align="center" markdown="1">\n\n' + claim + "\n\n</div>\n"
+        findings = _scan(text, _REAL_CFG, "branches/for-developer" + suffix + ".md")
+        assert len(findings) == 1
+        assert findings[0][1] == 3
+
+
+def test_fenced_centering_example_does_not_extend_the_qualifier_window():
+    text = '```html\nbaseline\n<div align="center" markdown="1">\n\n</div>\n```\nDeepSeek R1\n'
+    assert len(_scan(text, _R1_CFG)) == 1
+
+
+def test_unmatched_centering_wrapper_does_not_change_context():
+    lines = ['baseline', '<div align="center" markdown="1">', '', '', 'DeepSeek R1']
+    assert fr.qualifier_context_lines(lines) == list(range(len(lines)))
+    assert len(_scan('\n'.join(lines), _R1_CFG)) == 1
+
+
 if __name__ == "__main__":
     import sys
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

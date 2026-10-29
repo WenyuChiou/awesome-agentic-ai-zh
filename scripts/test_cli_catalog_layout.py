@@ -17,9 +17,9 @@ LABELS = {
         ".zh-Hans": ("现在适合谁：", "模型 / provider 选择：", "登录方式：", "安全起手式：", "状态：", "官方来源："),
     },
     "A2": {
-        "": ("先看什麼：", "適合何時使用：", "來源："),
-        ".en": ("What to look at first:", "When it is useful:", "Source:"),
-        ".zh-Hans": ("先看什么：", "适合什么时候使用：", "来源："),
+        "": ("先看：", "適用：", "來源："),
+        ".en": ("Read:", "Use for:", "Source:"),
+        ".zh-Hans": ("先看：", "适用：", "来源："),
     },
     "A3": {
         "": ("先看什麼：", "何時使用：", "來源："),
@@ -33,24 +33,24 @@ SUFFIXES = ("", ".en", ".zh-Hans")
 def cli_catalog(text, stem, suffix):
     groups, names = CATALOGS[stem]
     guide = stem == "resources/cli-agents-guide"
-    match = re.search(r'<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="[^"]+">\s*(<table>.*?</table>)\s*</div>', text, re.S)
+    match = re.search(r'<div class="reader-resource-catalog" role="region" tabindex="0" aria-label="[^"]+">\s*(<table align="center">.*?</table>)\s*</div>', text, re.S)
     assert match, "Missing focusable, named catalog"
     table = match[1]
     assert table in re.sub(r"<details\b[^>]*>.*?</details>", "", text, flags=re.S), "Important catalog is hidden"
-    assert table.count('<th scope="col">') == 2
+    assert table.count('<th scope="col">') == 5
     bodies = re.findall(r"<tbody>(.*?)</tbody>", table, re.S)
     assert len(bodies) == len(groups)
     expected_labels = LABELS["guide" if guide else "A2" if "A2" in stem else "A3"][suffix]
     for body, count in zip(bodies, groups):
-        assert re.findall(r'<th scope="rowgroup" rowspan="(\d+)">', body) == [str(count)]
+        assert re.findall(r'<th scope="rowgroup" rowspan="(\d+)" align="center" valign="middle" width="80">', body) == [str(count)]
         rows = re.findall(r"<tr>(.*?)</tr>", body, re.S)
         assert len(rows) == count
         for row in rows:
-            assert row.count("<td>") == row.count("</td>") == 1
-            fields = re.findall(r'<p data-field="([^"]+)">(.*?)</p>', row, re.S)
+            assert len(re.findall(r"<td\b[^>]*>", row)) == row.count("</td>") == 4
+            fields = re.findall(r'<div data-field="([^"]+)">(.*?)</div>', row, re.S)
             assert tuple(key for key, value in fields) == names
-            entry = re.fullmatch(r'<strong>(.*?)</strong>(?:\s+<span data-field="rating">(⭐{3,5})</span>)?', fields[0][1], re.S)
-            assert entry and bool(entry[2]) == (not guide), "Keep ratings only where originally provided"
+            entry = re.fullmatch(r'<strong>(.*?)</strong>', fields[0][1], re.S)
+            assert entry and bool(re.search(r'<td\b[^>]*><span data-field="rating">⭐{3,5}</span></td>', row)) == (not guide), "Keep ratings only where originally provided"
             assert "<br" not in entry[1], "Do not force project names to break"
             for owner, repo in re.findall(r'https://github.com/([^/"<>]+)/([^/"<>]+)', row):
                 assert f"{owner}/{repo}" not in re.sub(r"<[^>]+>", "", entry[1]), "Display the project name without its owner"
@@ -83,16 +83,16 @@ def test_cli_catalog_guards_reject_lost_mislabeled_or_hidden_fields(stem, mutati
     text = (ROOT / f"{stem}.md").read_text(encoding="utf-8")
     table = cli_catalog(text, stem, "")
     if mutation == "drop":
-        changed = re.sub(r'<p data-field="sources">.*?</p>', '', text, count=1, flags=re.S)
+        changed = re.sub(r'<div data-field="sources">.*?</div>', '', text, count=1, flags=re.S)
     elif mutation == "label":
-        changed = re.sub(r'(<p data-field="(?:read|audience)"><strong>)[^<]+', r'\1Wrong:', text, count=1)
+        changed = re.sub(r'(<div data-field="(?:read|audience)"><strong>)[^<]+', r'\1Wrong:', text, count=1)
     elif mutation == "hide":
         changed = text.replace('<div class="reader-resource-catalog"', '<details><div class="reader-resource-catalog"', 1)
         changed = changed.replace('</table>\n</div>', '</table>\n</div></details>', 1)
     else:
         row = next(row for row in re.findall(r'<tr>.*?</tr>', table, re.S) if 'https://github.com/' in row)
         owner, repo = re.search(r'https://github.com/([^/"<>]+)/([^/"<>]+)', row).groups()
-        changed_row = re.sub(r'(<p data-field="entry"><strong>).*?(</strong>)', lambda m: m[1]+owner+'/'+repo+m[2], row, count=1)
+        changed_row = re.sub(r'(<div data-field="entry"><strong>).*?(</strong>)', lambda m: m[1]+owner+'/'+repo+m[2], row, count=1)
         changed = text.replace(row, changed_row, 1)
     assert changed != text
     with pytest.raises(AssertionError):

@@ -79,12 +79,16 @@ agent 用來看見、操作或執行工作的「門」。搜尋、瀏覽器、�
 
 ## 🧭 先選最小的介面
 
+<div align="center" markdown="1">
+
 | 你的任務 | 先用什麼 | 小孩版理由 |
-|---|---|---|
+|:---|:---|:---|
 | 只找或讀公開資料 | **Web Search／Fetch** | 只需要拿資料，不需要替你點畫面。 |
 | 工作都在網頁內 | **Browser Use** | 它看得懂按鈕、欄位與分頁，門比整台電腦小。 |
 | 工作跨桌面 app | **Computer Use** | 只有這時才需要螢幕、滑鼠與鍵盤。 |
 | 要執行生成的 code 或改檔 | **Sandbox** | 先把程式放進隔離房間，再看結果。 |
+
+</div>
 
 > **正式 API 或 typed tool 優先。** 如果服務已提供清楚的 API，就先用 API；GUI 操作是必要時的 fallback，不是比較聰明的捷徑。
 
@@ -146,11 +150,15 @@ OpenAI 新整合使用 Responses API 的 <code>tools=[{"type": "computer"}]</cod
 
 三種訊號不要混成一件事：
 
+<div align="center" markdown="1">
+
 | 訊號 | 它給什麼 | 何時有用 |
-|---|---|---|
+|:---|:---|:---|
 | **DOM** | 網頁程式的節點與屬性 | 要讀結構或用 selector 時。 |
 | **Accessibility Tree** | 對人有意義的角色、名稱、狀態 | 要找按鈕、欄位和可操作元素時。 |
 | **Screenshot／pixel** | 畫面真的長什麼樣 | canvas、圖片、拖曳或結構訊號不夠時。 |
+
+</div>
 
 [Playwright MCP](https://github.com/microsoft/playwright-mcp) 適合把瀏覽器控制接進支援 MCP 的 client；[browser-use](https://github.com/browser-use/browser-use) 適合研究或建立完整 web-agent loop。兩者都不是「開箱就能安全登入所有網站」。
 
@@ -167,8 +175,10 @@ OpenAI 新整合使用 Responses API 的 <code>tools=[{"type": "computer"}]</cod
 <details markdown="1">
 <summary>📦 Sandbox：隔離技術、工作區與 provider 怎麼分</summary>
 
+<div align="center" markdown="1">
+
 | 詞 | 白話意思 | 重要限制 |
-|---|---|---|
+|:---|:---|:---|
 | **Container** | 共用 host kernel 的隔離房間。 | 配置錯誤仍可能碰到 host 或網路。 |
 | **Virtual Machine（VM）** | 有自己作業系統核心的房間。 | 通常比 container 重。 |
 | **microVM** | 把 VM 做得較小、較快。 | 不是所有 sandbox 都使用 microVM。 |
@@ -179,6 +189,8 @@ OpenAI 新整合使用 Responses API 的 <code>tools=[{"type": "computer"}]</cod
 | **Session** | 還活著、可以接著工作的 sandbox 實例。 | 跟聊天記憶不是同一件事。 |
 | **Snapshot** | 保存某個工作區狀態，之後從那裡再開。 | 祕密與暫存檔也要先清掉。 |
 
+</div>
+
 OpenAI Agents SDK 的 <code>SandboxAgent</code>、<code>Manifest</code> 與 <code>SandboxRunConfig</code> 把 agent 定義、新工作區契約與每次 run 的 sandbox 選擇分開；這個區域仍是 Beta。[官方文件](https://openai.github.io/openai-agents-python/sandbox/guide/)
 
 不要只看啟動速度。還要比較 filesystem 邊界、network policy、secret 注入、lifecycle、snapshot、日誌、區域、價格與失敗後清理。[Modal Sandboxes](https://modal.com/docs/guide/sandboxes) 也明寫網路與 runtime 有不同設定，不能把所有 provider 當成同一種隔離。
@@ -187,12 +199,16 @@ OpenAI Agents SDK 的 <code>SandboxAgent</code>、<code>Manifest</code> 與 <cod
 
 ## 🛡️ 四道安全檢查
 
+<div align="center" markdown="1">
+
 | 檢查 | 動手前先問 |
-|---|---|
+|:---|:---|
 | **1. Isolate（隔離）** | 它在新 browser profile、container 或 VM 裡嗎？ |
 | **2. Allowlist（白名單）** | 只允許哪些網站、檔案、工具與動作？ |
 | **3. Approve（批准）** | 哪些動作一定要停下來問人？ |
 | **4. Verify & Log（驗證與紀錄）** | 做完怎麼看證據？失敗時能追到哪一步？ |
+
+</div>
 
 ![Agent 動作前後的四道安全檢查](../resources/diagrams/agent-guardrail-patterns.png)
 
@@ -351,41 +367,41 @@ Amazon 案件也不能簡化成「某 browser 被全面禁止存取 Amazon」。
 
 <small>內容查核：原有 21 項沿用 2026-08-28 UTC 查核日期；Cortex README 中 typed MCP tools 與 gRPC schema 限制的說明於 2026-10-13 UTC 查核。GitHub repository metadata snapshot 另於 2026-10-13 UTC 查核。星號是本專案的教學推薦度，不是 GitHub stars。</small>
 
-<table>
+<table align="center">
 <thead>
 <tr><th scope="col">分類</th><th scope="col">資源</th><th scope="col">適合什麼時候</th><th scope="col">限制／狀態</th><th scope="col">推薦度</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">官方介面文件</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool">Anthropic Computer Use tool</a></td><td>理解 desktop action loop。</td><td>client toolset；executor 由應用程式提供。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool">Anthropic Browser Use tool</a></td><td>任務留在網頁內。</td><td>client toolset；需自備受控 browser。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://developers.openai.com/api/docs/guides/tools-computer-use">OpenAI Computer Use guide</a></td><td>實作 GA computer tool。</td><td>舊 preview shape 已 deprecated。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://openai.github.io/openai-agents-python/sandbox/guide/">OpenAI Agents SDK Sandbox guide</a></td><td>需要 stateful workspace。</td><td>Sandbox Agents 是 Beta。</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://support.google.com/chrome/answer/16283624?hl=en">Google Chrome Help：Gemini in Chrome</a></td><td>確認自己的帳戶是否可用。</td><td>gradual rollout；平台與地區有限制。</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">官方介面文件</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool">Anthropic Computer Use tool</a></td><td>理解 desktop action loop。</td><td>client toolset；executor 由應用程式提供。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool">Anthropic Browser Use tool</a></td><td>任務留在網頁內。</td><td>client toolset；需自備受控 browser。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://developers.openai.com/api/docs/guides/tools-computer-use">OpenAI Computer Use guide</a></td><td>實作 GA computer tool。</td><td>舊 preview shape 已 deprecated。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://openai.github.io/openai-agents-python/sandbox/guide/">OpenAI Agents SDK Sandbox guide</a></td><td>需要 stateful workspace。</td><td>Sandbox Agents 是 Beta。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://support.google.com/chrome/answer/16283624?hl=en">Google Chrome Help：Gemini in Chrome</a></td><td>確認自己的帳戶是否可用。</td><td>gradual rollout；平台與地區有限制。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">Executor／framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">anthropics/claude-quickstarts</a></td><td>讀官方 computer-use demo。</td><td>先看 container、credential 與 network 邊界。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/browser-use/browser-use">browser-use/browser-use</a></td><td>建立完整 web-agent loop。</td><td>production browser scaling 與安全仍要自行設計。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/microsoft/playwright-mcp">microsoft/playwright-mcp</a></td><td>把 browser 接給 MCP client。</td><td>仍需限制 origin、權限與資料。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/cortex-docs/cortex">cortex-docs/cortex</a></td><td>把 API spec 轉成 typed MCP tools。</td><td>gRPC 只提供 schema 資源，不產生可呼叫方法。</td><td>⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/trycua/cua">trycua/cua</a></td><td>研究跨平台 computer-use stack。</td><td>依 README 與 release 驗證實際 backend。</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">bytedance/UI-TARS-desktop</a></td><td>研究開放桌面 agent。</td><td>本地控制風險高；先用測試環境。</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Executor／framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">claude-quickstarts</a></td><td>讀官方 computer-use demo。</td><td>先看 container、credential 與 network 邊界。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/browser-use/browser-use">browser-use</a></td><td>建立完整 web-agent loop。</td><td>production browser scaling 與安全仍要自行設計。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/microsoft/playwright-mcp">playwright-mcp</a></td><td>把 browser 接給 MCP client。</td><td>仍需限制 origin、權限與資料。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/cortex-docs/cortex">cortex</a></td><td>把 API spec 轉成 typed MCP tools。</td><td>gRPC 只提供 schema 資源，不產生可呼叫方法。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/trycua/cua">cua</a></td><td>研究跨平台 computer-use stack。</td><td>依 README 與 release 驗證實際 backend。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>研究開放桌面 agent。</td><td>本地控制風險高；先用測試環境。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Sandbox／runtime</th><td><a href="https://github.com/e2b-dev/E2B">e2b-dev/E2B</a></td><td>agent 需要遠端 code workspace。</td><td>Apache-2.0 repo；受管服務另有費用與政策。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/cloudflare/sandbox-sdk">cloudflare/sandbox-sdk</a></td><td>在 Workers／Containers 上執行隔離 code。</td><td>Apache-2.0；Beta，API 在 v1.0 前可能改變。</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://modal.com/docs/guide/sandboxes">Modal Sandboxes</a></td><td>需要受管 container 與 runtime controls。</td><td>網路預設與 Beta／VM 功能要依當日文件設定。</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://vercel.com/docs/sandbox">Vercel Sandbox</a></td><td>已在 Vercel 生態建立隔離執行。</td><td>核對 runtime、region、network 與價格。</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Sandbox／runtime</th><td><a href="https://github.com/e2b-dev/E2B">E2B</a></td><td>agent 需要遠端 code workspace。</td><td>Apache-2.0 repo；受管服務另有費用與政策。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/cloudflare/sandbox-sdk">sandbox-sdk</a></td><td>在 Workers／Containers 上執行隔離 code。</td><td>Apache-2.0；Beta，API 在 v1.0 前可能改變。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://modal.com/docs/guide/sandboxes">Modal Sandboxes</a></td><td>需要受管 container 與 runtime controls。</td><td>網路預設與 Beta／VM 功能要依當日文件設定。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://vercel.com/docs/sandbox">Vercel Sandbox</a></td><td>已在 Vercel 生態建立隔離執行。</td><td>核對 runtime、region、network 與價格。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">GUI／benchmark／dataset</th><td><a href="https://github.com/microsoft/OmniParser">microsoft/OmniParser</a></td><td>研究 screenshot 元素解析。</td><td>repository 為 CC-BY-4.0；不要把這個授權自動套到 weights。</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://osworld-v2.xlang.ai/">OSWorld 2.0</a></td><td>評估長流程 desktop 任務。</td><td>分數必須連 metric、step 與 harness 一起看。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/xlang-ai/OSWorld">xlang-ai/OSWorld</a></td><td>重現原始跨 OS benchmark。</td><td>跟 2.0 任務集不同，不能直接比百分比。</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/web-arena-x/webarena">web-arena-x/webarena</a></td><td>評估 self-hosted web tasks。</td><td>環境 setup 與 evaluator 會影響結果。</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/OSU-NLP-Group/Mind2Web">OSU-NLP-Group/Mind2Web</a></td><td>研究真實網站的示範資料。</td><td>dataset 不等於現行網站可直接自動化。</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">GUI／benchmark／dataset</th><td><a href="https://github.com/microsoft/OmniParser">OmniParser</a></td><td>研究 screenshot 元素解析。</td><td>repository 為 CC-BY-4.0；不要把這個授權自動套到 weights。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://osworld-v2.xlang.ai/">OSWorld 2.0</a></td><td>評估長流程 desktop 任務。</td><td>分數必須連 metric、step 與 harness 一起看。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/xlang-ai/OSWorld">OSWorld</a></td><td>重現原始跨 OS benchmark。</td><td>跟 2.0 任務集不同，不能直接比百分比。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/web-arena-x/webarena">webarena</a></td><td>評估 self-hosted web tasks。</td><td>環境 setup 與 evaluator 會影響結果。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/OSU-NLP-Group/Mind2Web">Mind2Web</a></td><td>研究真實網站的示範資料。</td><td>dataset 不等於現行網站可直接自動化。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">安全研究與回應</th><td><a href="https://brave.com/blog/indirect-prompt-injection/">Brave：indirect prompt injection</a></td><td>建立 browser-agent threat model。</td><td>研究示範不是每個產品的現況證明。</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://research.perplexity.ai/articles/browsesafe">Perplexity BrowseSafe</a></td><td>比較供應商回應與防禦方向。</td><td>供應商說明需和獨立測試一起看。</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">安全研究與回應</th><td><a href="https://brave.com/blog/indirect-prompt-injection/">Brave：indirect prompt injection</a></td><td>建立 browser-agent threat model。</td><td>研究示範不是每個產品的現況證明。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://research.perplexity.ai/articles/browsesafe">Perplexity BrowseSafe</a></td><td>比較供應商回應與防禦方向。</td><td>供應商說明需和獨立測試一起看。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 </table>
 

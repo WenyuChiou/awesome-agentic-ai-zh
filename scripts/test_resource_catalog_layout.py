@@ -21,30 +21,29 @@ def resource_catalog(text: str, stem: str) -> str:
     groups, fields = CATALOGS[stem]
     matches = re.findall(
         r'<div class="reader-resource-catalog" role="region" tabindex="0" '
-        r'aria-label="[^"]+">\s*(<table>.*?</table>)\s*</div>', text, re.S,
+        r'aria-label="[^"]+">\s*(<table align="center">.*?</table>)\s*</div>', text, re.S,
     )
     assert len(matches) == 1, "Expected one named, keyboard-focusable catalog"
     table = matches[0]
-    assert len(re.findall(r'<th scope="col">', table)) == 2
+    assert len(re.findall(r'<th scope="col">', table)) == 5
     visible = re.sub(r"<details\b[^>]*>.*?</details>", "", text, flags=re.S)
     assert table in visible, "Important resources must not be collapsed"
     assert "<details" not in table
     bodies = re.findall(r"<tbody>(.*?)</tbody>", table, re.S)
     assert len(bodies) == len(groups)
     for body, expected in zip(bodies, groups):
-        categories = re.findall(r'<th scope="rowgroup" rowspan="(\d+)">[^<]+</th>', body)
+        categories = re.findall(r'<th scope="rowgroup" rowspan="(\d+)" align="center" valign="middle" width="80">[^<]+</th>', body)
         assert categories == [str(expected)], "Keep exactly one real merged category"
         rows = re.findall(r"<tr>(.*?)</tr>", body, re.S)
         assert len(rows) == expected
         for row in rows:
-            assert row.count("<td>") == row.count("</td>") == 1
-            facts = re.findall(r'<p data-field="([^"]+)">(.*?)</p>', row, re.S)
+            assert len(re.findall(r"<td\b[^>]*>", row)) == row.count("</td>") == 4
+            facts = re.findall(r'<div data-field="([^"]+)">(.*?)</div>', row, re.S)
             assert tuple(key for key, _ in facts) == fields, "Lost or reordered a resource field"
             entry = re.fullmatch(
-                r'<strong>(.*?)</strong>\s+<span data-field="rating">(.*?)</span>',
-                facts[0][1], re.S,
+                r'<strong>(.*?)</strong>', facts[0][1].strip(), re.S,
             )
-            assert entry and re.search("⭐{3,5}", entry[2]), "Keep the original editorial rating"
+            assert entry and re.search(r'<td\b[^>]*><span data-field="rating">⭐{3,5}[^<]*</span></td>', row), "Keep the original editorial rating"
             assert "<br" not in entry[1], "Do not force project-name line breaks"
             assert not re.search(r">[^<>]+/[^<>]+</a>", entry[1]), "Show project names, not owner/repo"
             for key, value in facts[1:]:
@@ -79,7 +78,7 @@ def test_catalog_validation_rejects_lost_or_hidden_information(stem, mutation):
     text = (ROOT / f"{stem}.md").read_text(encoding="utf-8")
     if mutation == "field":
         last_field = CATALOGS[stem][1][-1]
-        changed = re.sub(rf'<p data-field="{last_field}">.*?</p>', "", text, count=1, flags=re.S)
+        changed = re.sub(rf'<div data-field="{last_field}">.*?</div>', "", text, count=1, flags=re.S)
     elif mutation == "rating":
         changed = re.sub(r'<span data-field="rating">.*?</span>', "", text, count=1, flags=re.S)
     elif mutation == "category":
@@ -88,9 +87,9 @@ def test_catalog_validation_rejects_lost_or_hidden_information(stem, mutation):
         changed = text.replace('<div class="reader-resource-catalog"', '<details><div class="reader-resource-catalog"', 1)
         changed = changed.replace('</table>\n</div>', '</table>\n</div></details>', 1)
     elif mutation == "owner":
-        changed = re.sub(r'(<p data-field="entry"><strong><a href="https://github.com/([^/\"]+)/[^\"]+">)([^<]+)', r'\1\2/\3', text, count=1)
+        changed = re.sub(r'(<div data-field="entry"><strong><a href="https://github.com/([^/\"]+)/[^\"]+">)([^<]+)', r'\1\2/\3', text, count=1)
     else:
-        changed = re.sub(r'(<p data-field="entry"><strong>.*?)(</a>)', r'\1<br>\2', text, count=1)
+        changed = re.sub(r'(<div data-field="entry"><strong>.*?)(</a>)', r'\1<br>\2', text, count=1)
     assert changed != text, "Mutation must exercise the intended guard"
     with pytest.raises(AssertionError):
         resource_catalog(changed, stem)
@@ -100,7 +99,7 @@ def test_catalog_validation_rejects_lost_or_hidden_information(stem, mutation):
 def test_course_cost_cannot_be_misplaced_as_a_rating(suffix):
     stem = "resources/courses"
     text = (ROOT / f"{stem}{suffix}.md").read_text(encoding="utf-8")
-    cost = re.search(r'<p data-field="cost"><strong>[^<]+</strong> (.*?)</p>', text, re.S)
+    cost = re.search(r'<div data-field="cost"><strong>[^<]+</strong> (.*?)</div>', text, re.S)
     assert cost
     changed = re.sub(r'(<span data-field="rating">).*?(</span>)',
                      lambda match: match[1] + cost[1] + match[2], text, count=1)

@@ -10,25 +10,29 @@
 
 ## 📌 这份 Cookbook 帮你做什么
 
-**Recipe（实践配方）**是一条从“我想做什么”走到“我怎么知道完成了”的短路线。完成任一份 Recipe，你都会得到一个可以检查的成果，而不是只看懂一段说明：
+**Recipe（实践配方）** 是一条从“我想做什么”走到“我怎么知道完成了”的短路线。完成任一份 Recipe，你都会得到一个可以检查的成果，而不是只看懂一段说明：
 
 - 一张可重复使用的操作卡。
 - 一个能被 Agent 调用的小工具。
 - 一份文件、研究笔记或文献流程。
 - 一个在自己电脑上运行的 CLI Agent。
 
-你还会看到 **Skill（操作卡）**、**MCP Server（工具转接站）**和 **Coding Agent（程序代理）**。它们分别告诉 Agent 怎么做、替 Agent 接上工具，以及代替你读档、改档和检查结果。
+你还会看到 **Skill（操作卡）**、**MCP Server（工具转接站）** 和 **Coding Agent（程序代理）**。它们分别告诉 Agent 怎么做、替 Agent 接上工具，以及代替你读档、改档和检查结果。
 
 ## 🎯 先选一份 recipe
 
+<div align="center" markdown="1">
+
 | 你想完成什么 | 从哪里开始 | 主要风险 |
-|---|---|---|
+|:---|:---|:---|
 | 让 Claude 记住固定做法 | [1. 第一个 Skill](#1-写你的第一个-skill) | 规则写得太模糊 |
 | 让 Agent 调用自己的 Python 工具 | [2. 第一个 MCP server](#2-写你的第一个-mcp-server) | 把不该开放的权限交出去 |
 | 生成 Word／Excel／PowerPoint／PDF | [3. Office Docs Workflow](#3-office-docs-workflow) | 没有打开成品进行人工检查 |
 | 从自己的资料得到有引用的答案 | [4. Gemini Notebook Workflow](#4-gemini-notebook-workflow) | 社区集成可能突然失效 |
 | 从 Zotero 搜索或整理文献 | [5. Zotero Workflow](#5-zotero-workflow) | 写入前没有预览变更 |
 | 用本地模型协助修改程序 | [6. 本地 LLM＋CLI Agent](#6-本地-llm--cli-agent-快速-walkthrough) | 模型能力或电脑内存不足 |
+
+</div>
 
 ## 🧩 六个核心词
 
@@ -53,7 +57,7 @@
 
 ## 1. 写你的第一个 Skill
 
-**成果：**做出一张项目内可共用的操作卡，并亲手触发一次。
+**成果：** 做出一张项目内可共用的操作卡，并亲手触发一次。
 
 先建立文件夹：
 
@@ -91,19 +95,27 @@ description: Summarize uncommitted changes and flag risks. Use when the user ask
 
 常见问题：
 
+<div align="center" markdown="1">
+
 | 症状 | 先检查什么 |
-|---|---|
+|:---|:---|
 | `/summarize-changes` 不存在 | 路径是否正好是 `.claude/skills/summarize-changes/SKILL.md` |
 | 经常误触发 | `description` 是否清楚写出“何时使用” |
 | 指令太长 | 把背景资料移到同一文件夹的参考文件，需要时再读 |
 
+</div>
+
 先使用 project Skill 最安全：它只跟随这个 repo。确认多个项目都需要同一套做法后，才放到 personal path `~/.claude/skills/<name>/SKILL.md`。
 
+<div align="center" markdown="1">
+
 | 容易混淆的东西 | 它解决什么 | 何时使用 |
-|---|---|---|
+|:---|:---|:---|
 | 一次性 Prompt | 只交代眼前这一次任务 | 做法不会重复使用 |
 | **Skill** | 保存“遇到这类工作该怎么做” | 同一做法会在项目里反复出现 |
 | **MCP Server** | 提供新的 typed tool、数据或服务 | Agent 需要调用外部程序或 API |
+
+</div>
 
 Skill 可以指挥 Agent 使用已有工具，但 Skill 本身不是新的 API。不要再用“Skill 不能读文件、MCP 才能读文件”这种过度简化来区分两者。
 
@@ -115,7 +127,7 @@ Skill 可以指挥 Agent 使用已有工具，但 Skill 本身不是新的 API�
 
 ## 2. 写你的第一个 MCP server
 
-**成果：**做出一个两数相加的 MCP tool，并让 Claude Code 看见它。
+**成果：** 做出一个两数相加的 MCP tool，并让 Claude Code 看见它。
 
 先在干净的 Python 环境安装目前稳定的 MCP SDK：
 
@@ -164,10 +176,14 @@ MCP v2 的高层 class 是 `MCPServer`，正确 import 是 `from mcp.server impo
 - 写入、付款、寄信或删除动作先要求人工核准。
 - 第三方 MCP server 会接触你的资料；安装前先看来源与权限。
 
+<div align="center" markdown="1">
+
 | Transport | 适合哪里 | 验证提醒 |
-|---|---|---|
+|:---|:---|:---|
 | **stdio** | 同一台电脑上的 Claude Code／desktop host | 第一个 server 用这条；通常不在 transport 内做 OAuth |
 | **Streamable HTTP** | 远端、多人或服务化部署 | 按现行 MCP authorization 规范设计身份验证；不要照抄旧 HTTP＋SSE 教程 |
+
+</div>
 
 需要 API key 时，从环境变量读取；不要把 secret 写进 `server.py`、配置文件示例或 Git。
 
@@ -179,7 +195,7 @@ MCP v2 的高层 class 是 `MCPServer`，正确 import 是 `from mcp.server impo
 
 ## 3. Office Docs Workflow
 
-**成果：**用一份测试数据生成文件，再用真正的 Office／PDF 阅读器打开检查。
+**成果：** 用一份测试数据生成文件，再用真正的 Office／PDF 阅读器打开检查。
 
 先取得 Anthropic 的官方参考实现：
 
@@ -208,12 +224,16 @@ Copy-Item -Recurse anthropic-skills-reference/skills/docx .claude/skills/docx
 
 四个文件夹不是同一件事。先只安装你要练习的那一个：
 
+<div align="center" markdown="1">
+
 | Skill | 第一个小任务 | 完成时要检查 |
-|---|---|---|
+|:---|:---|:---|
 | `docx` | 把测试数据做成一页摘要 | 标题、段落、表格与分页 |
 | `xlsx` | 算出一小张表的合计并保留公式 | 公式、单元格类型与数值 |
 | `pptx` | 按 3 点大纲做 3 张幻灯片 | 文字不溢出，图片与来源正确 |
 | `pdf` | 从公开 PDF 摘出 3 个主张 | 页码、引用与原文能对上 |
+
+</div>
 
 可直接复制的 DOCX 任务：
 
@@ -233,7 +253,7 @@ Copy-Item -Recurse anthropic-skills-reference/skills/docx .claude/skills/docx
 
 ## 4. Gemini Notebook Workflow
 
-**成果：**放入自己的来源，取得有引用、可以回头核对的答案。
+**成果：** 放入自己的来源，取得有引用、可以回头核对的答案。
 
 Google 已把 NotebookLM 更名为 **Gemini Notebook**；部分套件与网址仍保留旧名。先从官方网页完成一次：
 
@@ -275,11 +295,15 @@ notebooklm skill install
 
 选择方式：
 
+<div align="center" markdown="1">
+
 | 需求 | 较适合的入口 |
-|---|---|
+|:---|:---|
 | 只想可靠阅读与人工核对 | Gemini Notebook 官方网页 |
 | 想批量新增来源、问答或导出 | `notebooklm-py` CLI |
 | 想研究早期浏览器 Skill 设计 | `notebooklm-skill`（已归档，只作历史参考） |
+
+</div>
 
 遇到登录失效，先回官方网页确认账号能正常使用，再按社区项目自己的 auth 指令重新登录。不要用大量重试绕过 Google 的限制。
 
@@ -289,7 +313,7 @@ notebooklm skill install
 
 ## 5. Zotero Workflow
 
-**成果：**从本地 Zotero 找到文献；需要写入时，先预览并批准变更。
+**成果：** 从本地 Zotero 找到文献；需要写入时，先预览并批准变更。
 
 在 Zotero 打开“Settings → Advanced → Allow other applications on this computer to communicate with Zotero”，再测试：
 
@@ -331,7 +355,7 @@ curl http://localhost:23119/api/
 
 ## 6. 本地 LLM + CLI Agent 快速 walkthrough
 
-**成果：**让 Coding Agent 使用你电脑上的模型，完成一个可用 Git 撤销的小改动。
+**成果：** 让 Coding Agent 使用你电脑上的模型，完成一个可用 Git 撤销的小改动。
 
 先安装 [Ollama](https://ollama.com/) 并下载目前的轻量模型：
 
@@ -341,12 +365,16 @@ ollama pull gemma4:e4b
 
 先分清它们是什么：
 
+<div align="center" markdown="1">
+
 | 名称 | 它的工作 | 它不是什么 |
-|---|---|---|
+|:---|:---|:---|
 | **Ollama** | 在本地加载并运行模型的 runtime | 不会自己读 repo、改文件或跑测试 |
 | **OpenRouter** | 用一个 API 账号路由多家云端模型与 provider | 不是本地模型，也不是终端 Coding Agent |
 | **OpenCode／Pi／Aider** | 读文件、改文件、跑指令的 Coding Agent | 本身不是模型；仍要接本地或云端模型 |
 | **Claude Code** | 使用 Claude 的 Coding Agent | 官方路径不能直接把模型切成 Ollama |
+
+</div>
 
 <details markdown="1">
 <summary>展开主要路径：OpenCode＋Ollama</summary>
@@ -388,12 +416,16 @@ aider --model ollama_chat/gemma4:e4b
 
 常见问题：
 
+<div align="center" markdown="1">
+
 | 症状 | 先做什么 |
-|---|---|
+|:---|:---|
 | 找不到 Ollama model | 跑 `ollama list`，确认 tag 正好是 `gemma4:e4b` |
 | 回答很慢或内存不足 | 改用 `gemma4:e2b`，并缩小任务与 context |
 | Agent 改太多文件 | 立即停止，查看 `git diff`；把任务缩成一个文件的一处改动 |
 | tool calling 不稳 | 改用 Stage 3 建议、且确认支持 tool calling 的模型 |
+
+</div>
 
 </details>
 
@@ -405,8 +437,10 @@ aider --model ollama_chat/gemma4:e4b
 
 <small>资料核查：2026-08-30 UTC</small>
 
+<div align="center" markdown="1">
+
 | 来源 | 先看什么 | 编辑评分 |
-|---|---|---|
+|:---|:---|:---|
 | [Claude Code — Skills](https://code.claude.com/docs/en/slash-commands) | 路径、触发方式与 live change detection | ⭐⭐⭐⭐⭐ |
 | [MCP Python SDK v2 — What’s new](https://github.com/modelcontextprotocol/python-sdk/blob/main/docs/whats-new.md) | `MCPServer` import 与 v1→v2 差异 | ⭐⭐⭐⭐⭐ |
 | [Anthropic Skills](https://github.com/anthropics/skills) | Skill 结构与文件 skill 的授权 | ⭐⭐⭐⭐⭐ |
@@ -416,37 +450,39 @@ aider --model ollama_chat/gemma4:e4b
 | [Aider＋Ollama](https://aider.chat/docs/llms/ollama.html) | 正确安装与 `ollama_chat/` prefix | ⭐⭐⭐⭐⭐ |
 | [Ollama — Gemma 4](https://ollama.com/library/gemma4) | `e2b`／`e4b` tag 与硬体选择 | ⭐⭐⭐⭐⭐ |
 
+</div>
+
 ## ⭐ 精选 Projects 与学习资源
 
 评分代表本项目的教学适用度，不是 GitHub stars，也不是永久分数。
 
-<table>
+<table align="center">
   <thead><tr><th scope="col">分类</th><th scope="col">Project／资源</th><th scope="col">适合做什么</th><th scope="col">限制</th><th scope="col">评分</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Skills</th><td><a href="https://agentskills.io">Agent Skills standard</a></td><td>理解跨工具共用的 skill 格式</td><td>各产品仍有自己的扩展字段</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td><td>阅读成熟 skill 示例</td><td>文件 skills 是 source-available</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Skills</th><td><a href="https://agentskills.io">Agent Skills standard</a></td><td>理解跨工具共用的 skill 格式</td><td>各产品仍有自己的扩展字段</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/skills">skills</a></td><td>阅读成熟 skill 示例</td><td>文件 skills 是 source-available</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">MCP</th><td><a href="https://modelcontextprotocol.io/specification">MCP specification</a></td><td>查 protocol 的正式定义</td><td>入门不用从头读完</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a></td><td>用 Python 写 server／client</td><td>注意 v1 与 v2 教程不可混用</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">MCP</th><td><a href="https://modelcontextprotocol.io/specification">MCP specification</a></td><td>查 protocol 的正式定义</td><td>入门不用从头读完</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a></td><td>用 Python 写 server／client</td><td>注意 v1 与 v2 教程不可混用</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">文件</th><td><a href="https://github.com/anthropics/skills/tree/main/skills/docx">Anthropic DOCX skill</a></td><td>学复杂文件 skill 的结构</td><td>使用前确认授权与 runtime</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/skills/tree/main/skills/xlsx">Anthropic XLSX skill</a></td><td>学习电子表格分析与输出流程</td><td>成品仍要用电子表格软件检查</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">文件</th><td><a href="https://github.com/anthropics/skills/tree/main/skills/docx">Anthropic DOCX skill</a></td><td>学复杂文件 skill 的结构</td><td>使用前确认授权与 runtime</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/skills/tree/main/skills/xlsx">Anthropic XLSX skill</a></td><td>学习电子表格分析与输出流程</td><td>成品仍要用电子表格软件检查</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Gemini Notebook</th><td><a href="https://github.com/teng-lin/notebooklm-py">notebooklm-py</a></td><td>批量来源、问答与 artifact 导出</td><td>非官方、未公开 API 可能改变</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>研究早期浏览器 Skill 设计</td><td>已归档；非官方，只作历史参考</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Gemini Notebook</th><td><a href="https://github.com/teng-lin/notebooklm-py">notebooklm-py</a></td><td>批量来源、问答与 artifact 导出</td><td>非官方、未公开 API 可能改变</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>研究早期浏览器 Skill 设计</td><td>已归档；非官方，只作历史参考</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">Zotero</th><td><a href="https://github.com/WenyuChiou/zotero-skills">zotero-skills</a></td><td>从 Agent 搜索与整理 Zotero</td><td>写入前一定先 preview</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/WenyuChiou/research-hub">research-hub</a></td><td>串接 Zotero、Obsidian 与研究流程</td><td>比单一 recipe 更进阶</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/MuiseDestiny/zotero-gpt">zotero-gpt</a></td><td>在 Zotero 内阅读时对话</td><td>plugin 路径和外部 Agent 不同</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Zotero</th><td><a href="https://github.com/WenyuChiou/zotero-skills">zotero-skills</a></td><td>从 Agent 搜索与整理 Zotero</td><td>写入前一定先 preview</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/WenyuChiou/research-hub">research-hub</a></td><td>串接 Zotero、Obsidian 与研究流程</td><td>比单一 recipe 更进阶</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/MuiseDestiny/zotero-gpt">zotero-gpt</a></td><td>在 Zotero 内阅读时对话</td><td>plugin 路径和外部 Agent 不同</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">本地／CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>连接本地或云端模型修改程序</td><td>先检查 provider 和 permission 设置</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/earendil-works/pi">Pi</a></td><td>可扩展的 coding harness／CLI</td><td>默认没有内置权限隔离</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/Aider-AI/aider">Aider</a></td><td>以 Git 为中心结对编程</td><td>小模型的编码质量可能不足</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">本地／CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>连接本地或云端模型修改程序</td><td>先检查 provider 和 permission 设置</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/earendil-works/pi">Pi</a></td><td>可扩展的 coding harness／CLI</td><td>默认没有内置权限隔离</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/Aider-AI/aider">Aider</a></td><td>以 Git 为中心结对编程</td><td>小模型的编码质量可能不足</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 

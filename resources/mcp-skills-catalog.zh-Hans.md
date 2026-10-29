@@ -22,13 +22,17 @@
 
 ## 📚 五个安全起点
 
+<div align="center" markdown="1">
+
 | 起点 | 先学什么 | 编辑评分 |
-|---|---|---|
+|:---|:---|:---|
 | [Official MCP Registry](https://registry.modelcontextprotocol.io/) | 找已发布的 MCP Server；安装前仍要检查维护者、权限和来源 | ⭐⭐⭐⭐⭐ |
-| [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) | 看 MCP 功能如何实现；这是教学用 reference implementations，不等于 production 推荐 | ⭐⭐⭐⭐⭐ |
+| [servers](https://github.com/modelcontextprotocol/servers) | 看 MCP 功能如何实现；这是教学用 reference implementations，不等于 production 推荐 | ⭐⭐⭐⭐⭐ |
 | [Notion MCP](https://developers.notion.com/guides/mcp/overview) | 看 hosted OAuth MCP 如何沿用用户 workspace 权限 | ⭐⭐⭐⭐⭐ |
 | [GitHub MCP Server](https://github.com/github/github-mcp-server) | 通过官方实现了解 OAuth、工具组和 repository 权限 | ⭐⭐⭐⭐⭐ |
-| [anthropics/skills](https://github.com/anthropics/skills) | 看 Agent Skill 的文件夹、指令和资源如何组合 | ⭐⭐⭐⭐⭐ |
+| [skills](https://github.com/anthropics/skills) | 看 Agent Skill 的文件夹、指令和资源如何组合 | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 > ⚠️ MCP Server 可能碰到真实数据。即使来源是官方，也要确认登录账号、scope、可写工具与批准画面。
 
@@ -36,9 +40,13 @@
 
 <small>新增项目核查：2026-10-15 UTC</small>
 
+<div align="center" markdown="1">
+
 | 需求 | 建议入口 | 编辑评分 | 先确认 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | 查找、安装或更新 Agent Skills | [Vercel Skills](#vercel-skills) | ⭐⭐⭐⭐ | 它不是 MCP server 或模型；安装前检查来源、权限与 host 支持 |
+
+</div>
 
 ### 目录
 
@@ -69,10 +77,14 @@
 
 ### [Notion MCP](https://developers.notion.com/guides/mcp/overview) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | 提供方式 | Notion hosted remote MCP；OAuth |
 | 推荐度 | ⭐⭐⭐⭐⭐（**官方**） |
+
+</div>
 
 **教什么**：Notion 官方 hosted MCP，可搜索、读取、创建和更新用户本来就能访问的内容。
 **适合谁**：日常用 Notion 写笔记、管项目或维护 wiki，想从支持 MCP 的 client 操作 workspace 的人。
@@ -80,10 +92,14 @@
 
 ### [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（社群维护） |
+
+</div>
 
 **教什么**：透过 Obsidian REST API community plugin 让 LLM 读写你的 Obsidian vault。
 **适合谁**：Obsidian 重度用户，想用 Claude Code 整理 daily note、自动 link、跨文件搜索。
@@ -93,10 +109,14 @@
 
 **状态（2026-09-10 UTC）**：已归档，作者不再提供更新或支持。保留作历史学习范例；新流程不要从它开始。
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：Claude Code Skill，用浏览器自动化操作 Gemini Notebook（旧名 NotebookLM）、查询上传文件，回复带 citation。
 **适合谁**：想研究早期浏览器自动化 Skill 设计的人；实际使用请先看官方网页或下方仍需自行评估的 `notebooklm-py`。
@@ -104,10 +124,14 @@
 
 ### [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：非官方 Gemini Notebook（旧名 NotebookLM）Python API + CLI + agentic skill；功能比上面 skill 多，包含一些 web UI 没开放的能力。
 **适合谁**：要程序化批量操作 Gemini Notebook（旧名 NotebookLM）的人（例如自动建 notebook、批量导入文件）。
@@ -115,10 +139,14 @@
 
 ### [ergut/mcp-logseq](https://github.com/ergut/mcp-logseq) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：透过 Logseq Local HTTP API 让 LLM 读写 Logseq graph。
 **适合谁**：Logseq 用户要自动化 daily journal、跨页 link、查询 backlinks。
@@ -126,10 +154,14 @@
 
 ### skridlevsky/graphthulhu ⭐⭐⭐（已归档／历史范例）
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | 先前记录为 MIT；目前无法重新核对 |
 | 推荐度 | ⭐⭐⭐（历史评分；目前无法公开获取） |
+
+</div>
 
 **教什么**：一组 tool，覆盖 navigation、search、analysis、writing、journals、flashcards、whiteboards。
 **适合谁**：想研究早期 Logseq + Obsidian MCP 设计的人；新项目应改找仍在维护的替代方案。
@@ -137,10 +169,14 @@
 
 ### [ankimcp/anki-mcp-server](https://github.com/ankimcp/anki-mcp-server) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：透过 AnkiConnect 让 LLM 建卡、查卡、批改 deck。
 **适合谁**：用 Anki 学语言 / 医学 / 法律的人——叫 LLM 从教材自动产卡。
@@ -156,10 +192,14 @@
 
 ### [anthropics/skills](https://github.com/anthropics/skills) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | 各 Skill 分别授权；许多为 Apache-2.0，docx／pdf／pptx／xlsx 为 source-available，依各文件夹条款 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**官方示例**） |
+
+</div>
 
 **教什么**：Anthropic 官方 Agent Skills 示例仓库，包含 docx / xlsx / pptx / pdf 处理 skill。
 **适合谁**：想了解标准 Skill 文件夹、`SKILL.md`、scripts 与 resources 怎样配合的人。
@@ -167,10 +207,14 @@
 
 ### [haris-musa/excel-mcp-server](https://github.com/haris-musa/excel-mcp-server) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（社群维护的 Excel MCP） |
+
+</div>
 
 **教什么**：Excel 档操作 MCP server——读 / 写 / 改 cell、formula、sheet。
 **适合谁**：日常处理 Excel 报表、要 LLM 自动填表 / 整理数据的人。
@@ -178,10 +222,14 @@
 
 ### [GongRzhe/Office-PowerPoint-MCP-Server](https://github.com/GongRzhe/Office-PowerPoint-MCP-Server) ⭐⭐⭐（⚠️ 已封存 2025-12、可改用 anthropics/skills pptx）
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐（⚠️ 已封存） |
+
+</div>
 
 **教什么**：用 python-pptx 操作 PPT——建简报、改 slide、插图、改 layout。
 **适合谁**：要 LLM 从大纲 / Markdown 自动生 PPT 的人（顾问、讲师、学生）。
@@ -189,10 +237,14 @@
 
 ### [open-slide/open-slide](https://github.com/open-slide/open-slide) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（agent-native 简报框架） |
+
+</div>
 
 **教什么**：为 coding agent 打造的 React 简报框架——用自然语言描述简报、让 Claude Code / Codex / Cursor 写出 React slides；内附 `/create-slide`、`/slide-authoring` 两个 Claude Code Skill。
 **适合谁**：想让 agent 直接产出“代码即简报、可进 git 版控”的人，跟 PowerPoint-MCP 走 .pptx 不同路。
@@ -200,10 +252,14 @@
 
 ### [tfriedel/claude-office-skills](https://github.com/tfriedel/claude-office-skills) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | 推荐度 | ⭐⭐⭐（补强版 Office skill） |
+
+</div>
 
 **教什么**：补强 anthropics/skills 没覆盖到的 Office workflow（automation、进阶格式）。
 **适合谁**：觉得官方 docx/xlsx/pptx skill 不够细的人。
@@ -211,10 +267,14 @@
 
 ### [xberg-io/xberg](https://github.com/xberg-io/xberg) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：解析 PDF、Office、图片与其他常见文件格式的 Rust 框架，提供 MCP server、REST API 与 CLI。
 **适合谁**：跨格式批量处理文件、要 throughput 的工程师。
@@ -230,10 +290,14 @@
 
 ### [Google Workspace MCP](https://developers.google.com/workspace/guides/configure-mcp-servers) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | 提供方式 | Google hosted remote MCP；OAuth 2.0 |
 | 推荐度 | ⭐⭐⭐⭐（**官方**，**Developer Preview**） |
+
+</div>
 
 **教什么**：Google 为 Gmail、Drive、Docs、Sheets、Slides、Calendar、Chat 和 People 提供的 remote MCP server。
 **适合谁**：想用官方入口让 Agent 读取 Workspace 数据，或创建草稿、更新文档与安排会议的人。
@@ -241,10 +305,14 @@
 
 ### [taylorwilsdon/google_workspace_mcp](https://github.com/taylorwilsdon/google_workspace_mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（社群维护的广泛 Workspace MCP） |
+
+</div>
 
 **教什么**：把 Gmail、Calendar、Docs、Sheets、Slides、Drive、Chat、Forms、Tasks 与 Search 放进一个社群 MCP server。
 **适合谁**：需要官方 Preview 尚未覆盖的社群功能，并愿意自行维护 OAuth 设置的人。
@@ -252,10 +320,14 @@
 
 ### [xing5/mcp-google-sheets](https://github.com/xing5/mcp-google-sheets) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（单纯 Sheets 用） |
+
+</div>
 
 **教什么**：专门 Google Sheets / Drive 集成，建 sheet、改 cell、查 formula。
 **适合谁**：只用 Google Sheets、不想装整套 Workspace MCP 的人。
@@ -271,10 +343,14 @@
 
 ### [Softeria/ms-365-mcp-server](https://github.com/Softeria/ms-365-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（M365 全套） |
+
+</div>
 
 **教什么**：透过 Microsoft Graph API 操作 M365——Outlook、Teams、OneDrive、SharePoint。
 **适合谁**：用 M365 的企业用户——要 LLM 回信、查行事历、捞 OneDrive 档。
@@ -282,10 +358,14 @@
 
 ### [ryaker/outlook-mcp](https://github.com/ryaker/outlook-mcp) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | 推荐度 | ⭐⭐⭐（只 Outlook） |
+
+</div>
 
 **教什么**：透过 Graph API 读写 Outlook mail / calendar。
 **适合谁**：只要操作 Outlook 不需要其他 M365 服务的人。
@@ -293,10 +373,14 @@
 
 ### [merill/lokka](https://github.com/merill/lokka) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：M365 + Microsoft Graph 全套，含 Entra（AD）、Intune 等管理用 API。
 **适合谁**：M365 系统管理员、要操作 Tenant / 用户 / 策略的人。
@@ -312,10 +396,14 @@
 
 ### [github/github-mcp-server](https://github.com/github/github-mcp-server) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（**官方**） |
+
+</div>
 
 **教什么**：GitHub 官方 MCP——issue / PR / repo / Actions / Codespaces 操作。
 **适合谁**：需要查 repository、整理 issue 或协助 PR review 的 GitHub 用户。
@@ -323,10 +411,14 @@
 
 ### [sooperset/mcp-atlassian](https://github.com/sooperset/mcp-atlassian) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（社群维护的 Atlassian MCP） |
+
+</div>
 
 **教什么**：把 Confluence 与 Jira 接成可自行部署的社群 MCP server。
 **适合谁**：需要 self-hosted、自定义认证，或官方 remote MCP 尚未支持之部署形状的团队。
@@ -334,10 +426,14 @@
 
 ### [Atlassian Rovo MCP](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | 提供方式 | Atlassian hosted remote MCP；OAuth 2.1 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Atlassian 官方**） |
+
+</div>
 
 **教什么**：让支持 MCP 的 client 按用户权限读写 Jira、Confluence 与 Bitbucket Cloud。
 **适合谁**：公司使用 Atlassian Cloud，并希望由 Atlassian 托管连接与授权的人。
@@ -345,10 +441,14 @@
 
 ### [Slack MCP Server](https://docs.slack.dev/ai/mcp-overview/) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | 提供方式 | Slack 官方 MCP Server |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Slack 官方**） |
+
+</div>
 
 **教什么**：让 AI app 搜索 Slack 频道、发送消息、管理 canvas，并执行其他 Slack 动作。
 **适合谁**：想从支持 MCP 的 client 查找团队讨论或协助处理 Slack 工作的人。
@@ -356,10 +456,14 @@
 
 ### [Linear MCP](https://linear.app/docs/mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | 提供方式 | Linear hosted remote MCP；Streamable HTTP |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Linear 官方**） |
+
+</div>
 
 **教什么**：用 Streamable HTTP 连接 Linear，查询或更新 issue、project 与 comment。
 **适合谁**：用 Linear 管 sprint 或 backlog，想从 Agent 查找与整理工作的人。
@@ -367,10 +471,14 @@
 
 ### [SaseQ/discord-mcp](https://github.com/SaseQ/discord-mcp) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：Discord MCP——读写频道消息、管理服务器。
 **适合谁**：用 Discord 跑社群 / 开源项目的 maintainer。
@@ -378,10 +486,14 @@
 
 ### [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：把 codebase / SQL schemas / R scripts / shell scripts / docs / papers / images / videos 变成 queryable knowledge graph 的 AI coding skill。Claude Code、Codex、OpenCode、Cursor、Gemini CLI 都能接。
 **适合谁**：要对大型 codebase 做架构分析、跨档追 reference、把"app code + DB schema + infra"放一起问的工程师 / 研究者。
@@ -389,10 +501,14 @@
 
 ### [upstash/context7](https://github.com/upstash/context7) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（coding context） |
+
+</div>
 
 **教什么**：按库与版本查找文档片段，放进 Agent 当下的 context，减少套用旧 API 的机会。
 **适合谁**：常跨不同版本的库写 code，想先找到相关文档再动手的开发者。
@@ -400,10 +516,14 @@
 
 ### [DeusData/codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（code intelligence） |
+
+</div>
 
 **教什么**：把 codebase 索引成可查询的 knowledge graph，让 coding agent 先查结构、符号与调用路径，再回到实际代码验证。
 **适合谁**：在大型或不熟的 repo 上跑 coding agent、想快速定位又想省 token 的人。
@@ -419,10 +539,14 @@
 
 ### [googleapis/mcp-toolbox](https://github.com/googleapis/mcp-toolbox) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Google 官方**，多 DB） |
+
+</div>
 
 **教什么**：跨 DB 的 MCP server——MySQL / PostgreSQL / Cloud SQL / Spanner / BigQuery 一次包。
 **适合谁**：在 Google Cloud 上跑 DB 的工程师、要支持多 DB 引擎的开发者。
@@ -430,10 +554,14 @@
 
 ### [bytebase/dbhub](https://github.com/bytebase/dbhub) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（社群多 DB MCP） |
+
+</div>
 
 **教什么**：zero-dependency、token-efficient 的多 DB MCP——Postgres、MySQL、SQL Server、MariaDB、SQLite。
 **适合谁**：不想装 Google Cloud SDK、要跨多种 OSS DB 的工程师。
@@ -441,10 +569,14 @@
 
 ### [supabase/mcp](https://github.com/supabase/mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Supabase 官方社群**） |
+
+</div>
 
 **教什么**：把 Supabase（含 Postgres、Auth、Storage、Edge Functions）接到 LLM。
 **适合谁**：用 Supabase 跑后端的全栈开发者。
@@ -452,10 +584,14 @@
 
 ### [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐（Postgres 写代码辅助） |
+
+</div>
 
 **教什么**：MCP server + Claude plugin，帮 LLM 生成更好的 PostgreSQL 代码。
 **适合谁**：写 Postgres heavy SQL / DBA 工程师。
@@ -463,10 +599,14 @@
 
 ### [benborla/mcp-server-mysql](https://github.com/benborla/mcp-server-mysql) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（read-only MySQL） |
+
+</div>
 
 **教什么**：read-only MySQL MCP，让 LLM 看 schema、跑 query。
 **适合谁**：要让 LLM 分析 production DB 但不能改的场景。
@@ -474,10 +614,14 @@
 
 ### [mongodb-js/mongodb-mcp-server](https://github.com/mongodb-js/mongodb-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐（**MongoDB 官方**） |
+
+</div>
 
 **教什么**：MongoDB 跟 MongoDB Atlas Cluster MCP server。
 **适合谁**：用 MongoDB / Atlas 的工程师。
@@ -485,10 +629,14 @@
 
 ### [redis/mcp-redis](https://github.com/redis/mcp-redis) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（**Redis 官方**） |
+
+</div>
 
 **教什么**：Redis 官方 MCP，自然语言操作 Redis 跟 Redis Stack（Vector / Search / JSON）。
 **适合谁**：用 Redis 当 cache / vector DB / queue 的人。
@@ -496,10 +644,14 @@
 
 ### [awslabs/mcp](https://github.com/awslabs/mcp) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐（**AWS 官方**） |
+
+</div>
 
 **教什么**：AWS 官方 MCP server（Lambda / S3 / DynamoDB / CloudWatch / Cost Explorer 等）。
 **适合谁**：在 AWS 上、想让 agent 查询 / 操作云端资源的团队。
@@ -515,10 +667,14 @@
 
 ### [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Microsoft 官方**） |
+
+</div>
 
 **教什么**：Playwright MCP server——让 LLM 开浏览器、点按钮、填表单、抓网页。
 **适合谁**：要做 E2E 自动化、跨网站集成、抓需要登录的网页的人。
@@ -526,10 +682,14 @@
 
 ### [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Chrome 官方**） |
+
+</div>
 
 **教什么**：把 Chrome DevTools 接给 coding agent——performance、network、console 直接给 LLM 看。
 **适合谁**：调试前端 bug、做 web performance 分析的开发者。
@@ -537,10 +697,14 @@
 
 ### [firecrawl/firecrawl-mcp-server](https://github.com/firecrawl/firecrawl-mcp-server) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Firecrawl 官方**） |
+
+</div>
 
 **教什么**：Firecrawl 官方 MCP——大规模网页抓取 + search + 结构化提取。
 **适合谁**：要抓大量网页当训练数据 / 做 RAG / 做研究的人。
@@ -548,10 +712,14 @@
 
 ### [browserbase/mcp-server-browserbase](https://github.com/browserbase/mcp-server-browserbase) ⭐⭐⭐⭐（⚠️ 已封存）
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐（**Browserbase 官方**、⚠️ 已封存） |
+
+</div>
 
 **教什么**：Browserbase 官方 MCP，配 Stagehand 跑 cloud-based 浏览器。
 **适合谁**：本地跑浏览器太重 / 要在 cloud 并行跑多个 session 的人。
@@ -567,10 +735,14 @@
 
 ### [Canva MCP](https://www.canva.dev/docs/mcp/) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | 提供方式 | Canva hosted remote MCP；`https://mcp.canva.com/mcp` |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Canva 官方**） |
+
+</div>
 
 **教什么**：让 AI assistant 创建、编辑、搜索、导出 Canva 设计，也能处理 asset、brand 与 comment。
 **适合谁**：想从支持 MCP 的工具操作 Canva，又希望沿用每位用户既有设计权限的人。
@@ -578,10 +750,14 @@
 
 ### [GLips/Figma-Context-MCP](https://github.com/GLips/Figma-Context-MCP) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（社群维护的 design-to-code MCP） |
+
+</div>
 
 **教什么**：把 Figma layout 信息送给 coding agent——读设计稿、提组件结构，给 Cursor / Claude Code 写对应的 React component。
 **适合谁**：前端开发者，要 LLM 从 Figma 设计稿生成 component code。
@@ -589,10 +765,14 @@
 
 ### [excalidraw/excalidraw-mcp](https://github.com/excalidraw/excalidraw-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Excalidraw 官方**） |
+
+</div>
 
 **教什么**：streamable Excalidraw MCP，让 LLM 直接画架构图、流程图。
 **适合谁**：写设计文档 / 系统架构 / 流程图的人——叫 Claude 从文字描述画图。
@@ -600,10 +780,14 @@
 
 ### [yctimlin/mcp_excalidraw](https://github.com/yctimlin/mcp_excalidraw) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（替代版 Excalidraw） |
+
+</div>
 
 **教什么**：MCP server + Claude Code Skill，real-time canvas sync，可创建 / 编辑 / 导出。
 **适合谁**：需要 real-time canvas sync 跟编程化操作的人。
@@ -611,10 +795,14 @@
 
 ### [pbakaus/impeccable](https://github.com/pbakaus/impeccable) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**："**让你 AI harness 在 design 上更强的 design language**"——一套设计 vocabulary / pattern，帮 AI 在生成 UI / 视觉成品时跳出常见的"AI 感"生硬风格。
 **适合谁**：用 AI 生 UI / mockup / visual design 但结果都很 generic 的开发者；前端 + AI workflow。
@@ -630,10 +818,14 @@
 
 ### [grafana/mcp-grafana](https://github.com/grafana/mcp-grafana) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Grafana 官方**） |
+
+</div>
 
 **教什么**：Grafana 官方 MCP，从 LLM 直接查 dashboard、metric、alert。
 **适合谁**：用 Grafana 看 metric 的 SRE / DevOps。
@@ -641,10 +833,14 @@
 
 ### [getsentry/toolkit](https://github.com/getsentry/toolkit) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | FSL-1.1-Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐（**Sentry 官方**） |
+
+</div>
 
 **教什么**：从 LLM 查 Sentry error event、issue、trace。
 **适合谁**：用 Sentry 接 production error 的工程师。
@@ -654,10 +850,14 @@
 
 ### [winor30/mcp-server-datadog](https://github.com/winor30/mcp-server-datadog) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐（社群版 Datadog） |
+
+</div>
 
 **教什么**：Datadog API MCP——查 monitor、log、metric。
 **适合谁**：用 Datadog 但 Datadog 还没出官方 MCP 的人。
@@ -674,10 +874,14 @@
 
 ### [varunneal/spotify-mcp](https://github.com/varunneal/spotify-mcp) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：把 LLM 接到 Spotify——播歌、加歌单、查历史。
 **适合谁**：想用 Claude Code 控播放列表、做语音 / 文字 → 音乐的集成者。
@@ -685,10 +889,14 @@
 
 ### [kimtaeyoon83/mcp-server-youtube-transcript](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（YouTube 字幕） |
+
+</div>
 
 **教什么**：直接抓 YouTube 视频字幕给 LLM 摘要、翻译、做 RAG。
 **适合谁**：用视频当学习材料、要批量摘要 YouTube 内容的人。
@@ -696,10 +904,14 @@
 
 ### [ZubeidHendricks/youtube-mcp-server](https://github.com/ZubeidHendricks/youtube-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（YouTube 完整 API） |
+
+</div>
 
 **教什么**：完整 YouTube API MCP——除了 transcript，还能管 video、Shorts、analytics。
 **适合谁**：YouTube 创作者要自动化频道管理。
@@ -716,10 +928,14 @@
 
 ### [leemysw/feishu-docx](https://github.com/leemysw/feishu-docx) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：飞书（Lark）docs / sheet / bitable ↔ Markdown 双向转换，含 OAuth 2.0、CLI、TUI、Claude Skills。
 **适合谁**：用飞书 / Lark 写文档的中文用户，要把 Lark 内容跟 Claude Code 串起来。
@@ -727,10 +943,14 @@
 
 ### [netease-youdao/LobsterAI](https://github.com/netease-youdao/LobsterAI) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：网易有道的产品式 Agent，示范工作流自动化、跨应用协作与文件处理。
 **适合谁**：想评估中文界面与中国大陆服务集成的用户。
@@ -738,10 +958,14 @@
 
 ### [QwenLM/Qwen-Agent](https://github.com/QwenLM/Qwen-Agent) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：阿里巴巴官方 Qwen agent framework——RAG、tool use、code interpreter、multi-agent、MCP 兼容，默认搭配 Qwen 系列模型但可换其他 LLM。
 **适合谁**：用 Qwen / 通义千问 为主 LLM 的开发者；想要中文 native 的 agent framework（范例、文档都中文齐全）。
@@ -749,10 +973,14 @@
 
 ### [coze-dev/coze-studio](https://github.com/coze-dev/coze-studio) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：字节跳动 Coze 的开源版——no-code agent builder（workflow / plugin / knowledge / memory），可自部署或上云。
 **适合谁**：不想写 code 但要做 agent 的团队；想看 enterprise agent platform 内部设计（RAG、工作流、Memory、Plugin 系统的 reference 实现）。
@@ -760,10 +988,14 @@
 
 ### [coze-dev/coze-loop](https://github.com/coze-dev/coze-loop) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：Coze 出的 agent observability + evaluation 平台——trace、debug、eval、prompt management，agent dev lifecycle 的下半场。
 **适合谁**：agent 已经跑起来、要 production 监控的团队；想看"agent eval / observability"可以怎么做的人。
@@ -771,10 +1003,14 @@
 
 ### [liaokongVFX/LangChain-Chinese-Getting-Started-Guide](https://github.com/liaokongVFX/LangChain-Chinese-Getting-Started-Guide) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | 未标注 |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：LangChain 中文入门指南——从 LangChain 基础、Prompt、Memory、Agent、Chains 到实作应用，是一份结构清晰的中文学习资源。
 **适合谁**：想用 LangChain 但英文文档吃不下去的中文用户；想理解 LangChain 设计脉络再决定要不要走这条路的人。
@@ -782,10 +1018,14 @@
 
 ### [chatchat-space/Langchain-Chatchat](https://github.com/chatchat-space/Langchain-Chatchat) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：基于 LangChain 的开源知识库问答系统——本地化部署、支持多种向量数据库、RAG 端到端范例。
 **适合谁**：想做 RAG 又不想全部自己刻的中文团队；要本地部署（不能用云端 LLM）的场景。
@@ -793,10 +1033,14 @@
 
 ### [usewhale/whale](https://github.com/usewhale/whale) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：专为 DeepSeek 模型优化的终端 AI 编码助手——支持 MCP server 接入、Claude-style Skills、对话缓存优化，Go 实现。
 **适合谁**：以 DeepSeek 为主力 LLM 的中文开发者；想用终端工具但不需要 Claude Code 全家桶的人。
@@ -804,10 +1048,14 @@
 
 ### [simonlin1212/a-stock-data](https://github.com/simonlin1212/a-stock-data) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：A 股数据 Skill，把 mootdx、东财、akshare、iwencai 等来源包成 AI 编码助手可调用的数据入口。
 **适合谁**：用 Claude Code / Codex / OpenClaw 做投研或量化分析的中文开发者；不想自己刻数据抓取逻辑的人。
@@ -817,10 +1065,14 @@
 
 ### [MoonshotAI/Kimi-K2](https://github.com/MoonshotAI/Kimi-K2) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Modified MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：月之暗面 Moonshot 的 Kimi K2 开源大模型系列——开源权重 + OpenAI / Anthropic 兼容 API，主打 agentic / coding / 长程任务，可当 agent stack 的后端模型。
 **适合谁**：想用国产开源模型跑 agent / coding 工作流、或要在自部署环境跑开源权重的中文开发者。
@@ -828,10 +1080,14 @@
 
 ### [zai-org/GLM-4.5](https://github.com/zai-org/GLM-4.5) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：智谱 Zhipu（Z.ai）的 GLM-4.5 开源模型——定位 Agentic / Reasoning / Coding（ARC）基础模型，开源权重 + API，可当 agent / tool use / coding 的后端。
 **适合谁**：想评估国产开源 agentic 模型、或需要 Apache-2.0 宽松许可权重的中文开发者。
@@ -847,10 +1103,14 @@
 
 ### [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Cloudflare 官方**） |
+
+</div>
 
 **教什么**：Cloudflare 官方 MCP——Workers、Pages、R2、KV、D1、DNS、Zero Trust 全包。
 **适合谁**：用 Cloudflare 跑 edge / serverless 的人。
@@ -858,10 +1118,14 @@
 
 ### [stripe/ai](https://github.com/stripe/ai) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（**Stripe 官方**） |
+
+</div>
 
 **教什么**：Stripe 官方 AI agent toolkit，含 MCP server，操作付款、订阅、退款、客户。
 **适合谁**：要在 agent 内处理付款 / billing 的开发者。
@@ -869,10 +1133,14 @@
 
 ### [ComposioHQ/composio](https://github.com/ComposioHQ/composio) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（多服务整合枢纽） |
+
+</div>
 
 **教什么**：一个用 SDK 与 MCP server 把 Agent 连到多种应用的平台，并集中处理服务登录，不用每个服务都自行写连接器。
 **适合谁**：agent 要跨大量工具、但不想维护几十个独立 MCP server 的团队。
@@ -881,12 +1149,16 @@
 <a id="vercel-skills"></a>
 ### [Vercel Skills](https://github.com/vercel-labs/skills) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐ |
 
-**教什么**：**CLI（命令行接口）**让你在终端用文字命令操作程序。
+</div>
+
+**教什么**：**CLI（命令行接口）** 让你在终端用文字命令操作程序。
 Vercel Skills 用这种方式管理 skills。
 你可以用 `npx skills find`、`add` 与 `update` 查找、安装和更新 Agent Skills。
 它不是 MCP server 或模型。
@@ -902,10 +1174,14 @@ CLI 根据官方 README 会收集匿名使用记录（usage telemetry）。
 
 ### [morluto/jacobian](https://github.com/morluto/jacobian) ⭐⭐⭐（⚠️ 作者本人投稿）
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：用一个可直接安装的数学 MCP server，练习让 agent 调用可组合的精确计算工具；涵盖 polynomial maps、linear algebra 和 graph algorithms。
 **适合谁**：想在 MCP 工作流中加入数学计算，或需要让 agent 处理结构化数学问题的研究者与开发者。
@@ -929,10 +1205,14 @@ npx -y jacobian mcp
 
 ### [WenyuChiou/ai-research-skills](https://github.com/WenyuChiou/ai-research-skills) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐（研究流程一整套） |
+
+</div>
 
 **教什么**：用一组研究 Skills 涵盖文献分流、研究设计、project context、论文写作与 multi-AI delegation，并以 marketplace 方式提供。
 **适合谁**：研究生 / 博后想一次获取“研究全流程”skill set。
@@ -940,10 +1220,14 @@ npx -y jacobian mcp
 
 ### [WenyuChiou/academic-writing-skills](https://github.com/WenyuChiou/academic-writing-skills) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐（窄但深） |
+
+</div>
 
 **教什么**：严谨学术论文写作 / 修改 / 投稿的 Claude Code skill。Field-agnostic，可用 per-paper journal_format.md 跟 style_overrides.md 客制规则。
 **适合谁**：在写 / 改 paper 的研究者，想把 banned-word audit、figure-text coupling、submission checklist 自动化。
@@ -951,10 +1235,14 @@ npx -y jacobian mcp
 
 ### [WenyuChiou/zotero-skills](https://github.com/WenyuChiou/zotero-skills) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：Zotero CLI skill——程序化搜索 / 添加 / 分类 / 标记文献。
 **适合谁**：用 Zotero 管理文献、想让 Claude Code 直接整理 library 的研究者。
@@ -962,10 +1250,14 @@ npx -y jacobian mcp
 
 ### [WenyuChiou/research-hub](https://github.com/WenyuChiou/research-hub) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：AI-operable research workspace，集成 Zotero、Obsidian 与 Gemini Notebook（旧名 NotebookLM），并提供多种操作接口。
 **适合谁**：同时用 Zotero / Obsidian / Gemini Notebook（旧名 NotebookLM）的研究者，想把它们绑成一个 workspace 给 LLM 操作。
@@ -994,10 +1286,14 @@ npx -y jacobian mcp
 
 ### [WenyuChiou/codex-delegate](https://github.com/WenyuChiou/codex-delegate) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：Claude Code skill 把 Codex CLI 当作 execution specialist——大量文件 refactor、batch edits、boilerplate 生成、wrapper-based 实现密集任务。Claude 写 plan + review，Codex 执行。
 **适合谁**：要省 token / 提速大规模机械式编辑的开发者；想验证“multi-agent 不只是 buzzword”的学习者。
@@ -1007,10 +1303,14 @@ npx -y jacobian mcp
 
 ### [WenyuChiou/gemini-delegate-skill](https://github.com/WenyuChiou/gemini-delegate-skill) ⭐⭐⭐（⚠️ 已封存 2026-07）
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐（⚠️ 已封存） |
+
+</div>
 
 **教什么**：历史上的 Claude Code delegation skill，示范把长文、跨文档或 CJK 任务交给另一个 CLI executor。
 **适合谁**：维护旧设置、研究早期 multi-LLM delegation pattern 的读者。
@@ -1020,10 +1320,14 @@ npx -y jacobian mcp
 
 ### [WenyuChiou/agent-collab-skills](https://github.com/WenyuChiou/agent-collab-skills) ⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐（experimental，当作 reference 看就好） |
+
+</div>
 
 **教什么**：Claude Code marketplace for multi-agent collaboration——task splitter、output reconciler、adversarial debate、shared memory、acceptance gate。
 **适合谁**：要协调多个 delegate、想看 multi-agent coordination 怎么打包成 marketplace 的人。
@@ -1041,10 +1345,14 @@ npx -y jacobian mcp
 
 ### [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：多 agent LLM 框架做金融交易决策，bull / bear / fundamentals / technicals / risk 各 agent 分工。
 **适合谁**：想看 multi-agent 在分析性任务怎么分工的学习者；量化研究者想实验 LLM 增强既有 pipeline。
@@ -1052,10 +1360,14 @@ npx -y jacobian mcp
 
 ### [virattt/ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐ |
+
+</div>
 
 **教什么**：多角色 AI hedge fund 模拟，bull / bear / 基本面 / 技术面 / 风控 agent 协作产生 trade recommendation。
 **适合谁**：看过 Stage 7 multi-agent 想要一个完整应用案例的学习者；对 agent + 金融交叉领域有兴趣的人。
@@ -1071,10 +1383,14 @@ npx -y jacobian mcp
 
 ### [exa-labs/exa-mcp-server](https://github.com/exa-labs/exa-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（**Exa 官方**） |
+
+</div>
 
 **教什么**：Exa 官方 MCP——为 LLM / agent 设计的网页搜索（neural + keyword 两种），回传干净结果直接喂进 prompt。
 **适合谁**：要做研究 / fact-check / 在线 RAG 检索的人——语义搜索在“概念相关”场景特别强，纯 keyword 反而没那么吃香。
@@ -1082,10 +1398,14 @@ npx -y jacobian mcp
 
 ### [tavily-ai/tavily-mcp](https://github.com/tavily-ai/tavily-mcp) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | MIT |
 | 推荐度 | ⭐⭐⭐⭐（LLM 搜索 MCP） |
+
+</div>
 
 **教什么**：把 Tavily search API 包成 MCP，让 Agent 取得搜索结果与来源。
 **适合谁**：想练习让 Agent 搜索网页，并另外核对来源内容的新手。
@@ -1101,10 +1421,14 @@ npx -y jacobian mcp
 
 ### [trailofbits/skills](https://github.com/trailofbits/skills) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | CC-BY-SA-4.0 |
 | 推荐度 | ⭐⭐⭐⭐⭐（**Trail of Bits 官方**） |
+
+</div>
 
 **教什么**：安全公司 Trail of Bits 官方的 Claude Code plugin marketplace，收的是他们自己在用的安全分析、测试与漏洞研究 skills。
 **适合谁**：想让 agent 帮忙做 code audit、漏洞分析、安全测试的人；也适合想看“专业安全团队怎么把方法论写成 skill”的人。
@@ -1112,10 +1436,14 @@ npx -y jacobian mcp
 
 ### [stacklok/toolhive](https://github.com/stacklok/toolhive) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：把每一个 MCP server 跑在隔离容器里，用最小权限文件取代本机凭证，并提供 audit log 与可配置的身份／访问策略；另附 Kubernetes operator。
 **适合谁**：团队里已经有人各自装了一堆 MCP server，开始需要回答“谁装了什么、它能拿到哪些凭证”的人。
@@ -1123,10 +1451,14 @@ npx -y jacobian mcp
 
 ### [NVIDIA/OpenShell](https://github.com/NVIDIA/OpenShell) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐（**NVIDIA 官方**） |
+
+</div>
 
 **教什么**：给自动化 agent 用的沙箱化执行环境，用声明式策略管住文件、网络与进程；Claude Code 与 Codex 不改任何代码就能跑在里面（OpenClaw 要另外通过下面那则 NemoClaw）。
 **适合谁**：要让 agent 真的能执行命令、但不想把整台机器交出去的人。
@@ -1134,10 +1466,14 @@ npx -y jacobian mcp
 
 ### [nolabs-ai/nono](https://github.com/nolabs-ai/nono) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | 栏位 | 内容 |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | 推荐度 | ⭐⭐⭐⭐ |
+
+</div>
 
 **教什么**：用操作系统自己的隔离机制（Linux Landlock、macOS Seatbelt）挡住 agent，不需要 daemon 也不需要容器。
 **适合谁**：想要沙箱但不想为此装一整套 container runtime 的人。

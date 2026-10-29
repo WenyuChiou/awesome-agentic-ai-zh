@@ -86,13 +86,17 @@ Recommendation is a required editorial judgment for every entry.
 
 ## 2. Recommendation star definitions
 
+<div align="center" markdown="1">
+
 | Stars | Meaning | When to use |
-|---|---|---|
+|:---|:---|:---|
 | ⭐⭐⭐⭐⭐ | Must-read / must-run | Skipping this will get you stuck in this stage |
 | ⭐⭐⭐⭐ | Highly recommended | Strong material to deepen the topic |
 | ⭐⭐⭐ | Solid example | Worth running for cross-reference |
 | ⭐⭐ | Useful reference | Browse if interested |
 | ⭐ | Niche / advanced / for completeness | Most readers can skip |
+
+</div>
 
 These are editorial ratings, not GitHub stars. Change a rating only when evidence about the resource’s purpose, quality, or maintenance changes.
 
@@ -114,8 +118,10 @@ The catalog's canonical text is **Traditional Chinese (zh-TW, Taiwan)**, so two 
 
 The terms are the data, so they stay in Chinese. Left column: the zh-Hans wording to avoid in canonical zh-TW pages. Right column: the zh-TW wording to use instead.
 
+<div align="center" markdown="1">
+
 | Avoid (zh-Hans) | Use instead (zh-TW) |
-|---|---|
+|:---|:---|
 | 教程 | 教學 / 課程 / 導讀 |
 | 視頻 | 影片 |
 | 軟件 | 軟體 |
@@ -134,10 +140,14 @@ The terms are the data, so they stay in Chinese. Left column: the zh-Hans wordin
 | 數據 | 資料 |
 | 內存 | 記憶體 |
 
+</div>
+
 ### Avoid overclaim phrases
 
+<div align="center" markdown="1">
+
 | Avoid | Use instead |
-|---|---|
+|:---|:---|
 | "the best in the world" / "industry's strongest" | "comprehensive" / "well-known" / "widely-used" |
 | "production-grade" (when describing teaching material) | "teaching-oriented" / "material to learn production patterns from" |
 | "the only choice" / "definitive" | "a good option" / "an entry-level pick" |
@@ -145,18 +155,24 @@ The terms are the data, so they stay in Chinese. Left column: the zh-Hans wordin
 | "authoritative reference" (unless truly the official spec) | "important reference implementation" / "official template" |
 | "no problem" (re: legal/license) | "check the terms before use" / "verify the terms yourself" |
 
+</div>
+
 ### Banned English-in-Chinese sentence patterns
 
 Splicing an English verb or adjective into a Chinese sentence reads as untranslated draft text. Rewrite it in Chinese.
 
+<div align="center" markdown="1">
+
 | Avoid | Use instead |
-|---|---|
+|:---|:---|
 | follow 條款 | 遵守條款 |
 | ready-made 教材 | 現成可改的教材 |
 | Gemini Notebook-like 工具 | 類 Gemini Notebook 的工具 / 類似 Gemini Notebook 的工具 |
 | 視覺化 node-based | 視覺化節點式 |
 | Anthropic host 的 server | Anthropic 維護的 server |
 | coding 流程 | 開發流程 / 程式開發流程 |
+
+</div>
 
 ---
 
@@ -188,13 +204,17 @@ Technical writing has terms that **read more naturally in English** than transla
 
 ### Annotated exceptions
 
+<div align="center" markdown="1">
+
 | Situation | Notation |
-|---|---|
+|:---|:---|
 | No SPDX upstream | `NOASSERTION (no SPDX upstream; check LICENSE before use)` |
 | AGPL (copyleft) | `AGPL-3.0` + Notes: `AGPL-3.0 license (copyleft) — derivative products that ship modifications must follow the terms.` |
 | Custom non-commercial | `NOASSERTION (custom non-commercial)` + Notes: `License is a custom non-commercial term — read the original terms before use.` |
 | Multiple per-plugin | `NOASSERTION (each plugin has its own license; check per plugin)` |
 | Creative Commons | `CC-BY-4.0`, `CC-BY-NC-SA-4.0`, etc. |
+
+</div>
 
 **Rule**: **Never** read a license as legal advice. Don't say "fine for personal use." Say "read the original terms before use."
 
@@ -478,3 +498,15 @@ This style guide covers "how to write an entry." For **design rationale** — wh
 PRs to this guide are welcome. Open an Issue first to discuss — terminology decisions affect many entries across three locales.
 
 Current maintainer: [@WenyuChiou](https://github.com/WenyuChiou).
+
+
+## Tables: verify GitHub and the documentation site separately
+
+- Center the table itself and center merged category headers horizontally and vertically. Short ratings may be centered; keep explanatory prose left-aligned. Preserve category groups, complete URLs, limits, and editorial star ratings.
+- Wrap native Markdown tables in `<div align="center" markdown="1">`, with blank lines around the table. Use `:---` for explanatory columns with no explicit alignment; reserve center/right alignment for ratings, categories, and genuine numeric columns. Leave fenced table examples untouched.
+- Use `<div data-field="...">` for catalog fields so default paragraph margins do not inflate each entry. Keep field labels, order, and content. Use the smallest practical category width without shrinking text or breaking words into letters.
+- Site CSS does not apply on GitHub. Inspect GitHub Markdown and the built site separately on desktop and phone widths, checking internal scrolling, column width, whitespace, wrapping, original facts, and visible important content. Check readability even when the whole page fits.
+
+Prefer five columns for desktop resource comparisons: category, project or document, rating, use, and limits. Merge categories with real rowspan. Do not invent ratings or limits; navigation and definition tables keep the columns they need. Left-align explanatory text; categories and ratings may be centered. Keep GitHub Markdown useful for comparison, while site CSS may stack the same facts at phone and tablet widths.
+
+Route and entry tables must leave enough room for complete names. Choose name-column widths from GitHub measurements rather than applying one width everywhere. Keep full titles, file names, and legacy-name hints visible; stack the same fields at full width on the mobile site.

@@ -34,48 +34,52 @@ Company or school computers may prohibit installing programs or creating API key
 
 The five doors are parallel choices, not five levels that must be completed in order.
 
+<div align="center" markdown="1">
+
 | What you want to do | What this door is | First action |
-|---|---|---|
+|:---|:---|:---|
 | Chat with a model first | **Web Chat**: conversation in a browser | Open [Claude](https://claude.ai), [ChatGPT](https://chatgpt.com), [Gemini](https://gemini.google.com), or [Le Chat](https://chat.mistral.ai) |
 | Chat or handle files in a computer app | **Desktop App**: a chat interface installed on your computer | Install it from the product's official download page |
 | Have AI assist while you write code | **IDE Assistant**: lives inside the editor | Start with the [developer branch](../branches/for-developer.en.md) |
 | Let an Agent read and edit files and run commands in a specified folder | **CLI Agent**: works in the terminal | Start with the [CLI Agents guide](cli-agents-guide.en.md) |
 | Write your own program to call a model | **API**: the entry point where a program talks to a model service | Continue with A → B → C below |
 
+</div>
+
 <details markdown="1">
 <summary>View the complete official entry points for Web, Desktop, IDE, and CLI</summary>
 
 The table below is an entry-point list, not a ranking. The recommendation rating means “how suitable is it as a starting point for this learning roadmap.”
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">Type</th><th scope="col">Official entry point / project</th><th scope="col">Know this first</th><th scope="col">Recommendation</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Web Chat</th><td><a href="https://claude.ai">Claude</a></td><td>Cloud chat interface; plans and features vary by account and region</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>Cloud chat interface; a ChatGPT subscription is not OpenAI API credit</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://gemini.google.com">Gemini</a></td><td>Cloud chat interface; check data permissions before connecting services</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://chat.mistral.ai">Le Chat</a></td><td>Mistral's cloud chat interface</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Web Chat</th><td><a href="https://claude.ai">Claude</a></td><td>Cloud chat interface; plans and features vary by account and region</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>Cloud chat interface; a ChatGPT subscription is not OpenAI API credit</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google.com">Gemini</a></td><td>Cloud chat interface; check data permissions before connecting services</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chat.mistral.ai">Le Chat</a></td><td>Mistral's cloud chat interface</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Desktop</th><td><a href="https://claude.com/download">Claude Desktop</a></td><td>Use the official page for the current Windows, macOS, and Linux entry points</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://chatgpt.com/download">ChatGPT Desktop</a></td><td>Use the official download page for platform requirements</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://gemini.google/mac">Gemini for macOS</a></td><td>Currently a macOS app; use the Web version on other systems</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://lmstudio.ai/download">LM Studio</a></td><td>Local-model runtime and graphical interface; you still manage models, hardware, and file permissions</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Desktop</th><td><a href="https://claude.com/download">Claude Desktop</a></td><td>Use the official page for the current Windows, macOS, and Linux entry points</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chatgpt.com/download">ChatGPT Desktop</a></td><td>Use the official download page for platform requirements</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google/mac">Gemini for macOS</a></td><td>Currently a macOS app; use the Web version on other systems</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://lmstudio.ai/download">LM Studio</a></td><td>Local-model runtime and graphical interface; you still manage models, hardware, and file permissions</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">IDE／Editor</th><td><a href="https://cursor.com">Cursor</a></td><td>AI editor; confirm every modification and terminal action</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://devin.ai/desktop">Devin Desktop (formerly Windsurf)</a></td><td>Windsurf's current desktop coding-agent / IDE surface; still check tool permissions and plans</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://cline.bot">Cline</a></td><td>VS Code coding agent; start with low permissions</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://zed.dev/ai">Zed AI</a></td><td>AI features in the Zed editor</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/features/copilot">GitHub Copilot</a></td><td>Available in GitHub, IDEs, and other interfaces; permissions differ by interface</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">IDE／Editor</th><td><a href="https://cursor.com">Cursor</a></td><td>AI editor; confirm every modification and terminal action</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://devin.ai/desktop">Devin Desktop (formerly Windsurf)</a></td><td>Windsurf's current desktop coding-agent / IDE surface; still check tool permissions and plans</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://cline.bot">Cline</a></td><td>VS Code coding agent; start with low permissions</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://zed.dev/ai">Zed AI</a></td><td>AI features in the Zed editor</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/features/copilot">GitHub Copilot</a></td><td>Available in GitHub, IDEs, and other interfaces; permissions differ by interface</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">CLI Agent</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>Keep the permission prompt enabled first; begin with a small folder</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/openai/codex">OpenAI Codex</a></td><td>Coding agent; confirm its sandbox, approval, and diff</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a></td><td>Gemini's open-source terminal agent</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>Multi-provider coding agent / harness, not a model router</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>Connects to providers and extensions; narrow tool permissions first</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://aider.chat/docs/">Aider</a></td><td>Git-first pair programmer; auto-commit does not mean you can skip review</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a></td><td>General-purpose agent; try small tasks in an isolated environment first</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">CLI Agent</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>Keep the permission prompt enabled first; begin with a small folder</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/openai/codex">OpenAI Codex</a></td><td>Coding agent; confirm its sandbox, approval, and diff</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a></td><td>Gemini's open-source terminal agent</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>Multi-provider coding agent / harness, not a model router</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>Connects to providers and extensions; narrow tool permissions first</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://aider.chat/docs/">Aider</a></td><td>Git-first pair programmer; auto-commit does not mean you can skip review</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a></td><td>General-purpose agent; try small tasks in an isolated environment first</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
 
@@ -95,15 +99,15 @@ The table below is an entry-point list, not a ranking. The recommendation rating
 
 These five entry points stay visible; when versions differ, use the official page as the authority.
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">Category</th><th scope="col">Official resource</th><th scope="col">What it helps you do</th><th scope="col">Recommendation</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Claude API</th><td><a href="https://platform.claude.com/docs/en/get-started">Claude API Quickstart</a></td><td>Create a key and send the first request</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://platform.claude.com/docs/en/api/sdks/python">Anthropic Python SDK</a></td><td>Confirm Python requirements, environment variables, and the current code shape</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Claude API</th><td><a href="https://platform.claude.com/docs/en/get-started">Claude API Quickstart</a></td><td>Create a key and send the first request</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.claude.com/docs/en/api/sdks/python">Anthropic Python SDK</a></td><td>Confirm Python requirements, environment variables, and the current code shape</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">Python tools</th><td><a href="https://docs.astral.sh/uv/getting-started/installation/">uv Installation</a></td><td>Install or update uv for your operating system</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">CLI basics</th><td><a href="https://code.claude.com/docs/en/terminal-guide">Claude Code Terminal Guide</a></td><td>Open a terminal for the first time, change folders, and run commands</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">Secret security</th><td><a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning">GitHub Secret Scanning</a></td><td>Understand why secrets must not enter Git history</td><td>⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">Python tools</th><td><a href="https://docs.astral.sh/uv/getting-started/installation/">uv Installation</a></td><td>Install or update uv for your operating system</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">CLI basics</th><td><a href="https://code.claude.com/docs/en/terminal-guide">Claude Code Terminal Guide</a></td><td>Open a terminal for the first time, change folders, and run commands</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">Secret security</th><td><a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning">GitHub Secret Scanning</a></td><td>Understand why secrets must not enter Git history</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr></tbody>
 </table>
 
 <a id="a--get-your-first-api-key-about-10-minutes"></a>
@@ -129,18 +133,18 @@ This quick start uses Anthropic Claude because Stage 1's canonical API path uses
 
 The table below lists only current official entry points. Click the official pages for prices, free quotas, and available models; this getting-started guide does not freeze them.
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">Type</th><th scope="col">Official entry point</th><th scope="col">Compatibility / limits</th><th scope="col">Recommendation</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">Cloud API</th><td><a href="https://platform.openai.com/docs/quickstart">OpenAI API</a></td><td>Official SDK and API; a ChatGPT subscription is not API billing</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://ai.google.dev/gemini-api/docs/openai">Gemini API</a></td><td>Google officially documents compatibility with OpenAI libraries</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://docs.api.nvidia.com/nim/reference/llm-apis">NVIDIA NIM</a></td><td>Check the endpoint for its supported API shape and models</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://api-docs.deepseek.com/">DeepSeek API</a></td><td>Official documentation provides an OpenAI-compatible way to use it</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://platform.kimi.com/docs/api/overview">Kimi API</a></td><td>Use the official Console for the region, endpoint, and models</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://help.aliyun.com/en/model-studio/base-url">Alibaba Model Studio／Qwen</a></td><td>Use the corresponding base URL for your region; the official service provides an OpenAI-compatible endpoint</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://docs.z.ai/api-reference/introduction">Z.ai／GLM API</a></td><td>Use the current endpoint in the official reference</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Cloud API</th><td><a href="https://platform.openai.com/docs/quickstart">OpenAI API</a></td><td>Official SDK and API; a ChatGPT subscription is not API billing</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://ai.google.dev/gemini-api/docs/openai">Gemini API</a></td><td>Google officially documents compatibility with OpenAI libraries</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://docs.api.nvidia.com/nim/reference/llm-apis">NVIDIA NIM</a></td><td>Check the endpoint for its supported API shape and models</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://api-docs.deepseek.com/">DeepSeek API</a></td><td>Official documentation provides an OpenAI-compatible way to use it</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.kimi.com/docs/api/overview">Kimi API</a></td><td>Use the official Console for the region, endpoint, and models</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://help.aliyun.com/en/model-studio/base-url">Alibaba Model Studio／Qwen</a></td><td>Use the corresponding base URL for your region; the official service provides an OpenAI-compatible endpoint</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://docs.z.ai/api-reference/introduction">Z.ai／GLM API</a></td><td>Use the current endpoint in the official reference</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">Local Runtime</th><td><a href="https://docs.ollama.com/api/openai-compatibility">Ollama</a></td><td>Compatible with only part of the OpenAI API; you must download local models separately</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">Local Runtime</th><td><a href="https://docs.ollama.com/api/openai-compatibility">Ollama</a></td><td>Compatible with only part of the OpenAI API; you must download local models separately</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr></tbody>
 </table>
 
 Local inference has no provider model API bill, but you remain responsible for hardware, electricity, download time, device security, files, and logs. For the complete path, see the [Cookbook local LLM walkthrough](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough).
@@ -255,13 +259,17 @@ When the model prints an introduction, Python, the packages, the API key, and th
 <details markdown="1">
 <summary>View common errors and safe recovery</summary>
 
+<div align="center" markdown="1">
+
 | What you see | What it usually means | Do this first |
-|---|---|---|
+|:---|:---|:---|
 | `401`／`authentication_error` | The key was not read, has expired, or was pasted incorrectly | Revoke any questionable key; confirm the filename is `.env`, then create a new key |
 | `429`／`rate_limit_error` | A usage, rate, or account-credit limit | Stop retrying, return to the Console to check usage / billing, then wait as the error message says |
 | `ModuleNotFoundError` | You did not use the environment from this `uv run --with ...` command | Copy the full run command; do not run only `python hello-claude.py` |
 | `uv` not found | The post-install terminal has not read the new PATH | Close and reopen the terminal; then check the official uv installation page |
 | Connection error | A network, proxy, firewall, or service-status problem | Check the provider status page first; ask your company / school administrator about managed networks |
+
+</div>
 
 If a key has appeared in Git, chat, a screenshot, or a public log, deleting the text is not enough; revoke it in the Console immediately and create a new key.
 
@@ -361,11 +369,15 @@ Also confirm:
 
 ## Where to Go Next
 
+<div align="center" markdown="1">
+
 | What you want to do now | Next stop |
-|---|---|
+|:---|:---|
 | Understand models, Tokens, Context Windows, and APIs | [Stage 1 — LLM Basics](../stages/01-llm-basics.en.md) |
 | Learn Prompt directly | [Stage 2 — Prompt Engineering](../stages/02-prompt-engineering.en.md) |
 | Work with a CLI Agent | [Track A1 — CLI Basics](../tracks/cli/A1-cli-intro.en.md) |
 | Understand Claude Code, MCP, Skills, Plugins, and Subagents | [Stage 5 — Claude Code Ecosystem](../stages/05-claude-code-ecosystem.en.md) |
 | Use local models | [Cookbook: local LLM walkthrough](cookbook.en.md#6-local-llm--cli-agent-quick-walkthrough) |
 | Still cannot distinguish OpenRouter, Ollama, OpenCode, or Pi | [Glossary: distinguish five tool identities](glossary.en.md#-separate-five-tool-identities-first) |
+
+</div>

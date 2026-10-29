@@ -244,32 +244,32 @@ Use an entry that matches the skill you need. You do not need to read all 18 res
 <table align="center">
   <thead><tr><th scope="col">Topic</th><th scope="col">Resource</th><th scope="col">Who it's for</th><th scope="col">Recommendation</th><th scope="col">Why recommended / Notes</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>Want to follow a book from the beginning</td><td>⭐⭐⭐⭐</td><td>Code and exercises are free; the complete book must be purchased.</td></tr>
-    <tr><td><a href="https://realpython.com/">Real Python</a></td><td>Know a little and want to look up one topic</td><td>⭐⭐⭐⭐</td><td>Articles are grouped by topic, so they are easy to find when needed.</td></tr>
-    <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>Like English videos</td><td>⭐⭐⭐</td><td>Uses videos to move from basic syntax to practical use.</td></tr>
-    <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>Like learning by doing</td><td>⭐⭐⭐</td><td>Some content is free; the complete backend path is paid.</td></tr>
-    <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python official Traditional Chinese tutorial</a></td><td>Finished the first exercise and want correct syntax</td><td>⭐⭐⭐⭐</td><td>Official reference material; it expects some programming knowledge.</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>Want to follow a book from the beginning</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Code and exercises are free; the complete book must be purchased.</td></tr>
+    <tr><td><a href="https://realpython.com/">Real Python</a></td><td>Know a little and want to look up one topic</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Articles are grouped by topic, so they are easy to find when needed.</td></tr>
+    <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>Like English videos</td><td align="center" valign="middle">⭐⭐⭐</td><td>Uses videos to move from basic syntax to practical use.</td></tr>
+    <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>Like learning by doing</td><td align="center" valign="middle">⭐⭐⭐</td><td>Some content is free; the complete backend path is paid.</td></tr>
+    <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python official Traditional Chinese tutorial</a></td><td>Finished the first exercise and want correct syntax</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Official reference material; it expects some programming knowledge.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>Want to understand Git fully</td><td>⭐⭐⭐⭐</td><td>Free, complete reference book.</td></tr>
-    <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>Want to understand branch, merge, and work order with pictures</td><td>⭐⭐⭐⭐</td><td>Common workflows explained with diagrams.</td></tr>
-    <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Made a Git mistake and want to recover safely</td><td>⭐⭐⭐⭐</td><td>Explains which actions can lose data before showing how to recover.</td></tr>
-    <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>Need more answers than the basics give</td><td>⭐⭐⭐</td><td>Collects more Git problems and ways to handle them.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>Want to understand Git fully</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Free, complete reference book.</td></tr>
+    <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>Want to understand branch, merge, and work order with pictures</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Common workflows explained with diagrams.</td></tr>
+    <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Made a Git mistake and want to recover safely</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Explains which actions can lose data before showing how to recover.</td></tr>
+    <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>Need more answers than the basics give</td><td align="center" valign="middle">⭐⭐⭐</td><td>Collects more Git problems and ways to handle them.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI / Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>Want to learn the command line in order</td><td>⭐⭐⭐⭐</td><td>Goes from beginner commands to more advanced use.</td></tr>
-    <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>Use Windows and want to start from the first step</td><td>⭐⭐⭐⭐</td><td>Microsoft's official PowerShell beginner course.</td></tr>
-    <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>Only want to see how one command is used</td><td>⭐⭐⭐⭐</td><td>Short, copyable examples explain common commands.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI / Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>Want to learn the command line in order</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Goes from beginner commands to more advanced use.</td></tr>
+    <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>Use Windows and want to start from the first step</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Microsoft's official PowerShell beginner course.</td></tr>
+    <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>Only want to see how one command is used</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Short, copyable examples explain common commands.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>Want to know how an API sends data</td><td>⭐⭐⭐⭐</td><td>Mozilla's maintained reference for HTTP.</td></tr>
-    <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>Want to try an API with a graphical tool</td><td>⭐⭐⭐⭐</td><td>See sent requests and received data without writing code first.</td></tr>
-    <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>Want to call an API from the command line</td><td>⭐⭐⭐</td><td>Commands are often easier to read than raw curl commands.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>Want to know how an API sends data</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Mozilla's maintained reference for HTTP.</td></tr>
+    <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>Want to try an API with a graphical tool</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>See sent requests and received data without writing code first.</td></tr>
+    <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>Want to call an API from the command line</td><td align="center" valign="middle">⭐⭐⭐</td><td>Commands are often easier to read than raw curl commands.</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML / JSON</th><td><a href="https://yaml.org/">YAML official site</a></td><td>Need to check the correct YAML syntax</td><td>⭐⭐⭐</td><td>Official entry point for syntax and the formal specification.</td></tr>
-    <tr><td><a href="https://www.json.org/json-en.html">JSON introduction</a></td><td>Meeting JSON for the first time</td><td>⭐⭐⭐⭐</td><td>Short examples explain how JSON holds data.</td></tr>
-    <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>Want to organize JSON from the command line</td><td>⭐⭐⭐⭐</td><td>Filters and organizes data returned by an API.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML / JSON</th><td><a href="https://yaml.org/">YAML official site</a></td><td>Need to check the correct YAML syntax</td><td align="center" valign="middle">⭐⭐⭐</td><td>Official entry point for syntax and the formal specification.</td></tr>
+    <tr><td><a href="https://www.json.org/json-en.html">JSON introduction</a></td><td>Meeting JSON for the first time</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Short examples explain how JSON holds data.</td></tr>
+    <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>Want to organize JSON from the command line</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Filters and organizes data returned by an API.</td></tr>
   </tbody>
 </table>
 

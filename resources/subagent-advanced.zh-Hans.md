@@ -12,11 +12,15 @@
 
 3 个独立的进阶主题，按需要查：
 
+<div align="center" markdown="1">
+
 | 你的问题 | 看哪节 |
-|---|---|
+|:---|:---|
 | 写了一个 subagent，但 Claude 从来不主动派遣它——为什么？ | [§1 Description 怎么写才会被主 session 主动 spawn](#1-description-怎么写才会被主-session-主动-spawn) |
 | 想跑 2-3 个 subagent 串成 pipeline / parallel——怎么设计？ | [§2 Composition pattern 怎么设计](#2-composition-pattern-怎么设计) |
 | subagent 跑坏 / 报错 / 行为跟设置的不一样——怎么 debug？ | [§3 自制 subagent 的 debug 工具](#3-自制-subagent-的-debug-工具) |
+
+</div>
 
 每节独立，可以跳读。
 
@@ -156,11 +160,15 @@ description: Use PROACTIVELY before commits touching auth or payment code. Check
 
 ### 3 个 pattern 怎么选
 
+<div align="center" markdown="1">
+
 | 你的情境 | 用哪个 |
-|---|---|
+|:---|:---|
 | 3 个独立任务，结果各回主 session | **Pattern A** |
 | 多步骤协作，有 input → output 依赖 | **Pattern B** |
 | 想“自动生成 subagent” | **不要做**（去想为什么，通常 skill / template 更合适）|
+
+</div>
 
 **90% 的使用情境是 Pattern A**——上 Pattern B 之前先确认“真的需要 coordination”，别 over-engineer。
 
@@ -263,13 +271,17 @@ issues, error handling gaps. Per-issue: file:line + suggested fix.
 
 ### 5 切点 quick check
 
+<div align="center" markdown="1">
+
 | 症状 | 切点 |
-|---|---|
+|:---|:---|
 | `/agents` 看不到 | 切点 1（文件位置 / YAML 语法）|
 | Claude 不主动派遣 | 切点 2（description 写法）|
 | subagent 报“no access to X tool” | 切点 3（tools 白名单）|
 | Token 账单暴增 | 切点 4（model 没指定）|
 | subagent 跑乱、行为怪 | 切点 5（prompt 不 self-contained）|
+
+</div>
 
 ---
 

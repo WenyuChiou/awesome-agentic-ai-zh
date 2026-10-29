@@ -59,8 +59,10 @@ It is a toolkit that lets your Python or TypeScript program control an agent. Th
 
 <a id="-7-layer-architecture-map-read-this-first-then-51-57"></a>
 
+<div align="center" markdown="1">
+
 | Your problem | Start with | Do not start by |
-|---|---|---|
+|:---|:---|:---|
 | Remembering the same project rule every time | `CLAUDE.md` | Putting an entire manual into it |
 | A workflow is needed only in a particular situation | Skill | Pasting the same long prompt every time |
 | Connecting to GitHub, a database, or a browser | MCP | Connecting an unreviewed server to a high-privilege account |
@@ -69,6 +71,8 @@ It is a toolkit that lets your Python or TypeScript program control an agent. Th
 | Multiple tasks will modify the same repository | Worktree | Letting multiple agents share the same uncommitted files |
 | Sharing a configuration with a team | Plugin | Building a marketplace for the first question |
 | Embedding an agent in a product | Agent SDK | Rewriting as a service what the CLI can already do |
+
+</div>
 
 > Want to distinguish OpenRouter, Pi, OpenCode, and Ollama? OpenRouter is a **router**, Ollama is a **local runtime**, and Claude Code, OpenCode, and Pi are **coding agents/harnesses**. The full selection table is in [Track A1](../tracks/cli/A1-cli-intro.en.md).
 
@@ -305,12 +309,16 @@ The outcome of this section: you can start safely and know that “configuration
 
 Claude Code is available on surfaces including the CLI, Desktop, VS Code, and JetBrains. It can operate files and tools, but remains constrained by permissions, sandboxing, Hooks, and organizational policy; do not mistake “can run shell commands” for “should have every permission.”
 
+<div align="center" markdown="1">
+
 | Scope | Common location | What belongs there |
-|---|---|---|
+|:---|:---|:---|
 | Managed | Operating-system managed path | Organization policy |
 | User | `~/.claude/CLAUDE.md` | Personal cross-project preferences |
 | Project | `./CLAUDE.md` or `./.claude/CLAUDE.md` | Team-shared rules |
 | Local | `./CLAUDE.local.md` | Local configuration not committed to Git |
+
+</div>
 
 `.claude/rules/*.md` can be loaded later based on `paths`. `.claude/skills/<name>/SKILL.md` is knowledge or a workflow loaded on demand. The old `.claude/commands/*.md` can still create slash commands, but new material should teach Skills first.
 
@@ -403,12 +411,16 @@ The outcome of this section: you can decide when independent context is useful a
 <details markdown="1">
 <summary>Expand 5.5: built-in types, differences from Skills, permissions, cost, and common errors</summary>
 
+<div align="center" markdown="1">
+
 | | Skill | Subagent |
-|---|---|---|
+|:---|:---|:---|
 | Core purpose | Reuse knowledge or a workflow | Isolate a portion of work |
 | Context | Usually loaded in the current conversation; can also be configured to fork | A new independent context by default |
 | Result | Changes how Claude handles a task | Returns a result or summary |
 | Best for | Rules, reference material, fixed workflows | Large searches, parallel analysis, specialist workers |
+
+</div>
 
 A custom Subagent’s `description` is a routing hint, not a code-level `if`. Make the prompt self-contained: state the task, scope, tools, output, and stopping condition. The current official configuration also supports `skills`, `mcpServers`, permissions, hooks, and settings such as `isolation: worktree`; add them only when truly needed.
 
@@ -427,14 +439,18 @@ The outcome of this section: you can distinguish who coordinates work from who i
 <details markdown="1">
 <summary>Expand 5.6: Subagents, agent view, agent teams, Dynamic workflows, Worktrees, and /batch</summary>
 
+<div align="center" markdown="1">
+
 | Approach | Who coordinates | Best for | Current status/boundary |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | Subagent | Main conversation | Isolated search or specialist task | Returns results in the same session |
 | Agent view | User | Monitoring multiple independent background sessions | Research preview |
 | Agent teams | Lead and teammates | Workers need to share tasks and message one another | Experimental, disabled by default |
 | [**Dynamic workflows**](https://code.claude.com/docs/en/workflows) | Coordinator script/runtime | Large audits, migrations, or cross-checked research | Readable, rerunnable JavaScript orchestration; uses extra tokens |
 | Worktree | Git/user | Isolating file changes in the same repository | Does not coordinate agent communication |
 | `/batch` | Claude plans, then delegates | 5–30 separable mechanical changes | Each worker needs its own scope and review |
+
+</div>
 
 A Worktree solves “do not edit the same files”; a Subagent or team solves “who does which task.” They can be used together, but are not the same feature. Agent teams do not automatically create a Worktree for every teammate, so file ownership must still be divided clearly.
 
@@ -512,56 +528,56 @@ On your first pass, choose only one entry that matches the exercise at hand. Fiv
 
 <small>Information checked: 2026-08-29 UTC</small>
 
-<table>
+<table align="center">
 <thead>
 <tr><th scope="col">Topic</th><th scope="col">Resource</th><th scope="col">Rating</th><th scope="col">Who it is for / what to read</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Claude Code fundamentals</th><td><a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a></td><td>⭐⭐⭐⭐⭐</td><td>Follow official releases, issues, and current features.</td></tr>
-<tr><td><a href="https://code.claude.com/docs/en/overview">Official Claude Code documentation</a></td><td>⭐⭐⭐⭐⭐</td><td>The primary source for configuration, permissions, or command questions.</td></tr>
-<tr><td><a href="https://github.com/hesreallyhim/awesome-claude-code">awesome-claude-code</a></td><td>⭐⭐⭐⭐</td><td>Explore community extensions after completing the official quickstart.</td></tr>
-<tr><td><a href="https://github.com/KimYx0207/AI-Coding-Guide-Zh">AI-Coding-Guide-Zh</a></td><td>⭐⭐⭐⭐</td><td>For readers who want a step-by-step Simplified Chinese guide.</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Claude Code fundamentals</th><td><a href="https://github.com/anthropics/claude-code">claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Follow official releases, issues, and current features.</td></tr>
+<tr><td><a href="https://code.claude.com/docs/en/overview">Official Claude Code documentation</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>The primary source for configuration, permissions, or command questions.</td></tr>
+<tr><td><a href="https://github.com/hesreallyhim/awesome-claude-code">awesome-claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Explore community extensions after completing the official quickstart.</td></tr>
+<tr><td><a href="https://github.com/KimYx0207/AI-Coding-Guide-Zh">AI-Coding-Guide-Zh</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>For readers who want a step-by-step Simplified Chinese guide.</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="8">MCP</th><td><a href="https://github.com/modelcontextprotocol/servers">modelcontextprotocol/servers</a></td><td>⭐⭐⭐⭐⭐</td><td>Official reference implementations; read them for the protocol, not as a production guarantee.</td></tr>
-<tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">modelcontextprotocol/python-sdk</a></td><td>⭐⭐⭐⭐⭐</td><td>Write a client/server in Python; compare it with the current specification revision first.</td></tr>
-<tr><td><a href="https://github.com/modelcontextprotocol/typescript-sdk">modelcontextprotocol/typescript-sdk</a></td><td>⭐⭐⭐⭐</td><td>The official SDK for the TypeScript path.</td></tr>
-<tr><td><a href="https://github.com/wong2/awesome-mcp-servers">wong2/awesome-mcp-servers</a></td><td>⭐⭐⭐⭐⭐</td><td>Look for an existing option before writing a server; review each publisher and permission.</td></tr>
-<tr><td><a href="https://github.com/punkpeye/awesome-mcp-servers">punkpeye/awesome-mcp-servers</a></td><td>⭐⭐⭐⭐</td><td>Use a different classification to find servers; listing is not a safety endorsement.</td></tr>
-<tr><td><a href="https://github.com/github/github-mcp-server">github/github-mcp-server</a></td><td>⭐⭐⭐⭐</td><td>Study the tool and permission design of a large official MCP server.</td></tr>
-<tr><td><a href="https://github.com/21st-dev/magic-mcp">21st-dev/magic-mcp</a></td><td>⭐⭐⭐</td><td>A nontrivial MCP case for generated UI; separately check its license and maintenance status before use.</td></tr>
-<tr><td><a href="https://github.com/yamadashy/repomix">yamadashy/repomix</a></td><td>⭐⭐⭐⭐⭐</td><td>Learn repository packaging, sensitive-data filtering, and the boundaries of MCP mode.</td></tr>
+<tr><th scope="rowgroup" rowspan="8" align="center" valign="middle">MCP</th><td><a href="https://github.com/modelcontextprotocol/servers">servers</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Official reference implementations; read them for the protocol, not as a production guarantee.</td></tr>
+<tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">python-sdk</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Write a client/server in Python; compare it with the current specification revision first.</td></tr>
+<tr><td><a href="https://github.com/modelcontextprotocol/typescript-sdk">typescript-sdk</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>The official SDK for the TypeScript path.</td></tr>
+<tr><td><a href="https://github.com/wong2/awesome-mcp-servers">awesome-mcp-servers</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Look for an existing option before writing a server; review each publisher and permission.</td></tr>
+<tr><td><a href="https://github.com/punkpeye/awesome-mcp-servers">awesome-mcp-servers</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Use a different classification to find servers; listing is not a safety endorsement.</td></tr>
+<tr><td><a href="https://github.com/github/github-mcp-server">github-mcp-server</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Study the tool and permission design of a large official MCP server.</td></tr>
+<tr><td><a href="https://github.com/21st-dev/magic-mcp">magic-mcp</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>A nontrivial MCP case for generated UI; separately check its license and maintenance status before use.</td></tr>
+<tr><td><a href="https://github.com/yamadashy/repomix">repomix</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Learn repository packaging, sensitive-data filtering, and the boundaries of MCP mode.</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="8">Skills</th><td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td><td>⭐⭐⭐⭐⭐</td><td>Official templates, specification, and document-processing Skills; read these before creating your own Skill.</td></tr>
-<tr><td><a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a></td><td>⭐⭐⭐⭐</td><td>Follow Claude Code’s current support for Skills.</td></tr>
-<tr><td><a href="https://github.com/mattpocock/skills">mattpocock/skills</a></td><td>⭐⭐⭐⭐</td><td>Observe concise, task-oriented community Skill writing.</td></tr>
-<tr><td><a href="https://github.com/obra/superpowers">obra/superpowers</a></td><td>⭐⭐⭐⭐</td><td>Learn how TDD, debugging, and planning Skills can be combined.</td></tr>
-<tr><td><a href="https://github.com/wshobson/agents">wshobson/agents</a></td><td>⭐⭐⭐⭐</td><td>See how Skills and Subagents divide work; do not copy permissions wholesale.</td></tr>
-<tr><td><a href="https://github.com/travisvn/awesome-claude-skills">awesome-claude-skills</a></td><td>⭐⭐⭐⭐</td><td>An entry point to community Skills; review each one before installation.</td></tr>
-<tr><td><a href="https://github.com/VoltAgent/awesome-agent-skills">awesome-agent-skills</a></td><td>⭐⭐⭐</td><td>Compare the compatible scope of Agent Skills across tools.</td></tr>
-<tr><td><a href="https://github.com/alirezarezvani/claude-skills">alirezarezvani/claude-skills</a></td><td>⭐⭐⭐</td><td>Find domain examples; treat this as a case library, not an official standard.</td></tr>
+<tr><th scope="rowgroup" rowspan="8" align="center" valign="middle">Skills</th><td><a href="https://github.com/anthropics/skills">skills</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Official templates, specification, and document-processing Skills; read these before creating your own Skill.</td></tr>
+<tr><td><a href="https://github.com/anthropics/claude-code">claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Follow Claude Code’s current support for Skills.</td></tr>
+<tr><td><a href="https://github.com/mattpocock/skills">skills</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Observe concise, task-oriented community Skill writing.</td></tr>
+<tr><td><a href="https://github.com/obra/superpowers">superpowers</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Learn how TDD, debugging, and planning Skills can be combined.</td></tr>
+<tr><td><a href="https://github.com/wshobson/agents">agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>See how Skills and Subagents divide work; do not copy permissions wholesale.</td></tr>
+<tr><td><a href="https://github.com/travisvn/awesome-claude-skills">awesome-claude-skills</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>An entry point to community Skills; review each one before installation.</td></tr>
+<tr><td><a href="https://github.com/VoltAgent/awesome-agent-skills">awesome-agent-skills</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Compare the compatible scope of Agent Skills across tools.</td></tr>
+<tr><td><a href="https://github.com/alirezarezvani/claude-skills">claude-skills</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Find domain examples; treat this as a case library, not an official standard.</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">Plugins / Marketplaces</th><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td>⭐⭐⭐⭐⭐</td><td>The primary official example of Plugin and Marketplace structure.</td></tr>
-<tr><td><a href="https://github.com/anthropics/knowledge-work-plugins">knowledge-work-plugins</a></td><td>⭐⭐⭐⭐⭐</td><td>See how bundles for multiple domains divide work and package components.</td></tr>
-<tr><td><a href="https://github.com/obra/superpowers-marketplace">superpowers-marketplace</a></td><td>⭐⭐⭐⭐</td><td>Learn a minimal Marketplace that only curates while Plugins live in external repositories.</td></tr>
-<tr><td><a href="https://github.com/trailofbits/skills-curated">trailofbits/skills-curated</a></td><td>⭐⭐⭐</td><td>Observe how a Marketplace can add human security review and trust information.</td></tr>
-<tr><td><a href="https://github.com/rohitg00/awesome-claude-code-toolkit">awesome-claude-code-toolkit</a></td><td>⭐⭐⭐</td><td>A community entry point for agents, Skills, Hooks, and templates.</td></tr>
-<tr><td><a href="https://github.com/anthropics/life-sciences">anthropics/life-sciences</a></td><td>⭐⭐⭐</td><td>Study the structure of a single-domain Marketplace; the content itself is life-science focused.</td></tr>
-<tr><td><a href="https://github.com/anthropics/claude-for-legal">anthropics/claude-for-legal</a></td><td>⭐⭐⭐⭐</td><td>See a large vertical suite’s Skills, Agents, MCP, and responsibility boundaries.</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Plugins / Marketplaces</th><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>The primary official example of Plugin and Marketplace structure.</td></tr>
+<tr><td><a href="https://github.com/anthropics/knowledge-work-plugins">knowledge-work-plugins</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>See how bundles for multiple domains divide work and package components.</td></tr>
+<tr><td><a href="https://github.com/obra/superpowers-marketplace">superpowers-marketplace</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Learn a minimal Marketplace that only curates while Plugins live in external repositories.</td></tr>
+<tr><td><a href="https://github.com/trailofbits/skills-curated">skills-curated</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Observe how a Marketplace can add human security review and trust information.</td></tr>
+<tr><td><a href="https://github.com/rohitg00/awesome-claude-code-toolkit">awesome-claude-code-toolkit</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>A community entry point for agents, Skills, Hooks, and templates.</td></tr>
+<tr><td><a href="https://github.com/anthropics/life-sciences">life-sciences</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Study the structure of a single-domain Marketplace; the content itself is life-science focused.</td></tr>
+<tr><td><a href="https://github.com/anthropics/claude-for-legal">claude-for-legal</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>See a large vertical suite’s Skills, Agents, MCP, and responsibility boundaries.</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Subagents</th><td><a href="https://github.com/anthropics/claude-cookbooks">anthropics/claude-cookbooks</a></td><td>⭐⭐⭐⭐⭐</td><td>Read official tool-use and orchestration notebooks.</td></tr>
-<tr><td><a href="https://github.com/wshobson/agents">wshobson/agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Study naming and division of work across many agent definitions; begin with a small number of files.</td></tr>
-<tr><td><a href="https://github.com/obra/superpowers">obra/superpowers</a></td><td>⭐⭐⭐⭐</td><td>Compare when to use a Skill and when to isolate a worker.</td></tr>
-<tr><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td>⭐⭐⭐⭐</td><td>See how a Plugin packages Agents.</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Subagents</th><td><a href="https://github.com/anthropics/claude-cookbooks">claude-cookbooks</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Read official tool-use and orchestration notebooks.</td></tr>
+<tr><td><a href="https://github.com/wshobson/agents">agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Study naming and division of work across many agent definitions; begin with a small number of files.</td></tr>
+<tr><td><a href="https://github.com/obra/superpowers">superpowers</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Compare when to use a Skill and when to isolate a worker.</td></tr>
+<tr><td><a href="https://github.com/anthropics/claude-plugins-official">claude-plugins-official</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>See how a Plugin packages Agents.</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Agent loop / SDK</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">claude-agent-sdk-python</a></td><td>⭐⭐⭐⭐⭐</td><td>Python SDK client, message types, and options; not the complete Claude Code runtime source.</td></tr>
-<tr><td><a href="https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding">harness-engineering-from-cc-to-ai-coding</a></td><td>⭐⭐⭐⭐</td><td>A Chinese explanation of harnesses; verify facts against official documentation.</td></tr>
-<tr><td><a href="https://github.com/ai-boost/awesome-harness-engineering">awesome-harness-engineering</a></td><td>⭐⭐⭐⭐</td><td>Expand into eval, memory, observability, and runtime resources.</td></tr>
-<tr><td><a href="https://github.com/wshobson/agents">wshobson/agents</a></td><td>⭐⭐⭐⭐</td><td>Observe the readability and permission surface of a harness through actual Agent definitions.</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Agent loop / SDK</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">claude-agent-sdk-python</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Python SDK client, message types, and options; not the complete Claude Code runtime source.</td></tr>
+<tr><td><a href="https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding">harness-engineering-from-cc-to-ai-coding</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>A Chinese explanation of harnesses; verify facts against official documentation.</td></tr>
+<tr><td><a href="https://github.com/ai-boost/awesome-harness-engineering">awesome-harness-engineering</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Expand into eval, memory, observability, and runtime resources.</td></tr>
+<tr><td><a href="https://github.com/wshobson/agents">agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Observe the readability and permission surface of a harness through actual Agent definitions.</td></tr>
 </tbody>
 </table>
 

@@ -503,7 +503,7 @@ def test_three_locales_have_the_same_external_urls_and_current_fact_sources() ->
 @pytest.mark.parametrize("page", PAGES.values())
 def test_resource_table_has_accessible_merged_groups_and_23_ratings(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
-    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    tables = re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)
     rated_tables = [table for table in tables if re.search(r"⭐{3,5}", table)]
     assert len(rated_tables) == 1
     table = rated_tables[0]
@@ -516,7 +516,7 @@ def test_resource_table_has_accessible_merged_groups_and_23_ratings(page: Path) 
         assert f'scope="rowgroup" rowspan="{rows}"' in group
     pairs = tuple(
         re.findall(
-            r'<a href="([^"]+)">.*?</a></td><td>(⭐{3,5})</td>',
+            r'<a href="([^"]+)">.*?</a></td><td align="center" valign="middle">(⭐{3,5})</td>',
             table,
         )
     )

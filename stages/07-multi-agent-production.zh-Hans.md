@@ -16,12 +16,16 @@
 
 > **先说清楚怎样算成功 → 留下做事纪录 → 危险动作先问人 → 确认跌倒后能继续 → 最后才交给别人使用。**
 
+<div align="center" markdown="1">
+
 | 你现在卡在哪里 | 先做什么 | 你要拿出的证据 |
-|---|---|---|
+|:---|:---|:---|
 | 不知道摘要算不算成功 | 先写固定案例与成功条件 | 可重跑的检查结果 |
 | 出错时不知道坏在哪一步 | 记录每一步、错误、时间与成本 | 一次完整做事纪录 |
 | 会寄信、付款、删除或写入数据 | 在动作前停下来问人，并先保存进度 | 谁同意了，以及要从哪里继续 |
 | 前三项都能重跑并通过 | 才交给别人使用 | 系统是否正常、怎么停止、怎么回到旧版 |
+
+</div>
 
 先做稳单一 Agent；需要独立分工或互相检查时，再加 Agent。
 
@@ -51,10 +55,10 @@
 
 先看“五岁也能懂的说法”抓住方向，再看“本章用途／技术边界”了解这一关怎么使用它。同类词已经合并在同一组，不需要读两次。
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">先解决什么</th><th scope="col">核心词</th><th scope="col">五岁也能懂的说法</th><th scope="col">本章用途／技术边界</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">先让任务跑得动</th><td><strong>Agent Harness（Agent 执行架构）</strong></td><td>AI 帮手工作的房间</td><td>放入模型、工具、权限、状态、错误处理与纪录的执行环境；本章用它安全地查资料与准备摘要</td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">先让任务跑得动</th><td><strong>Agent Harness（Agent 执行架构）</strong></td><td>AI 帮手工作的房间</td><td>放入模型、工具、权限、状态、错误处理与纪录的执行环境；本章用它安全地查资料与准备摘要</td></tr>
 <tr><td><strong>Agent Loop（Agent 循环）</strong></td><td>做一步、看结果，再决定下一步</td><td>模型在一次任务里反复选动作、读取工具结果，直到完成、超出限制或需要问人</td></tr>
 <tr><td><strong>Workflow Graph（工作流程图）</strong></td><td>有岔路的路线图</td><td>用步骤、连接、条件与状态排出不同情况该走的路；本章用它安排查数据、检查与送出前批准</td></tr>
 <tr><td><strong>Orchestration（编排）</strong></td><td>安排谁先做、谁后做</td><td>控制步骤、数据流、角色、重试与停止条件</td></tr>
@@ -62,7 +66,7 @@
 <tr><td><strong>Handoff（交接）</strong></td><td>把接力棒和笔记一起交出去</td><td>一个 Agent 把控制权、必要数据与成果证据交给另一个 Agent</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">再证明有做对</th><td><strong>Evaluation／Eval（评测）</strong></td><td>用同一张检查表反复检查</td><td>用固定案例、环境、评分方法与门槛量测 Agent 的结果和过程</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">再证明有做对</th><td><strong>Evaluation／Eval（评测）</strong></td><td>用同一张检查表反复检查</td><td>用固定案例、环境、评分方法与门槛量测 Agent 的结果和过程</td></tr>
 <tr><td><strong>Outcome（结果）</strong></td><td>最后真的发生什么</td><td>任务结束时外部可验证的状态；本章要确认摘要真的包含三个合格来源，而不是只相信 Agent 说“完成了”</td></tr>
 <tr><td><strong>Trajectory（轨迹）</strong></td><td>一路留下的脚印</td><td>一次运行中做过的事，包括工具调用、中间结果、错误与输出</td></tr>
 <tr><td><strong>Grader（评分器）</strong></td><td>照规则批改一份答案</td><td>依成功条件为一个 Eval Case 评分的方法、程序或模型；本章要求保留规则与人工抽查</td></tr>
@@ -71,7 +75,7 @@
 <tr><td><strong>Observability（可观测性）</strong></td><td>替系统装透明窗</td><td>用追踪纪录、系统纪录与数值指标看见内部状态；本章用它找出摘要在哪一步漏掉来源</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">最后让它能停、能接着做</th><td><strong>Guardrail（护栏）</strong></td><td>先挡住不能做的事</td><td>限制输入、输出、工具权限或高风险操作的规则</td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">最后让它能停、能接着做</th><td><strong>Guardrail（护栏）</strong></td><td>先挡住不能做的事</td><td>限制输入、输出、工具权限或高风险操作的规则</td></tr>
 <tr><td><strong>Human Approval（人工批准）</strong></td><td>危险动作先问人</td><td>运行敏感 tool call 前暂停，由人批准、修改或拒绝</td></tr>
 <tr><td><strong>Checkpoint（检查点）</strong></td><td>先存盘再往下走</td><td>保存目前做到哪里和版本信息，让任务可以恢复</td></tr>
 <tr><td><strong>Resume（续跑）</strong></td><td>回到存盘点继续</td><td>用同一个任务编号加载检查点并继续运行</td></tr>
@@ -80,7 +84,7 @@
 </tbody>
 </table>
 
-**Prompt（提示）**是你交给模型的指令与材料。**Context（上下文）**是这一步需要看的数据。它们仍然重要；本章是在外面补上运行、检查和恢复的系统。
+**Prompt（提示）** 是你交给模型的指令与材料。**Context（上下文）** 是这一步需要看的数据。它们仍然重要；本章是在外面补上运行、检查和恢复的系统。
 
 ## 🚪 进入条件
 
@@ -123,12 +127,16 @@ Docker 还不熟也可以开始；先做四个核心练习，再为核心练习 
 
 它们不是四代产品，也不是只能选一个。请把同一个研究助理想成四个角度：
 
+<div align="center" markdown="1">
+
 | 责任 | 白话问题 | 研究助理例子 |
-|---|---|---|
+|:---|:---|:---|
 | **Agent Harness** | 它在哪里安全做事？ | 只允许读数据；准备送出时必须停下 |
 | **Agent Loop** | 它为什么再做一轮？ | 少一个来源就再查一次；达到上限就停止 |
 | **Workflow Graph** | 遇到不同情况要往哪走？ | 来源不足就回去查；足够就进入人工批准 |
 | **Eval** | 我怎么知道结果和过程合格？ | 检查三个来源、引用正确、没有跳过批准 |
+
+</div>
 
 Eval 会检查 **Outcome**、**Trajectory**，再由 **Grader** 依规则判断是否合格。Eval 可以让 Loop 重试、让 Graph 换路，或要求 Harness 停止；但把 Harness 和 Eval 放在一起，仍不会自动产生“何时重复、何时停止”的 Loop。
 
@@ -145,8 +153,10 @@ Eval 会检查 **Outcome**、**Trajectory**，再由 **Grader** 依规则判断�
 
 这八项是本项目的 production 检查表，不是全世界唯一的官方分类。
 
+<div align="center" markdown="1">
+
 | 组件 | 五岁也能懂的说法 | 上线前要问 |
-|---|---|---|
+|:---|:---|:---|
 | **1. Orchestration／Run loop** | 决定下一步做什么 | 谁开始、谁停止、交接失败怎么办？ |
 | **2. Tool／Permission boundary** | 只给它需要的钥匙 | 哪些工具能读、能写、能删？ |
 | **3. Context／State／Checkpoint** | 保存它现在做到哪里 | 中断后能不能从正确位置继续？ |
@@ -155,6 +165,8 @@ Eval 会检查 **Outcome**、**Trajectory**，再由 **Grader** 依规则判断�
 | **6. Telemetry／Observability** | 装上透明窗 | 能不能看到 trace、错误、延迟与 token？ |
 | **7. Eval harness** | 每次改动都重新考试 | 有固定案例、评分规则和失败门槛吗？ |
 | **8. Cost／Latency budget** | 先说可以花多少钱和时间 | 超过预算时要停止、降级还是排队？ |
+
+</div>
 
 <details markdown="1">
 <summary>🔧 展开：回馈、恢复与成本的实作重点</summary>
@@ -173,11 +185,15 @@ Eval 会检查 **Outcome**、**Trajectory**，再由 **Grader** 依规则判断�
 
 先分清三种很像、但范围不同的 Loop：
 
+<div align="center" markdown="1">
+
 | 名称 | 它重复什么 | 例子 |
-|---|---|---|
+|:---|:---|:---|
 | **程序循环** | 同一段代码 | `for item in items`；这是语法，不是本节主题 |
 | **Agent Loop** | 模型 → 工具 → 工具结果 → 模型 | 一次 run 里持续调用工具，直到完成或碰到 `max_turns` |
 | **Loop Engineering** | 目标 → 动作 → 观察 → 调整 | 一次长 run 或跨 session／调度反复工作，每轮都有验证、记忆、预算与停止条件 |
+
+</div>
 
 IBM 用 `Goal → Action → Observation → Adjustment` 说明较外层的 **Loop Engineering**。重点不是让 Agent 永远自己跑，而是每一轮都能回答：**目标还成立吗？证据够了吗？要继续、停止，还是交给人？**
 
@@ -216,12 +232,14 @@ Agent Loop 负责“要不要再做一次”。Workflow Graph 负责“接下来
 
 Eval 不是一个分数，也不是等系统做完才补的报表。它先写清楚“怎样才算成功”，再用同一套方法检查不同版本。
 
-先从 **Outcome（结果）**开始。研究助理的 Outcome 不是“Agent 说摘要完成了”，而是“摘要真的使用三个合格来源、引用可以打开，而且尚未跳过人工批准”。
+先从 **Outcome（结果）** 开始。研究助理的 Outcome 不是“Agent 说摘要完成了”，而是“摘要真的使用三个合格来源、引用可以打开，而且尚未跳过人工批准”。
 
 接着创建完整的 **Eval Case（评测案例）**。它像一张连规则都写好的考题；input 只是其中一格。
 
+<div align="center" markdown="1">
+
 | Eval Case 的部分 | 研究助理例子 | 为什么要留 |
-|---|---|---|
+|:---|:---|:---|
 | **Input（输入）** | `整理这三个主题` | 告诉系统要做什么 |
 | **Initial State（初始状态）** | 三个候选来源、尚未批准 | 固定开始时的环境 |
 | **Success Criteria（成功条件）** | 三个来源都能打开；摘要包含可核对引用 | 说清楚怎样算成功 |
@@ -230,23 +248,29 @@ Eval 不是一个分数，也不是等系统做完才补的报表。它先写清
 | **Grader（评分方法）** | 程序检查链接与数量，人检查摘要是否忠于来源 | 决定谁照什么规则评分 |
 | **Case Metadata（案例信息）** | case ID、版本、split、来源与标签 | 让同一题可以重跑和追踪 |
 
+</div>
+
 ![完整 Eval Case 包含 Input、Initial State、Success Criteria、Forbidden Actions、Optional Reference Answer、Grader 与 Case Metadata；Input 只是其中一格](../resources/diagrams/eval-case-anatomy.zh-Hans.png)
 
 把多个完整案例放在一起，叫做 **Eval Suite（评测组）**。替 Suite 留下版本，才能知道这次和上次是不是在考同一份题目。
 
 经人检查、可重复使用的完整案例集合，本项目称为 **Reviewed Eval Set（已审查评测集）**。外部数据有时写 **Golden Set** 或 **Reference Set**，但这些名称没有跨供应商一致定义。看到它们时，要回到来源确认它是在说题目、答案、标准，还是整套数据。
 
-> **Golden／Reference Set 不只是 input，也不等于训练数据或 Few-shot 范例。**它通常包含完整案例、条件、参考证据与评分方法；实际字段仍要看当前项目的定义。
+> **Golden／Reference Set 不只是 input，也不等于训练数据或 Few-shot 范例。** 它通常包含完整案例、条件、参考证据与评分方法；实际字段仍要看当前项目的定义。
 
 最后再加入这些测量词：
 
+<div align="center" markdown="1">
+
 | 名词 | 白话意思 | 本章怎么用 |
-|---|---|---|
+|:---|:---|:---|
 | **Trial（试跑）** | 同一题实际做一次 | 模型结果会变动时，同一个 case 要跑多次 |
 | **Baseline（基线）** | 改之前先量一次 | 提供新旧版本的比较起点 |
 | **Regression（退步）** | 新版本超过预先门槛地变差 | 同时检查质量、成本、安全与可靠性 |
 | **Development Set（开发集）** | 平常可以看的练习题 | 每次修改后重跑并用失败改善系统 |
 | **Holdout Set（保留集）** | 平常不偷看的最后考卷 | 只在 release candidate 或最后验证时打开 |
+
+</div>
 
 Anthropic 的 [Agent Eval 指南](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)把 task、trial、grader、trajectory 与 outcome 分开；OpenAI 的 [Graders API](https://platform.openai.com/docs/api-reference/graders?api-mode=chat)列出多种 grader。工具可以不同，但每份报告都应留下 dataset version、split、case ID、trial 次数、grader、Outcome、Trajectory 与 baseline。
 
@@ -256,7 +280,7 @@ Anthropic 的 [Agent Eval 指南](https://www.anthropic.com/engineering/demystif
 
 Observability 像在透明积木盒外面看每一格。它不是把所有内容公开，而是留下能调试的 trace、log 与 metrics，并遮住密码、个资和客户数据。
 
-在研究助理案例里，一次 **Trace（追踪纪录）**要能回答：查了哪些来源、哪个工具失败、重试几次、花了多少时间，以及为什么停在人工批准前。Trace 能解释 Trajectory，但“记录很多”不等于“结果正确”；Outcome 仍要交给 Eval 检查。
+在研究助理案例里，一次 **Trace（追踪纪录）** 要能回答：查了哪些来源、哪个工具失败、重试几次、花了多少时间，以及为什么停在人工批准前。Trace 能解释 Trajectory，但“记录很多”不等于“结果正确”；Outcome 仍要交给 Eval 检查。
 
 ## 🛑 Approval、Checkpoint、Resume 与 Recovery：先停，再安全继续
 
@@ -267,16 +291,20 @@ Observability 像在透明积木盒外面看每一格。它不是把所有内容
 <a id="-上线四步eval--observability--approvalrecovery--deploy"></a>
 ## 🛡 完整上线路线：Eval → Observability → Approval／Recovery → Deploy
 
-**Deploy（部署）**是把通过检查的系统交给别人使用。它像开店前正式开门；开门不是成功证明，前面的测试、纪录、煞车和恢复方式才是。
+<strong>Deploy（部署）</strong>是把通过检查的系统交给别人使用。它像开店前正式开门；开门不是成功证明，前面的测试、纪录、煞车和恢复方式才是。
 
 这四步不是成熟度徽章，而是同一次修改要走完的检查路线：
 
+<div align="center" markdown="1">
+
 | 顺序 | 先回答的问题 | 最少要留下的证据 | 没通过时怎么做 |
-|---:|---|---|---|
+|:---|:---|:---|:---|
 | 1. **Eval** | 最后结果真的对吗？中间有没有走危险捷径？ | Anthropic 建议先从 20–50 个代表真实工作的 cases 起步；这是实务起点，不是所有项目的硬性最低数。另记 Outcome、Trajectory、grader、成本与失败门槛 | 先补案例或修行为，不进部署 |
 | 2. **Observability** | 坏掉时找得到哪一步吗？ | task ID、trace／span、tool call、错误类型、延迟、token 与敏感数据遮罩 | 先让失败看得见，再改 Prompt 或模型 |
 | 3. **Approval／Recovery** | 高风险动作能先停下吗？中断后能安全续跑吗？ | 人工批准点、版本化 checkpoint、resume 测试、idempotency key、拒绝／timeout／补偿路线 | fail closed，停止自动运行并交给人 |
 | 4. **Deploy** | 前三项能在新版本重跑吗？ | 服务是否活着与准备好、用量限制、回到旧版的方法、停止开关与版本纪录 | 保留旧版或回到旧版，不把“服务有启动”当成功 |
+
+</div>
 
 **Outcome Eval** 要检查外部世界的结果。例如 Agent 说“信已寄出”只是文本；测试环境真的只有一封信、收件者正确，才是 Outcome 通过。**Trajectory Eval** 则检查它用了哪些工具、尝试几次、是否绕过批准、花多少 token。两种一起看，才不会只因最后一句很漂亮就放行。
 
@@ -286,13 +314,17 @@ Observability 像在透明积木盒外面看每一格。它不是把所有内容
 
 它们不是五个同类产品。把它们放到正确层，就不会混在一起：
 
+<div align="center" markdown="1">
+
 | 名称 | 它是什么 | 一句话记法 |
-|---|---|---|
+|:---|:---|:---|
 | [OpenRouter](https://openrouter.ai/docs/quickstart) | 模型 API 入口／Router | 帮程序连接不同模型，本身不是帮你改程序的 Agent |
 | [Pi](https://github.com/earendil-works/pi) | Agent toolkit 和 coding-agent CLI | 调用模型和工具，把任务做完 |
 | [OpenCode](https://github.com/anomalyco/opencode) | 开源 coding agent | 在代码项目里读取、修改、测试 |
 | [Orca](https://github.com/stablyai/orca) | 多 Agent 开发环境 | 让多个 coding agent 在隔离 worktree 中并行工作和比较 |
 | [QM](https://github.com/yc-software/qm) | 团队用的多 Agent harness | 管理多人、workspace、权限、计划任务和协作 |
+
+</div>
 
 > **模型入口 → Agent runtime → 多 Agent 协作平台**。这三层可以互相搭配，但不能互相代替。
 
@@ -302,7 +334,7 @@ Observability 像在透明积木盒外面看每一格。它不是把所有内容
 
 ### 核心练习 1：Eval
 
-**成果：**用固定案例和规则检查 Agent，看到哪一题退步。
+**成果：** 用固定案例和规则检查 Agent，看到哪一题退步。
 
 ```bash
 cd examples/stage-7/02-eval
@@ -311,7 +343,7 @@ python test.py
 
 ### 核心练习 2：Observability
 
-**成果：**看到一次运行的步骤、延迟、token 和错误。
+**成果：** 看到一次运行的步骤、延迟、token 和错误。
 
 ```bash
 cd examples/stage-7/03-observability
@@ -320,7 +352,7 @@ python test.py
 
 ### 核心练习 3：Approval、Checkpoint 与 Recovery
 
-**成果：**敏感动作先停在人工批准点；重新启动后从 checkpoint resume，相同 idempotency key 不会重复执行。
+**成果：** 敏感动作先停在人工批准点；重新启动后从 checkpoint resume，相同 idempotency key 不会重复执行。
 
 ```bash
 cd examples/stage-7/06-safe-execution
@@ -329,7 +361,7 @@ python test.py
 
 ### 核心练习 4：Deploy
 
-**成果：**把 Agent 包成有 `/health` 和 `/chat` 的 API，再用测试确认错误状态。
+**成果：** 把 Agent 包成有 `/health` 和 `/chat` 的 API，再用测试确认错误状态。
 
 ```bash
 cd examples/stage-7/05-deploy
@@ -351,13 +383,13 @@ python test.py
 
 ### 选修 A：Multi-Agent 辩论
 
-**成果：**两个 Agent 分别提出正反意见，第三个 Agent 按规则裁决。只有单一 Agent baseline 已有 Eval，且角色真的需要分开时再做。
+**成果：** 两个 Agent 分别提出正反意见，第三个 Agent 按规则裁决。只有单一 Agent baseline 已有 Eval，且角色真的需要分开时再做。
 
 [打开 Multi-Agent 示例](../examples/stage-7/01-multi-agent-debate/README.zh-Hans.md)
 
 ### 选修 B：Streaming 与 Prompt caching
 
-**成果：**比较 streaming 与 prompt caching 的行为；成本效果必须自己测量，不把 cache 当成安全或恢复机制。
+**成果：** 比较 streaming 与 prompt caching 的行为；成本效果必须自己测量，不把 cache 当成安全或恢复机制。
 
 [打开 SDK 进阶示例](../examples/stage-7/04-sdk-advanced/README.zh-Hans.md)
 
@@ -390,19 +422,23 @@ python test.py
 
 ## 📊 Agent Benchmark Landscape：怎么看，不要只看排行榜 + ⚠ Reward-Hacking 警告
 
-**Benchmark（基准测试）**像统一考卷。它能帮助比较，但不能保证你的真实工作也会一样好。
+**Benchmark（基准测试）** 像统一考卷。它能帮助比较，但不能保证你的真实工作也会一样好。
 
 看任何分数前，先问五件事：
 
+<div align="center" markdown="1">
+
 | 要看什么 | 大白话问题 |
-|---|---|
+|:---|:---|
 | Task | 考题和我的工作像吗？ |
 | Environment | 模型拿到哪些工具、数据和权限？ |
 | Grader | 谁评分？规则有没有漏洞？ |
 | Trajectory | 它真的完成任务，还是只碰巧拿到分数？ |
 | Hold-out | 它有没有通过我自己没有拿来调整的测试？ |
 
-**Reward hacking（奖励钻漏洞）**就是“拿到高分，却没有真的完成目的”。像小孩发现只要按一下铃就有糖，于是一直按铃，却没做原本的任务。
+</div>
+
+**Reward hacking（奖励钻漏洞）** 就是“拿到高分，却没有真的完成目的”。像小孩发现只要按一下铃就有糖，于是一直按铃，却没做原本的任务。
 
 <details markdown="1">
 <summary>📊 展开：可以参考的 Benchmark 与 production 评测方法</summary>
@@ -423,40 +459,40 @@ python test.py
 
 按用途选，星等不是 GitHub stars。两份新文档供单 Agent baseline 后比较；三星依文档教学价值，未实跑 API。
 
-<table>
+<table align="center">
   <thead>
     <tr><th scope="col">分类</th><th scope="col">Project／文档</th><th scope="col">教学适合度</th><th scope="col">适合做什么</th><th scope="col">先知道的限制</th></tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Orchestration／Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>先学简单 workflow，再理解 Agent</td><td>是设计指南，不是可以直接部署的框架</td></tr>
-    <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td>⭐⭐⭐⭐⭐</td><td>比较 manager 和 handoff</td><td>示例以 OpenAI Agents SDK 为主</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent（官方文档）</a></td><td>⭐⭐⭐</td><td>已完成单 Agent 者选读：模型分派独立任务</td><td>Beta；各自 context、共用模型与工具；不同于 SDK manager／handoff</td></tr>
-    <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td>⭐⭐⭐⭐</td><td>顺序、并行、handoff、群聊和人工批准</td><td>先确认软件包版本和当前预览状态</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>⭐⭐⭐⭐⭐</td><td>需要 state、checkpoint 和 human-in-the-loop</td><td>抽象较多，第一个 Agent 不必从这里开始</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Orchestration／Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>先学简单 workflow，再理解 Agent</td><td>是设计指南，不是可以直接部署的框架</td></tr>
+    <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>比较 manager 和 handoff</td><td>示例以 OpenAI Agents SDK 为主</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent（官方文档）</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>已完成单 Agent 者选读：模型分派独立任务</td><td>Beta；各自 context、共用模型与工具；不同于 SDK manager／handoff</td></tr>
+    <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>顺序、并行、handoff、群聊和人工批准</td><td>先确认软件包版本和当前预览状态</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>需要 state、checkpoint 和 human-in-the-loop</td><td>抽象较多，第一个 Agent 不必从这里开始</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">Eval／Observability</th><td><a href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests">Anthropic — Develop tests and evaluations</a></td><td>⭐⭐⭐⭐⭐</td><td>建立成功标准和 grader</td><td>需要自己准备代表真实工作的案例</td></tr>
-    <tr><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>⭐⭐⭐⭐⭐</td><td>把 Eval 放进 CI</td><td>配置文件不能代替好的 rubric</td></tr>
-    <tr><td><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI conventions</a></td><td>⭐⭐⭐⭐</td><td>学习可移植的 trace 字段</td><td>规范仍在演进，各平台支持度不同</td></tr>
-    <tr><td><a href="https://github.com/langfuse/langfuse">Langfuse</a></td><td>⭐⭐⭐⭐⭐</td><td>trace、Eval 和 prompt 管理</td><td>MIT 不含 ee/ 等企业目录；自行托管仍需运维和数据治理</td></tr>
-    <tr><td><a href="https://github.com/Arize-ai/phoenix">Arize Phoenix</a></td><td>⭐⭐⭐⭐</td><td>OpenTelemetry 和本地分析</td><td>ELv2 限制对外托管服务；先设计敏感数据遮盖</td></tr>
-     <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td>⭐⭐⭐⭐⭐</td><td>一起检查 Outcome、Trajectory 与 grader</td><td>案例仍要从自己的真实工作与失败建立</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Eval／Observability</th><td><a href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests">Anthropic — Develop tests and evaluations</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>建立成功标准和 grader</td><td>需要自己准备代表真实工作的案例</td></tr>
+    <tr><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>把 Eval 放进 CI</td><td>配置文件不能代替好的 rubric</td></tr>
+    <tr><td><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI conventions</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>学习可移植的 trace 字段</td><td>规范仍在演进，各平台支持度不同</td></tr>
+    <tr><td><a href="https://github.com/langfuse/langfuse">Langfuse</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>trace、Eval 和 prompt 管理</td><td>MIT 不含 ee/ 等企业目录；自行托管仍需运维和数据治理</td></tr>
+    <tr><td><a href="https://github.com/Arize-ai/phoenix">Arize Phoenix</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>OpenTelemetry 和本地分析</td><td>ELv2 限制对外托管服务；先设计敏感数据遮盖</td></tr>
+     <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>一起检查 Outcome、Trajectory 与 grader</td><td>案例仍要从自己的真实工作与失败建立</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="7">Harness／Sandbox／Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>阅读工具循环、权限和 subagent 实现</td><td>以 Claude runtime 为中心</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent（官方文档）</a></td><td>⭐⭐⭐</td><td>已完成单 Agent 者选读：sandbox、持久文件与 code</td><td>Public Preview；网络与工具权限仍须限制，不能自动保证安全</td></tr>
-    <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>阅读 plugin-based harness 架构</td><td>Developer preview；可能有破坏性变更</td></tr>
-    <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td>⭐⭐⭐⭐⭐</td><td>暂停敏感工具、保存 RunState 并 resume</td><td>保存的 state 也可能含 context 与 runtime metadata，要按敏感资料管理</td></tr>
-    <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td>⭐⭐⭐⭐⭐</td><td>批准、checkpoint、resume 与幂等副作用</td><td>production 要使用 durable checkpointer，不能只靠记忆体</td></tr>
-    <tr><td><a href="https://github.com/sandbaseai/sandbase-harness">SandBase Harness</a></td><td>⭐⭐⭐⭐</td><td>看 self-hosted runtime 怎样保存工作、接入 MCP、停下来等待人工批准，并留下 audit／replay 记录</td><td>仍是 v0.x；隔离强度取决于 local／Docker／Kubernetes／Worker backend 和部署设置，不是固定的 microVM 保证</td></tr>
-    <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td>⭐⭐⭐⭐</td><td>把应用打包成服务和容器</td><td>部署框架不会自动补齐 Eval 和 Guardrail</td></tr>
+    <tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Harness／Sandbox／Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>阅读工具循环、权限和 subagent 实现</td><td>以 Claude runtime 为中心</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent（官方文档）</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>已完成单 Agent 者选读：sandbox、持久文件与 code</td><td>Public Preview；网络与工具权限仍须限制，不能自动保证安全</td></tr>
+    <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>阅读 plugin-based harness 架构</td><td>Developer preview；可能有破坏性变更</td></tr>
+    <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>暂停敏感工具、保存 RunState 并 resume</td><td>保存的 state 也可能含 context 与 runtime metadata，要按敏感资料管理</td></tr>
+    <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>批准、checkpoint、resume 与幂等副作用</td><td>production 要使用 durable checkpointer，不能只靠记忆体</td></tr>
+    <tr><td><a href="https://github.com/sandbaseai/sandbase-harness">SandBase Harness</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>看 self-hosted runtime 怎样保存工作、接入 MCP、停下来等待人工批准，并留下 audit／replay 记录</td><td>仍是 v0.x；隔离强度取决于 local／Docker／Kubernetes／Worker backend 和部署设置，不是固定的 microVM 保证</td></tr>
+    <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>把应用打包成服务和容器</td><td>部署框架不会自动补齐 Eval 和 Guardrail</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Multi-Agent 案例</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>⭐⭐⭐⭐</td><td>理解角色式任务分工</td><td>角色多不等于答案一定更好</td></tr>
-    <tr><td><a href="https://github.com/stablyai/orca">Orca</a></td><td>⭐⭐⭐⭐</td><td>在隔离 worktree 中并行运行 coding agents</td><td>并行结果仍然需要人审查和选择</td></tr>
-    <tr><td><a href="https://github.com/yc-software/qm">QM</a></td><td>⭐⭐⭐⭐</td><td>观察团队 workspace、权限和计划任务</td><td>组织级部署比个人 CLI 复杂</td></tr>
-    <tr><td><a href="https://github.com/AMAP-ML/LongHorizon-Harness">LongHorizon-Harness</a></td><td>⭐⭐⭐</td><td>看 Manager／Executor／Auditor 分工</td><td>项目很新，长期维护记录仍有限</td></tr>
-    <tr><td><a href="https://github.com/cft0808/edict">Edict</a></td><td>⭐⭐⭐</td><td>用中文案例理解规划、审查和执行角色</td><td>特殊角色命名是案例设计，不是行业标准</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Multi-Agent 案例</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>理解角色式任务分工</td><td>角色多不等于答案一定更好</td></tr>
+    <tr><td><a href="https://github.com/stablyai/orca">Orca</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>在隔离 worktree 中并行运行 coding agents</td><td>并行结果仍然需要人审查和选择</td></tr>
+    <tr><td><a href="https://github.com/yc-software/qm">QM</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>观察团队 workspace、权限和计划任务</td><td>组织级部署比个人 CLI 复杂</td></tr>
+    <tr><td><a href="https://github.com/AMAP-ML/LongHorizon-Harness">LongHorizon-Harness</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>看 Manager／Executor／Auditor 分工</td><td>项目很新，长期维护记录仍有限</td></tr>
+    <tr><td><a href="https://github.com/cft0808/edict">Edict</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>用中文案例理解规划、审查和执行角色</td><td>特殊角色命名是案例设计，不是行业标准</td></tr>
   </tbody>
 </table>
 

@@ -16,52 +16,72 @@
 
 ### 共用基礎（Stage 0-2）
 
+<div align="center" markdown="1">
+
 | Stage | Maintainer | 加入日期 |
-|---|---|---|
+|:---|:---|:---|
 | Stage 0 — 基礎準備 | （社群 PR 機會） | — |
 | Stage 1 — LLM 入門 | （社群 PR 機會） | — |
 | Stage 2 — Prompt 設計 | （社群 PR 機會） | — |
 
+</div>
+
 ### Track A — CLI Power User
 
+<div align="center" markdown="1">
+
 | Stage | Maintainer | 加入日期 |
-|---|---|---|
+|:---|:---|:---|
 | A1 — CLI Agent 入門 + 選擇 | （社群 PR 機會） | — |
 | A2 — CLI Workflow Patterns | （社群 PR 機會） | — |
 | A3 — Integration & Production | （社群 PR 機會） | — |
 
+</div>
+
 ### Track B — Agent Builder
 
+<div align="center" markdown="1">
+
 | Stage | Maintainer | 加入日期 |
-|---|---|---|
+|:---|:---|:---|
 | Stage 3 — 工具使用與第一個 Agent Loop ⭐ | （社群 PR 機會） | — |
 | Stage 4 — Workflow Graph 與 Agent 框架 | （社群 PR 機會） | — |
 | Stage 5 — Claude Code 生態 ⭐⭐（兩條軌共用） | （社群 PR 機會） | — |
 | Stage 6 — Memory · RAG · 進階 | （社群 PR 機會） | — |
 | Stage 7 — Agent 上線工程：可測、可看、可停、可恢復 | （社群 PR 機會） | — |
 
+</div>
+
 ## 🌳 Branch 維護者 / Branch maintainers
 
+<div align="center" markdown="1">
+
 | Branch | Maintainer | 加入日期 |
-|---|---|---|
+|:---|:---|:---|
 | 🔬 for-researcher | （社群 PR 機會） | — |
 | 💻 for-developer | （社群 PR 機會） | — |
 | 🎓 for-teacher | **特別歡迎自薦**（學術引用待深化） | — |
 | 📊 for-knowledge-worker | **特別歡迎自薦**（目前最薄） | — |
 | 👥 for-everyday-users | （社群 PR 機會） | — |
 
+</div>
+
 ## 💬 內容貢獻者 / Content contributors
 
 > 每次 merged PR 或實質 issue 修正都會在這裡留名。第一次 contribution 不分大小都會列入。
 
+<div align="center" markdown="1">
+
 | Contributor | 貢獻 / Contribution | First contribution |
-|---|---|---|
+|:---|:---|:---|
 | [@scott0127](https://github.com/scott0127) | **Stage 6 RAG 教材** — chunking strategies guide ([#2](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/2))、unit guide overview ([#5](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/5)) · **for-teacher 框架** — 3-tier 教師 AI 應用情境 + 學術引用 (Chen 2020 / Mittal 2024) ([#6](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/6)) | 2026-05-08 |
 | [@xfq](https://github.com/xfq) | **i18n correctness audit** — flagged BCP 47 / W3C compliance issue (`zh-CN` → `zh-Hans`) and provided the script subtag rationale ([#9](https://github.com/WenyuChiou/awesome-agentic-ai-zh/issues/9)). [W3C i18n lead](https://www.w3.org/International/). | 2026-05-10 |
 | [@demo112](https://github.com/demo112) | **中國生態 catalog** — 新增 whale (DeepSeek terminal assistant) + a-stock-data (A 股工具包) 到 Chinese ecosystem ([#14](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/14)) | 2026-05-14 |
 | [@Rain120](https://github.com/Rain120) | **zh-Hans 大陸在地化** — 系統盤點 zh-Hans 鏡像的台灣用詞,促成 `scripts/zh-hans-localize.py`(curated 台→陸詞表 + 大陸引號,已套全 54 檔並進 lint CI gate;貢獻者掛 commit `7f73b8a` Co-Author)([#18](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/18)) | 2026-05-16 |
 | [@JunLin-Bobby](https://github.com/JunLin-Bobby) | **Stage 3 ReAct 練習 bug fix** — `trace.append` 移進 `for tc in tool_calls:` 迴圈內(原本在外層、一步多 tool 只記錄 `tool_calls[0]`)+ 為 question 內的 lookup key 加引號避免 LLM 跨語轉譯失敗(qwen2.5:3b + gemini-3-flash-preview 雙模型交叉驗證)([#26](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/26)) | 2026-05-24 |
 | [@thebrierfox](https://github.com/thebrierfox) | **§12 Finance hosted-MCP example** — 新增 YIELD INTELLIGENCE MCP (hosted remote server) 到 §12 其他常用、tri-locale。catalog 第一個用 style-guide §1 非 repo entry exemption 的 hosted-service entry (`形式 = hosted MCP server` 取代 Stars/License)、為 Stage 5 學習者示範 hosted vs self-hosted MCP 架構差異 ([#28](https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/28)) | 2026-05-26 |
+
+</div>
 
 ---
 

@@ -12,12 +12,16 @@
 
 每个 recipe 都用同样的 4 段结构：
 
+<div align="center" markdown="1">
+
 | 段 | 内容 | 为什么有这段 |
-|---|---|---|
+|:---|:---|:---|
 | **场景** | 你今天工作会遇到的具体场景 | 从“我有 X 问题”找到 recipe，而不是从“我想用 subagent”找 |
 | **Subagent** | 用哪一个（Claude Code 内置名称） | 直接 copy 名字，不用想 |
 | **Prompt 模板** | 复制粘贴即可用的指令文字 | 不用自己想怎么写 |
 | **何时不用** | 比用 subagent 更好的替代方案 | 避免“大材小用” |
+
+</div>
 
 > 💡 **怎么实际派遣 subagent**：在你的 Claude Code 终端对话框里，**直接输入（或粘贴）prompt 模板**——就这样。Claude 看到指令，会自动通过 **Agent tool**（内部派遣机制）找到对应 subagent 跑，跑完后向主 session 回报一段摘要。**不需要 slash command，不需要特殊语法**。
 >
@@ -334,14 +338,18 @@ React Hook Form + Zod>. Include: component code, validation schema,
 
 不确定该用哪个 subagent？从**任务类型**反查：
 
+<div align="center" markdown="1">
+
 | Subagent | Recipes |
-|---|---|
+|:---|:---|
 | `code-reviewer` | **1**（pre-commit review）/ **4**（cross-locale parity）/ **8**（release security audit）|
 | `Explore` | **2**（new codebase）/ **6**（find symbol）/ **11**（cross-repo similar code）|
 | `Plan` | **3**（refactor plan）/ **9**（blast radius）|
 | `general-purpose` | **5**（fact-check）/ **7**（multi-paper compare）/ **10**（parallel multi-target）/ **12**（LLM-as-judge eval）|
 | `frontend-developer` | **13**（a11y audit）/ **15**（React form）|
 | `claude-code-guide` | **14**（Claude Code feature 查询）|
+
+</div>
 
 ---
 

@@ -16,12 +16,16 @@ Remember this order:
 
 > **Say what success looks like → keep a record of the work → ask a person before risky actions → prove it can continue after a fall → only then give it to other people.**
 
+<div align="center" markdown="1">
+
 | Where you are stuck | Do this first | Evidence to produce |
-|---|---|---|
+|:---|:---|:---|
 | You do not know whether the summary is good | Write fixed examples and success rules | A check you can run again |
 | You do not know which step failed | Record every step, error, time, and cost | One complete work record |
 | It can send mail, pay, delete, or write data | Stop before the action, ask a person, and save progress | Who approved it and where to continue |
 | The first three checks can rerun and pass | Give it to other people | Health, stop, continue-after-failure, and rollback instructions |
+
+</div>
 
 Make one AI helper reliable first. Add helpers only for separable work or independent checks.
 
@@ -51,10 +55,10 @@ After this stage, you can:
 
 Use “plain-language meaning” to get oriented, then read “how this chapter uses it / technical boundary” to see what the term means here. Related terms share one group, so you do not need to read the same definition twice.
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">What to solve first</th><th scope="col">Core term</th><th scope="col">Plain-language meaning</th><th scope="col">How this chapter uses it / technical boundary</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">Make the task run</th><td><strong>Agent Harness</strong></td><td>The room where the AI helper works</td><td>The execution environment that holds the model, tools, permissions, state, error handling, and records; this chapter uses it to check sources and prepare a summary safely</td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Make the task run</th><td><strong>Agent Harness</strong></td><td>The room where the AI helper works</td><td>The execution environment that holds the model, tools, permissions, state, error handling, and records; this chapter uses it to check sources and prepare a summary safely</td></tr>
 <tr><td><strong>Agent Loop</strong></td><td>Do one step, see the result, then choose the next step</td><td>The model repeatedly chooses an action and reads the tool result until it finishes, reaches a limit, or must ask a person</td></tr>
 <tr><td><strong>Workflow Graph</strong></td><td>A route map with forks</td><td>Steps, connections, conditions, and state that say which route to take; this chapter uses it for research, checking, and approval before sending</td></tr>
 <tr><td><strong>Orchestration</strong></td><td>Arrange who goes first and who goes next</td><td>Control steps, data flow, roles, retries, and stop conditions</td></tr>
@@ -62,7 +66,7 @@ Use “plain-language meaning” to get oriented, then read “how this chapter 
 <tr><td><strong>Handoff</strong></td><td>Pass the baton and the notes together</td><td>One Agent passes control, needed data, and result evidence to another Agent</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">Prove it did the right thing</th><td><strong>Evaluation / Eval</strong></td><td>Use the same checklist each time</td><td>Measure an Agent's result and process with fixed cases, environments, grading methods, and thresholds</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Prove it did the right thing</th><td><strong>Evaluation / Eval</strong></td><td>Use the same checklist each time</td><td>Measure an Agent's result and process with fixed cases, environments, grading methods, and thresholds</td></tr>
 <tr><td><strong>Outcome</strong></td><td>What really happened at the end</td><td>The externally verifiable state when the task ends; this chapter checks that the summary truly uses three valid sources</td></tr>
 <tr><td><strong>Trajectory</strong></td><td>The footprints left along the way</td><td>What happened during one run, including tool calls, intermediate results, errors, and output</td></tr>
 <tr><td><strong>Grader</strong></td><td>Mark one answer using stated rules</td><td>A method, program, or model that scores one Eval Case against success criteria; this chapter keeps the rules and human spot checks visible</td></tr>
@@ -71,7 +75,7 @@ Use “plain-language meaning” to get oriented, then read “how this chapter 
 <tr><td><strong>Observability</strong></td><td>Put a clear window on the system</td><td>Use traces, logs, and metrics to see internal state; this chapter uses it to find where a source went missing</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">Let it stop and continue safely</th><td><strong>Guardrail</strong></td><td>Block what must not happen</td><td>Rules that limit inputs, outputs, tool permissions, or risky actions</td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Let it stop and continue safely</th><td><strong>Guardrail</strong></td><td>Block what must not happen</td><td>Rules that limit inputs, outputs, tool permissions, or risky actions</td></tr>
 <tr><td><strong>Human Approval</strong></td><td>Ask a person before a risky action</td><td>Pause before a sensitive tool call so a person can approve, edit, or reject it</td></tr>
 <tr><td><strong>Checkpoint</strong></td><td>Save before moving on</td><td>Save recoverable workflow state and version information</td></tr>
 <tr><td><strong>Resume</strong></td><td>Continue from the saved point</td><td>Load a checkpoint with the same task or thread ID and continue execution</td></tr>
@@ -122,12 +126,16 @@ Read these six in production order:
 
 They are not four product generations, and you do not choose only one. Think about the same research helper from four angles:
 
+<div align="center" markdown="1">
+
 | Responsibility | Plain-language question | Research-helper example |
-|---|---|---|
+|:---|:---|:---|
 | **Agent Harness** | Where can it work safely? | It may read sources, but it must stop before sending |
 | **Agent Loop** | Why should it take another round? | If one source is missing, search again; stop at the limit |
 | **Workflow Graph** | Which route should it take now? | Go back to research when sources are weak; otherwise ask for approval |
 | **Eval** | How do I know the result and process are acceptable? | Check three valid sources, correct citations, and no skipped approval |
+
+</div>
 
 Eval checks the **Outcome** and **Trajectory**, then uses a **Grader** to decide whether the run meets the stated rules. Eval can make the Loop retry, make the Graph choose another route, or make the Harness stop. Putting a Harness and Eval together still does not create the Loop's rules for repeating and stopping.
 
@@ -143,8 +151,10 @@ The learning order is [Stage 3 Agent Loop](03-tool-use-and-hello-agent.en.md) �
 
 These eight items are this project’s production checklist, not the world’s only official taxonomy.
 
+<div align="center" markdown="1">
+
 | Component | Plain-language meaning | Question before release |
-|---|---|---|
+|:---|:---|:---|
 | **1. Orchestration / Run loop** | Decide what happens next | Who starts, who stops, and what if a handoff fails? |
 | **2. Tool / Permission boundary** | Give it only the keys it needs | Which tools may read, write, or delete? |
 | **3. Context / State / Checkpoint** | Save where it is now | Can it resume from the correct point? |
@@ -153,6 +163,8 @@ These eight items are this project’s production checklist, not the world’s o
 | **6. Telemetry / Observability** | Put a clear window on the system | Can we see traces, errors, latency, and tokens? |
 | **7. Eval harness** | Retake the test after every change | Are cases, scoring rules, and failure thresholds fixed? |
 | **8. Cost / Latency budget** | Decide the money and time limit first | Above budget, should it stop, downgrade, or queue? |
+
+</div>
 
 <details markdown="1">
 <summary>🔧 Expand: feedback, recovery, and cost details</summary>
@@ -170,11 +182,15 @@ These eight items are this project’s production checklist, not the world’s o
 
 First separate three kinds of Loop that sound similar but cover different scopes:
 
+<div align="center" markdown="1">
+
 | Name | What repeats | Example |
-|---|---|---|
+|:---|:---|:---|
 | **Program loop** | The same code block | `for item in items`; this is syntax, not the topic of this section |
 | **Agent Loop** | Model → tool → tool result → model | Keep calling tools inside one run until completion or `max_turns` |
 | **Loop Engineering** | Goal → action → observation → adjustment | Repeat work in one long run or across sessions／schedules, with verification, memory, budgets, and stop conditions on every round |
+
+</div>
 
 IBM explains Loop Engineering as `Goal → Action → Observation → Adjustment`. The point is not to let an Agent run forever. Every round must answer: **Is the goal still valid? Is the evidence enough? Should we continue, stop, or hand control to a person?**
 
@@ -216,8 +232,10 @@ Start with the **Outcome**. The research helper's Outcome is not “the Agent sa
 
 Next, create a complete **Eval Case**. It is like an exam question that also includes its rules. Input is only one part.
 
+<div align="center" markdown="1">
+
 | Part of an Eval Case | Research-helper example | Why keep it |
-|---|---|---|
+|:---|:---|:---|
 | **Input** | `Summarize these three topics` | Tells the system what to do |
 | **Initial State** | Three candidate sources; not yet approved | Fixes the starting environment |
 | **Success Criteria** | All three sources open; the summary has checkable citations | Says what success means |
@@ -225,6 +243,8 @@ Next, create a complete **Eval Case**. It is like an exam question that also inc
 | **Optional Reference Answer** | A summary checked by a person | Gives comparison guidance when useful; not every case needs one |
 | **Grader** | Code checks links and counts; a person checks faithfulness | Says who grades with which rule |
 | **Case Metadata** | Case ID, version, split, source, and labels | Makes the same case rerunnable and traceable |
+
+</div>
 
 ![A complete Eval Case includes Input, Initial State, Success Criteria, Forbidden Actions, Optional Reference Answer, Grader, and Case Metadata; Input is only one part](../resources/diagrams/eval-case-anatomy.en.png)
 
@@ -236,13 +256,17 @@ This project calls a human-reviewed, reusable collection of complete cases a **R
 
 Add these measurement terms last:
 
+<div align="center" markdown="1">
+
 | Term | Plain-language meaning | How this chapter uses it |
-|---|---|---|
+|:---|:---|:---|
 | **Trial** | One actual attempt at one case | Run a case more than once when model output can vary |
 | **Baseline** | Measure before changing anything | Gives old and new versions the same starting point |
 | **Regression** | The new version becomes worse past a preset limit | Check quality, cost, safety, and reliability together |
 | **Development Set** | Practice questions you may look at | Rerun after changes and use failures to improve the system |
 | **Holdout Set** | The final exam you do not peek at | Open only for a release candidate or final validation |
+
+</div>
 
 Anthropic's [Agent Eval guide](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) separates task, trial, grader, trajectory, and outcome. OpenAI's [Graders API](https://platform.openai.com/docs/api-reference/graders?api-mode=chat) lists several grader types. Tools may differ, but each report should keep dataset version, split, case ID, trial count, grader, Outcome, Trajectory, and baseline.
 
@@ -267,12 +291,16 @@ Save a Checkpoint before approval. After a restart, Resume uses the same task ID
 
 These four steps are not maturity badges; they are the check route for the same change:
 
+<div align="center" markdown="1">
+
 | Order | Question to answer | Minimum evidence to leave | What to do if it fails |
-|---:|---|---|---|
+|:---|:---|:---|:---|
 | 1. **Eval** | Is the final result really correct? Did it take a dangerous shortcut? | Anthropic suggests starting with 20–50 cases representing real work as a practical range, not a universal minimum. Also record Outcome, Trajectory, grader, cost, and a failure threshold | Add cases or fix behavior; do not deploy |
 | 2. **Observability** | Can you find the failed step? | Task ID, trace/span, tool call, error type, latency, tokens, and sensitive-data redaction | Make failures visible before changing the Prompt or model |
 | 3. **Approval / Recovery** | Can a risky action stop first? Can it resume safely after interruption? | Human approval point, versioned checkpoint, resume test, idempotency key, and reject/timeout/compensation route | Fail closed, stop automation, and hand it to a person |
 | 4. **Deploy** | Can the first three steps rerun on the new version? | Health/readiness, rate limit, rollback, stop switch, version, and release record | Keep the old version or roll back; “the service started” is not success |
+
+</div>
 
 An **Outcome Eval** checks the outside-world result. For example, an Agent saying “the email was sent” is only text; the test environment having exactly one email sent to the right recipient is an Outcome pass. A **Trajectory Eval** checks which tools it used, how many attempts it made, whether it bypassed approval, and how many tokens it spent. Use both so a polished final sentence cannot pass by itself.
 
@@ -282,13 +310,17 @@ Build cases from real failures first: for each error, keep a de-identified input
 
 They are not five versions of the same product. Put each one at the right layer:
 
+<div align="center" markdown="1">
+
 | Name | What it is | One-line memory aid |
-|---|---|---|
+|:---|:---|:---|
 | [OpenRouter](https://openrouter.ai/docs/quickstart) | Model API gateway / router | Connects software to different models; it is not a coding Agent |
 | [Pi](https://github.com/earendil-works/pi) | Agent toolkit and coding-agent CLI | Calls models and tools to finish a task |
 | [OpenCode](https://github.com/anomalyco/opencode) | Open-source coding Agent | Reads, edits, and tests inside a code project |
 | [Orca](https://github.com/stablyai/orca) | Multi-Agent development environment | Runs coding Agents in isolated worktrees for comparison |
 | [QM](https://github.com/yc-software/qm) | Team Multi-Agent harness | Manages people, workspaces, permissions, schedules, and collaboration |
+
+</div>
 
 > **Model gateway → Agent runtime → Multi-Agent collaboration platform.** The three layers can work together, but they do not replace one another.
 
@@ -390,13 +422,17 @@ A **Benchmark** is like a shared exam. It helps comparison, but it cannot promis
 
 Ask five questions before trusting a score:
 
+<div align="center" markdown="1">
+
 | Check | Plain-language question |
-|---|---|
+|:---|:---|
 | Task | Does the exam resemble my real work? |
 | Environment | Which tools, data, and permissions did the model receive? |
 | Grader | Who scored it, and can the rule be exploited? |
 | Trajectory | Did it really solve the task, or only stumble into a score? |
 | Hold-out | Did it pass my own tests that were not used for tuning? |
+
+</div>
 
 **Reward hacking** means “getting the score without achieving the real goal.” It is like a child learning that pressing a bell earns candy, then pressing the bell repeatedly instead of doing the assigned task.
 
@@ -419,40 +455,40 @@ Do not copy one SOTA score into the page as a permanent fact. Release decisions 
 
 Choose by purpose; ratings are not GitHub stars. Compare the two new three-star readings after a single-Agent baseline. Their ratings reflect documented teaching value; they haven't been run against live APIs.
 
-<table>
+<table align="center">
   <thead>
     <tr><th scope="col">Category</th><th scope="col">Project / document</th><th scope="col">Teaching fit</th><th scope="col">Best for</th><th scope="col">Know this first</th></tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Orchestration / Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Learn simple workflows before Agents</td><td>A design guide, not a deployable framework</td></tr>
-    <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td>⭐⭐⭐⭐⭐</td><td>Compare manager and handoff patterns</td><td>Examples center on OpenAI Agents SDK</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent (official docs)</a></td><td>⭐⭐⭐</td><td>Readers with a single-Agent baseline: model-directed independent tasks</td><td>Beta; separate contexts, shared model/tools; differs from SDK manager / handoff</td></tr>
-    <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td>⭐⭐⭐⭐</td><td>Sequence, concurrency, handoff, group chat, and approval</td><td>Confirm current package version and preview status</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>⭐⭐⭐⭐⭐</td><td>State, checkpointing, and human-in-the-loop</td><td>More abstraction than a first Agent needs</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Orchestration / Workflow</th><td><a href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic — Building Effective Agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Learn simple workflows before Agents</td><td>A design guide, not a deployable framework</td></tr>
+    <tr><td><a href="https://openai.github.io/openai-agents-python/multi_agent/">OpenAI Agents SDK orchestration</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Compare manager and handoff patterns</td><td>Examples center on OpenAI Agents SDK</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/responses-multi-agent">OpenAI Responses Multi-agent (official docs)</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Readers with a single-Agent baseline: model-directed independent tasks</td><td>Beta; separate contexts, shared model/tools; differs from SDK manager / handoff</td></tr>
+    <tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/">Microsoft Agent Framework orchestrations</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Sequence, concurrency, handoff, group chat, and approval</td><td>Confirm current package version and preview status</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>State, checkpointing, and human-in-the-loop</td><td>More abstraction than a first Agent needs</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">Eval / Observability</th><td><a href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests">Anthropic — Develop tests and evaluations</a></td><td>⭐⭐⭐⭐⭐</td><td>Define success criteria and graders</td><td>You must supply cases that represent real work</td></tr>
-    <tr><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>⭐⭐⭐⭐⭐</td><td>Put Evals in CI</td><td>A config file cannot replace a good rubric</td></tr>
-    <tr><td><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI conventions</a></td><td>⭐⭐⭐⭐</td><td>Learn portable trace fields</td><td>The conventions evolve and support varies</td></tr>
-    <tr><td><a href="https://github.com/langfuse/langfuse">Langfuse</a></td><td>⭐⭐⭐⭐⭐</td><td>Tracing, Eval, and prompt management</td><td>MIT excludes enterprise directories such as ee/; self-hosting needs operations and data governance</td></tr>
-    <tr><td><a href="https://github.com/Arize-ai/phoenix">Arize Phoenix</a></td><td>⭐⭐⭐⭐</td><td>OpenTelemetry and local analysis</td><td>ELv2 restricts hosted services for third parties; redact sensitive data</td></tr>
-     <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td>⭐⭐⭐⭐⭐</td><td>Check Outcome, Trajectory, and graders together</td><td>Build cases from your own real work and failures</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Eval / Observability</th><td><a href="https://platform.claude.com/docs/en/test-and-evaluate/develop-tests">Anthropic — Develop tests and evaluations</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Define success criteria and graders</td><td>You must supply cases that represent real work</td></tr>
+    <tr><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Put Evals in CI</td><td>A config file cannot replace a good rubric</td></tr>
+    <tr><td><a href="https://github.com/open-telemetry/semantic-conventions-genai">OpenTelemetry GenAI conventions</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Learn portable trace fields</td><td>The conventions evolve and support varies</td></tr>
+    <tr><td><a href="https://github.com/langfuse/langfuse">Langfuse</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Tracing, Eval, and prompt management</td><td>MIT excludes enterprise directories such as ee/; self-hosting needs operations and data governance</td></tr>
+    <tr><td><a href="https://github.com/Arize-ai/phoenix">Arize Phoenix</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>OpenTelemetry and local analysis</td><td>ELv2 restricts hosted services for third parties; redact sensitive data</td></tr>
+     <tr><td><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Anthropic — Demystifying evals for AI agents</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Check Outcome, Trajectory, and graders together</td><td>Build cases from your own real work and failures</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="7">Harness / Sandbox / Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td>⭐⭐⭐⭐⭐</td><td>Read tool loops, permissions, and subagent code</td><td>Centers on the Claude runtime</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent (official docs)</a></td><td>⭐⭐⭐</td><td>Readers with a single-Agent baseline: sandbox, persistent files, and code</td><td>Public Preview; restrict network and tool permissions to manage safety</td></tr>
-    <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td>⭐⭐⭐</td><td>Read a plugin-based harness architecture</td><td>Developer preview; breaking changes are possible</td></tr>
-     <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td>⭐⭐⭐⭐⭐</td><td>Pause sensitive tools, save RunState, and resume</td><td>Saved state may contain context and runtime metadata; manage it as sensitive data</td></tr>
-     <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td>⭐⭐⭐⭐⭐</td><td>Approval, checkpoints, resume, and idempotent side effects</td><td>Production needs a durable checkpointer, not only memory</td></tr>
-    <tr><td><a href="https://github.com/sandbaseai/sandbase-harness">SandBase Harness</a></td><td>⭐⭐⭐⭐</td><td>See how a self-hosted runtime saves work, connects MCP, waits for approval, and keeps audit / replay records</td><td>Still v0.x; isolation depends on the local, Docker, Kubernetes, or Worker backend and its deployment, not a fixed microVM guarantee</td></tr>
-    <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td>⭐⭐⭐⭐</td><td>Package an application as a service and container</td><td>A deployment framework does not add Evals or Guardrails for you</td></tr>
+    <tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Harness / Sandbox / Deploy</th><td><a href="https://github.com/anthropics/claude-agent-sdk-python">Claude Agent SDK Python</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Read tool loops, permissions, and subagent code</td><td>Centers on the Claude runtime</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/antigravity-agent">Google Antigravity agent (official docs)</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Readers with a single-Agent baseline: sandbox, persistent files, and code</td><td>Public Preview; restrict network and tool permissions to manage safety</td></tr>
+    <tr><td><a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Read a plugin-based harness architecture</td><td>Developer preview; breaking changes are possible</td></tr>
+     <tr><td><a href="https://openai.github.io/openai-agents-python/human_in_the_loop/">OpenAI Agents SDK — Human-in-the-loop</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Pause sensitive tools, save RunState, and resume</td><td>Saved state may contain context and runtime metadata; manage it as sensitive data</td></tr>
+     <tr><td><a href="https://docs.langchain.com/oss/python/langgraph/interrupts">LangGraph — Interrupts</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Approval, checkpoints, resume, and idempotent side effects</td><td>Production needs a durable checkpointer, not only memory</td></tr>
+    <tr><td><a href="https://github.com/sandbaseai/sandbase-harness">SandBase Harness</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>See how a self-hosted runtime saves work, connects MCP, waits for approval, and keeps audit / replay records</td><td>Still v0.x; isolation depends on the local, Docker, Kubernetes, or Worker backend and its deployment, not a fixed microVM guarantee</td></tr>
+    <tr><td><a href="https://github.com/bentoml/BentoML">BentoML</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Package an application as a service and container</td><td>A deployment framework does not add Evals or Guardrails for you</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Multi-Agent Cases</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>⭐⭐⭐⭐</td><td>Understand role-based task division</td><td>More roles do not guarantee a better answer</td></tr>
-    <tr><td><a href="https://github.com/stablyai/orca">Orca</a></td><td>⭐⭐⭐⭐</td><td>Run coding Agents in isolated worktrees</td><td>A person must still review and select parallel results</td></tr>
-    <tr><td><a href="https://github.com/yc-software/qm">QM</a></td><td>⭐⭐⭐⭐</td><td>Study team workspaces, permissions, and schedules</td><td>Organization-wide deployment is more complex than a personal CLI</td></tr>
-    <tr><td><a href="https://github.com/AMAP-ML/LongHorizon-Harness">LongHorizon-Harness</a></td><td>⭐⭐⭐</td><td>See Manager / Executor / Auditor roles</td><td>Very new, with limited long-term maintenance history</td></tr>
-    <tr><td><a href="https://github.com/cft0808/edict">Edict</a></td><td>⭐⭐⭐</td><td>Learn planning, review, and execution roles from a Chinese-language case</td><td>Its special role names are a case design, not an industry standard</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Multi-Agent Cases</th><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Understand role-based task division</td><td>More roles do not guarantee a better answer</td></tr>
+    <tr><td><a href="https://github.com/stablyai/orca">Orca</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Run coding Agents in isolated worktrees</td><td>A person must still review and select parallel results</td></tr>
+    <tr><td><a href="https://github.com/yc-software/qm">QM</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Study team workspaces, permissions, and schedules</td><td>Organization-wide deployment is more complex than a personal CLI</td></tr>
+    <tr><td><a href="https://github.com/AMAP-ML/LongHorizon-Harness">LongHorizon-Harness</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>See Manager / Executor / Auditor roles</td><td>Very new, with limited long-term maintenance history</td></tr>
+    <tr><td><a href="https://github.com/cft0808/edict">Edict</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Learn planning, review, and execution roles from a Chinese-language case</td><td>Its special role names are a case design, not an industry standard</td></tr>
   </tbody>
 </table>
 

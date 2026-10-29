@@ -138,7 +138,7 @@ The name only counts examples: Zero-Shot means 0, One-Shot means 1, and Few-Shot
 
 **First step**: Keep these six data points fixed. Do not change the questions halfway through.
 
-<table>
+<table align="center">
   <thead>
     <tr><th scope="col">Message</th><th scope="col">Correct label</th></tr>
   </thead>
@@ -248,7 +248,7 @@ Start with one of the three starting points above. The full list is a toolbox, n
 
 > Recommendation is this Stage's reading order, not a popularity ranking: `⭐⭐⭐⭐⭐` = skipping it would block progress; `⭐⭐⭐⭐` = start here; `⭐⭐⭐` = read when needed; `⭐⭐` = historical or niche. This is an optional toolbox, so no forced five-star ratings.
 
-<table>
+<table align="center">
   <thead>
     <tr>
       <th scope="col">Category</th>
@@ -259,32 +259,32 @@ Start with one of the three starting points above. The full list is a toolbox, n
     </tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5">Official courses</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>Follow the first notebook chapter.</td><td>Maintained; upstream does not provide SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>Read the older Real World Prompting and Prompt Evaluations examples; use the current official docs in this table when building.</td><td>Archived; upstream does not provide SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>Read “When to change a prompt” first.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>Read about message roles, examples, and evals.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>Read about clear instructions and fixed structures.</td><td>Official documentation</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Official courses</th><td><a href="https://github.com/anthropics/prompt-eng-interactive-tutorial">Anthropic Prompt Engineering Tutorial</a></td><td>Follow the first notebook chapter.</td><td>Maintained; upstream does not provide SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/courses">Anthropic Courses</a></td><td>Read the older Real World Prompting and Prompt Evaluations examples; use the current official docs in this table when building.</td><td>Archived; upstream does not provide SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering</a></td><td>Read “When to change a prompt” first.</td><td>Official documentation</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/prompt-engineering">OpenAI Prompt Engineering</a></td><td>Read about message roles, examples, and evals.</td><td>Official documentation</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies">Google Prompt Design Strategies</a></td><td>Read about clear instructions and fixed structures.</td><td>Official documentation</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Official cookbooks</th><td><a href="https://github.com/anthropics/claude-cookbooks">Anthropic Claude Cookbooks</a></td><td>Find the notebook closest to your task.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/openai/openai-cookbook">OpenAI Cookbook</a></td><td>Find eval and structured-output examples.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/google-gemini/cookbook">Google Gemini Cookbook</a></td><td>Run one prompting quickstart.</td><td>Maintained; Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/GoogleCloudPlatform/generative-ai">Google Cloud Generative AI</a></td><td>Read it when you need Vertex AI.</td><td>Maintained; Apache-2.0</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Official cookbooks</th><td><a href="https://github.com/anthropics/claude-cookbooks">Anthropic Claude Cookbooks</a></td><td>Find the notebook closest to your task.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/openai/openai-cookbook">OpenAI Cookbook</a></td><td>Find eval and structured-output examples.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/google-gemini/cookbook">Google Gemini Cookbook</a></td><td>Run one prompting quickstart.</td><td>Maintained; Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/GoogleCloudPlatform/generative-ai">Google Cloud Generative AI</a></td><td>Read it when you need Vertex AI.</td><td>Maintained; Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Learn from examples</th><td><a href="https://github.com/dair-ai/Prompt-Engineering-Guide">DAIR.AI Prompt Engineering Guide</a></td><td>Use it as a reference. You do not need to memorize it from start to finish.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></td><td>Use the website to find one technique quickly.</td><td>Maintained; website</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>Choose one notebook and learn while running it.</td><td>Custom non-commercial license; commercial use needs written permission</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php">李宏毅 GenAI-ML (2025 Fall)</a></td><td>Use it when you need a Chinese classroom explanation.</td><td>2025 Fall course website; not current model documentation</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Learn from examples</th><td><a href="https://github.com/dair-ai/Prompt-Engineering-Guide">DAIR.AI Prompt Engineering Guide</a></td><td>Use it as a reference. You do not need to memorize it from start to finish.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://www.promptingguide.ai/">PromptingGuide.ai</a></td><td>Use the website to find one technique quickly.</td><td>Maintained; website</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/NirDiamant/Prompt_Engineering">NirDiamant Prompt Engineering</a></td><td>Choose one notebook and learn while running it.</td><td>Custom non-commercial license; commercial use needs written permission</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://speech.ee.ntu.edu.tw/~hylee/GenAI-ML/2025-fall.php">李宏毅 GenAI-ML (2025 Fall)</a></td><td>Use it when you need a Chinese classroom explanation.</td><td>2025 Fall course website; not current model documentation</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Evaluation and optimization</th><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>Move the six-question eval into a rerunnable configuration.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/promptflow">Microsoft Promptflow</a></td><td>Use it when you need workflow and evaluation interfaces.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>Use it when you want to optimize prompts with code.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/UKGovernmentBEIS/inspect_ai">Inspect AI</a></td><td>Use it when you need a formal eval package.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Evaluation and optimization</th><td><a href="https://github.com/promptfoo/promptfoo">promptfoo</a></td><td>Move the six-question eval into a rerunnable configuration.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/promptflow">Microsoft Promptflow</a></td><td>Use it when you need workflow and evaluation interfaces.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td><td>Use it when you want to optimize prompts with code.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/UKGovernmentBEIS/inspect_ai">Inspect AI</a></td><td>Use it when you need a formal eval package.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="1">Historical material</th><td><a href="https://github.com/microsoft/prompt-engine">Microsoft Prompt Engine</a></td><td>Use it only to see an early approach.</td><td>Archived; MIT; do not use for new projects</td><td>⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">Historical material</th><td><a href="https://github.com/microsoft/prompt-engine">Microsoft Prompt Engine</a></td><td>Use it only to see an early approach.</td><td>Archived; MIT; do not use for new projects</td><td align="center" valign="middle">⭐⭐</td></tr>
   </tbody>
 </table>
 
@@ -295,11 +295,15 @@ Start with one of the three starting points above. The full list is a toolbox, n
 
 Think of them as three different questions:
 
+<div align="center" markdown="1">
+
 | Layer | What it controls | Where to learn |
-|---|---|---|
+|:---|:---|:---|
 | Prompt Engineering | How to write the instructions sent to the model this time | This Stage |
 | Context Engineering | Which data to put into the context window this time | [Stage 6](06-memory-rag.en.md) |
 | Harness Engineering | The loop, retry, sandbox, eval, and observability around the model | [Stage 7](07-multi-agent-production.en.md) |
+
+</div>
 
 They cannot replace one another. When data is missing, changing only the prompt will not help. When the process is unreliable, fix the harness.
 
