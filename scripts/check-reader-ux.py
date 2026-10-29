@@ -157,9 +157,12 @@ def analyze_markdown(text: str) -> tuple[PageMetrics, list[str]]:
         if in_fenced_code:
             visible_measurement_lines.append(line)
         else:
-            visible_measurement_lines.append(
-                _without_html_tags_outside_inline_code(line)
-            )
+            measured = _without_html_tags_outside_inline_code(line)
+            # Alignment colons change table layout, not the reader's text.
+            # Keep the existing conservative syntax count for pipes/dashes.
+            if re.fullmatch(r"\s*\|?\s*:?-+:?\s*(?:\|\s*:?-+:?\s*)+\|?\s*", measured):
+                measured = measured.replace(":", "")
+            visible_measurement_lines.append(measured)
 
     for line_no, (line, in_code) in enumerate(zip(lines, code_flags), start=1):
         if in_comment:
@@ -291,12 +294,19 @@ class _VisibleEntryHTMLParser(HTMLParser):
         self._suppressed_depth = 0
         self._anchor_stack: list[dict[str, bool]] = []
 
+    def handle_comment(self, data: str) -> None:
+        if data.strip() == f"{self._target_id}:start":
+            self._target_depth = 1
+        elif data.strip() == f"{self._target_id}:end":
+            self._target_depth = 0
+            self._element_stack.clear()
+            self._anchor_stack.clear()
+            self._suppressed_depth = 0
+
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         tag = tag.casefold()
         attributes = {name.casefold(): value or "" for name, value in attrs}
         if not self._target_depth:
-            if tag == "div" and attributes.get("id") == self._target_id:
-                self._target_depth = 1
             return
         compact_style = re.sub(r"\s+", "", attributes.get("style", "")).casefold()
         hidden = (
@@ -331,9 +341,6 @@ class _VisibleEntryHTMLParser(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         tag = tag.casefold()
         if not self._target_depth:
-            return
-        if self._target_depth == 1 and tag == "div":
-            self._target_depth = 0
             return
         if tag == "a" and self._anchor_stack:
             anchor = self._anchor_stack.pop()
@@ -377,14 +384,14 @@ def _rendered_entry_metrics(
     target_base = "reader-ux-visible-section"
     target_id = target_base
     suffix = 1
-    while target_id in existing_ids:
+    while target_id in existing_ids or target_id in visible_page:
         target_id = f"{target_base}-{suffix}"
         suffix += 1
     text = (
         visible_page[:section_start]
-        + f'\n<div id="{target_id}" markdown="1">\n'
+        + f"\n<!-- {target_id}:start -->\n"
         + visible_page[section_start:section_end]
-        + "\n</div>\n"
+        + f"\n<!-- {target_id}:end -->\n"
         + visible_page[section_end:]
     )
     # Python-Markdown expands link-looking text inside some raw HTML attribute
@@ -398,6 +405,8 @@ def _rendered_entry_metrics(
         ),
         text,
     )
+    # Comment sentinels leave the real HTML nesting intact. A synthetic div
+    # around a raw table containing div fields changes Python-Markdown parsing.
     rendered = markdown.markdown(text, extensions=["extra"])
     parser = _VisibleEntryHTMLParser(target_id)
     parser.feed(rendered)

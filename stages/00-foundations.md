@@ -10,7 +10,7 @@
 
 - [ ] 用 **Python** 向 **API** (Application Programming Interface) 拿公開資料，再從 **JSON** (JavaScript Object Notation) 裡找出一個值。
 - [ ] 用 **Git** 複製專案（clone）、開工作線（**branch**）、保存版本（**commit**），再把版本送到網路上（**push**）。兩次修改撞在一起時，知道要留下什麼（合併衝突）。
-- [ ] 用 **CLI（命令列介面）**切換資料夾、建立檔案並執行 Python 程式。
+- [ ] 用 **CLI（命令列介面）** 切換資料夾、建立檔案並執行 Python 程式。
 - [ ] 看懂 **YAML** 與 JSON。它們都是用文字保存資料的格式。
 
 四項都做得到，就直接前往 [Stage 1 — LLM 基礎](01-llm-basics.md)。只要有一項不確定，就完成本頁的主練習；需要時再展開補充內容。
@@ -63,7 +63,7 @@
 </table>
 </div>
 
-**History（版本歷史）**是專案保存的版本紀錄；它可以分支，不一定是一條依時間排列的直線。**Diff（差異）**比較修改前後的內容。Commit 中的作者名稱、時間、說明與識別碼有助追查，但作者標籤本身不能證明身分。
+**History（版本歷史）** 是專案保存的版本紀錄；它可以分支，不一定是一條依時間排列的直線。**Diff（差異）** 比較修改前後的內容。Commit 中的作者名稱、時間、說明與識別碼有助追查，但作者標籤本身不能證明身分。
 
 例如：在 branch 修正一個錯字 → 在本機做 commit → push 到 GitHub 的 branch → 提出 PR 請人檢查 → 同意後 merge 進 main。每一步有不同用途；PR 不會因此自動合併。
 
@@ -84,7 +84,7 @@
 
 ## 🛠 動手練習：做一個 GitHub 資料小工具
 
-**成果：**讓 Python 從 GitHub 拿公開資料，把結果顯示在畫面上、寫進檔案，再用 Git 保存。這個主練習不需要帳號、API token 或付費服務。
+**成果：** 讓 Python 從 GitHub 拿公開資料，把結果顯示在畫面上、寫進檔案，再用 Git 保存。這個主練習不需要帳號、API token 或付費服務。
 
 先花五分鐘用瀏覽器觀察：[打開本專案](https://github.com/WenyuChiou/awesome-agentic-ai-zh)，找出 README、License 和 Issues，再打開 commit 歷史，選一筆查看作者、時間、說明、識別碼與 diff。公開顯示的作者 email 是紀錄中的標籤，不是登入憑證，也不能單憑它驗證作者身分。不需要建立 Issue 或 PR。
 
@@ -244,32 +244,32 @@ Token 就像程式使用的臨時鑰匙。拿到它的人可能以你的身分�
 <table align="center">
   <thead><tr><th scope="col">主題</th><th scope="col">資源</th><th scope="col">適合誰</th><th scope="col">推薦度</th><th scope="col">為什麼推薦／備註</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>想跟著一本書從頭練習</td><td>⭐⭐⭐⭐</td><td>程式碼免費；完整教材需購買書本。</td></tr>
-    <tr><td><a href="https://realpython.com/">Real Python</a></td><td>學過一點，想查一個問題</td><td>⭐⭐⭐⭐</td><td>文章按主題分開，遇到問題時容易查找。</td></tr>
-    <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>喜歡看英文影片</td><td>⭐⭐⭐</td><td>用影片從基礎語法帶到實際應用。</td></tr>
-    <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>喜歡一邊操作一邊學</td><td>⭐⭐⭐</td><td>部分內容免費；完整後端路線需付費。</td></tr>
-    <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python 官方繁體中文教學</a></td><td>做完第一次練習，想查正確語法</td><td>⭐⭐⭐⭐</td><td>官方參考資料；它預期你已懂一點程式設計。</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>想跟著一本書從頭練習</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>程式碼免費；完整教材需購買書本。</td></tr>
+    <tr><td><a href="https://realpython.com/">Real Python</a></td><td>學過一點，想查一個問題</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>文章按主題分開，遇到問題時容易查找。</td></tr>
+    <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>喜歡看英文影片</td><td align="center" valign="middle">⭐⭐⭐</td><td>用影片從基礎語法帶到實際應用。</td></tr>
+    <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>喜歡一邊操作一邊學</td><td align="center" valign="middle">⭐⭐⭐</td><td>部分內容免費；完整後端路線需付費。</td></tr>
+    <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python 官方繁體中文教學</a></td><td>做完第一次練習，想查正確語法</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>官方參考資料；它預期你已懂一點程式設計。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>想完整理解 Git</td><td>⭐⭐⭐⭐</td><td>免費的官方完整參考書。</td></tr>
-    <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>想用圖看懂 branch、merge 與做事順序</td><td>⭐⭐⭐⭐</td><td>用圖解說明常見工作流程。</td></tr>
-    <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Git 操作出錯，想安全復原</td><td>⭐⭐⭐⭐</td><td>先說明哪些操作會丟失資料，再教你如何復原。</td></tr>
-    <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>基本方法不夠，想查更多問題</td><td>⭐⭐⭐</td><td>收錄較多 Git 問題與處理方式。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>想完整理解 Git</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>免費的官方完整參考書。</td></tr>
+    <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>想用圖看懂 branch、merge 與做事順序</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用圖解說明常見工作流程。</td></tr>
+    <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Git 操作出錯，想安全復原</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>先說明哪些操作會丟失資料，再教你如何復原。</td></tr>
+    <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>基本方法不夠，想查更多問題</td><td align="center" valign="middle">⭐⭐⭐</td><td>收錄較多 Git 問題與處理方式。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI／Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>想有順序地學命令列</td><td>⭐⭐⭐⭐</td><td>從新手指令一路介紹到較進階的操作。</td></tr>
-    <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>使用 Windows，想從第一步開始</td><td>⭐⭐⭐⭐</td><td>Microsoft 官方的 PowerShell 入門教材。</td></tr>
-    <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>只想先看一個指令怎麼用</td><td>⭐⭐⭐⭐</td><td>用短小、可複製的例子解釋常用指令。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI／Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>想有順序地學命令列</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>從新手指令一路介紹到較進階的操作。</td></tr>
+    <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>使用 Windows，想從第一步開始</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Microsoft 官方的 PowerShell 入門教材。</td></tr>
+    <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>只想先看一個指令怎麼用</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用短小、可複製的例子解釋常用指令。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>想知道 API 背後怎麼傳資料</td><td>⭐⭐⭐⭐</td><td>Mozilla 維護的 HTTP 參考資料。</td></tr>
-    <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>想用圖形介面試 API</td><td>⭐⭐⭐⭐</td><td>不必先寫程式，也能看到送出與收到的資料。</td></tr>
-    <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>想從命令列呼叫 API</td><td>⭐⭐⭐</td><td>指令通常比原始 curl 寫法容易閱讀。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>想知道 API 背後怎麼傳資料</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Mozilla 維護的 HTTP 參考資料。</td></tr>
+    <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>想用圖形介面試 API</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>不必先寫程式，也能看到送出與收到的資料。</td></tr>
+    <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>想從命令列呼叫 API</td><td align="center" valign="middle">⭐⭐⭐</td><td>指令通常比原始 curl 寫法容易閱讀。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML／JSON</th><td><a href="https://yaml.org/">YAML 官網</a></td><td>需要查 YAML 的正確寫法</td><td>⭐⭐⭐</td><td>語法與正式規格的官方入口。</td></tr>
-    <tr><td><a href="https://www.json.org/json-en.html">JSON 介紹</a></td><td>第一次接觸 JSON</td><td>⭐⭐⭐⭐</td><td>用短例子說明 JSON 怎麼裝資料。</td></tr>
-    <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>想從命令列整理 JSON</td><td>⭐⭐⭐⭐</td><td>可以篩選與整理 API 傳回的資料。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML／JSON</th><td><a href="https://yaml.org/">YAML 官網</a></td><td>需要查 YAML 的正確寫法</td><td align="center" valign="middle">⭐⭐⭐</td><td>語法與正式規格的官方入口。</td></tr>
+    <tr><td><a href="https://www.json.org/json-en.html">JSON 介紹</a></td><td>第一次接觸 JSON</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用短例子說明 JSON 怎麼裝資料。</td></tr>
+    <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>想從命令列整理 JSON</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>可以篩選與整理 API 傳回的資料。</td></tr>
   </tbody>
 </table>
 

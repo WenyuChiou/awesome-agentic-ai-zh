@@ -81,12 +81,16 @@ Malicious instructions hidden in webpage content that try to replace the agent's
 
 ## 🧭 Choose the smallest interface first
 
+<div align="center" markdown="1">
+
 | Your task | Start with | Simple reason |
-|---|---|---|
+|:---|:---|:---|
 | Only find or read public information | **Web Search / Fetch** | You need data, not screen clicks. |
 | All work stays on webpages | **Browser Use** | It understands buttons, fields, and tabs, so the door is smaller than a whole computer. |
 | Work crosses desktop applications | **Computer Use** | Only then do you need screenshots, mouse, and keyboard. |
 | Run generated code or change files | **Sandbox** | Put the code in an isolated room before inspecting its result. |
+
+</div>
 
 > **Prefer a formal API or typed tool.** If a service already exposes a clear API, use it first. GUI control is a fallback when necessary, not a smarter shortcut.
 
@@ -148,11 +152,15 @@ Anthropic's current <code>browser_toolset_20260801</code> is a client toolset. I
 
 Do not collapse three signals into one:
 
+<div align="center" markdown="1">
+
 | Signal | What it provides | When it helps |
-|---|---|---|
+|:---|:---|:---|
 | **DOM** | Nodes and attributes used by webpage code. | Reading structure or using selectors. |
 | **Accessibility Tree** | Human-meaningful roles, names, and states. | Finding buttons, fields, and operable elements. |
 | **Screenshot / pixel** | What the page actually looks like. | Canvas, images, drag-and-drop, or missing structural signals. |
+
+</div>
 
 [Playwright MCP](https://github.com/microsoft/playwright-mcp) connects browser control to an MCP-capable client. [browser-use](https://github.com/browser-use/browser-use) helps study or build a full web-agent loop. Neither means safe access to every signed-in website out of the box.
 
@@ -169,8 +177,10 @@ Do not collapse three signals into one:
 <details markdown="1">
 <summary>📦 Sandbox: isolation technology, workspaces, and providers</summary>
 
+<div align="center" markdown="1">
+
 | Term | Plain meaning | Important limit |
-|---|---|---|
+|:---|:---|:---|
 | **Container** | An isolated room that shares the host kernel. | Bad configuration can still expose the host or network. |
 | **Virtual Machine (VM)** | A room with its own operating-system kernel. | Usually heavier than a container. |
 | **microVM** | A smaller, faster VM design. | Not every sandbox uses a microVM. |
@@ -181,6 +191,8 @@ Do not collapse three signals into one:
 | **Session** | A live sandbox instance that can continue work. | It is not conversational memory. |
 | **Snapshot** | Saved workspace state used to start again later. | Remove secrets and temporary files first. |
 
+</div>
+
 OpenAI Agents SDK separates the agent definition, fresh-workspace contract, and per-run sandbox choice through <code>SandboxAgent</code>, <code>Manifest</code>, and <code>SandboxRunConfig</code>. This area remains Beta. [Official documentation](https://openai.github.io/openai-agents-python/sandbox/guide/)
 
 Do not compare only startup speed. Check filesystem boundaries, network policy, secret injection, lifecycle, snapshots, logs, region, price, and cleanup. [Modal Sandboxes](https://modal.com/docs/guide/sandboxes) also documents different network and runtime controls, so providers are not one interchangeable isolation type.
@@ -189,12 +201,16 @@ Do not compare only startup speed. Check filesystem boundaries, network policy, 
 
 ## 🛡️ Four safety checks
 
+<div align="center" markdown="1">
+
 | Check | Ask before action |
-|---|---|
+|:---|:---|
 | **1. Isolate** | Is it in a fresh browser profile, container, or VM? |
 | **2. Allowlist** | Which sites, files, tools, and actions are permitted? |
 | **3. Approve** | Which actions must stop and ask a person? |
 | **4. Verify & Log** | What evidence proves success, and can a failure be traced? |
+
+</div>
 
 ![Four safety checks around agent actions](../resources/diagrams/agent-guardrail-patterns.en.png)
 
@@ -353,41 +369,41 @@ Choose only one to start:
 
 <small>Content checks: the original 21 entries inherit the 2026-08-28 UTC check date; Cortex's current README claims about typed MCP tools and the gRPC schema limitation were checked on 2026-10-13 UTC. The GitHub repository metadata snapshot was checked separately on 2026-10-13 UTC. Stars are this project's teaching ratings, not GitHub stars.</small>
 
-<table>
+<table align="center">
 <thead>
 <tr><th scope="col">Group</th><th scope="col">Resource</th><th scope="col">Use it when</th><th scope="col">Limit / status</th><th scope="col">Rating</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Official interface docs</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool">Anthropic Computer Use tool</a></td><td>Understand the desktop action loop.</td><td>Client toolset; your application supplies the executor.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool">Anthropic Browser Use tool</a></td><td>Keep a task inside webpages.</td><td>Client toolset; requires a controlled browser.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://developers.openai.com/api/docs/guides/tools-computer-use">OpenAI Computer Use guide</a></td><td>Implement the GA computer tool.</td><td>The old preview shape is deprecated.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://openai.github.io/openai-agents-python/sandbox/guide/">OpenAI Agents SDK Sandbox guide</a></td><td>Need a stateful workspace.</td><td>Sandbox Agents are Beta.</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://support.google.com/chrome/answer/16283624?hl=en">Google Chrome Help: Gemini in Chrome</a></td><td>Check whether your account has access.</td><td>gradual rollout with platform and region limits.</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Official interface docs</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool">Anthropic Computer Use tool</a></td><td>Understand the desktop action loop.</td><td>Client toolset; your application supplies the executor.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/browser-use-tool">Anthropic Browser Use tool</a></td><td>Keep a task inside webpages.</td><td>Client toolset; requires a controlled browser.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://developers.openai.com/api/docs/guides/tools-computer-use">OpenAI Computer Use guide</a></td><td>Implement the GA computer tool.</td><td>The old preview shape is deprecated.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://openai.github.io/openai-agents-python/sandbox/guide/">OpenAI Agents SDK Sandbox guide</a></td><td>Need a stateful workspace.</td><td>Sandbox Agents are Beta.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://support.google.com/chrome/answer/16283624?hl=en">Google Chrome Help: Gemini in Chrome</a></td><td>Check whether your account has access.</td><td>gradual rollout with platform and region limits.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="6">Executor / framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">anthropics/claude-quickstarts</a></td><td>Read the official computer-use demo.</td><td>Inspect container, credentials, and network boundaries first.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/browser-use/browser-use">browser-use/browser-use</a></td><td>Build a full web-agent loop.</td><td>You still own production browser scaling and safety.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/microsoft/playwright-mcp">microsoft/playwright-mcp</a></td><td>Connect a browser to an MCP client.</td><td>Restrict origins, permissions, and data.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/cortex-docs/cortex">cortex-docs/cortex</a></td><td>Turn API specifications into typed MCP tools.</td><td>gRPC exposes schema resources but no callable methods.</td><td>⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/trycua/cua">trycua/cua</a></td><td>Study a cross-platform computer-use stack.</td><td>Verify the actual backend from current README and releases.</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">bytedance/UI-TARS-desktop</a></td><td>Study an open desktop agent.</td><td>Local control is high risk; use a test environment.</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Executor / framework</th><td><a href="https://github.com/anthropics/claude-quickstarts">claude-quickstarts</a></td><td>Read the official computer-use demo.</td><td>Inspect container, credentials, and network boundaries first.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/browser-use/browser-use">browser-use</a></td><td>Build a full web-agent loop.</td><td>You still own production browser scaling and safety.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/microsoft/playwright-mcp">playwright-mcp</a></td><td>Connect a browser to an MCP client.</td><td>Restrict origins, permissions, and data.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/cortex-docs/cortex">cortex</a></td><td>Turn API specifications into typed MCP tools.</td><td>gRPC exposes schema resources but no callable methods.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/trycua/cua">cua</a></td><td>Study a cross-platform computer-use stack.</td><td>Verify the actual backend from current README and releases.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>Study an open desktop agent.</td><td>Local control is high risk; use a test environment.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Sandbox / runtime</th><td><a href="https://github.com/e2b-dev/E2B">e2b-dev/E2B</a></td><td>An agent needs a remote code workspace.</td><td>Apache-2.0 repo; managed service has separate cost and policy.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/cloudflare/sandbox-sdk">cloudflare/sandbox-sdk</a></td><td>Run isolated code on Workers and Containers.</td><td>Apache-2.0; Beta, and APIs may change before v1.0.</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://modal.com/docs/guide/sandboxes">Modal Sandboxes</a></td><td>Need managed containers and runtime controls.</td><td>Configure network defaults and Beta / VM features from current docs.</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://vercel.com/docs/sandbox">Vercel Sandbox</a></td><td>Already build isolated execution in Vercel.</td><td>Check runtime, region, network, and pricing.</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Sandbox / runtime</th><td><a href="https://github.com/e2b-dev/E2B">E2B</a></td><td>An agent needs a remote code workspace.</td><td>Apache-2.0 repo; managed service has separate cost and policy.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/cloudflare/sandbox-sdk">sandbox-sdk</a></td><td>Run isolated code on Workers and Containers.</td><td>Apache-2.0; Beta, and APIs may change before v1.0.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://modal.com/docs/guide/sandboxes">Modal Sandboxes</a></td><td>Need managed containers and runtime controls.</td><td>Configure network defaults and Beta / VM features from current docs.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://vercel.com/docs/sandbox">Vercel Sandbox</a></td><td>Already build isolated execution in Vercel.</td><td>Check runtime, region, network, and pricing.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">GUI / benchmark / dataset</th><td><a href="https://github.com/microsoft/OmniParser">microsoft/OmniParser</a></td><td>Study screenshot element parsing.</td><td>The repository is CC-BY-4.0; do not automatically apply that license to the weights.</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://osworld-v2.xlang.ai/">OSWorld 2.0</a></td><td>Evaluate long-horizon desktop tasks.</td><td>Read scores with metric, step budget, and harness.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/xlang-ai/OSWorld">xlang-ai/OSWorld</a></td><td>Reproduce the original cross-OS benchmark.</td><td>Its task set differs from 2.0; percentages are not directly comparable.</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/web-arena-x/webarena">web-arena-x/webarena</a></td><td>Evaluate self-hosted web tasks.</td><td>Environment setup and evaluator affect results.</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/OSU-NLP-Group/Mind2Web">OSU-NLP-Group/Mind2Web</a></td><td>Study demonstrations from real websites.</td><td>A dataset does not make current sites safe to automate.</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">GUI / benchmark / dataset</th><td><a href="https://github.com/microsoft/OmniParser">OmniParser</a></td><td>Study screenshot element parsing.</td><td>The repository is CC-BY-4.0; do not automatically apply that license to the weights.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://osworld-v2.xlang.ai/">OSWorld 2.0</a></td><td>Evaluate long-horizon desktop tasks.</td><td>Read scores with metric, step budget, and harness.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/xlang-ai/OSWorld">OSWorld</a></td><td>Reproduce the original cross-OS benchmark.</td><td>Its task set differs from 2.0; percentages are not directly comparable.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/web-arena-x/webarena">webarena</a></td><td>Evaluate self-hosted web tasks.</td><td>Environment setup and evaluator affect results.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/OSU-NLP-Group/Mind2Web">Mind2Web</a></td><td>Study demonstrations from real websites.</td><td>A dataset does not make current sites safe to automate.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Safety research and response</th><td><a href="https://brave.com/blog/indirect-prompt-injection/">Brave: indirect prompt injection</a></td><td>Build a browser-agent threat model.</td><td>A research demo is not proof of every product's current state.</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://research.perplexity.ai/articles/browsesafe">Perplexity BrowseSafe</a></td><td>Compare a provider response and defense direction.</td><td>Read provider claims alongside independent testing.</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Safety research and response</th><td><a href="https://brave.com/blog/indirect-prompt-injection/">Brave: indirect prompt injection</a></td><td>Build a browser-agent threat model.</td><td>A research demo is not proof of every product's current state.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://research.perplexity.ai/articles/browsesafe">Perplexity BrowseSafe</a></td><td>Compare a provider response and defense direction.</td><td>Read provider claims alongside independent testing.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 </table>
 

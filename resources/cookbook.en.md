@@ -21,14 +21,18 @@ You will also see **Skill**, **MCP Server**, and **Coding Agent**. They mean a r
 
 ## 🎯 Choose one recipe first
 
+<div align="center" markdown="1">
+
 | What you want to accomplish | Where to start | Key risks |
-|---|---|---|
+|:---|:---|:---|
 | Let Claude remember a repeatable method | [1. First Skill](#1-write-your-first-skill) | Rules that are too vague |
 | Let an Agent call your Python tool | [2. First MCP server](#2-write-your-first-mcp-server) | Giving the tool too much access |
 | Generate Word, Excel, PowerPoint, or PDF files | [3. Office Docs Workflow](#3-office-docs-workflow) | Failing to open and inspect the result |
 | Get cited answers from your own sources | [4. Gemini Notebook Workflow](#4-gemini-notebook-workflow) | A **Community Integration**—a bridge maintained by users—may stop working |
 | Search or organize Zotero items | [5. Zotero Workflow](#5-zotero-workflow) | Writing changes without a preview |
 | Use a local model to help edit code | [6. Local LLM + CLI Agent](#6-local-llm--cli-agent-quick-walkthrough) | A model or computer that is too small for the task |
+
+</div>
 
 ## 🧩 Six core terms
 
@@ -91,19 +95,27 @@ Success criteria: The answer is really based on the current diff, and it says "w
 
 FAQ:
 
+<div align="center" markdown="1">
+
 | Symptom | What to check first |
-|---|---|
+|:---|:---|
 | `/summarize-changes` does not exist | Check that the path is exactly `.claude/skills/summarize-changes/SKILL.md` |
 | It triggers for unrelated requests | Make the "when to use" sentence in `description` more specific |
 | The Skill is becoming too long | Move background material into a reference file in the same folder and read it only when needed |
 
+</div>
+
 Start with a project Skill because it travels only with this repository. Move it to the personal path `~/.claude/skills/<name>/SKILL.md` only after you know several projects need the same procedure.
 
+<div align="center" markdown="1">
+
 | Often-confused item | What it solves | When to use it |
-|---|---|---|
+|:---|:---|:---|
 | One-off Prompt | Describes only the task in front of you | The procedure will not be reused |
 | **Skill** | Saves how to handle a recurring kind of work | The same procedure recurs in a project |
 | **MCP Server** | Provides a new typed tool, data source, or service | The Agent must call an external program or API |
+
+</div>
 
 A Skill can direct an Agent to use existing tools, but a Skill is not a new API. Do not use the oversimplification that “Skills cannot read files while MCP can” to distinguish them.
 
@@ -164,10 +176,14 @@ Safety bottom line:
 - Require human approval before writing, paying, sending, or deleting.
 - A third-party MCP server may see your data. Check its source and permissions before installing it.
 
+<div align="center" markdown="1">
+
 | Transport | Best for | Verification note |
-|---|---|---|
+|:---|:---|:---|
 | **stdio** | Claude Code or a desktop host on the same computer | Use this for a first server; OAuth is usually not implemented inside the transport |
 | **Streamable HTTP** | Remote, multi-user, or service deployments | Design authentication against the current MCP authorization specification; do not copy old HTTP+SSE tutorials |
+
+</div>
 
 When you need an API key, read it from an environment variable. Do not put a secret in `server.py`, a configuration example, or Git.
 
@@ -208,12 +224,16 @@ Copy-Item -Recurse anthropic-skills-reference/skills/docx .claude/skills/docx
 
 The four folders are not interchangeable. Install only the one you want to practice first:
 
+<div align="center" markdown="1">
+
 | Skill | First small task | Check when finished |
-|---|---|---|
+|:---|:---|:---|
 | `docx` | Make a one-page summary from test data | Title, paragraphs, tables, and page breaks |
 | `xlsx` | Total a small table while preserving formulas | Formulas, cell types, and values |
 | `pptx` | Make three slides from a three-point outline | No overflowing text; images and sources are correct |
 | `pdf` | Extract three claims from a public PDF | Page numbers, citations, and source text match |
+
+</div>
 
 Copyable DOCX task:
 
@@ -275,11 +295,15 @@ Signing in will open the browser and save the verification status. Don't commit 
 
 How to choose:
 
+<div align="center" markdown="1">
+
 | What you need | Best starting point |
-|---|---|
+|:---|:---|
 | Just want reliable reading and manual verification | Gemini Notebook official website |
 | Want to add sources, Q&A or export in batches | `notebooklm-py` CLI |
 | Study early browser-based Skill design | `notebooklm-skill` (archived; historical reference only) |
+
+</div>
 
 If your login fails, first go back to the official website to confirm that your account can be used normally, and then log in again according to the community project's own auth instructions. Don't use lots of retries to bypass Google's restrictions.
 
@@ -341,12 +365,16 @@ ollama pull gemma4:e4b
 
 Let’s first distinguish what they are:
 
+<div align="center" markdown="1">
+
 | Name | What it does | What it is not |
-|---|---|---|
+|:---|:---|:---|
 | **Ollama** | Loads and runs a model on your computer | It does not read a repo, edit files, or run tests by itself |
 | **OpenRouter** | Routes one API account to many cloud models and providers | It is not a local model or a terminal Coding Agent |
 | **OpenCode／Pi／Aider** | Coding Agents that read files, edit them, and run commands | They are not models; each still needs a local or cloud model |
 | **Claude Code** | A Coding Agent built for Claude | Its official setup cannot replace Claude with an Ollama model |
+
+</div>
 
 <details markdown="1">
 <summary>Expand the main path: OpenCode＋Ollama</summary>
@@ -388,12 +416,16 @@ Other options:
 
 FAQ:
 
+<div align="center" markdown="1">
+
 | Symptoms | What to do first |
-|---|---|
+|:---|:---|
 | Ollama model not found | Run `ollama list` and make sure the tag is exactly `gemma4:e4b` |
 | Slow answer or out of memory | Use `gemma4:e2b` instead and narrow the task and context |
 | Agent changed too many files | Stop immediately and inspect `git diff`; shrink the task to one change in one file |
 | Tool calling is unstable | Use a Stage 3 model that officially supports tool calling |
+
+</div>
 
 </details>
 
@@ -405,8 +437,10 @@ These are the fact sources for the instructions above. You do not need to read t
 
 <small>Data verification: 2026-08-30 UTC</small>
 
+<div align="center" markdown="1">
+
 | Source | What to see first | Editor's Rating |
-|---|---|---|
+|:---|:---|:---|
 | [Claude Code — Skills](https://code.claude.com/docs/en/slash-commands) | Path, triggering method and live change detection | ⭐⭐⭐⭐⭐ |
 | [MCP Python SDK v2 — What’s new](https://github.com/modelcontextprotocol/python-sdk/blob/main/docs/whats-new.md) | Differences between `MCPServer` import and v1→v2 | ⭐⭐⭐⭐⭐ |
 | [Anthropic Skills](https://github.com/anthropics/skills) | Skill structure and file skill authorization | ⭐⭐⭐⭐⭐ |
@@ -416,37 +450,39 @@ These are the fact sources for the instructions above. You do not need to read t
 | [Aider＋Ollama](https://aider.chat/docs/llms/ollama.html) | Correct installation with `ollama_chat/` prefix | ⭐⭐⭐⭐⭐ |
 | [Ollama — Gemma 4](https://ollama.com/library/gemma4) | `e2b`/`e4b` tag and hardware selection | ⭐⭐⭐⭐⭐ |
 
+</div>
+
 ## ⭐ Curated projects and learning resources
 
 The rating measures teaching usefulness in this project. It is not a GitHub star count or a permanent score.
 
-<table>
+<table align="center">
   <thead><tr><th scope="col">Category</th><th scope="col">Project／resource</th><th scope="col">Use it to</th><th scope="col">Limitation</th><th scope="col">Rating</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Skills</th><td><a href="https://agentskills.io">Agent Skills standard</a></td><td>Understand the skill format shared across tools</td><td>Each product still has its own expansion field</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td><td>Read mature skill examples</td><td>File skills are source-available</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Skills</th><td><a href="https://agentskills.io">Agent Skills standard</a></td><td>Understand the skill format shared across tools</td><td>Each product still has its own expansion field</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/skills">skills</a></td><td>Read mature skill examples</td><td>File skills are source-available</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">MCP</th><td><a href="https://modelcontextprotocol.io/specification">MCP specification</a></td><td>Check the formal definition of protocol</td><td>You don’t have to read it from the beginning to get started</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a></td><td>Use Python to write server/client</td><td>Note that v1 and v2 teaching cannot be mixed</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">MCP</th><td><a href="https://modelcontextprotocol.io/specification">MCP specification</a></td><td>Check the formal definition of protocol</td><td>You don’t have to read it from the beginning to get started</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/modelcontextprotocol/python-sdk">MCP Python SDK</a></td><td>Use Python to write server/client</td><td>Note that v1 and v2 teaching cannot be mixed</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Documents</th><td><a href="https://github.com/anthropics/skills/tree/main/skills/docx">Anthropic DOCX skill</a></td><td>Study a complex document Skill</td><td>Check its license and runtime requirements first</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/skills/tree/main/skills/xlsx">Anthropic XLSX skill</a></td><td>Learn spreadsheet analysis and output process</td><td>Finished products still need to be checked with spreadsheet software</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Documents</th><td><a href="https://github.com/anthropics/skills/tree/main/skills/docx">Anthropic DOCX skill</a></td><td>Study a complex document Skill</td><td>Check its license and runtime requirements first</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/skills/tree/main/skills/xlsx">Anthropic XLSX skill</a></td><td>Learn spreadsheet analysis and output process</td><td>Finished products still need to be checked with spreadsheet software</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Gemini Notebook</th><td><a href="https://github.com/teng-lin/notebooklm-py">notebooklm-py</a></td><td>Add sources, ask questions, and export artifacts in batches</td><td>Unofficial; its unpublished API may change</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>Study early browser-based Skill design</td><td>Archived; unofficial, historical reference only</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Gemini Notebook</th><td><a href="https://github.com/teng-lin/notebooklm-py">notebooklm-py</a></td><td>Add sources, ask questions, and export artifacts in batches</td><td>Unofficial; its unpublished API may change</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/PleasePrompto/notebooklm-skill">notebooklm-skill</a></td><td>Study early browser-based Skill design</td><td>Archived; unofficial, historical reference only</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">Zotero</th><td><a href="https://github.com/WenyuChiou/zotero-skills">zotero-skills</a></td><td>Search and organize Zotero from an Agent</td><td>Always preview before writing</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/WenyuChiou/research-hub">research-hub</a></td><td>Connect Zotero, Obsidian, and a research workflow</td><td>More advanced than a single recipe</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/MuiseDestiny/zotero-gpt">zotero-gpt</a></td><td>Chat while reading inside Zotero</td><td>A Zotero plugin follows a different path from an external Agent</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Zotero</th><td><a href="https://github.com/WenyuChiou/zotero-skills">zotero-skills</a></td><td>Search and organize Zotero from an Agent</td><td>Always preview before writing</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/WenyuChiou/research-hub">research-hub</a></td><td>Connect Zotero, Obsidian, and a research workflow</td><td>More advanced than a single recipe</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/MuiseDestiny/zotero-gpt">zotero-gpt</a></td><td>Chat while reading inside Zotero</td><td>A Zotero plugin follows a different path from an external Agent</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">Local/CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>Change programs with local or cloud models</td><td>Check provider and permission settings first</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/earendil-works/pi">Pi</a></td><td>Extensible coding harness/CLI</td><td>No built-in permission isolation by default</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/Aider-AI/aider">Aider</a></td><td>Pair-program with a Git-centered workflow</td><td>Small local models may not code well enough</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Local/CLI</th><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>Change programs with local or cloud models</td><td>Check provider and permission settings first</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/earendil-works/pi">Pi</a></td><td>Extensible coding harness/CLI</td><td>No built-in permission isolation by default</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/Aider-AI/aider">Aider</a></td><td>Pair-program with a Git-centered workflow</td><td>Small local models may not code well enough</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 

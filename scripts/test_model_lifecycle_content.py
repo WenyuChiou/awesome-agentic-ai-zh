@@ -102,7 +102,7 @@ def test_training_guide_keeps_terms_resources_and_completion_visible(
     assert all(url in visible for url in OFFICIAL_URLS)
     assert visible.count("⭐") == 29
 
-    tables = re.findall(r"<table>.*?</table>", visible, flags=re.DOTALL)
+    tables = re.findall(r"<table align=\"center\">.*?</table>", visible, flags=re.DOTALL)
     assert len(tables) == 2
     groups = re.findall(r"<tbody>(.*?)</tbody>", tables[1], flags=re.DOTALL)
     assert len(groups) == 3

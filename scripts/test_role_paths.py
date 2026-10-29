@@ -826,7 +826,7 @@ def _without_details(text: str) -> str:
 
 
 def _resource_table(text: str, first_url: str) -> str:
-    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    tables = re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)
     matches = [table for table in tables if first_url in table]
     assert len(matches) == 1
     return matches[0]
@@ -1302,7 +1302,7 @@ def test_personal_agent_resource_rows_name_an_audience_and_teaching_role(locale:
 @pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
 def test_personal_agent_ratings_disclose_untested_comparisons_and_documented_teaching_value(locale: str) -> None:
     text = _without_details(PAGES["everyday-user"][locale].read_text(encoding="utf-8"))
-    intro = text[text.index("## ⭐"):text.index("<table>", text.index("## ⭐"))]
+    intro = text[text.index("## ⭐"):text.index('<table align="center">', text.index("## ⭐"))]
     required = {
         "zh-TW": ("三星代表可選的具體產品範例，適合互相對照", "未實測的參考／對照範例", "評分依官方文件的教學價值，不代表實測產品品質"),
         "en": ("three stars as optional concrete product examples to compare", "untested reference/comparison examples", "Ratings reflect documented teaching value, not hands-on product quality"),
@@ -1314,7 +1314,7 @@ def test_personal_agent_ratings_disclose_untested_comparisons_and_documented_tea
 @pytest.mark.parametrize("locale", ("zh-TW", "zh-Hans"))
 def test_introduced_personal_agent_chinese_sentences_stay_within_sixty_visible_characters(locale: str) -> None:
     text = PAGES["everyday-user"][locale].read_text(encoding="utf-8")
-    resource_intro = text[text.index("## ⭐"):text.index("<table>", text.index("## ⭐"))]
+    resource_intro = text[text.index("## ⭐"):text.index('<table align="center">', text.index("## ⭐"))]
     prose = [_personal_agent_section(locale), resource_intro]
     for url in PERSONAL_AGENT_RESOURCE_URLS:
         row = _row_for_url(text, url)
@@ -1576,7 +1576,7 @@ def test_developer_identity_and_surface_are_separate_axes() -> None:
                 assert surface.casefold() in row.casefold()
         assert re.search(
             r"Roo Code.{0,300}(archived|封存|历史|歷史)",
-            text,
+            re.sub(r"<[^>]*>", "", text),
             re.DOTALL | re.IGNORECASE,
         )
         assert re.search(

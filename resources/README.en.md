@@ -8,8 +8,10 @@ Think of this folder as a tool cabinet. When you get stuck, take only the card y
 
 ## 🧭 What are you stuck on?
 
+<div align="center" markdown="1">
+
 | What you want to do now | Open this first |
-|---|---|
+|:---|:---|
 | I have never coded and do not know where to start | [`setup-guide.en.md`](setup-guide.en.md) |
 | I want to follow the complete learning map | [Home](../README.en.md) → [Stage 0](../stages/00-foundations.en.md) |
 | I cannot tell how models learn, how they are adapted, and when they are only producing an answer | [`model-training-guide.en.md`](model-training-guide.en.md) |
@@ -24,6 +26,8 @@ Think of this folder as a tool cabinet. When you get stuck, take only the card y
 | I want to design, combine, or debug helper agents (subagents) | [`subagent-advanced.en.md`](subagent-advanced.en.md) |
 | I want to write content or send a PR to this project | [`style-guide.en.md`](style-guide.en.md) |
 
+</div>
+
 ## 🧩 Five words to know first
 
 - **Reference**: something you return to when stuck, not another required course.
@@ -36,31 +40,33 @@ Think of this folder as a tool cabinet. When you get stuck, take only the card y
 
 The left column merges resources of the same type. This table stays visible because learners need to see which entrances exist.
 
-<table>
+<div class="reader-reference-table" role="region" tabindex="0" aria-label="Learning resource comparison">
+<table align="center">
 <thead><tr><th scope="col">Type</th><th scope="col">File</th><th scope="col">Best time to read it</th><th scope="col">What it does not do</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Start and choose</th><td><a href="setup-guide.en.md">setup-guide.en.md</a></td><td>Your first choice among Web, Desktop, IDE, CLI, and API</td><td>Does not replace each product’s current installation page</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Start and choose</th><td><a href="setup-guide.en.md">setup-guide.en.md</a></td><td>Your first choice among Web, Desktop, IDE, CLI, and API</td><td>Does not replace each product’s current installation page</td></tr>
 <tr><td><a href="glossary.en.md">glossary.en.md</a></td><td>Look up one term in 30 seconds</td><td>Does not replace a full chapter or practice</td></tr>
 <tr><td><a href="cli-agents-guide.en.md">cli-agents-guide.en.md</a></td><td>Separate models, model entrances (routers), execution environments (runtimes), and coding agents</td><td>Does not grant permissions or choose a paid plan for you</td></tr>
 <tr><td><a href="courses.en.md">courses.en.md</a></td><td>Compare courses, practice depth, and certificate limits</td><td>Does not promise that a certificate gets you a job</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Build and debug</th><td><a href="cookbook.en.md">cookbook.en.md</a></td><td>Build a Skill, MCP, Office, Gemini Notebook, Zotero, or local CLI workflow</td><td>Does not turn every topic into a textbook</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Build and debug</th><td><a href="cookbook.en.md">cookbook.en.md</a></td><td>Build a Skill, MCP, Office, Gemini Notebook, Zotero, or local CLI workflow</td><td>Does not turn every topic into a textbook</td></tr>
 <tr><td><a href="schema-design-cheatsheet.en.md">schema-design-cheatsheet.en.md</a></td><td>A tool or its parameters are often wrong</td><td>Does not teach complete MCP server installation</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">Search and position</th><td><a href="model-training-guide.en.md">model-training-guide.en.md</a></td><td>Separate Pre-training, Post-training, Fine-tuning, and Inference</td><td>Is not a complete course on training a model from scratch</td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Search and position</th><td><a href="model-training-guide.en.md">model-training-guide.en.md</a></td><td>Separate Pre-training, Post-training, Fine-tuning, and Inference</td><td>Is not a complete course on training a model from scratch</td></tr>
 <tr><td><a href="mcp-skills-catalog.en.md">mcp-skills-catalog.en.md</a></td><td>Find a tool connector (MCP server) or action card (Skill) by job</td><td>Listing does not mean risk-free or permanently available</td></tr>
 <tr><td><a href="agent-paradigms.en.md">agent-paradigms.en.md</a></td><td>See whether an agent runs in a terminal, editor, cloud, or your own device</td><td>Is not a product leaderboard</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Advanced subagents</th><td><a href="subagent-cookbook.en.md">subagent-cookbook.en.md</a></td><td>Copy a helper-agent dispatch example first</td><td>Does not explain every design principle</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Advanced subagents</th><td><a href="subagent-cookbook.en.md">subagent-cookbook.en.md</a></td><td>Copy a helper-agent dispatch example first</td><td>Does not explain every design principle</td></tr>
 <tr><td><a href="subagent-advanced.en.md">subagent-advanced.en.md</a></td><td>Design, combine, and debug helper agents</td><td>Is not where a first-time CLI-agent user should begin</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="1">Maintain the project</th><td><a href="style-guide.en.md">style-guide.en.md</a></td><td>Write entries, translate, build tables, or send a PR</td><td>Is not required reading for ordinary learners</td></tr>
+<tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">Maintain the project</th><td><a href="style-guide.en.md">style-guide.en.md</a></td><td>Write entries, translate, build tables, or send a PR</td><td>Is not required reading for ordinary learners</td></tr>
 </tbody>
 </table>
+</div>
 
 ## 🔁 Where do you return next?
 

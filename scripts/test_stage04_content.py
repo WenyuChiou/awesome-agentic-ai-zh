@@ -116,9 +116,9 @@ def test_stage3_required_reading_and_all_rated_resources_are_visible(
     visible = _without_closed_details(page.read_text(encoding="utf-8"))
     assert all(url in visible for url in STAGE3_READING_URLS)
     projects = visible[visible.index("## 🎯") :]
-    table = re.search(r"<table>.*?</table>", projects, flags=re.DOTALL)
+    table = re.search(r"<table align=\"center\">.*?</table>", projects, flags=re.DOTALL)
     assert table
-    assert len(re.findall(r"<td>⭐{2,5}</td>", table.group())) == 21
+    assert len(re.findall(r"<td align=\"center\" valign=\"middle\">⭐{2,5}</td>", table.group())) == 21
     assert 'scope="rowgroup"' in table.group()
 
 
@@ -131,11 +131,11 @@ def test_stage4_required_reading_and_all_rated_resources_are_visible(
     assert all(url in visible for url in STAGE4_READING_URLS)
     assert all(text in source for text in STAGE4_PROJECT_COUNT_TEXT[locale])
     projects = visible[visible.index("## 🎯") :]
-    table = re.search(r"<table>.*?</table>", projects, flags=re.DOTALL)
+    table = re.search(r"<table align=\"center\">.*?</table>", projects, flags=re.DOTALL)
     assert table
     table_html = table.group()
     assert len(
-        re.findall(r"<td>⭐{2,5}[^<]*</td>", table_html)
+        re.findall(r"<td(?: align=\"center\" valign=\"middle\")?>⭐{2,5}[^<]*</td>", table_html)
     ) == 19
     assert "https://github.com/maximhq/bifrost" in table_html
     assert "https://github.com/BerriAI/litellm" in table_html

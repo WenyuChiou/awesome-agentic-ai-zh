@@ -92,27 +92,27 @@ AI 可以先做草稿，教師負責決定能不能用。這條路教你用 AI �
 <small>指引、服務可用性、repository 狀態與授權於 2026-08-29 UTC 依官方頁面與 GitHub API 查核。推薦度是本學習地圖的編輯評分，不是 GitHub stars 或效能排名。</small>
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="資源表（分類、用途與限制）">
-<table>
-<thead><tr><th scope="col">分類</th><th scope="col">資源、用途與限制</th></tr></thead>
+<table align="center">
+<thead><tr><th scope="col">分類</th><th scope="col">專案／文件</th><th scope="col">評分</th><th scope="col">用途</th><th scope="col">限制</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">安全與政策</th><td><p data-field="entry"><strong><a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research?hub=387">UNESCO GenAI 教育指引</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">建立以人為中心的校內原則</p><p data-field="status">現行；官方指引</p><p data-field="limits">全球原則仍要配合所在地規則與年齡要求</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://education.ec.europa.eu/focus-topics/digital-education/actions/plan/ethical-guidelines-for-educators-on-using-artificial-intelligence">European Commission 教師倫理指引</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">檢查資料、透明度與課堂風險</p><p data-field="status">現行；官方指引</p><p data-field="limits">AI Act／GDPR 說明以歐盟情境為主</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://www.teachai.org/toolkit">TeachAI School Toolkit</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">草擬學校 AI guidance 與溝通材料</p><p data-field="status">現行；教育工具包</p><p data-field="limits">範本不是可直接複製的校方政策，仍需利害關係人審查</p></td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">安全與政策</th><td><div data-field="entry"><strong><a href="https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research?hub=387">UNESCO GenAI 教育指引</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">建立以人為中心的校內原則</div></td><td><div data-field="status">現行；官方指引</div><div data-field="limits">全球原則仍要配合所在地規則與年齡要求</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://education.ec.europa.eu/focus-topics/digital-education/actions/plan/ethical-guidelines-for-educators-on-using-artificial-intelligence">European Commission 教師倫理指引</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">檢查資料、透明度與課堂風險</div></td><td><div data-field="status">現行；官方指引</div><div data-field="limits">AI Act／GDPR 說明以歐盟情境為主</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://www.teachai.org/toolkit">TeachAI School Toolkit</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">草擬學校 AI guidance 與溝通材料</div></td><td><div data-field="status">現行；教育工具包</div><div data-field="limits">範本不是可直接複製的校方政策，仍需利害關係人審查</div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">需由學校核准的教師雲端工具</th><td><p data-field="entry"><strong><a href="https://www.anthropic.com/news/claude-for-teachers">Claude for Teachers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">備課、標準對照與教師工作流</p><p data-field="status">限區可用；雲端服務</p><p data-field="limits">目前面向通過驗證的美國 K-12 教師；不能把產品方案當全球通用</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://openai.com/index/chatgpt-for-teachers/">ChatGPT for Teachers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">在學校管理的 workspace 草擬教材</p><p data-field="status">限區可用；雲端服務</p><p data-field="limits">目前面向通過驗證的美國 K-12 教育工作者；仍須遵守校方 Student Data 規則</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://support.google.com/gemininotebook/answer/16337734?hl=en">Gemini Notebook（原 NotebookLM）</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">用指定來源做摘要、提問與 citation 回查</p><p data-field="status">正式可用；雲端服務</p><p data-field="limits">分享、保存與資料使用依帳號而異；先看學校政策和 Workspace for Education 條款</p></td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">需由學校核准的教師雲端工具</th><td><div data-field="entry"><strong><a href="https://www.anthropic.com/news/claude-for-teachers">Claude for Teachers</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="use">備課、標準對照與教師工作流</div></td><td><div data-field="status">限區可用；雲端服務</div><div data-field="limits">目前面向通過驗證的美國 K-12 教師；不能把產品方案當全球通用</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://openai.com/index/chatgpt-for-teachers/">ChatGPT for Teachers</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="use">在學校管理的 workspace 草擬教材</div></td><td><div data-field="status">限區可用；雲端服務</div><div data-field="limits">目前面向通過驗證的美國 K-12 教育工作者；仍須遵守校方 Student Data 規則</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://support.google.com/gemininotebook/answer/16337734?hl=en">Gemini Notebook（原 NotebookLM）</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">用指定來源做摘要、提問與 citation 回查</div></td><td><div data-field="status">正式可用；雲端服務</div><div data-field="limits">分享、保存與資料使用依帳號而異；先看學校政策和 Workspace for Education 條款</div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">可改編課程</th><td><p data-field="entry"><strong><a href="https://github.com/huggingface/agents-course">agents-course</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">改編成 Agent 入門課或工作坊</p><p data-field="status">活躍；Apache-2.0</p><p data-field="limits">它教人建立 Agent，不是教師日常工具</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/datawhalechina/hello-agents">hello-agents</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">使用中文章節與實作教 Agent</p><p data-field="status">活躍；CC BY-NC-SA 4.0</p><p data-field="limits">非商業授權；改編與散布前先讀完整條款</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/microsoft/ai-agents-for-beginners">ai-agents-for-beginners</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">挑選短課程、notebook 與練習</p><p data-field="status">活躍；MIT</p><p data-field="limits">工具與 SDK 版本變動快，授課前先重跑範例</p></td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">可改編課程</th><td><div data-field="entry"><strong><a href="https://github.com/huggingface/agents-course">agents-course</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">改編成 Agent 入門課或工作坊</div></td><td><div data-field="status">活躍；Apache-2.0</div><div data-field="limits">它教人建立 Agent，不是教師日常工具</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/datawhalechina/hello-agents">hello-agents</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">使用中文章節與實作教 Agent</div></td><td><div data-field="status">活躍；CC BY-NC-SA 4.0</div><div data-field="limits">非商業授權；改編與散布前先讀完整條款</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/microsoft/ai-agents-for-beginners">ai-agents-for-beginners</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="use">挑選短課程、notebook 與練習</div></td><td><div data-field="status">活躍；MIT</div><div data-field="limits">工具與 SDK 版本變動快，授課前先重跑範例</div></td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">模板與進階流程</th><td><p data-field="entry"><strong><a href="https://github.com/anthropics/skills">skills</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="use">參考文件、投影片與 spreadsheet Skills</p><p data-field="status">活躍；各資料夾授權</p><p data-field="limits">不是整個 repository 一張授權；重用前逐資料夾讀授權</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/obra/superpowers">superpowers</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="use">參考 planning、寫作與 review 工作流</p><p data-field="status">活躍；MIT</p><p data-field="limits">通用 workflow 仍要加校方政策與人工 gate</p></td></tr>
-<tr><td><p data-field="entry"><strong><a href="https://github.com/f/prompts.chat">prompts.chat</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="use">比較不同 prompt 寫法</p><p data-field="status">活躍；MIT／CC0 雙軌</p><p data-field="limits">社群內容品質不一；先挑選、核對，再拿進課堂</p></td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">模板與進階流程</th><td><div data-field="entry"><strong><a href="https://github.com/anthropics/skills">skills</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="use">參考文件、投影片與 spreadsheet Skills</div></td><td><div data-field="status">活躍；各資料夾授權</div><div data-field="limits">不是整個 repository 一張授權；重用前逐資料夾讀授權</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/obra/superpowers">superpowers</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="use">參考 planning、寫作與 review 工作流</div></td><td><div data-field="status">活躍；MIT</div><div data-field="limits">通用 workflow 仍要加校方政策與人工 gate</div></td></tr>
+<tr><td><div data-field="entry"><strong><a href="https://github.com/f/prompts.chat">prompts.chat</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐</span></td><td><div data-field="use">比較不同 prompt 寫法</div></td><td><div data-field="status">活躍；MIT／CC0 雙軌</div><div data-field="limits">社群內容品質不一；先挑選、核對，再拿進課堂</div></td></tr>
 </tbody>
 </table>
 </div>
@@ -204,12 +204,16 @@ AI 可以草擬家長信、會議摘要與常見問題。寄出前刪除不必�
 
 法規與政策依地區、年齡、機構和工具合約不同。FERPA、GDPR、台灣《個人資料保護法》或其他規則是否適用，應由校方與合格人員判斷；本頁不是法律意見。
 
+<div align="center" markdown="1">
+
 | 問題 | 先怎麼做 |
-|---|---|
+|:---|:---|
 | AI 草稿看起來很完整 | 要求列出待核對事實，再逐條回到課本或可靠來源 |
 | 不確定能不能貼學生作品 | 先不要貼；查校方政策、家長／學生通知和工具條款 |
 | 活動只會讓學生抄答案 | 改成分層提示、要求說理由，並保留不用 AI 也能完成的路徑 |
 | 工具不支援你的地區或帳號 | 不繞過限制；換校方核准工具或只使用公開、虛構內容 |
+
+</div>
 
 歡迎貢獻學科專用模板、年齡適切案例、LMS 安全整合與經過教師實測的工作流。請見 [CONTRIBUTING.md](../CONTRIBUTING.md)。
 

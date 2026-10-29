@@ -368,11 +368,11 @@ def test_stale_stage06_claims_are_absent(page: Path) -> None:
 @pytest.mark.parametrize("page", PAGES.values())
 def test_resource_table_uses_real_rowgroups_and_preserves_9_ratings(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
-    table = re.search(r"<table>.*?⭐{3,5}.*?</table>", text, flags=re.DOTALL)
+    table = re.search(r"<table align=\"center\">.*?⭐{3,5}.*?</table>", text, flags=re.DOTALL)
     assert table, "missing grouped resource table"
-    assert len(re.findall(r'<th scope="col">', table.group())) == 2
+    assert len(re.findall(r'<th scope="col">', table.group())) == 5
     for field in ("entry", "audience", "learn", "status"):
-        assert table.group().count(f'<p data-field="{field}">') == 9
+        assert table.group().count(f'<div data-field="{field}">') == 9
     groups = re.findall(r"<tbody>(.*?)</tbody>", table.group(), flags=re.DOTALL)
     assert len(groups) == 3
     expected = [3, 4, 2]

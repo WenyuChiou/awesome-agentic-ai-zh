@@ -35,13 +35,17 @@ After finishing a track, **build something yourself** — this file is not a tut
 
 ### Track A scoring rubric (self-assessed, 4 levels)
 
+<div align="center" markdown="1">
+
 | Dimension | Not yet | Basic | Good | Excellent |
-|---|---|---|---|---|
+|:---|:---|:---|:---|:---|
 | Problem realism | Toy problem | Somewhat useful | Real, will reuse | Real, with a quantifiable metric (time saved / fewer errors etc.) |
 | Tool use | Plain chat only | Used a CLI agent | + MCP or self-written skill/command | Multi-component, with justified choices |
 | Reproducibility | Only runs for you | Steps incomplete | Others can run it from the README | One-click / fully automated with pre-checks |
 | Robustness | Crashes on any error | Risks mentioned | Handles 1 failure | Multiple failures have fallbacks |
 | Docs & reflection | None | Has a README | Clear README + reflection | Reflection points to a concrete next improvement |
+
+</div>
 
 ---
 
@@ -68,8 +72,10 @@ After finishing a track, **build something yourself** — this file is not a tut
 
 ### Track B scoring rubric (self-assessed, 4 levels)
 
+<div align="center" markdown="1">
+
 | Dimension | Not yet | Basic | Good | Excellent |
-|---|---|---|---|---|
+|:---|:---|:---|:---|:---|
 | Problem definition | Vague | Has a goal | Clear scope, acceptance-checkable | Clear, and states why it's worth doing |
 | Architecture | No design | Just runs | Justified multi-agent / RAG choice | Can articulate the trade-offs |
 | Implementation correctness | Doesn't run | Main path runs | Handles edge cases | Stable and the code is readable |
@@ -77,6 +83,8 @@ After finishing a track, **build something yourself** — this file is not a tut
 | Robustness & failure analysis | None | Risks mentioned | Concrete failure modes | Failures are detected + mitigated |
 | Interface & docs | None | Runs | Interface + clear README | Others can use it directly |
 | Reflection | None | One sentence | Concrete (names a specific problem in the architecture or component choice) | Points to an architecture-level next step |
+
+</div>
 
 ---
 

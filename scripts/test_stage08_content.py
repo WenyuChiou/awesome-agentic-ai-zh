@@ -308,7 +308,7 @@ def _without_details(text: str) -> str:
 
 
 def _html_tables(text: str) -> list[str]:
-    return re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    return re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)
 
 
 def _detail_depth_at(text: str, offset: int) -> int:

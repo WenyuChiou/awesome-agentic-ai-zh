@@ -28,33 +28,37 @@
 
 ## 🧩 先认识方法，不必先实作
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">目的</th><th scope="col">方法</th><th scope="col">白话意思</th><th scope="col">会改变权重吗？</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">教模型如何行动</th><td><strong>SFT（Supervised Fine-Tuning）</strong></td><td>把好问题和好答案给模型看，让它模仿。</td><td>会</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">教模型如何行动</th><td><strong>SFT（Supervised Fine-Tuning）</strong></td><td>把好问题和好答案给模型看，让它模仿。</td><td>会</td></tr>
 <tr><td><strong>DPO（Direct Preference Optimization）</strong></td><td>给模型看两个答案，告诉它哪一个更符合偏好。</td><td>会</td></tr>
 <tr><td><strong>RLHF（Reinforcement Learning from Human Feedback）/RL（Reinforcement Learning）</strong></td><td>用人类或规则的反馈，让模型学着得到更好的结果。</td><td>会</td></tr>
 <tr><td><strong>GRPO（Group Relative Policy Optimization）</strong></td><td>比较同一问题的多个答案，再根据相对结果学习。</td><td>会</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">少改一点来适应</th><td><strong>PEFT（Parameter-Efficient Fine-Tuning）</strong></td><td>只训练一小部分参数，减少需要更新的内容。</td><td>只改选定或新增参数</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">少改一点来适应</th><td><strong>PEFT（Parameter-Efficient Fine-Tuning）</strong></td><td>只训练一小部分参数，减少需要更新的内容。</td><td>只改选定或新增参数</td></tr>
 <tr><td><strong>LoRA（Low-Rank Adaptation）</strong></td><td>冻结原来的权重，另外训练较小的低秩矩阵。</td><td>原权重不改；新增参数会训练</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">让模型更小或更省</th><td><strong>Distillation（蒸馏）</strong></td><td>让较小的 Student Model 学习较大的 Teacher Model。</td><td>会训练 Student Model</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">让模型更小或更省</th><td><strong>Distillation（蒸馏）</strong></td><td>让较小的 Student Model 学习较大的 Teacher Model。</td><td>会训练 Student Model</td></tr>
 <tr><td><strong>Quantization（量化）</strong></td><td>用更少位元保存或运算权重，通常能少用内存。</td><td>通常不重新训练原模型；部分方法会再调整</td></tr>
 </tbody>
 </table>
 
 ## 不要把外部系统误认成训练
 
+<div align="center" markdown="1">
+
 | 方法 | 它真正做的事 | 通常会改变模型权重吗？ |
-|---|---|---|
+|:---|:---|:---|
 | **Prompt** | 告诉模型这一次要做什么。 | 不会 |
 | **RAG** | 先找外部资料，再把证据放进这次输入。 | 不会 |
 | **Memory** | 保存之后还要用的状态，需要时再读回来。 | 不会 |
 | **Tools** | 让程序在检查后执行搜索、计算或其他动作。 | 不会 |
 | **Harness** | 管理工具、权限、状态、记录、重试和停止规则。 | 不会 |
+
+</div>
 
 “通常不会”很重要。有些产品可能在背后另外启动训练工作。要确认时，查看官方文档是否写到 training job、trainable parameters 或 model weights。
 
@@ -62,20 +66,20 @@
 
 先读前两项就能分清主线。其余在你真的要训练或压缩模型时再看。推荐度是编辑判断，不是 GitHub stars。
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">分类</th><th scope="col">资源</th><th scope="col">推荐度</th><th scope="col">你会学到什么</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">先分清主线</th><td><a href="https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/">OpenAI：模型如何开发</a></td><td>⭐⭐⭐⭐⭐</td><td>数据、训练与模型之间的关系。</td></tr>
-<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google：LLM（Large Language Model，能读写语言的模型） 调整</a></td><td>⭐⭐⭐⭐⭐</td><td>Prompt Engineering、Fine-tuning 与 Distillation 的边界。</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">先分清主线</th><td><a href="https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/">OpenAI：模型如何开发</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>数据、训练与模型之间的关系。</td></tr>
+<tr><td><a href="https://developers.google.com/machine-learning/crash-course/llm/tuning">Google：LLM（Large Language Model，能读写语言的模型） 调整</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>Prompt Engineering、Fine-tuning 与 Distillation 的边界。</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">学习 Post-training</th><td><a href="https://openai.com/index/introducing-gpt-oss/">OpenAI：gpt-oss</a></td><td>⭐⭐⭐⭐</td><td>一个模型家族如何描述 Pre-training、SFT 与 RL。</td></tr>
-<tr><td><a href="https://huggingface.co/docs/trl/quickstart">Hugging Face TRL</a></td><td>⭐⭐⭐⭐</td><td>SFT、DPO、GRPO 等 Post-training 方法入口。</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">学习 Post-training</th><td><a href="https://openai.com/index/introducing-gpt-oss/">OpenAI：gpt-oss</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>一个模型家族如何描述 Pre-training、SFT 与 RL。</td></tr>
+<tr><td><a href="https://huggingface.co/docs/trl/quickstart">Hugging Face TRL</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>SFT、DPO、GRPO 等 Post-training 方法入口。</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">少改或压缩</th><td><a href="https://huggingface.co/docs/peft/main/methods/overview">Hugging Face PEFT</a></td><td>⭐⭐⭐⭐</td><td>只训练较少参数的做法与限制。</td></tr>
-<tr><td><a href="https://huggingface.co/docs/peft/main/conceptual_guides/lora">Hugging Face LoRA</a></td><td>⭐⭐⭐⭐</td><td>冻结原权重，再训练低秩矩阵。</td></tr>
-<tr><td><a href="https://huggingface.co/docs/transformers/main_classes/quantization">Hugging Face Quantization</a></td><td>⭐⭐⭐</td><td>用更低精度减少内存与运算需求。</td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">少改或压缩</th><td><a href="https://huggingface.co/docs/peft/main/methods/overview">Hugging Face PEFT</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>只训练较少参数的做法与限制。</td></tr>
+<tr><td><a href="https://huggingface.co/docs/peft/main/conceptual_guides/lora">Hugging Face LoRA</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>冻结原权重，再训练低秩矩阵。</td></tr>
+<tr><td><a href="https://huggingface.co/docs/transformers/main_classes/quantization">Hugging Face Quantization</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>用更低精度减少内存与运算需求。</td></tr>
 </tbody>
 </table>
 

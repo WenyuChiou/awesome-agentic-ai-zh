@@ -61,12 +61,14 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 
 ## 场景式模型选择器
 
-**Typed Decision Model（类型化决策模型）**只从预设答案中选择、评分或返回概率。TypeSafe AI 的 **Jev** 属于这类，不能用来聊天、摘要或编程。
+**Typed Decision Model（类型化决策模型）** 只从预设答案中选择、评分或返回概率。TypeSafe AI 的 **Jev** 属于这类，不能用来聊天、摘要或编程。
 
 **判断不是授权**：程序仍须检查权限；寄信、付款或删文件前先请人确认。
 
+<div align="center" markdown="1">
+
 | 你的场景 | 先试哪条路 | 选择理由 |
-|---|---|---|
+|:---|:---|:---|
 | 第一次学 API，想零费用反复试 | **Ollama + `gemma4:e4b`** | 本地运行，单次 API 成本为 $0，可以反复修改示例。 |
 | 想比较云端质量，数据可以发送出去 | **Claude Haiku 5.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，开发工具和库的工具包） 路径简单，按输入和输出 token 计费。 |
 | OpenAI Agent API | **GPT-6.1 Sol／Terra／GPT-6 Luna** | Sol 写程序；Terra 看图与改写；Luna 做简单任务。先小测，再查价格。 |
@@ -75,7 +77,9 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 | 固定选项的分类、评分或分流，结果要直接交给程序 | **Jev 1.13（服务 Early access）** | 返回 Choice、Score 或 Noul 的概率结果；低置信度或高风险动作仍要交给人或另一个模型。 |
 | 隐私、离线或需要自部署 | **Llama 4、Qwen 3.8、Gemma 4 等开放权重** | 先估算硬件和授权，再用 Ollama 或其他运行时测量真实速度。 |
 
-**Haiku 5.5（2026-10-07 发布，2026-10-08 核查）**适合分类、摘要和范围明确的子代理；复杂编程 Agent 仍先评估 Sonnet／Opus。API ID 是固定的 `claude-haiku-5-5`，没有日期后缀或另一个 alias。练习 1、3 改用 5.5；temperature 练习和跨章示例保留 Haiku 4.5 兼容基线。5.5 默认 adaptive thinking，须按区块 `type` 取文本、保留 thinking 区块并重新计算 token；不能只换 ID。参考 [发布公告](https://www.anthropic.com/claude-haiku-5-5) 和 [Haiku 5.5 迁移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide)。
+</div>
+
+**Haiku 5.5（2026-10-07 发布，2026-10-08 核查）** 适合分类、摘要和范围明确的子代理；复杂编程 Agent 仍先评估 Sonnet／Opus。API ID 是固定的 `claude-haiku-5-5`，没有日期后缀或另一个 alias。练习 1、3 改用 5.5；temperature 练习和跨章示例保留 Haiku 4.5 兼容基线。5.5 默认 adaptive thinking，须按区块 `type` 取文本、保留 thinking 区块并重新计算 token；不能只换 ID。参考 [发布公告](https://www.anthropic.com/claude-haiku-5-5) 和 [Haiku 5.5 迁移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide)。
 
 ## 🚪 进入条件
 
@@ -116,7 +120,7 @@ Path A 需要 [Ollama](https://ollama.com)、`pip install openai` 和 `ollama pu
 
 ### 练习 1：LLM API（hello world）
 
-**成果：**用几行核心代码取得响应，并从 `usage` 读出输出 token。单次预算：Ollama $0；Anthropic Haiku 按本次 input／output usage 与 5.5 的 `$0.10/$0.50` 短提示费率（提示超过 100K token 时为 `$0.50/$2.50`）计算。阶段预算：本地反复运行仍为 $0；云端累加 3–5 次的实际 usage。
+**成果：** 用几行核心代码取得响应，并从 `usage` 读出输出 token。单次预算：Ollama $0；Anthropic Haiku 按本次 input／output usage 与 5.5 的 `$0.10/$0.50` 短提示费率（提示超过 100K token 时为 `$0.50/$2.50`）计算。阶段预算：本地反复运行仍为 $0；云端累加 3–5 次的实际 usage。
 
 <details markdown="1" open>
 <summary>📋 <b>起手码 — Path A（本地 Ollama <code>gemma4:e4b</code>、默认）</b>（复制到 <code>practice_1.py</code>，运行 <code>python practice_1.py</code>）</summary>
@@ -190,7 +194,7 @@ print("✅ 练习 1 通过 — 已成功调用 Anthropic API")
 
 ### 练习 2：Tokens
 
-**成果：**重复发送同一个提示，观察语言、temperature 和输出长度如何改变 token 用量。单次预算：Ollama $0；Anthropic Haiku 按该次 input／output usage 与官方费率计算。阶段预算：本地为 $0；Path B 累加 3–5 组重复测试的实际 `usage`。
+**成果：** 重复发送同一个提示，观察语言、temperature 和输出长度如何改变 token 用量。单次预算：Ollama $0；Anthropic Haiku 按该次 input／output usage 与官方费率计算。阶段预算：本地为 $0；Path B 累加 3–5 组重复测试的实际 `usage`。
 
 <details markdown="1" open>
 <summary>📋 <b>起手码 — Path A（本地 Ollama <code>gemma4:e4b</code>、默认）</b>（复制到 <code>practice_2.py</code>）</summary>
@@ -267,7 +271,7 @@ Anthropic 调用使用 `client.messages.create()`、`usage.input_tokens` 和 con
 
 ### 练习 3：Pricing / Latency
 
-**成果：**分别测量同一个小任务的 token 成本与等待时间。单次预算：Ollama $0；Anthropic Haiku 按本次 input／output usage 与官方费率计算。阶段预算：本地为 $0；Path B 先运行 1 次取得实际数量，再乘以计划次数。
+**成果：** 分别测量同一个小任务的 token 成本与等待时间。单次预算：Ollama $0；Anthropic Haiku 按本次 input／output usage 与官方费率计算。阶段预算：本地为 $0；Path B 先运行 1 次取得实际数量，再乘以计划次数。
 
 <details markdown="1" open>
 <summary>📋 <b>起手码 — Path A（本地 Ollama <code>gemma4:e4b</code>、测量 latency）</b>（复制到 <code>practice_3.py</code>）</summary>
@@ -382,34 +386,34 @@ print("\n✅ 练习 3 通过（Anthropic）— 已计算本次成本；跨模型
 
 下面的表格保留本章原有的 17 个延伸入口。它们是选读资源，不是本章必做项目。推荐度是编辑判断，不是 GitHub 热度：`⭐⭐⭐⭐⭐` 代表跳过会卡住；本表都是补充入口，所以如实使用 `⭐⭐⭐⭐`、`⭐⭐⭐` 或历史参考的 `⭐⭐`，不列会变化的 stars。
 
-<table>
+<table align="center">
   <thead><tr><th scope="col">分类</th><th scope="col">资源</th><th scope="col">入口</th><th scope="col">推荐度</th><th scope="col">用途／状态</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">官方 API 入门</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Claude API notebook，可查 tool use、batch 和 prompt cache。</td></tr>
-    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>已归档的官方课程；可看旧示例，动手时请对照下方现行 API Quickstart。</td></tr>
-    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>⭐⭐⭐⭐</td><td>OpenAI API、structured output 和 function calling 示例。</td></tr>
-    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">官方文档</a></td><td>⭐⭐⭐</td><td>快速完成第一次 Claude API 调用。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">官方 API 入门</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Claude API notebook，可查 tool use、batch 和 prompt cache。</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>已归档的官方课程；可看旧示例，动手时请对照下方现行 API Quickstart。</td></tr>
+    <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>OpenAI API、structured output 和 function calling 示例。</td></tr>
+    <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">官方文档</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>快速完成第一次 Claude API 调用。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">中文教材</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td>⭐⭐⭐⭐</td><td>用中文理解 LLM 原理和训练流程。</td></tr>
-    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td>⭐⭐⭐⭐</td><td>从 API 基础延伸到知识库和 RAG。</td></tr>
-    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td>⭐⭐⭐</td><td>Andrew Ng 课程的中文改编，更新速度较慢。</td></tr>
-    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td>⭐⭐⭐</td><td>从零实现小型模型训练，Apache-2.0。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">中文教材</th><td>datawhalechina/happy-llm</td><td><a href="https://github.com/datawhalechina/happy-llm">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用中文理解 LLM 原理和训练流程。</td></tr>
+    <tr><td>datawhalechina/llm-universe</td><td><a href="https://github.com/datawhalechina/llm-universe">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>从 API 基础延伸到知识库和 RAG。</td></tr>
+    <tr><td>datawhalechina/llm-cookbook</td><td><a href="https://github.com/datawhalechina/llm-cookbook">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Andrew Ng 课程的中文改编，更新速度较慢。</td></tr>
+    <tr><td>jingyaogong/minimind</td><td><a href="https://github.com/jingyaogong/minimind">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>从零实现小型模型训练，Apache-2.0。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">英文课程</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course/chapter1/1">课程</a></td><td>⭐⭐⭐⭐</td><td>Transformer、tokenizer 与 Hugging Face 生态。</td></tr>
-    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">课程</a></td><td>⭐⭐⭐</td><td>官方免费课程，包含 RAG 与 agent。</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">英文课程</th><td>Hugging Face — LLM Course</td><td><a href="https://huggingface.co/learn/llm-course/chapter1/1">课程</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Transformer、tokenizer 与 Hugging Face 生态。</td></tr>
+    <tr><td>LangChain Academy</td><td><a href="https://academy.langchain.com/">课程</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>官方免费课程，包含 RAG 与 agent。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">本地运行</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td>⭐⭐⭐⭐</td><td>本章 Path A 的本地运行入口。</td></tr>
-    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td>⭐⭐⭐⭐</td><td>理解量化和本地推理底层。</td></tr>
-    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td>⭐⭐⭐</td><td>提供 OpenAI 兼容的 self-host 服务。</td></tr>
-    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td>⭐⭐⭐</td><td>Apple Silicon 的机器学习框架。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">本地运行</th><td>ollama/ollama</td><td><a href="https://github.com/ollama/ollama">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>本章 Path A 的本地运行入口。</td></tr>
+    <tr><td>ggml-org/llama.cpp</td><td><a href="https://github.com/ggml-org/llama.cpp">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>理解量化和本地推理底层。</td></tr>
+    <tr><td>mudler/LocalAI</td><td><a href="https://github.com/mudler/LocalAI">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>提供 OpenAI 兼容的 self-host 服务。</td></tr>
+    <tr><td>ml-explore/mlx</td><td><a href="https://github.com/ml-explore/mlx">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>Apple Silicon 的机器学习框架。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">从零理解</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">视频</a></td><td>⭐⭐⭐⭐</td><td>用 PyTorch 从零构建 GPT。</td></tr>
-    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td>⭐⭐⭐⭐</td><td>用代码深入 tokenizer、attention 和训练。</td></tr>
-    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td>⭐⭐</td><td>已归档的课程大纲，属于历史参考，不是现行教学。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">从零理解</th><td>Karpathy — Let's build GPT from scratch</td><td><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">视频</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用 PyTorch 从零构建 GPT。</td></tr>
+    <tr><td>rasbt/LLMs-from-scratch</td><td><a href="https://github.com/rasbt/LLMs-from-scratch">GitHub</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用代码深入 tokenizer、attention 和训练。</td></tr>
+    <tr><td>karpathy/LLM101n</td><td><a href="https://github.com/karpathy/LLM101n">GitHub</a></td><td align="center" valign="middle">⭐⭐</td><td>已归档的课程大纲，属于历史参考，不是现行教学。</td></tr>
   </tbody>
 </table>
 
@@ -423,13 +427,13 @@ print("\n✅ 练习 3 通过（Anthropic）— 已计算本次成本；跨模型
 
 ### 练习 4：Cross-Provider 比较
 
-**成果：**用同一个提示比较不同供应商的输出，记录差异，不把单次结果当成排名。单次预算：Path A Ollama $0；Path B 按三家 API 的实际 token 计费。阶段预算：本地为 $0；云端先各运行 1 次，再按 3–5 组评测估算。
+**成果：** 用同一个提示比较不同供应商的输出，记录差异，不把单次结果当成排名。单次预算：Path A Ollama $0；Path B 按三家 API 的实际 token 计费。阶段预算：本地为 $0；云端先各运行 1 次，再按 3–5 组评测估算。
 
 <details markdown="1">
 <summary>🔬 练习 4 详细路径（选做）</summary>
 
-- **Path A（Ollama，主要练习）：**使用 [`examples/stage-1/04-cross-provider/`](../examples/stage-1/04-cross-provider/) 的 Ollama 调用，先建立本地基线。
-- **Path B（Anthropic，可选）：**在同一数据集加入 Anthropic SDK；如果也加入 OpenAI／Google，分别记录型号、参数、token 和失败情况。
+- **Path A（Ollama，主要练习）：** 使用 [`examples/stage-1/04-cross-provider/`](../examples/stage-1/04-cross-provider/) 的 Ollama 调用，先建立本地基线。
+- **Path B（Anthropic，可选）：** 在同一数据集加入 Anthropic SDK；如果也加入 OpenAI／Google，分别记录型号、参数、token 和失败情况。
 - 比较回答风格、长度、格式遵守度和事实遗漏；把结果视为你的任务小评测，不是官方规格或普遍排名。
 
 这个 starter 包含三家 SDK 的并行调用，缺少某家 key 时会跳过；它是 illustrative 示例，不是 chapter-length 教程。
@@ -438,13 +442,13 @@ print("\n✅ 练习 3 通过（Anthropic）— 已计算本次成本；跨模型
 
 ### 练习 5：Error Handling
 
-**成果：**为错误分类、重试和停止条件写出可测试的处理流程。单次预算：Path A Ollama $0；Path B 只使用 mock 时没有 API 费用。阶段预算：本地与 mock 测试为 $0；若加入云端集成测试，限制为 1–2 次并累加实际 token 成本。
+**成果：** 为错误分类、重试和停止条件写出可测试的处理流程。单次预算：Path A Ollama $0；Path B 只使用 mock 时没有 API 费用。阶段预算：本地与 mock 测试为 $0；若加入云端集成测试，限制为 1–2 次并累加实际 token 成本。
 
 <details markdown="1">
 <summary>🧰 练习 5 详细路径（选做）</summary>
 
-- **Path A（Ollama，主要练习）：**先在 [`examples/stage-1/05-error-handling/`](../examples/stage-1/05-error-handling/) 运行 mock-based test，再用本地端点观察可恢复的网络错误。
-- **Path B（Anthropic，可选）：**用 Anthropic SDK 的异常类型接上同一 retry wrapper；API key 错误和 context 过长不应无限重试。
+- **Path A（Ollama，主要练习）：** 先在 [`examples/stage-1/05-error-handling/`](../examples/stage-1/05-error-handling/) 运行 mock-based test，再用本地端点观察可恢复的网络错误。
+- **Path B（Anthropic，可选）：** 用 Anthropic SDK 的异常类型接上同一 retry wrapper；API key 错误和 context 过长不应无限重试。
 - 至少覆盖错误 API key、提示过长和网络中断；exponential backoff 要有上限和明确的最大尝试次数。
 
 这个 starter 不需要真的断网就能验证重试逻辑；它是 illustrative 示例，不是 chapter-length 教程。
@@ -453,7 +457,7 @@ print("\n✅ 练习 3 通过（Anthropic）— 已计算本次成本；跨模型
 
 ### 练习 6：Local LLM
 
-**成果：**在自己的电脑上启动 Ollama，并通过 OpenAI-compatible API 调用本地模型。单次预算：Ollama $0（另有硬件电力成本）；Path B 按实际 token 计费。阶段预算：本地练习为 $0；若用 Anthropic 做一次质量对照，限制为 1–3 次并记录 usage。
+**成果：** 在自己的电脑上启动 Ollama，并通过 OpenAI-compatible API 调用本地模型。单次预算：Ollama $0（另有硬件电力成本）；Path B 按实际 token 计费。阶段预算：本地练习为 $0；若用 Anthropic 做一次质量对照，限制为 1–3 次并记录 usage。
 
 <details markdown="1">
 <summary>🦙 练习 6 详细路径（选做）</summary>
@@ -494,7 +498,7 @@ print("✅ 练习 6 通过 — 本地 Ollama 已能通过 OpenAI-compatible API 
 print("💡 本次调用为 $0（不含电费）")
 ```
 
-**Path B（Anthropic，可选）：**把同一个 ReAct 提示发送到 `claude-haiku-4-5`，保存响应和 `msg.usage`，再与 Path A 的格式遵守度、延迟和成本比较。不要把云端结果当成本地模型的规格保证。
+**Path B（Anthropic，可选）：** 把同一个 ReAct 提示发送到 `claude-haiku-4-5`，保存响应和 `msg.usage`，再与 Path A 的格式遵守度、延迟和成本比较。不要把云端结果当成本地模型的规格保证。
 
 没有 Ollama 时，可以把 `base_url` 换成 [LM Studio](https://lmstudio.ai)（`http://localhost:1234/v1`）或 [vLLM](https://github.com/vllm-project/vllm) endpoint；接口相同，但模型 tag 和硬件需求需要重新确认。
 
@@ -506,17 +510,17 @@ print("💡 本次调用为 $0（不含电费）")
 <small>全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一行更新：2026-10-08 UTC。Gemini／Muse／Mistral／Jev 与 GPT 选读更新：2026-10-15 UTC。DeepSeek／Decisions／Clef 选读更新：2026-10-23 UTC。</small>
 
 没有可靠公开数字就写“官方未公布”。价格通常是 USD／每 1M token；供应商若用别的单位，就按官方单位记录。
-**缓存（cache）**就像重复使用读过的便条：读取旧内容和写入新内容可能有不同价格。
+**缓存（cache）** 就像重复使用读过的便条：读取旧内容和写入新内容可能有不同价格。
 
 先展开你想查的家族，再看型号、价格与限制。
 
 <details class="model-family" markdown="1">
 <summary>Claude</summary>
 
-<table data-model-family="Claude">
+<table data-model-family="Claude" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="5">当前推荐型号</th><td>Fable 5.1（<code>claude-fable-5-1</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">当前推荐型号</th><td>Fable 5.1（<code>claude-fable-5-1</code>）</td></tr>
     <tr><td>Mythos 5.1（<code>claude-mythos-5-1</code>）</td></tr>
     <tr><td>Opus 5.5（<code>claude-opus-5-5</code>）</td></tr>
     <tr><td>Sonnet 5.5（<code>claude-sonnet-5-5</code>）</td></tr>
@@ -547,10 +551,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>GPT</summary>
 
-<table data-model-family="GPT">
+<table data-model-family="GPT" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="4">当前推荐型号</th><td>GPT-6 Astra（<code>gpt-6-astra</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">当前推荐型号</th><td>GPT-6 Astra（<code>gpt-6-astra</code>）</td></tr>
     <tr><td>GPT-6.1 Sol（<code>gpt-6.1-sol</code>）</td></tr>
     <tr><td>GPT-6.1 Terra（<code>gpt-6.1-terra</code>）</td></tr>
     <tr><td>GPT-6 Luna（<code>gpt-6-luna</code>）</td></tr>
@@ -562,7 +566,7 @@ print("💡 本次调用为 $0（不含电费）")
     <tr><th scope="row">Context</th><td>1.05M context／128K 最大输出</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="5">价格或授权</th><td>Standard API，每百万 token，US$ 输入／cache 读／cache 写（30 分钟）／输出。</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">价格或授权</th><td>Standard API，每百万 token，US$ 输入／cache 读／cache 写（30 分钟）／输出。</td></tr>
     <tr><td>Astra $10/$1/$12.50/$50。</td></tr>
     <tr><td>Sol 6.1 $2/$0.10/$2.50/$10。</td></tr>
     <tr><td>Terra 6.1 $1/$0.05/$1.25/$5；12 小时 cache 写入 $2.50。</td></tr>
@@ -584,10 +588,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Jev（TypeSafe AI）</summary>
 
-<table data-model-family="Jev（TypeSafe AI）">
+<table data-model-family="Jev（TypeSafe AI）" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3">当前推荐型号</th><td>TypeSafe direct：稳定 Jev 1.13（<code>jev-1.13.0</code>／<code>jev-latest</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">当前推荐型号</th><td>TypeSafe direct：稳定 Jev 1.13（<code>jev-1.13.0</code>／<code>jev-latest</code>）</td></tr>
     <tr><td>Preview Jev 1.14（<code>jev-1.14.0</code>／<code>jev-preview</code>）</td></tr>
     <tr><td>Cloudflare route：<code>typesafe/jev</code></td></tr>
   </tbody>
@@ -616,10 +620,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Gemini</summary>
 
-<table data-model-family="Gemini">
+<table data-model-family="Gemini" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">当前推荐型号</th><td>Gemini 3.8 Flash</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>Gemini 3.8 Flash</td></tr>
     <tr><td>Gemini 4 Argon（<code>gemini-4-argon</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -647,10 +651,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>DeepSeek</summary>
 
-<table data-model-family="DeepSeek">
+<table data-model-family="DeepSeek" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">当前推荐型号</th><td>V4.1 Flash 1017（<code>deepseek-flash</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>V4.1 Flash 1017（<code>deepseek-flash</code>）</td></tr>
     <tr><td>V4 Pro 0813（<code>deepseek-v4-pro</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -678,10 +682,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Kimi</summary>
 
-<table data-model-family="Kimi">
+<table data-model-family="Kimi" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">当前推荐型号</th><td>Kimi K3.1 Pro（<code>kimi-k3.1-pro</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>Kimi K3.1 Pro（<code>kimi-k3.1-pro</code>）</td></tr>
     <tr><td>Kimi K3.1 Pro Highspeed（<code>kimi-k3.1-pro-highspeed</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -691,7 +695,7 @@ print("💡 本次调用为 $0（不含电费）")
     <tr><th scope="row">Context</th><td>1,048,576 token。</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="4">价格或授权</th><td>国际 API，每百万 token，US$ 输入／cache 读／cache 写（5 分钟）／输出；未含税。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">价格或授权</th><td>国际 API，每百万 token，US$ 输入／cache 读／cache 写（5 分钟）／输出；未含税。</td></tr>
     <tr><td>Pro $2/$0.20/$2/$10。</td></tr>
     <tr><td>Highspeed $4/$0.20/$4/$20。</td></tr>
     <tr><td>重复前缀自动缓存；1 小时保留另有写入费率。API 按量计费，不等于 Kimi 会员或 Kimi Code 订阅。</td></tr>
@@ -700,7 +704,7 @@ print("💡 本次调用为 $0（不含电费）")
     <tr><th scope="row">适合做什么</th><td>长编程任务、看图与视频、整理长文档。先用自己的任务测试，不把供应商分数当成成果保证。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="rowgroup" rowspan="2">限制</th><td>固定开启思考。<code>reasoning_effort</code> 可选 <code>low</code>／<code>high</code>／<code>max</code>，默认 <code>max</code>。工具对话须保留完整 assistant 消息。</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">限制</th><td>固定开启思考。<code>reasoning_effort</code> 可选 <code>low</code>／<code>high</code>／<code>max</code>，默认 <code>max</code>。工具对话须保留完整 assistant 消息。</td></tr>
     <tr><td>K3 是前一代。K2 系列自 2026-10-31 不再开放新账号，官方计划于 2026 年底退役；不是已全部停用。</td></tr>
   </tbody>
   <tbody data-field="sources">
@@ -713,7 +717,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Hunyuan</summary>
 
-<table data-model-family="Hunyuan">
+<table data-model-family="Hunyuan" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
     <tr><th scope="row">当前推荐型号</th><td><code>Hy3</code>（TokenHub）</td></tr>
@@ -743,7 +747,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>MiniMax</summary>
 
-<table data-model-family="MiniMax">
+<table data-model-family="MiniMax" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
     <tr><th scope="row">当前推荐型号</th><td>MiniMax M3</td></tr>
@@ -773,10 +777,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Qwen</summary>
 
-<table data-model-family="Qwen">
+<table data-model-family="Qwen" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">当前推荐型号</th><td>qwen3.8-max（API）</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>qwen3.8-max（API）</td></tr>
     <tr><td>Qwen3.8 开放权重变体</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -804,7 +808,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>GLM</summary>
 
-<table data-model-family="GLM">
+<table data-model-family="GLM" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
     <tr><th scope="row">当前推荐型号</th><td>GLM-5.3</td></tr>
@@ -834,7 +838,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Yi</summary>
 
-<table data-model-family="Yi">
+<table data-model-family="Yi" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
     <tr><th scope="row">当前推荐型号</th><td>Yi-34B／Yi-9B 及 200K 变体</td></tr>
@@ -864,10 +868,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Llama</summary>
 
-<table data-model-family="Llama">
+<table data-model-family="Llama" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">当前推荐型号</th><td>Llama 4 Scout／Maverick</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>Llama 4 Scout／Maverick</td></tr>
     <tr><td>Llama 3.3 70B（较实用旧基线）</td></tr>
   </tbody>
   <tbody data-field="status">
@@ -895,10 +899,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Muse</summary>
 
-<table data-model-family="Muse">
+<table data-model-family="Muse" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3">当前推荐型号</th><td>Muse Wonder（<code>muse-wonder-1.0</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">当前推荐型号</th><td>Muse Wonder（<code>muse-wonder-1.0</code>）</td></tr>
     <tr><td>Muse Spark 1.3（<code>muse-spark-1.3</code>／<code>muse-spark-1.3-contributor</code>）</td></tr>
     <tr><td>Muse Glimmer 30B</td></tr>
   </tbody>
@@ -927,7 +931,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Grok</summary>
 
-<table data-model-family="Grok">
+<table data-model-family="Grok" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
     <tr><th scope="row">当前推荐型号</th><td>Grok 4.7（<code>grok-4.7</code>）</td></tr>
@@ -957,7 +961,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>MiMo</summary>
 
-<table data-model-family="MiMo">
+<table data-model-family="MiMo" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
     <tr><th scope="row">当前推荐型号</th><td>MiMo V2.6 Pro（<code>mimo-v2.6-pro</code>）</td></tr>
@@ -987,7 +991,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Gemma</summary>
 
-<table data-model-family="Gemma">
+<table data-model-family="Gemma" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
     <tr><th scope="row">当前推荐型号</th><td>Gemma 4：E2B、E4B、12B、26B A4B、31B</td></tr>
@@ -1017,10 +1021,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Mistral</summary>
 
-<table data-model-family="Mistral">
+<table data-model-family="Mistral" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="5">当前推荐型号</th><td>Mistral Large 4（<code>mistral-large-4</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">当前推荐型号</th><td>Mistral Large 4（<code>mistral-large-4</code>）</td></tr>
     <tr><td>Medium 3.5（<code>mistral-medium-3-5</code>）</td></tr>
     <tr><td>Small 4</td></tr>
     <tr><td>Large 3</td></tr>
@@ -1051,10 +1055,10 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Phi</summary>
 
-<table data-model-family="Phi">
+<table data-model-family="Phi" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2">当前推荐型号</th><td>Phi-4 14B</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>Phi-4 14B</td></tr>
     <tr><td>Phi-4 mini／multimodal</td></tr>
   </tbody>
   <tbody data-field="status">

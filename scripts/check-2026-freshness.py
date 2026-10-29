@@ -25,6 +25,8 @@ from datetime import date, datetime, timezone
 from fnmatch import fnmatch
 from pathlib import Path
 
+from md_fences import code_line_flags
+
 try:
     import yaml
 except ImportError:
@@ -79,13 +81,45 @@ def matches_exclude(path: Path, repo_root: Path, exclude_patterns: list[str]) ->
     return False
 
 
+def qualifier_context_lines(lines: list[str]) -> list[int]:
+    """Ignore only matched centering wrappers, keeping original line numbers."""
+    fenced = code_line_flags('\n'.join(lines))
+    stack: list[tuple[bool, int]] = []
+    ignored: set[int] = set()
+    for index, line in enumerate(lines):
+        if fenced[index]:
+            continue
+        stripped = line.strip()
+        if re.fullmatch(r'<div\b[^>]*>', stripped) and not stripped.endswith('/>'):
+            centered = bool(re.fullmatch(
+                r'<div align="center" markdown="1">', stripped
+            ))
+            stack.append((centered, index))
+        elif stripped == '</div>' and stack:
+            centered, opening = stack.pop()
+            if centered:
+                ignored.update((opening, index))
+                if opening + 1 < index and not lines[opening + 1].strip():
+                    ignored.add(opening + 1)
+                if index - 1 > opening and not lines[index - 1].strip():
+                    ignored.add(index - 1)
+    return [index for index in range(len(lines)) if index not in ignored]
+
+
 def has_qualifier(
-    lines: list[str], idx: int, terms: list[str], window: int
+    lines: list[str], idx: int, terms: list[str], window: int,
+    context_lines: list[int] | None = None,
 ) -> bool:
-    """Check if any qualifier term appears in ±window lines around idx."""
-    start = max(0, idx - window)
-    end = min(len(lines), idx + window + 1)
-    context = ' '.join(lines[start:end])
+    """Keep the same qualifier window after removing centering-only markup."""
+    if not terms:
+        return False
+    positions = context_lines if context_lines is not None else qualifier_context_lines(lines)
+    if idx not in positions:
+        positions = sorted([*positions, idx])
+    position = positions.index(idx)
+    start = max(0, position - window)
+    end = min(len(positions), position + window + 1)
+    context = ' '.join(lines[index] for index in positions[start:end])
     return any(q in context for q in terms)
 
 
@@ -102,6 +136,7 @@ def scan_file(
     findings: list[tuple[Path, int, str, str, str]] = []
     content = path.read_text(encoding='utf-8')
     lines = content.split('\n')
+    context_lines = qualifier_context_lines(lines)
 
     window = cfg.get('qualifier_context_lines', 2)
 
@@ -137,7 +172,7 @@ def scan_file(
         note = entry.get('note', '')
         for idx, line in enumerate(lines):
             m = pat.search(line)
-            if m and not has_qualifier(lines, idx, terms, window):
+            if m and not has_qualifier(lines, idx, terms, window, context_lines):
                 findings.append((path, idx + 1, m.group(0), pat_str, note))
 
     # Check stale_date_phrases
@@ -154,7 +189,7 @@ def scan_file(
             m = pat.search(line)
             if m:
                 # Date phrases either need qualifier OR no qualifier needed (different rule)
-                if terms and has_qualifier(lines, idx, terms, window):
+                if terms and has_qualifier(lines, idx, terms, window, context_lines):
                     continue
                 findings.append((path, idx + 1, m.group(0), pat_str, note))
 

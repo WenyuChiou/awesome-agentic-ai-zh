@@ -84,14 +84,14 @@ def test_memory_table_keeps_a_real_eight_row_memory_group() -> None:
     for path in MEMORY:
         body = _body(path)
         assert re.search(
-            r'<th scope="rowgroup" rowspan="8">Memory layer</th>', body
+            r'<th scope="rowgroup" rowspan="8" align="center" valign="middle" width="80">Memory layer</th>', body
         )
         first_tbody = re.search(r"<tbody>(.*?)</tbody>", body, re.DOTALL)
         assert first_tbody is not None
         assert first_tbody.group(1).count("<tr>") == 8
         tables = _rendered_tables(path)
         assert any(
-            tag == "th" and attrs == {"scope": "rowgroup", "rowspan": "8"}
+            tag == "th" and attrs == {"scope": "rowgroup", "rowspan": "8", "align": "center", "valign": "middle", "width": "80"}
             for table in tables
             for tag, attrs in table
         )

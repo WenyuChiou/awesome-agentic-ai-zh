@@ -191,7 +191,7 @@ def _rated_resource_links(text: str, heading: str) -> list[tuple[str, str]]:
     if next_heading != -1:
         section = section[:next_heading]
     rows = re.findall(
-        r'<tr>.*?href="([^"]+)".*?<td>(⭐{4,5})</td>.*?</tr>',
+        r'<tr>.*?href="([^"]+)".*?<td align="center" valign="middle">(⭐{4,5})</td>.*?</tr>',
         section,
         flags=re.DOTALL,
     )
@@ -258,7 +258,7 @@ def test_visible_mainline_keeps_reader_decisions_and_resources(locale: str, page
         assert term in visible
     for target in (*ROLE_LINKS, "resources/glossary", "resources/cookbook", "examples/README"):
         assert target in visible
-    assert "<table>" in visible and "rowspan=" in visible
+    assert '<table align="center">' in visible and "rowspan=" in visible
 
 
 @pytest.mark.parametrize("locale,page", PAGES.items())
@@ -357,10 +357,24 @@ def test_homepage_is_shorter_without_deleting_key_terms(page: Path) -> None:
     # The English-only refresh equals its measured source length after the
     # audited first-use names/meanings are added and compressed. Chinese limits
     # stay unchanged; banner delivery has its own contract.
-    content = text[text.index("# awesome-agentic-ai-zh"):]
-    assert len(text) - len(content) <= 550
+    # Measure the original content budget without counting centering-only markup.
+    # Keep the table text, links and delimiter widths; the wrapper adds no prose.
+    measured = re.sub(
+        r'<div align="center" markdown="1">\n\n(?=[^\n]*\n[ \t|:\-]+\n)(.*?)\n</div>\n',
+        lambda match: match.group(1), text, flags=re.DOTALL,
+    )
+    measured = re.sub(r'(?m)^(\|(?::?-{3,}\|)+)$',
+                      lambda match: match.group(1).replace(":---", "---"), measured)
+    measured = re.sub(
+        r'<div class="reader-reference-table" role="region" tabindex="0" aria-label="[^"]+">\n(<table.*?</table>)\n</div>',
+        lambda match: match[1], measured, flags=re.DOTALL,
+    )
+    measured = measured.replace('<table align="center">', '<table>')
+    measured = measured.replace(' align="center" valign="middle"', '')
+    content = measured[measured.index("# awesome-agentic-ai-zh"):]
+    assert len(measured) - len(content) <= 550
     assert len(content) <= (14_277 if page == PAGES["en"] else 14_000)
-    assert len(text.splitlines()) <= 230
+    assert len(measured.splitlines()) <= 230
     for banned in ("240+", "81+", "Agent Workflow Audit", "mv starter.py"):
         assert banned not in text
     for required in (

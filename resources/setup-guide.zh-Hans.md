@@ -34,48 +34,52 @@
 
 五扇门是并行选择，不是五个一定要依次完成的等级。
 
+<div align="center" markdown="1">
+
 | 你想做什么 | 这扇门是什么 | 第一个动作 |
-|---|---|---|
+|:---|:---|:---|
 | 先和模型聊天 | **Web Chat**：在浏览器里对话 | 打开 [Claude](https://claude.ai)、[ChatGPT](https://chatgpt.com)、[Gemini](https://gemini.google.com) 或 [Le Chat](https://chat.mistral.ai) |
 | 在电脑 App 里聊天或处理文件 | **Desktop App**：装在电脑上的聊天界面 | 从产品的官方下载页安装 |
 | 写 code 时让 AI 在旁边协助 | **IDE Assistant**：住在 editor 里 | 先看[开发者路线](../branches/for-developer.zh-Hans.md) |
 | 让 Agent 在指定文件夹读文件、改文件、跑命令 | **CLI Agent**：在 terminal 里工作 | 先看 [CLI Agents 指南](cli-agents-guide.zh-Hans.md) |
 | 自己写程序调用模型 | **API**：程序和模型服务对话的入口 | 继续做下面 A → B → C |
 
+</div>
+
 <details markdown="1">
 <summary>查看 Web、Desktop、IDE 与 CLI 的完整官方入口</summary>
 
 下表是入口清单，不是排名。推荐度表示“这份学习地图是否适合把它作为起点”。
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">类型</th><th scope="col">官方入口／项目</th><th scope="col">先知道什么</th><th scope="col">推荐度</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Web Chat</th><td><a href="https://claude.ai">Claude</a></td><td>云端聊天界面；方案和功能依账号、地区而异</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>云端聊天界面；ChatGPT 订阅不等于 OpenAI API 额度</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://gemini.google.com">Gemini</a></td><td>云端聊天界面；连接服务前先看数据权限</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://chat.mistral.ai">Le Chat</a></td><td>Mistral 的云端聊天界面</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Web Chat</th><td><a href="https://claude.ai">Claude</a></td><td>云端聊天界面；方案和功能依账号、地区而异</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chatgpt.com">ChatGPT</a></td><td>云端聊天界面；ChatGPT 订阅不等于 OpenAI API 额度</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google.com">Gemini</a></td><td>云端聊天界面；连接服务前先看数据权限</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chat.mistral.ai">Le Chat</a></td><td>Mistral 的云端聊天界面</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Desktop</th><td><a href="https://claude.com/download">Claude Desktop</a></td><td>Windows、macOS 与 Linux 的当前入口以官方页面为准</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://chatgpt.com/download">ChatGPT Desktop</a></td><td>平台要求以官方下载页为准</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://gemini.google/mac">Gemini for macOS</a></td><td>目前是 macOS App；其他系统可使用 Web</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://lmstudio.ai/download">LM Studio</a></td><td>本地模型 runtime 和图形界面；仍要管理模型、硬件和文件权限</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Desktop</th><td><a href="https://claude.com/download">Claude Desktop</a></td><td>Windows、macOS 与 Linux 的当前入口以官方页面为准</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://chatgpt.com/download">ChatGPT Desktop</a></td><td>平台要求以官方下载页为准</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://gemini.google/mac">Gemini for macOS</a></td><td>目前是 macOS App；其他系统可使用 Web</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://lmstudio.ai/download">LM Studio</a></td><td>本地模型 runtime 和图形界面；仍要管理模型、硬件和文件权限</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">IDE／Editor</th><td><a href="https://cursor.com">Cursor</a></td><td>AI editor；确认每次修改和 terminal 操作</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://devin.ai/desktop">Devin Desktop（原 Windsurf）</a></td><td>Windsurf 更名后的桌面 Coding Agent／IDE；仍要确认工具权限和方案</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://cline.bot">Cline</a></td><td>VS Code coding agent；从低权限开始</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://zed.dev/ai">Zed AI</a></td><td>Zed editor 的 AI 功能</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/features/copilot">GitHub Copilot</a></td><td>可在 GitHub、IDE 和其他界面使用；各界面的权限不同</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">IDE／Editor</th><td><a href="https://cursor.com">Cursor</a></td><td>AI editor；确认每次修改和 terminal 操作</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://devin.ai/desktop">Devin Desktop（原 Windsurf）</a></td><td>Windsurf 更名后的桌面 Coding Agent／IDE；仍要确认工具权限和方案</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://cline.bot">Cline</a></td><td>VS Code coding agent；从低权限开始</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://zed.dev/ai">Zed AI</a></td><td>Zed editor 的 AI 功能</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/features/copilot">GitHub Copilot</a></td><td>可在 GitHub、IDE 和其他界面使用；各界面的权限不同</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">CLI Agent</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>先保留 permission prompt；从小文件夹开始</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/openai/codex">OpenAI Codex</a></td><td>coding agent；确认 sandbox、approval 和 diff</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a></td><td>Gemini 的开源 terminal agent</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>多 Provider coding agent／harness，不是模型 Router</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>可连接 Provider 和 extensions；先缩小工具权限</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://aider.chat/docs/">Aider</a></td><td>Git-first pair programmer；auto-commit 不代表可以跳过 review</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a></td><td>通用 agent；先在隔离环境试小任务</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">CLI Agent</th><td><a href="https://code.claude.com/docs/en/quickstart">Claude Code</a></td><td>先保留 permission prompt；从小文件夹开始</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/openai/codex">OpenAI Codex</a></td><td>coding agent；确认 sandbox、approval 和 diff</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a></td><td>Gemini 的开源 terminal agent</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/anomalyco/opencode">OpenCode</a></td><td>多 Provider coding agent／harness，不是模型 Router</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>可连接 Provider 和 extensions；先缩小工具权限</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://aider.chat/docs/">Aider</a></td><td>Git-first pair programmer；auto-commit 不代表可以跳过 review</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a></td><td>通用 agent；先在隔离环境试小任务</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
 
@@ -95,15 +99,15 @@
 
 这五个入口直接保持可见；遇到版本差异时，以官方页面为准。
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">类别</th><th scope="col">官方资源</th><th scope="col">用它解决什么</th><th scope="col">推荐度</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Claude API</th><td><a href="https://platform.claude.com/docs/en/get-started">Claude API Quickstart</a></td><td>创建 key、发送第一个请求</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://platform.claude.com/docs/en/api/sdks/python">Anthropic Python SDK</a></td><td>确认 Python 要求、环境变量与当前程序形态</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Claude API</th><td><a href="https://platform.claude.com/docs/en/get-started">Claude API Quickstart</a></td><td>创建 key、发送第一个请求</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.claude.com/docs/en/api/sdks/python">Anthropic Python SDK</a></td><td>确认 Python 要求、环境变量与当前程序形态</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">Python 工具</th><td><a href="https://docs.astral.sh/uv/getting-started/installation/">uv Installation</a></td><td>按操作系统安装或更新 uv</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">CLI 入门</th><td><a href="https://code.claude.com/docs/en/terminal-guide">Claude Code Terminal Guide</a></td><td>第一次打开 terminal、切换文件夹和执行命令</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">秘密安全</th><td><a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning">GitHub Secret Scanning</a></td><td>了解为什么 secret 不能进入 Git 历史</td><td>⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">Python 工具</th><td><a href="https://docs.astral.sh/uv/getting-started/installation/">uv Installation</a></td><td>按操作系统安装或更新 uv</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">CLI 入门</th><td><a href="https://code.claude.com/docs/en/terminal-guide">Claude Code Terminal Guide</a></td><td>第一次打开 terminal、切换文件夹和执行命令</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">秘密安全</th><td><a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning">GitHub Secret Scanning</a></td><td>了解为什么 secret 不能进入 Git 历史</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr></tbody>
 </table>
 
 <a id="a--申请第一个-api-key约-10-分钟"></a>
@@ -129,18 +133,18 @@
 
 下表只写当前官方入口。价格、免费额度和可用模型请点击官方页面查看，这份入门指南不冻结这些信息。
 
-<table>
+<table align="center">
 <thead><tr><th scope="col">类型</th><th scope="col">官方入口</th><th scope="col">Compatibility／限制</th><th scope="col">推荐度</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="7">Cloud API</th><td><a href="https://platform.openai.com/docs/quickstart">OpenAI API</a></td><td>官方 SDK 与 API；ChatGPT 订阅不等于 API billing</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://ai.google.dev/gemini-api/docs/openai">Gemini API</a></td><td>Google 官方提供 OpenAI libraries compatibility 说明</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://docs.api.nvidia.com/nim/reference/llm-apis">NVIDIA NIM</a></td><td>按 endpoint 查看支持的 API shape 与模型</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://api-docs.deepseek.com/">DeepSeek API</a></td><td>官方文档提供 OpenAI-compatible 使用方式</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://platform.kimi.com/docs/api/overview">Kimi API</a></td><td>地区、endpoint 与模型以官方 Console 为准</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://help.aliyun.com/en/model-studio/base-url">Alibaba Model Studio／Qwen</a></td><td>按区域使用对应 base URL；官方提供 OpenAI-compatible endpoint</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://docs.z.ai/api-reference/introduction">Z.ai／GLM API</a></td><td>按官方 reference 使用当前 endpoint</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Cloud API</th><td><a href="https://platform.openai.com/docs/quickstart">OpenAI API</a></td><td>官方 SDK 与 API；ChatGPT 订阅不等于 API billing</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://ai.google.dev/gemini-api/docs/openai">Gemini API</a></td><td>Google 官方提供 OpenAI libraries compatibility 说明</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://docs.api.nvidia.com/nim/reference/llm-apis">NVIDIA NIM</a></td><td>按 endpoint 查看支持的 API shape 与模型</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://api-docs.deepseek.com/">DeepSeek API</a></td><td>官方文档提供 OpenAI-compatible 使用方式</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://platform.kimi.com/docs/api/overview">Kimi API</a></td><td>地区、endpoint 与模型以官方 Console 为准</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://help.aliyun.com/en/model-studio/base-url">Alibaba Model Studio／Qwen</a></td><td>按区域使用对应 base URL；官方提供 OpenAI-compatible endpoint</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://docs.z.ai/api-reference/introduction">Z.ai／GLM API</a></td><td>按官方 reference 使用当前 endpoint</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
-<tbody><tr><th scope="rowgroup" rowspan="1">本地 Runtime</th><td><a href="https://docs.ollama.com/api/openai-compatibility">Ollama</a></td><td>只兼容 OpenAI API 的一部分；需要另外下载本地模型</td><td>⭐⭐⭐⭐⭐</td></tr></tbody>
+<tbody><tr><th scope="rowgroup" rowspan="1" align="center" valign="middle">本地 Runtime</th><td><a href="https://docs.ollama.com/api/openai-compatibility">Ollama</a></td><td>只兼容 OpenAI API 的一部分；需要另外下载本地模型</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr></tbody>
 </table>
 
 本地推理没有供应商模型 API 账单，但硬件、电力、下载时间、设备安全、文件和 log 仍由你负责。完整路径请看 [Cookbook 的本地 LLM walkthrough](cookbook.zh-Hans.md#6-本地-llm--cli-agent-快速-walkthrough)。
@@ -255,13 +259,17 @@ uv run --python 3.12 --with anthropic --with python-dotenv python hello-claude.p
 <details markdown="1">
 <summary>查看常见错误与安全恢复</summary>
 
+<div align="center" markdown="1">
+
 | 你看到什么 | 通常代表什么 | 先做什么 |
-|---|---|---|
+|:---|:---|:---|
 | `401`／`authentication_error` | key 没读到、失效或贴错 | 撤销有疑虑的 key；确认文件名是 `.env`，再创建新 key |
 | `429`／`rate_limit_error` | 用量、速率或账号额度限制 | 停止重试，回 Console 看 usage／billing，再按错误信息等待 |
 | `ModuleNotFoundError` | 没用到这次 `uv run --with ...` 的环境 | 完整复制执行命令，不要只跑 `python hello-claude.py` |
 | `uv` 找不到 | 安装后的 terminal 还没读到新 PATH | 关闭并重新打开 terminal；再看 uv 官方安装页 |
 | 连接错误 | 网络、proxy、防火墙或服务状态 | 先看供应商 status page；公司／学校网络请问管理员 |
+
+</div>
 
 如果 key 曾出现在 Git、聊天、截图或公开 log，不能只把文字删掉；请立刻在 Console 撤销它并创建新 key。
 
@@ -361,11 +369,15 @@ description: 当使用者明确请你打招呼时，用两种语言回复。
 
 ## 接下来去哪
 
+<div align="center" markdown="1">
+
 | 你现在想做什么 | 下一站 |
-|---|---|
+|:---|:---|
 | 理解模型、Token、Context Window 与 API | [Stage 1 — LLM 基础](../stages/01-llm-basics.zh-Hans.md) |
 | 直接学 Prompt | [Stage 2 — Prompt Engineering](../stages/02-prompt-engineering.zh-Hans.md) |
 | 使用 CLI Agent 工作 | [Track A1 — CLI 入门](../tracks/cli/A1-cli-intro.zh-Hans.md) |
 | 理解 Claude Code、MCP、Skills、Plugins 与 Subagents | [Stage 5 — Claude Code 生态](../stages/05-claude-code-ecosystem.zh-Hans.md) |
 | 使用本地模型 | [Cookbook：本地 LLM walkthrough](cookbook.zh-Hans.md#6-本地-llm--cli-agent-快速-walkthrough) |
 | 还分不清 OpenRouter、Ollama、OpenCode 或 Pi | [Glossary：先分清五种工具身份](glossary.zh-Hans.md#-先分清五种工具身份) |
+
+</div>

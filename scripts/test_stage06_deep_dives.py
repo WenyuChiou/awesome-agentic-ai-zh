@@ -69,7 +69,7 @@ def test_required_reading_projects_and_core_terms_are_visible(topic: str, locale
 @pytest.mark.parametrize("locale", ("zh-TW", "en", "zh-Hans"))
 def test_resource_tables_use_real_rowgroups(topic: str, locale: str) -> None:
     text = PAGES[topic][locale].read_text(encoding="utf-8")
-    table = re.search(r"<table>.*?⭐{3,5}.*?</table>", text, flags=re.DOTALL)
+    table = re.search(r"<table align=\"center\">.*?⭐{3,5}.*?</table>", text, flags=re.DOTALL)
     assert table
     groups = re.findall(r"<tbody>(.*?)</tbody>", table.group(), flags=re.DOTALL)
     assert len(groups) == len(ROWGROUPS[topic])

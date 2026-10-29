@@ -10,7 +10,7 @@
 
 - [ ] 用 **Python** 向 **API** (Application Programming Interface) 拿公开资料，再从 **JSON** (JavaScript Object Notation) 里找出一个值。
 - [ ] 用 **Git** 复制专案（clone）、开工作线（**branch**）、保存版本（**commit**），再把版本送到网络上（**push**）。两次修改撞在一起时，知道要留下什么（合并冲突）。
-- [ ] 用 **CLI（命令行界面）**切换资料夹、建立文件并执行 Python 程序。
+- [ ] 用 **CLI（命令行界面）** 切换资料夹、建立文件并执行 Python 程序。
 - [ ] 看懂 **YAML** 与 JSON。它们都是用文字保存资料的格式。
 
 四项都能做到，就直接前往 [Stage 1 — LLM 基础](01-llm-basics.zh-Hans.md)。只要有一项不确定，就完成本页的主要练习。需要时再展开补充内容。
@@ -63,7 +63,7 @@
 </table>
 </div>
 
-**History（版本历史）**是项目保存的版本记录；它可以分支，不一定是一条依时间排列的直线。**Diff（差异）**比较修改前后的内容。Commit 中的作者名称、时间、说明与识别码有助追查，但作者标签本身不能证明身份。
+**History（版本历史）** 是项目保存的版本记录；它可以分支，不一定是一条依时间排列的直线。**Diff（差异）** 比较修改前后的内容。Commit 中的作者名称、时间、说明与识别码有助追查，但作者标签本身不能证明身份。
 
 例如：在 branch 修正一个错字 → 在本机做 commit → push 到 GitHub 的 branch → 提出 PR 请人检查 → 同意后 merge 进 main。每一步有不同用途；PR 不会因此自动合并。
 
@@ -84,7 +84,7 @@
 
 ## 🛠 动手练习：做一个 GitHub 数据小工具
 
-**成果：**让 Python 从 GitHub 获取公开数据，把结果显示在屏幕上、写入文件，再用 Git 保存。这项主要练习不需要账号、API token 或付费服务。
+**成果：** 让 Python 从 GitHub 获取公开数据，把结果显示在屏幕上、写入文件，再用 Git 保存。这项主要练习不需要账号、API token 或付费服务。
 
 先花五分钟用浏览器观察：[打开本项目](https://github.com/WenyuChiou/awesome-agentic-ai-zh)，找出 README、License 和 Issues，再打开 commit 历史，选一笔查看作者、时间、说明、识别码与 diff。公开显示的作者 email 是记录中的标签，不是登入凭证，也不能单凭它验证作者身份。不需要建立 Issue 或 PR。
 
@@ -146,9 +146,9 @@ git commit -m "Add GitHub profile checker"
 <details markdown="1">
 <summary>⏱️ 展开时间、环境与这一关存在的原因</summary>
 
-**时间：**完全不熟时预留 1–2 周，约 5–15 小时。已经会其中几项的话，只补不熟的部分。
+**时间：** 完全不熟时预留 1–2 周，约 5–15 小时。已经会其中几项的话，只补不熟的部分。
 
-**环境：**准备仍受支持的 Python 3、Git、文本编辑器和终端。终端就是输入文字指令的窗口。Windows 可以使用 PowerShell。macOS 或 Linux 可以使用系统终端。
+**环境：** 准备仍受支持的 Python 3、Git、文本编辑器和终端。终端就是输入文字指令的窗口。Windows 可以使用 PowerShell。macOS 或 Linux 可以使用系统终端。
 
 先确认工具可以运行：
 
@@ -166,11 +166,11 @@ git --version
 
 只做你还不熟的项目：
 
-1. **Python：**把主要练习 URL 里的 `torvalds` 换成自己的 GitHub 账号或其他公开账号。确认程序仍能读出 `login` 和 `followers`。
-2. **Git：**创建一个新 branch（不直接修改原版本的工作线），修改输出文字，再做一次 commit。接着把练习放到自己的远程 Git 项目，并运行 `git push`。
-3. **命令行：**创建 `src`、`tests`、`docs` 三个文件夹。从不同路径运行主要练习，并找出 `result.txt` 实际写到哪里。
-4. **JSON：**把 API 响应保存成文件，找出 `name`、`public_repos` 和 `followers` 三个字段。
-5. **YAML：**创建一个含有 `username` 和 `output_file` 的小配置文件，练习缩进、字符串和布尔值。YAML 对空格很敏感。不要使用 Tab 缩进。
+1. **Python：** 把主要练习 URL 里的 `torvalds` 换成自己的 GitHub 账号或其他公开账号。确认程序仍能读出 `login` 和 `followers`。
+2. **Git：** 创建一个新 branch（不直接修改原版本的工作线），修改输出文字，再做一次 commit。接着把练习放到自己的远程 Git 项目，并运行 `git push`。
+3. **命令行：** 创建 `src`、`tests`、`docs` 三个文件夹。从不同路径运行主要练习，并找出 `result.txt` 实际写到哪里。
+4. **JSON：** 把 API 响应保存成文件，找出 `name`、`public_repos` 和 `followers` 三个字段。
+5. **YAML：** 创建一个含有 `username` 和 `output_file` 的小配置文件，练习缩进、字符串和布尔值。YAML 对空格很敏感。不要使用 Tab 缩进。
 
 遇到错误时，先读最后一行错误信息。再确认当前文件夹、文件名和 Python 版本。一次只改一件事。这样才能知道哪个修改有效。
 
@@ -224,10 +224,10 @@ Token 就像程序使用的临时钥匙。拿到它的人可能以你的身份�
 <details markdown="1">
 <summary>🗺️ 展开名词与 Agent 全景补充</summary>
 
-- **CLI（命令行接口）：**在终端输入文字指令来操作电脑。
-- **API（应用程序接口）：**让两个程序按固定规则交换数据的入口。
-- **JSON／YAML：**用文本保存结构化数据的两种格式。JSON 常见于 API。YAML 常见于配置文件。
-- **Git：**记录文件版本的工具。commit 是一次带说明的版本快照。
+- **CLI（命令行接口）：** 在终端输入文字指令来操作电脑。
+- **API（应用程序接口）：** 让两个程序按固定规则交换数据的入口。
+- **JSON／YAML：** 用文本保存结构化数据的两种格式。JSON 常见于 API。YAML 常见于配置文件。
+- **Git：** 记录文件版本的工具。commit 是一次带说明的版本快照。
 
 看到其他不懂的词，先查[术语表](../resources/glossary.zh-Hans.md)。想知道 agent 为什么可能出现在终端、聊天软件或设备上，再看[Agent 全景地图](../resources/agent-paradigms.zh-Hans.md)。这两份都不是开始主要练习前的必读内容。
 
@@ -244,32 +244,32 @@ Token 就像程序使用的临时钥匙。拿到它的人可能以你的身份�
 <table align="center">
   <thead><tr><th scope="col">主题</th><th scope="col">资源</th><th scope="col">适合谁</th><th scope="col">推荐度</th><th scope="col">为什么推荐／备注</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>想跟着一本书从头练习</td><td>⭐⭐⭐⭐</td><td>代码免费并配有练习；完整教材需要购买书籍。</td></tr>
-    <tr><td><a href="https://realpython.com/">Real Python</a></td><td>学过一点，想查一个问题</td><td>⭐⭐⭐⭐</td><td>文章按主题分开，遇到问题时容易查找。</td></tr>
-    <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>喜欢看英文视频</td><td>⭐⭐⭐</td><td>用视频从基础语法讲到实际应用。</td></tr>
-    <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>喜欢一边操作一边学</td><td>⭐⭐⭐</td><td>部分内容免费；完整后端路线需要付费。</td></tr>
-    <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python 官方繁体中文教程</a></td><td>做完第一次练习，想查正确语法</td><td>⭐⭐⭐⭐</td><td>官方参考资料；它预期你已经懂一点编程。</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Python</th><td><a href="https://github.com/ehmatthes/pcc_3e">Python Crash Course</a></td><td>想跟着一本书从头练习</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>代码免费并配有练习；完整教材需要购买书籍。</td></tr>
+    <tr><td><a href="https://realpython.com/">Real Python</a></td><td>学过一点，想查一个问题</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>文章按主题分开，遇到问题时容易查找。</td></tr>
+    <tr><td><a href="https://www.youtube.com/c/Coreyms">Corey Schafer YouTube</a></td><td>喜欢看英文视频</td><td align="center" valign="middle">⭐⭐⭐</td><td>用视频从基础语法讲到实际应用。</td></tr>
+    <tr><td><a href="https://www.boot.dev/">Boot.dev</a></td><td>喜欢一边操作一边学</td><td align="center" valign="middle">⭐⭐⭐</td><td>部分内容免费；完整后端路线需要付费。</td></tr>
+    <tr><td><a href="https://docs.python.org/zh-tw/3/tutorial/">Python 官方繁体中文教程</a></td><td>做完第一次练习，想查正确语法</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>官方参考资料；它预期你已经懂一点编程。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>想完整理解 Git</td><td>⭐⭐⭐⭐</td><td>免费的完整参考书。</td></tr>
-    <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>想用图看懂 branch、merge 和操作顺序</td><td>⭐⭐⭐⭐</td><td>用图解说明常见工作流程。</td></tr>
-    <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Git 操作出错，想安全恢复</td><td>⭐⭐⭐⭐</td><td>先说明哪些操作可能丢失资料，再教你如何恢复。</td></tr>
-    <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>基本方法不够，想查更多问题</td><td>⭐⭐⭐</td><td>收录更多 Git 问题与处理方式。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Git</th><td><a href="https://git-scm.com/book/en/v2">Pro Git book</a></td><td>想完整理解 Git</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>免费的完整参考书。</td></tr>
+    <tr><td><a href="https://www.atlassian.com/git/tutorials">Atlassian Git Tutorials</a></td><td>想用图看懂 branch、merge 和操作顺序</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用图解说明常见工作流程。</td></tr>
+    <tr><td><a href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">Pro Git — Undoing Things</a></td><td>Git 操作出错，想安全恢复</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>先说明哪些操作可能丢失资料，再教你如何恢复。</td></tr>
+    <tr><td><a href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></td><td>基本方法不够，想查更多问题</td><td align="center" valign="middle">⭐⭐⭐</td><td>收录更多 Git 问题与处理方式。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI／Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>想有顺序地学命令行</td><td>⭐⭐⭐⭐</td><td>从新手指令一路介绍到较进阶的操作。</td></tr>
-    <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>使用 Windows，想从第一步开始</td><td>⭐⭐⭐⭐</td><td>Microsoft 官方的 PowerShell 入门教材。</td></tr>
-    <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>只想先看一个指令怎么用</td><td>⭐⭐⭐⭐</td><td>用短小、可复制的例子解释常用指令。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">CLI／Shell</th><td><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></td><td>想有顺序地学命令行</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>从新手指令一路介绍到较进阶的操作。</td></tr>
+    <tr><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/">Microsoft Learn — PowerShell</a></td><td>使用 Windows，想从第一步开始</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Microsoft 官方的 PowerShell 入门教材。</td></tr>
+    <tr><td><a href="https://github.com/tldr-pages/tldr">tldr pages</a></td><td>只想先看一个指令怎么用</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用短小、可复制的例子解释常用指令。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>想知道 API 背后怎么传资料</td><td>⭐⭐⭐⭐</td><td>Mozilla 维护的 HTTP 参考资料。</td></tr>
-    <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>想用图形界面试 API</td><td>⭐⭐⭐⭐</td><td>不用先写程序，也能看到发送的内容和收到的资料。</td></tr>
-    <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>想从命令行调用 API</td><td>⭐⭐⭐</td><td>指令通常比原始 curl 写法更容易阅读。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">REST API</th><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></td><td>想知道 API 背后怎么传资料</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>Mozilla 维护的 HTTP 参考资料。</td></tr>
+    <tr><td><a href="https://learning.postman.com/">Postman Learning Center</a></td><td>想用图形界面试 API</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>不用先写程序，也能看到发送的内容和收到的资料。</td></tr>
+    <tr><td><a href="https://github.com/httpie/cli">HTTPie</a></td><td>想从命令行调用 API</td><td align="center" valign="middle">⭐⭐⭐</td><td>指令通常比原始 curl 写法更容易阅读。</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML／JSON</th><td><a href="https://yaml.org/">YAML 官网</a></td><td>需要查 YAML 的正确写法</td><td>⭐⭐⭐</td><td>语法和正式规范的官方入口。</td></tr>
-    <tr><td><a href="https://www.json.org/json-en.html">JSON 介绍</a></td><td>第一次接触 JSON</td><td>⭐⭐⭐⭐</td><td>用短例子说明 JSON 怎么装资料。</td></tr>
-    <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>想从命令行整理 JSON</td><td>⭐⭐⭐⭐</td><td>可以筛选和整理 API 返回的资料。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">YAML／JSON</th><td><a href="https://yaml.org/">YAML 官网</a></td><td>需要查 YAML 的正确写法</td><td align="center" valign="middle">⭐⭐⭐</td><td>语法和正式规范的官方入口。</td></tr>
+    <tr><td><a href="https://www.json.org/json-en.html">JSON 介绍</a></td><td>第一次接触 JSON</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>用短例子说明 JSON 怎么装资料。</td></tr>
+    <tr><td><a href="https://github.com/jqlang/jq">jq</a></td><td>想从命令行整理 JSON</td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>可以筛选和整理 API 返回的资料。</td></tr>
   </tbody>
 </table>
 

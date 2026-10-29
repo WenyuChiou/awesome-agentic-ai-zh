@@ -75,13 +75,13 @@ def _external_urls(text: str) -> tuple[str, ...]:
 
 def _table_shapes(text: str) -> tuple[tuple[int, ...], ...]:
     shapes: list[tuple[int, ...]] = []
-    for table in re.findall(r"<table>.*?</table>", text, flags=re.DOTALL):
+    for table in re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL):
         groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
         spans: list[int] = []
         for group in groups:
             rows = re.findall(r"<tr>", group)
             headers = re.findall(
-                r'<th scope="rowgroup" rowspan="(\d+)">', group
+                r'<th scope="rowgroup" rowspan="(\d+)" align="center" valign="middle">', group
             )
             assert len(headers) == 1
             assert int(headers[0]) == len(rows)

@@ -210,6 +210,9 @@ body[data-md-color-scheme="slate"] {
   inline-size: 100%;
   min-inline-size: 44rem;
 }
+.md-typeset table {
+  margin-inline: auto;
+}
 .md-typeset table:not([class]) {
   border-radius: 10px;
   /* auto, not hidden. Any non-visible overflow value still gives the rounded
@@ -332,27 +335,39 @@ body[data-md-color-scheme="slate"] {
   min-width: 0;
 }
 .md-typeset .reader-resource-catalog thead th:first-child {
-  width: 20%;
+  width: 10%;
+}
+.md-typeset .reader-resource-catalog thead th:nth-child(2) { width: 20%; }
+.md-typeset .reader-resource-catalog thead th:nth-child(3) { width: 14%; }
+.md-typeset .reader-resource-catalog thead th:nth-child(4),
+.md-typeset .reader-resource-catalog thead th:nth-child(5) { width: 28%; }
+.md-typeset .reader-resource-catalog table:not([class]) th { min-width: 0; padding: .6em .65em; }
+.md-typeset .reader-resource-catalog table:not([class]) td { padding: .6em .65em; }
+.md-typeset .reader-resource-catalog td:nth-of-type(2) {
+  text-align: center; white-space: nowrap;
 }
 .md-typeset .reader-resource-catalog th,
 .md-typeset .reader-resource-catalog td {
   vertical-align: top;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  text-align: left;
 }
-.md-typeset .reader-resource-catalog p {
-  margin: .4em 0;
+.md-typeset .reader-resource-catalog th[scope="rowgroup"] {
+  text-align: center;
+  vertical-align: middle;
 }
-.md-typeset .reader-resource-catalog p:first-child {
+.md-typeset .reader-resource-catalog div[data-field] {
+  margin: .15em 0;
+}
+.md-typeset .reader-resource-catalog div[data-field]:first-child {
   margin-top: 0;
 }
-.md-typeset .reader-resource-catalog p:last-child {
+.md-typeset .reader-resource-catalog div[data-field]:last-child {
   margin-bottom: 0;
 }
-.md-typeset .reader-resource-catalog [data-field="entry"] {
+.md-typeset .reader-resource-catalog div[data-field="entry"] {
   font-weight: 600;
-}
-.md-typeset .reader-resource-catalog [data-field="identity"] {
-  font-size: .75rem;
+  margin-bottom: .3em;
 }
 @media (max-width: 600px) {
   .md-typeset details.model-family table[data-model-family] th,
@@ -365,7 +380,7 @@ body[data-md-color-scheme="slate"] {
   }
 }
 /* Phone catalogs: category heading, then full-width resources. */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .md-typeset .reader-resource-catalog table:not([class]),
   .md-typeset .reader-resource-catalog tbody,
   .md-typeset .reader-resource-catalog tr,
@@ -390,8 +405,12 @@ body[data-md-color-scheme="slate"] {
   }
   .md-typeset .reader-resource-catalog td {
     border-inline: 0;
+    text-align: left;
+    padding-block: .2em;
   }
-  .md-typeset .reader-resource-catalog p[data-field="identity"] {
+  .md-typeset .reader-resource-catalog td:first-of-type { padding-top: .7em; }
+  .md-typeset .reader-resource-catalog td:last-of-type { padding-bottom: .7em; }
+  .md-typeset .reader-resource-catalog div[data-field="identity"] {
     font-size: inherit;
   }
 }
@@ -414,4 +433,60 @@ body[data-md-color-scheme="slate"] {
   .md-typeset .reader-core-terms th[scope="rowgroup"] { background: var(--md-code-bg-color); padding: .5em .65em; }
   .md-typeset .reader-core-terms table:not([class]) td { border: 0; padding: .15em .65em; }
   .md-typeset .reader-core-terms tr { border-bottom: 1px solid var(--md-typeset-table-color); padding: .35em 0 .45em; }
+}
+
+/* Resource selectors: keep destinations and ratings visible on phones. */
+.md-typeset .reader-table-picker .md-typeset__scrollwrap { margin: 0; }
+.md-typeset .reader-table-picker .md-typeset__table { display: block; padding: 0; }
+.md-typeset .reader-table-picker table:not([class]) { width: 100%; min-width: 0; }
+.md-typeset .reader-table-picker table:not([class]) td,
+.md-typeset .reader-table-picker table:not([class]) a {
+  overflow-wrap: normal; word-break: normal; hyphens: none;
+}
+@media (max-width: 600px) {
+  .md-typeset .reader-table-picker table:not([class]),
+  .md-typeset .reader-table-picker tbody,
+  .md-typeset .reader-table-picker tr {
+    display: block; inline-size: 100%; box-sizing: border-box;
+  }
+  .md-typeset .reader-table-picker thead {
+    position: absolute; inline-size: 1px; block-size: 1px;
+    overflow: hidden; clip-path: inset(50%);
+  }
+  .md-typeset .reader-table-picker tr {
+    border-bottom: 1px solid var(--md-typeset-table-color); padding: .35em 0;
+  }
+  .md-typeset .reader-table-picker table:not([class]) td {
+    display: block; min-inline-size: 0; border: 0; padding: .35em .5em;
+  }
+  .md-typeset .reader-table-picker td:first-child { font-weight: 600; }
+}
+
+/* README references keep their real fields; no invented rating or limits column. */
+.md-typeset .reader-reference-table { max-inline-size: 100%; overflow-x: auto; }
+.md-typeset .reader-reference-table .md-typeset__scrollwrap { margin: 0; }
+.md-typeset .reader-reference-table .md-typeset__table { display: block; padding: 0; }
+.md-typeset .reader-reference-table table:not([class]) { width: 100%; min-width: 0; }
+.md-typeset .reader-reference-table td { text-align: left; }
+.md-typeset .reader-reference-table th[scope="rowgroup"] { text-align: center; vertical-align: middle; }
+@media (max-width: 900px) {
+  .md-typeset .reader-reference-table table:not([class]),
+  .md-typeset .reader-reference-table tbody,
+  .md-typeset .reader-reference-table tr,
+  .md-typeset .reader-reference-table th[scope="rowgroup"],
+  .md-typeset .reader-reference-table td {
+    box-sizing: border-box; display: block; inline-size: 100%; min-inline-size: 0;
+  }
+  .md-typeset .reader-reference-table thead {
+    position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%);
+  }
+  .md-typeset .reader-reference-table tr { border-bottom: 1px solid var(--md-typeset-table-color); padding: .4em 0; }
+  .md-typeset .reader-reference-table td { border: 0; padding: .2em .65em; }
+  .md-typeset .reader-reference-table td:first-of-type { font-weight: 600; }
+  .md-typeset .reader-reference-table th[scope="rowgroup"] { background: var(--md-code-bg-color); text-align: left; }
+}
+
+/* Give desktop resource comparisons room without widening unrelated pages. */
+@media (min-width: 1200px) {
+  .md-main__inner.md-grid:has(.reader-resource-catalog) { max-width: 76rem; }
 }

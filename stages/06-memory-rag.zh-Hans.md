@@ -31,8 +31,10 @@
 
 ## 🧩 先认识七个核心术语
 
+<div align="center" markdown="1">
+
 | 核心术语 | 好理解的说法 | 正确意思 |
-|---|---|---|
+|:---|:---|:---|
 | **Retrieval（检索）** | 去书架找几页可能有答案的书 | 收到问题后，从外部资料找出相关内容。 |
 | **RAG（Retrieval-Augmented Generation）** | 先翻书，再用自己的话回答 | 先 retrieval，再把找到的内容交给模型生成答案。 |
 | **Embedding（嵌入向量）** | 帮句子的意思做一张坐标卡 | 把文字转成一串数字，让意思接近的文字在向量空间里靠近。 |
@@ -41,24 +43,30 @@
 | **Reranking（重新排序）** | 把第一次找来的卡片再排一次 | 用第二个方法重新评分候选内容，让更可能有用的片段排前面。 |
 | **Memory（记忆）** | 助理自己的笔记本 | 把跨消息或跨 session 还需要的状态写下来，之后再读回来；它不是聊天记录的别名。 |
 
+</div>
+
 ![RAG 检索外部证据；Memory 写入并读回重要状态](../resources/diagrams/rag-memory-map.zh-Hans.png)
 
 ### 一张表先选对方法
 
+<div align="center" markdown="1">
+
 | 你遇到的问题 | 先考虑 | 为什么 |
-|---|---|---|
+|:---|:---|:---|
 | 资料不长，而且这次回答用完就好 | **Long context** | 直接把资料放进这次请求，流程最短。 |
 | 文档很多，问题来了才知道要找哪几段 | **RAG** | 先找相关片段，不必每次塞入全部文档。 |
 | 助理下次仍要记得偏好、任务状态或过往结果 | **Memory** | 把值得保留的信息写入可再次读取的存储层。 |
 | 想稳定改变模型的行为或特定能力 | [**Fine-tuning**](../resources/model-training-guide.zh-Hans.md) | 调整模型权重与行为；它不会自动提供最新文档。 |
 
+</div>
+
 没有一个选项永远最好。请用自己的资料、问题与成功条件做评测。
 
 ## 🚪 进入条件与阅读路径
 
-- **第一次学：**先读七个核心术语，完成练习 1–4，再做短版自我检查。
-- **要做长期助理：**接着完成练习 5，再阅读 Memory 设计。
-- **要研究或上线：**最后进入进阶 RAG、Chunking、评测与研究入口。
+- **第一次学：** 先读七个核心术语，完成练习 1–4，再做短版自我检查。
+- **要做长期助理：** 接着完成练习 5，再阅读 Memory 设计。
+- **要研究或上线：** 最后进入进阶 RAG、Chunking、评测与研究入口。
 
 <details markdown="1">
 <summary>时间、环境、费用与资料安全</summary>
@@ -86,7 +94,7 @@
 <a id="练习-1embeddings"></a>
 ### 练习 1：把两句话变成 Embedding
 
-**成果：**你会看到意思相近的两句话，比不相关的句子更靠近。
+**成果：** 你会看到意思相近的两句话，比不相关的句子更靠近。
 
 ```powershell
 cd examples/stage-6/01-embeddings
@@ -99,7 +107,7 @@ python starter_anthropic.py
 <a id="练习-2vector-db"></a>
 ### 练习 2：把 Embedding 放进 Vector Database
 
-**成果：**你能把文字放进 Chroma，再用一句问题找回相关片段。
+**成果：** 你能把文字放进 Chroma，再用一句问题找回相关片段。
 
 ```powershell
 cd examples/stage-6/02-vector-db
@@ -112,7 +120,7 @@ python starter_anthropic.py
 <a id="练习-3chunking-对照"></a>
 ### 练习 3：比较三种 Chunking 方法
 
-**成果：**你会看到切得太大、太小或重叠太多，各自会发生什么事。
+**成果：** 你会看到切得太大、太小或重叠太多，各自会发生什么事。
 
 ```powershell
 cd examples/stage-6/03-chunking-comparison
@@ -125,7 +133,7 @@ python starter_anthropic.py
 <a id="练习-4完整-rag-流水线"></a>
 ### 练习 4：串起完整 RAG
 
-**成果：**程序会先找资料，再回答，并显示它使用了哪些来源片段。
+**成果：** 程序会先找资料，再回答，并显示它使用了哪些来源片段。
 
 ```powershell
 cd examples/stage-6/04-full-rag-pipeline
@@ -138,7 +146,7 @@ python starter_anthropic.py
 <a id="练习-5long-term-memory"></a>
 ### 练习 5：记住一项偏好
 
-**成果：**本练习只会在程序仍运行时新增、搜索并读回一项偏好；临时存储不代表长期持久记忆。
+**成果：** 本练习只会在程序仍运行时新增、搜索并读回一项偏好；临时存储不代表长期持久记忆。
 
 ```powershell
 cd examples/stage-6/05-long-term-memory
@@ -163,8 +171,10 @@ RAG 有两条路：一条先整理数据，一条在问题来时找资料。
 
 先从 **2-step RAG** 开始：每个问题都先检索，再回答，流程最容易测。**Agentic RAG** 让模型决定要不要找资料、是否改写问题或再找一次；**Hybrid RAG** 混合固定步骤与 agent 决策。它和 **Hybrid Search** 不同：Hybrid Search 只是在 retrieval 这一步合并候选。
 
+<div align="center" markdown="1">
+
 | 阶段 | 做什么 | 好理解的说法 |
-|---|---|---|
+|:---|:---|:---|
 | Load | 读入 PDF、网页或数据库内容 | 把书搬到桌上 |
 | Split | 切成 chunks | 把书分成小卡 |
 | Embed | 把每张卡转成向量 | 帮意思做坐标 |
@@ -173,6 +183,8 @@ RAG 有两条路：一条先整理数据，一条在问题来时找资料。
 | Rerank（可选） | 重新排候选内容 | 再检查哪张卡最有用 |
 | Generate | 把问题与证据交给模型 | 看着卡片回答 |
 | Cite／Evaluate | 显示来源并检查结果 | 告诉别人答案从哪里来 |
+
+</div>
 
 **Retriever** 是“收到问题后，回传相关文档”的接口。它不一定使用 vector database；BM25、SQL、网站搜索与混合搜索也能成为 retriever。
 
@@ -208,7 +220,7 @@ RAG 有两条路：一条先整理数据，一条在问题来时找资料。
 
 适合要做跨 session 助理、个人化或长期任务的人。页面会完整解释短期／长期，以及 **Semantic**、**Episodic**、**Procedural Memory**，再走过写入、搜索、更新、删除、过期与用户隔离；Mem0、Letta Code、LangMem、Graphiti 与研究资源都直接列在页面上。
 
-**怎么选：**答案需要更好的外部证据，走进阶 RAG；助理下次还要读回自身状态，走 Agent Memory。两者都需要时，分开测试，最后再接起来。
+**怎么选：** 答案需要更好的外部证据，走进阶 RAG；助理下次还要读回自身状态，走 Agent Memory。两者都需要时，分开测试，最后再接起来。
 
 ## 🎯 精选项目与学习资源
 
@@ -217,22 +229,22 @@ RAG 有两条路：一条先整理数据，一条在问题来时找资料。
 <small>资料核查：2026-08-30 UTC</small>
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="精选项目与学习资源">
-<table>
-  <thead><tr><th scope="col">分类</th><th scope="col">资源、用途与限制</th></tr></thead>
+<table align="center">
+  <thead><tr><th scope="col">分类</th><th scope="col">项目／文档</th><th scope="col">评分</th><th scope="col">用途</th><th scope="col">限制</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">RAG framework</th><td><p data-field="entry"><strong><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 文档型应用初学者</p><p data-field="learn"><strong>能学什么：</strong> Index、retriever、query engine</p><p data-field="status"><strong>状态／限制：</strong> MIT；套件多，先用官方 starter</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/deepset-ai/haystack">Haystack</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想比较模块化 pipeline</p><p data-field="learn"><strong>能学什么：</strong> components、pipelines、routing</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；先选一套 framework 练习</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想看完整 Web 产品的团队</p><p data-field="learn"><strong>能学什么：</strong> 文档解析、retrieval、UI</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；部署比教学示例重</p></td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">RAG framework</th><td><div data-field="entry"><strong><a href="https://github.com/run-llama/llama_index">LlamaIndex</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 文档型应用初学者</div><div data-field="learn"><strong>能学什么：</strong> Index、retriever、query engine</div></td><td><div data-field="status"><strong>状态／限制：</strong> MIT；套件多，先用官方 starter</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/deepset-ai/haystack">Haystack</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 想比较模块化 pipeline</div><div data-field="learn"><strong>能学什么：</strong> components、pipelines、routing</div></td><td><div data-field="status"><strong>状态／限制：</strong> Apache-2.0；先选一套 framework 练习</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/infiniflow/ragflow">RAGFlow</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 想看完整 Web 产品的团队</div><div data-field="learn"><strong>能学什么：</strong> 文档解析、retrieval、UI</div></td><td><div data-field="status"><strong>状态／限制：</strong> Apache-2.0；部署比教学示例重</div></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Vector data</th><td><p data-field="entry"><strong><a href="https://github.com/chroma-core/chroma">Chroma</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 第一次在本机做向量搜索</p><p data-field="learn"><strong>能学什么：</strong> collection、add、query</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；练习与 production 设置不同</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/qdrant/qdrant">Qdrant</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 需要自建或托管服务的团队</p><p data-field="learn"><strong>能学什么：</strong> dense、sparse、hybrid query</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；需规划服务与备份</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/weaviate/weaviate">Weaviate</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 需要 schema 与 hybrid search</p><p data-field="learn"><strong>能学什么：</strong> BM25 + vector search</p><p data-field="status"><strong>状态／限制：</strong> wl/ 以外为 BSD-3-Clause；wl/ 另需企业授权；先做小型基线</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/pgvector/pgvector">pgvector</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 已使用 PostgreSQL 的团队</p><p data-field="learn"><strong>能学什么：</strong> SQL 与 vector 同库</p><p data-field="status"><strong>状态／限制：</strong> PostgreSQL extension；仍需索引与查询调校</p></td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle" width="80">Vector data</th><td><div data-field="entry"><strong><a href="https://github.com/chroma-core/chroma">Chroma</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 第一次在本机做向量搜索</div><div data-field="learn"><strong>能学什么：</strong> collection、add、query</div></td><td><div data-field="status"><strong>状态／限制：</strong> Apache-2.0；练习与 production 设置不同</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/qdrant/qdrant">Qdrant</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 需要自建或托管服务的团队</div><div data-field="learn"><strong>能学什么：</strong> dense、sparse、hybrid query</div></td><td><div data-field="status"><strong>状态／限制：</strong> Apache-2.0；需规划服务与备份</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/weaviate/weaviate">Weaviate</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 需要 schema 与 hybrid search</div><div data-field="learn"><strong>能学什么：</strong> BM25 + vector search</div></td><td><div data-field="status"><strong>状态／限制：</strong> wl/ 以外为 BSD-3-Clause；wl/ 另需企业授权；先做小型基线</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/pgvector/pgvector">pgvector</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 已使用 PostgreSQL 的团队</div><div data-field="learn"><strong>能学什么：</strong> SQL 与 vector 同库</div></td><td><div data-field="status"><strong>状态／限制：</strong> PostgreSQL extension；仍需索引与查询调校</div></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">评测与完整产品</th><td><p data-field="entry"><strong><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 要建立可重复运行 eval 的团队</p><p data-field="learn"><strong>能学什么：</strong> datasets、metrics、experiments</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；metric 仍需人工校准</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想读完整 AI assistant 架构</p><p data-field="learn"><strong>能学什么：</strong> ingest、retrieval、chat、admin</p><p data-field="status"><strong>状态／限制：</strong> 完整产品很大；当架构参考，不当 starter</p></td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle" width="80">评测与完整产品</th><td><div data-field="entry"><strong><a href="https://github.com/vibrantlabsai/ragas">Ragas</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 要建立可重复运行 eval 的团队</div><div data-field="learn"><strong>能学什么：</strong> datasets、metrics、experiments</div></td><td><div data-field="status"><strong>状态／限制：</strong> Apache-2.0；metric 仍需人工校准</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/onyx-dot-app/onyx">Onyx</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 想读完整 AI assistant 架构</div><div data-field="learn"><strong>能学什么：</strong> ingest、retrieval、chat、admin</div></td><td><div data-field="status"><strong>状态／限制：</strong> 完整产品很大；当架构参考，不当 starter</div></td></tr>
   </tbody>
 </table>
 </div>

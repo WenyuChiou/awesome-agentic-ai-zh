@@ -37,17 +37,21 @@ When it is done, you should see a repo summary, a test command, a plan waiting f
 
 ## 🧩 Five Core Terms First
 
+<div align="center" markdown="1">
+
 | Core term | What it is, in plain language | How A1 uses it | What it is not |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **LLM (Large Language Model)** | The model that generates text or code, like the brain that thinks of answers in a workbench | Claude, GPT, and Gemini are model families | It does not manage the repo, file permissions, or billing |
 | **Provider API (model-service entry point)** | The door that lets a tool send a request to one model service | Anthropic, OpenAI, and Gemini APIs handle authentication and billing | It is not a coding agent that edits files |
 | **Router** | A transfer station that sends the same request to different providers | [OpenRouter](https://openrouter.ai/docs/faq) can centralize API, routing, and usage | It is not an LLM and does not manage file permissions |
 | **Coding agent (coding workbench)** | A workbench that can read files, edit files, and run commands in the terminal | Claude Code, Codex, OpenCode, and Pi are in this group | Its model, provider, and sandbox still need separate checks |
 | **Local runtime (local model engine)** | An engine that runs a model on your own computer, like a motor starting the model | [Ollama](https://github.com/ollama/ollama) lets compatible agents call a local model | It is not a coding agent and does not read a repo by itself |
 
+</div>
+
 ## Choose an entry point from what you already have
 
-<table>
+<table align="center">
 <thead>
 <tr><th scope="col">What you already have</th><th scope="col">Entry points to check first</th><th scope="col">Confirm first</th></tr>
 </thead>
@@ -134,26 +138,26 @@ A1 teaches you how to start safely; it does not maintain the same fast-changing 
 
 Editorial ratings are learning-map guidance, not GitHub stars or an overall ranking. `⭐⭐⭐⭐⭐` means read this first when you choose that tool path; it does not mean install every five-star tool.
 
-<table>
+<table align="center">
 <thead>
 <tr><th scope="col">Category</th><th scope="col">Project</th><th scope="col">Rating</th><th scope="col">Best for</th><th scope="col">Watch first</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">Official model ecosystems</th><td><a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a></td><td>⭐⭐⭐⭐⭐</td><td>People using the Anthropic ecosystem</td><td>Keep the permission prompt; start in a demo repo</td></tr>
-<tr><td><a href="https://github.com/openai/codex">openai/codex</a></td><td>⭐⭐⭐⭐⭐</td><td>People with ChatGPT or an OpenAI API</td><td>Confirm approval, sandbox, and working directory</td></tr>
-<tr><td><a href="https://github.com/google-gemini/gemini-cli">google-gemini/gemini-cli</a></td><td>⭐⭐⭐⭐</td><td>People with Google auth or Vertex AI</td><td>Confirm authentication and sandbox first</td></tr>
-<tr><td><a href="https://github.com/xai-org/grok-build">xai-org/grok-build</a></td><td>⭐⭐⭐</td><td>People trying the xAI ecosystem or a new tool</td><td>Observe in a demo repo; do not make it your first production tool</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Official model ecosystems</th><td><a href="https://github.com/anthropics/claude-code">claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>People using the Anthropic ecosystem</td><td>Keep the permission prompt; start in a demo repo</td></tr>
+<tr><td><a href="https://github.com/openai/codex">codex</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>People with ChatGPT or an OpenAI API</td><td>Confirm approval, sandbox, and working directory</td></tr>
+<tr><td><a href="https://github.com/google-gemini/gemini-cli">gemini-cli</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>People with Google auth or Vertex AI</td><td>Confirm authentication and sandbox first</td></tr>
+<tr><td><a href="https://github.com/xai-org/grok-build">grok-build</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>People trying the xAI ecosystem or a new tool</td><td>Observe in a demo repo; do not make it your first production tool</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Provider-flexible</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>⭐⭐⭐⭐⭐</td><td>People switching providers or using a compatible endpoint</td><td><code>AGENTS.md</code> has priority; check permission settings</td></tr>
-<tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>⭐⭐⭐⭐</td><td>People using CLI, desktop, and extensions</td><td>Start with low-privilege extensions</td></tr>
-<tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>⭐⭐⭐⭐⭐</td><td>People who value git diff and commit workflows</td><td>Understand its git auto-commit behavior</td></tr>
-<tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>⭐⭐⭐⭐</td><td>People extending a small core with extensions, skills, or RPC</td><td>No built-in sandbox; use a container or VM when isolation is needed</td></tr>
-<tr><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>⭐⭐⭐⭐⭐</td><td>People using one agent in terminal, desktop, or chat</td><td>Enable provider, Skill, and MCP permissions one at a time</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Provider-flexible</th><td><a href="https://github.com/anomalyco/opencode">opencode</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>People switching providers or using a compatible endpoint</td><td><code>AGENTS.md</code> has priority; check permission settings</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>People using CLI, desktop, and extensions</td><td>Start with low-privilege extensions</td></tr>
+<tr><td><a href="https://github.com/Aider-AI/aider">aider</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>People who value git diff and commit workflows</td><td>Understand its git auto-commit behavior</td></tr>
+<tr><td><a href="https://github.com/earendil-works/pi">pi</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>People extending a small core with extensions, skills, or RPC</td><td>No built-in sandbox; use a container or VM when isolation is needed</td></tr>
+<tr><td><a href="https://github.com/NousResearch/hermes-agent">hermes-agent</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>People using one agent in terminal, desktop, or chat</td><td>Enable provider, Skill, and MCP permissions one at a time</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Router / local engine</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>⭐⭐⭐⭐</td><td>People switching providers through one API</td><td>It is a Router and still needs an agent</td></tr>
-<tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>People running models on their own computer</td><td>It is a local runtime and still needs an agent</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Router / local engine</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>People switching providers through one API</td><td>It is a Router and still needs an agent</td></tr>
+<tr><td><a href="https://github.com/ollama/ollama">ollama</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>People running models on their own computer</td><td>It is a local runtime and still needs an agent</td></tr>
 </tbody>
 </table>
 <details markdown="1">

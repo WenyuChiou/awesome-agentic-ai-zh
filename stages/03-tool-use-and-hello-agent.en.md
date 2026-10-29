@@ -62,11 +62,15 @@ The model returns data in a fixed shape, such as JSON that conforms to a schema.
 
 ## Choose the Right Method First
 
+<div align="center" markdown="1">
+
 | What you need | Start with | Example |
-|---|---|---|
+|:---|:---|:---|
 | Only a text answer | A normal model response | Rewrite an email |
 | Data in a fixed shape | Structured Output | Extract a name and date |
 | Live data or an action | Function Calling / Tool Use | Check weather, create a ticket |
+
+</div>
 
 ## ⚠️ Five Guardrails Before Writing Your First Agent
 
@@ -126,13 +130,17 @@ Path A has **`$0` in API cost**; it still uses your hardware, memory, and electr
 <details markdown="1">
 <summary>Expand for the differences between CoT, ReAct, Reflection, and Planning</summary>
 
+<div align="center" markdown="1">
+
 | Term | Plain-language use | Where to learn it |
-|---|---|---|
+|:---|:---|:---|
 | **Chain-of-Thought (CoT)** | Early prompt techniques often asked for intermediate reasoning. Do not treat a full private chain of thought as a general output requirement; when checking, look at the final answer and a short, verifiable reason | [Stage 02](02-prompt-engineering.en.md) |
 | **ReAct** | Alternate actions and observations in a loop, then decide the next step | Exercise 3 of this chapter |
 | **Reflection** | A broad practice of using one round of feedback to improve the next attempt | The routing section below |
 | **Reflexion / Self-Refine** | Research patterns with an explicit Actor/Critic or self-feedback process | This chapter’s concepts; persistent-memory version in [Stage 06](06-memory-rag.en.md) |
 | **Planning** | Break the task into steps, then adjust the plan from results | [Stage 07.5](07.5-advanced-agentic-concepts.en.md) |
+
+</div>
 
 These terms describe different ways to solve problems, not the only test for whether something is an Agent. Computer-use, CodeAct, and workflow agents may use different loops too.
 
@@ -410,13 +418,17 @@ python examples/stage-3/05-error-handling/test_anthropic.py
 <details markdown="1">
 <summary>Expand error categories, bounded retry, and budget</summary>
 
+<div align="center" markdown="1">
+
 | Error | What the program does first | Send back to the model? |
-|---|---|---|
+|:---|:---|:---|
 | Network timeout/rate limit | Retry with a bound; record the error | Usually not at first |
 | Tool Call JSON parsing failure | Do not execute the tool; report a format error | Yes, as an error result |
 | Unknown tool/unauthorized argument | Reject execution; leave an audit log | Yes, but never relax permissions |
 | Tool cannot find data | Return a clear, minimal semantic error | Yes, so the model can revise or give up |
 | `MAX_STEPS`/cost limit reached | Stop immediately | Do not retry |
+
+</div>
 
 Anthropic’s failed `tool_result` uses `"is_error": true`. On the OpenAI-compatible path, structured errors can go in the `role: tool` content, but the application must still limit retries.
 
@@ -487,7 +499,7 @@ Complete one five-star route first: official docs → Exercises 1–3 → one fr
 
 > Ratings indicate this Stage’s learning priority, not popularity: `⭐⭐⭐⭐⭐` = skipping it will block this chapter’s route; `⭐⭐⭐⭐` = recommended early; `⭐⭐⭐` = read if needed; `⭐⭐` = historical or niche context.
 
-<table>
+<table align="center">
   <thead>
     <tr>
       <th scope="col">Category</th>
@@ -498,37 +510,37 @@ Complete one five-star route first: official docs → Exercises 1–3 → one fr
     </tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">Official core docs</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works">Anthropic — How Tool Use Works</a></td><td>Start with the five-step client-tool round trip.</td><td>Official docs</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls">Anthropic — Handle Tool Calls</a></td><td>Look at call IDs, results, and <code>is_error</code>.</td><td>Official docs</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://docs.ollama.com/capabilities/tool-calling">Ollama — Tool Calling</a></td><td>Run the single-tool and agent-loop examples once.</td><td>Official docs</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/function-calling">OpenAI — Function Calling</a></td><td>Compare function schemas and strict mode.</td><td>Official docs</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/function-calling">Google Gemini — Function Calling</a></td><td>Compare sequential/parallel calls when you need Gemini.</td><td>Official docs</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://arxiv.org/abs/2210.03629">ReAct paper</a></td><td>Read the abstract and method diagram first.</td><td>Original paper; arXiv</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Official core docs</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works">Anthropic — How Tool Use Works</a></td><td>Start with the five-step client-tool round trip.</td><td>Official docs</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls">Anthropic — Handle Tool Calls</a></td><td>Look at call IDs, results, and <code>is_error</code>.</td><td>Official docs</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://docs.ollama.com/capabilities/tool-calling">Ollama — Tool Calling</a></td><td>Run the single-tool and agent-loop examples once.</td><td>Official docs</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/function-calling">OpenAI — Function Calling</a></td><td>Compare function schemas and strict mode.</td><td>Official docs</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/function-calling">Google Gemini — Function Calling</a></td><td>Compare sequential/parallel calls when you need Gemini.</td><td>Official docs</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2210.03629">ReAct paper</a></td><td>Read the abstract and method diagram first.</td><td>Original paper; arXiv</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Official courses and examples</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>Read the older Tool Use notebook; use the Cookbook in the next row when building.</td><td>Archived official course; upstream provides no SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/claude-cookbooks/tree/main/tool_use">Anthropic Tool Use Cookbook</a></td><td>Move from one tool to parallel tools.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/claude-quickstarts">Anthropic Quickstarts</a></td><td>After the exercises, see how a full app connects tools.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/ai-agents-for-beginners">Microsoft AI Agents for Beginners</a></td><td>Choose a chapter if you want another complete course.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Official courses and examples</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>Read the older Tool Use notebook; use the Cookbook in the next row when building.</td><td>Archived official course; upstream provides no SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/claude-cookbooks/tree/main/tool_use">Anthropic Tool Use Cookbook</a></td><td>Move from one tool to parallel tools.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/claude-quickstarts">Anthropic Quickstarts</a></td><td>After the exercises, see how a full app connects tools.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/ai-agents-for-beginners">Microsoft AI Agents for Beginners</a></td><td>Choose a chapter if you want another complete course.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">From-scratch implementations</th><td><a href="https://github.com/pguso/ai-agents-from-scratch">pguso/ai-agents-from-scratch</a></td><td>Use Ollama to compare with Exercise 3’s loop.</td><td>Maintained; MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/arunpshankar/react-from-scratch">arunpshankar/react-from-scratch</a></td><td>Read later for Gemini/Reflection variants.</td><td>Updates slowed (last push 2025-05); Apache-2.0</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/mattambrogi/agent-implementation">mattambrogi/agent-implementation</a></td><td>Use only to read through a minimal teaching toy line by line.</td><td>Historical reference (last push 2024-01); upstream provides no SPDX</td><td>⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/lsdefine/GenericAgent">lsdefine/GenericAgent</a></td><td>Compare it later if you want to see a small framework.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">From-scratch implementations</th><td><a href="https://github.com/pguso/ai-agents-from-scratch">ai-agents-from-scratch</a></td><td>Use Ollama to compare with Exercise 3’s loop.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/arunpshankar/react-from-scratch">react-from-scratch</a></td><td>Read later for Gemini/Reflection variants.</td><td>Updates slowed (last push 2025-05); Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/mattambrogi/agent-implementation">agent-implementation</a></td><td>Use only to read through a minimal teaching toy line by line.</td><td>Historical reference (last push 2024-01); upstream provides no SPDX</td><td align="center" valign="middle">⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/lsdefine/GenericAgent">GenericAgent</a></td><td>Compare it later if you want to see a small framework.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">Framework / CodeAct comparisons</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>Compare CodeAct after completing the JSON-tool loop.</td><td>Maintained; Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/QuantaLogic/quantalogic">QuantaLogic</a></td><td>Read later when you need a second CodeAct implementation.</td><td>Updates slower (last push 2025-12); Apache-2.0</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/react-agent">LangChain ReAct Agent</a></td><td>See how a framework wraps the loop you wrote yourself.</td><td>Maintained; MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Framework / CodeAct comparisons</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>Compare CodeAct after completing the JSON-tool loop.</td><td>Maintained; Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/QuantaLogic/quantalogic">QuantaLogic</a></td><td>Read later when you need a second CodeAct implementation.</td><td>Updates slower (last push 2025-12); Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/react-agent">LangChain ReAct Agent</a></td><td>See how a framework wraps the loop you wrote yourself.</td><td>Maintained; MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Chinese chapter-style textbooks</th><td><a href="https://github.com/datawhalechina/hello-agents">datawhalechina/hello-agents</a></td><td>Use this route for complete Chinese chapters.</td><td>Maintained; upstream metadata provides no SPDX</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/jjyaoao/HelloAgents">jjyaoao/HelloAgents</a></td><td>Run the code alongside the textbook; check the matching branch first.</td><td>Maintained; upstream metadata provides no SPDX</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Chinese chapter-style textbooks</th><td><a href="https://github.com/datawhalechina/hello-agents">hello-agents</a></td><td>Use this route for complete Chinese chapters.</td><td>Maintained; upstream metadata provides no SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/jjyaoao/HelloAgents">HelloAgents</a></td><td>Run the code alongside the textbook; check the matching branch first.</td><td>Maintained; upstream metadata provides no SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Structured Output tools</th><td><a href="https://github.com/567-labs/instructor">567-labs/instructor</a></td><td>Read it for typed models, validation, and retry.</td><td>Former <code>jxnl/instructor</code> redirects here; MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/dottxt-ai/outlines">dottxt-ai/outlines</a></td><td>Read it to study constrained decoding locally.</td><td>Maintained; Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Structured Output tools</th><td><a href="https://github.com/567-labs/instructor">instructor</a></td><td>Read it for typed models, validation, and retry.</td><td>Former <code>jxnl/instructor</code> redirects here; MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/dottxt-ai/outlines">outlines</a></td><td>Read it to study constrained decoding locally.</td><td>Maintained; Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 

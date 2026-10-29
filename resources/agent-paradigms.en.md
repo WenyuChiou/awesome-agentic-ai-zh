@@ -12,11 +12,15 @@ One tool can appear in a terminal, IDE, and desktop app. It can also connect to 
 
 ## 📌 First, separate three axes
 
+<div align="center" markdown="1">
+
 | Axis | Plain explanation | Exact question |
-|---|---|---|
+|:---|:---|:---|
 | **Identity** | What job does this thing do? | Is it a Coding Agent, Router, Local Runtime, Framework, or Chat Gateway? |
 | **Surface** | Which door do you use to talk to it? | Terminal, IDE, desktop, web, chat app, or API? |
 | **Deployment** | Where does its body live? | Your computer, a cloud host, an edge device, or a managed service? |
+
+</div>
 
 A product can have many **Surfaces** and move between **Deployments**. Its main **Identity** does not automatically change.
 
@@ -29,20 +33,26 @@ A product can have many **Surfaces** and move between **Deployments**. Its main 
 
 ## 🧩 Identity: what is it responsible for?
 
+<div align="center" markdown="1">
+
 | Core term | Plain definition | Examples | What it does not automatically provide |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **Coding Agent/Harness** | Reads files, edits, runs commands, and reports back inside allowed boundaries | Claude Code, Codex, OpenCode, Pi, Aider, goose | A model, Router, or Sandbox |
 | **Router** | Forwards model requests to different Providers | OpenRouter | Repo editing or file permissions |
 | **Local Runtime** | Loads and runs a model on your own machine | Ollama, vLLM | Task understanding or workspace operations |
 | **Agent Framework** | A toolbox for developers to write state, steps, Handoffs, and Workflows | LangGraph, CrewAI, Microsoft Agent Framework | A finished Agent that works immediately after installation |
 | **Chat Gateway** | Connects an Agent to Telegram, Slack, or another messaging entry point | Hermes Agent's gateway/messaging mode | A safe model, permission policy, or deployment by itself |
 
+</div>
+
 The shortest check is: **Who runs the model? Who routes the request? Who can touch files? Who arranges multiple steps? Where do you talk to it?**
 
 ## 🧭 Where common tools fit
 
+<div align="center" markdown="1">
+
 | Tool | Main Identity | Common Surfaces | Possible Deployment | Common beginner confusion |
-|---|---|---|---|---|
+|:---|:---|:---|:---|:---|
 | [OpenCode](https://opencode.ai/docs/) | Coding Agent/Harness | Terminal, desktop, IDE | The OpenCode process runs locally | Connecting a cloud Provider sends model requests; it does not move the OpenCode process to the cloud. You still choose the model and permissions |
 | [Pi](https://pi.dev/docs/latest) | Coding Agent/Harness | Terminal, SDK, RPC | Local | This Pi is not Raspberry Pi; it has no built-in Sandbox |
 | [OpenRouter](https://openrouter.ai/docs/faq) | Router | API | Managed cloud service | It does not read files or run commands |
@@ -51,6 +61,8 @@ The shortest check is: **Who runs the model? Who routes the request? Who can tou
 | [goose](https://block.github.io/goose/) | Coding/general Agent | CLI, desktop, API | Local | Review extension permissions separately |
 | [Hermes Agent](https://github.com/NousResearch/hermes-agent) | Agent runtime + Chat Gateway | CLI, messaging | Local or your own host | A chat entry point does not guarantee 24/7 service, safety, or zero maintenance |
 | [OpenClaw](https://github.com/openclaw/openclaw) | Self-hostable Agent/assistant platform | Web, chat, or CLI, depending on deployment | Local, cloud, or edge | Edge deployment does not remove network, tool, or data-exfiltration risks |
+
+</div>
 
 ## 📚 Required reading
 
@@ -90,10 +102,14 @@ A local model can reduce the need to send Prompts to an external Provider. But a
 
 A **Subagent** is an isolated worker that receives one small part of a task from the main Agent. It describes how work is divided, not where a product runs.
 
+<div align="center" markdown="1">
+
 | Path | Who creates the Subagent | Best fit |
-|---|---|---|
+|:---|:---|:---|
 | **Framework-based** | Your Python/TypeScript orchestration program | You need direct control over state, Providers, Handoffs, and Workflows |
 | **Coding-Agent native** | A runtime such as Claude Code or Codex | Split research, implementation, or review inside one repo |
+
+</div>
 
 For either path, give the Subagent a precise scope, output format, budget, stop condition, and verification method. The main Agent must still read the result. “Used multiple Agents” is not evidence of correctness.
 
@@ -103,27 +119,27 @@ Continue with [Stage 5 Subagents](../stages/05-claude-code-ecosystem.en.md) and 
 
 Stars are this learning map's reading priority. They are not GitHub stars or an overall tool ranking.
 
-<table>
+<table align="center">
 <thead><tr><th>Group</th><th>Project/resource</th><th>Learn this</th><th>Limit</th><th>Rating</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">Coding Agent/Harness</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>Provider switching, rules, Skills, and permissions</td><td>Model and Sandbox still need separate choices</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>Small core, extensions, SDK, and RPC</td><td>No built-in Sandbox</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>Git diff, commit, and undo workflows</td><td>Check auto-commit and hook settings first</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>CLI, desktop, Providers, and extensions</td><td>Start with minimal extension permissions</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/continuedev/continue">continuedev/continue</a></td><td>IDE/CLI Surfaces and Agent mode</td><td>Review each Surface's permissions separately</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Coding Agent/Harness</th><td><a href="https://github.com/anomalyco/opencode">opencode</a></td><td>Provider switching, rules, Skills, and permissions</td><td>Model and Sandbox still need separate choices</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/earendil-works/pi">pi</a></td><td>Small core, extensions, SDK, and RPC</td><td>No built-in Sandbox</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/Aider-AI/aider">aider</a></td><td>Git diff, commit, and undo workflows</td><td>Check auto-commit and hook settings first</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td>CLI, desktop, Providers, and extensions</td><td>Start with minimal extension permissions</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/continuedev/continue">continue</a></td><td>IDE/CLI Surfaces and Agent mode</td><td>Review each Surface's permissions separately</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Router/Runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter official docs</a></td><td>Routers, Provider routing, and usage</td><td>Not a Coding Agent</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>Local model downloads and compatible APIs</td><td>Not a Coding Agent</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Router/Runtime</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter official docs</a></td><td>Routers, Provider routing, and usage</td><td>Not a Coding Agent</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/ollama/ollama">ollama</a></td><td>Local model downloads and compatible APIs</td><td>Not a Coding Agent</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Messaging/self-hosted</th><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>Agent runtime, Messaging Gateway, and scheduling</td><td>Self-hosting still needs operations and narrow tool permissions</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/openclaw/openclaw">openclaw/openclaw</a></td><td>Local, edge, and self-hosted assistant trade-offs</td><td>Local does not mean zero data risk</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Messaging/self-hosted</th><td><a href="https://github.com/NousResearch/hermes-agent">hermes-agent</a></td><td>Agent runtime, Messaging Gateway, and scheduling</td><td>Self-hosting still needs operations and narrow tool permissions</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/openclaw/openclaw">openclaw</a></td><td>Local, edge, and self-hosted assistant trade-offs</td><td>Local does not mean zero data risk</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">Framework/Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langchain-ai/langgraph</a></td><td>State, nodes, edges, Checkpoints, and Human-in-the-loop</td><td>You still write and test the Workflow</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/crewAIInc/crewAI">crewAIInc/crewAI</a></td><td>Roles, Tasks, and Crew orchestration</td><td>Role descriptions do not replace verification</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/microsoft/agent-framework">microsoft/agent-framework</a></td><td>Microsoft's current Agent and Workflow path</td><td>Old AutoGen/Swarm material is historical context only</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Framework/Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langgraph</a></td><td>State, nodes, edges, Checkpoints, and Human-in-the-loop</td><td>You still write and test the Workflow</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>Roles, Tasks, and Crew orchestration</td><td>Role descriptions do not replace verification</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/microsoft/agent-framework">agent-framework</a></td><td>Microsoft's current Agent and Workflow path</td><td>Old AutoGen/Swarm material is historical context only</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
 

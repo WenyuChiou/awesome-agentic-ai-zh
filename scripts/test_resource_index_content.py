@@ -113,7 +113,7 @@ def test_reference_table_uses_five_real_rowgroups_without_empty_category_cells(
     locale: str,
 ) -> None:
     text = PAGES[locale].read_text(encoding="utf-8")
-    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    tables = re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)
     assert len(tables) == 1
     table = tables[0]
     groups = re.findall(r"<tbody>(.*?)</tbody>", table, flags=re.DOTALL)
@@ -151,7 +151,8 @@ def test_public_router_keeps_ordered_destinations_and_ratings_in_locale_parity()
     for locale, page in PUBLIC_PAGES.items():
         visible = _without_details(page.read_text(encoding="utf-8"))
         router = visible.split("## 📌", 1)[1].split("<a id=", 1)[0]
-        rows = re.findall(r"\[[^]]+\]\(([^)]+)\)\s*\|\s*(⭐+)\s*\|", router)
+        rows = re.findall(r"\[[^]]+\]\(([^)]+)\)\s*<br>\s*(⭐+)\s*\|", router)
+        assert len(rows) == 6, "Every destination must retain its own visible rating"
         signatures[locale] = [(_locale_neutral_href(href), rating) for href, rating in rows]
 
     assert signatures["en"] == signatures["zh-TW"]

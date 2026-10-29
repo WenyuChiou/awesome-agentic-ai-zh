@@ -6,7 +6,7 @@
 
 ← [回到 Stage 6：RAG 与 Memory](../stages/06-memory-rag.zh-Hans.md)
 
-**Agent Memory（代理记忆）**像一本有管理规则的笔记本。它不是把所有聊天偷偷存起来；它只保存之后真的需要、用户允许，而且可以查看、修改与删除的内容。
+**Agent Memory（代理记忆）** 像一本有管理规则的笔记本。它不是把所有聊天偷偷存起来；它只保存之后真的需要、用户允许，而且可以查看、修改与删除的内容。
 
 ## 📌 学习目标
 
@@ -20,14 +20,18 @@
 
 ## 🧩 先把四样东西分开
 
+<div align="center" markdown="1">
+
 | 核心术语 | 好理解的说法 | 正确意思 |
-|---|---|---|
+|:---|:---|:---|
 | **Chat History（聊天记录）** | 这次对话的逐字稿 | 消息记录；不代表每一则都应永久保存或放进模型 context。 |
 | **Context（上下文）** | 这一刻放在桌上的资料 | 本次模型调用实际看到的 instructions、messages、工具结果与取回内容。 |
 | **RAG** | 有问题时去书架找资料 | 从外部知识来源取回证据，再交给模型回答。 |
 | **Memory（记忆）** | 助理留给下次的短笔记 | 跨步骤、thread 或 session 仍需读回的状态，必须有写入与治理规则。 |
 
-**最重要的判断：**产品手册放知识库；当前任务做到哪里放短期 state；经用户同意保存的偏好才可能进入长期 memory。
+</div>
+
+**最重要的判断：** 产品手册放知识库；当前任务做到哪里放短期 state；经用户同意保存的偏好才可能进入长期 memory。
 
 ## 📚 必读材料
 
@@ -46,11 +50,15 @@
 
 ## 🧠 三种内容类型
 
+<div align="center" markdown="1">
+
 | 类型 | 记什么 | 例子 | 风险 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **Semantic Memory（语义记忆）** | 较稳定的事实 | 用户偏好短答、项目使用 Python 3.13 | 事实会过期或互相冲突 |
 | **Episodic Memory（情节记忆）** | 发生过的事件与结果 | 上次部署在哪一步失败、哪个修法有效 | 成功一次不代表永远适用 |
 | **Procedural Memory（程序记忆）** | 做事规则与步骤 | 发版前要跑哪些 gate | 恶意内容可能污染未来行为 |
+
+</div>
 
 **Semantic memory** 和 **semantic search** 不是同一件事：前者是记住的内容类型，后者是按意思相近来搜索的取回方法。
 
@@ -67,14 +75,18 @@
 
 ## 🧱 先选最简单的设计
 
+<div align="center" markdown="1">
+
 | 问题 | 先用什么 | 何时升级 |
-|---|---|---|
+|:---|:---|:---|
 | 字段固定，例如语言、时区、通知偏好 | **直接状态表** | 字段种类变多或需要模糊搜索时 |
 | 内容较自由，例如短摘要或可重用经验 | **可搜索文字 memory** | 关系、时间与冲突成为主要问题时 |
 | 人、事件与关系会随时间改变 | **Temporal Knowledge Graph** | 只有测试证明一般资料表／搜索不够时 |
 | 只需恢复同一个工作流程 | **Checkpoint／thread state** | 真正需要跨 thread 分享时 |
 
-**先从资料表开始。**能用明确字段保存的内容，不必先做向量搜索；能用短期 state 解决的问题，不必先做永久记忆。
+</div>
+
+**先从资料表开始。** 能用明确字段保存的内容，不必先做向量搜索；能用短期 state 解决的问题，不必先做永久记忆。
 
 ## 🛡️ Memory 的安全底线
 
@@ -95,7 +107,7 @@
 4. 删除偏好，再搜索一次，结果必须为空。
 5. 用另一个 `user_id` 查询，不能看到前一位用户的内容。
 
-**完成条件：**add、search、update、delete 与 user isolation 五项测试都通过；只会 `add` 不算完成。
+**完成条件：** add、search、update、delete 与 user isolation 五项测试都通过；只会 `add` 不算完成。
 
 <details markdown="1">
 <summary>Hot path、Background 与冲突处理</summary>
@@ -116,7 +128,7 @@
 4. 记错：保留来源与信心，让用户能修改，不把模型推测直接当事实。
 5. 删不干净：追踪主库、索引、cache、事件串流与备份的删除路径。
 
-**TencentDB 阅读提示（仅此项核查：2026-10-16 UTC）：**Chat Memory 保存对话中提取的事实与经验；Skill 保存可复用步骤；LLM-Wiki 整理文档；CodeGraph 建立代码符号与调用关系。后两者主要是知识检索资产，不宜全部等同个人长期记忆。先完成上面的最小练习，再观察团队如何管理这四种资产。<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/README.md">核查版本 README</a>／<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/LICENSE">MIT 许可</a>。
+**TencentDB 阅读提示（仅此项核查：2026-10-16 UTC）：** Chat Memory 保存对话中提取的事实与经验；Skill 保存可复用步骤；LLM-Wiki 整理文档；CodeGraph 建立代码符号与调用关系。后两者主要是知识检索资产，不宜全部等同个人长期记忆。先完成上面的最小练习，再观察团队如何管理这四种资产。<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/README.md">核查版本 README</a>／<a href="https://github.com/TencentCloud/TencentDB-Agent-Memory/blob/e9a82935b52741e0c798c75326e90b7144eb4d5f/LICENSE">MIT 许可</a>。
 
 </details>
 
@@ -131,28 +143,28 @@
 还要测试用户／workspace 隔离，以及恶意内容会不会污染后续行为。
 
 <div class="reader-resource-catalog" role="region" tabindex="0" aria-label="精选项目与学习资源">
-<table>
-  <thead><tr><th scope="col">分类</th><th scope="col">资源、用途与限制</th></tr></thead>
+<table align="center">
+  <thead><tr><th scope="col">分类</th><th scope="col">项目／文档</th><th scope="col">评分</th><th scope="col">用途</th><th scope="col">限制</th></tr></thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="8">Memory layer</th><td><p data-field="entry"><strong><a href="https://github.com/mem0ai/mem0">Mem0</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 第一次做跨 session memory</p><p data-field="learn"><strong>能学什么：</strong> library、server、cloud 与搜索生命周期</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；OSS 与 managed 能力分开看</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/langchain-ai/langmem">LangMem</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 已使用 LangGraph 的团队</p><p data-field="learn"><strong>能学什么：</strong> hot-path／background memory</p><p data-field="status"><strong>状态／限制：</strong> MIT；先理解 LangGraph store</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/letta-ai/letta">Letta 项目入口</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 先分清 Letta 的产品范围</p><p data-field="learn"><strong>能学什么：</strong> 现行安装、文档与 source 去向</p><p data-field="status"><strong>状态／限制：</strong> landing page；退役 V1 server 只留在 archive branch</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/letta-ai/letta-code">Letta Code</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 建立 stateful agent 或 App Server</p><p data-field="learn"><strong>能学什么：</strong> agent harness、git-backed MemFS、长期 identity</p><p data-field="status"><strong>状态／限制：</strong> 现行 source；产品型 agent harness，不是通用 memory DB</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 先用磁盘上已经存在的记忆</p><p data-field="learn"><strong>能学什么：</strong> 从 coding agent 的 session 文件做 episodic memory；默认是词汇检索（BM25），不需要 embedding；可选的 <code>deja embed</code> 另外提供语义召回</p><p data-field="status"><strong>状态／限制：</strong> MIT；默认只在本机。若配置远程 embedding 端点，会把已脱敏凭据的索引文本发送过去；用本机 Ollama 或 LM Studio 则不离开本机</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/vectorize-io/hindsight">Hindsight</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想比较明确 memory 操作的读者</p><p data-field="learn"><strong>能学什么：</strong> <code>retain</code> ／ <code>recall</code> ／ <code>reflect</code>：保存、检索、根据记忆推理并回答</p><p data-field="status"><strong>状态／限制：</strong> MIT；不要把供应商 benchmark 当作自己的质量证据</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/volcengine/OpenViking">OpenViking</a></strong> <span data-field="rating">⭐⭐⭐（进阶）</span></p><p data-field="audience"><strong>适合谁：</strong> 要整理大量 agent context 的团队</p><p data-field="learn"><strong>能学什么：</strong> 用类文件系统组织 resource、memory 与 skill</p><p data-field="status"><strong>状态／限制：</strong> 主项目 AGPL-3.0。CLI／examples 分别授权。README 另有重写限制文字。</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory">TencentDB Agent Memory</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想研究跨 Agent 记忆共享与治理的团队</p><p data-field="learn"><strong>能学什么：</strong> Chat Memory、Skill、LLM-Wiki、CodeGraph 的分工；资产所有者、版本、可见性与 Agent 绑定</p><p data-field="status"><strong>状态／限制：</strong> MIT；可自托管，默认 SQLite；记忆提取仍需模型端点。完整部署较重，先检查网络、权限与数据流</p></td></tr>
+    <tr><th scope="rowgroup" rowspan="8" align="center" valign="middle" width="80">Memory layer</th><td><div data-field="entry"><strong><a href="https://github.com/mem0ai/mem0">Mem0</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 第一次做跨 session memory</div><div data-field="learn"><strong>能学什么：</strong> library、server、cloud 与搜索生命周期</div></td><td><div data-field="status"><strong>状态／限制：</strong> Apache-2.0；OSS 与 managed 能力分开看</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/langchain-ai/langmem">LangMem</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 已使用 LangGraph 的团队</div><div data-field="learn"><strong>能学什么：</strong> hot-path／background memory</div></td><td><div data-field="status"><strong>状态／限制：</strong> MIT；先理解 LangGraph store</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/letta-ai/letta">Letta 项目入口</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 先分清 Letta 的产品范围</div><div data-field="learn"><strong>能学什么：</strong> 现行安装、文档与 source 去向</div></td><td><div data-field="status"><strong>状态／限制：</strong> landing page；退役 V1 server 只留在 archive branch</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/letta-ai/letta-code">Letta Code</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 建立 stateful agent 或 App Server</div><div data-field="learn"><strong>能学什么：</strong> agent harness、git-backed MemFS、长期 identity</div></td><td><div data-field="status"><strong>状态／限制：</strong> 现行 source；产品型 agent harness，不是通用 memory DB</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/vshulcz/deja-vu">deja-vu</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 先用磁盘上已经存在的记忆</div><div data-field="learn"><strong>能学什么：</strong> 从 coding agent 的 session 文件做 episodic memory；默认是词汇检索（BM25），不需要 embedding；可选的 <code>deja embed</code> 另外提供语义召回</div></td><td><div data-field="status"><strong>状态／限制：</strong> MIT；默认只在本机。若配置远程 embedding 端点，会把已脱敏凭据的索引文本发送过去；用本机 Ollama 或 LM Studio 则不离开本机</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/vectorize-io/hindsight">Hindsight</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 想比较明确 memory 操作的读者</div><div data-field="learn"><strong>能学什么：</strong> <code>retain</code> ／ <code>recall</code> ／ <code>reflect</code>：保存、检索、根据记忆推理并回答</div></td><td><div data-field="status"><strong>状态／限制：</strong> MIT；不要把供应商 benchmark 当作自己的质量证据</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/volcengine/OpenViking">OpenViking</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐（进阶）</span></td><td><div data-field="audience"><strong>适合谁：</strong> 要整理大量 agent context 的团队</div><div data-field="learn"><strong>能学什么：</strong> 用类文件系统组织 resource、memory 与 skill</div></td><td><div data-field="status"><strong>状态／限制：</strong> 主项目 AGPL-3.0。CLI／examples 分别授权。README 另有重写限制文字。</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory">TencentDB Agent Memory</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 想研究跨 Agent 记忆共享与治理的团队</div><div data-field="learn"><strong>能学什么：</strong> Chat Memory、Skill、LLM-Wiki、CodeGraph 的分工；资产所有者、版本、可见性与 Agent 绑定</div></td><td><div data-field="status"><strong>状态／限制：</strong> MIT；可自托管，默认 SQLite；记忆提取仍需模型端点。完整部署较重，先检查网络、权限与数据流</div></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">时间与关系</th><td><p data-field="entry"><strong><a href="https://github.com/getzep/graphiti">Graphiti</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 关系会随时间改变的应用</p><p data-field="learn"><strong>能学什么：</strong> bi-temporal facts、temporal graph</p><p data-field="status"><strong>状态／限制：</strong> Apache-2.0；需要图数据库与治理</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/getzep/zep">Zep examples</a></strong> <span data-field="rating">⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 评估 Zep Cloud 的团队</p><p data-field="learn"><strong>能学什么：</strong> 集成与示例入口</p><p data-field="status"><strong>状态／限制：</strong> 旧 Community Edition 已移到 legacy／deprecated</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://docs.langchain.com/oss/python/concepts/memory">LangChain Memory overview</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 想先学清楚概念的读者</p><p data-field="learn"><strong>能学什么：</strong> thread state、store、三种 memory 类型</p><p data-field="status"><strong>状态／限制：</strong> 框架文档；概念可移植，API 需看版本</p></td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle" width="80">时间与关系</th><td><div data-field="entry"><strong><a href="https://github.com/getzep/graphiti">Graphiti</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 关系会随时间改变的应用</div><div data-field="learn"><strong>能学什么：</strong> bi-temporal facts、temporal graph</div></td><td><div data-field="status"><strong>状态／限制：</strong> Apache-2.0；需要图数据库与治理</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/getzep/zep">Zep examples</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 评估 Zep Cloud 的团队</div><div data-field="learn"><strong>能学什么：</strong> 集成与示例入口</div></td><td><div data-field="status"><strong>状态／限制：</strong> 旧 Community Edition 已移到 legacy／deprecated</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://docs.langchain.com/oss/python/concepts/memory">LangChain Memory overview</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 想先学清楚概念的读者</div><div data-field="learn"><strong>能学什么：</strong> thread state、store、三种 memory 类型</div></td><td><div data-field="status"><strong>状态／限制：</strong> 框架文档；概念可移植，API 需看版本</div></td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">研究与评测</th><td><p data-field="entry"><strong><a href="https://arxiv.org/abs/2309.02427">CoALA</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 研究 agent memory 架构</p><p data-field="learn"><strong>能学什么：</strong> working、episodic、semantic、procedural</p><p data-field="status"><strong>状态／限制：</strong> 分析框架，不是可安装产品</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://arxiv.org/abs/2304.03442">Generative Agents</a></strong> <span data-field="rating">⭐⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 研究反思与记忆取回</p><p data-field="learn"><strong>能学什么：</strong> recency、importance、relevance</p><p data-field="status"><strong>状态／限制：</strong> 经典研究，不是 production 标准答案</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://arxiv.org/abs/2303.11366">Reflexion</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 研究经验反馈的读者</p><p data-field="learn"><strong>能学什么：</strong> verbal feedback 与下一次尝试</p><p data-field="status"><strong>状态／限制：</strong> reflection 只有持久保存后才成为跨 session memory</p></td></tr>
-    <tr><td><p data-field="entry"><strong><a href="https://github.com/mem0ai/memory-benchmarks">Mem0 Memory Benchmarks</a></strong> <span data-field="rating">⭐⭐⭐⭐</span></p><p data-field="audience"><strong>适合谁：</strong> 要测 memory quality 的开发者</p><p data-field="learn"><strong>能学什么：</strong> 数据集与可重复运行评测入口</p><p data-field="status"><strong>状态／限制：</strong> 供应商维护；自行加入 isolation／deletion 测试</p></td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle" width="80">研究与评测</th><td><div data-field="entry"><strong><a href="https://arxiv.org/abs/2309.02427">CoALA</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 研究 agent memory 架构</div><div data-field="learn"><strong>能学什么：</strong> working、episodic、semantic、procedural</div></td><td><div data-field="status"><strong>状态／限制：</strong> 分析框架，不是可安装产品</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://arxiv.org/abs/2304.03442">Generative Agents</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 研究反思与记忆取回</div><div data-field="learn"><strong>能学什么：</strong> recency、importance、relevance</div></td><td><div data-field="status"><strong>状态／限制：</strong> 经典研究，不是 production 标准答案</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://arxiv.org/abs/2303.11366">Reflexion</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 研究经验反馈的读者</div><div data-field="learn"><strong>能学什么：</strong> verbal feedback 与下一次尝试</div></td><td><div data-field="status"><strong>状态／限制：</strong> reflection 只有持久保存后才成为跨 session memory</div></td></tr>
+    <tr><td><div data-field="entry"><strong><a href="https://github.com/mem0ai/memory-benchmarks">Mem0 Memory Benchmarks</a></strong></div></td><td align="center" valign="middle"><span data-field="rating">⭐⭐⭐⭐</span></td><td><div data-field="audience"><strong>适合谁：</strong> 要测 memory quality 的开发者</div><div data-field="learn"><strong>能学什么：</strong> 数据集与可重复运行评测入口</div></td><td><div data-field="status"><strong>状态／限制：</strong> 供应商维护；自行加入 isolation／deletion 测试</div></td></tr>
   </tbody>
 </table>
 </div>

@@ -14,13 +14,17 @@ Stage 章节先告诉你“这个概念是什么”；这个文件夹让你真�
 
 ## 📌 先分清五个词
 
+<div align="center" markdown="1">
+
 | 核心词 | 五岁也能懂的说法 | 正确意思 |
-|---|---|---|
+|:---|:---|:---|
 | **Example（范例）** | 已经拼好的小积木 | 可以直接运行、观察结果的示范程序 |
 | **Starter（起始程序）** | 留几块给你自己拼 | 练习用的最小程序入口，通常是 `starter.py` |
 | **Path（路径）** | 到同一个终点的不同道路 | 本项目用 Path A／B／C 表示不同运行方式 |
 | **Mock（模拟答案）** | 先用玩具电话练习 | 不连接真实模型，先检查程序逻辑 |
 | **Live call（真实调用）** | 真的把电话打出去 | 连接本地或云端模型，结果、时间和费用都可能变化 |
+
+</div>
 
 ## 🎯 你会学会什么
 
@@ -47,11 +51,15 @@ python test.py
 
 看到通过信息，表示程序的固定逻辑能工作；它还没有证明任何模型一定会答对。接着再选一条真实模型路径。
 
+<div align="center" markdown="1">
+
 | 路径 | 谁真的生成答案 | 先做什么 | 适合什么时候 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **Path C：Mock** | 固定的假答案 | `python test.py` | 第一步；先找程序错误 |
 | **Path A：Ollama** | 你电脑上的模型 | 安装 Ollama、pull 题目指定的模型 | 练习真实模型行为，不产生供应商模型 API 账单 |
 | **Path B：Anthropic** | Anthropic 云端模型 | 设置 `ANTHROPIC_API_KEY` | 想用同一道题比较云端质量时 |
+
+</div>
 
 <details markdown="1">
 <summary>展开 Path A／B 的完整命令、环境和费用提醒</summary>
@@ -81,8 +89,10 @@ python starter_anthropic.py
 
 这里只列实际存在的文件夹；短练习仍会直接放在 Stage 章节中。
 
+<div align="center" markdown="1">
+
 | Stage | 这一关在学什么 | 可运行文件夹 |
-|---|---|---|
+|:---|:---|:---|
 | [Stage 1](../stages/01-llm-basics.zh-Hans.md) | LLM 基础和错误处理 | `stage-1/`：2 个 |
 | [Stage 2](../stages/02-prompt-engineering.zh-Hans.md) | Prompt 设计和小型评测循环 | `stage-2/`：1 个 |
 | [Stage 3](../stages/03-tool-use-and-hello-agent.zh-Hans.md) | **工具使用与第一个 Agent Loop** | `stage-3/`：6 个 |
@@ -92,15 +102,21 @@ python starter_anthropic.py
 | [Stage 7](../stages/07-multi-agent-production.zh-Hans.md) | **Agent Production Engineering** | `stage-7/`：6 个；核心顺序是 Eval → Observability → Safe Execution → Deploy |
 | [Track A1–A3](../tracks/cli/A1-cli-intro.zh-Hans.md) | CLI 工作流 | 章节内练习；没有 `examples/track-a/` |
 
+</div>
+
 ## 🧠 本地模型怎么选
 
 模型不是“越新就一定越适合”。先用题目指定的 tag，再跑固定测试。下载大小以 Ollama 官方 tag 页面在 **2026-08-31 UTC** 的显示为准。
 
+<div align="center" markdown="1">
+
 | 范围 | 默认 tag | 官方显示下载大小 | 为什么 |
-|---|---|---:|---|
+|:---|:---|---:|:---|
 | Stage 1–2 | [`gemma4:e4b`](https://ollama.com/library/gemma4:e4b) | 9.6 GB | 纯对话和 Prompt 练习 |
 | Stage 3–6 | [`qwen2.5:3b`](https://ollama.com/library/qwen2.5:3b) | 1.9 GB | 当前范例的工具调用练习默认值 |
 | Stage 7 | [`qwen3.5:4b`](https://ollama.com/library/qwen3.5:4b) | 3.4 GB | 评测、观测和部署的模型路径；`06-safe-execution` 不需要模型 |
+
+</div>
 
 完整的现行模型、价格、Context 和替代方案只在 [Stage 1](../stages/01-llm-basics.zh-Hans.md) 维护，避免两个页面讲成不同版本。
 
@@ -108,14 +124,18 @@ python starter_anthropic.py
 
 先打开这道题的 `README`。文件名会跟着要学的内容改变，不要因为没看到普通的 `starter.py` 就以为文件坏了。
 
+<div align="center" markdown="1">
+
 | 形状 | 实际文件夹 | 你会看到什么 |
-|---|---|---|
+|:---|:---|:---|
 | 标准双路径 | 大多数 Python 练习 | `starter.py`、`starter_anthropic.py`、两个离线测试、三语 README、`requirements.txt` |
 | Provider 切换 | `stage-1/04-cross-provider/` | 只用 OpenAI-compatible client 比较 endpoint，所以只有 `starter.py` 和 `test.py` |
 | Schema 好坏比较 | `stage-3/06-schema-design/` | `starter_bad*` 和 `starter_good*`，不是普通 starter 文件名 |
 | Framework／部署加项 | `stage-4/01-same-agent-two-frameworks/`<br>`stage-4/04-codeact-vs-json-tool/`<br>`stage-7/05-deploy/` | 在标准双路径外，再加入 CrewAI、Docker smoke test 或 `Dockerfile` |
 | Safe Execution | `stage-7/06-safe-execution/` | 只有 `starter.py`、`test.py` 与三语 README；用本机 JSON 假动作教 approval、checkpoint、resume 与 idempotency，不调用模型 |
 | Skill 包 | `stage-5/tool-calling-tutor/` | `SKILL.md`、references、translations 和三语 README；它不是 Python starter 项目 |
+
+</div>
 
 设计底线：每个 Python 练习都要能用离线测试检查固定逻辑；Skill 包由 repository 结构测试检查。starter 保持小；环境变量只放假 key 范例；真实模型行为用固定 eval 核对；不要关闭必要 hook 或 approval。
 
@@ -133,21 +153,23 @@ python starter_anthropic.py
 
 星星是本学习地图的阅读优先级，不是 GitHub stars，也不是工具总排名。
 
-<table>
+<div class="reader-reference-table" role="region" tabindex="0" aria-label="精选学习资源">
+<table align="center">
 <thead><tr><th>分类</th><th>资源</th><th>先学什么</th><th>评分</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">模型运行</th><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>先在本地运行一个模型，再让 starter 调用它</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/vllm-project/vllm">vllm-project/vllm</a></td><td>需要服务器级吞吐量时再学</td><td>⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">模型运行</th><td><a href="https://github.com/ollama/ollama">ollama</a></td><td>先在本地运行一个模型，再让 starter 调用它</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/vllm-project/vllm">vllm</a></td><td>需要服务器级吞吐量时再学</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Python SDK</th><td><a href="https://github.com/openai/openai-python">openai/openai-python</a></td><td>理解 OpenAI-compatible client 和 response shape</td><td>⭐⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/anthropics/anthropic-sdk-python">anthropics/anthropic-sdk-python</a></td><td>比较 Anthropic messages 和 tool schema</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Python SDK</th><td><a href="https://github.com/openai/openai-python">openai-python</a></td><td>理解 OpenAI-compatible client 和 response shape</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/anthropics/anthropic-sdk-python">anthropic-sdk-python</a></td><td>比较 Anthropic messages 和 tool schema</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">验证与数据</th><td><a href="https://github.com/pytest-dev/pytest">pytest-dev/pytest</a></td><td>从小型 assert 走向可重复的测试</td><td>⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/pydantic/pydantic">pydantic/pydantic</a></td><td>验证工具输入、结构化输出和错误</td><td>⭐⭐⭐⭐</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">验证与数据</th><td><a href="https://github.com/pytest-dev/pytest">pytest</a></td><td>从小型 assert 走向可重复的测试</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/pydantic/pydantic">pydantic</a></td><td>验证工具输入、结构化输出和错误</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
+</div>
 
 ## ✅ 完成检查
 

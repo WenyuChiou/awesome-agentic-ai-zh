@@ -52,7 +52,7 @@ def _text(path: Path) -> str:
 
 
 def _course_table(text: str) -> str:
-    tables = re.findall(r"<table>.*?</table>", text, flags=re.DOTALL)
+    tables = re.findall(r"<table align=\"center\">.*?</table>", text, flags=re.DOTALL)
     assert len(tables) == 1
     return tables[0]
 
@@ -90,9 +90,9 @@ def test_course_table_keeps_four_real_rowgroups_and_thirteen_ratings(page: Path)
         assert group.count('scope="rowgroup"') == 1
         assert f'rowspan="{expected_rows}"' in group
     assert len(re.findall(r'<span data-field="rating">⭐{3,5}</span>', table)) == 13
-    assert len(re.findall(r'<th scope="col">', table)) == 2
+    assert len(re.findall(r'<th scope="col">', table)) == 5
     for field in ("entry", "cost", "outcome", "limits"):
-        assert table.count(f'<p data-field="{field}">') == 13
+        assert table.count(f'<div data-field="{field}">') == 13
     assert '<th scope="rowgroup"></th>' not in table
 
 

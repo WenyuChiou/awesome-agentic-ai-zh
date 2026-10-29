@@ -44,7 +44,7 @@ def test_connector_questions_precede_first_connector_action(locale: str) -> None
     block = re.search(r'<!-- connector-safety:start -->(.*?)<!-- connector-safety:end -->', visible, re.S)
     assert block is not None
     assert len(re.findall(r"^\d\. ", block[1], re.M)) == 4
-    assert block.start() < visible.index("<table>")
+    assert block.start() < visible.index('<table align="center">')
     assert "Approval Gate" in block[1]
 
 

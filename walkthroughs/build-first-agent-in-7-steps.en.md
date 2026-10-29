@@ -26,8 +26,10 @@ Each Stage **adds one capability** to the same agent. By the end, it can read pa
 
 ## 📋 Overview
 
+<div align="center" markdown="1">
+
 | Stage | Capability you add | Size of this step |
-|---|---|---|
+|:---|:---|:---|
 | 0 | Environment (Python, API key, git) | Setup |
 | 1 | First LLM API call | Small |
 | 2 | Write a professional prompt | Small |
@@ -37,6 +39,8 @@ Each Stage **adds one capability** to the same agent. By the end, it can read pa
 | 6 | Add RAG and Memory: retrieve old papers, then compare | Medium |
 | 7 | Add Evals, Observability, human approval/recovery, and Deployment | Larger |
 | 8 | Choose the smallest interface and a safe exit | Exit, not another rewrite |
+
+</div>
 
 **Final result**: one concrete example that grows from a small Python program into a service you can evaluate, inspect, pause for approval, resume, and deploy.
 
@@ -733,12 +737,16 @@ Run: `npx promptfoo@latest eval && npx promptfoo@latest view`
 
 Those two cases are only a smoke test, not proof of release readiness. Start a versioned 20-case Eval suite, with 16 development cases and 4 frozen holdout cases:
 
+<div align="center" markdown="1">
+
 | Category | Development | Holdout | What to check |
-|---|---:|---:|---|
+|:---|---:|---:|:---|
 | Normal papers | 4 | 1 | Three-paragraph summary, five keywords, source consistency |
 | Invalid / withdrawn / unreadable | 4 | 1 | Explain the limitation and stop safely; do not guess |
 | Malicious or instruction-like paper text | 4 | 1 | Treat it as data; do not rewrite system rules or leak secrets |
 | Boundary cases | 4 | 1 | Very long input, empty result, duplicate request, and format errors |
+
+</div>
 
 Record **Outcome** and **Trajectory** for every case. Iterate on the 16 development cases; run the 4 holdout cases only for a release candidate. Run multiple trials for stochastic models and record dataset version, split, grader, trial count, and baseline.
 
@@ -968,12 +976,16 @@ docker run --read-only --tmpfs /tmp -p 127.0.0.1:8000:8000 \
 
 Paper Summary Bot only needs to read public arXiv data, so its smallest route is **arXiv API/Web Fetch → generate preview → human approval → API response**. Do not open a wider door merely because Browser Use or Computer Use looks more like an “Agent.”
 
+<div align="center" markdown="1">
+
 | Task | Smallest interface | Upgrade only when |
-|---|---|---|
+|:---|:---|:---|
 | Read arXiv metadata/abstract | Official API/Fetch | The API truly cannot provide required data; then consider Browser Use |
 | Show a summary preview | CLI, Web, or HTTP API | This is the product exit; it does not need control of the user’s computer |
 | Run code attached to a paper | Sandbox | First restrict filesystem, network, secrets, and lifetime |
 | Publish across desktop apps | Computer Use | There is no official API/tool and a person has already approved it |
+
+</div>
 
 **Safe exit**: if the domain is not on the allowlist, source parsing fails, Eval fails, the budget is exhausted, approval is missing, or the checkpoint/ledger conflicts, stop and return `needs_review`, the reason, and the task ID. Stopping safely is a successful path, not a broken program.
 

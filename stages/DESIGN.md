@@ -539,3 +539,10 @@ Stage 0 的可見主線固定為「skip 條件 → 4 個學習目標 → 核心�
 - **branch 設計理由**：見 [`../branches/DESIGN.md`](../branches/DESIGN.md)
 - **entry schema / 用詞規範**：見 [`../resources/style-guide.md`](../resources/style-guide.md)
 - **跨 stage 範例**：見 [`../walkthroughs/build-first-agent-in-7-steps.md`](../walkthroughs/build-first-agent-in-7-steps.md)
+
+
+### GitHub 原生表格與網站排版
+
+學習資源表同時服務 GitHub Markdown 與文件站。原生 Markdown 表格用置中的 `markdown="1"` 外框，說明欄明確靠左；HTML 表格置中，合併分類與短評分置中。資源欄改用沒有段落預設留白的 `div[data-field]`，保留所有資料、URL、星等與分組。GitHub 會移除 class／data 屬性，所以原生版須靠可接受的 HTML 排版，不能用手機文件站的 CSS 通過來代替驗收。reader UX 量測不把表格對齊冒號算成新增敘述，也不能為了計數而插入改變原始 HTML 巢狀關係的容器。
+
+桌面資源比較優先五欄：分類、專案／文件、推薦度、用途、限制；資料不足不硬湊五欄，也不新增星等。GitHub Markdown 保留多欄比較；文件站在手機／平板可將同一份資料直向排滿寬。說明文字靠左，分類與星等可置中；置中的是整張表，不是所有敘述。

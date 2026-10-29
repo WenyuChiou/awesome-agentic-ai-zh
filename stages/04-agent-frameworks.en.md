@@ -29,13 +29,17 @@ After this stage, you can:
 <a id="-first-separate-loop-framework-and-graph"></a>
 ## 🧭 First Separate Loop, Graph, and Framework
 
+<div align="center" markdown="1">
+
 | Name | Five-year-old-friendly version | Correct boundary and where to learn it |
-|---|---|---|
+|:---|:---|:---|
 | **Agent Loop** | The assistant does one step, checks the result, then chooses the next step | The within-one-run loop from Stage 3: model → tool call → execute → tool result → model |
 | **Workflow Graph** | Draw every station and road | Represents work order with node, edge, branch, and state; each box can be an Agent, tool, check, or human approval |
 | **Agent Framework** | A toolbox that helps connect the wires | Provides runner, tool, state, handoff, checkpoint, and related parts; one Agent can use it too |
 | **Loop Engineering** | Design how it repeats, validates, and stops | Stage 7 adds budgets, verification, recovery, and human escalation |
 | **Production orchestration** | Make the whole work map run safely in real use | Stage 7 adds observation, recovery, and stop rules around multiple loops, tools, and human approvals; emerging writing may also call this Graph Engineering |
+
+</div>
 
 **A framework is the toolbox; a Workflow Graph is the work map you draw; production orchestration is the engineering work that makes the map run safely.** **Graph Engineering** is an emerging, non-standard label, not another name for a framework. **Multi-Agent** systems can go into a graph, but not every graph needs multiple Agents, and not every node has to be an Agent.
 
@@ -78,10 +82,14 @@ An Agent framework is a toolbox for connecting models, tools, state, retries, sa
 <a id="two-dimensions-to-clarify-first-workflow-vs-agent--single-vs-multi"></a>
 ### Two Dimensions to Clarify First (workflow vs agent / single vs multi)
 
+<div align="center" markdown="1">
+
 | | **Workflow**: the program writes the route first | **Agent**: the model chooses the next step dynamically |
-|---|---|---|
+|:---|:---|:---|
 | **One Agent** | A linear process or fixed branches | The tool loop you wrote in Stage 3 |
 | **Multiple Agents** | Fixed roles and order | Dynamic handoffs, a supervisor, or debate |
+
+</div>
 
 These four cells overlap. For example, a LangGraph conditional edge can contain both fixed rules and a model decision. The table helps you ask questions; it does not force every system into a box.
 
@@ -111,13 +119,17 @@ Without that evidence, one Agent with good tools, good context, and a bounded lo
 
 **Supervisor** (a supervising Agent) is like a team lead: it breaks up work and combines answers. **Worker** (a working Agent) is like a team member: it receives only the data and tools needed to finish its own task.
 
+<div align="center" markdown="1">
+
 | Pattern | One-line shape | Good for | Watch first |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **Routing / Handoff** | A decides, then passes work to B | Support triage and expert escalation | Handoff data and permissions |
 | **Sequential** | B starts only after A finishes | Processes with a fixed order | An earlier error propagates forward |
 | **Parallel** | Several pieces run at the same time | Independent searches or checks | The slowest branch and merge rules |
 | **Supervisor–Worker** | One supervisor assigns several workers | Breaking down and consolidating a large task | The supervisor may become a bottleneck |
 | **Debate / Peer Review** | Several roles critique one another | High-risk decisions and double-checking | More roles do not make facts true |
+
+</div>
 
 <details markdown="1">
 <summary>Expand patterns, papers, and the Claude Code comparison</summary>
@@ -132,13 +144,17 @@ Without that evidence, one Agent with good tools, good context, and a bounded lo
 
 ### Choose a Tool by Need
 
+<div align="center" markdown="1">
+
 | Your current situation | Look at first | Why |
-|---|---|---|
+|:---|:---|:---|
 | A simple tool loop is already enough | Raw SDK / the Stage 3 approach | Most transparent and easiest to debug |
 | You need graph-based state, checkpoints, and HITL | **LangGraph** | A low-level orchestration runtime with clear control |
 | You want a quick role-based prototype | **CrewAI** | Agents, Tasks, and Crews are easy to start; Flows also support persistence and human feedback |
 | You already use the OpenAI ecosystem and need handoffs and tracing | **OpenAI Agents SDK** | The official SDK; Sandbox Agents are still beta |
 | A Python / .NET Microsoft team | **Microsoft Agent Framework** | Stable, with AutoGen and Semantic Kernel migration guides |
+
+</div>
 
 For Ollama exercises, start with the LangGraph or CrewAI route. Do not change frameworks because the tool list crosses a fixed number; use evals first to see whether context, wrong-selection rate, and latency are actually getting worse.
 
@@ -248,7 +264,7 @@ Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐�
 
 <small>Existing framework information checked: 2026-08-27 UTC; Bifrost: 2026-09-03 UTC</small>
 
-<table>
+<table align="center">
   <thead>
     <tr>
       <th scope="col">Category</th>
@@ -259,33 +275,33 @@ Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐�
     </tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Production orchestration</th><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>Those who need state, checkpoints, HITL, and replayable workflows.</td><td>Maintained; MIT. A low-level runtime that requires more design work from you.</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/semantic-kernel">Microsoft Semantic Kernel</a></td><td>Existing .NET / Java / Python Microsoft stacks.</td><td>Maintained; MIT. Microsoft also provides guidance for migrating to Agent Framework.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/agno-agi/agno">Agno</a></td><td>Those who want to manage Agents, Teams, and Workflows with AgentOS.</td><td>Maintained; Apache-2.0. Its platform scope is broad; confirm you really need the whole stack first.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/agent-framework">Microsoft Agent Framework</a></td><td>New Python / .NET Microsoft Agent projects.</td><td>Python 1.x stable; MIT. Official AutoGen and Semantic Kernel migration paths are available.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Production orchestration</th><td><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></td><td>Those who need state, checkpoints, HITL, and replayable workflows.</td><td>Maintained; MIT. A low-level runtime that requires more design work from you.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/semantic-kernel">Microsoft Semantic Kernel</a></td><td>Existing .NET / Java / Python Microsoft stacks.</td><td>Maintained; MIT. Microsoft also provides guidance for migrating to Agent Framework.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/agno-agi/agno">Agno</a></td><td>Those who want to manage Agents, Teams, and Workflows with AgentOS.</td><td>Maintained; Apache-2.0. Its platform scope is broad; confirm you really need the whole stack first.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/agent-framework">Microsoft Agent Framework</a></td><td>New Python / .NET Microsoft Agent projects.</td><td>Python 1.x stable; MIT. Official AutoGen and Semantic Kernel migration paths are available.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">Rapid prototyping / multi-agent</th><td><a href="https://github.com/crewAIInc/crewAI">CrewAI</a></td><td>Quick researcher → writer → reviewer role workflows.</td><td>Maintained; MIT. Flows support persistence, resume, and human feedback.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>Maintaining existing group-chat, debate, or peer-review projects.</td><td>Maintenance mode and community maintained; CC-BY-4.0. Existing Python projects use <code>autogen-agentchat</code> 0.7.x; use Agent Framework for new Microsoft projects and avoid old 0.2 tutorials.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/openai/openai-agents-python">OpenAI Agents SDK</a></td><td>Those already in the OpenAI ecosystem who need handoffs, guardrails, and tracing.</td><td>Maintained; MIT. Sandbox Agents are beta, which does not mean every production problem is solved.</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/deepagents">Deep Agents</a></td><td>Those who need a full harness for planning, filesystem access, subagents, memory, and permissions.</td><td>Maintained; MIT. Built on LangGraph; it may be too heavy for a simple Agent.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Rapid prototyping / multi-agent</th><td><a href="https://github.com/crewAIInc/crewAI">CrewAI</a></td><td>Quick researcher → writer → reviewer role workflows.</td><td>Maintained; MIT. Flows support persistence, resume, and human feedback.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>Maintaining existing group-chat, debate, or peer-review projects.</td><td>Maintenance mode and community maintained; CC-BY-4.0. Existing Python projects use <code>autogen-agentchat</code> 0.7.x; use Agent Framework for new Microsoft projects and avoid old 0.2 tutorials.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/openai/openai-agents-python">OpenAI Agents SDK</a></td><td>Those already in the OpenAI ecosystem who need handoffs, guardrails, and tracing.</td><td>Maintained; MIT. Sandbox Agents are beta, which does not mean every production problem is solved.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/deepagents">Deep Agents</a></td><td>Those who need a full harness for planning, filesystem access, subagents, memory, and permissions.</td><td>Maintained; MIT. Built on LangGraph; it may be too heavy for a simple Agent.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/openai/swarm">OpenAI Swarm</a></td><td>Those who want to read small source code to understand Agents and handoffs.</td><td>Frozen / historical educational use; MIT. Superseded by the Agents SDK; do not use it for new production projects.</td><td>⭐⭐⭐⭐ (education)</td></tr>
-    <tr><td><a href="https://github.com/strands-agents/harness-sdk">Strands Agents</a></td><td>AWS / Bedrock teams, or those needing Python / TypeScript SDKs.</td><td>Maintained; Apache-2.0. The canonical repository moved from the old <code>sdk-python</code> to <code>harness-sdk</code>.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/strands-agents/harness-sdk">Strands Agents</a></td><td>AWS / Bedrock teams, or those needing Python / TypeScript SDKs.</td><td>Maintained; Apache-2.0. The canonical repository moved from the old <code>sdk-python</code> to <code>harness-sdk</code>.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">Special paths</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>Those comparing CodeAct and tool calling, or using the Hugging Face ecosystem.</td><td>Maintained; Apache-2.0. Model-generated code must run in isolation.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/pydantic/pydantic-ai">Pydantic AI</a></td><td>Those who value typed dependencies, structured output, and validation.</td><td>Maintained; MIT. Schema validation checks shape, not semantic correctness.</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/letta-ai/letta">Letta</a></td><td>Long sessions, cross-day memory, and persona-stable assistants.</td><td>Maintained; Apache-2.0. It is memory-first; the full memory concepts come in Stage 6.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/vercel/eve">Vercel Eve</a></td><td>TypeScript / Vercel teams that need durable workflows, sandboxes, and approvals.</td><td>Public Preview; Apache-2.0. It was only made public in 2026-06, so its API may still change quickly.</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Special paths</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>Those comparing CodeAct and tool calling, or using the Hugging Face ecosystem.</td><td>Maintained; Apache-2.0. Model-generated code must run in isolation.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/pydantic/pydantic-ai">Pydantic AI</a></td><td>Those who value typed dependencies, structured output, and validation.</td><td>Maintained; MIT. Schema validation checks shape, not semantic correctness.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/letta-ai/letta">Letta</a></td><td>Long sessions, cross-day memory, and persona-stable assistants.</td><td>Maintained; Apache-2.0. It is memory-first; the full memory concepts come in Stage 6.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/vercel/eve">Vercel Eve</a></td><td>TypeScript / Vercel teams that need durable workflows, sandboxes, and approvals.</td><td>Public Preview; Apache-2.0. It was only made public in 2026-06, so its API may still change quickly.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">Specialized</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex Agents</a></td><td>Document-heavy, retrieval, and knowledge workflows.</td><td>Maintained; MIT. Its strength is data and retrieval, not every orchestration situation.</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/agentscope-ai/agentscope">AgentScope</a></td><td>Researching multi-agent systems and needing visualization and studio tools.</td><td>Maintained; Apache-2.0. Check community, deployment, and language needs first.</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>Those who need high-level building blocks for models, retrieval, tools, and middleware.</td><td>Maintained; MIT. Complex orchestration can move down to LangGraph.</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Specialized</th><td><a href="https://github.com/run-llama/llama_index">LlamaIndex Agents</a></td><td>Document-heavy, retrieval, and knowledge workflows.</td><td>Maintained; MIT. Its strength is data and retrieval, not every orchestration situation.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/agentscope-ai/agentscope">AgentScope</a></td><td>Researching multi-agent systems and needing visualization and studio tools.</td><td>Maintained; Apache-2.0. Check community, deployment, and language needs first.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/langchain">LangChain</a></td><td>Those who need high-level building blocks for models, retrieval, tools, and middleware.</td><td>Maintained; MIT. Complex orchestration can move down to LangGraph.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Infrastructure</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>Those who want to self-host a gateway, connect multiple providers through one interface, and practise routing, fallback, and load balancing.</td><td>Maintained; Apache-2.0. It is infrastructure rather than an Agent framework; adaptive load balancing, clustering, and some guardrails are enterprise features.</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>Those who want a Python SDK or OpenAI-compatible proxy for switching among providers.</td><td>Maintained; the root LICENSE says everything except enterprise uses MIT, while <code>enterprise/</code> has a separate license. It is not an Agent framework.</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Infrastructure</th><td><a href="https://github.com/maximhq/bifrost">Bifrost</a></td><td>Those who want to self-host a gateway, connect multiple providers through one interface, and practise routing, fallback, and load balancing.</td><td>Maintained; Apache-2.0. It is infrastructure rather than an Agent framework; adaptive load balancing, clustering, and some guardrails are enterprise features.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/BerriAI/litellm">LiteLLM</a></td><td>Those who want a Python SDK or OpenAI-compatible proxy for switching among providers.</td><td>Maintained; the root LICENSE says everything except enterprise uses MIT, while <code>enterprise/</code> has a separate license. It is not an Agent framework.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 

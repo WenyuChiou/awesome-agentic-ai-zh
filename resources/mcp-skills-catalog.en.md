@@ -22,13 +22,17 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ## 📚 Five safe starting points
 
+<div align="center" markdown="1">
+
 | Starting point | Learn first | Editorial rating |
-|---|---|---|
+|:---|:---|:---|
 | [Official MCP Registry](https://registry.modelcontextprotocol.io/) | Find published MCP Servers; still check the maintainer, permissions, and source | ⭐⭐⭐⭐⭐ |
-| [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) | See educational reference implementations; they are not a production recommendation | ⭐⭐⭐⭐⭐ |
+| [servers](https://github.com/modelcontextprotocol/servers) | See educational reference implementations; they are not a production recommendation | ⭐⭐⭐⭐⭐ |
 | [Notion MCP](https://developers.notion.com/guides/mcp/overview) | See how a hosted OAuth MCP follows the user’s workspace permissions | ⭐⭐⭐⭐⭐ |
 | [GitHub MCP Server](https://github.com/github/github-mcp-server) | Learn OAuth, tool groups, and repository permissions from an official implementation | ⭐⭐⭐⭐⭐ |
-| [anthropics/skills](https://github.com/anthropics/skills) | See how Agent Skill folders, instructions, and resources fit together | ⭐⭐⭐⭐⭐ |
+| [skills](https://github.com/anthropics/skills) | See how Agent Skill folders, instructions, and resources fit together | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 > ⚠️ An MCP Server may touch real data. Even with an official source, confirm the signed-in account, scopes, writable tools, and approval screen.
 
@@ -36,9 +40,13 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 <small>New entry verified: 2026-10-15 UTC</small>
 
+<div align="center" markdown="1">
+
 | Need | Suggested entry | Editorial rating | Check first |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | Find, install, or update Agent Skills | [Vercel Skills](#vercel-skills) | ⭐⭐⭐⭐ | It is not an MCP Server or model; inspect the source, permissions, and host support before installation |
+
+</div>
 
 ### Index
 
@@ -70,10 +78,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Notion MCP](https://developers.notion.com/guides/mcp/overview) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | Delivery | Notion hosted remote MCP; OAuth |
 | Rating | ⭐⭐⭐⭐⭐ (**official**) |
+
+</div>
 
 **What it does**: Notion’s official hosted MCP can search, read, create, and update content the user can already access.
 **Audience**: People who use Notion for notes, projects, or a wiki and want an MCP-capable client.
@@ -81,10 +93,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (community maintained) |
+
+</div>
 
 **What it does**: read/write your Obsidian vault via the Obsidian REST API community plugin.
 **Audience**: heavy Obsidian users wanting Claude Code to organize daily notes, auto-link, search across files.
@@ -94,10 +110,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 **Status (2026-09-10 UTC)**: archived; the author no longer provides updates or support. Kept as a historical learning example, not a starting point for new workflows.
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: a Claude Code Skill that uses browser automation to query Gemini Notebook (formerly NotebookLM), with citation-backed answers.
 **Audience**: people studying early browser-automation Skill design. For actual use, start with the official website or assess `notebooklm-py` below yourself.
@@ -105,10 +125,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [teng-lin/notebooklm-py](https://github.com/teng-lin/notebooklm-py) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: unofficial Gemini Notebook (formerly NotebookLM) Python API, CLI, and agentic Skill.
 **Audience**: people doing programmatic or batch operations in Gemini Notebook (formerly NotebookLM).
@@ -116,10 +140,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [ergut/mcp-logseq](https://github.com/ergut/mcp-logseq) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: read/write Logseq graph via Logseq's Local HTTP API.
 **Audience**: Logseq users automating daily journals, cross-page links, backlink queries.
@@ -127,10 +155,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### skridlevsky/graphthulhu ⭐⭐⭐ (archived / historical example)
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Previously recorded as MIT; cannot currently reverify |
 | Rating | ⭐⭐⭐ (historical rating; no longer publicly accessible) |
+
+</div>
 
 **What it does**: a broad tool set across navigation, search, analysis, writing, journals, flashcards, whiteboards.
 **Audience**: people studying early Logseq + Obsidian MCP design; new projects should choose a maintained alternative.
@@ -138,10 +170,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [ankimcp/anki-mcp-server](https://github.com/ankimcp/anki-mcp-server) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: create / query / batch-edit Anki decks via AnkiConnect.
 **Audience**: people using Anki for languages / medicine / law — let the LLM auto-generate cards from study material.
@@ -157,10 +193,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [anthropics/skills](https://github.com/anthropics/skills) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Per-Skill licenses; many are Apache-2.0, while docx/pdf/pptx/xlsx are source-available under their folder terms |
 | Rating | ⭐⭐⭐⭐⭐ (**official examples**) |
+
+</div>
 
 **What it does**: Anthropic's official Agent Skills examples include document workflows for docx, xlsx, pptx, and pdf files.
 **Audience**: people who want to study how a standard Skill folder, `SKILL.md`, scripts, and resources work together.
@@ -168,10 +208,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [haris-musa/excel-mcp-server](https://github.com/haris-musa/excel-mcp-server) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (community-maintained Excel MCP) |
+
+</div>
 
 **What it does**: Excel file manipulation MCP — read / write / modify cells, formulas, sheets.
 **Audience**: people working with Excel reports daily who want LLM-driven data filling and cleanup.
@@ -179,10 +223,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [GongRzhe/Office-PowerPoint-MCP-Server](https://github.com/GongRzhe/Office-PowerPoint-MCP-Server) ⭐⭐⭐ (⚠️ archived 2025-12; use anthropics/skills pptx)
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ (⚠️ archived) |
+
+</div>
 
 **What it does**: PPT manipulation via python-pptx — create decks, edit slides, insert images, change layouts.
 **Audience**: people who want LLMs to auto-generate decks from outlines / Markdown (consultants, lecturers, students).
@@ -190,10 +238,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [open-slide/open-slide](https://github.com/open-slide/open-slide) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (agent-native slide framework) |
+
+</div>
 
 **What it does**: a React slide framework built for coding agents — describe a deck in natural language and let Claude Code / Codex / Cursor write the React; ships two Claude Code Skills (`/create-slide`, `/slide-authoring`).
 **Audience**: people who want agents to produce decks as code (git-versionable) — a different route from PowerPoint-MCP's .pptx output.
@@ -201,10 +253,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [tfriedel/claude-office-skills](https://github.com/tfriedel/claude-office-skills) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | Rating | ⭐⭐⭐ (Office skill add-on) |
+
+</div>
 
 **What it does**: extends `anthropics/skills` with Office workflows it doesn't cover (automation, advanced formatting).
 **Audience**: people who find the official docx/xlsx/pptx skills too coarse-grained.
@@ -212,10 +268,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [xberg-io/xberg](https://github.com/xberg-io/xberg) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: Rust framework for parsing PDF, Office, image, and other common document formats. Provides an MCP server, REST API, and CLI.
 **Audience**: cross-format batch parsing engineers who care about throughput.
@@ -231,10 +291,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Google Workspace MCP](https://developers.google.com/workspace/guides/configure-mcp-servers) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | Delivery | Google hosted remote MCP; OAuth 2.0 |
 | Rating | ⭐⭐⭐⭐ (**official**, **Developer Preview**) |
+
+</div>
 
 **What it does**: Google provides dedicated remote MCP servers for Gmail, Drive, Docs, Sheets, Slides, Calendar, Chat, and People.
 **Audience**: people who want an official entry point for reading Workspace data or creating drafts, updating documents, and scheduling meetings.
@@ -242,10 +306,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [taylorwilsdon/google_workspace_mcp](https://github.com/taylorwilsdon/google_workspace_mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (community-maintained broad Workspace MCP) |
+
+</div>
 
 **What it does**: Gmail, Calendar, Docs, Sheets, Slides, Drive, Chat, Forms, Tasks, Search — all in one MCP server.
 **Audience**: people who need community features beyond the official Preview and are willing to maintain the OAuth setup.
@@ -253,10 +321,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [xing5/mcp-google-sheets](https://github.com/xing5/mcp-google-sheets) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (Sheets-only) |
+
+</div>
 
 **What it does**: focused Google Sheets / Drive integration — create sheets, edit cells, query formulas.
 **Audience**: people using only Google Sheets who don't want the full Workspace MCP.
@@ -272,10 +344,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Softeria/ms-365-mcp-server](https://github.com/Softeria/ms-365-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (full M365) |
+
+</div>
 
 **What it does**: M365 + Office services via Microsoft Graph API — Outlook, Teams, OneDrive, SharePoint.
 **Audience**: enterprise M365 users wanting LLM-driven email replies, calendar lookups, OneDrive operations.
@@ -283,10 +359,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [ryaker/outlook-mcp](https://github.com/ryaker/outlook-mcp) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | Rating | ⭐⭐⭐ (Outlook only) |
+
+</div>
 
 **What it does**: Outlook mail / calendar via Graph API.
 **Audience**: people who only need Outlook, not the rest of M365.
@@ -294,10 +374,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [merill/lokka](https://github.com/merill/lokka) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: M365 + Microsoft Graph admin operations — Entra (AD), Intune, etc.
 **Audience**: M365 system admins managing tenants / users / policies.
@@ -313,10 +397,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [github/github-mcp-server](https://github.com/github/github-mcp-server) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (**official**) |
+
+</div>
 
 **What it does**: GitHub's official MCP — issues / PRs / repos / Actions / Codespaces.
 **Audience**: GitHub users who need to look up repositories, organize issues, or assist with PR review.
@@ -324,10 +412,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [sooperset/mcp-atlassian](https://github.com/sooperset/mcp-atlassian) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (community-maintained Atlassian MCP) |
+
+</div>
 
 **What it does**: Connects Confluence and Jira through a community MCP server you can self-host.
 **Audience**: teams that need self-hosting, custom authentication, or a deployment shape the official remote MCP does not support.
@@ -335,10 +427,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Atlassian Rovo MCP](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | Delivery | Atlassian hosted remote MCP; OAuth 2.1 |
 | Rating | ⭐⭐⭐⭐⭐ (**Atlassian official**) |
+
+</div>
 
 **What it does**: Lets an MCP-capable client read and write Jira, Confluence, and Bitbucket Cloud according to user permissions.
 **Audience**: teams using Atlassian Cloud.
@@ -346,10 +442,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Slack MCP Server](https://docs.slack.dev/ai/mcp-overview/) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | Delivery | Slack official MCP Server |
 | Rating | ⭐⭐⭐⭐⭐ (**Slack official**) |
+
+</div>
 
 **What it does**: Lets an AI app search Slack channels, send messages, manage canvases, and perform other Slack actions.
 **Audience**: teams using Slack with an MCP-capable client.
@@ -357,10 +457,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Linear MCP](https://linear.app/docs/mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | Delivery | Linear hosted remote MCP; Streamable HTTP |
 | Rating | ⭐⭐⭐⭐⭐ (**Linear official**) |
+
+</div>
 
 **What it does**: Queries or updates Linear issues, projects, and comments.
 **Audience**: Linear users who manage sprints or backlogs.
@@ -368,10 +472,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [SaseQ/discord-mcp](https://github.com/SaseQ/discord-mcp) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: Discord MCP — read/write channel messages, manage servers.
 **Audience**: maintainers running OSS / community Discord servers.
@@ -379,10 +487,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: AI coding skill that turns codebases / SQL schemas / R scripts / shell scripts / docs / papers / images / videos into a queryable knowledge graph. Works across Claude Code, Codex, OpenCode, Cursor, Gemini CLI.
 **Audience**: engineers / researchers analyzing large codebases, tracking cross-file references, or asking questions across "app code + DB schema + infra" together.
@@ -390,10 +502,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [upstash/context7](https://github.com/upstash/context7) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (coding context) |
+
+</div>
 
 **What it does**: Finds documentation snippets by library and version, then puts them into the Agent's current context to reduce the chance of using an old API.
 **Audience**: developers who write code across library versions and want to find relevant documentation before editing.
@@ -401,10 +517,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [DeusData/codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (code intelligence) |
+
+</div>
 
 **What it does**: Indexes a codebase into a queryable knowledge graph, so a coding agent can inspect structure, symbols, and call paths before returning to the actual code to verify them.
 **Audience**: people running coding agents on large or unfamiliar repos who want fast orientation and lower token use.
@@ -420,10 +540,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [googleapis/mcp-toolbox](https://github.com/googleapis/mcp-toolbox) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ (**Google official**, multi-DB) |
+
+</div>
 
 **What it does**: cross-DB MCP server — MySQL / PostgreSQL / Cloud SQL / Spanner / BigQuery.
 **Audience**: engineers running databases on Google Cloud, or anyone needing multi-engine support.
@@ -431,10 +555,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [bytebase/dbhub](https://github.com/bytebase/dbhub) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (community multi-DB) |
+
+</div>
 
 **What it does**: zero-dependency, token-efficient multi-DB MCP — Postgres, MySQL, SQL Server, MariaDB, SQLite.
 **Audience**: engineers who don't want the Google Cloud SDK and need cross-OSS-DB support.
@@ -442,10 +570,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [supabase/mcp](https://github.com/supabase/mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ (**Supabase official-community**) |
+
+</div>
 
 **What it does**: connect Supabase (Postgres, Auth, Storage, Edge Functions) to LLMs.
 **Audience**: full-stack devs using Supabase as backend.
@@ -453,10 +585,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [timescale/pg-aiguide](https://github.com/timescale/pg-aiguide) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ (Postgres coding aid) |
+
+</div>
 
 **What it does**: MCP server + Claude plugin to help LLMs write better PostgreSQL code.
 **Audience**: Postgres-heavy SQL writers / DBAs.
@@ -464,10 +600,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [benborla/mcp-server-mysql](https://github.com/benborla/mcp-server-mysql) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (read-only MySQL) |
+
+</div>
 
 **What it does**: read-only MySQL MCP — let the LLM see schemas, run queries.
 **Audience**: scenarios where the LLM should analyze production DBs but never modify them.
@@ -475,10 +615,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [mongodb-js/mongodb-mcp-server](https://github.com/mongodb-js/mongodb-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ (**MongoDB official**) |
+
+</div>
 
 **What it does**: MongoDB and MongoDB Atlas Cluster MCP server.
 **Audience**: engineers using MongoDB / Atlas.
@@ -486,10 +630,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [redis/mcp-redis](https://github.com/redis/mcp-redis) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (**Redis official**) |
+
+</div>
 
 **What it does**: official Redis MCP — natural-language operations on Redis and Redis Stack (Vector / Search / JSON).
 **Audience**: people using Redis as cache / vector DB / queue.
@@ -497,10 +645,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [awslabs/mcp](https://github.com/awslabs/mcp) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ (**AWS official**) |
+
+</div>
 
 **What it does**: AWS's first-party MCP servers (Lambda / S3 / DynamoDB / CloudWatch / Cost Explorer and more).
 **Audience**: teams on AWS who want agents to query / operate their cloud.
@@ -516,10 +668,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ (**Microsoft official**) |
+
+</div>
 
 **What it does**: Playwright MCP server — let the LLM open browsers, click buttons, fill forms, scrape pages.
 **Audience**: anyone doing E2E automation, cross-site integration, scraping behind logins.
@@ -527,10 +683,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ (**Chrome official**) |
+
+</div>
 
 **What it does**: expose Chrome DevTools to coding agents — performance, network, console traces all available to the LLM.
 **Audience**: developers debugging frontend bugs, doing web performance analysis.
@@ -538,10 +698,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [firecrawl/firecrawl-mcp-server](https://github.com/firecrawl/firecrawl-mcp-server) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (**Firecrawl official**) |
+
+</div>
 
 **What it does**: Firecrawl's official MCP — large-scale web scraping + search + structured extraction.
 **Audience**: people scraping large amounts of web data for training / RAG / research.
@@ -549,10 +713,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [browserbase/mcp-server-browserbase](https://github.com/browserbase/mcp-server-browserbase) ⭐⭐⭐⭐ (⚠️ archived)
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ (**Browserbase official**, ⚠️ archived) |
+
+</div>
 
 **What it does**: Browserbase's official MCP, paired with Stagehand for cloud-based browser automation.
 **Audience**: people whose local browser automation is too heavy / who need parallel cloud sessions.
@@ -568,10 +736,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [Canva MCP](https://www.canva.dev/docs/mcp/) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | Delivery | Canva hosted remote MCP; `https://mcp.canva.com/mcp` |
 | Rating | ⭐⭐⭐⭐⭐ (**Canva official**) |
+
+</div>
 
 **What it does**: Lets an AI assistant create, edit, search, and export Canva designs, and work with assets, brands, and comments.
 **Audience**: people who want to operate Canva while following existing design permissions.
@@ -579,10 +751,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [GLips/Figma-Context-MCP](https://github.com/GLips/Figma-Context-MCP) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (community-maintained design-to-code MCP) |
+
+</div>
 
 **What it does**: feed Figma layout info to coding agents — read design files, expose component structure, let Cursor / Claude Code generate matching React components.
 **Audience**: front-end devs going from Figma designs to component code.
@@ -590,10 +766,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [excalidraw/excalidraw-mcp](https://github.com/excalidraw/excalidraw-mcp) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | NOASSERTION |
 | Rating | ⭐⭐⭐⭐⭐ (**Excalidraw official**) |
+
+</div>
 
 **What it does**: streamable Excalidraw MCP — let LLMs draw architecture diagrams and flowcharts directly.
 **Audience**: anyone writing design docs / system architecture / flowcharts who wants Claude to draw from text.
@@ -601,10 +781,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [yctimlin/mcp_excalidraw](https://github.com/yctimlin/mcp_excalidraw) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (alternative Excalidraw) |
+
+</div>
 
 **What it does**: MCP server + Claude Code Skill, real-time canvas sync, create / edit / export.
 **Audience**: people who need real-time canvas sync and programmatic operation.
@@ -612,10 +796,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [pbakaus/impeccable](https://github.com/pbakaus/impeccable) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: "**The design language that makes your AI harness better at design.**" A vocabulary / pattern set that helps AI agents produce UI / visual output that escapes the generic "AI-generated" feel.
 **Audience**: developers using AI to generate UI / mockups / visual designs but getting generic results; front-end + AI workflows.
@@ -631,10 +819,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [grafana/mcp-grafana](https://github.com/grafana/mcp-grafana) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ (**Grafana official**) |
+
+</div>
 
 **What it does**: Grafana's official MCP — query dashboards / metrics / alerts from the LLM.
 **Audience**: SREs / DevOps using Grafana for metrics.
@@ -642,10 +834,14 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 
 ### [getsentry/toolkit](https://github.com/getsentry/toolkit) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | FSL-1.1-Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ (**Sentry official**) |
+
+</div>
 
 **What it does**: query Sentry error events / issues / traces from LLMs.
 **Audience**: engineers using Sentry for production errors.
@@ -655,10 +851,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [winor30/mcp-server-datadog](https://github.com/winor30/mcp-server-datadog) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐ (community Datadog) |
+
+</div>
 
 **What it does**: Datadog API MCP — monitors / logs / metrics.
 **Audience**: Datadog users while there's no official Datadog MCP yet.
@@ -674,10 +874,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [varunneal/spotify-mcp](https://github.com/varunneal/spotify-mcp) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: connect LLMs to Spotify — play tracks, manage playlists, query history.
 **Audience**: anyone integrating playback control or text → music workflows with Claude Code.
@@ -685,10 +889,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [kimtaeyoon83/mcp-server-youtube-transcript](https://github.com/kimtaeyoon83/mcp-server-youtube-transcript) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (YouTube transcripts) |
+
+</div>
 
 **What it does**: pull YouTube video transcripts into the LLM for summary / translation / RAG.
 **Audience**: people using video as study material, batch-summarizing YouTube content.
@@ -696,10 +904,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [ZubeidHendricks/youtube-mcp-server](https://github.com/ZubeidHendricks/youtube-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (full YouTube API) |
+
+</div>
 
 **What it does**: full YouTube API MCP — beyond transcripts, also video management, Shorts, analytics.
 **Audience**: YouTube creators automating channel management.
@@ -715,10 +927,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [leemysw/feishu-docx](https://github.com/leemysw/feishu-docx) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: bidirectional Feishu (Lark) docs / sheet / bitable ↔ Markdown, with OAuth 2.0, CLI, TUI, Claude Skills.
 **Audience**: Chinese-language users on Feishu / Lark wanting to bridge Lark content with Claude Code.
@@ -726,10 +942,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [netease-youdao/LobsterAI](https://github.com/netease-youdao/LobsterAI) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: NetEase Youdao's product-style Agent demonstrates workflow automation, cross-app coordination, and file processing.
 **Audience**: people evaluating a Chinese interface and integrations with mainland Chinese services.
@@ -737,10 +957,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [QwenLM/Qwen-Agent](https://github.com/QwenLM/Qwen-Agent) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: Alibaba's official Qwen agent framework — RAG, tool use, code interpreter, multi-agent, MCP-compatible. Defaults to Qwen models but swappable to other LLMs.
 **Audience**: developers using Qwen / Tongyi as primary LLM; teams that want a Chinese-native agent framework (examples + docs are bilingual but Chinese-first).
@@ -748,10 +972,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [coze-dev/coze-studio](https://github.com/coze-dev/coze-studio) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: open-source release of ByteDance Coze — no-code agent builder (workflow / plugin / knowledge / memory), self-hosted or cloud.
 **Audience**: teams building agents without writing code; engineers wanting a reference implementation of an enterprise agent platform (RAG, workflow, memory, plugin system).
@@ -759,10 +987,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [coze-dev/coze-loop](https://github.com/coze-dev/coze-loop) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: Coze's agent observability + evaluation platform — trace, debug, eval, prompt management. The back half of the agent dev lifecycle.
 **Audience**: teams whose agents are running in production and need monitoring; developers wanting to see how "agent eval / observability" can be designed.
@@ -770,10 +1002,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [liaokongVFX/LangChain-Chinese-Getting-Started-Guide](https://github.com/liaokongVFX/LangChain-Chinese-Getting-Started-Guide) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | unspecified |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: Chinese-language LangChain getting-started guide — covers basics, prompts, memory, agents, chains, and applied examples. It is a structured Chinese learning resource.
 **Audience**: Chinese-language users who want LangChain but find the English docs heavy; readers who want to understand LangChain's design before committing to the framework.
@@ -781,10 +1017,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [chatchat-space/Langchain-Chatchat](https://github.com/chatchat-space/Langchain-Chatchat) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: LangChain-based open-source knowledge-base QA system — local deployment, supports multiple vector stores, end-to-end RAG example.
 **Audience**: Chinese teams who want RAG without building it from scratch; scenarios requiring local-only deployment (no cloud LLM).
@@ -792,10 +1032,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [usewhale/whale](https://github.com/usewhale/whale) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: Terminal AI coding assistant optimized for DeepSeek models — supports MCP server integration, Claude-style Skills, conversation caching, written in Go.
 **Audience**: Chinese developers who use DeepSeek as their primary LLM; those who want a terminal tool without the full Claude Code stack.
@@ -803,10 +1047,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [simonlin1212/a-stock-data](https://github.com/simonlin1212/a-stock-data) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: China A-share data Skill that wraps mootdx, EastMoney, akshare, iwencai, and other sources as a data entry point an AI coding assistant can call.
 **Audience**: Chinese developers using Claude Code / Codex / OpenClaw for investment research or quantitative analysis; those who don't want to build data-fetching logic from scratch.
@@ -816,10 +1064,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [MoonshotAI/Kimi-K2](https://github.com/MoonshotAI/Kimi-K2) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Modified MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: Moonshot's Kimi K2 open-weight LLM series — open weights + OpenAI/Anthropic-compatible API, oriented toward agentic / coding / long-horizon tasks; usable as a backend model for an agent stack.
 **Audience**: Chinese developers who want to run agent / coding workflows on a domestic open model, or to self-host open weights.
@@ -827,10 +1079,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [zai-org/GLM-4.5](https://github.com/zai-org/GLM-4.5) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: Zhipu (Z.ai)'s GLM-4.5 open model — positioned as Agentic, Reasoning, and Coding (ARC) foundation models; open weights + API, usable as a backend for agent / tool use / coding.
 **Audience**: Chinese developers evaluating domestic open agentic models, or who need weights under a permissive license (Apache-2.0).
@@ -846,10 +1102,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐⭐ (**Cloudflare official**) |
+
+</div>
 
 **What it does**: Cloudflare's official MCP — Workers, Pages, R2, KV, D1, DNS, Zero Trust.
 **Audience**: anyone running edge / serverless on Cloudflare.
@@ -857,10 +1117,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [stripe/ai](https://github.com/stripe/ai) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (**Stripe official**) |
+
+</div>
 
 **What it does**: Stripe's official AI agent toolkit, includes an MCP server — handle payments, subscriptions, refunds, customers.
 **Audience**: developers wiring payment / billing into agent flows.
@@ -868,10 +1132,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 
 ### [ComposioHQ/composio](https://github.com/ComposioHQ/composio) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (many tool-integration hub) |
+
+</div>
 
 **What it does**: a platform (SDKs + MCP servers) that connects agents to many apps (Slack / GitHub / Gmail / Salesforce / Notion…) and handles the logins for you, so you don't build a separate connector for each one.
 **Audience**: teams whose agents need broad API coverage without maintaining dozens of separate MCP servers.
@@ -880,10 +1148,14 @@ The license restricts Competing Use; it is not a blanket current Apache-2.0 lice
 <a id="vercel-skills"></a>
 ### [Vercel Skills](https://github.com/vercel-labs/skills) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it teaches**: a **command-line interface (CLI)** lets you control a program with text commands in a terminal.
 Vercel Skills uses this interface to manage skills.
@@ -901,10 +1173,14 @@ Set `DISABLE_TELEMETRY=1` or `DO_NOT_TRACK=1` to opt out.
 
 ### [morluto/jacobian](https://github.com/morluto/jacobian) ⭐⭐⭐ (⚠️ submitted by its author)
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it teaches**: a directly installable math MCP server for practicing agent calls to composable, exact computations across polynomial maps, linear algebra, and graph algorithms.
 **Who it's for**: researchers and developers who want to add mathematical computation to MCP workflows or have agents work with structured mathematical problems.
@@ -929,10 +1205,14 @@ Research Skills can organize literature and writing workflows; the researcher re
 
 ### [WenyuChiou/ai-research-skills](https://github.com/WenyuChiou/ai-research-skills) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ (full research workflow) |
+
+</div>
 
 **What it does**: Uses a set of research Skills to cover literature triage, research design, project context, manuscript writing, and multi-AI delegation, distributed through a marketplace.
 **Audience**: grad students / postdocs wanting a complete "research workflow" skill set in one drop.
@@ -940,10 +1220,14 @@ Research Skills can organize literature and writing workflows; the researcher re
 
 ### [WenyuChiou/academic-writing-skills](https://github.com/WenyuChiou/academic-writing-skills) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ (narrow but deep) |
+
+</div>
 
 **What it does**: rigorous academic paper writing / revision / submission skill for Claude Code. Field-agnostic, customizable per-paper via journal_format.md and style_overrides.md.
 **Audience**: researchers actively writing / revising papers who want to automate banned-word audit, figure-text coupling, submission checklists.
@@ -951,10 +1235,14 @@ Research Skills can organize literature and writing workflows; the researcher re
 
 ### [WenyuChiou/zotero-skills](https://github.com/WenyuChiou/zotero-skills) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: Zotero CLI skill — programmatically search, add, classify, annotate references.
 **Audience**: Zotero users wanting Claude Code to organize their library directly.
@@ -962,10 +1250,14 @@ Research Skills can organize literature and writing workflows; the researcher re
 
 ### [WenyuChiou/research-hub](https://github.com/WenyuChiou/research-hub) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: AI-operable research workspace integrating Zotero, Obsidian, and Gemini Notebook (formerly NotebookLM), with several interfaces.
 **Audience**: researchers using Zotero, Obsidian, and Gemini Notebook (formerly NotebookLM) together.
@@ -994,10 +1286,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [WenyuChiou/codex-delegate](https://github.com/WenyuChiou/codex-delegate) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: Claude Code skill that uses Codex CLI as the execution specialist — multi-file refactors, batch edits, boilerplate generation, wrapper-based implementation tasks. Claude writes the plan + reviews; Codex executes.
 **Audience**: developers wanting to save tokens / accelerate large-scale mechanical edits; learners who want to verify "multi-agent isn't just a buzzword".
@@ -1007,10 +1303,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [WenyuChiou/gemini-delegate-skill](https://github.com/WenyuChiou/gemini-delegate-skill) ⭐⭐⭐ (⚠️ archived 2026-07)
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ (⚠️ archived) |
+
+</div>
 
 **What it does**: Historical Claude Code delegation skill that sent long-form, cross-document, or CJK tasks to another CLI executor.
 **Audience**: maintainers of older setups and readers studying early multi-LLM delegation patterns.
@@ -1020,10 +1320,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [WenyuChiou/agent-collab-skills](https://github.com/WenyuChiou/agent-collab-skills) ⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐ (experimental — treat as reference) |
+
+</div>
 
 **What it does**: Claude Code marketplace for multi-agent collaboration — task splitter, output reconciler, adversarial debate, shared memory, acceptance gate.
 **Audience**: people coordinating multiple delegates who want to see one way of packaging multi-agent coordination into a marketplace.
@@ -1041,10 +1345,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: a multi-agent LLM framework for financial trading decisions, with bull / bear / fundamentals / technicals / risk agents collaborating.
 **Audience**: learners studying how multi-agent systems split analytical work; quant researchers experimenting with LLM augmentation of existing pipelines.
@@ -1052,10 +1360,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [virattt/ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) ⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐ |
+
+</div>
 
 **What it does**: a multi-role AI hedge-fund simulation where bull / bear / fundamentals / technicals / risk agents collaborate to produce trade recommendations.
 **Audience**: Stage 7 multi-agent learners wanting a complete application example; people interested in the agent × finance crossover.
@@ -1071,10 +1383,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [exa-labs/exa-mcp-server](https://github.com/exa-labs/exa-mcp-server) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (**Exa official**) |
+
+</div>
 
 **What it does**: Exa's official MCP — LLM / agent-oriented web search (neural + keyword) that returns clean results to feed straight into prompts.
 **Audience**: people doing research / fact-check / online RAG retrieval — semantic search shines for "concept-related" queries, less so for pure keyword lookups.
@@ -1082,10 +1398,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [tavily-ai/tavily-mcp](https://github.com/tavily-ai/tavily-mcp) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | MIT |
 | Rating | ⭐⭐⭐⭐ (LLM search MCP) |
+
+</div>
 
 **What it does**: wraps the Tavily search API as MCP, giving an Agent search results and sources.
 **Audience**: beginners who want an Agent to search the web and then verify the source content separately.
@@ -1101,10 +1421,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [trailofbits/skills](https://github.com/trailofbits/skills) ⭐⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | CC-BY-SA-4.0 |
 | Rating | ⭐⭐⭐⭐⭐ (**official Trail of Bits**) |
+
+</div>
 
 **What it does**: the official Claude Code plugin marketplace from security firm Trail of Bits, carrying the skills they use themselves for security analysis, testing, and vulnerability research.
 **Audience**: people who want an agent to help with code audits, vulnerability analysis, and security testing; also anyone curious how a professional security team encodes its own methodology as skills.
@@ -1112,10 +1436,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [stacklok/toolhive](https://github.com/stacklok/toolhive) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: runs every MCP server in an isolated container, replaces local credentials with a minimal permission file, and adds audit logs plus configurable identity and access policy. Ships a Kubernetes operator as well.
 **Audience**: teams where everyone has installed their own pile of MCP servers and somebody now has to answer "who installed what, and which credentials can it reach".
@@ -1123,10 +1451,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [NVIDIA/OpenShell](https://github.com/NVIDIA/OpenShell) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ (**NVIDIA official**) |
+
+</div>
 
 **What it does**: a sandboxed execution environment for autonomous agents, with declarative policy over files, network and processes. Claude Code and Codex run inside it unmodified; OpenClaw goes through NemoClaw, the next entry below.
 **Audience**: people who want an agent to actually execute commands without handing it the whole machine.
@@ -1134,10 +1466,14 @@ Do not turn model names into permanent job titles. First check the current model
 
 ### [nolabs-ai/nono](https://github.com/nolabs-ai/nono) ⭐⭐⭐⭐
 
+<div align="center" markdown="1">
+
 | Field | Value |
-|---|---|
+|:---|:---|
 | License | Apache-2.0 |
 | Rating | ⭐⭐⭐⭐ |
+
+</div>
 
 **What it does**: confines agents using the operating system's own isolation (Linux Landlock, macOS Seatbelt), with no daemon and no container.
 **Audience**: people who want a sandbox without installing a whole container runtime for it.

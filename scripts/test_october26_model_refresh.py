@@ -20,7 +20,7 @@ def page(locale: str) -> str:
 
 
 def family_table(text: str, family: str) -> ElementTree.Element:
-    markup = re.search(rf'<table data-model-family="{family}">.*?</table>', text, re.S)
+    markup = re.search(rf'<table data-model-family="{family}" align="center">.*?</table>', text, re.S)
     assert markup is not None
     return ElementTree.fromstring(markup[0])
 
@@ -67,7 +67,7 @@ def test_long_fields_use_real_merged_labels(locale: str, family: str, counts: di
     for field, count in counts.items():
         rows = table.find(f'./tbody[@data-field="{field}"]').findall("tr")
         assert len(rows) == count
-        assert rows[0].find("th").attrib == {"scope": "rowgroup", "rowspan": str(count)}
+        assert rows[0].find("th").attrib == {"scope": "rowgroup", "rowspan": str(count), "align": "center", "valign": "middle"}
         assert len(rows[0]) == 2
         assert all(len(row) == 1 and row[0].tag == "td" for row in rows[1:])
 

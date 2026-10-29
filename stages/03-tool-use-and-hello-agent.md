@@ -62,11 +62,15 @@ ReAct 會交替決定下一步、採取 action、查看 observation，再繼續�
 
 ## 先選對方法
 
+<div align="center" markdown="1">
+
 | 你要什麼 | 先用什麼 | 例子 |
-|---|---|---|
+|:---|:---|:---|
 | 只要文字答案 | 一般模型回答 | 改寫一封信 |
 | 要固定形狀的資料 | Structured Output | 抽出姓名與日期 |
 | 要查即時資料或採取動作 | Function Calling / Tool Use | 查天氣、建立工單 |
+
+</div>
 
 ## ⚠️ 寫第一個 Agent 前的五條底線
 
@@ -126,13 +130,17 @@ Path A 的 **API 費用是 `$0`**；仍會使用你的硬體、記憶體與電�
 <details markdown="1">
 <summary>展開 CoT、ReAct、Reflection 與 Planning 的差別</summary>
 
+<div align="center" markdown="1">
+
 | 名詞 | 白話用途 | 放在哪裡學 |
-|---|---|---|
+|:---|:---|:---|
 | **Chain-of-Thought（CoT）** | 早期 prompt 技巧常要求寫出中間推理。現在不把完整私人思維鏈當成通用輸出要求；需要檢查時，看最後答案與簡短、可驗證的理由 | [Stage 02](02-prompt-engineering.md) |
 | **ReAct** | 在迴圈中交替採取 action、讀 observation、再決定下一步 | 本章練習 3 |
 | **Reflection** | 用一次回饋改下一次嘗試的廣義做法 | 本章下方路由 |
 | **Reflexion／Self-Refine** | 有明確 Actor／Critic 或自我回饋流程的研究 pattern | 本章概念；持久記憶版到 [Stage 06](06-memory-rag.md) |
 | **Planning** | 先拆成多步，再依結果調整計畫 | [Stage 07.5](07.5-advanced-agentic-concepts.md) |
+
+</div>
 
 這些詞描述不同解題方式，不是 Agent 的唯一判定表。Computer-use、CodeAct 和 workflow agent 也可能使用不同 loop。
 
@@ -410,13 +418,17 @@ python examples/stage-3/05-error-handling/test_anthropic.py
 <details markdown="1">
 <summary>展開錯誤分類、bounded retry 與預算</summary>
 
+<div align="center" markdown="1">
+
 | 錯誤 | 程式先做什麼 | 是否送回模型 |
-|---|---|---|
+|:---|:---|:---|
 | 網路 timeout／rate limit | 有上限地 retry；記錄錯誤 | 通常先不要 |
 | Tool Call JSON 解析失敗 | 不執行工具；回報格式錯誤 | 可以，用 error result |
 | 未知工具／未授權參數 | 拒絕執行；留下 audit log | 可以，但不能放寬權限 |
 | 工具查無資料 | 回傳明確、最小的語意錯誤 | 可以，讓模型改查詢或放棄 |
 | 達到 `MAX_STEPS`／費用上限 | 立刻停止 | 不再 retry |
+
+</div>
 
 Anthropic 的失敗 `tool_result` 使用 `"is_error": true`。OpenAI-compatible 路徑可在 `role: tool` 的 content 放結構化錯誤，但應用程式仍要自己限制 retry。
 
@@ -487,7 +499,7 @@ python examples/stage-3/06-schema-design/test_anthropic.py
 
 > 推薦度是本 Stage 的學習優先順序，不是人氣排名：`⭐⭐⭐⭐⭐`＝跳過會卡住本章路線；`⭐⭐⭐⭐`＝建議優先；`⭐⭐⭐`＝有需要再看；`⭐⭐`＝歷史或少數情境。
 
-<table>
+<table align="center">
   <thead>
     <tr>
       <th scope="col">分類</th>
@@ -498,37 +510,37 @@ python examples/stage-3/06-schema-design/test_anthropic.py
     </tr>
   </thead>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="6">官方核心文件</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works">Anthropic — How Tool Use Works</a></td><td>先看 client tool 的五步來回。</td><td>官方文件</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls">Anthropic — Handle Tool Calls</a></td><td>看 call ID、result 與 <code>is_error</code>。</td><td>官方文件</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://docs.ollama.com/capabilities/tool-calling">Ollama — Tool Calling</a></td><td>照 single tool 和 agent loop 範例跑一次。</td><td>官方文件</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://developers.openai.com/api/docs/guides/function-calling">OpenAI — Function Calling</a></td><td>比較 function schema 與 strict mode。</td><td>官方文件</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://ai.google.dev/gemini-api/docs/function-calling">Google Gemini — Function Calling</a></td><td>需要 Gemini 時比較 sequential／parallel call。</td><td>官方文件</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://arxiv.org/abs/2210.03629">ReAct paper</a></td><td>先讀 abstract 與方法圖。</td><td>原始論文；arXiv</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">官方核心文件</th><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works">Anthropic — How Tool Use Works</a></td><td>先看 client tool 的五步來回。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls">Anthropic — Handle Tool Calls</a></td><td>看 call ID、result 與 <code>is_error</code>。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://docs.ollama.com/capabilities/tool-calling">Ollama — Tool Calling</a></td><td>照 single tool 和 agent loop 範例跑一次。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/guides/function-calling">OpenAI — Function Calling</a></td><td>比較 function schema 與 strict mode。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://ai.google.dev/gemini-api/docs/function-calling">Google Gemini — Function Calling</a></td><td>需要 Gemini 時比較 sequential／parallel call。</td><td>官方文件</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2210.03629">ReAct paper</a></td><td>先讀 abstract 與方法圖。</td><td>原始論文；arXiv</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">官方課程與範例</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>看舊版 Tool Use notebook；動手時對照下一列 Cookbook。</td><td>已封存的官方課程；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/claude-cookbooks/tree/main/tool_use">Anthropic Tool Use Cookbook</a></td><td>從單工具讀到平行工具。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/anthropics/claude-quickstarts">Anthropic Quickstarts</a></td><td>練習後看完整應用怎麼接工具。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/ai-agents-for-beginners">Microsoft AI Agents for Beginners</a></td><td>需要另一條完整課程時選讀一章。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">官方課程與範例</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>看舊版 Tool Use notebook；動手時對照下一列 Cookbook。</td><td>已封存的官方課程；上游未提供 SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/claude-cookbooks/tree/main/tool_use">Anthropic Tool Use Cookbook</a></td><td>從單工具讀到平行工具。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/anthropics/claude-quickstarts">Anthropic Quickstarts</a></td><td>練習後看完整應用怎麼接工具。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/ai-agents-for-beginners">Microsoft AI Agents for Beginners</a></td><td>需要另一條完整課程時選讀一章。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">從零實作</th><td><a href="https://github.com/pguso/ai-agents-from-scratch">pguso/ai-agents-from-scratch</a></td><td>用 Ollama 對照練習 3 的 loop。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/arunpshankar/react-from-scratch">arunpshankar/react-from-scratch</a></td><td>需要 Gemini／Reflection 變體時再看。</td><td>更新放緩（最後 push 2025-05）；Apache-2.0</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/mattambrogi/agent-implementation">mattambrogi/agent-implementation</a></td><td>只用來逐行看最小教學玩具。</td><td>歷史參考（最後 push 2024-01）；上游未提供 SPDX</td><td>⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/lsdefine/GenericAgent">lsdefine/GenericAgent</a></td><td>想看小型 framework 時再比較。</td><td>維護中；MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">從零實作</th><td><a href="https://github.com/pguso/ai-agents-from-scratch">ai-agents-from-scratch</a></td><td>用 Ollama 對照練習 3 的 loop。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/arunpshankar/react-from-scratch">react-from-scratch</a></td><td>需要 Gemini／Reflection 變體時再看。</td><td>更新放緩（最後 push 2025-05）；Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/mattambrogi/agent-implementation">agent-implementation</a></td><td>只用來逐行看最小教學玩具。</td><td>歷史參考（最後 push 2024-01）；上游未提供 SPDX</td><td align="center" valign="middle">⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/lsdefine/GenericAgent">GenericAgent</a></td><td>想看小型 framework 時再比較。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="3">Framework／CodeAct 對照</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>完成 JSON-tool loop 後比較 CodeAct。</td><td>維護中；Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/QuantaLogic/quantalogic">QuantaLogic</a></td><td>需要第二個 CodeAct 實作時再看。</td><td>更新較慢（最後 push 2025-12）；Apache-2.0</td><td>⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/langchain-ai/react-agent">LangChain ReAct Agent</a></td><td>看 framework 如何包住自己寫過的 loop。</td><td>維護中；MIT</td><td>⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Framework／CodeAct 對照</th><td><a href="https://github.com/huggingface/smolagents">Hugging Face Smolagents</a></td><td>完成 JSON-tool loop 後比較 CodeAct。</td><td>維護中；Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/QuantaLogic/quantalogic">QuantaLogic</a></td><td>需要第二個 CodeAct 實作時再看。</td><td>更新較慢（最後 push 2025-12）；Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/langchain-ai/react-agent">LangChain ReAct Agent</a></td><td>看 framework 如何包住自己寫過的 loop。</td><td>維護中；MIT</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">中文章節式教材</th><td><a href="https://github.com/datawhalechina/hello-agents">datawhalechina/hello-agents</a></td><td>需要完整中文章節時走這條主線。</td><td>維護中；上游 metadata 未提供 SPDX</td><td>⭐⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/jjyaoao/HelloAgents">jjyaoao/HelloAgents</a></td><td>配合上面教材跑程式；先確認對應分支。</td><td>維護中；上游 metadata 未提供 SPDX</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">中文章節式教材</th><td><a href="https://github.com/datawhalechina/hello-agents">hello-agents</a></td><td>需要完整中文章節時走這條主線。</td><td>維護中；上游 metadata 未提供 SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/jjyaoao/HelloAgents">HelloAgents</a></td><td>配合上面教材跑程式；先確認對應分支。</td><td>維護中；上游 metadata 未提供 SPDX</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="2">Structured Output 工具</th><td><a href="https://github.com/567-labs/instructor">567-labs/instructor</a></td><td>想用 typed model、驗證與 retry 時看。</td><td>原 <code>jxnl/instructor</code> 已轉址；MIT</td><td>⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/dottxt-ai/outlines">dottxt-ai/outlines</a></td><td>研究本機 constrained decoding 時看。</td><td>維護中；Apache-2.0</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Structured Output 工具</th><td><a href="https://github.com/567-labs/instructor">instructor</a></td><td>想用 typed model、驗證與 retry 時看。</td><td>原 <code>jxnl/instructor</code> 已轉址；MIT</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/dottxt-ai/outlines">outlines</a></td><td>研究本機 constrained decoding 時看。</td><td>維護中；Apache-2.0</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
   </tbody>
 </table>
 

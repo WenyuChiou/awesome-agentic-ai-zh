@@ -37,17 +37,21 @@
 
 ## 🧩 先认识五个核心词
 
+<div align="center" markdown="1">
+
 | 核心词 | 它是什么、像什么 | A1 怎么用 | 不是什么 |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | **LLM（大型语言模型）** | 生成文字或代码的模型，像工作台里负责想答案的大脑 | Claude、GPT、Gemini 都是模型家族 | 不会自己管理 repo、文件权限或账单 |
 | **Provider API（模型服务入口）** | 让工具向一家模型服务发送请求的门 | Anthropic API、OpenAI API、Gemini API 会处理认证和计费 | 不是会改文件的 coding agent |
 | **Router（路由器）** | 把同一个请求转给不同 provider 的中转站 | [OpenRouter](https://openrouter.ai/docs/faq) 可集中 API、routing 和 usage | 不是 LLM，也不管理你的文件权限 |
 | **Coding agent（编程工作台）** | 能在终端里读文件、改文件和执行命令的工作台 | Claude Code、Codex、OpenCode、Pi 都属于这一类 | 里面使用的模型、provider 和 sandbox 要另外确认 |
 | **Local runtime（本地模型引擎）** | 在自己的电脑上运行模型的引擎，像启动模型的马达 | [Ollama](https://github.com/ollama/ollama) 可以让支持它的 agent 调用本地模型 | 不是 coding agent，不会自己读取 repo |
 
+</div>
+
 ## 根据已有条件选择入口
 
-<table>
+<table align="center">
 <thead>
 <tr><th scope="col">你已有的条件</th><th scope="col">可以先看的入口</th><th scope="col">先确认什么</th></tr>
 </thead>
@@ -134,26 +138,26 @@ A1 只教你安全开始，不在两个页面重复维护同一份易变数据�
 
 推荐度是本学习地图的编辑建议，不是 GitHub stars 或总排名。`⭐⭐⭐⭐⭐` 表示：如果你选择这条工具路径，这一行应先看；不是让你安装所有五星工具。
 
-<table>
+<table align="center">
 <thead>
 <tr><th scope="col">分类</th><th scope="col">Project</th><th scope="col">推荐度</th><th scope="col">适合谁</th><th scope="col">先注意什么</th></tr>
 </thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="4">官方模型生态</th><td><a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a></td><td>⭐⭐⭐⭐⭐</td><td>使用 Anthropic 生态的人</td><td>保留 permission prompt，先用 demo repo</td></tr>
-<tr><td><a href="https://github.com/openai/codex">openai/codex</a></td><td>⭐⭐⭐⭐⭐</td><td>已有 ChatGPT 或 OpenAI API 的人</td><td>确认 approval、sandbox 和工作目录</td></tr>
-<tr><td><a href="https://github.com/google-gemini/gemini-cli">google-gemini/gemini-cli</a></td><td>⭐⭐⭐⭐</td><td>已有 Google 认证或 Vertex AI 的人</td><td>先确认认证方式和 sandbox</td></tr>
-<tr><td><a href="https://github.com/xai-org/grok-build">xai-org/grok-build</a></td><td>⭐⭐⭐</td><td>已在使用 xAI 生态、想比较新工具的人</td><td>先在 demo repo 观察，不作第一个 production 工具</td></tr>
+<tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">官方模型生态</th><td><a href="https://github.com/anthropics/claude-code">claude-code</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>使用 Anthropic 生态的人</td><td>保留 permission prompt，先用 demo repo</td></tr>
+<tr><td><a href="https://github.com/openai/codex">codex</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>已有 ChatGPT 或 OpenAI API 的人</td><td>确认 approval、sandbox 和工作目录</td></tr>
+<tr><td><a href="https://github.com/google-gemini/gemini-cli">gemini-cli</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>已有 Google 认证或 Vertex AI 的人</td><td>先确认认证方式和 sandbox</td></tr>
+<tr><td><a href="https://github.com/xai-org/grok-build">grok-build</a></td><td align="center" valign="middle">⭐⭐⭐</td><td>已在使用 xAI 生态、想比较新工具的人</td><td>先在 demo repo 观察，不作第一个 production 工具</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="5">可换 provider</th><td><a href="https://github.com/anomalyco/opencode">anomalyco/opencode</a></td><td>⭐⭐⭐⭐⭐</td><td>想切换 provider 或接兼容 endpoint 的人</td><td><code>AGENTS.md</code> 优先；另查 permission 设置</td></tr>
-<tr><td><a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a></td><td>⭐⭐⭐⭐</td><td>想同时使用 CLI、desktop 和 extensions 的人</td><td>先只开低权限 extension</td></tr>
-<tr><td><a href="https://github.com/Aider-AI/aider">Aider-AI/aider</a></td><td>⭐⭐⭐⭐⭐</td><td>重视 git diff 和 commit 流程的人</td><td>先理解它的 git auto-commit 行为</td></tr>
-<tr><td><a href="https://github.com/earendil-works/pi">earendil-works/pi</a></td><td>⭐⭐⭐⭐</td><td>想从小核心加 extensions、skills 或 RPC 的人</td><td>没有内建 sandbox；需要隔离时用容器或 VM</td></tr>
-<tr><td><a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></td><td>⭐⭐⭐⭐⭐</td><td>想在 terminal、desktop 或聊天平台使用同一 agent 的人</td><td>逐项开启 provider、Skill 和 MCP 权限</td></tr>
+<tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">可换 provider</th><td><a href="https://github.com/anomalyco/opencode">opencode</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>想切换 provider 或接兼容 endpoint 的人</td><td><code>AGENTS.md</code> 优先；另查 permission 设置</td></tr>
+<tr><td><a href="https://github.com/aaif-goose/goose">goose</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>想同时使用 CLI、desktop 和 extensions 的人</td><td>先只开低权限 extension</td></tr>
+<tr><td><a href="https://github.com/Aider-AI/aider">aider</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>重视 git diff 和 commit 流程的人</td><td>先理解它的 git auto-commit 行为</td></tr>
+<tr><td><a href="https://github.com/earendil-works/pi">pi</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>想从小核心加 extensions、skills 或 RPC 的人</td><td>没有内建 sandbox；需要隔离时用容器或 VM</td></tr>
+<tr><td><a href="https://github.com/NousResearch/hermes-agent">hermes-agent</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>想在 terminal、desktop 或聊天平台使用同一 agent 的人</td><td>逐项开启 provider、Skill 和 MCP 权限</td></tr>
 </tbody>
 <tbody>
-<tr><th scope="rowgroup" rowspan="2">Router／本地引擎</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td>⭐⭐⭐⭐</td><td>想用一个 API 入口切换 provider 的人</td><td>它是 Router，仍要搭配 agent</td></tr>
-<tr><td><a href="https://github.com/ollama/ollama">ollama/ollama</a></td><td>⭐⭐⭐⭐⭐</td><td>想在自己电脑上运行模型的人</td><td>它是 local runtime，仍要搭配 agent</td></tr>
+<tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Router／本地引擎</th><td><a href="https://openrouter.ai/docs/faq">OpenRouter</a></td><td align="center" valign="middle">⭐⭐⭐⭐</td><td>想用一个 API 入口切换 provider 的人</td><td>它是 Router，仍要搭配 agent</td></tr>
+<tr><td><a href="https://github.com/ollama/ollama">ollama</a></td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td><td>想在自己电脑上运行模型的人</td><td>它是 local runtime，仍要搭配 agent</td></tr>
 </tbody>
 </table>
 <details markdown="1">
