@@ -73,17 +73,17 @@
 
 ### 把改好的文件放上 GitHub
 
-假設你要修改自己的 `README.md`。先在自己的練習儲存庫操作；[GitHub 官方入門](https://docs.github.com/en/get-started/using-github/hello-world)會帶你建立儲存庫。**Clone（複製專案）**會把專案檔案與版本歷史下載到電腦。以下從已複製到電腦、目前位於 `main` 的練習儲存庫開始；先依 [GitHub 官方 Git 設定](https://docs.github.com/en/get-started/git-basics/set-up-git)安裝 Git 並完成驗證，再依[複製專案教學](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)取得練習儲存庫。在終端機切到該專案資料夾後再輸入指令。
+假設你要修改自己的 `README.md`。先在自己的練習儲存庫操作；[GitHub 官方入門](https://docs.github.com/en/get-started/using-github/hello-world)會帶你建立儲存庫。<strong>Clone（複製專案）</strong>會把專案檔案與版本歷史下載到電腦。以下從已複製到電腦、目前位於 `main` 的練習儲存庫開始；先依 [GitHub 官方 Git 設定](https://docs.github.com/en/get-started/git-basics/set-up-git)安裝 Git 並完成驗證，再依[複製專案教學](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)取得練習儲存庫。在終端機切到該專案資料夾後再輸入指令。
 
-1. **開自己的工作線。** 輸入 `git switch -c docs/my-first-update`，建立並切換到新分支。**Branch（分支）**像從同一份版本開始的一條修改線，不是另外複製一份資料夾；`docs/my-first-update` 是你取的分支名稱。
+1. **開自己的工作線。** 輸入 `git switch -c docs/my-first-update`，建立並切換到新分支。<strong>Branch（分支）</strong>像從同一份版本開始的一條修改線，不是另外複製一份資料夾；`docs/my-first-update` 是你取的分支名稱。
 2. **修改、存檔、檢查。** 改好 `README.md`，儲存檔案並完成專案要求的檢查。用 `git status` 看哪些檔案有變，再用 `git diff` 看具體差異。此時還沒有新的 Commit。
-3. **選出這次要記錄的檔案。** 輸入 `git add README.md`。**暫存區（Staging Area）**是「下一筆 Commit 要放哪些修改」的清單。這個指令選入目前的修改；如果之後又改了檔案，要重新選入。
+3. **選出這次要記錄的檔案。** 輸入 `git add README.md`。<strong>暫存區（Staging Area）</strong>是「下一筆 Commit 要放哪些修改」的清單。這個指令選入目前的修改；如果之後又改了檔案，要重新選入。
 4. **在電腦留下紀錄。** 輸入 `git commit -m "docs: clarify the introduction"`。這會把暫存區中的修改存成一筆 **Commit**；引號內是修改說明。它仍在你的電腦，尚未上傳。
-5. **上傳這條分支。** 輸入 `git push -u origin docs/my-first-update`。**origin** 是這個例子中 GitHub 遠端儲存庫的名稱；`-u` 記住本機分支與遠端分支的對應。**Push** 把版本送到該分支，還沒有合進 `main`。
-6. **提出 PR，等人檢查。** 到 GitHub 開 Pull Request，來源選 `docs/my-first-update`，目標選 `main`。**Review（審查）**就是看差異、提問並檢查結果；依專案規則完成檢查與批准後，再由有權限的人 **Merge**。自己的練習儲存庫可以自行檢查並合併；合作專案先讀貢獻說明。
-7. **把合併結果帶回電腦。** 確認 PR 已合併，並用 `git status` 確認工作區乾淨，再依序輸入 `git switch main` 和 `git pull --ff-only`。**Pull（取得遠端更新）**讓本機 `main` 跟上 GitHub；如果失敗，先讀錯誤，別強行覆蓋。
+5. **上傳這條分支。** 輸入 `git push -u origin docs/my-first-update`。<strong>origin</strong> 是這個例子中 GitHub 遠端儲存庫的名稱；`-u` 記住本機分支與遠端分支的對應。**Push** 把版本送到該分支，還沒有合進 `main`。
+6. **提出 PR，等人檢查。** 到 GitHub 開 Pull Request，來源選 `docs/my-first-update`，目標選 `main`。<strong>Review（審查）</strong>就是看差異、提問並檢查結果；依專案規則完成檢查與批准後，再由有權限的人 **Merge**。自己的練習儲存庫可以自行檢查並合併；合作專案先讀貢獻說明。
+7. **把合併結果帶回電腦。** 確認 PR 已合併，並用 `git status` 確認工作區乾淨，再依序輸入 `git switch main` 和 `git pull --ff-only`。<strong>Pull（取得遠端更新）</strong>讓本機 `main` 跟上 GitHub；如果失敗，先讀錯誤，別強行覆蓋。
 
-要修改別人的專案，卻沒有寫入權限時，通常先 **Fork（建立自己帳號下的專案副本）**，再從自己的副本提出 PR，見 [Fork 官方教學](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。**Issue** 是問題與建議的討論頁，不是每次修改的必經步驟。
+要修改別人的專案，卻沒有寫入權限時，通常先 <strong>Fork（建立自己帳號下的專案副本）</strong>，再從自己的副本提出 PR，見 [Fork 官方教學](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。**Issue** 是問題與建議的討論頁，不是每次修改的必經步驟。
 
 ### 看一筆真實修改
 

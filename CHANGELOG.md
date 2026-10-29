@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-10-29
 
-- **content / Stage 0 / GitHub screenshot guides** · 三語以「改文件、記錄、上傳、提出 PR、合併、取得更新」串起七步流程；將舊 Commit 上方標籤換成實際欄位紅框與編號，另補本專案 PR #343／Issue #314 的三語導讀。保留原始畫面與來源連結、可見逐號說明、主練習及五星資源；明分暫存區、Commit、Push、Merge、Review／Checks 與 Closed 的意義。
+- **content / Stage 0 / GitHub screenshot guides** · 三語以「改文件、記錄、上傳、提出 PR、合併、取得更新」串起七步流程；將舊 Commit 上方標籤換成實際欄位紅框與編號，另補本專案 PR #343／Issue #314 的三語導讀。保留原始畫面與來源連結、可見逐號說明、主練習及五星資源；以明確 HTML 粗體避免 GitHub 中文括號顯示 `**`，同步本專案連結的引用索引（保留原查核時間與事實）；明分暫存區、Commit、Push、Merge、Review／Checks 與 Closed 的意義。
 
 - **review / Greptile curriculum rules** · 新增共用教材審查規則，檢查三語語意、重要內容展開、白話核心詞、官方來源與局部查核日期，以及 GitHub／文件站的手機與桌面排版證據。明確關閉自動批准，保留 status check 與人工合併；PR 開啟與新增 commit 觸發審查，不覆寫審查等級或 PR 說明。引用既有 CLAUDE／DESIGN／style guide，另加設定與本機 context 範圍測試；未驗證的來源或畫面必須明示限制。
 

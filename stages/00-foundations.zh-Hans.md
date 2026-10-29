@@ -73,17 +73,17 @@
 
 ### 把改好的文件放上 GitHub
 
-假设你要修改自己的 `README.md`。先在自己的练习仓库操作；[GitHub 官方入门](https://docs.github.com/en/get-started/using-github/hello-world)会带你创建仓库。**Clone（克隆项目）**会把项目文件与版本历史下载到电脑。以下从已克隆到电脑、当前位于 `main` 的练习仓库开始；先按 [GitHub 官方 Git 设置](https://docs.github.com/en/get-started/git-basics/set-up-git)安装 Git 并完成验证，再按[克隆项目教程](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)获取练习仓库。在终端切到该项目文件夹后再输入命令。
+假设你要修改自己的 `README.md`。先在自己的练习仓库操作；[GitHub 官方入门](https://docs.github.com/en/get-started/using-github/hello-world)会带你创建仓库。<strong>Clone（克隆项目）</strong>会把项目文件与版本历史下载到电脑。以下从已克隆到电脑、当前位于 `main` 的练习仓库开始；先按 [GitHub 官方 Git 设置](https://docs.github.com/en/get-started/git-basics/set-up-git)安装 Git 并完成验证，再按[克隆项目教程](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)获取练习仓库。在终端切到该项目文件夹后再输入命令。
 
-1. **开自己的工作线。** 输入 `git switch -c docs/my-first-update`，创建并切换到新分支。**Branch（分支）**像从同一份版本开始的一条修改线，不是另外复制一份文件夹；`docs/my-first-update` 是你取的分支名称。
+1. **开自己的工作线。** 输入 `git switch -c docs/my-first-update`，创建并切换到新分支。<strong>Branch（分支）</strong>像从同一份版本开始的一条修改线，不是另外复制一份文件夹；`docs/my-first-update` 是你取的分支名称。
 2. **修改、保存、检查。** 改好 `README.md`，保存文件并完成项目要求的检查。用 `git status` 看哪些文件有变化，再用 `git diff` 看具体差异。此时还没有新的 Commit。
-3. **选出这次要记录的文件。** 输入 `git add README.md`。**暂存区（Staging Area）**是“下一笔 Commit 要放哪些修改”的清单。这个命令选入当前的修改；如果之后又改了文件，要重新选入。
+3. **选出这次要记录的文件。** 输入 `git add README.md`。<strong>暂存区（Staging Area）</strong>是“下一笔 Commit 要放哪些修改”的清单。这个命令选入当前的修改；如果之后又改了文件，要重新选入。
 4. **在电脑留下记录。** 输入 `git commit -m "docs: clarify the introduction"`。这会把暂存区中的修改存成一笔 **Commit**；引号内是修改说明。它仍在你的电脑，尚未上传。
-5. **上传这条分支。** 输入 `git push -u origin docs/my-first-update`。**origin** 是这个例子中 GitHub 远程仓库的名称；`-u` 记住本地分支与远程分支的对应。**Push** 把版本送到该分支，还没有合进 `main`。
-6. **提出 PR，等人检查。** 到 GitHub 开 Pull Request，来源选 `docs/my-first-update`，目标选 `main`。**Review（审查）**就是看差异、提问并检查结果；按项目规则完成检查与批准后，再由有权限的人 **Merge**。自己的练习仓库可以自行检查并合并；合作项目先读贡献说明。
-7. **把合并结果带回电脑。** 确认 PR 已合并，并用 `git status` 确认工作区干净，再依次输入 `git switch main` 和 `git pull --ff-only`。**Pull（获取远程更新）**让本地 `main` 跟上 GitHub；如果失败，先读错误，别强行覆盖。
+5. **上传这条分支。** 输入 `git push -u origin docs/my-first-update`。<strong>origin</strong> 是这个例子中 GitHub 远程仓库的名称；`-u` 记住本地分支与远程分支的对应。**Push** 把版本送到该分支，还没有合进 `main`。
+6. **提出 PR，等人检查。** 到 GitHub 开 Pull Request，来源选 `docs/my-first-update`，目标选 `main`。<strong>Review（审查）</strong>就是看差异、提问并检查结果；按项目规则完成检查与批准后，再由有权限的人 **Merge**。自己的练习仓库可以自行检查并合并；合作项目先读贡献说明。
+7. **把合并结果带回电脑。** 确认 PR 已合并，并用 `git status` 确认工作区干净，再依次输入 `git switch main` 和 `git pull --ff-only`。<strong>Pull（获取远程更新）</strong>让本地 `main` 跟上 GitHub；如果失败，先读错误，别强行覆盖。
 
-要修改别人的项目，却没有写入权限时，通常先 **Fork（创建自己账号下的项目副本）**，再从自己的副本提出 PR，见 [Fork 官方教程](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。**Issue** 是问题与建议的讨论页，不是每次修改的必经步骤。
+要修改别人的项目，却没有写入权限时，通常先 <strong>Fork（创建自己账号下的项目副本）</strong>，再从自己的副本提出 PR，见 [Fork 官方教程](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)。**Issue** 是问题与建议的讨论页，不是每次修改的必经步骤。
 
 ### 看一笔真实修改
 

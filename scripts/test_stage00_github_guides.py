@@ -26,6 +26,11 @@ def test_document_workflow_keeps_local_and_remote_steps_visible(suffix: str) -> 
     positions = [story.index(command) for command in commands]
     assert positions == sorted(positions)
     assert "<details" not in story
+    # CJK punctuation beside Markdown ** can stay literal on GitHub even
+    # when the MkDocs renderer makes it bold. Explicit HTML keeps both aligned.
+    labels = re.findall(r"<strong>(.*?)</strong>", story)
+    for term in ("Branch", "Staging Area", "origin", "Review", "Pull", "Fork"):
+        assert any(term in label for label in labels), term
     for term in ("Staging Area", "origin", "Fork", "Review", "Committer", "Checks", "Closed"):
         assert term in story
     start = source.rfind("\n1. **", 0, source.index("git switch -c docs/my-first-update"))
