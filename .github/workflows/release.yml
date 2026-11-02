@@ -278,4 +278,3 @@ jobs:
           test "$(jq -r .prerelease /tmp/published-release.json)" = false
           test "$(jq '.assets | length' /tmp/published-release.json)" -eq 0
           echo "Published: $(jq -r .html_url /tmp/published-release.json)" >> "$GITHUB_STEP_SUMMARY"
-

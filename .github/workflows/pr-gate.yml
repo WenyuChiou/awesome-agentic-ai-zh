@@ -280,4 +280,3 @@ jobs:
             gh api -X POST "repos/$REPOSITORY/issues/$PR_NUMBER/comments" \
               -F body=@evidence/pr-readiness.md >/dev/null
           fi
-
