@@ -516,7 +516,7 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 18-family table (official specification entries)</summary>
 
-<small>Full table checked: 2026-09-22 UTC. Scoped GPT/Kimi update: 2026-10-26 UTC. Claude row updated: 2026-10-08 UTC. Gemini row updated: 2026-10-29 UTC. Muse/Mistral/Jev and GPT electives updated: 2026-10-15 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
+<small>Full table checked: 2026-09-22 UTC. Scoped GPT/Kimi update: 2026-10-26 UTC. Claude row updated: 2026-10-08 UTC. Gemini row updated: 2026-10-29 UTC. Muse/Jev and GPT electives updated: 2026-10-15 UTC. Mistral Large 4 updated: 2026-11-02 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 **Cache** is like reusing a note you already read: reading old content and writing new content may have different prices.
@@ -1050,22 +1050,22 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><td>Ministral 3</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">Status</th><td>Large 4: Public Preview. Medium 3.5/Small 4: generally available</td></tr>
+    <tr><th scope="row">Status</th><td>Large 4 API: Public Preview; weights released on 2026-10-29. Medium 3.5/Small 4: generally available</td></tr>
   </tbody>
   <tbody data-field="context">
     <tr><th scope="row">Context</th><td>Large 4: 1M. Medium 3.5/Small 4: 256K</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>US$ per million tokens. Large 4 input/cache/output: promotional US$0.68/$0.07/$2.09, list US$1.36/$0.14/$4.18. Medium 3.5 input/output $1.50/$7.50, Modified MIT. Small 4: $0.15/$0.60, Apache 2.0</td></tr>
+    <tr><th scope="row">Price or license</th><td>US$ per million tokens. Large 4 input/cache/output: US$0.70/$0.07/$2.10; weights use the Mistral Ecosystem Open-Weight License. Medium 3.5 input/output $1.50/$7.50, Modified MIT. Small 4: $0.15/$0.60, Apache 2.0</td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">Good for</th><td>Compare reasoning, vision, coding, and tool use. For self-hosting, choose a model with released weights and license terms</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limits</th><td>Large 4 weights not yet released. Promotion lasts 2 weeks after launch, not a permanent rate. Do not treat the whole family as Apache 2.0</td></tr>
+    <tr><th scope="row">Limits</th><td>Large 4 is open-weight, not necessarily fully open source; commercial use by a Model-as-a-Service business requires a separate license. Assess memory and inference requirements before self-hosting; it is not a beginner model for an ordinary laptop. Do not treat the whole family as Apache 2.0</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://docs.mistral.ai/models/mistral-large-4-0">Large 4 specs and pricing</a> · <a href="https://docs.mistral.ai/resources/changelogs">Release status</a> · <a href="https://docs.mistral.ai/models/mistral-medium-3-5-26-04">Medium 3.5</a> · <a href="https://docs.mistral.ai/models/mistral-small-4-0-26-03">Small 4</a></td></tr>
+    <tr><th scope="row">Official source</th><td><a href="https://docs.mistral.ai/models/mistral-large-4-0">Large 4 specs and pricing</a> · <a href="https://mistral.ai/news/mistral-large-4-oss/">Weight release and licensing</a> · <a href="https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B">Official model card</a> · <a href="https://docs.mistral.ai/resources/changelogs">Release status</a> · <a href="https://docs.mistral.ai/models/mistral-medium-3-5-26-04">Medium 3.5</a> · <a href="https://docs.mistral.ai/models/mistral-small-4-0-26-03">Small 4</a></td></tr>
   </tbody>
 </table>
 

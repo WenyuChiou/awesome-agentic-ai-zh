@@ -216,10 +216,16 @@ def test_october_preview_and_product_boundaries(page: Path) -> None:
     assert "Wonder Full" in rows["Muse"][6] and "Muse Code" in rows["Muse"][6]
     mistral = rows["Mistral"]
     assert "mistral-large-4" in mistral[1] and "Public Preview" in mistral[2]
-    assert "US$0.68/$0.07/$2.09" in mistral[4]
-    assert "US$1.36/$0.14/$4.18" in mistral[4]
-    assert "Modified MIT" in mistral[4]
-    assert any(token in mistral[6] for token in ("權重尚未釋出", "权重尚未发布", "weights not yet released"))
+    assert "2026-10-29" in mistral[2]
+    assert "US$0.70/$0.07/$2.10" in mistral[4]
+    assert "US$0.68/$0.07/$2.09" not in mistral[4]
+    assert "US$1.36/$0.14/$4.18" not in mistral[4]
+    assert "Mistral Ecosystem Open-Weight License" in mistral[4]
+    assert "Modified MIT" in mistral[4]  # Medium 3.5 retains its own license.
+    assert "Model-as-a-Service" in mistral[6]
+    assert not any(token in mistral[6] for token in ("權重尚未釋出", "权重尚未发布", "weights not yet released"))
+    assert "https://mistral.ai/news/mistral-large-4-oss/" in mistral[7]
+    assert "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B" in mistral[7]
     assert "https://developers.openai.com/api/docs/guides/ultrafast-mode" in text
     assert "https://developers.openai.com/api/docs/guides/decisions" in text
     decisions = re.search(r"<!-- decision-electives:start -->(.*?)<!-- decision-electives:end -->", text, re.S)
