@@ -1193,6 +1193,24 @@ npx -y jacobian mcp
 
 ---
 
+### [heymrun/heym](https://github.com/heymrun/heym) ⭐⭐
+
+<div align="center" markdown="1">
+
+| 字段 | 内容 |
+|:---|:---|
+| License | NOASSERTION (MIT + Commons Clause) |
+| 推荐度 | ⭐⭐ |
+
+</div>
+
+**教什么**：把选定的 Heym 工作流公开为 MCP 工具，也可启用 heym_chat 来管理工作流。命名服务器可限制公开的工作流。
+**适合谁**：想在自托管环境提供 MCP 工作流工具，并学习工具权限边界的 Agent 开发者。
+**备注**：需要自托管 Heym；连接使用 OAuth 或 API key。工作流工具可写入外部服务；heym_chat 也可修改工作流与数据。根据任务选择公开范围，使用前请读原始条款。本次仅核查文档，未做 MCP 连接实测。
+**文档与条款**：[MCP 设置](https://github.com/heymrun/heym/blob/main/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
+
+<small>Heym 文档核查：2026-11-08 UTC</small>
+
 </details>
 ## 13. 研究工作流 Skills（学术 / paper / 文献）
 
