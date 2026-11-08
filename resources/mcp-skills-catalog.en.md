@@ -1192,6 +1192,24 @@ npx -y jacobian mcp
 
 ---
 
+### [heymrun/heym](https://github.com/heymrun/heym) ⭐⭐
+
+<div align="center" markdown="1">
+
+| Field | Value |
+|:---|:---|
+| License | NOASSERTION (MIT + Commons Clause) |
+| Rating | ⭐⭐ |
+
+</div>
+
+**What it teaches**: Expose selected Heym workflows as MCP tools, with optional heym_chat for workflow management. Named servers select which workflows a client can call.
+**Who it's for**: Agent developers who want to serve workflow tools from their own infrastructure and study the permission boundary of an MCP integration.
+**Notes**: Requires a self-hosted Heym instance and OAuth or an API key. Workflow tools may write to external services; heym_chat can also modify workflows and data. Choose the exposed scope for the task and read the upstream terms before use. Documentation reviewed; no live MCP connection was tested for this entry.
+**Documentation and terms**: [MCP setup](https://github.com/heymrun/heym/blob/main/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
+
+<small>Heym documentation reviewed: 2026-11-08 UTC</small>
+
 </details>
 <a id="13-research-workflow-skills-academic--paper--literature"></a>
 ## 13. Research Workflow Skills (academic / paper / lit)
