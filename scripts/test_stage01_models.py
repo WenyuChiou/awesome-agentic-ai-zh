@@ -25,16 +25,23 @@ def test_stage01_uses_current_fable_and_mythos_models(
     cells = family_cells(text, "Claude")
 
     assert len(cells) == 8
-    assert "Fable 5.1" in cells[1]
-    assert "Mythos 5.1" in cells[1]
-    assert "claude-fable-5-1" in cells[1]
-    assert "claude-mythos-5-1" in cells[1]
+    assert "Fable 5.2" in cells[1]
+    assert "Mythos 5.2" in cells[1]
+    assert "claude-fable-5-2" in cells[1]
+    assert "claude-mythos-5-2" in cells[1]
     assert fable_status in cells[2]
     assert mythos_status in cells[2]
     assert "1M" in cells[3]
     assert "128K" in cells[3]
-    assert "$10/$50" in cells[4]
-    assert "$0.25" in cells[4]
+    assert "$8/$40" in cells[4]
+    assert "$16/$80" in cells[4]
+    assert "30" in cells[6] and "ZDR" in cells[6]
+    assert "$10/$50" not in cells[4]
+    assert "2026-11-09" in text
+    for suffix in ("fable-5-2/overview", "mythos-5-2/overview", "fable-5-2/migration-guide"):
+        assert "https://platform.claude.com/docs/en/models/" + suffix in cells[7]
+    assert '"claude-fable-5-2":   {"input": 8.00, "output": 40.00}' in text
+    assert "$0.20" in cells[4]
     assert "claude-opus-5-5" in cells[1]
     assert "claude-sonnet-5-5" in cells[1]
     assert "$4/$20" in cells[4]
@@ -43,9 +50,9 @@ def test_stage01_uses_current_fable_and_mythos_models(
     assert "https://platform.claude.com/docs/en/models/opus-5-5/overview" in cells[7]
     assert "https://platform.claude.com/docs/en/models/sonnet-5-5/overview" in cells[7]
     assert "https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide" in cells[7]
-    assert "claude-fable-5-1" in text
-    assert "claude-mythos-5-1" in text
-    assert not re.search(r"claude-(?:fable|mythos)-5(?!-1)", text)
+    assert "claude-fable-5-2" in text
+    assert "claude-mythos-5-2" in text
+    assert not re.search(r"claude-(?:fable|mythos)-5(?!-2)", text)
     assert "verified_on=2026-09-22" in text
 
 
