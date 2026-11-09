@@ -344,7 +344,7 @@ PRICING = {
     "claude-haiku-5-5":   {"input": 0.10, "output":  0.50},
     "claude-sonnet-5-5":  {"input": 2.00, "output": 10.00},
     "claude-opus-5-5":    {"input": 4.00, "output": 20.00},
-    "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
+    "claude-fable-5-2":   {"input": 8.00, "output": 40.00},
 }
 
 def rates_for(model, input_tokens):
@@ -523,14 +523,16 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 
 先展開你想查的家族，再看型號、價格與限制。
 
+核對日期 2026-11-09：Fable 5.2 與 Mythos 5.2 於 2026-11-09 發布。這是文件更新，不是真實 API 評測；既有練習預設模型不變。遷移前檢查 thinking block 相容性、prefix 驗證、computer-use 工具與 advisor 模型配對。
+
 <details class="model-family" markdown="1">
 <summary>Claude</summary>
 
 <table data-model-family="Claude" align="center">
   <thead><tr><th scope="col">欄位</th><th scope="col">內容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">目前推薦型號</th><td>Fable 5.1（<code>claude-fable-5-1</code>）</td></tr>
-    <tr><td>Mythos 5.1（<code>claude-mythos-5-1</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">目前推薦型號</th><td>Fable 5.2（<code>claude-fable-5-2</code>）</td></tr>
+    <tr><td>Mythos 5.2（<code>claude-mythos-5-2</code>）</td></tr>
     <tr><td>Opus 5.5（<code>claude-opus-5-5</code>）</td></tr>
     <tr><td>Sonnet 5.5（<code>claude-sonnet-5-5</code>）</td></tr>
     <tr><td>Haiku 5.5 (<code>claude-haiku-5-5</code>)</td></tr>
@@ -542,16 +544,16 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
     <tr><th scope="row">Context</th><td>1M context／128K 最大輸出</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">價格或授權</th><td>Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$0.10/$0.50 (prompt ≤100K), US$0.50/$2.50 (prompt &gt;100K)（每百萬輸入／輸出 token）；Sonnet cache read US$0.10，Opus US$0.20，Fable／Mythos US$0.25</td></tr>
+    <tr><th scope="row">價格或授權</th><td>Claude API：Fable／Mythos US$8/$40、Opus US$4/$20、Sonnet US$2/$10、Haiku US$0.10/$0.50 (prompt ≤100K), US$0.50/$2.50 (prompt &gt;100K)（每百萬輸入／輸出 token）；Sonnet cache read US$0.10，Opus US$0.20，Fable／Mythos US$0.20；Fable／Mythos fast mode US$16/$80</td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">適合做什麼</th><td>長文、程式、長時間 Agent 工作流</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td>Mythos 5.1 限資安與生命科學核准使用者；Sonnet 5.5 的工具指定與 temperature 設定不同於舊版，升級既有程式前先看遷移指南；雲端夥伴平台價格另查</td></tr>
+    <tr><th scope="row">限制</th><td>Fable 5.2 要求 30 天資料保留；零資料保留（ZDR）須經 Anthropic 明確授權。不要為了練習自行更改工作區隱私設定。Mythos 5.2 限資安與生命科學核准使用者；Sonnet 5.5 的工具指定與 temperature 設定不同於舊版，升級既有程式前先看遷移指南；雲端夥伴平台價格另查</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方來源</th><td><a href="https://platform.claude.com/docs/en/models/overview">Claude 模型總覽</a> · <a href="https://platform.claude.com/docs/en/models/opus-5-5/overview">Opus 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Sonnet 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide">遷移指南</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview">Haiku 5.5</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide">Haiku 5.5 migration</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude API 價格</a></td></tr>
+    <tr><th scope="row">官方來源</th><td><a href="https://www.anthropic.com/claude-fable-and-mythos-5-2">Fable / Mythos 5.2 release</a> · <a href="https://platform.claude.com/docs/en/models/fable-5-2/overview">Fable 5.2</a> · <a href="https://platform.claude.com/docs/en/models/mythos-5-2/overview">Mythos 5.2</a> · <a href="https://platform.claude.com/docs/en/models/fable-5-2/migration-guide">5.2 migration</a> · <a href="https://platform.claude.com/docs/en/models/overview">Claude 模型總覽</a> · <a href="https://platform.claude.com/docs/en/models/opus-5-5/overview">Opus 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Sonnet 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide">遷移指南</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview">Haiku 5.5</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide">Haiku 5.5 migration</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude API 價格</a></td></tr>
   </tbody>
 </table>
 

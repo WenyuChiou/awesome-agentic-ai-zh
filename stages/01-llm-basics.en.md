@@ -344,7 +344,7 @@ PRICING = {
     "claude-haiku-5-5":   {"input": 0.10, "output":  0.50},
     "claude-sonnet-5-5":  {"input": 2.00, "output": 10.00},
     "claude-opus-5-5":    {"input": 4.00, "output": 20.00},
-    "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
+    "claude-fable-5-2":   {"input": 8.00, "output": 40.00},
 }
 
 def rates_for(model, input_tokens):
@@ -523,14 +523,16 @@ If an official source gives no reliable public number, the table says “Not pub
 
 Open the family you need, then check its models, pricing, and limits.
 
+Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This is a documentation update, not a live API evaluation. Existing exercise defaults are unchanged. Before migrating, check thinking-block compatibility, prefix validation, computer-use tools, and advisor model pairing.
+
 <details class="model-family" markdown="1">
 <summary>Claude</summary>
 
 <table data-model-family="Claude" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Models</th><td>Fable 5.1 (<code>claude-fable-5-1</code>)</td></tr>
-    <tr><td>Mythos 5.1 (<code>claude-mythos-5-1</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Models</th><td>Fable 5.2 (<code>claude-fable-5-2</code>)</td></tr>
+    <tr><td>Mythos 5.2 (<code>claude-mythos-5-2</code>)</td></tr>
     <tr><td>Opus 5.5 (<code>claude-opus-5-5</code>)</td></tr>
     <tr><td>Sonnet 5.5 (<code>claude-sonnet-5-5</code>)</td></tr>
     <tr><td>Haiku 5.5 (<code>claude-haiku-5-5</code>)</td></tr>
@@ -542,16 +544,16 @@ Open the family you need, then check its models, pricing, and limits.
     <tr><th scope="row">Context</th><td>1M context / 128K max output</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>Claude API: Fable/Mythos US$10/$50, Opus US$4/$20, Sonnet US$2/$10, Haiku US$0.10/$0.50 (prompt ≤100K), US$0.50/$2.50 (prompt &gt;100K) per million input/output tokens; Sonnet cache read US$0.10, Opus US$0.20, Fable/Mythos US$0.25</td></tr>
+    <tr><th scope="row">Price or license</th><td>Claude API: Fable/Mythos US$8/$40, Opus US$4/$20, Sonnet US$2/$10, Haiku US$0.10/$0.50 (prompt ≤100K), US$0.50/$2.50 (prompt &gt;100K) per million input/output tokens; Sonnet cache read US$0.10, Opus US$0.20, Fable/Mythos US$0.20; Fable/Mythos fast mode US$16/$80</td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">Good for</th><td>Long-form, coding, long-running agent workflows</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limits</th><td>Mythos 5.1 is limited to vetted cybersecurity and life-science users; Sonnet 5.5 changes forced tool choice and temperature settings, so read the migration guide before upgrading existing code; cloud-partner prices differ</td></tr>
+    <tr><th scope="row">Limits</th><td>Fable 5.2 requires 30-day data retention; zero data retention (ZDR) requires explicit Anthropic authorization. Do not change workspace privacy settings just to run an exercise. Mythos 5.2 is limited to vetted cybersecurity and life-science users; Sonnet 5.5 changes forced tool choice and temperature settings, so read the migration guide before upgrading existing code; cloud-partner prices differ</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://platform.claude.com/docs/en/models/overview">Claude model overview</a> · <a href="https://platform.claude.com/docs/en/models/opus-5-5/overview">Opus 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Sonnet 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide">Migration guide</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview">Haiku 5.5</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide">Haiku 5.5 migration</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude API pricing</a></td></tr>
+    <tr><th scope="row">Official source</th><td><a href="https://www.anthropic.com/claude-fable-and-mythos-5-2">Fable / Mythos 5.2 release</a> · <a href="https://platform.claude.com/docs/en/models/fable-5-2/overview">Fable 5.2</a> · <a href="https://platform.claude.com/docs/en/models/mythos-5-2/overview">Mythos 5.2</a> · <a href="https://platform.claude.com/docs/en/models/fable-5-2/migration-guide">5.2 migration</a> · <a href="https://platform.claude.com/docs/en/models/overview">Claude model overview</a> · <a href="https://platform.claude.com/docs/en/models/opus-5-5/overview">Opus 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview">Sonnet 5.5</a> · <a href="https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide">Migration guide</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/overview">Haiku 5.5</a> · <a href="https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide">Haiku 5.5 migration</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude API pricing</a></td></tr>
   </tbody>
 </table>
 
