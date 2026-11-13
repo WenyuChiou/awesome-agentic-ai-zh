@@ -1225,6 +1225,30 @@ CLI 依官方 README 會收集匿名使用紀錄（usage telemetry）。
 npx -y jacobian mcp
 ```
 
+---
+
+### [heymrun/heym](https://github.com/heymrun/heym) ⭐⭐
+
+<div align="center" markdown="1">
+
+| 欄位 | 內容 |
+|:---|:---|
+| License | NOASSERTION (MIT + Commons Clause) |
+| 推薦度 | ⭐⭐ |
+
+</div>
+
+**教什麼**：透過具名 MCP 伺服器公開選定的工作流程，並比較這個範圍與 `heym_chat` 較廣的管理權限。
+**適合誰**：想在自架環境提供 MCP 工作流程工具，並學習工具權限邊界的 Agent 開發者。
+**備註**：需要自架 Heym；連線使用 OAuth 或 API key。工作流程工具可能寫入外部服務。
+**起始設定**：建立具名伺服器，只指派任務需要的工作流程，並停用 Heym Capabilities（`heym_chat`）。
+**權限邊界**：預設伺服器即使停用 `heym_chat`，仍會列出 `get_user_memory` 與 `set_user_memory`。具名伺服器不會列出這兩個獨立的記憶工具。啟用 `heym_chat` 後，管理權限超出選定的工作流程清單。它可修改工作流程與資料，測試執行也會產生實際副作用。
+**授權限制**：原始碼可取得，但受 Commons Clause 限制；使用前請讀下方原始條款。
+**查核範圍**：本次僅查核文件，未做 MCP 連線實測。
+**文件與條款**：[MCP 設定](https://github.com/heymrun/heym/blob/main/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
+
+<small>Heym 文件查核：2026-11-13 UTC</small>
+
 </details>
 
 ---
