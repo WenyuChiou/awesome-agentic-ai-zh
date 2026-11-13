@@ -1203,12 +1203,16 @@ npx -y jacobian mcp
 
 </div>
 
-**What it teaches**: Expose selected Heym workflows as MCP tools, with optional heym_chat for workflow management. Named servers select which workflows a client can call.
+**What it teaches**: Expose selected workflows through a named MCP server and compare that workflow boundary with the broader authority of `heym_chat`.
 **Who it's for**: Agent developers who want to serve workflow tools from their own infrastructure and study the permission boundary of an MCP integration.
-**Notes**: Requires a self-hosted Heym instance and OAuth or an API key. Workflow tools may write to external services; heym_chat can also modify workflows and data. Choose the exposed scope for the task and read the upstream terms before use. Documentation reviewed; no live MCP connection was tested for this entry.
+**Notes**: Requires a self-hosted Heym instance and OAuth or an API key. Workflow tools may write to external services.
+**Start with**: Create a named server, assign only the workflows needed for the task, and leave Heym Capabilities (`heym_chat`) disabled.
+**Permissions**: The default server lists `get_user_memory` and `set_user_memory` even when `heym_chat` is off. Named servers do not list these standalone memory tools. Enabling `heym_chat` grants broader management operations beyond the selected workflow list. It can modify workflows and data, and its test runs have real side effects.
+**License limits**: Source-available, subject to Commons Clause restrictions. Read the linked terms before use.
+**Verification**: Documentation reviewed; no live MCP connection was tested for this entry.
 **Documentation and terms**: [MCP setup](https://github.com/heymrun/heym/blob/main/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
 
-<small>Heym documentation reviewed: 2026-11-08 UTC</small>
+<small>Heym documentation reviewed: 2026-11-13 UTC</small>
 
 </details>
 <a id="13-research-workflow-skills-academic--paper--literature"></a>
