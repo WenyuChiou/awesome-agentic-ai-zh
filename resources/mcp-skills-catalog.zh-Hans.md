@@ -1204,12 +1204,16 @@ npx -y jacobian mcp
 
 </div>
 
-**教什么**：把选定的 Heym 工作流公开为 MCP 工具，也可启用 heym_chat 来管理工作流。命名服务器可限制公开的工作流。
+**教什么**：通过命名 MCP 服务器公开选定的工作流，并比较这个范围与 `heym_chat` 更广的管理权限。
 **适合谁**：想在自托管环境提供 MCP 工作流工具，并学习工具权限边界的 Agent 开发者。
-**备注**：需要自托管 Heym；连接使用 OAuth 或 API key。工作流工具可写入外部服务；heym_chat 也可修改工作流与数据。根据任务选择公开范围，使用前请读原始条款。本次仅核查文档，未做 MCP 连接实测。
+**备注**：需要自托管 Heym；连接使用 OAuth 或 API key。工作流工具可能写入外部服务。
+**起始配置**：创建命名服务器，只分配任务需要的工作流，并停用 Heym Capabilities（`heym_chat`）。
+**权限边界**：默认服务器即使停用 `heym_chat`，仍会列出 `get_user_memory` 与 `set_user_memory`。命名服务器不会列出这两个独立的记忆工具。启用 `heym_chat` 后，管理权限超出选定的工作流列表。它可修改工作流与数据，测试运行也会产生实际副作用。
+**许可限制**：源码可获取，但受 Commons Clause 限制；使用前请读下方原始条款。
+**核查范围**：本次仅核查文档，未做 MCP 连接实测。
 **文档与条款**：[MCP 设置](https://github.com/heymrun/heym/blob/main/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
 
-<small>Heym 文档核查：2026-11-08 UTC</small>
+<small>Heym 文档核查：2026-11-13 UTC</small>
 
 </details>
 ## 13. 研究工作流 Skills（学术 / paper / 文献）
