@@ -337,3 +337,42 @@ def test_reference_parser_rejects_missing_fields_and_duplicate_families() -> Non
         family_rows(table)
     with pytest.raises(AssertionError, match="duplicate family table"):
         family_rows(table + table)
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+def test_stage01_hydrogen_is_scoped_and_not_an_exercise_migration(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    cells = family_cells(text, "Gemini")
+    assert "gemini-4-hydrogen" in cells[1]
+    assert "stable" in cells[2]
+    assert all(value in cells[3] for value in ("Hydrogen", "1,048,576", "65,536", "thinking", "Long decode", "max_output_tokens", "background execution", "client-side continuation"))
+    assert all(value in cells[4] for value in ("Hydrogen Standard", "$1.50/$7.50", "$0.075", "thinking"))
+    assert "function calling" in cells[5] and "structured outputs" in cells[5]
+    assert all(value in cells[6] for value in ("Hydrogen", "implicit caching", "explicit caching", "Live API", "Standard"))
+    for suffix in ("models/gemini-4-hydrogen", "pricing#gemini-4-hydrogen", "whats-new-gemini-4-hydrogen", "terms"):
+        assert "https://aistudio.google.com/docs/" + suffix in cells[7]
+    assert "2026-11-15 UTC" in text and "2026-10-29 UTC" in text
+    assert 'model="gemma4:e4b"' in text
+    assert 'model="gemini-4-hydrogen"' not in text
+
+
+def test_hydrogen_freshness_does_not_revalidate_older_gemini_rows() -> None:
+    text = (ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8")
+    assert "gemini_hydrogen: '2026-11-15'" in text
+    assert "gemini: '2026-10-29'" in text
+    assert "verified_on: '2026-09-22'" in text
+    assert "gemini_hydrogen_pricing: 'https://aistudio.google.com/docs/pricing#gemini-4-hydrogen'" in text
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+def test_hydrogen_check_note_keeps_family_disclosure_structure(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    note = re.search(r"<small>Hydrogen.*?</small>", text)
+    assert note is not None
+    assert "2026-11-15 UTC" in note.group()
+    after_note = text[note.end():]
+    assert re.match(
+        r'\s*<details class="model-family" markdown="1">\s*'
+        r'<summary>Gemini</summary>\s*<table data-model-family="Gemini"',
+        after_note,
+    )

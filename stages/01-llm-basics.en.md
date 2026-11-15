@@ -628,42 +628,51 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
 
 </details>
 
+<small>Hydrogen-only check: 2026-11-15 UTC; other Gemini entries retain their own check dates, not a full-table revalidation.</small>
+
 <details class="model-family" markdown="1">
 <summary>Gemini</summary>
 
 <table data-model-family="Gemini" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Models</th><td>Gemini 3.8 Flash</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Models</th><td>Gemini 3.8 Flash</td></tr>
     <tr><td>Gemini 4 Argon (<code>gemini-4-argon</code>)</td></tr>
+    <tr><td>Gemini 4 Hydrogen (<code>gemini-4-hydrogen</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Status</th><td>Flash/Argon: generally available.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Status</th><td>Flash/Argon: generally available.</td></tr>
     <tr><td>Gemini 4 Carbon: Preview; phased access for selected partners, not a generally available API.</td></tr>
+    <tr><td>Hydrogen: stable; free and paid tiers in AI Studio / Gemini API. Quotas vary by project, model and tier; check account availability separately.</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Context</th><td>Flash: 1,048,576 context / 65,536 max output.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Context</th><td>Flash: 1,048,576 context / 65,536 max output.</td></tr>
     <tr><td>Argon: 1,048,576 combined input/output; default synchronous output 65,536.</td></tr>
     <tr><td>Carbon: input context and maximum output not published by the official source.</td></tr>
+    <tr><td>Hydrogen: a unified 1,048,576-token window shared by input, thinking and output; the default synchronous cap of 65,536 includes thinking plus output. Long decode needs a higher max_output_tokens with background execution or client-side continuation, within the shared window.</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Price or license</th><td>US$ per million tokens. Flash: $0.75/$3.75 input/output through 2026-12-31.</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Price or license</th><td>US$ per million tokens. Flash: $0.75/$3.75 input/output through 2026-12-31.</td></tr>
     <tr><td>Argon Standard input/cache/output: $2/$0.10/$10 through 2026-11-30. $4/$0.20/$20 from 2026-12-01.</td></tr>
     <tr><td>Carbon announced introductory input/output: $2/$10. Cached input is 5% of the current input price ($0.10 during the introductory period).</td></tr>
     <tr><td>Carbon announced post-introductory input/output: $4/$20. The introductory end date has not been published.</td></tr>
+    <tr><td>Hydrogen Standard: per million tokens, input/output (including thinking) $1.50/$7.50; implicit cached input $0.075. Tool charges are separate.</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Good for</th><td>Flash for multimodal and Agent practice. Argon for comparing long tasks and coding outcomes.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Good for</th><td>Flash for multimodal and Agent practice. Argon for comparing long tasks and coding outcomes.</td></tr>
     <tr><td>Carbon is announced for sustained coding and computer-security defense; it is not yet a general beginner recommendation.</td></tr>
+    <tr><td>Hydrogen: multimodal input, text output, function calling and structured outputs; an Agent comparison option, official update / not hands-on verified.</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Limits</th><td>Argon has no free tier. Output up to 1M requires long decode, not the default for every request.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Limits</th><td>Argon has no free tier. Output up to 1M requires long decode, not the default for every request.</td></tr>
     <tr><td>Carbon API ID, tool support and general-access date have not been published. Announced pricing does not mean the API can be called now.</td></tr>
     <tr><td>This chapter still starts with local models.</td></tr>
+    <tr><td>Hydrogen supports implicit caching only, not explicit caching, Live API or image/audio generation. Free-tier content may improve products; Standard paid-tier content does not, subject to terms.</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Official source</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">Launch announcement</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Official source</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">Launch announcement</a></td></tr>
     <tr><td><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">Carbon announcement and advertised pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models">General developer model list</a></td></tr>
+    <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen">Hydrogen specs</a> · <a href="https://aistudio.google.com/docs/pricing#gemini-4-hydrogen">Hydrogen pricing</a> · <a href="https://aistudio.google.com/docs/whats-new-gemini-4-hydrogen">Hydrogen migration</a> · <a href="https://aistudio.google.com/docs/terms">Terms</a> · <a href="https://aistudio.google.com/docs/rate-limits">Rate limits</a> · <a href="https://aistudio.google.com/docs/long-decode">Long decode</a></td></tr>
   </tbody>
 </table>
 

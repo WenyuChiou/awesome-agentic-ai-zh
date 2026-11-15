@@ -628,42 +628,51 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 
 </details>
 
+<small>Hydrogen 單項查核：2026-11-15 UTC；其他 Gemini 項目保留各自查核日期，不表示全表重新驗證。</small>
+
 <details class="model-family" markdown="1">
 <summary>Gemini</summary>
 
 <table data-model-family="Gemini" align="center">
   <thead><tr><th scope="col">欄位</th><th scope="col">內容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">目前推薦型號</th><td>Gemini 3.8 Flash</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">目前推薦型號</th><td>Gemini 3.8 Flash</td></tr>
     <tr><td>Gemini 4 Argon（<code>gemini-4-argon</code>）</td></tr>
+    <tr><td>Gemini 4 Hydrogen（<code>gemini-4-hydrogen</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">狀態</th><td>Flash／Argon：正式可用。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">狀態</th><td>Flash／Argon：正式可用。</td></tr>
     <tr><td>Gemini 4 Carbon：Preview；限指定夥伴逐步開放，一般 API 尚未開放。</td></tr>
+    <tr><td>Hydrogen：stable。AI Studio／Gemini API 有免費與付費層。配額依 project、model 與 tier 而異。帳號可用性須另查。</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Context</th><td>Flash：1,048,576 context／65,536 最大輸出。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Context</th><td>Flash：1,048,576 context／65,536 最大輸出。</td></tr>
     <tr><td>Argon：1,048,576 輸入與輸出合計；同步輸出預設 65,536。</td></tr>
     <tr><td>Carbon：輸入 context 與最大輸出官方未公布。</td></tr>
+    <tr><td>Hydrogen：1,048,576 tokens 為輸入、thinking 與輸出共用的統一視窗。預設同步上限 65,536 含 thinking＋輸出。Long decode 須提高 max_output_tokens。搭配 background execution 或 client-side continuation。仍受共用視窗限制。</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">價格或授權</th><td>每百萬 token，US$。Flash：2026-12-31 前輸入／輸出 $0.75/$3.75。</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">價格或授權</th><td>每百萬 token，US$。Flash：2026-12-31 前輸入／輸出 $0.75/$3.75。</td></tr>
     <tr><td>Argon Standard 輸入／cache／輸出：2026-11-30 前 $2/$0.10/$10。2026-12-01 起 $4/$0.20/$20。</td></tr>
     <tr><td>Carbon 公告優惠價：輸入／輸出 $2/$10。快取輸入為當期輸入價的 5%（優惠期 $0.10）。</td></tr>
     <tr><td>Carbon 公告優惠後價格：輸入／輸出 $4/$20。優惠結束日期官方未公布。</td></tr>
+    <tr><td>Hydrogen Standard：每百萬 tokens 輸入／輸出（含 thinking）$1.50/$7.50。隱式快取輸入 $0.075。工具費另計。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">適合做什麼</th><td>Flash 用於多模態與 Agent 練習。Argon 可比較長任務與程式成果。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">適合做什麼</th><td>Flash 用於多模態與 Agent 練習。Argon 可比較長任務與程式成果。</td></tr>
     <tr><td>Carbon 的公告方向是長時間程式任務與電腦安全防禦；尚不作一般入門推薦。</td></tr>
+    <tr><td>Hydrogen：多模態輸入、文字輸出。支援 function calling 與 structured outputs。作為 Agent 比較選項。官方動態／未實測參考。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">限制</th><td>Argon 無免費層。輸出到 1M 須使用 long decode，不是每次請求的預設。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">限制</th><td>Argon 無免費層。輸出到 1M 須使用 long decode，不是每次請求的預設。</td></tr>
     <tr><td>Carbon 的 API ID、工具支援與正式開放日期官方未公布。公告價格不表示現在就能呼叫 API。</td></tr>
     <tr><td>本章仍先用本機模型練習。</td></tr>
+    <tr><td>Hydrogen 僅支援 implicit caching。不支援 explicit caching、Live API 或圖片／音訊生成。免費層內容可用於產品改善。Standard 付費層不使用，詳見條款。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">官方來源</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API 定價</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon 規格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">發布公告</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">官方來源</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API 定價</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon 規格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">發布公告</a></td></tr>
     <tr><td><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">Carbon 公告與價格預告</a> · <a href="https://ai.google.dev/gemini-api/docs/models">一般開發者模型清單</a></td></tr>
+    <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen">Hydrogen specs</a> · <a href="https://aistudio.google.com/docs/pricing#gemini-4-hydrogen">Hydrogen pricing</a> · <a href="https://aistudio.google.com/docs/whats-new-gemini-4-hydrogen">Hydrogen migration</a> · <a href="https://aistudio.google.com/docs/terms">Terms</a> · <a href="https://aistudio.google.com/docs/rate-limits">Rate limits</a> · <a href="https://aistudio.google.com/docs/long-decode">Long decode</a></td></tr>
   </tbody>
 </table>
 
