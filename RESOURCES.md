@@ -100,6 +100,7 @@
 - [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code)：Claude Code 社群資源。
 - [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)：Agent Skills 社群清單。
 - [Canva MCP](https://www.canva.dev/docs/mcp/)：官方 remote MCP；功能、方案與權限依帳號而異，不先記固定工具數。
+- [No Stairs Please MCP](https://nostairsplease.com/mcp)：遠端 MCP 服務，支援搜尋北美 2,200+ 現場音樂場地、無障礙裝台資訊與巡演駕車路線。
 - [課程清單](resources/courses.md)：按學習目標挑課程，不把證書當成學位。
 - [Agent paradigms](resources/agent-paradigms.md)：用圖比較常見 Agent 形狀。
 
