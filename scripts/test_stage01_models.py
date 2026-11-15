@@ -415,4 +415,3 @@ def test_hydrogen_context_rejects_wrong_numbers_despite_other_models(
     assert "1,048,576" in cells[3] and "65,536" in cells[3]
     with pytest.raises(AssertionError):
         assert_hydrogen_context(changed)
-
