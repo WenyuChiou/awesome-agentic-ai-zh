@@ -337,3 +337,81 @@ def test_reference_parser_rejects_missing_fields_and_duplicate_families() -> Non
         family_rows(table)
     with pytest.raises(AssertionError, match="duplicate family table"):
         family_rows(table + table)
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+def test_stage01_hydrogen_is_scoped_and_not_an_exercise_migration(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    cells = family_cells(text, "Gemini")
+    assert "gemini-4-hydrogen" in cells[1]
+    assert "stable" in cells[2]
+    assert_hydrogen_context(text)
+    assert all(value in cells[4] for value in ("Hydrogen Standard", "$1.50/$7.50", "$0.075", "thinking"))
+    assert "function calling" in cells[5] and "structured outputs" in cells[5]
+    assert all(value in cells[6] for value in ("Hydrogen", "implicit caching", "explicit caching", "Live API", "Standard"))
+    for suffix in ("models/gemini-4-hydrogen", "pricing#gemini-4-hydrogen", "whats-new-gemini-4-hydrogen", "terms"):
+        assert "https://aistudio.google.com/docs/" + suffix in cells[7]
+    assert "2026-11-15 UTC" in text and "2026-10-29 UTC" in text
+    assert 'model="gemma4:e4b"' in text
+    assert 'model="gemini-4-hydrogen"' not in text
+
+
+def test_hydrogen_freshness_does_not_revalidate_older_gemini_rows() -> None:
+    text = (ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8")
+    assert "gemini_hydrogen: '2026-11-15'" in text
+    assert "gemini: '2026-10-29'" in text
+    assert "verified_on: '2026-09-22'" in text
+    assert "gemini_hydrogen_pricing: 'https://aistudio.google.com/docs/pricing#gemini-4-hydrogen'" in text
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+def test_hydrogen_check_note_keeps_family_disclosure_structure(page: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    note = re.search(r"<small>Hydrogen.*?</small>", text)
+    assert note is not None
+    assert "2026-11-15 UTC" in note.group()
+    after_note = text[note.end():]
+    assert re.match(
+        r'\s*<details class="model-family" markdown="1">\s*'
+        r'<summary>Gemini</summary>\s*<table data-model-family="Gemini"',
+        after_note,
+    )
+
+
+def assert_hydrogen_context(text: str) -> None:
+    parser = ModelReferenceParser()
+    parser.feed(text)
+    rows = [row for row in parser.records["Gemini"]["context"]
+            if re.match(r"^Hydrogen[:：]", row)]
+    assert len(rows) == 1, "expected exactly one Hydrogen context row"
+    context = rows[0]
+    numbers = re.findall(r"\d[\d,]*", context)
+    assert "1,048,576" in numbers and "65,536" in numbers
+    assert all(value in context for value in (
+        "thinking", "Long decode", "max_output_tokens",
+        "background execution", "client-side continuation",
+    ))
+
+
+@pytest.mark.parametrize("page", [item[0] for item in PAGES])
+@pytest.mark.parametrize(("correct", "incorrect"), (
+    ("1,048,576", "524,288"),
+    ("65,536", "32,768"),
+    ("1,048,576", "11,048,576"),
+))
+def test_hydrogen_context_rejects_wrong_numbers_despite_other_models(
+    page: Path, correct: str, incorrect: str
+) -> None:
+    text = page.read_text(encoding="utf-8")
+    table = re.search(r'<table data-model-family="Gemini".*?</table>', text, flags=re.S)
+    assert table is not None
+    context = re.search(r'<tbody data-field="context">.*?</tbody>', table.group(), flags=re.S)
+    assert context is not None
+    row = re.search(r"<td>Hydrogen[:：].*?</td>", context.group(), flags=re.S)
+    assert row is not None and correct in row.group()
+    changed = text.replace(row.group(), row.group().replace(correct, incorrect), 1)
+    # Flash and Argon still make the old family-wide numeric checks pass.
+    cells = family_cells(changed, "Gemini")
+    assert "1,048,576" in cells[3] and "65,536" in cells[3]
+    with pytest.raises(AssertionError):
+        assert_hydrogen_context(changed)

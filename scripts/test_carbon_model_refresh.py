@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from model_reference_test_helpers import family_cells, family_rows
+from model_reference_test_helpers import ModelReferenceParser, family_cells, family_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCALES = ("", ".en", ".zh-Hans")
@@ -31,13 +31,23 @@ def test_carbon_warning_is_visible_but_recommendations_are_available(locale: str
     assert "<code>gemini-4-carbon</code>" not in text
 
 
+def carbon_field_rows(text: str, field: str) -> list[str]:
+    """Select Carbon's own data rows, not all text after its first mention."""
+    parser = ModelReferenceParser()
+    parser.feed(text)
+    rows = [row for row in parser.records["Gemini"][field]
+            if re.match(r"^Carbon(?=[:：\s])", row)]
+    assert len(rows) == {"context": 1, "pricing": 2}[field]
+    return rows
+
+
 @pytest.mark.parametrize("locale", LOCALES)
 def test_carbon_does_not_inherit_argon_specs_or_promotion_end(locale: str) -> None:
     text = (ROOT / f"stages/01-llm-basics{locale}.md").read_text(encoding="utf-8")
     cells = family_cells(text, "Gemini")
-    carbon_context = cells[3].split("Carbon", 1)[1]
+    carbon_context = carbon_field_rows(text, "context")[0]
     assert "1,048,576" not in carbon_context and "65,536" not in carbon_context
-    carbon_prices = cells[4].split("Carbon", 1)[1]
+    carbon_prices = "; ".join(carbon_field_rows(text, "pricing"))
     assert all(value in carbon_prices for value in ("$2/$10", "$4/$20", "5%", "$0.10"))
     assert "2026-11-30" not in carbon_prices and "2026-12-01" not in carbon_prices
     context_unknown, price_unknown = {
@@ -76,3 +86,32 @@ def test_manual_browser_record_is_not_a_scanner_override() -> None:
     assert sum(row["classification"] == "valid" for row in records) == 9
     login = [row for row in records if row["classification"] != "valid"]
     assert len(login) == 1 and login[0]["finalUrl"] == "https://claude.ai/login"
+
+
+@pytest.mark.parametrize("hydrogen_first", (False, True))
+def test_carbon_row_selection_excludes_hydrogen_but_preserves_carbon_facts(hydrogen_first: bool) -> None:
+    carbon = '<tr><td>Carbon: not published</td></tr>'
+    hydrogen = '<tr><td>Hydrogen: 1,048,576; 65,536</td></tr>'
+    rows = hydrogen + carbon if hydrogen_first else carbon + hydrogen
+    text = '<table data-model-family="Gemini"><tbody data-field="context">' + rows + '</tbody></table>'
+    assert carbon_field_rows(text, "context") == ["Carbon: not published"]
+    # A real Carbon contamination must remain visible to the existing assertions.
+    contaminated = text.replace("Carbon: not published", "Carbon: 1,048,576; 65,536")
+    assert all(value in carbon_field_rows(contaminated, "context")[0]
+               for value in ("1,048,576", "65,536"))
+
+
+def test_carbon_price_selection_keeps_both_rows_and_rejects_missing_rows() -> None:
+    text = ('<table data-model-family="Gemini"><tbody data-field="pricing">'
+            '<tr><td>Argon: 2026-11-30</td></tr>'
+            '<tr><td>Carbon introductory: $2/$10; 5%; $0.10</td></tr>'
+            '<tr><td>Carbon post-promotion: $4/$20; end not published</td></tr>'
+            '<tr><td>Hydrogen: $1.50/$7.50; 2026-12-01</td></tr>'
+            '</tbody></table>')
+    rows = carbon_field_rows(text, "pricing")
+    assert len(rows) == 2 and all(row.startswith("Carbon") for row in rows)
+    assert "2026-11-30" not in "; ".join(rows) and "2026-12-01" not in "; ".join(rows)
+    contaminated = text.replace("Carbon introductory:", "Carbon introductory: 2026-11-30")
+    assert "2026-11-30" in "; ".join(carbon_field_rows(contaminated, "pricing"))
+    with pytest.raises(AssertionError):
+        carbon_field_rows(text.replace("Carbon post-promotion:", "Hydrogen post-promotion:"), "pricing")
