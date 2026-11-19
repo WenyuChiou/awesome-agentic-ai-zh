@@ -657,8 +657,8 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
   <tbody data-field="context">
     <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Context</th><td>Flash：1,048,576 context／65,536 最大輸出。</td></tr>
     <tr><td>Argon：1,048,576 輸入與輸出合計；同步輸出預設 65,536。</td></tr>
-    <tr><td>Carbon: 輸入與輸出共用 1,048,576 token。預設同步輸出上限 65,536。</td></tr>
-    <tr><td>Neon: 輸入與輸出共用 1,048,576 token。預設同步輸出上限 65,536。</td></tr>
+    <tr><td>Carbon：輸入與輸出共用 1,048,576 token。預設同步輸出上限 65,536。</td></tr>
+    <tr><td>Neon：輸入與輸出共用 1,048,576 token。預設同步輸出上限 65,536。</td></tr>
     <tr><td>Hydrogen：1,048,576 tokens 為輸入、thinking 與輸出共用的統一視窗。預設同步上限 65,536 含 thinking＋輸出。Long decode 須提高 max_output_tokens。搭配 background execution 或 client-side continuation。仍受共用視窗限制。</td></tr>
   </tbody>
   <tbody data-field="pricing">

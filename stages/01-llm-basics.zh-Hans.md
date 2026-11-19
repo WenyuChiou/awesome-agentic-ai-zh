@@ -657,8 +657,8 @@ print("💡 本次调用为 $0（不含电费）")
   <tbody data-field="context">
     <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Context</th><td>Flash：1,048,576 context／65,536 最大输出。</td></tr>
     <tr><td>Argon：1,048,576 输入与输出合计；同步输出缺省 65,536。</td></tr>
-    <tr><td>Carbon: 输入与输出共用 1,048,576 token。默认同步输出上限 65,536。</td></tr>
-    <tr><td>Neon: 输入与输出共用 1,048,576 token。默认同步输出上限 65,536。</td></tr>
+    <tr><td>Carbon：输入与输出共用 1,048,576 token。默认同步输出上限 65,536。</td></tr>
+    <tr><td>Neon：输入与输出共用 1,048,576 token。默认同步输出上限 65,536。</td></tr>
     <tr><td>Hydrogen：1,048,576 tokens 为输入、thinking 与输出共用的统一窗口。默认同步上限 65,536 含 thinking＋输出。Long decode 须提高 max_output_tokens。配合 background execution 或 client-side continuation。仍受共用窗口限制。</td></tr>
   </tbody>
   <tbody data-field="pricing">

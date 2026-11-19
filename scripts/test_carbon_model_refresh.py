@@ -44,6 +44,8 @@ def test_carbon_and_neon_have_separate_pricing_and_limits(locale: str) -> None:
     text = (ROOT / f"stages/01-llm-basics{locale}.md").read_text(encoding="utf-8")
     cells = family_cells(text, "Gemini")
     carbon_context = carbon_field_rows(text, "context")[0]
+    context_separator = ": " if locale == ".en" else "："
+    assert carbon_context.startswith(f"Carbon{context_separator}")
     assert all(value in carbon_context for value in ("1,048,576", "65,536"))
     introductory, current = carbon_field_rows(text, "pricing")
     assert "2026-11-30" in introductory and "$2/$0.10/$10" in introductory
@@ -51,7 +53,7 @@ def test_carbon_and_neon_have_separate_pricing_and_limits(locale: str) -> None:
     parser = ModelReferenceParser()
     parser.feed(text)
     fields = parser.records["Gemini"]
-    neon_context = [row for row in fields["context"] if row.startswith("Neon:")]
+    neon_context = [row for row in fields["context"] if row.startswith(f"Neon{context_separator}")]
     neon_pricing = [row for row in fields["pricing"] if re.match(r"^Neon[:：]", row)]
     assert len(neon_context) == len(neon_pricing) == 1
     assert all(value in neon_context[0] for value in ("1,048,576", "65,536"))
