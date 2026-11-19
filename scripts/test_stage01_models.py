@@ -62,21 +62,21 @@ def test_stage01_uses_current_gpt_family(page: Path) -> None:
     cells = family_cells(text, "GPT")
 
     assert len(cells) == 8
-    for model in ("gpt-6-astra", "gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-luna"):
+    for model in ("gpt-6.2-astra", "gpt-6.2-sol", "gpt-6.1-terra", "gpt-6-luna"):
         assert model in cells[1]
         assert f"https://developers.openai.com/api/docs/models/{model}" in cells[7]
     assert "GPT-5.6" not in cells[1]
     assert "1.05M" in cells[3]
     assert "128K" in cells[3]
     assert "Standard" in cells[4]
-    assert "$10/$1/$12.50/$50" in cells[4]
+    assert "$8/$0.40/$10/$40" in cells[4]
     assert "$2/$0.10/$2.50/$10" in cells[4]
     assert "$1/$0.05/$1.25/$5" in cells[4]
     assert "$0.10/$0.01/$0.125/$0.50" in cells[4]
     assert "272K" in cells[6]
     assert "1.5" in cells[6]
     assert "https://developers.openai.com/api/docs/pricing" in cells[7]
-    assert "GPT-6.1 Sol" in text.split("<details", maxsplit=1)[0]
+    assert "GPT-6.2 Sol" in text.split("<details", maxsplit=1)[0]
     assert "2026-10-26 UTC" in text
     assert "verified_on=2026-09-22" in text
 
@@ -84,7 +84,7 @@ def test_stage01_uses_current_gpt_family(page: Path) -> None:
 def test_stage01_fact_pack_separates_full_table_and_gpt_update_dates() -> None:
     fact_pack = (ROOT / "scripts" / "freshness-models.yml").read_text(encoding="utf-8")
     assert "verified_on: '2026-09-22'" in fact_pack
-    assert "gpt: '2026-10-26'" in fact_pack
+    assert "gpt: '2026-11-19'" in fact_pack
     assert "kimi: '2026-10-26'" in fact_pack
     assert "gemini: '2026-10-29'" in fact_pack
     for provider in ("typesafe_jev", "muse", "mistral", "gpt_features"):
@@ -174,10 +174,10 @@ def test_stage01_has_eighteen_sourced_families_and_distinguishes_muse_products(p
 
 
 @pytest.mark.parametrize("page", [item[0] for item in PAGES])
-def test_stage01_gpt61_has_exact_id_and_responses_tool_boundary(page: Path) -> None:
+def test_stage01_gpt62_has_exact_id_and_responses_tool_boundary(page: Path) -> None:
     text = page.read_text(encoding="utf-8")
     cells = family_cells(text, "GPT")
-    assert "gpt-6.1-sol" in cells[1]
+    assert "gpt-6.2-sol" in cells[1]
     assert "`gpt-6-sol`" not in cells[1]
     required_boundary = {
         "01-llm-basics.md": ("工具呼叫須用 Responses API", "Chat Completions 不支援工具呼叫"),
@@ -186,7 +186,7 @@ def test_stage01_gpt61_has_exact_id_and_responses_tool_boundary(page: Path) -> N
     }[page.name]
     assert all(token in cells[6] for token in required_boundary)
     assert "Sora" not in " ".join(cells)
-    assert "https://developers.openai.com/api/docs/models/gpt-6.1-sol" in cells[7]
+    assert "https://developers.openai.com/api/docs/models/gpt-6.2-sol" in cells[7]
 
 
 @pytest.mark.parametrize("page", [item[0] for item in PAGES])
@@ -204,7 +204,7 @@ def test_stage01_argon_is_available_with_scoped_context_and_pricing(page: Path) 
     assert any(label in cells[6] for label in ("無免費層", "无免费层", "no free tier"))
     assert "https://ai.google.dev/gemini-api/docs/models/gemini-4-argon" in cells[7]
     visible_selector = text.split("<details", maxsplit=1)[0]
-    assert "Gemini 3.8 Flash" in visible_selector
+    assert "Gemini 4 Hydrogen" in visible_selector
     assert "Gemini 4 Argon" not in visible_selector
 
 

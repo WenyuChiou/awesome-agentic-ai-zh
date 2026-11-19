@@ -72,21 +72,21 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 
 **判斷不是授權**：程式仍須檢查權限；寄信、付款或刪檔前先請人確認。
 
-<div align="center" markdown="1">
+<div class="reader-model-picker" align="center" markdown="1">
 
-| 你的場景 | 先試哪條路 | 選擇理由 |
-|:---|:---|:---|
-| 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`** | 本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
-| 要比較雲端品質、資料可送出 | **Claude Haiku 5.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，開發工具與函式庫的工具包） 路徑簡單；按輸入與輸出 token 計費。 |
-| OpenAI Agent API | **GPT-6.1 Sol／Terra／GPT-6 Luna** | Sol 寫程式；Terra 看圖與改寫；Luna 做簡單任務。先小測，再查價格。 |
-| 文件很長，且要處理圖像或影音 | **Gemini 3.8 Flash 或 Kimi K3.1 Pro** | 先查 context 與多模態支援，用你的文件測試。 |
-| 中文 API 任務，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
-| 固定選項的分類、評分或分流，結果要直接交給程式 | **Jev 1.13（服務 Early access）** | 回傳 Choice、Score 或 Noul 的機率結果；低信心或高風險動作仍要交給人或另一個模型。 |
-| 隱私、離線或需自行部署 | **Llama 4、Qwen 3.8、Gemma 4 等開放權重** | 先估算硬體與授權，再以 Ollama 或其他推論工具測量實際速度。 |
+| 你的場景 | 先試哪條路 |
+| :--- | :--- |
+| 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`**<br>本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
+| 要比較雲端品質、資料可送出 | **Claude Haiku 5.5／Sonnet 5.5**<br>Anthropic SDK（Software Development Kit，開發工具與函式庫的工具包） 路徑簡單；按輸入與輸出 token 計費。 |
+| OpenAI Agent API | **GPT-6.2 Sol**<br>一般程式與工具任務先用 Sol。難題再試 Astra。 |
+| 長文件、圖片或影音 | **Gemini 4 Hydrogen 或 Kimi K3.1 Pro**<br>先查輸入格式與用量限制，再用自己的資料測試。 |
+| 中文 API 任務，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3**<br>先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
+| 固定選項的分類、評分或分流，結果要直接交給程式 | **Jev 1.13（服務 Early access）**<br>回傳 Choice、Score 或 Noul 的機率結果；低信心或高風險動作仍要交給人或另一個模型。 |
+| 隱私、離線或需自行部署 | **Llama 4、Qwen 3.8、Gemma 4 等開放權重**<br>先估算硬體與授權，再以 Ollama 或其他推論工具測量實際速度。 |
 
 </div>
 
-**Gemini 4 Carbon** 已公告，但一般開發者還不能直接用。Google 先逐步開放給指定的電腦安全團隊與可信夥伴；先選已開放的模型練習。[官方公告](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/)。
+**Gemini 4 Carbon** 和 **Gemini 4 Neon** 可透過付費 API 使用。複雜程式先試 Neon，長時間難題再試 Carbon。
 
 **Haiku 5.5（2026-10-07 發布，2026-10-08 查核）** 適合分類、摘要與範圍明確的子代理；複雜程式 Agent 仍先評估 Sonnet／Opus。API ID 是固定的 `claude-haiku-5-5`，沒有日期尾碼或另一個 alias。練習 1、3 改用 5.5；temperature 練習與跨章範例保留 Haiku 4.5 相容基線。5.5 預設 adaptive thinking，須依區塊 `type` 取文字、保留 thinking 區塊並重新計算 token；不能只換 ID。參考 [發布公告](https://www.anthropic.com/claude-haiku-5-5) 與 [Haiku 5.5 遷移指南](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide)。
 
@@ -516,7 +516,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details markdown="1">
 <summary>🌐 完整 18 家族資料表（官方規格入口）</summary>
 
-<small>全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一列更新：2026-10-08 UTC。Gemini 一列更新：2026-10-29 UTC。Muse／Jev 與 GPT 選讀更新：2026-10-15 UTC。Mistral Large 4 更新：2026-11-02 UTC。DeepSeek／Decisions／Clef 選讀更新：2026-10-23 UTC。</small>
+<small>GPT-6.2／Neon／Carbon 查核：2026-11-19 UTC。全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一列更新：2026-10-08 UTC。Gemini 一列更新：2026-10-29 UTC。Muse／Jev 與 GPT 選讀更新：2026-10-15 UTC。Mistral Large 4 更新：2026-11-02 UTC。DeepSeek／Decisions／Clef 選讀更新：2026-10-23 UTC。</small>
 
 沒有可靠公開數字就寫「官方未公布」。價格通常是 USD／每 1M token；供應商若用別的單位，就照官方單位記錄。
 **快取（cache）** 像重用已讀過的便條：讀取舊內容與寫入新內容可能有不同價格。
@@ -565,32 +565,39 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <table data-model-family="GPT" align="center">
   <thead><tr><th scope="col">欄位</th><th scope="col">內容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">目前推薦型號</th><td>GPT-6 Astra（<code>gpt-6-astra</code>）</td></tr>
-    <tr><td>GPT-6.1 Sol（<code>gpt-6.1-sol</code>）</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">目前推薦型號</th><td>GPT-6.2 Astra（<code>gpt-6.2-astra</code>）</td></tr>
+    <tr><td>GPT-6.2 Sol（<code>gpt-6.2-sol</code>）</td></tr>
     <tr><td>GPT-6.1 Terra（<code>gpt-6.1-terra</code>）</td></tr>
     <tr><td>GPT-6 Luna（<code>gpt-6-luna</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">狀態</th><td>正式 API 模型；免費層不支援</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">狀態</th><td>正式 API 模型，無免費層。</td></tr>
+    <tr><td>Astra／Sol 6.2 在 ChatGPT Work 與 Codex 桌面版為 Preview。一般 Chat 有自己的模型選項。</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>1.05M context／128K 最大輸出</td></tr>
+    <tr><th scope="row">Context</th><td>1.05M context。最大輸出 128K。Astra／Sol 6.2 最大輸入 922K。</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">價格或授權</th><td>Standard API，每百萬 token，US$ 輸入／cache 讀／cache 寫（30 分鐘）／輸出。</td></tr>
-    <tr><td>Astra $10/$1/$12.50/$50。</td></tr>
-    <tr><td>Sol 6.1 $2/$0.10/$2.50/$10。</td></tr>
-    <tr><td>Terra 6.1 $1/$0.05/$1.25/$5；12 小時 cache 寫入 $2.50。</td></tr>
-    <tr><td>Luna $0.10/$0.01/$0.125/$0.50。</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">價格或授權</th><td>Standard API 短上下文，每百萬 token（US$）。順序為輸入／快取讀取／快取寫入（30 分鐘）／輸出。</td></tr>
+    <tr><td>Astra 6.2 · $8/$0.40/$10/$40。</td></tr>
+    <tr><td>Sol 6.2 · $2/$0.10/$2.50/$10。</td></tr>
+    <tr><td>Terra 6.1 · $1/$0.05/$1.25/$5。</td></tr>
+    <tr><td>Luna · $0.10/$0.01/$0.125/$0.50。</td></tr>
+    <tr><td>12 小時快取寫入 · Astra 6.2 $20 · Sol 6.2 $5。Terra 6.1 $2.50 · Luna $0.25。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">適合做什麼</th><td>Sol 6.1 用於程式與多步 Agent 工作。Terra 6.1 看圖、操作畫面與改寫文字。Luna 用於聚焦、重複任務。Astra 的成本與品質差異要自行評測。</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">適合做什麼</th><td>Astra 6.2 適合複雜推理與程式。Sol 6.2 適合日常程式和 Agent 工作。</td></tr>
+    <tr><td>Terra 6.1 適合看圖與操作畫面。Luna 適合簡單、重複任務。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td>Sol 6.1 與 Terra 6.1 的工具呼叫須用 Responses API。Chat Completions 不支援工具呼叫。超過 272K 輸入時，整次請求輸入與 cache 價為 2 倍、輸出為 1.5 倍。Batch／Flex 半價，Fast 為 2 倍。工具可能另計費。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">限制</th><td>Astra／Sol 6.2 與 Terra 6.1 的工具呼叫須用 Responses API。Chat Completions 不支援工具呼叫。</td></tr>
+    <tr><td>Astra／Sol 6.2 的推理強度至少選 <code>low</code>。這四款模型超過 272K 輸入時，整次請求的輸入和快取費率為 2 倍。輸出為 1.5 倍。</td></tr>
+    <tr><td>Batch 為 Standard 半價，Fast 為 2 倍。Terra 6.1／Luna 也有半價 Flex。工具可能另計費。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方來源</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol">GPT-6.1 Sol</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra">GPT-6.1 Terra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI API 價格</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">官方來源</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6.2-astra">GPT-6.2 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.2-sol">GPT-6.2 Sol</a></td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra">GPT-6.1 Terra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a></td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/pricing">OpenAI API 價格</a> · <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT 發布紀錄</a></td></tr>
   </tbody>
 </table>
 
@@ -636,42 +643,49 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <table data-model-family="Gemini" align="center">
   <thead><tr><th scope="col">欄位</th><th scope="col">內容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">目前推薦型號</th><td>Gemini 3.8 Flash</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">目前推薦型號</th><td>Gemini 4 Hydrogen（<code>gemini-4-hydrogen</code>）</td></tr>
+    <tr><td>Gemini 4 Neon（<code>gemini-4-neon</code>）</td></tr>
+    <tr><td>Gemini 4 Carbon（<code>gemini-4-carbon</code>）</td></tr>
     <tr><td>Gemini 4 Argon（<code>gemini-4-argon</code>）</td></tr>
-    <tr><td>Gemini 4 Hydrogen（<code>gemini-4-hydrogen</code>）</td></tr>
+    <tr><td>Gemini 3.8 Flash</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">狀態</th><td>Flash／Argon：正式可用。</td></tr>
-    <tr><td>Gemini 4 Carbon：Preview；限指定夥伴逐步開放，一般 API 尚未開放。</td></tr>
-    <tr><td>Hydrogen：stable。AI Studio／Gemini API 有免費與付費層。配額依 project、model 與 tier 而異。帳號可用性須另查。</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">狀態</th><td>Hydrogen：stable。AI Studio／Gemini API 有免費與付費層。配額依 project、model 與 tier 而異。帳號可用性須另查。</td></tr>
+    <tr><td>Neon／Carbon：正式可用，無免費層。Carbon 自 2026-11-10 開放付費 API。</td></tr>
+    <tr><td>Flash／Argon：正式可用。</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Context</th><td>Flash：1,048,576 context／65,536 最大輸出。</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Context</th><td>Flash：1,048,576 context／65,536 最大輸出。</td></tr>
     <tr><td>Argon：1,048,576 輸入與輸出合計；同步輸出預設 65,536。</td></tr>
-    <tr><td>Carbon：輸入 context 與最大輸出官方未公布。</td></tr>
+    <tr><td>Carbon：輸入與輸出共用 1,048,576 token。預設同步輸出上限 65,536。</td></tr>
+    <tr><td>Neon：輸入與輸出共用 1,048,576 token。預設同步輸出上限 65,536。</td></tr>
     <tr><td>Hydrogen：1,048,576 tokens 為輸入、thinking 與輸出共用的統一視窗。預設同步上限 65,536 含 thinking＋輸出。Long decode 須提高 max_output_tokens。搭配 background execution 或 client-side continuation。仍受共用視窗限制。</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">價格或授權</th><td>每百萬 token，US$。Flash：2026-12-31 前輸入／輸出 $0.75/$3.75。</td></tr>
-    <tr><td>Argon Standard 輸入／cache／輸出：2026-11-30 前 $2/$0.10/$10。2026-12-01 起 $4/$0.20/$20。</td></tr>
-    <tr><td>Carbon 公告優惠價：輸入／輸出 $2/$10。快取輸入為當期輸入價的 5%（優惠期 $0.10）。</td></tr>
-    <tr><td>Carbon 公告優惠後價格：輸入／輸出 $4/$20。優惠結束日期官方未公布。</td></tr>
+    <tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">價格或授權</th><td>Standard API，每百萬 token（US$）。依各列標示讀取價格。</td></tr>
     <tr><td>Hydrogen Standard：每百萬 tokens 輸入／輸出（含 thinking）$1.50/$7.50。隱式快取輸入 $0.075。工具費另計。</td></tr>
+    <tr><td>Neon：輸入／快取／輸出 $3/$0.15/$15。</td></tr>
+    <tr><td>Carbon 至 2026-11-30：輸入／快取／輸出 $2/$0.10/$10。</td></tr>
+    <tr><td>Carbon 自 2026-12-01：輸入／快取／輸出 $4/$0.20/$20。</td></tr>
+    <tr><td>Argon Standard 輸入／cache／輸出：2026-11-30 前 $2/$0.10/$10。2026-12-01 起 $4/$0.20/$20。</td></tr>
+    <tr><td>每百萬 token，US$。Flash：2026-12-31 前輸入／輸出 $0.75/$3.75。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">適合做什麼</th><td>Flash 用於多模態與 Agent 練習。Argon 可比較長任務與程式成果。</td></tr>
-    <tr><td>Carbon 的公告方向是長時間程式任務與電腦安全防禦；尚不作一般入門推薦。</td></tr>
-    <tr><td>Hydrogen：多模態輸入、文字輸出。支援 function calling 與 structured outputs。作為 Agent 比較選項。官方動態／未實測參考。</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">適合做什麼</th><td>Hydrogen：多模態輸入、文字輸出。支援 function calling 與 structured outputs。作為 Agent 比較選項。官方動態／未實測參考。</td></tr>
+    <tr><td>Carbon 適合長時間、多步驟的程式工作。</td></tr>
+    <tr><td>Neon 適合較複雜的程式或分析，兼顧完成速度。</td></tr>
+    <tr><td>Flash 用於多模態與 Agent 練習。Argon 可比較長任務與程式成果。</td></tr>
   </tbody>
   <tbody data-field="limits">
     <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">限制</th><td>Argon 無免費層。輸出到 1M 須使用 long decode，不是每次請求的預設。</td></tr>
-    <tr><td>Carbon 的 API ID、工具支援與正式開放日期官方未公布。公告價格不表示現在就能呼叫 API。</td></tr>
+    <tr><td>Carbon／Neon 只支援自動快取。輸出費含推理 token，工具可能另計費。</td></tr>
     <tr><td>本章仍先用本機模型練習。</td></tr>
     <tr><td>Hydrogen 僅支援 implicit caching。不支援 explicit caching、Live API 或圖片／音訊生成。免費層內容可用於產品改善。Standard 付費層不使用，詳見條款。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">官方來源</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API 定價</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon 規格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">發布公告</a></td></tr>
-    <tr><td><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">Carbon 公告與價格預告</a> · <a href="https://ai.google.dev/gemini-api/docs/models">一般開發者模型清單</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">官方來源</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API 定價</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon 規格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">發布公告</a></td></tr>
+    <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-carbon">Carbon 規格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/">正式開放</a></td></tr>
+    <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-neon">Neon 規格</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/">發布公告</a></td></tr>
     <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen">Hydrogen specs</a> · <a href="https://aistudio.google.com/docs/pricing#gemini-4-hydrogen">Hydrogen pricing</a> · <a href="https://aistudio.google.com/docs/whats-new-gemini-4-hydrogen">Hydrogen migration</a> · <a href="https://aistudio.google.com/docs/terms">Terms</a> · <a href="https://aistudio.google.com/docs/rate-limits">Rate limits</a> · <a href="https://aistudio.google.com/docs/long-decode">Long decode</a></td></tr>
   </tbody>
 </table>
@@ -1117,7 +1131,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 
 **API 與決策模型選讀**：完成一般請求後，再依任務需求比較。
 
-- **Ultrafast（加價低延遲服務層）**：讓支援的模型更快回應，不是新模型或免費加速。[官方指南](https://developers.openai.com/api/docs/guides/ultrafast-mode) 列出 GPT-6.1 Sol 的用法；費用依服務層另算。
+- **Ultrafast（加價低延遲服務層）**：讓 Astra／Sol 6.2 等支援的模型更快回應。先查 [官方指南](https://developers.openai.com/api/docs/guides/ultrafast-mode)與當期費率。
 <!-- decision-electives:start -->
 - **Decisions API（判斷介面，正式可用）**：讓 `gpt-6-luna` 從固定答案中分類、評分或估計機率。每次請求最多 400 個問題，不會自己執行工具。一般未命中快取輸入為 US$0.10／百萬 token，不收輸出 token 費。快取、長上下文與區域加價另查 [官方指南](https://developers.openai.com/api/docs/guides/decisions)；這不是一般文字生成的價格。
 - **Clef（可自架的決策模型）**：把文字、圖片與固定選項交給它，取回各答案的機率，不用它寫文章。Cloudflare 的 27B 權重採 Apache-2.0；它不是 Jev 的型號，也不是聊天模型。[官方模型卡](https://huggingface.co/Cloudflare/clef) 的實測環境使用 H200，不能據此保證一般筆電可跑。這裡只提供選讀，未實測本機執行。

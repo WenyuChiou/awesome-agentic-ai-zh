@@ -72,21 +72,21 @@ A **Typed Decision Model** returns a predefined choice, score, or probability. T
 
 **Deciding is not authorization**: code must check permissions; ask a person before sending mail, paying, or deleting files.
 
-<div align="center" markdown="1">
+<div class="reader-model-picker" align="center" markdown="1">
 
-| Your situation | Start with | Why |
-|:---|:---|:---|
-| Learning the API and iterating at zero cost | **Ollama + `gemma4:e4b`** | Runs locally, so each API call costs $0 and the example can be repeated freely. |
-| Comparing cloud quality when data may be sent out | **Claude Haiku 5.5 / Sonnet 5.5** | The Anthropic SDK (Software Development Kit, a toolkit of developer tools and libraries) path is simple; pricing is based on input and output tokens. |
-| OpenAI Agent API | **GPT-6.1 Sol / Terra / GPT-6 Luna** | Sol for coding; Terra for images and writing; Luna for simple tasks. Test first; check pricing. |
-| Very long documents with images or video | **Gemini 3.8 Flash or Kimi K3.1 Pro** | Check context and multimodal support; test with your document. |
-| Chinese-language API work with usage control | **DeepSeek V4.1 Flash or GLM-5.3** | Compare official prices, output limits, and availability; do not choose by name alone. |
-| Classification, scoring, or routing with fixed choices that code will use directly | **Jev 1.13 (service in early access)** | Returns probabilities for Choice, Score, or Noul questions; send low-confidence or high-risk actions to a person or another model. |
-| Privacy, offline use, or self-hosting | **Llama 4, Qwen 3.8, Gemma 4, and other open weights** | Estimate hardware and license requirements, then measure real speed with Ollama or another runtime. |
+| Your situation | Model and reason |
+| :--- | :--- |
+| Learning the API and iterating at zero cost | **Ollama + `gemma4:e4b`**<br>Runs locally, so each API call costs $0 and the example can be repeated freely. |
+| Compare cloud quality when data may be sent out | **Claude Haiku 5.5 / Sonnet 5.5**<br>The Anthropic SDK (Software Development Kit, a toolkit of developer tools and libraries) path is simple; pricing is based on input and output tokens. |
+| OpenAI Agent API | **GPT-6.2 Sol**<br>Start with Sol for coding and tool use. Try Astra for harder tasks. |
+| Long documents, images, or video | **Gemini 4 Hydrogen or Kimi K3.1 Pro**<br>Check input formats and limits, then test on your own material. |
+| Chinese text with usage control | **DeepSeek V4.1 Flash or GLM-5.3**<br>Compare official prices, output limits, and availability; do not choose by name alone. |
+| Classify, score, or route fixed choices in code | **Jev 1.13 (service in early access)**<br>Returns probabilities for Choice, Score, or Noul questions; send low-confidence or high-risk actions to a person or another model. |
+| Privacy, offline use, or self-hosting | **Llama 4, Qwen 3.8, Gemma 4, and other open weights**<br>Estimate hardware and license requirements, then measure real speed with Ollama or another runtime. |
 
 </div>
 
-**Gemini 4 Carbon** has been announced, but it is not yet available to general developers. Google is gradually opening access to selected teams that protect computer systems and trusted partners. Start with an available model; see the [official announcement](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/).
+**Gemini 4 Carbon** and **Gemini 4 Neon** are available through the paid API. Try Neon for complex coding and Carbon for longer, harder tasks.
 
 **Haiku 5.5 (released 2026-10-07; checked 2026-10-08)** suits classification, summarization, and narrowly scoped subagents; evaluate Sonnet/Opus for complex coding agents. Its fixed API ID is `claude-haiku-5-5`, without a date suffix or separate alias. Exercises 1 and 3 use 5.5; the temperature exercise and cross-stage examples retain a Haiku 4.5 compatibility baseline. With adaptive thinking enabled by default, select text by block `type`, preserve thinking blocks, and recount tokens; an ID-only swap is insufficient. See the [announcement](https://www.anthropic.com/claude-haiku-5-5) and [Haiku 5.5 migration guide](https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide).
 
@@ -516,7 +516,7 @@ Without Ollama, replace `base_url` with [LM Studio](https://lmstudio.ai) (`http:
 <details markdown="1">
 <summary>🌐 Complete 18-family table (official specification entries)</summary>
 
-<small>Full table checked: 2026-09-22 UTC. Scoped GPT/Kimi update: 2026-10-26 UTC. Claude row updated: 2026-10-08 UTC. Gemini row updated: 2026-10-29 UTC. Muse/Jev and GPT electives updated: 2026-10-15 UTC. Mistral Large 4 updated: 2026-11-02 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
+<small>GPT-6.2, Neon and Carbon checked: 2026-11-19 UTC. Full table checked: 2026-09-22 UTC. Scoped GPT/Kimi update: 2026-10-26 UTC. Claude row updated: 2026-10-08 UTC. Gemini row updated: 2026-10-29 UTC. Muse/Jev and GPT electives updated: 2026-10-15 UTC. Mistral Large 4 updated: 2026-11-02 UTC. DeepSeek/Decisions/Clef electives updated: 2026-10-23 UTC.</small>
 
 If an official source gives no reliable public number, the table says “Not published by the official source.” Prices use USD per 1M tokens unless the provider uses another unit.
 **Cache** is like reusing a note you already read: reading old content and writing new content may have different prices.
@@ -565,32 +565,39 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
 <table data-model-family="GPT" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Models</th><td>GPT-6 Astra (<code>gpt-6-astra</code>)</td></tr>
-    <tr><td>GPT-6.1 Sol (<code>gpt-6.1-sol</code>)</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Models</th><td>GPT-6.2 Astra (<code>gpt-6.2-astra</code>)</td></tr>
+    <tr><td>GPT-6.2 Sol (<code>gpt-6.2-sol</code>)</td></tr>
     <tr><td>GPT-6.1 Terra (<code>gpt-6.1-terra</code>)</td></tr>
     <tr><td>GPT-6 Luna (<code>gpt-6-luna</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">Status</th><td>Generally available API models; the Free tier is not supported</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Status</th><td>Generally available API models on paid tiers.</td></tr>
+    <tr><td>Astra and Sol 6.2 are in Preview in ChatGPT Work and Codex desktop. Regular Chat has its own model choices.</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>1.05M context / 128K max output</td></tr>
+    <tr><th scope="row">Context</th><td>1.05M context. 128K max output. Astra and Sol 6.2 accept up to 922K input.</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Price or license</th><td>Standard API, US$ per 1M tokens, input/cache read/cache write (30 minutes)/output.</td></tr>
-    <tr><td>Astra $10/$1/$12.50/$50.</td></tr>
-    <tr><td>Sol 6.1 $2/$0.10/$2.50/$10.</td></tr>
-    <tr><td>Terra 6.1 $1/$0.05/$1.25/$5; 12-hour cache writes $2.50.</td></tr>
-    <tr><td>Luna $0.10/$0.01/$0.125/$0.50.</td></tr>
+    <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Price or license</th><td>Standard API, short context, US$ per million tokens. Read as input / cache read / cache write (30 minutes) / output.</td></tr>
+    <tr><td>Astra 6.2 · $8/$0.40/$10/$40</td></tr>
+    <tr><td>Sol 6.2 · $2/$0.10/$2.50/$10</td></tr>
+    <tr><td>Terra 6.1 · $1/$0.05/$1.25/$5</td></tr>
+    <tr><td>Luna · $0.10/$0.01/$0.125/$0.50</td></tr>
+    <tr><td>12-hour cache writes · Astra 6.2 $20 · Sol 6.2 $5. Terra 6.1 $2.50 · Luna $0.25</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">Good for</th><td>Sol 6.1 for coding and multi-step Agent work. Terra 6.1 for images, screen actions and rewriting. Luna for focused, repeated tasks. Evaluate Astra's cost-quality tradeoff on your own tasks.</td></tr>
+    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Good for</th><td>Astra 6.2 for difficult reasoning and coding. Sol 6.2 for everyday coding and Agent work.</td></tr>
+    <tr><td>Terra 6.1 for images and on-screen actions. Luna for simple, repeated tasks.</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limits</th><td>Sol 6.1 and Terra 6.1 tool calling requires Responses API; Chat Completions has no tool calling. Above 272K input, the full request uses 2× input/cache and 1.5× output rates. Batch/Flex are half-price, Fast is 2×. Tools may cost extra.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Limits</th><td>For Astra and Sol 6.2 and Terra 6.1, tool calling requires Responses API. Chat Completions has no tool calling.</td></tr>
+    <tr><td>For Astra and Sol 6.2, select reasoning effort <code>low</code> or higher. For all four models, above 272K input, input and cache rates are 2× and output costs 1.5× for the whole request.</td></tr>
+    <tr><td>Batch costs half of Standard and Fast costs 2×. Terra 6.1 and Luna also offer half-price Flex. Tools may cost extra.</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6-astra">GPT-6 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol">GPT-6.1 Sol</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra">GPT-6.1 Terra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a> · <a href="https://developers.openai.com/api/docs/pricing">OpenAI API pricing</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Official source</th><td><a href="https://developers.openai.com/api/docs/models/gpt-6.2-astra">GPT-6.2 Astra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6.2-sol">GPT-6.2 Sol</a></td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/models/gpt-6.1-terra">GPT-6.1 Terra</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-luna">GPT-6 Luna</a></td></tr>
+    <tr><td><a href="https://developers.openai.com/api/docs/pricing">OpenAI API pricing</a> · <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">ChatGPT release notes</a></td></tr>
   </tbody>
 </table>
 
@@ -636,42 +643,49 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
 <table data-model-family="Gemini" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Models</th><td>Gemini 3.8 Flash</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Models</th><td>Gemini 4 Hydrogen (<code>gemini-4-hydrogen</code>)</td></tr>
+    <tr><td>Gemini 4 Neon (<code>gemini-4-neon</code>)</td></tr>
+    <tr><td>Gemini 4 Carbon (<code>gemini-4-carbon</code>)</td></tr>
     <tr><td>Gemini 4 Argon (<code>gemini-4-argon</code>)</td></tr>
-    <tr><td>Gemini 4 Hydrogen (<code>gemini-4-hydrogen</code>)</td></tr>
+    <tr><td>Gemini 3.8 Flash</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Status</th><td>Flash/Argon: generally available.</td></tr>
-    <tr><td>Gemini 4 Carbon: Preview; phased access for selected partners, not a generally available API.</td></tr>
-    <tr><td>Hydrogen: stable; free and paid tiers in AI Studio / Gemini API. Quotas vary by project, model and tier; check account availability separately.</td></tr>
+    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Status</th><td>Hydrogen: stable; free and paid tiers in AI Studio / Gemini API. Quotas vary by project, model and tier; check account availability separately.</td></tr>
+    <tr><td>Neon and Carbon: generally available on paid API tiers, with no free tier. Paid Carbon API access began on 2026-11-10.</td></tr>
+    <tr><td>Flash/Argon: generally available.</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Context</th><td>Flash: 1,048,576 context / 65,536 max output.</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Context</th><td>Flash: 1,048,576 context / 65,536 max output.</td></tr>
     <tr><td>Argon: 1,048,576 combined input/output; default synchronous output 65,536.</td></tr>
-    <tr><td>Carbon: input context and maximum output not published by the official source.</td></tr>
+    <tr><td>Carbon: Input and output share 1,048,576 tokens. Default synchronous output cap is 65,536.</td></tr>
+    <tr><td>Neon: Input and output share 1,048,576 tokens. Default synchronous output cap is 65,536.</td></tr>
     <tr><td>Hydrogen: a unified 1,048,576-token window shared by input, thinking and output; the default synchronous cap of 65,536 includes thinking plus output. Long decode needs a higher max_output_tokens with background execution or client-side continuation, within the shared window.</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">Price or license</th><td>US$ per million tokens. Flash: $0.75/$3.75 input/output through 2026-12-31.</td></tr>
-    <tr><td>Argon Standard input/cache/output: $2/$0.10/$10 through 2026-11-30. $4/$0.20/$20 from 2026-12-01.</td></tr>
-    <tr><td>Carbon announced introductory input/output: $2/$10. Cached input is 5% of the current input price ($0.10 during the introductory period).</td></tr>
-    <tr><td>Carbon announced post-introductory input/output: $4/$20. The introductory end date has not been published.</td></tr>
+    <tr><th scope="rowgroup" rowspan="7" align="center" valign="middle">Price or license</th><td>Standard API, US$ per million tokens. Each row labels its price order.</td></tr>
     <tr><td>Hydrogen Standard: per million tokens, input/output (including thinking) $1.50/$7.50; implicit cached input $0.075. Tool charges are separate.</td></tr>
+    <tr><td>Neon: input/cache/output $3/$0.15/$15.</td></tr>
+    <tr><td>Carbon through 2026-11-30: input/cache/output $2/$0.10/$10.</td></tr>
+    <tr><td>Carbon from 2026-12-01: input/cache/output $4/$0.20/$20.</td></tr>
+    <tr><td>Argon Standard input/cache/output: through 2026-11-30, $2/$0.10/$10. From 2026-12-01, $4/$0.20/$20.</td></tr>
+    <tr><td>Flash through 2026-12-31: $0.75/$3.75 input/output.</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Good for</th><td>Flash for multimodal and Agent practice. Argon for comparing long tasks and coding outcomes.</td></tr>
-    <tr><td>Carbon is announced for sustained coding and computer-security defense; it is not yet a general beginner recommendation.</td></tr>
-    <tr><td>Hydrogen: multimodal input, text output, function calling and structured outputs; an Agent comparison option, official update / not hands-on verified.</td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Good for</th><td>Hydrogen: multimodal input, text output, function calling and structured outputs; an Agent comparison option, official update / not hands-on verified.</td></tr>
+    <tr><td>Carbon for long, multi-step coding work.</td></tr>
+    <tr><td>Neon for complex coding or analysis where speed matters.</td></tr>
+    <tr><td>Flash for multimodal and Agent practice. Argon for comparing long tasks and coding outcomes.</td></tr>
   </tbody>
   <tbody data-field="limits">
     <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Limits</th><td>Argon has no free tier. Output up to 1M requires long decode, not the default for every request.</td></tr>
-    <tr><td>Carbon API ID, tool support and general-access date have not been published. Announced pricing does not mean the API can be called now.</td></tr>
+    <tr><td>Carbon and Neon support automatic caching only. Output prices include thinking tokens. Tools may cost extra.</td></tr>
     <tr><td>This chapter still starts with local models.</td></tr>
     <tr><td>Hydrogen supports implicit caching only, not explicit caching, Live API or image/audio generation. Free-tier content may improve products; Standard paid-tier content does not, subject to terms.</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Official source</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">Launch announcement</a></td></tr>
-    <tr><td><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">Carbon announcement and advertised pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models">General developer model list</a></td></tr>
+    <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Official source</th><td><a href="https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash">Gemini 3.8 Flash</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing">Gemini API pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/models/gemini-4-argon">Gemini 4 Argon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/">Launch announcement</a></td></tr>
+    <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-carbon">Carbon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/">API availability</a></td></tr>
+    <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-neon">Neon specs</a> · <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/">Launch announcement</a></td></tr>
     <tr><td><a href="https://aistudio.google.com/docs/models/gemini-4-hydrogen">Hydrogen specs</a> · <a href="https://aistudio.google.com/docs/pricing#gemini-4-hydrogen">Hydrogen pricing</a> · <a href="https://aistudio.google.com/docs/whats-new-gemini-4-hydrogen">Hydrogen migration</a> · <a href="https://aistudio.google.com/docs/terms">Terms</a> · <a href="https://aistudio.google.com/docs/rate-limits">Rate limits</a> · <a href="https://aistudio.google.com/docs/long-decode">Long decode</a></td></tr>
   </tbody>
 </table>
@@ -1117,7 +1131,7 @@ For an agent that listens and answers immediately by voice, optionally read [Gem
 
 **API and decision-model electives**: finish a standard request first, then compare what your task needs.
 
-- **Ultrafast (a paid lower-latency service tier)**: makes supported models respond faster; it is neither a new model nor free acceleration. The [official guide](https://developers.openai.com/api/docs/guides/ultrafast-mode) covers GPT-6.1 Sol; pricing depends on the service tier.
+- **Ultrafast (paid lower-latency tier)** speeds up Astra and Sol 6.2 and other supported models. Check the [official guide](https://developers.openai.com/api/docs/guides/ultrafast-mode) for current rates.
 <!-- decision-electives:start -->
 - **Decisions API (a judgment interface, generally available)**: asks `gpt-6-luna` to classify, score, or estimate a probability from fixed answers. Each request allows up to 400 questions and does not execute tools. Standard cache-miss input is US$0.10 per million tokens, with no output-token charge. Check the [official guide](https://developers.openai.com/api/docs/guides/decisions) for caching, long-context, and regional surcharges; this is not the price of ordinary text generation.
 - **Clef (a self-hostable decision model)**: gives text, images, and fixed choices a probability per answer; it does not write prose. Cloudflare's 27B weights use Apache-2.0. It is not a Jev model or a chat model. The [official model card](https://huggingface.co/Cloudflare/clef) uses H200 hardware in its test environment, which does not guarantee an ordinary laptop can run it. This is optional reading, not a local-run test.

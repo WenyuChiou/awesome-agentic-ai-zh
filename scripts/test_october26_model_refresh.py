@@ -60,7 +60,7 @@ def test_kimi_api_is_not_a_completed_weights_release(locale: str) -> None:
 
 
 @pytest.mark.parametrize("locale", LOCALES)
-@pytest.mark.parametrize("family,counts", (("GPT", {"models": 4, "pricing": 5}),
+@pytest.mark.parametrize("family,counts", (("GPT", {"models": 4, "pricing": 6, "status": 2, "limits": 3}),
                                           ("Kimi", {"models": 2, "pricing": 4, "limits": 2})))
 def test_long_fields_use_real_merged_labels(locale: str, family: str, counts: dict) -> None:
     table = family_table(page(locale), family)
@@ -73,7 +73,7 @@ def test_long_fields_use_real_merged_labels(locale: str, family: str, counts: di
 
 
 def test_model_numbers_ids_urls_and_groups_match_across_locales() -> None:
-    for family in ("GPT", "Kimi"):
+    for family in ("GPT", "Kimi", "Gemini"):
         signatures = []
         for locale in LOCALES:
             table = family_table(page(locale), family)
@@ -92,7 +92,7 @@ def test_model_numbers_ids_urls_and_groups_match_across_locales() -> None:
 def test_new_model_choices_stay_visible_without_redating_other_facts(locale: str) -> None:
     text = page(locale)
     visible = text.split("<details", maxsplit=1)[0]
-    assert "**GPT-6.1 Sol" in visible and "Terra" in visible
+    assert "**GPT-6.2 Sol**" in visible and "Astra" in visible
     assert "Kimi K3.1 Pro**" in visible
     assert "verified_on=2026-09-22" in text
     dates = next(line for line in text.splitlines() if line.startswith("<small>") and "2026-09-22 UTC" in line)
@@ -104,7 +104,8 @@ def test_fact_pack_tracks_only_this_scoped_refresh() -> None:
     config = yaml.safe_load((ROOT / "scripts/freshness-models.yml").read_text(encoding="utf-8"))
     pack = config["stage01_fact_pack"]
     assert pack["verified_on"] == "2026-09-22"
-    assert pack["provider_updates"]["gpt"] == pack["provider_updates"]["kimi"] == "2026-10-26"
+    assert pack["provider_updates"]["gpt"] == "2026-11-19"
+    assert pack["provider_updates"]["kimi"] == "2026-10-26"
     assert pack["provider_updates"]["anthropic"] == "2026-10-08"
     assert pack["provider_updates"]["deepseek"] == "2026-10-23"
     assert pack["official_sources"]["gpt_terra"] == TERRA
