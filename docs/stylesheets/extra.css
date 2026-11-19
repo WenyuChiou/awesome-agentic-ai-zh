@@ -253,7 +253,7 @@ body[data-md-color-scheme="slate"] {
   overflow-wrap: normal;
   word-break: normal;
 }
-/* Course and model choices stay in three columns on desktop and read down on phones. */
+/* Course and model choices keep columns on desktop and read down on phones. */
 .md-typeset :is(.reader-course-picker, .reader-model-picker) .md-typeset__scrollwrap {
   margin: 0;
 }

@@ -74,15 +74,15 @@ A **Typed Decision Model** returns a predefined choice, score, or probability. T
 
 <div class="reader-model-picker" align="center" markdown="1">
 
-| Your situation | Start with | Why |
-|:---|:---|:---|
-| Learning the API and iterating at zero cost | **Ollama + `gemma4:e4b`** | Runs locally, so each API call costs $0 and the example can be repeated freely. |
-| Comparing cloud quality when data may be sent out | **Claude Haiku 5.5 / Sonnet 5.5** | The Anthropic SDK (Software Development Kit, a toolkit of developer tools and libraries) path is simple; pricing is based on input and output tokens. |
-| OpenAI Agent API | **GPT-6.2 Sol** | Start with Sol for coding and tool use. Try Astra for harder tasks. |
-| Long documents, images, or video | **Gemini 4 Hydrogen or Kimi K3.1 Pro** | Check input formats and limits, then test on your own material. |
-| Chinese-language API work with usage control | **DeepSeek V4.1 Flash or GLM-5.3** | Compare official prices, output limits, and availability; do not choose by name alone. |
-| Classification, scoring, or routing with fixed choices that code will use directly | **Jev 1.13 (service in early access)** | Returns probabilities for Choice, Score, or Noul questions; send low-confidence or high-risk actions to a person or another model. |
-| Privacy, offline use, or self-hosting | **Llama 4, Qwen 3.8, Gemma 4, and other open weights** | Estimate hardware and license requirements, then measure real speed with Ollama or another runtime. |
+| Your situation | Model and reason |
+| :--- | :--- |
+| Learning the API and iterating at zero cost | **Ollama + `gemma4:e4b`**<br>Runs locally, so each API call costs $0 and the example can be repeated freely. |
+| Compare cloud quality when data may be sent out | **Claude Haiku 5.5 / Sonnet 5.5**<br>The Anthropic SDK (Software Development Kit, a toolkit of developer tools and libraries) path is simple; pricing is based on input and output tokens. |
+| OpenAI Agent API | **GPT-6.2 Sol**<br>Start with Sol for coding and tool use. Try Astra for harder tasks. |
+| Long documents, images, or video | **Gemini 4 Hydrogen or Kimi K3.1 Pro**<br>Check input formats and limits, then test on your own material. |
+| Chinese text with usage control | **DeepSeek V4.1 Flash or GLM-5.3**<br>Compare official prices, output limits, and availability; do not choose by name alone. |
+| Classify, score, or route fixed choices in code | **Jev 1.13 (service in early access)**<br>Returns probabilities for Choice, Score, or Noul questions; send low-confidence or high-risk actions to a person or another model. |
+| Privacy, offline use, or self-hosting | **Llama 4, Qwen 3.8, Gemma 4, and other open weights**<br>Estimate hardware and license requirements, then measure real speed with Ollama or another runtime. |
 
 </div>
 

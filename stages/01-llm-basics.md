@@ -74,15 +74,15 @@ Temperature 是控制抽樣變化程度的參數。把模型想成每次都從�
 
 <div class="reader-model-picker" align="center" markdown="1">
 
-| 你的場景 | 先試哪條路 | 選擇理由 |
-|:---|:---|:---|
-| 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`** | 本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
-| 要比較雲端品質、資料可送出 | **Claude Haiku 5.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，開發工具與函式庫的工具包） 路徑簡單；按輸入與輸出 token 計費。 |
-| OpenAI Agent API | **GPT-6.2 Sol** | 一般程式與工具任務先用 Sol。難題再試 Astra。 |
-| 長文件、圖片或影音 | **Gemini 4 Hydrogen 或 Kimi K3.1 Pro** | 先查輸入格式與用量限制，再用自己的資料測試。 |
-| 中文 API 任務，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
-| 固定選項的分類、評分或分流，結果要直接交給程式 | **Jev 1.13（服務 Early access）** | 回傳 Choice、Score 或 Noul 的機率結果；低信心或高風險動作仍要交給人或另一個模型。 |
-| 隱私、離線或需自行部署 | **Llama 4、Qwen 3.8、Gemma 4 等開放權重** | 先估算硬體與授權，再以 Ollama 或其他推論工具測量實際速度。 |
+| 你的場景 | 先試哪條路 |
+| :--- | :--- |
+| 第一次學 API、想零費用反覆試 | **Ollama + `gemma4:e4b`**<br>本機執行，單次 API 成本為 $0；同一組範例可反覆改寫。 |
+| 要比較雲端品質、資料可送出 | **Claude Haiku 5.5／Sonnet 5.5**<br>Anthropic SDK（Software Development Kit，開發工具與函式庫的工具包） 路徑簡單；按輸入與輸出 token 計費。 |
+| OpenAI Agent API | **GPT-6.2 Sol**<br>一般程式與工具任務先用 Sol。難題再試 Astra。 |
+| 長文件、圖片或影音 | **Gemini 4 Hydrogen 或 Kimi K3.1 Pro**<br>先查輸入格式與用量限制，再用自己的資料測試。 |
+| 中文 API 任務，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3**<br>先比較官方價格、輸出限制與服務可用性；不要只看模型名稱。 |
+| 固定選項的分類、評分或分流，結果要直接交給程式 | **Jev 1.13（服務 Early access）**<br>回傳 Choice、Score 或 Noul 的機率結果；低信心或高風險動作仍要交給人或另一個模型。 |
+| 隱私、離線或需自行部署 | **Llama 4、Qwen 3.8、Gemma 4 等開放權重**<br>先估算硬體與授權，再以 Ollama 或其他推論工具測量實際速度。 |
 
 </div>
 
