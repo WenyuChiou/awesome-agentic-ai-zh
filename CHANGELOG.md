@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-11-19
 
+- **resources / Advanced RAG and A3** · 三語精選表新增 QMD 與 Playwright CLI。前者用同一批本機筆記比較三種搜尋，後者用本機測試頁確認按鈕行為。兩筆授權、星數門檻與維護狀態均已向 GitHub 查核。
+
 - **content / Stage 1 / OpenAI and Gemini** · 三語加入 GPT-6.2 Astra／Sol 和 Gemini 4 Neon。更新 Carbon 付費 API、規格和優惠期限。選型表補上 Hydrogen。家族詳表維持兩欄，價格逐項分行。選型表縮為兩欄，文件站手機版改為直向閱讀。
 
 ## 2026-10-29
