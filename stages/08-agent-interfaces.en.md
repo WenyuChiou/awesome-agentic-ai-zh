@@ -77,7 +77,7 @@ A brake at the doorway. It always stops for a person before payment, sign-in, se
 
 ### **Prompt Injection**
 
-Malicious instructions hidden in webpage content that try to replace the agent's real rules. Treat page text as untrusted input, not higher-priority commands.
+Malicious instructions can be embedded in webpages, documents, retrieved passages, or tool outputs to influence an agent. Treat them as untrusted data, not higher-priority commands; reading content does not authorize acting on it. [OWASP's overview](https://genai.owasp.org/glossary/prompt-injection/) also names emails, database records, and API responses as indirect-injection sources.
 
 ## 🧭 Choose the smallest interface first
 
