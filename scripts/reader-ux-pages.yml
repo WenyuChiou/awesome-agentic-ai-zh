@@ -1441,7 +1441,7 @@ pages:
       zh-Hans: resources/advanced-rag.zh-Hans.md
     max_visible_chars:
       zh-TW: 6600
-      en: 10900
+      en: 11005
       zh-Hans: 6600
     max_open_details: 0
     required_details_count: 2
@@ -1496,8 +1496,8 @@ pages:
         zh-Hans: {heading: "✅ 自我检查", anchor: -自我检查}
     visible_section_minimums:
       required-reading: {min_links: 6}
-      projects: {min_links: 12, min_ratings: 12}
-    resource_group_rowspans: [4, 4, 4]
+      projects: {min_links: 13, min_ratings: 13}
+    resource_group_rowspans: [4, 5, 4]
 
   - id: agent-memory
     canonical: resources/agent-memory.md
@@ -2518,8 +2518,8 @@ pages:
           zh-Hans: {term: Observability, label: "Observability（观测与记录）"}
     visible_section_minimums:
       required-reading: {min_links: 4}
-      projects: {min_links: 18, min_ratings: 18}
-    resource_group_rowspans: [4, 5, 4, 3, 2]
+      projects: {min_links: 19, min_ratings: 19}
+    resource_group_rowspans: [4, 6, 4, 3, 2]
 
   - id: cli-agents-guide
     canonical: resources/cli-agents-guide.md
