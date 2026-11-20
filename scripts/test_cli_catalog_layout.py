@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOGS = {
     "resources/cli-agents-guide": ((4, 5), ("entry", "audience", "models", "auth", "safety", "status", "sources")),
     "tracks/cli/A2-cli-workflow": ((4, 4, 4, 2, 2), ("entry", "read", "when", "sources")),
-    "tracks/cli/A3-cli-production": ((4, 5, 4, 3, 2), ("entry", "read", "when", "sources")),
+    "tracks/cli/A3-cli-production": ((4, 6, 4, 3, 2), ("entry", "read", "when", "sources")),
 }
 LABELS = {
     "guide": {

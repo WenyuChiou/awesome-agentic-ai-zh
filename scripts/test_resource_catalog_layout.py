@@ -8,7 +8,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOGS = {
-    "resources/advanced-rag": ((4, 4, 4), ("entry", "audience", "learn", "status")),
+    "resources/advanced-rag": ((4, 5, 4), ("entry", "audience", "learn", "status")),
     "resources/agent-memory": ((8, 3, 4), ("entry", "audience", "learn", "status")),
     "stages/06-memory-rag": ((3, 4, 2), ("entry", "audience", "learn", "status")),
     "resources/courses": ((3, 6, 2, 2), ("entry", "cost", "outcome", "limits")),

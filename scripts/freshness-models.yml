@@ -14,10 +14,12 @@ stage01_fact_pack:
   verified_on: '2026-09-22'
   provider_updates:
     claude_fable_mythos: '2026-11-09'
-    gpt: '2026-10-26'
+    gpt: '2026-11-19'
     kimi: '2026-10-26'
     gemini: '2026-10-29'
     gemini_hydrogen: '2026-11-15'
+    gemini_carbon: '2026-11-19'
+    gemini_neon: '2026-11-19'
     anthropic: '2026-10-08'
     typesafe_jev: '2026-10-15'
     muse: '2026-10-15'
@@ -42,8 +44,8 @@ stage01_fact_pack:
     claude_haiku_migration: 'https://platform.claude.com/docs/en/models/haiku-5-5/migration-guide'
     claude_haiku_release: 'https://www.anthropic.com/claude-haiku-5-5'
     claude_sonnet_migration: 'https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide'
-    gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
-    gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6.1-sol'
+    gpt: 'https://developers.openai.com/api/docs/models/gpt-6.2-astra'
+    gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6.2-sol'
     gpt_terra: 'https://developers.openai.com/api/docs/models/gpt-6.1-terra'
     gpt_luna: 'https://developers.openai.com/api/docs/models/gpt-6-luna'
     gpt_pricing: 'https://developers.openai.com/api/docs/pricing'
@@ -58,6 +60,11 @@ stage01_fact_pack:
     gemini: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash'
     gemini_argon: 'https://ai.google.dev/gemini-api/docs/models/gemini-4-argon'
     gemini_carbon_announcement: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/'
+    gemini_carbon: 'https://aistudio.google.com/docs/models/gemini-4-carbon'
+    gemini_carbon_availability: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/'
+    gemini_neon: 'https://aistudio.google.com/docs/models/gemini-4-neon'
+    gemini_neon_pricing: 'https://aistudio.google.com/docs/pricing#gemini-4-neon'
+    gemini_neon_announcement: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/'
     gemini_model_list: 'https://ai.google.dev/gemini-api/docs/models'
     gemini_live: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
@@ -101,33 +108,26 @@ stage01_fact_pack:
     mistral_large4: 'https://docs.mistral.ai/models/mistral-large-4-0'
     grok: 'https://docs.x.ai/developers/pricing'
     mimo: 'https://mimo.mi.com/models/en-US/mimo-v2.6-pro'
-  announced_models:
+  model_updates:
     gemini_carbon:
-      verified_on: '2026-10-29'
-      announced_on: '2026-10-28'
-      status: 'Preview'
-      availability: 'restricted-phased-rollout'
-      public_api_available: false
-      api_model_id: null
-      input_context_tokens: null
-      max_output_tokens: null
-      general_access_date: null
-      tool_support: null
-      pricing_is_announcement: true
-      currency: 'USD'
-      unit: 'per-1M-tokens'
-      introductory_input: 2
-      introductory_output: 10
-      cached_input_discount_percent: 95
-      introductory_cached_input_calculated: 0.10
-      introductory_end_date: null
-      post_introductory_input: 4
-      post_introductory_output: 20
-      official_sources:
-        - 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/'
-        - 'https://ai.google.dev/gemini-api/docs/models'
-        - 'https://ai.google.dev/gemini-api/docs/pricing'
-        - 'https://ai.google.dev/gemini-api/docs/changelog'
+      status: 'stable'
+      api_model_id: 'gemini-4-carbon'
+      general_access_date: '2026-11-10'
+      free_tier: false
+      context_tokens: 1048576
+      synchronous_max_output_tokens: 65536
+      introductory_end_date: '2026-11-30'
+      post_introductory_start_date: '2026-12-01'
+      standard_introductory_usd_per_million: {input: 2, cached_input: 0.10, output: 10}
+      standard_post_introductory_usd_per_million: {input: 4, cached_input: 0.20, output: 20}
+    gemini_neon:
+      status: 'stable'
+      api_model_id: 'gemini-4-neon'
+      general_access_date: '2026-11-17'
+      free_tier: false
+      context_tokens: 1048576
+      synchronous_max_output_tokens: 65536
+      standard_usd_per_million: {input: 3, cached_input: 0.15, output: 15}
   migration_sources:
     hunyuan: 'https://cloud.tencent.com/announce/detail/2391'
 
@@ -617,8 +617,8 @@ current_frontier_models:
     - "Haiku 5.5"
     - "Haiku 4.5 (exercise compatibility baseline)"
   openai:
-    - "GPT-6 Astra"
-    - "GPT-6.1 Sol"
+    - "GPT-6.2 Astra"
+    - "GPT-6.2 Sol"
     - "GPT-6.1 Terra"
     - "GPT-6 Sol (previous generation)"
     - "GPT-6 Luna"
@@ -627,6 +627,10 @@ current_frontier_models:
     - "Jev 1.13 / jev-1.13.0 (official model; service in early access)"
     - "Jev 1.14 / jev-1.14.0 (Preview; jev-preview, not jev-latest)"
   google_gemini:
+    - "Gemini 4 Hydrogen"
+    - "Gemini 4 Neon"
+    - "Gemini 4 Carbon"
+    - "Gemini 4 Argon"
     - "Gemini 3.8 Flash"
     - "Gemini 3.1 Pro Preview"
   deepseek:
@@ -742,12 +746,12 @@ stale_patterns:
   - pattern: 'GPT-5\.6 Sol\s*(?:／|/)\s*Terra\s*(?:／|/)\s*Luna'
     include_files: ['stages/01-llm-basics.md']
     qualifier_terms: []
-    note: 'The former exact Stage 01 roster has been replaced with GPT-6 Astra, Sol and Luna; previous-generation models are not current defaults'
+    note: 'Stage 01 recommends GPT-6.2 Astra and Sol, GPT-6.1 Terra, and GPT-6 Luna'
 
   - pattern: 'Gemini 3\.5 (Flash|Pro)'
     include_files: ['stages/01-llm-basics.md']
     qualifier_terms: ['前身', '歷史', '历史', '舊版', '旧版', 'legacy', 'historical', 'replaced', 'superseded']
-    note: 'Stage 01 recommends Gemini 3.8 Flash; Gemini 3.1 Pro remains Preview'
+    note: 'Stage 01 starts its Gemini model picker with Gemini 4 Hydrogen'
 
   - pattern: 'GLM-5\.2'
     include_files: ['stages/01-llm-basics.md']
