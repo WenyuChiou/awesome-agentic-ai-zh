@@ -263,6 +263,8 @@ Combine the five exercises into a small project: one researcher finds sources an
 
 Success criterion: you can restart the program and continue from a checkpoint; without a person's approval, the process never enters its final publishing step.
 
+**Set permissions first.** Let the research helper read only the chosen sources. The program only enables publishing after a person checks the content and destination. Read [Agent Safety Basics](../resources/agent-security.en.md), then test whether the simulated workflow waits for approval in Stage 7.
+
 ## 🎯 Curated Projects
 
 Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐: it lets you directly see state, edges, checkpoints, and interruption points. The other 18 entries are grouped by purpose below; the ratings indicate this chapter's learning order, not a popularity ranking.

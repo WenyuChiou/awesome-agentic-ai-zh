@@ -87,6 +87,7 @@ plugins:
             Track B — Agent: Track B — Agent builder
             讀者分流: Audience branches
             實作: Walkthroughs
+            Agent 安全入門（選讀）: Agent Safety Basics (optional)
             資源: Resources
             貢獻: Contributing
         - locale: zh-Hans
@@ -105,6 +106,7 @@ plugins:
             Track B — Agent: Track B — Agent 建构者
             讀者分流: 读者分流
             實作: 实作
+            Agent 安全入門（選讀）: Agent 安全入门（选读）
             資源: 资源
             貢獻: 贡献
           # Material ships no `zh-Hans.html` UI partial (it predates strict
@@ -180,6 +182,7 @@ nav:
           - Advanced RAG: resources/advanced-rag.md
           - Agent Memory: resources/agent-memory.md
       - Stage 7 — Agent 上線工程：可測、可看、可停、可恢復: stages/07-multi-agent-production.md
+      - Agent 安全入門（選讀）: resources/agent-security.md
       - Stage 7.5 — Advanced Agentic: stages/07.5-advanced-agentic-concepts.md
       - Stage 8 — Agent Interfaces: stages/08-agent-interfaces.md
   - 讀者分流:

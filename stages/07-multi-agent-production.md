@@ -352,7 +352,7 @@ python test.py
 
 ### 核心練習 3：Approval、Checkpoint 與 Recovery
 
-**成果：** 敏感動作先停在人工核准點；重新啟動後從 checkpoint resume，相同 idempotency key 不會重複執行。
+**成果：** 預期：拒絕 0、核准 1、續跑仍 1。[安全入門](../resources/agent-security.md)
 
 ```bash
 cd examples/stage-7/06-safe-execution

@@ -348,7 +348,7 @@ python test.py
 
 ### Core Exercise 3: Approval, Checkpoint, and Recovery
 
-**Result:** a sensitive action stops at human approval; after a restart it resumes from a checkpoint, and the same idempotency key does not repeat the action.
+**Result:** Expected simulated entries: reject 0, approve 1, resume still 1. [Safety guide](../resources/agent-security.en.md)
 
 ```bash
 cd examples/stage-7/06-safe-execution

@@ -263,6 +263,8 @@ py -3.11 test.py
 
 成功标准：你能重新启动程序并从 checkpoint 继续；没有人的批准，流程不会进入最后发布步骤。
 
+**先画出权限**：让研究助手只读指定资料。发布工具要等人确认内容和目的地后，才由程序放行。先看 [Agent 安全入门](../resources/agent-security.zh-Hans.md)，再到 Stage 7 测试模拟流程会不会等人批准。
+
 ## 🎯 精选 Projects
 
 第一个入口先看 [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐：你能直接看到 state、edge、checkpoint 与中断点。其余 18 条已按用途分组放在下面；推荐度是本章学习顺序，不是人气排行榜。
