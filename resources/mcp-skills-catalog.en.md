@@ -1233,10 +1233,29 @@ npx -y jacobian mcp
 **Start with**: Create a named server, assign only the workflows needed for the task, and leave Heym Capabilities (`heym_chat`) disabled.
 **Permissions**: The default server lists `get_user_memory` and `set_user_memory` even when `heym_chat` is off. Named servers do not list these standalone memory tools. Enabling `heym_chat` grants broader management operations beyond the selected workflow list. It can modify workflows and data, and its test runs have real side effects.
 **License limits**: Source-available, subject to Commons Clause restrictions. Read the linked terms before use.
-**Verification**: Documentation reviewed; no live MCP connection was tested for this entry.
-**Documentation and terms**: [MCP setup](https://github.com/heymrun/heym/blob/main/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
+**Verification**: Tested locally on 2026-11-20 UTC with the commands below on v0.0.165. The named server listed only `echo_text`, and the default server also listed the two memory tools. OAuth clients and `heym_chat` were not tested.
+**How to run**: a throwaway instance pinned to v0.0.165 and reachable only from this machine.
+```bash
+docker network create heym-mcp-demo
+docker run -d --name heym-mcp-demo-db --network heym-mcp-demo \
+  -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=heym postgres:16-alpine
+until docker exec heym-mcp-demo-db pg_isready -h 127.0.0.1 -U postgres; do sleep 1; done
+docker run -d --name heym-mcp-demo --network heym-mcp-demo -p 127.0.0.1:4017:4017 \
+  -e DATABASE_URL=postgresql+asyncpg://postgres:postgres@heym-mcp-demo-db:5432/heym \
+  -e SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')" \
+  -e ENCRYPTION_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
+  ghcr.io/heymrun/heym:0.0.165
+# Open http://localhost:4017, sign up, and build an Echo text workflow: Input → Output, Message Template $start.body.text
+# MCP / A2A tab: create a named server, copy its MCP Endpoint and API Key, assign only Echo text, keep Heym Capabilities off
+curl -s "<MCP Endpoint>" -H "X-MCP-Key: <API Key>" -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+# Cleanup
+docker rm -f heym-mcp-demo heym-mcp-demo-db && docker network rm heym-mcp-demo
+```
+**Expected result**: the named server's `tools/list` returns only `echo_text`.
+**Documentation and terms**: [MCP setup](https://github.com/heymrun/heym/blob/v0.0.165/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
 
-<small>Heym documentation reviewed: 2026-11-13 UTC</small>
+<small>Heym v0.0.165 tested locally: 2026-11-20 UTC</small>
 
 </details>
 <a id="13-research-workflow-skills-academic--paper--literature"></a>
