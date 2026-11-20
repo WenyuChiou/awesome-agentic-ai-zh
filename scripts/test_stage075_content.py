@@ -84,7 +84,7 @@ RESOURCE_PAIRS = (
     ("https://www.anthropic.com/engineering/harness-design-long-running-apps", "⭐⭐⭐⭐"),
     ("https://www.anthropic.com/engineering/multi-agent-research-system", "⭐⭐⭐⭐⭐"),
     ("https://github.com/langchain-ai/langgraph", "⭐⭐⭐⭐"),
-    ("https://github.com/microsoft/agent-framework", "⭐⭐⭐⭐⭐"),
+    ("https://learn.microsoft.com/en-us/agent-framework/overview/", "⭐⭐⭐⭐⭐"),
     ("https://openai.github.io/openai-agents-python/sandbox/guide/", "⭐⭐⭐⭐"),
     ("https://code.claude.com/docs/en/workflows", "⭐⭐⭐⭐"),
     ("https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents", "⭐⭐⭐⭐⭐"),

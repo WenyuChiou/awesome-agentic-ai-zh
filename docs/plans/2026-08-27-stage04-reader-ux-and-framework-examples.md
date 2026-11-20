@@ -128,7 +128,7 @@
 6. [OpenAI Agents SDK orchestration](https://openai.github.io/openai-agents-python/multi_agent/)、[handoffs](https://openai.github.io/openai-agents-python/handoffs/)、[tracing](https://openai.github.io/openai-agents-python/tracing/)：manager-as-tools 與 handoff 是不同模式；SDK 內建 tracing。
 7. [OpenAI Sandbox Agents](https://openai.github.io/openai-agents-python/sandbox/guide/)：Sandbox Agents 是 beta；隔離邊界、manifest、session 與 approval 分層描述。
 8. [OpenAI Swarm](https://github.com/openai/swarm)：官方標示 experimental／educational，已由 Agents SDK 取代。
-9. [Microsoft Agent Framework](https://github.com/microsoft/agent-framework)、[Migration Guide](https://learn.microsoft.com/en-us/agent-framework/migration-guide/)：Python `1.0.0` 於 2026-04-02 stable；官方提供 AutoGen／Semantic Kernel 遷移路徑。
+9. [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/overview/)、[Migration Guide](https://learn.microsoft.com/en-us/agent-framework/migration-guide/)：Python `1.0.0` 於 2026-04-02 stable；官方提供 AutoGen／Semantic Kernel 遷移路徑。
 10. [AutoGen](https://microsoft.github.io/autogen/)：現行 package 是 `autogen-agentchat 0.7.5`；舊 0.2 tutorial 不可當現行 API。
 11. [Deep Agents](https://docs.langchain.com/oss/python/deepagents/overview)：官方定位是建在 LangGraph 上的 agent harness，包含 planning、filesystem、subagent、memory、permissions 與 HITL。
 12. [Strands Agents](https://strandsagents.com/docs/user-guide/sdk/quickstart/overview/)：Python／TypeScript SDK；canonical monorepo 是 `strands-agents/harness-sdk`。

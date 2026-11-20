@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-11-20
+
+- **links / Microsoft Agent Framework** · 將失效的 GitHub 專案連結換成 Microsoft Learn 官方入口。更新三語教材、來源檢查與 repo 清單，保留既有推薦度。
+
 ## 2026-11-19
 
 - **resources / Advanced RAG and A3** · 三語精選表新增 QMD 與 Playwright CLI。前者用同一批本機筆記比較三種搜尋，後者用本機測試頁確認按鈕行為。兩筆授權、星數門檻與維護狀態均已向 GitHub 查核。
