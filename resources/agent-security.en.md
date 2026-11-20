@@ -1,4 +1,4 @@
-# Agent Safety Basics: Let AI Help, Ask Before It Acts
+# Agent Safety Basics: Ask Before High-Impact Actions
 
 [繁體中文](agent-security.md) | [English](agent-security.en.md) | [简体中文](agent-security.zh-Hans.md)
 

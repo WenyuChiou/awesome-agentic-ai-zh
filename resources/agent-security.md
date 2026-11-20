@@ -1,4 +1,4 @@
-# Agent 安全入門：讓 AI 幫忙，重要動作先問人
+# Agent 安全入門：重要動作先問人
 
 [繁體中文](agent-security.md) | [English](agent-security.en.md) | [简体中文](agent-security.zh-Hans.md)
 
