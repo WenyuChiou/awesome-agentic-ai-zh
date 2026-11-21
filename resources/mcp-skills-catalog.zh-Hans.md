@@ -1193,6 +1193,60 @@ npx -y jacobian mcp
 
 ---
 
+### [heymrun/heym](https://github.com/heymrun/heym) ⭐⭐
+
+<div align="center" markdown="1">
+
+| 字段 | 内容 |
+|:---|:---|
+| License | NOASSERTION (MIT + Commons Clause) |
+| 推荐度 | ⭐⭐ |
+
+</div>
+
+**教什么**：通过命名 MCP 服务器公开选定的工作流，并比较这个范围与 `heym_chat` 更广的管理权限。
+**适合谁**：想在自托管环境提供 MCP 工作流工具，并学习工具权限边界的 Agent 开发者。
+**备注**：需要自托管 Heym；连接使用 OAuth 或 API key。工作流工具可能写入外部服务。
+**起始配置**：创建命名服务器，只分配任务需要的工作流，并停用 Heym Capabilities（`heym_chat`）。
+**权限边界**：默认服务器即使停用 `heym_chat`，仍会列出 `get_user_memory` 与 `set_user_memory`。命名服务器不会列出这两个独立的记忆工具。启用 `heym_chat` 后，管理权限超出选定的工作流列表。它可修改工作流与数据，测试运行也会产生实际副作用。
+**许可限制**：源码可获取，但受 Commons Clause 限制；使用前请读下方原始条款。
+**核查范围**：2026-11-21 UTC 在 zsh 按下方命令实测 v0.0.165。命名服务器只列出 `echo_text`，默认服务器另列出两个记忆工具。清理后没有留下容器、网络或 volume。未测 OAuth 客户端与 `heym_chat`。
+**怎么跑**：用 v0.0.165 开一个只能从本机连接的临时环境。
+```bash
+docker network create heym-mcp-demo
+docker run -d --name heym-mcp-demo-db --network heym-mcp-demo \
+  -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=heym postgres:16-alpine
+# 最多等 60 秒；Postgres 就绪后才启动 Heym
+ready=0
+for i in $(seq 1 60); do
+  docker exec heym-mcp-demo-db pg_isready -q -h 127.0.0.1 -U postgres 2>/dev/null && { ready=1; break; }
+  sleep 1
+done
+if [ "$ready" -eq 1 ]; then
+  docker run -d --name heym-mcp-demo --network heym-mcp-demo -p 127.0.0.1:4017:4017 \
+    -e DATABASE_URL=postgresql+asyncpg://postgres:postgres@heym-mcp-demo-db:5432/heym \
+    -e SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')" \
+    -e ENCRYPTION_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
+    ghcr.io/heymrun/heym:0.0.165
+else
+  echo "已停止：Postgres 60 秒内未就绪。请看 docker logs heym-mcp-demo-db，再执行下方清理。"
+fi
+# 打开 http://localhost:4017 注册，创建 Echo text 工作流：Input → Output，Message Template 填 $start.body.text
+# MCP / A2A 标签页：创建命名服务器，复制 MCP Endpoint 与 API Key，只分配 Echo text，Heym Capabilities 保持关闭
+curl -s "<MCP Endpoint>" -H "X-MCP-Key: <API Key>" -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+# 清理：删除两个容器及其匿名 volume，再删除网络
+vols=($(docker container inspect -f '{{range .Mounts}}{{if eq .Type "volume"}}{{.Name}} {{end}}{{end}}' heym-mcp-demo heym-mcp-demo-db 2>/dev/null))
+docker rm -f -v heym-mcp-demo heym-mcp-demo-db; docker network rm heym-mcp-demo
+# 检查：容器、网络与 volume 都删除后，下面两行不会输出任何内容
+docker ps -aq --filter name=heym-mcp-demo; docker network ls -q --filter name=heym-mcp-demo
+for v in "${vols[@]}"; do docker volume ls -q --filter name="$v"; done
+```
+**预期结果**：命名服务器的 `tools/list` 只返回 `echo_text`。
+**文档与条款**：[MCP 设置](https://github.com/heymrun/heym/blob/v0.0.165/frontend/src/docs/content/tabs/mcp-tab.md)；[Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md)。
+
+<small>Heym v0.0.165 本机实测：2026-11-21 UTC</small>
+
 </details>
 ## 13. 研究工作流 Skills（学术 / paper / 文献）
 

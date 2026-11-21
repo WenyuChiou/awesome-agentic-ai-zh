@@ -1192,6 +1192,60 @@ npx -y jacobian mcp
 
 ---
 
+### [heymrun/heym](https://github.com/heymrun/heym) ⭐⭐
+
+<div align="center" markdown="1">
+
+| Field | Value |
+|:---|:---|
+| License | NOASSERTION (MIT + Commons Clause) |
+| Rating | ⭐⭐ |
+
+</div>
+
+**What it teaches**: Expose selected workflows through a named MCP server and compare that workflow boundary with the broader authority of `heym_chat`.
+**Who it's for**: Agent developers who want to serve workflow tools from their own infrastructure and study the permission boundary of an MCP integration.
+**Notes**: Requires a self-hosted Heym instance and OAuth or an API key. Workflow tools may write to external services.
+**Start with**: Create a named server, assign only the workflows needed for the task, and leave Heym Capabilities (`heym_chat`) disabled.
+**Permissions**: The default server lists `get_user_memory` and `set_user_memory` even when `heym_chat` is off. Named servers do not list these standalone memory tools. Enabling `heym_chat` grants broader management operations beyond the selected workflow list. It can modify workflows and data, and its test runs have real side effects.
+**License limits**: Source-available, subject to Commons Clause restrictions. Read the linked terms before use.
+**Verification**: Tested on 2026-11-21 UTC by running the commands below in zsh on v0.0.165. The named server listed only `echo_text`, and the default server also listed the two memory tools. Cleanup left no container, network or volume. OAuth clients and `heym_chat` were not tested.
+**How to run**: a throwaway instance pinned to v0.0.165 and reachable only from this machine.
+```bash
+docker network create heym-mcp-demo
+docker run -d --name heym-mcp-demo-db --network heym-mcp-demo \
+  -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=heym postgres:16-alpine
+# Wait up to 60 s; Heym starts only once Postgres is ready
+ready=0
+for i in $(seq 1 60); do
+  docker exec heym-mcp-demo-db pg_isready -q -h 127.0.0.1 -U postgres 2>/dev/null && { ready=1; break; }
+  sleep 1
+done
+if [ "$ready" -eq 1 ]; then
+  docker run -d --name heym-mcp-demo --network heym-mcp-demo -p 127.0.0.1:4017:4017 \
+    -e DATABASE_URL=postgresql+asyncpg://postgres:postgres@heym-mcp-demo-db:5432/heym \
+    -e SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')" \
+    -e ENCRYPTION_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
+    ghcr.io/heymrun/heym:0.0.165
+else
+  echo "Stopped: Postgres was not ready after 60 s. Check docker logs heym-mcp-demo-db, then run the cleanup below."
+fi
+# Open http://localhost:4017, sign up, and build an Echo text workflow: Input → Output, Message Template $start.body.text
+# MCP / A2A tab: create a named server, copy its MCP Endpoint and API Key, assign only Echo text, keep Heym Capabilities off
+curl -s "<MCP Endpoint>" -H "X-MCP-Key: <API Key>" -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+# Cleanup: remove both containers with their anonymous volumes, then the network
+vols=($(docker container inspect -f '{{range .Mounts}}{{if eq .Type "volume"}}{{.Name}} {{end}}{{end}}' heym-mcp-demo heym-mcp-demo-db 2>/dev/null))
+docker rm -f -v heym-mcp-demo heym-mcp-demo-db; docker network rm heym-mcp-demo
+# Check: once the containers, network and volumes are gone, the next two lines print nothing
+docker ps -aq --filter name=heym-mcp-demo; docker network ls -q --filter name=heym-mcp-demo
+for v in "${vols[@]}"; do docker volume ls -q --filter name="$v"; done
+```
+**Expected result**: the named server's `tools/list` returns only `echo_text`.
+**Documentation and terms**: [MCP setup](https://github.com/heymrun/heym/blob/v0.0.165/frontend/src/docs/content/tabs/mcp-tab.md); [Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md).
+
+<small>Heym v0.0.165 tested locally: 2026-11-21 UTC</small>
+
 </details>
 <a id="13-research-workflow-skills-academic--paper--literature"></a>
 ## 13. Research Workflow Skills (academic / paper / lit)
