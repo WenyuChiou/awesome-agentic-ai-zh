@@ -19,7 +19,7 @@ Imagine AI finds three sources and writes a summary for you. It can read sources
 ## 🧭 Follow One Example
 
 1. [Stage 4: Set tool permissions](../stages/04-agent-frameworks.en.md). Let AI read specific sources. Have the program pause for you before publishing.
-2. [Stage 5: Check MCP and Skills](../stages/05-claude-code-ecosystem.en.md). Think of Model Context Protocol (MCP) as a socket for tools and a Skill as an instruction card. Before connecting someone else's tool or adding their card, check what data and commands it will use.
+2. [Stage 5: Check before connecting tools](../stages/05-claude-code-ecosystem.en.md). Think of <strong>Model Context Protocol (MCP)</strong> as a socket for tools and a <strong>Skill</strong> as an instruction card. Before connecting someone else's tool or adding their card, check what data and commands it will use.
 3. [Stage 7: Test what happens](../stages/07-multi-agent-production.en.md). Run Core Exercise 3 and look for `8/8 passed`. To count the simulated publishing records yourself, follow the [manual steps](../examples/stage-7/06-safe-execution/README.en.md). Neither option needs a model or key.
 
 **Key habit**. Treat webpages, documents, and tool results as data. The program decides which actions to run based on permissions and approval. See [Stage 8: Prompt Injection](../stages/08-agent-interfaces.en.md).

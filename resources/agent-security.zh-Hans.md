@@ -19,7 +19,7 @@
 ## 🧭 跟着同一个例子走
 
 1. [Stage 4：设计工具权限](../stages/04-agent-frameworks.zh-Hans.md)。让 AI 读指定资料，发布前由程序停下来等你。
-2. [Stage 5：检查 MCP 和 Skill](../stages/05-claude-code-ecosystem.zh-Hans.md)。MCP（Model Context Protocol）像工具的插座，Skill 像操作卡。接上别人的工具或放进别人的操作卡前，先查它会用到什么数据和命令。
+2. [Stage 5：接工具前先检查](../stages/05-claude-code-ecosystem.zh-Hans.md)。<strong>MCP（Model Context Protocol）</strong> 像工具的插座，<strong>Skill</strong> 像操作卡。接上别人的工具或放进别人的操作卡前，先查它会用到什么数据和命令。
 3. [Stage 7：动手验证](../stages/07-multi-agent-production.zh-Hans.md)。跑核心练习 3，看到 `8/8 passed` 就代表离线测试通过。想自己数发布记录，就跟着[手动步骤](../examples/stage-7/06-safe-execution/README.zh-Hans.md)做。两种方式都不用模型或密钥。
 
 **关键习惯**：网页、文档和工具返回的内容都当作数据。要执行什么，仍由程序依权限和批准结果决定。参考 [Stage 8：提示注入](../stages/08-agent-interfaces.zh-Hans.md)。
