@@ -1449,20 +1449,20 @@ Do not turn model names into permanent job titles. First check the current model
 **Audience**: teams where everyone has installed their own pile of MCP servers and somebody now has to answer "who installed what, and which credentials can it reach".
 **Notes**: Go project, available as a desktop app and a CLI. Open-source ToolHive and Stacklok's enterprise product are separate, so check which features sit on which side.
 
-### [NVIDIA/OpenShell](https://github.com/NVIDIA/OpenShell) ⭐⭐⭐⭐
+### [OpenShell](https://github.com/ai-openshell/openshell) ⭐⭐⭐⭐
 
 <div align="center" markdown="1">
 
 | Field | Value |
 |:---|:---|
 | License | Apache-2.0 |
-| Rating | ⭐⭐⭐⭐ (**NVIDIA official**) |
+| Rating | ⭐⭐⭐⭐ |
 
 </div>
 
 **What it does**: a sandboxed execution environment for autonomous agents, with declarative policy over files, network and processes. Claude Code and Codex run inside it unmodified; OpenClaw goes through NemoClaw, the next entry below.
 **Audience**: people who want an agent to actually execute commands without handing it the whole machine.
-**Notes**: Rust project. Needs Docker / Podman or host virtualization for MicroVM-backed sandboxes; Windows goes through WSL 2 and is marked experimental. **⚠️ The project still calls itself alpha**, so read it and try it, but assess before depending on it. The split against `toolhive`: toolhive governs MCP servers, this governs the Agent's own execution boundary.
+**Notes**: Requires Docker, Podman, or host virtualization. The Windows WSL 2 path is experimental. Verify the isolation boundaries in a test environment before production use. The split against `toolhive`: toolhive governs MCP servers, this governs the Agent's own execution boundary.
 
 ### [nolabs-ai/nono](https://github.com/nolabs-ai/nono) ⭐⭐⭐⭐
 

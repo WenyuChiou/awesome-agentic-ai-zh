@@ -1449,20 +1449,20 @@ npx -y jacobian mcp
 **适合谁**：团队里已经有人各自装了一堆 MCP server，开始需要回答“谁装了什么、它能拿到哪些凭证”的人。
 **备注**：Go 项目，桌面版与 CLI 都有。开源的 ToolHive 与 Stacklok 的企业版是分开的，评估功能时注意分界在哪。
 
-### [NVIDIA/OpenShell](https://github.com/NVIDIA/OpenShell) ⭐⭐⭐⭐
+### [OpenShell](https://github.com/ai-openshell/openshell) ⭐⭐⭐⭐
 
 <div align="center" markdown="1">
 
 | 栏位 | 内容 |
 |:---|:---|
 | License | Apache-2.0 |
-| 推荐度 | ⭐⭐⭐⭐（**NVIDIA 官方**） |
+| 推荐度 | ⭐⭐⭐⭐ |
 
 </div>
 
 **教什么**：给自动化 agent 用的沙箱化执行环境，用声明式策略管住文件、网络与进程；Claude Code 与 Codex 不改任何代码就能跑在里面（OpenClaw 要另外通过下面那则 NemoClaw）。
 **适合谁**：要让 agent 真的能执行命令、但不想把整台机器交出去的人。
-**备注**：Rust 项目。需要 Docker / Podman 或主机虚拟化（MicroVM sandbox 用）；Windows 走 WSL 2 且标为 experimental。**⚠️ 项目自述仍是 alpha**，拿来读与试可以，正式依赖前先自行评估。与 `toolhive` 的分工是：toolhive 管 MCP server，这个管 Agent 本身的执行边界。
+**备注**：需要 Docker、Podman 或主机虚拟化。Windows 的 WSL 2 路径仍标为实验性。上线前先用测试环境确认隔离范围。与 `toolhive` 的分工是：toolhive 管 MCP server，这个管 Agent 本身的执行边界。
 
 ### [nolabs-ai/nono](https://github.com/nolabs-ai/nono) ⭐⭐⭐⭐
 

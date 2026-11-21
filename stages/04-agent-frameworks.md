@@ -269,7 +269,7 @@ py -3.11 test.py
 
 第一個入口先看 [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐：你能直接看到 state、edge、checkpoint 與中斷點。其餘 18 筆已依用途分組放在下面；推薦度是本章學習順序，不是人氣排行榜。
 
-<small>既有框架資訊查核：2026-08-27 UTC；Bifrost：2026-09-03 UTC</small>
+<small>既有框架資訊查核：2026-08-27 UTC；Bifrost：2026-09-03 UTC。AutoGen：2026-11-21 UTC（程式碼授權 MIT）</small>
 
 <table align="center">
   <thead>
@@ -289,7 +289,7 @@ py -3.11 test.py
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">快速雛形／多 Agent</th><td><a href="https://github.com/crewAIInc/crewAI">CrewAI</a></td><td>快速做 researcher → writer → reviewer 角色流程。</td><td>維護中；MIT。Flows 已支援 persistence、resume 與 human feedback。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>維護既有 group-chat、辯論或 peer-review 專案。</td><td>Maintenance mode，由社群維護；CC-BY-4.0。既有 Python 專案使用 <code>autogen-agentchat</code> 0.7.x；新的 Microsoft 專案改用 Agent Framework，並避開舊 0.2 教學。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>查閱既有多 Agent 專案或準備遷移。</td><td>已封存。文件 CC-BY-4.0。既有 <code>autogen-agentchat</code> 0.7.x 可查遷移指引。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/openai/openai-agents-python">OpenAI Agents SDK</a></td><td>已使用 OpenAI 生態，需要 handoff、guardrail 與 tracing。</td><td>維護中；MIT。Sandbox Agents 是 beta，不等於所有 production 問題已解決。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/deepagents">Deep Agents</a></td><td>要 planning、filesystem、subagent、memory 與 permissions 的完整 harness。</td><td>維護中；MIT。建在 LangGraph 上；簡單 Agent 用它可能太重。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/openai/swarm">OpenAI Swarm</a></td><td>想讀小型 source，理解 Agent 與 handoff。</td><td>凍結／歷史教育用途；MIT。官方已由 Agents SDK 取代，不用於新 production 專案。</td><td>⭐⭐⭐⭐（教育）</td></tr>

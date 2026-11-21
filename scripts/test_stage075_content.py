@@ -216,14 +216,15 @@ def test_resource_table_preserves_24_urls_ratings_and_true_rowgroups() -> None:
 
 def test_three_locales_share_sources_dates_and_current_status() -> None:
     expected_urls: list[str] | None = None
-    for page in PAGES.values():
+    archive_status = {"zh-TW": "AutoGen 已封存", "zh-Hans": "AutoGen 已归档", "en": "AutoGen is archived"}
+    for locale, page in PAGES.items():
         text = page.read_text(encoding="utf-8")
         assert text.count(FRESHNESS) == 1
+        assert archive_status[locale] in _without_details(text)
         for literal in (
             "2026-09-13",
             "Microsoft Agent Framework",
             "AutoGen",
-            "maintenance mode",
             "Sandbox Agents",
             "Beta",
             "v2.1.203+",
