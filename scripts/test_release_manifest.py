@@ -73,26 +73,29 @@ def test_current_model_reference_keeps_public_api_ids(locale: str) -> None:
 
 
 @pytest.mark.parametrize("locale", rm.LOCALES)
-def test_october_29_third_notes_cover_only_the_new_release_window(locale: str) -> None:
+def test_november_21_notes_cover_the_release_window(locale: str) -> None:
     notes = rm.validate_notes_manifest()
-    assert notes["release_version"] == "v2026.10.29-3"
+    assert notes["release_version"] == "v2026.11.21"
     changes = {change["id"]: change for change in notes["changes"]}
-    assert set(changes) == {
-        "rag-search-terms-and-comparisons", "execution-and-isolation-boundaries",
-        "model-terms-and-token-price-units",
+    expected_terms = {
+        "agent-safety-basics": ("MCP", "Skill", "Stage 8", "0", "1"),
+        "stage-one-model-reference": (
+            "Mistral Large 4", "Fable", "Mythos 5.2", "GPT-6.2",
+            "Astra", "Sol", "Hydrogen", "Neon", "Carbon",
+        ),
+        "qmd-and-playwright-cli": ("QMD", "A3", "Playwright CLI"),
+        "framework-reference-health": ("Microsoft Learn", "OpenShell", "AutoGen", "LLM Leaderboard"),
+        "docs-and-ci-dependencies": ("Markdown", "PyMdown Extensions", "MkDocs Material", "requests"),
     }
-    rag = changes["rag-search-terms-and-comparisons"][locale]
-    assert all(term in rag for term in ("BM25", "Recall@5", "13", "12"))
-    safety = changes["execution-and-isolation-boundaries"][locale]
-    assert all(term in safety for term in ("Stage 5", "Stage 6", "Stage 8", "Path A", "Path B"))
-    models = changes["model-terms-and-token-price-units"][locale]
-    assert all(term in models for term in ("Base Model", "Instruct Model", "A3", "token"))
-    assert {"zh-TW": "每百萬", "zh-Hans": "每百万", "en": "per million"}[locale] in models
+    assert changes.keys() == expected_terms.keys()
+    for change_id, terms in expected_terms.items():
+        assert all(term in changes[change_id][locale] for term in terms)
     links = {link for change in changes.values() for link in change["links"]}
     assert links == {
         f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
-        for pr in (356, 357, 358)
-    }
+        for pr in (364, 365, 366, 369, 370, 374, 376, 377, 378, 379, 380, 381)
+    } | {"https://github.com/ai-openshell/openshell", "https://github.com/microsoft/autogen"}
+
 
 def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:
     calls: list[object] = []

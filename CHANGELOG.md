@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-11-21
+
+- **release / v2026.11.21** · 依 v2026.10.29-3 後的差異整理三語發布說明，涵蓋 Agent 安全入門、模型更新、新資源、官方連結與依賴。OpenShell 與 LLM Leaderboard 改連現行網址，AutoGen 標為已封存。正式版只附三語說明。
+
 ## 2026-11-20
 
 - **content / Agent 安全入門** · 三語新增一頁選讀。在 Stage 4 畫出工具權限，Stage 5 提供可見的 MCP／Skill 檢查，Stage 7 沿用離線測試核對發布紀錄。
@@ -423,7 +427,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 ## 2026-08-23
 
 - **content** · **Stage 5 補上 MCP 2026-07-28 的無狀態改版**(三語)。拿掉 `initialize` 握手與 `Mcp-Session-Id`、server 改用自發 handle 當普通 tool 參數、新增 `server/discover`、Roots/Sampling/Logging 與 HTTP+SSE 標為 deprecated(至少 12 個月過渡期)、MRTR 取代 server 主動發請求。每一條都從官方 changelog 讀出來。**補之前先查過 repo 現況**:`2026-07-28` 已經出現 15 處,所以這是補概念不是改錯——缺的是 MCP 語境下的 `stateless` 以及 `MRTR`、`server/discover`、`Mcp-Session-Id`——後三者先前是 0 處,`stateless` 則只在 walkthrough 裡以「agent 有沒有記憶」的無關語義出現過。
-- **content** · **四個新專案,全部表格型態**。Stage 7 參考實作新增表格收 [grok-build](https://github.com/xai-org/grok-build)(★25k+)與 [NemoClaw](https://github.com/NVIDIA/NemoClaw)(★22k+);catalog 第 17 類收 [OpenShell](https://github.com/NVIDIA/OpenShell)(★8.3k+)與 [nono](https://github.com/nolabs-ai/nono)(★3.7k+)。條目 79 → 81,39 處數字宣稱同步(照 `check-catalog-counts.py` 自己的座標定位,不是整包 sed)。星數 / license / 語言 / push 日期全部讀自 `gh api`。
+- **content** · **四個新專案,全部表格型態**。Stage 7 參考實作新增表格收 [grok-build](https://github.com/xai-org/grok-build)(★25k+)與 [NemoClaw](https://github.com/NVIDIA/NemoClaw)(★22k+);catalog 第 17 類收 [OpenShell](https://github.com/ai-openshell/openshell)(★8.3k+)與 [nono](https://github.com/nolabs-ai/nono)(★3.7k+)。條目 79 → 81,39 處數字宣稱同步(照 `check-catalog-counts.py` 自己的座標定位,不是整包 sed)。星數 / license / 語言 / push 日期全部讀自 `gh api`。
 - **tooling** · **新增 `check-duplicate-repos.py` + 掛進 CI**。起因是 `microsoft/agent-framework` 被我當成新專案加進 Stage 4 的表,但它 2026-06-13 就在同一張表裡了——星數、license、push 日期全查證過,**唯獨沒有 grep 一次 slug**,而六個內容 gate 全綠,**是 reviewer 讀 diff 讀出來的**(唯一會數條目的 gate 只掃 catalog,看不到 stage 的散文表格)。**前兩版都錯在太吵**:v1 比整個檔案報 229 筆、v2 比區塊但取整行連結報 6 筆,全是誤判。最終版比「同一張表 / 清單裡每列的第一個連結」,剩 3 筆逐一確認是同一本書一章一列,用 baseline 記錄。**一個報 229 個問題的檢查會被無視,而被無視的檢查比沒有檢查更糟——它看起來像有覆蓋。**
 - **fix** · **三個讀者已經在用的詞不再翻譯**(三語):Stage 2 的 `eval harness` 曾被寫成「評估腳手架」貼在英文旁邊、後面又解釋一次;(三條都是 audit 找出來的)Stage 8 的 `accessibility tree` 段落中途變成「無障礙樹」,而同一則 callout 的標題與結尾括號都用英文;Stage 7 的 `sandbox` 被寫成「沙箱」,同檔保留英文 5 次(只改了 qm 條目那處;deepseek 條目裡那個「沙箱」是在列 plugin 元件類別、不是講產品介面,留著)。**讀者之後去 grep 工具自己的文件時,認不出那個中文詞是同一個東西。**
 - **fix** · **砍掉 13 處重述**(Stage 1/2/3/4/5/6/7/7.5,三語)。形狀都一樣:幾行前才講過的事換句話再講一次。其中 Stage 1 那則最糟——callout 標題寫「不裝 Ollama 也能讀」、下一句就給安裝指令,中間沒有轉折,**兩句話讀起來像自相矛盾**;Stage 6 有一句塞了七個模型的複合主詞、動詞最後才到,而兩行下的表格列得更清楚。Stage 5 的兩條不是刪掉而是換成表格沒有的資訊。

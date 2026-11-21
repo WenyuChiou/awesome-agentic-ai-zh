@@ -849,12 +849,12 @@ stale_patterns:
   - pattern: 'AutoGen.{0,100}(?:current default|production-ready|推薦新專案|推荐新项目|新專案首選|新项目首选)'
     include_files: ['stages/07.5-advanced-agentic-concepts.md']
     qualifier_terms: ['maintenance mode', 'maintenance', 'historical', 'history', '維護', '维护']
-    note: 'AutoGen is community-managed and in maintenance mode; new Microsoft work should start with Agent Framework'
+    note: 'AutoGen is archived; new Microsoft work should start with Agent Framework'
 
   - pattern: '(?:production|生產級|生产级).{0,120}AutoGen'
     include_files: ['stages/04-agent-frameworks.md', 'stages/07.5-advanced-agentic-concepts.md', 'resources/mcp-skills-catalog.md']
     qualifier_terms: ['maintenance mode', 'maintenance', 'historical', 'history', 'legacy', 'existing', '既有', '现有', '維護', '维护']
-    note: 'AutoGen is not a production recommendation for new projects; use Microsoft Agent Framework and keep AutoGen for maintenance or migration context'
+    note: 'AutoGen is not a production recommendation for new projects; use Microsoft Agent Framework and keep AutoGen for historical or migration context'
 
   - pattern: 'Sandbox Agents.{0,100}(?:generally available|\bGA\b|正式可用|穩定介面|稳定接口)'
     include_files: ['stages/07.5-advanced-agentic-concepts.md', 'stages/08-agent-interfaces.md', 'resources/glossary.md']

@@ -113,7 +113,7 @@ PRO 与 CON 都只看原题。Judge 才会看到原题和两份论点：
 
 - ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents)：章节式中文 Agent 教材，适合补完整背景。
 - ⭐⭐⭐⭐⭐ [Anthropic：Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)：先判断单 Agent 是否已足够，再增加协作。
-- ⭐⭐⭐⭐ [Microsoft AutoGen](https://github.com/microsoft/autogen)：想看完整 multi-agent framework 时再进入。
+- ⭐⭐⭐⭐ [Microsoft AutoGen](https://github.com/microsoft/autogen)：已归档，适合查旧有多 Agent 设计。
 
 完整清单见 [Stage 7 精选 Projects](../../../stages/07-multi-agent-production.zh-Hans.md#-精选-projects范本--sdk--工具-collection)。
 

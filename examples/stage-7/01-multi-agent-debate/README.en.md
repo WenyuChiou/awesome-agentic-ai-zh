@@ -113,7 +113,7 @@ Next, replace the roles with “engineer/user,” add human approval, or evaluat
 
 - ⭐⭐⭐⭐⭐ [`datawhalechina/hello-agents`](https://github.com/datawhalechina/hello-agents): chapter-style Chinese agent material for fuller background.
 - ⭐⭐⭐⭐⭐ [Anthropic: Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): decide whether one agent is enough before adding collaboration.
-- ⭐⭐⭐⭐ [Microsoft AutoGen](https://github.com/microsoft/autogen): explore a full multi-agent framework after this small pattern.
+- ⭐⭐⭐⭐ [Microsoft AutoGen](https://github.com/microsoft/autogen): archived reference for older multi-agent designs.
 
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
