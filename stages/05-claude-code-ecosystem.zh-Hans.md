@@ -331,6 +331,16 @@ Claude Code 可在 CLI、Desktop、VS Code 与 JetBrains 等 surface 使用。�
 
 本节成果：你能用“通用插座”解释 MCP，也能说出 Tool Use 与 MCP 的区别。
 
+**连接 MCP 前先问五件事**
+
+1. **能读、能改什么？** 第一次先开启用得上的只读工具。
+2. **哪把钥匙交给谁？** 分清你的应用程序连接 MCP 服务器用的凭证，以及服务器连接其他服务用的凭证。只给需要的权限。
+3. **谁能在动手前拦住它？** 在你使用的 AI 应用中，确认发送、写入或删除会先问人。单靠提示词无法强制停止。
+4. **在哪里运行？数据去哪？** 看它能看到哪些文件、会把数据发给哪些服务。
+5. **怎么停用？** 先找到关闭工具、收回凭证和移除配置的位置。
+
+看 [Agent 安全入门](../resources/agent-security.zh-Hans.md) 和 [MCP 官方安全指南](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices)。
+
 <details markdown="1">
 <summary>展开 5.2：Tools、Resources、Prompts、版本与安全</summary>
 
@@ -351,6 +361,8 @@ Claude Code 可在 CLI、Desktop、VS Code 与 JetBrains 等 surface 使用。�
 <a id="-skillmd-设计-prompts含-skill-creator-替代"></a>
 
 本节成果：你能写出短小、可触发、可验证的 `SKILL.md`。
+
+**添加别人的 Skill 前**：先打开 `SKILL.md` 和附带的脚本。看它会请 AI 做什么、需要哪些权限，以及有没有把数据发出去的步骤。先在没有私人文件和正式账号的测试环境，用示例数据试。
 
 <details markdown="1">
 <summary>展开 5.3：frontmatter、加载、prompt 设计与 eval</summary>

@@ -332,6 +332,16 @@ Refer to the current [Commands reference](https://code.claude.com/docs/en/comman
 
 The outcome of this section: you can describe MCP as a “shared socket” and distinguish Tool Use from MCP.
 
+**Five questions before connecting MCP**
+
+1. **What can it read or change?** Start with only the read-only tools you need.
+2. **Who gets which key?** Check the credential your app uses to connect to the MCP server and the separate credentials the server uses for other services. Give each only the permissions it needs.
+3. **What stops it before it acts?** In your AI app, check that sending, writing, or deleting asks a person first. A prompt alone cannot enforce the pause.
+4. **Where does it run and where does data go?** Check which files it sees and which services it sends data to.
+5. **How do I turn it off?** Find where to disable the tool, revoke credentials, and remove the configuration.
+
+See [Agent Safety Basics](../resources/agent-security.en.md) and [MCP Security Best Practices](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices).
+
 <details markdown="1">
 <summary>Expand 5.2: Tools, Resources, Prompts, versions, and safety</summary>
 
@@ -352,6 +362,8 @@ The official [`modelcontextprotocol/servers`](https://github.com/modelcontextpro
 <a id="-skillmd-design-prompts-including-skill-creator-as-the-alternative"></a>
 
 The outcome of this section: you can write a short, triggerable, verifiable `SKILL.md`.
+
+**Before adding someone else's Skill**, open its `SKILL.md` and any bundled scripts. Check what it asks AI to do, what permissions it needs, and whether any step sends data out. Try it with sample data in a test environment without private files or production accounts.
 
 <details markdown="1">
 <summary>Expand 5.3: frontmatter, loading, prompt design, and evaluation</summary>

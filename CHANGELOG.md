@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-11-20
 
+- **content / Agent 安全入門** · 三語新增一頁選讀。在 Stage 4 畫出工具權限，Stage 5 提供可見的 MCP／Skill 檢查，Stage 7 沿用離線測試核對發布紀錄。
+
 - **links / Microsoft Agent Framework** · 將失效的 GitHub 專案連結換成 Microsoft Learn 官方入口。更新三語教材、來源檢查與 repo 清單，保留既有推薦度。
 
 ## 2026-11-19
