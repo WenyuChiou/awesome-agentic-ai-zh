@@ -175,7 +175,7 @@ stage04_fact_pack:
     openai_agents_orchestration: 'https://openai.github.io/openai-agents-python/multi_agent/'
     openai_sandbox_agents: 'https://openai.github.io/openai-agents-python/sandbox/guide/'
     openai_swarm: 'https://github.com/openai/swarm'
-    microsoft_agent_framework: 'https://github.com/microsoft/agent-framework'
+    microsoft_agent_framework: 'https://learn.microsoft.com/en-us/agent-framework/overview/'
     microsoft_migration_guide: 'https://learn.microsoft.com/en-us/agent-framework/migration-guide/'
     autogen: 'https://microsoft.github.io/autogen/'
     deepagents: 'https://docs.langchain.com/oss/python/deepagents/overview'
@@ -341,7 +341,7 @@ stage075_fact_pack:
     openai_sandbox_agents: 'https://openai.github.io/openai-agents-python/sandbox/guide/'
     claude_code_permissions: 'https://code.claude.com/docs/en/permissions'
     claude_code_dynamic_workflows: 'https://code.claude.com/docs/en/workflows'
-    microsoft_agent_framework: 'https://github.com/microsoft/agent-framework'
+    microsoft_agent_framework: 'https://learn.microsoft.com/en-us/agent-framework/overview/'
     autogen_status: 'https://github.com/microsoft/autogen'
     dspy_signatures: 'https://dspy.ai/learn/programming/signatures/'
     react: 'https://arxiv.org/abs/2210.03629'
@@ -450,7 +450,7 @@ agent_paradigms_fact_pack:
     goose: 'https://github.com/aaif-goose/goose'
     hermes_agent: 'https://github.com/NousResearch/hermes-agent'
     openclaw: 'https://github.com/openclaw/openclaw'
-    microsoft_agent_framework: 'https://github.com/microsoft/agent-framework'
+    microsoft_agent_framework: 'https://learn.microsoft.com/en-us/agent-framework/overview/'
     project_status: 'scripts/repository-freshness-snapshot.json'
 
 courses_fact_pack:

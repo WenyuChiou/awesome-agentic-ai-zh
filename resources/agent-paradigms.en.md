@@ -139,7 +139,7 @@ Stars are this learning map's reading priority. They are not GitHub stars or an 
 <tbody>
 <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Framework/Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langgraph</a></td><td>State, nodes, edges, Checkpoints, and Human-in-the-loop</td><td>You still write and test the Workflow</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>Roles, Tasks, and Crew orchestration</td><td>Role descriptions do not replace verification</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/microsoft/agent-framework">agent-framework</a></td><td>Microsoft's current Agent and Workflow path</td><td>Old AutoGen/Swarm material is historical context only</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/overview/">Microsoft Agent Framework</a></td><td>Microsoft's current Agent and Workflow path</td><td>Old AutoGen/Swarm material is historical context only</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
 

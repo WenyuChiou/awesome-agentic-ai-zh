@@ -139,7 +139,7 @@ Hermes Agent 這類工具可以接 Messaging Gateway。你仍要處理主機更�
 <tbody>
 <tr><th scope="rowgroup" rowspan="3" align="center" valign="middle">Framework／Workflow</th><td><a href="https://github.com/langchain-ai/langgraph">langgraph</a></td><td>狀態、節點、邊、Checkpoint 與 Human-in-the-loop</td><td>需要自己寫與測 Workflow</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/crewAIInc/crewAI">crewAI</a></td><td>角色、Task 與 Crew orchestration</td><td>角色描述不能取代驗證</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/microsoft/agent-framework">agent-framework</a></td><td>Microsoft 現行 Agent／Workflow 開發路徑</td><td>舊 AutoGen／Swarm 教材只作歷史脈絡</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/agent-framework/overview/">Microsoft Agent Framework</a></td><td>Microsoft 現行 Agent／Workflow 開發路徑</td><td>舊 AutoGen／Swarm 教材只作歷史脈絡</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 </table>
 
