@@ -269,7 +269,7 @@ Success criterion: you can restart the program and continue from a checkpoint; w
 
 Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐⭐: it lets you directly see state, edges, checkpoints, and interruption points. The other 18 entries are grouped by purpose below; the ratings indicate this chapter's learning order, not a popularity ranking.
 
-<small>Existing framework information checked: 2026-08-27 UTC; Bifrost: 2026-09-03 UTC</small>
+<small>Existing framework information checked: 2026-08-27 UTC; Bifrost: 2026-09-03 UTC. AutoGen: 2026-11-21 UTC (code license MIT)</small>
 
 <table align="center">
   <thead>
@@ -289,7 +289,7 @@ Start with [LangGraph](https://github.com/langchain-ai/langgraph) ⭐⭐⭐⭐�
   </tbody>
   <tbody>
     <tr><th scope="rowgroup" rowspan="6" align="center" valign="middle">Rapid prototyping / multi-agent</th><td><a href="https://github.com/crewAIInc/crewAI">CrewAI</a></td><td>Quick researcher → writer → reviewer role workflows.</td><td>Maintained; MIT. Flows support persistence, resume, and human feedback.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
-    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>Reviewing or migrating existing multi-agent projects.</td><td>Archived. For existing <code>autogen-agentchat</code> 0.7.x projects, see the migration guide. Start new Microsoft projects with Agent Framework.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+    <tr><td><a href="https://github.com/microsoft/autogen">Microsoft AutoGen</a></td><td>Reviewing or migrating existing multi-agent projects.</td><td>Archived. Docs CC-BY-4.0. See migration guidance for <code>autogen-agentchat</code> 0.7.x.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/openai/openai-agents-python">OpenAI Agents SDK</a></td><td>Those already in the OpenAI ecosystem who need handoffs, guardrails, and tracing.</td><td>Maintained; MIT. Sandbox Agents are beta, which does not mean every production problem is solved.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/langchain-ai/deepagents">Deep Agents</a></td><td>Those who need a full harness for planning, filesystem access, subagents, memory, and permissions.</td><td>Maintained; MIT. Built on LangGraph; it may be too heavy for a simple Agent.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/openai/swarm">OpenAI Swarm</a></td><td>Those who want to read small source code to understand Agents and handoffs.</td><td>Frozen / historical educational use; MIT. Superseded by the Agents SDK; do not use it for new production projects.</td><td>⭐⭐⭐⭐ (education)</td></tr>

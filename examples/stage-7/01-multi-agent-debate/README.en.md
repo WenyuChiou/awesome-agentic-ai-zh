@@ -117,4 +117,4 @@ Next, replace the roles with “engineer/user,” add human approval, or evaluat
 
 See the full list in [Stage 7 Featured Projects](../../../stages/07-multi-agent-production.en.md#-featured-projects-templates--sdks--tool-collections).
 
-<small>Models, prices, packages, and links checked: 2026-08-28 UTC.</small>
+<small>Models, prices, packages, and links checked: 2026-08-28 UTC. AutoGen: 2026-11-21 UTC.</small>
