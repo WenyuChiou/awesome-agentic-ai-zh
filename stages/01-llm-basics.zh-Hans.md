@@ -821,29 +821,30 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Qwen</summary>
 
+<p class="model-release-note"><small>Qwen4-Max 核查：2026-11-24 UTC，仅核对官方文档，未实测 API。</small></p>
+
 <table data-model-family="Qwen" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>qwen3.8-max（API）</td></tr>
-    <tr><td>Qwen3.8 开放权重变体</td></tr>
+    <tr><th scope="row">当前推荐型号</th><td>Qwen4-Max (<code>qwen4-max</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">状态</th><td>正式可用</td></tr>
+    <tr><th scope="row">状态</th><td>Alibaba Cloud Model Studio 正式提供的托管 API</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>1M</td></tr>
+    <tr><th scope="row">Context</th><td>1M tokens</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">价格或授权</th><td>API 按地区定价；例如北京为 CNY 12／36，每百万输入／输出 tokens；开放权重变体使用各自授权</td></tr>
+    <tr><th scope="row">价格或授权</th><td>API 按地区和部署范围定价。例如美国弗吉尼亚区的 Virginia 范围，标准调用每百万输入／输出 tokens 为 USD 1.50／4.50。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">适合做什么</th><td>中文任务、多模态、自部署工作流</td></tr>
+    <tr><th scope="row">适合做什么</th><td>支持文本、图片或视频输入，返回文本；适合试做需要工具调用或结构化输出的工作流。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td>API 型号与开放权重变体不可混用；可用性与授权要分别确认</td></tr>
+    <tr><th scope="row">限制</th><td>这里介绍的是托管 API，不是开放权重，也不替换本地练习的型号。自部署时另查开放权重版本的授权和硬件要求；使用云端服务前确认区域、端点和价格。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方来源</th><td><a href="https://help.aliyun.com/en/model-studio/qwen3-8-max">Qwen 3.8 Max</a></td></tr>
+    <tr><th scope="row">官方来源</th><td><a href="https://www.alibabacloud.com/help/en/model-studio/qwen4-max">Qwen4-Max · Alibaba Cloud Model Studio</a></td></tr>
   </tbody>
 </table>
 
@@ -851,6 +852,8 @@ print("💡 本次调用为 $0（不含电费）")
 
 <details class="model-family" markdown="1">
 <summary>GLM</summary>
+
+<p class="model-release-note">Z.ai 于 2026-11-23 公布 GLM-5.4，已在 Coding Plan、ZCode 和 Z.ai Chat 提供。公告称公开 API 将稍后开放，当时未发布开放权重。下表仍是 GLM-5.3 的 API 规格，不适用于 5.4。 <a href="https://z.ai/blog/glm-5.4">Z.ai 公告</a></p>
 
 <table data-model-family="GLM" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
