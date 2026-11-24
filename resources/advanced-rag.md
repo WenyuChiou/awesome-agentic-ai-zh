@@ -159,6 +159,11 @@
 3. 排名正確，再看 prompt 是否要求引用與拒答。
 4. 最後才檢查生成模型；不要用更大模型掩蓋 retrieval 錯誤。
 
+
+**選讀案例：換掉 Embedding 模型，舊索引怎麼辦？** [Pagekin 的設計紀錄](https://github.com/EthanYoQ/Pagekin/blob/v1.5.3/docs/adr/0004-versioned-project-embedding-space.md)把模型識別、向量維度和索引版本分開記錄。換模型時先保留舊索引，全文檢索仍可用。新索引通過驗證後才切換，避免把不同模型產生的向量混在一起比對。
+
+**動手想一想**：假設新模型的向量維度不同。重建期間要讓讀者繼續用哪一種搜尋？你會用什麼檢查決定能不能切換？只需閱讀設計紀錄，不用安裝 App 或提供 API key。
+
 </details>
 
 ## 🎯 精選 Projects 與學習資源

@@ -159,6 +159,11 @@ Read: [RAPTOR paper](https://arxiv.org/abs/2401.18059) · [DSPy](https://github.
 3. If the ranking is right, check whether the prompt requires citations and abstention.
 4. Inspect the generation model last; do not hide a retrieval error with a larger model.
 
+
+**Optional case: What happens to the old index when you switch embedding models?** [Pagekin's design record](https://github.com/EthanYoQ/Pagekin/blob/v1.5.3/docs/adr/0004-versioned-project-embedding-space.md) tracks model identity, vector dimensions, and index generation separately. It keeps the old index and full-text retrieval available during a model change. It switches only after validating the new index, so vectors from different models are not compared together.
+
+**Try it on paper**: Suppose your new model outputs vectors with a different dimension. What kind of search should readers keep using during the rebuild? What would you check before switching? Read the design record; no app installation or API key is needed.
+
 </details>
 
 ## 🎯 Curated projects and learning resources
