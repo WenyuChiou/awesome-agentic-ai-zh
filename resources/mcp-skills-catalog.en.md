@@ -1413,6 +1413,21 @@ Do not turn model names into permanent job titles. First check the current model
 
 ---
 
+### [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) ⭐⭐⭐
+
+<div align="center" markdown="1">
+
+| Field | Value |
+|:---|:---|
+| License | MIT |
+| Rating | ⭐⭐⭐ (Multi-source search skill) |
+
+</div>
+
+**What it does**: combines recent multi-source search, deduplication, and ranking in one skill. Compare the summary with the original links to see how ranking affects what you read first.
+**Audience**: readers moving from a single search API to multi-source research.
+**Notes**: start with a public topic and limit it to the [documented sources that need no credentials](https://github.com/mvanhorn/last30days-skill). Do not grant browser cookie access or enter private queries. Engagement is not verification. We checked upstream documentation, not installation or runtime.
+
 </details>
 ## 17. Security / MCP Governance
 
