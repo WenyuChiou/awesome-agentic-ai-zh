@@ -1588,9 +1588,11 @@ pages:
       zh-Hans: stages/07-multi-agent-production.zh-Hans.md
     max_visible_chars:
       # License safety caveats add exactly 24 / 21 visible Chinese characters.
-      zh-TW: 14154
-      en: 25588
-      zh-Hans: 14275
+      # The Harness table's entry link to the Stage 5.5 checks (#332) adds
+      # exactly 82 / 115 / 90 visible characters (zh-TW / en / zh-Hans).
+      zh-TW: 14236
+      en: 25703
+      zh-Hans: 14365
     max_open_details: 0
     required_details_count: 7
     visible_section_order:

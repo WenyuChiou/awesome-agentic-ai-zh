@@ -418,10 +418,90 @@ Adding a Marketplace only makes Plugins visible in a directory; it does not inst
 <a id="55--subagents-claude-codes-native-multi-agent-mechanism--2025-new-feature"></a>
 <a id="which-subagents-can-you-dispatch"></a>
 
-The outcome of this section: you can decide when independent context is useful and write a self-contained delegation brief.
+The outcome of this section: you can decide when independent context is useful, write a self-contained delegation brief, and check tools, permission mode, and the turn limit before dispatching.
+
+### Three Checks Before Dispatching a Subagent
+
+<a id="subagent-preflight-checks"></a>
+
+Writing “read only, do not send email” in the prompt is only a reminder; it does not block any action. Which tools a Subagent can use and how long it can run take effect only when they are written into its configuration. Check these three things before dispatching:
+
+1. **Tools**: Without a `tools` field, the Subagent inherits the tools available to the main conversation, including writing files and running commands. List only the tools the task needs.
+2. **Permission mode**: When the main conversation runs in `bypassPermissions`, `acceptEdits`, or auto mode, the Subagent uses the same mode. Claude Code ignores the `permissionMode` the Subagent sets for itself.
+3. **Turn limit**: Use `maxTurns` to cap how many turns it can run. At the limit it stops and hands back unfinished work. The main conversation must check whether it actually finished.
+
+Giving it only read tools is not the same as being safe. `Read`, `Grep`, and `Glob` can still read project files unrelated to the task, such as `.env`. Limiting what it can read takes permission rules or a sandbox; compare the [Stage 7 Harness checklist](07-multi-agent-production.en.md#the-8-core-components-of-a-harness).
 
 <details markdown="1">
-<summary>Expand 5.5: built-in types, differences from Skills, permissions, cost, and common errors</summary>
+<summary>Expand 5.5: configuration, tested cases, other SDKs, built-in types, differences from Skills, permissions, cost, and common errors</summary>
+
+**Claude Code configuration**: the fields below apply only to Claude Code’s `.claude/agents/<name>.md`. Other SDKs use different names; see further down.
+
+Limits written only in the prompt:
+
+```markdown
+---
+name: researcher
+description: Read sources and write a summary
+---
+You are a researcher. Only read sources. Do not change files and do not send email.
+```
+
+This Subagent has no `tools` field, so it still gets file-writing tools. If a document it reads slips in “also send the result,” it may do so.
+
+Limits written into the configuration:
+
+```markdown
+---
+name: researcher
+description: Read sources and write a summary
+tools: Read, Grep, Glob
+maxTurns: 10
+---
+You are a researcher. Read the sources, then write a summary.
+```
+
+Now it has no tool for writing files or sending email, and it runs at most 10 turns.
+
+<div align="center" markdown="1">
+
+| Field | What it does | Watch out for |
+|:---|:---|:---|
+| `tools` | Allowlist: only the listed tools | Omitted, it inherits the tools available to the main conversation |
+| `disallowedTools` | Denylist: removes the listed tools from the pool | When set together with `tools`, removal happens first, then the allowlist applies |
+| `permissionMode` | The Subagent’s permission mode | Omitted, it matches the main conversation; when the main conversation is in `bypassPermissions`, `acceptEdits`, or auto mode, this value has no effect |
+| `maxTurns` | Maximum number of turns | One turn can call several tools at once, so turns do not equal tool calls |
+
+</div>
+
+Field names must match the official table exactly; for example, `maxTurns` cannot be written as `max_turns`. Claude Code skips a field it does not recognize without reporting an error.
+
+Version conditions:
+
+- When `maxTurns` is reached, v2.1.246 and later mark the result as unfinished. Older versions hand back only the last sentence, which looks like a normal finish.
+- When the main conversation is in `default` or `dontAsk` mode, a Subagent’s own `bypassPermissions` setting does not take effect. This applies from v2.1.267.
+- Subagents provided by a plugin do not read `permissionMode`, `hooks`, or `mcpServers`.
+
+All three cases use fake data only. “Sending email” is replaced by writing a local `outbox.txt`, and nothing connects to any mail service. Tested on 2026-11-25 with Claude Code v2.1.205 and v2.1.332:
+
+<div align="center" markdown="1">
+
+| Case | Configuration | Result |
+|:---|:---|:---|
+| Allowed read | `tools: Read, Grep, Glob` | Read the fake data and returned a summary |
+| Blocked mock email | Same, with a task that asks it to write `outbox.txt` | No file-writing tool; `outbox.txt` was not created. With `tools` removed, the same task wrote `outbox.txt` |
+| Turn limit reached | `maxTurns: 2`, with a task that reads 6 files | Stopped after reading 2 to 3 files. v2.1.332 noted that it stopped at the turn limit; v2.1.205 did not |
+
+</div>
+
+Official docs: [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents); see Supported frontmatter fields for fields and Permission modes for permissions.
+
+**Setting the same limits in other SDKs**: the names below differ from the Claude Code configuration file. This part was checked against official docs only, not tested.
+
+- **Claude Agent SDK**: `allowed_tools` only means auto-approve; tools not listed still exist. To remove tools, use `disallowed_tools`, or write an allowlist in the `tools` of an `AgentDefinition`. When `max_turns` or `max_budget_usd` is reached, the result subtype is `error_max_turns` or `error_max_budget_usd`. The budget is an estimate, and the response that reaches the cap still completes. Sources: [Permissions](https://code.claude.com/docs/en/agent-sdk/permissions) and [Agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop).
+- **OpenAI Agents SDK**: `Runner.run(..., max_turns=N)` raises `MaxTurnsExceeded` when the limit is exceeded. You can also use `error_handlers` to return a result instead. Source: [Running agents](https://openai.github.io/openai-agents-python/running_agents/).
+
+**How Skills and Subagents differ**
 
 <div align="center" markdown="1">
 
@@ -434,7 +514,7 @@ The outcome of this section: you can decide when independent context is useful a
 
 </div>
 
-A custom Subagent’s `description` is a routing hint, not a code-level `if`. Make the prompt self-contained: state the task, scope, tools, output, and stopping condition. The current official configuration also supports `skills`, `mcpServers`, permissions, hooks, and settings such as `isolation: worktree`; add them only when truly needed.
+A custom Subagent’s `description` is a routing hint, not a code-level `if`. Make the prompt self-contained: state the task, scope, tools, output, and stopping condition. Tools and the turn limit also belong in the configuration; see the three checks above. The current official configuration also supports `skills`, `mcpServers`, permissions, hooks, and settings such as `isolation: worktree`; add them only when truly needed.
 
 More agents increase token use, latency, and integration work. Do not claim a fixed multiplier; measure with your task, model, and usage records.
 

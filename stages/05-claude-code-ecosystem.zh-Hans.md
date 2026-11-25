@@ -415,10 +415,90 @@ my-plugin/
 <a id="55--subagentsclaude-code-原生-multi-agent-机制-2025-新功能"></a>
 <a id="可派遣的-subagent-有哪些"></a>
 
-本节成果：你能判断何时需要独立 context，并写出一份自足的 delegation brief。
+本节成果：你能判断何时需要独立 context，写出一份自足的 delegation brief，并在派出前检查工具、权限模式和回合上限。
+
+### 派 Subagent 前的三个检查
+
+<a id="subagent-preflight-checks"></a>
+
+在 prompt 写“只能读，不要寄信”只是提醒，不会挡下任何动作。Subagent 能用哪些工具、能跑多久，要写进设置才会生效。派出前先看这三件事：
+
+1. **工具**：没写 `tools` 时，Subagent 会继承主对话能用的工具，包括写文件和执行命令。只列出任务需要的工具。
+2. **权限模式**：主对话开着 `bypassPermissions`、`acceptEdits` 或 auto 模式时，Subagent 会用同一个模式。Claude Code 会忽略它自己设置的 `permissionMode`。
+3. **回合上限**：用 `maxTurns` 限制它最多跑几个回合。到上限时它会停下来，交回还没做完的结果。主对话要自己检查它有没有做完。
+
+只给读取工具也不等于安全。`Read`、`Grep`、`Glob` 仍读得到项目里和任务无关的文件，例如 `.env`。要限制读取范围，得靠权限规则或沙箱，可以对照 [Stage 7 的 Harness 检查表](07-multi-agent-production.zh-Hans.md#harness-的-8-个核心组件)。
 
 <details markdown="1">
-<summary>展开 5.5：内置类型、Skill 差异、权限、费用与常见错误</summary>
+<summary>展开 5.5：设置写法、实测案例、其他 SDK、内置类型、Skill 差异、权限、费用与常见错误</summary>
+
+**Claude Code 的设置写法**：以下字段只适用 Claude Code 的 `.claude/agents/<name>.md`。其他 SDK 的写法不同，放在后面。
+
+只在 prompt 写限制：
+
+```markdown
+---
+name: researcher
+description: 读资料并写摘要
+---
+你是研究员。只能读资料，不要改文件，也不要寄信。
+```
+
+这个 Subagent 没写 `tools`，仍拿得到写文件工具。它读到的文档如果夹了一句“顺便把结果寄出去”，就可能照做。
+
+把限制写进设置：
+
+```markdown
+---
+name: researcher
+description: 读资料并写摘要
+tools: Read, Grep, Glob
+maxTurns: 10
+---
+你是研究员。读完资料后写一份摘要。
+```
+
+现在它没有写文件或寄信的工具，最多也只跑 10 个回合。
+
+<div align="center" markdown="1">
+
+| 字段 | 作用 | 要注意 |
+|:---|:---|:---|
+| `tools` | 允许清单：只能用列出的工具 | 不写就继承主对话能用的工具 |
+| `disallowedTools` | 拒绝清单：从工具池拿掉列出的工具 | 和 `tools` 同时设置时，先拿掉，再套用允许清单 |
+| `permissionMode` | Subagent 的权限模式 | 不写就跟主对话相同；主对话是 `bypassPermissions`、`acceptEdits` 或 auto 模式时，这个值无效 |
+| `maxTurns` | 最多跑几个回合 | 一个回合可以同时调用好几个工具，回合数不等于工具调用次数 |
+
+</div>
+
+字段名称要和官方表格一字不差，例如 `maxTurns` 不能写成 `max_turns`。Claude Code 遇到不认识的字段会直接略过，不会报错。
+
+版本条件：
+
+- `maxTurns` 到上限时，v2.1.246 起会把结果标成未完成。更旧的版本只交回最后一句话，看起来像正常结束。
+- 主对话在 `default` 或 `dontAsk` 模式时，Subagent 自己设置的 `bypassPermissions` 不会生效。这条从 v2.1.267 起。
+- plugin 提供的 Subagent 不读 `permissionMode`、`hooks` 和 `mcpServers`。
+
+三个案例都只用假数据。“寄信”改成写入本地的 `outbox.txt`，不会连到任何邮件服务。2026-11-25 在 Claude Code v2.1.205 和 v2.1.332 实测：
+
+<div align="center" markdown="1">
+
+| 案例 | 设置 | 结果 |
+|:---|:---|:---|
+| 允许读取 | `tools: Read, Grep, Glob` | 读到假数据，返回摘要 |
+| 拦下模拟寄信 | 同上，任务要求写入 `outbox.txt` | 没有写文件工具，`outbox.txt` 没有产生。拿掉 `tools` 后，同一个任务会写出 `outbox.txt` |
+| 达到回合上限 | `maxTurns: 2`，任务要读 6 个文件 | 读了 2 到 3 个文件就停。v2.1.332 会注明停在回合上限；v2.1.205 没有注明 |
+
+</div>
+
+官方文档：[Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)，字段见 Supported frontmatter fields，权限见 Permission modes。
+
+**其他 SDK 怎么设置同样的限制**：下面的名称和 Claude Code 配置文件不同。这里只核对官方文档，没有实测。
+
+- **Claude Agent SDK**：`allowed_tools` 只代表自动批准，没列出的工具仍然存在。要拿掉工具，用 `disallowed_tools`，或在 `AgentDefinition` 的 `tools` 写允许清单。`max_turns` 和 `max_budget_usd` 到上限时，结果的 subtype 是 `error_max_turns` 或 `error_max_budget_usd`。预算是估算值，碰到上限的那次响应仍会跑完。来源：[Permissions](https://code.claude.com/docs/en/agent-sdk/permissions)、[Agent loop](https://code.claude.com/docs/en/agent-sdk/agent-loop)。
+- **OpenAI Agents SDK**：`Runner.run(..., max_turns=N)` 超过上限时抛出 `MaxTurnsExceeded`。也可以用 `error_handlers` 改成返回一个结果。来源：[Running agents](https://openai.github.io/openai-agents-python/running_agents/)。
+
+**Skill 和 Subagent 的区别**
 
 <div align="center" markdown="1">
 
@@ -431,7 +511,7 @@ my-plugin/
 
 </div>
 
-自定义 Subagent 的 `description` 是路由提示，不是代码层的 `if`。prompt 应自足，明确任务、范围、工具、输出和停止条件。现行官方还支持 `skills`、`mcpServers`、permissions、hooks 与 `isolation: worktree` 等设置；只在确有需要时添加。
+自定义 Subagent 的 `description` 是路由提示，不是代码层的 `if`。prompt 应自足，明确任务、范围、工具、输出和停止条件。工具和回合上限也要写进设置，见上方的三个检查。现行官方还支持 `skills`、`mcpServers`、permissions、hooks 与 `isolation: worktree` 等设置；只在确有需要时添加。
 
 多开代理会增加 token、延迟与集成工作。不要声称固定倍数；应按任务、模型和用量记录实测。
 
