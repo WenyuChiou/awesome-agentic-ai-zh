@@ -78,7 +78,7 @@ def test_november_25_notes_cover_the_release_window(locale: str) -> None:
     assert notes["release_version"] == "v2026.11.25"
     changes = {change["id"]: change for change in notes["changes"]}
     expected_changes = {
-        "qwen4-max-glm54": (388, ("Qwen4-Max", "1M", "GLM-5.4", "Coding Plan", "GLM-5.3")),
+        "qwen4-max-glm54": (388, ("Qwen4-Max", "1M", "GLM-5.4", "Coding Plan", "GLM-5.3", "Mistral", "Medium 3.5")),
         "catalog-safety-mirrors": (387, ("MCP", "Skills", "15", "GLM-4.5")),
         "pagekin-embedding-migration": (389, ("Pagekin", "RAG", "Embedding")),
         "dependency-review-action-501": (384, ("Dependency Review", "5.0.1")),

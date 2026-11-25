@@ -10,6 +10,7 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 - **release / v2026.11.25** · 三語發布說明對齊 #384、#387、#388 與 #389。
 - **content / Stage 1** · 查核 Qwen4-Max 的託管 API、1M token 上下文和區域價格。GLM-5.4 公開模型 API 仍待安全評估，保留 GLM-5.3 的 API 資料和本機練習。
+- **links / Stage 1** · 修復四個 Mistral 官方連結。三語查核日期為 2026-11-25 UTC，並標示 Medium 3.5 已棄用。
 - **content / MCP／Skills 目錄** · 英文與簡中補齊 15 類使用與安全提醒，並同步 GLM-4.5 的來源說明。
 - **content / 進階 RAG** · 新增 Pagekin 選讀案例。用舊索引和全文搜尋撐過重建，再檢查新索引並切換。
 - **CI / Dependency Review** · GitHub Actions 的 Dependency Review 更新到 5.0.1，固定為官方發布提交。

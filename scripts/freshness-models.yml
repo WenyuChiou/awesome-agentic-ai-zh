@@ -24,7 +24,7 @@ stage01_fact_pack:
     typesafe_jev: '2026-10-15'
     muse: '2026-10-15'
     mistral: '2026-10-15'
-    mistral_large4: '2026-11-02'
+    mistral_large4: '2026-11-25'
     gpt_features: '2026-10-15'
     deepseek: '2026-10-23'
     gpt_decisions: '2026-10-23'
@@ -88,11 +88,12 @@ stage01_fact_pack:
     mimo: 'https://mimo.mi.com/models/en-US/mimo-v2.6-pro'
     gemma: 'https://ai.google.dev/gemma/docs/core'
     mistral: 'https://docs.mistral.ai/models'
-    mistral_large4: 'https://docs.mistral.ai/models/mistral-large-4-0'
+    mistral_large4: 'https://docs.mistral.ai/models/mistral-large-4'
     mistral_large4_weights_release: 'https://mistral.ai/news/mistral-large-4-oss/'
     mistral_large4_weights: 'https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B'
-    mistral_medium35: 'https://docs.mistral.ai/models/mistral-medium-3-5-26-04'
-    mistral_releases: 'https://docs.mistral.ai/resources/changelogs'
+    mistral_medium35: 'https://docs.mistral.ai/models/mistral-medium-3-5'
+    mistral_small4: 'https://docs.mistral.ai/models/mistral-small-4'
+    mistral_releases: 'https://docs.mistral.ai/resources/release-notes'
     phi: 'https://azure.microsoft.com/en-us/products/phi'
   pricing_sources:
     claude: 'https://platform.claude.com/docs/en/about-claude/pricing'
@@ -107,7 +108,7 @@ stage01_fact_pack:
     glm: 'https://docs.z.ai/guides/overview/pricing'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     muse_spark: 'https://dev.meta.ai/docs/pricing-rate-limits'
-    mistral_large4: 'https://docs.mistral.ai/models/mistral-large-4-0'
+    mistral_large4: 'https://docs.mistral.ai/models/mistral-large-4'
     grok: 'https://docs.x.ai/developers/pricing'
     mimo: 'https://mimo.mi.com/models/en-US/mimo-v2.6-pro'
   model_updates:
@@ -665,8 +666,8 @@ current_frontier_models:
   google_gemma:
     - "Gemma 4"
   mistral:
-    - "Mistral Large 4 (Public Preview API; weights forthcoming)"
-    - "Mistral Medium 3.5 (Modified MIT)"
+    - "Mistral Large 4 (hosted API; weights released 2026-10-29)"
+    - "Mistral Medium 3.5 (deprecated API; Modified MIT weights)"
     - "Mistral Small 4"
     - "Mistral Large 3"
     - "Ministral 3"
