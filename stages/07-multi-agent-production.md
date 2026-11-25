@@ -158,7 +158,7 @@ Eval 會檢查 **Outcome**、**Trajectory**，再由 **Grader** 依規則判斷�
 | 元件 | 五歲也能懂的說法 | 上線前要問 |
 |:---|:---|:---|
 | **1. Orchestration／Run loop** | 決定下一步做什麼 | 誰開始、誰停止、交接失敗怎麼辦？ |
-| **2. Tool／Permission boundary** | 只給它需要的鑰匙 | 哪些工具能讀、能寫、能刪？ |
+| **2. Tool／Permission boundary** | 只給它需要的鑰匙 | 哪些工具能讀、能寫、能刪？派 Subagent 前見 [Stage 5.5 的三個檢查](05-claude-code-ecosystem.md#subagent-preflight-checks)。 |
 | **3. Context／State／Checkpoint** | 保存它現在做到哪裡 | 中斷後能不能從正確位置繼續？ |
 | **4. Retry／Recovery／Idempotency** | 跌倒能重來，又不會重複扣款 | 重試會不會重複寄信、付款或寫資料？ |
 | **5. Guardrail／Human approval** | 危險動作先問大人 | 哪些操作一定要人按核准？ |

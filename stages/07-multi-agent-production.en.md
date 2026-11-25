@@ -156,7 +156,7 @@ These eight items are this project’s production checklist, not the world’s o
 | Component | Plain-language meaning | Question before release |
 |:---|:---|:---|
 | **1. Orchestration / Run loop** | Decide what happens next | Who starts, who stops, and what if a handoff fails? |
-| **2. Tool / Permission boundary** | Give it only the keys it needs | Which tools may read, write, or delete? |
+| **2. Tool / Permission boundary** | Give it only the keys it needs | Which tools may read, write, or delete? Before dispatching a Subagent, see [the three checks in Stage 5.5](05-claude-code-ecosystem.en.md#subagent-preflight-checks). |
 | **3. Context / State / Checkpoint** | Save where it is now | Can it resume from the correct point? |
 | **4. Retry / Recovery / Idempotency** | Try again without charging twice | Could a retry repeat an email, payment, or database write? |
 | **5. Guardrail / Human approval** | Ask an adult before a risky action | Which actions always require approval? |
