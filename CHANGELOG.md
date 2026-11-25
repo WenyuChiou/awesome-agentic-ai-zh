@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-11-25
 
+- **content / MCP／Skills 目錄** · 三語新增 last30days 進階選讀。用公開查詢比較 Hacker News 和 GitHub 的結果排序，並回到原始連結查核。在無金鑰、無登入的容器跑過 v4.6.0。同時更新資源索引。
+
 - **release / v2026.11.25** · 三語發布說明對齊 #384、#387、#388 與 #389。
 - **content / Stage 1** · 查核 Qwen4-Max 的託管 API、1M token 上下文和區域價格。GLM-5.4 公開模型 API 仍待安全評估，保留 GLM-5.3 的 API 資料和本機練習。
 - **links / Stage 1** · 修復四個 Mistral 官方連結。三語查核日期為 2026-11-25 UTC，並標示 Medium 3.5 已棄用。

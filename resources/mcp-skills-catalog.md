@@ -1453,6 +1453,21 @@ npx -y jacobian mcp
 **適合誰**：想練習讓 Agent 搜尋網頁，並另外核對來源內容的新手。
 **備註**：需要 Tavily API key；方案與額度可能改變，使用前看現行官方文件。
 
+### [last30days](https://github.com/mvanhorn/last30days-skill) ⭐⭐⭐
+
+<div align="center" markdown="1">
+
+| 欄位 | 內容 |
+|:---|:---|
+| License | MIT <small>(查核 2026-11-25 UTC)</small> |
+| 推薦度 | ⭐⭐⭐（多來源搜尋 Skill） |
+
+</div>
+
+**教什麼**：把近期多來源搜尋、去重和排序接成一個 Skill。比對摘要與原始連結，看看排序如何影響你先讀到的內容。
+**適合誰**：想從單一搜尋 API 進階到多來源調查的人。
+**備註**：用公開主題練習。從 [v4.6.0 的設定說明](https://github.com/mvanhorn/last30days-skill/blob/64b1f006f800640022ce07f51de5ce56aad34b76/CONFIGURATION.md) 開始，在乾淨環境只選 Hacker News、GitHub，並停用瀏覽器 Cookie。查詢會送到這兩個來源。互動熱度不能代替查核。<br><small>2026-11-25 實測：Python 3.12 容器未設定金鑰或登入。公開查詢「Python 3.15」取得 6 筆 Hacker News 和 2 筆 GitHub 結果。</small>
+
 </details>
 
 ---

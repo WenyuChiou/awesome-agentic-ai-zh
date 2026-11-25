@@ -1441,6 +1441,21 @@ Search tools send your queries to outside services; think about sensitive terms,
 
 ---
 
+### [last30days](https://github.com/mvanhorn/last30days-skill) ⭐⭐⭐
+
+<div align="center" markdown="1">
+
+| Field | Value |
+|:---|:---|
+| License | MIT <small>(Verified 2026-11-25 UTC)</small> |
+| Rating | ⭐⭐⭐ (Multi-source search skill) |
+
+</div>
+
+**What it does**: combines recent multi-source search, deduplication, and ranking in one skill. Compare the summary with the original links to see how ranking affects what you read first.
+**Audience**: readers moving from a single search API to multi-source research.
+**Notes**: Practise with a public topic. Start with the [v4.6.0 configuration guide](https://github.com/mvanhorn/last30days-skill/blob/64b1f006f800640022ce07f51de5ce56aad34b76/CONFIGURATION.md). In a clean environment, select only Hacker News and GitHub and disable browser cookies. Both sources receive your query. Check what the original links say before trusting popular results.<br><small>Tested 2026-11-25 in a Python 3.12 container with no keys or logins. A public search for “Python 3.15” returned 6 Hacker News and 2 GitHub results.</small>
+
 </details>
 ## 17. Security / MCP Governance
 
