@@ -367,7 +367,7 @@ Choose only one to start:
 
 ## 📚 22 complete learning resources and limits
 
-<small>Content checks: the original 21 entries inherit the 2026-08-28 UTC check date; Cortex's current README claims about typed MCP tools and the gRPC schema limitation were checked on 2026-10-13 UTC. The GitHub repository metadata snapshot was checked separately on 2026-10-13 UTC. Stars are this project's teaching ratings, not GitHub stars.</small>
+<small>Content checks: the original 21 entries inherit the 2026-08-28 UTC check date; Cortex's current README claims about typed MCP tools and the gRPC schema limitation were checked on 2026-10-13 UTC. The GitHub repository metadata snapshot was checked separately on 2026-10-13 UTC. UI-TARS-desktop's archive status was checked on 2026-11-25 UTC. Stars are this project's teaching ratings, not GitHub stars.</small>
 
 <table align="center">
 <thead>

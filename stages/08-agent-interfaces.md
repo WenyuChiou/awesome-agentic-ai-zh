@@ -365,7 +365,7 @@ Amazon 案件也不能簡化成「某 browser 被全面禁止存取 Amazon」。
 
 ## 📚 22 筆完整學習資源與限制
 
-<small>內容查核：原有 21 項沿用 2026-08-28 UTC 查核日期；Cortex README 中 typed MCP tools 與 gRPC schema 限制的說明於 2026-10-13 UTC 查核。GitHub repository metadata snapshot 另於 2026-10-13 UTC 查核。星號是本專案的教學推薦度，不是 GitHub stars。</small>
+<small>內容查核：原有 21 項沿用 2026-08-28 UTC 查核日期；Cortex README 中 typed MCP tools 與 gRPC schema 限制的說明於 2026-10-13 UTC 查核。GitHub repository metadata snapshot 另於 2026-10-13 UTC 查核。UI-TARS-desktop 的封存狀態於 2026-11-25 UTC 查核。星號是本專案的教學推薦度，不是 GitHub stars。</small>
 
 <table align="center">
 <thead>
