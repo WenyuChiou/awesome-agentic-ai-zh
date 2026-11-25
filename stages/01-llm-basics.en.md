@@ -821,29 +821,30 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
 <details class="model-family" markdown="1">
 <summary>Qwen</summary>
 
+<p class="model-release-note"><small>Qwen4-Max checked 2026-11-25 UTC against official documentation only; no live API test.</small></p>
+
 <table data-model-family="Qwen" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">Models</th><td>qwen3.8-max (API)</td></tr>
-    <tr><td>Qwen3.8 open-weight variants</td></tr>
+    <tr><th scope="row">Models</th><td>Qwen4-Max (<code>qwen4-max</code>)</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">Status</th><td>Generally available</td></tr>
+    <tr><th scope="row">Status</th><td>Generally available as a hosted API on Alibaba Cloud Model Studio</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>1M</td></tr>
+    <tr><th scope="row">Context</th><td>1M tokens</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>API pricing varies by region; for example, Beijing is CNY 12/36 per million input/output tokens; open-weight variants use their own licenses</td></tr>
+    <tr><th scope="row">Price or license</th><td>API pricing varies by region and deployment scope. For example, in the US (Virginia) region with Virginia deployment scope, standard calls cost USD 1.50 for input and USD 4.50 for output per million tokens.</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">Good for</th><td>Chinese tasks, multimodal work, self-hosted workflows</td></tr>
+    <tr><th scope="row">Good for</th><td>Accepts text, images or video and returns text. Try it for workflows that need tool calls or structured outputs.</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">Limits</th><td>API models and open-weight variants must be checked separately for availability and license</td></tr>
+    <tr><th scope="row">Limits</th><td>This entry covers the hosted API, not open weights or a replacement for the local exercise models. For self-hosting, check a separate open-weight model’s license and hardware needs. For hosted use, check region, endpoint and price.</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">Official source</th><td><a href="https://help.aliyun.com/en/model-studio/qwen3-8-max">Qwen 3.8 Max</a></td></tr>
+    <tr><th scope="row">Official source</th><td><a href="https://www.alibabacloud.com/help/en/model-studio/qwen4-max">Qwen4-Max · Alibaba Cloud Model Studio</a></td></tr>
   </tbody>
 </table>
 
@@ -851,6 +852,8 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
 
 <details class="model-family" markdown="1">
 <summary>GLM</summary>
+
+<p class="model-release-note">Z.ai announced GLM-5.4 on 2026-11-23. It is available in Coding Plan, ZCode and Z.ai Chat. The public model API is pending a security assessment. Z.ai released no open weights at launch. The API details below apply to GLM-5.3. <a href="https://z.ai/blog/glm-5.4">Z.ai announcement</a> · <a href="https://docs.z.ai/guides/llm/glm-5.4">Developer docs</a> · <small>Checked 2026-11-25 UTC</small></p>
 
 <table data-model-family="GLM" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>

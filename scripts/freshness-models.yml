@@ -75,7 +75,9 @@ stage01_fact_pack:
     kimi_cache: 'https://platform.kimi.ai/docs/guide/context-caching'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130051'
     minimax: 'https://huggingface.co/MiniMaxAI/MiniMax-M3'
-    qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
+    qwen: 'https://www.alibabacloud.com/help/en/model-studio/qwen4-max'
+    glm54_announcement: 'https://z.ai/blog/glm-5.4'
+    glm54_developer_docs: 'https://docs.z.ai/guides/llm/glm-5.4'
     glm: 'https://docs.z.ai/guides/llm/glm-5.3'
     yi: 'https://github.com/01-ai/Yi'
     llama: 'https://dev.meta.ai/llama'
@@ -101,7 +103,7 @@ stage01_fact_pack:
     kimi_billing: 'https://platform.kimi.ai/docs/pricing/chat'
     hunyuan: 'https://cloud.tencent.com/document/product/1823/130055'
     minimax: 'https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise'
-    qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
+    qwen: 'https://www.alibabacloud.com/help/en/model-studio/qwen4-max'
     glm: 'https://docs.z.ai/guides/overview/pricing'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     muse_spark: 'https://dev.meta.ai/docs/pricing-rate-limits'
@@ -645,10 +647,11 @@ current_frontier_models:
   minimax:
     - "MiniMax M3"
   alibaba:
-    - "Qwen 3.8 Max"
+    - "Qwen4-Max / qwen4-max (hosted API; documentation checked 2026-11-25)"
     - "Qwen 3.8 open weights"
   zhipu:
-    - "GLM-5.3"
+    - "GLM-5.3 (public API reference)"
+    - "GLM-5.4 (announced 2026-11-23; listed surfaces only; public model API pending security assessment as of 2026-11-25)"
   zero_one_ai:
     - "Yi-34B / Yi-9B (historical baseline; current maintenance unverified)"
   meta:
