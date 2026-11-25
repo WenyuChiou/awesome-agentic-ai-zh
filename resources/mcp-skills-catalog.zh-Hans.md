@@ -1441,20 +1441,20 @@ npx -y jacobian mcp
 
 ---
 
-### [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) ⭐⭐⭐
+### [last30days](https://github.com/mvanhorn/last30days-skill) ⭐⭐⭐
 
 <div align="center" markdown="1">
 
 | 栏位 | 内容 |
 |:---|:---|
-| License | MIT |
+| License | MIT <small>(核查 2026-11-25 UTC)</small> |
 | 推荐度 | ⭐⭐⭐（多来源搜索 Skill） |
 
 </div>
 
 **教什么**：把近期多来源搜索、去重和排序接成一个 Skill。对照摘要和原始链接，看看排序如何影响你先读到的内容。
 **适合谁**：想从单一搜索 API 进阶到多来源调查的人。
-**备注**：用公开主题试读，先限用 [官方列出的免凭证来源](https://github.com/mvanhorn/last30days-skill)。请勿授权读取浏览器 Cookie，也不要输入私密查询。互动热度不等于核查结果。本文仅核对上游文档，未实测安装或运行时间。
+**备注**：用公开主题练习。从 [v4.6.0 的设置说明](https://github.com/mvanhorn/last30days-skill/blob/64b1f006f800640022ce07f51de5ce56aad34b76/CONFIGURATION.md) 开始，在干净环境只选 Hacker News、GitHub，并停用浏览器 Cookie。查询会发送到这两个来源。互动热度不能代替核查。<br><small>2026-11-25 实测：Python 3.12 容器未设置密钥或登录。公开查询“Python 3.15”取得 6 条 Hacker News 和 2 条 GitHub 结果。</small>
 
 </details>
 ## 17. 安全 / MCP 安全治理
