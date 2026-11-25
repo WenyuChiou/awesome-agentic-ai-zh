@@ -3,9 +3,9 @@ release_version: v2026.11.25
 changes:
 - id: qwen4-max-glm54
   category: model-reference
-  zh-TW: Stage 1 更新 Qwen4-Max 的託管 API、1M token 上下文和區域價格。GLM-5.4 已提供給 Coding Plan 使用者，公開模型 API 仍待安全評估。保留 GLM-5.3 API 資料和本機練習。
-  zh-Hans: Stage 1 更新 Qwen4-Max 的托管 API、1M token 上下文和地区价格。GLM-5.4 已提供给 Coding Plan 用户，公开模型 API 仍待安全评估。保留 GLM-5.3 API 资料和本地练习。
-  en: Stage 1 updates the Qwen4-Max hosted API, 1M-token context, and regional pricing. GLM-5.4 is available to Coding Plan users, and the public model API is pending a security assessment. The GLM-5.3 API reference and local exercises stay in place.
+  zh-TW: Stage 1 更新 Qwen4-Max 的託管 API、1M token 上下文和區域價格。GLM-5.4 已提供給 Coding Plan 使用者，公開模型 API 仍待安全評估。保留 GLM-5.3 API 資料和本機練習。修復四個 Mistral 官方連結，並標示 Medium 3.5 已棄用。
+  zh-Hans: Stage 1 更新 Qwen4-Max 的托管 API、1M token 上下文和地区价格。GLM-5.4 已提供给 Coding Plan 用户，公开模型 API 仍待安全评估。保留 GLM-5.3 API 资料和本地练习。修复四个 Mistral 官方链接，并标明 Medium 3.5 已弃用。
+  en: Stage 1 updates the Qwen4-Max hosted API, 1M-token context, and regional pricing. GLM-5.4 is available to Coding Plan users, and the public model API is pending a security assessment. The GLM-5.3 API reference and local exercises stay in place. Four official Mistral links were repaired and Medium 3.5 is marked deprecated.
   links:
   - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/388
 - id: catalog-safety-mirrors

@@ -267,7 +267,16 @@ def test_october_preview_and_product_boundaries(page: Path) -> None:
     assert "US$4/$0.20/$20" in rows["Muse"][4]
     assert "Wonder Full" in rows["Muse"][6] and "Muse Code" in rows["Muse"][6]
     mistral = rows["Mistral"]
-    assert "mistral-large-4" in mistral[1] and "Public Preview" in mistral[2]
+    assert all(f"`{model}`" in mistral[1] for model in (
+        "mistral-large-4-0", "mistral-medium-3-5-26-04", "mistral-small-4-0-26-03",
+    ))
+    assert any(label in mistral[2] for label in ("已棄用", "已弃用", "deprecated"))
+    assert "$1.50/$7.50" not in mistral[4]
+    note = text.split("<summary>Mistral</summary>", 1)[1].split("<table", 1)[0]
+    assert "2026-11-25 UTC" in note
+    for suffix in ("models/mistral-large-4", "models/mistral-medium-3-5",
+                   "models/mistral-small-4", "resources/release-notes"):
+        assert f"https://docs.mistral.ai/{suffix}" in mistral[7].split()
     assert "2026-10-29" in mistral[2]
     assert "US$0.70/$0.07/$2.10" in mistral[4]
     assert "US$0.68/$0.07/$2.09" not in mistral[4]
