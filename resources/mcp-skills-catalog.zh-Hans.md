@@ -72,6 +72,8 @@
 
 ## 1. 笔记 / 知识库
 
+要让 Agent 查笔记或知识库，先确认它能看到哪些页面，以及是否真的需要写入。
+
 <details markdown="1">
 <summary>展开第 1 类精选项目</summary>
 
@@ -187,6 +189,8 @@
 </details>
 ## 2. 办公文件（Word / Excel / PowerPoint / PDF）
 
+要创建或修改文件，先备份原文件并核对输出；格式正确不代表内容正确。
+
 <details markdown="1">
 <summary>展开第 2 类精选项目</summary>
 
@@ -285,6 +289,8 @@
 </details>
 ## 3. Google Workspace
 
+Google Workspace 会涉及邮件、云端硬盘与日历；先从测试账号或 read-only 开始。
+
 <details markdown="1">
 <summary>展开第 3 类精选项目</summary>
 
@@ -338,6 +344,8 @@
 </details>
 ## 4. Microsoft 365
 
+Microsoft 365 集成会沿用组织权限；公司账号先问管理员的政策。
+
 <details markdown="1">
 <summary>展开第 4 类精选项目</summary>
 
@@ -390,6 +398,8 @@
 
 </details>
 ## 5. 开发协作（GitHub / Atlassian / Slack…）
+
+开发协作工具可能创建 issue、更新 PR 或发送消息；高影响操作保留人工核准。
 
 <details markdown="1">
 <summary>展开第 5 类精选项目</summary>
@@ -534,6 +544,8 @@
 </details>
 ## 6. 数据库
 
+数据库工具先用只读账号、限制 schema，并把查询与写入分开授权。
+
 <details markdown="1">
 <summary>展开第 6 类精选项目</summary>
 
@@ -662,6 +674,8 @@
 </details>
 ## 7. 浏览器自动化 / 网页抓取
 
+浏览器工具能操作真实网站；登录、付款、发布与下载文件要额外设限。
+
 <details markdown="1">
 <summary>展开第 7 类精选项目</summary>
 
@@ -729,6 +743,8 @@
 
 </details>
 ## 8. 设计（Figma / Excalidraw）
+
+设计工具可能改动真实资产；先复制测试稿，再让 Agent 编辑。
 
 <details markdown="1">
 <summary>展开第 8 类精选项目</summary>
@@ -813,6 +829,8 @@
 </details>
 ## 9. 监控 / Observability
 
+Observability 工具能看到 trace 与 log；不要把 secret、个人信息或完整客户内容直接发送出去。
+
 <details markdown="1">
 <summary>展开第 9 类精选项目</summary>
 
@@ -869,6 +887,8 @@
 <a id="10-媒体--流媒体youtube--spotify"></a>
 ## 10. 媒体 / 串流（YouTube / Spotify）
 
+媒体工具常受账号、地区、版权与 API 配额限制；先核对服务条款。
+
 <details markdown="1">
 <summary>展开第 10 类精选项目</summary>
 
@@ -922,6 +942,8 @@
 </details>
 <a id="11-中文生态专用"></a>
 ## 11. 中文圈专属
+
+中文社区项目解决本地平台与语言需求；小型项目也要检查最近维护和授权。
 
 <details markdown="1">
 <summary>展开第 11 类精选项目</summary>
@@ -1091,12 +1113,14 @@
 
 **教什么**：智谱 Zhipu（Z.ai）的 GLM-4.5 开源模型——定位 Agentic / Reasoning / Coding（ARC）基础模型，开源权重 + API，可当 agent / tool use / coding 的后端。
 **适合谁**：想评估国产开源 agentic 模型、或需要 Apache-2.0 宽松许可权重的中文开发者。
-**备注**：zai-org 是智谱开源 org；同系列另有 GLM-4（）可一起参考；weights 在 Hugging Face。
+**备注**：zai-org 是智谱开源 org；同系列与 weights 的现行入口以官方 repo 和 Hugging Face 组织页为准。
 
 ---
 
 </details>
 ## 12. 其他常用（Cloudflare / Stripe…）
+
+这组跨多种服务；先按工作选，不要因为“常用”就一次全部安装。
 
 <details markdown="1">
 <summary>展开第 12 类精选项目</summary>
@@ -1338,6 +1362,8 @@ npx -y jacobian mcp
 </details>
 ## 15. 金融 / 交易 Agents
 
+金融工具可能涉及真实资产与高风险决策；本目录只提供研究入口，不构成投资建议。
+
 > ⚠️ **应用领域区**：agent 在量化交易 / hedge fund 模拟 / 自动下单的应用。本节两个 entry 分别是 Apache-2.0 与 MIT，但这类 repo 授权状态普遍混杂，使用前仍请自行查清楚。**警示**：trading agent 跑真实资金有显著风险，本目录列入是为了学习 agent 设计模式、不是投资建议。
 
 <details markdown="1">
@@ -1378,6 +1404,8 @@ npx -y jacobian mcp
 </details>
 ## 16. 网页搜索 / 检索（Web Search / Retrieval）
 
+搜索工具会把查询发送到外部服务；机密词语、配额与来源质量都要先考虑。
+
 <details markdown="1">
 <summary>展开第 16 类精选项目</summary>
 
@@ -1415,6 +1443,8 @@ npx -y jacobian mcp
 
 </details>
 ## 17. 安全 / MCP 安全治理
+
+安全治理工具用来缩小 Agent 权限和执行范围；正式依赖前仍要做自己的威胁模型。
 
 <details markdown="1">
 <summary>展开第 17 类精选项目</summary>
