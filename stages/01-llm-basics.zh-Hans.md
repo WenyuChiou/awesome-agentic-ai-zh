@@ -516,7 +516,7 @@ print("💡 本次调用为 $0（不含电费）")
 <details markdown="1">
 <summary>🌐 完整 18 个家族表（官方规格入口）</summary>
 
-<small>GPT-6.2／Neon／Carbon 核查：2026-11-19 UTC。全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一行更新：2026-10-08 UTC。Gemini 一行更新：2026-10-29 UTC。Muse／Jev 与 GPT 选读更新：2026-10-15 UTC。Mistral Large 4 更新：2026-11-02 UTC。DeepSeek／Decisions／Clef 选读更新：2026-10-23 UTC。</small>
+<small>GPT-6.2／Neon／Carbon 核查：2026-11-19 UTC。全表查核：2026-09-22 UTC。GPT／Kimi 局部更新：2026-10-26 UTC。Claude 一行更新：2026-10-08 UTC。Gemini 一行更新：2026-10-29 UTC。Muse／Jev 与 GPT 选读更新：2026-10-15 UTC。Mistral 文档与状态核查：2026-11-25 UTC。DeepSeek／Decisions／Clef 选读更新：2026-10-23 UTC。</small>
 
 没有可靠公开数字就写“官方未公布”。价格通常是 USD／每 1M token；供应商若用别的单位，就按官方单位记录。
 **缓存（cache）** 就像重复使用读过的便条：读取旧内容和写入新内容可能有不同价格。
@@ -821,29 +821,30 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Qwen</summary>
 
+<p class="model-release-note"><small>Qwen4-Max 核查：2026-11-25 UTC，仅核对官方文档，未实测 API。</small></p>
+
 <table data-model-family="Qwen" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="2" align="center" valign="middle">当前推荐型号</th><td>qwen3.8-max（API）</td></tr>
-    <tr><td>Qwen3.8 开放权重变体</td></tr>
+    <tr><th scope="row">当前推荐型号</th><td>Qwen4-Max（<code>qwen4-max</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">状态</th><td>正式可用</td></tr>
+    <tr><th scope="row">状态</th><td>Alibaba Cloud Model Studio 正式提供的托管 API</td></tr>
   </tbody>
   <tbody data-field="context">
-    <tr><th scope="row">Context</th><td>1M</td></tr>
+    <tr><th scope="row">Context</th><td>1M tokens</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">价格或授权</th><td>API 按地区定价；例如北京为 CNY 12／36，每百万输入／输出 tokens；开放权重变体使用各自授权</td></tr>
+    <tr><th scope="row">价格或授权</th><td>API 按地区和部署范围定价。以美国弗吉尼亚区的 Virginia 部署为例。标准调用每百万 token 的输入价为 USD 1.50，输出价为 USD 4.50。</td></tr>
   </tbody>
   <tbody data-field="use">
-    <tr><th scope="row">适合做什么</th><td>中文任务、多模态、自部署工作流</td></tr>
+    <tr><th scope="row">适合做什么</th><td>支持文本、图片或视频输入，返回文本；适合试做需要工具调用或结构化输出的工作流。</td></tr>
   </tbody>
   <tbody data-field="limits">
-    <tr><th scope="row">限制</th><td>API 型号与开放权重变体不可混用；可用性与授权要分别确认</td></tr>
+    <tr><th scope="row">限制</th><td>这里介绍的是托管 API，不是开放权重，也不替换本地练习的型号。自部署时另查开放权重版本的授权和硬件要求；使用云端服务前确认区域、端点和价格。</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方来源</th><td><a href="https://help.aliyun.com/en/model-studio/qwen3-8-max">Qwen 3.8 Max</a></td></tr>
+    <tr><th scope="row">官方来源</th><td><a href="https://www.alibabacloud.com/help/en/model-studio/qwen4-max">Qwen4-Max · Alibaba Cloud Model Studio</a></td></tr>
   </tbody>
 </table>
 
@@ -851,6 +852,8 @@ print("💡 本次调用为 $0（不含电费）")
 
 <details class="model-family" markdown="1">
 <summary>GLM</summary>
+
+<p class="model-release-note">Z.ai 于 2026-11-23 公布 GLM-5.4。Coding Plan、ZCode 和 Z.ai Chat 已提供。公开模型 API 仍待安全评估，发布时未发布开放权重。下表为 GLM-5.3 的 API 规格。 <a href="https://z.ai/blog/glm-5.4">Z.ai 公告</a> · <a href="https://docs.z.ai/guides/llm/glm-5.4">开发者文档</a> · <small>2026-11-25 UTC 核查</small></p>
 
 <table data-model-family="GLM" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
@@ -1065,23 +1068,25 @@ print("💡 本次调用为 $0（不含电费）")
 <details class="model-family" markdown="1">
 <summary>Mistral</summary>
 
+<p class="model-release-note"><small>Mistral 模型文档与状态核查：2026-11-25 UTC。</small></p>
+
 <table data-model-family="Mistral" align="center">
   <thead><tr><th scope="col">栏位</th><th scope="col">内容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">当前推荐型号</th><td>Mistral Large 4（<code>mistral-large-4</code>）</td></tr>
-    <tr><td>Medium 3.5（<code>mistral-medium-3-5</code>）</td></tr>
-    <tr><td>Small 4</td></tr>
+    <tr><th scope="rowgroup" rowspan="5" align="center" valign="middle">当前推荐型号</th><td>Mistral Large 4（<code>mistral-large-4-0</code>）</td></tr>
+    <tr><td>Medium 3.5（<code>mistral-medium-3-5-26-04</code>）</td></tr>
+    <tr><td>Small 4（<code>mistral-small-4-0-26-03</code>）</td></tr>
     <tr><td>Large 3</td></tr>
     <tr><td>Ministral 3</td></tr>
   </tbody>
   <tbody data-field="status">
-    <tr><th scope="row">状态</th><td>Large 4 API：Public Preview；权重已于 2026-10-29 发布。Medium 3.5／Small 4：正式可用</td></tr>
+    <tr><th scope="row">状态</th><td>Large 4 可通过 Mistral API 使用。权重已于 2026-10-29 发布。Small 4 正式可用。Medium 3.5 已弃用，新项目请选择 Large 4。</td></tr>
   </tbody>
   <tbody data-field="context">
     <tr><th scope="row">Context</th><td>Large 4：1M。Medium 3.5／Small 4：256K</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">价格或授权</th><td>每百万 token，US$。Large 4 输入／cache／输出：US$0.70/$0.07/$2.10；权重采用 Mistral Ecosystem Open-Weight License。Medium 3.5 输入／输出 $1.50/$7.50，Modified MIT。Small 4：$0.15/$0.60，Apache 2.0</td></tr>
+    <tr><th scope="row">价格或授权</th><td>每百万 token，US$。Large 4 输入／cache／输出：US$0.70/$0.07/$2.10；权重采用 Mistral Ecosystem Open-Weight License。Medium 3.5 权重采用 Modified MIT。Small 4：$0.15/$0.60，Apache 2.0</td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">适合做什么</th><td>比较推理、视觉、程序与工具使用。想自部署时，先选已有权重和授权的型号</td></tr>
@@ -1090,7 +1095,7 @@ print("💡 本次调用为 $0（不含电费）")
     <tr><th scope="row">限制</th><td>Large 4 是开放权重，不代表完全开源；经营 Model-as-a-Service 业务的商业使用须另取得授权。自部署须先评估内存与推理环境，不是普通笔记本电脑入门模型。不要把整个家族都当成 Apache 2.0</td></tr>
   </tbody>
   <tbody data-field="sources">
-    <tr><th scope="row">官方来源</th><td><a href="https://docs.mistral.ai/models/mistral-large-4-0">Large 4 规格与价格</a> · <a href="https://mistral.ai/news/mistral-large-4-oss/">权重发布与授权说明</a> · <a href="https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B">官方模型卡</a> · <a href="https://docs.mistral.ai/resources/changelogs">发布状态</a> · <a href="https://docs.mistral.ai/models/mistral-medium-3-5-26-04">Medium 3.5</a> · <a href="https://docs.mistral.ai/models/mistral-small-4-0-26-03">Small 4</a></td></tr>
+    <tr><th scope="row">官方来源</th><td><a href="https://docs.mistral.ai/models/mistral-large-4">Large 4 规格与价格</a> · <a href="https://mistral.ai/news/mistral-large-4-oss/">权重发布与授权说明</a> · <a href="https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B">官方模型卡</a> · <a href="https://docs.mistral.ai/resources/release-notes">发布状态</a> · <a href="https://docs.mistral.ai/models/mistral-medium-3-5">Medium 3.5</a> · <a href="https://docs.mistral.ai/models/mistral-small-4">Small 4</a></td></tr>
   </tbody>
 </table>
 

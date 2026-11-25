@@ -73,28 +73,24 @@ def test_current_model_reference_keeps_public_api_ids(locale: str) -> None:
 
 
 @pytest.mark.parametrize("locale", rm.LOCALES)
-def test_november_21_notes_cover_the_release_window(locale: str) -> None:
+def test_november_25_notes_cover_the_release_window(locale: str) -> None:
     notes = rm.validate_notes_manifest()
-    assert notes["release_version"] == "v2026.11.21"
+    assert notes["release_version"] == "v2026.11.25"
     changes = {change["id"]: change for change in notes["changes"]}
-    expected_terms = {
-        "agent-safety-basics": ("MCP", "Skill", "Stage 8", "0", "1"),
-        "stage-one-model-reference": (
-            "Mistral Large 4", "Fable", "Mythos 5.2", "GPT-6.2",
-            "Astra", "Sol", "Hydrogen", "Neon", "Carbon",
-        ),
-        "qmd-and-playwright-cli": ("QMD", "A3", "Playwright CLI"),
-        "framework-reference-health": ("Microsoft Learn", "OpenShell", "AutoGen", "LLM Leaderboard"),
-        "docs-and-ci-dependencies": ("Markdown", "PyMdown Extensions", "MkDocs Material", "requests"),
+    expected_changes = {
+        "qwen4-max-glm54": (388, ("Qwen4-Max", "1M", "GLM-5.4", "Coding Plan", "GLM-5.3", "Mistral", "Medium 3.5")),
+        "catalog-safety-mirrors": (387, ("MCP", "Skills", "15", "GLM-4.5")),
+        "pagekin-embedding-migration": (389, ("Pagekin", "RAG", "Embedding")),
+        "dependency-review-action-501": (384, ("Dependency Review", "5.0.1")),
+        "ui-tars-archive-status": (None, ("Stage 8", "UI-TARS-desktop")),
     }
-    assert changes.keys() == expected_terms.keys()
-    for change_id, terms in expected_terms.items():
+    assert changes.keys() == expected_changes.keys()
+    for change_id, (pr, terms) in expected_changes.items():
         assert all(term in changes[change_id][locale] for term in terms)
-    links = {link for change in changes.values() for link in change["links"]}
-    assert links == {
-        f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
-        for pr in (364, 365, 366, 369, 370, 374, 376, 377, 378, 379, 380, 381)
-    } | {"https://github.com/ai-openshell/openshell", "https://github.com/microsoft/autogen"}
+        assert changes[change_id]["links"] == [
+            f"https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/{pr}"
+            if pr is not None else "https://github.com/bytedance/UI-TARS-desktop"
+        ]
 
 
 def test_validate_version_uses_utc_date(monkeypatch: pytest.MonkeyPatch) -> None:

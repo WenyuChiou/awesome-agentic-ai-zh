@@ -161,6 +161,10 @@ Read: [RAPTOR paper](https://arxiv.org/abs/2401.18059) · [DSPy](https://github.
 
 </details>
 
+**Optional case: What happens to the old index when you switch embedding models?** [Pagekin's design record](https://github.com/EthanYoQ/Pagekin/blob/v1.5.3/docs/adr/0004-versioned-project-embedding-space.md) records which model it uses, how many numbers each vector contains, and which version of the index it has. During a model change, it keeps the old index and lets readers keep searching the full text. It switches after the new index passes its checks.
+
+**Try it on paper**: Suppose the old model gives you 3 numbers at a time and the new one gives you 5. What kind of search still works during the rebuild? How would you check the new index before switching? Just read the design record.
+
 ## 🎯 Curated projects and learning resources
 
 Ratings represent educational value for this learning map, not a project-quality leaderboard. Choose one framework, one data layer, and one evaluation tool first.
