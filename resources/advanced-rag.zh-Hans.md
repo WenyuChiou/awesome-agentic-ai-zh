@@ -160,9 +160,9 @@
 4. 最后才检查生成模型；不要用更大模型掩盖 retrieval 错误。
 
 
-**选读案例：换掉 Embedding 模型，旧索引怎么办？** [Pagekin 的设计记录](https://github.com/EthanYoQ/Pagekin/blob/v1.5.3/docs/adr/0004-versioned-project-embedding-space.md)把模型标识、向量维度和索引版本分开记录。换模型时先保留旧索引，全文检索仍可用。新索引通过验证后才切换，避免把不同模型生成的向量混在一起比较。
+**选读案例：换掉 Embedding 模型，旧索引怎么办？** [Pagekin 的设计记录](https://github.com/EthanYoQ/Pagekin/blob/v1.5.3/docs/adr/0004-versioned-project-embedding-space.md)分开记录用的是哪个模型、每串向量有几个数字，以及索引是哪一版。换模型时先保留旧索引，读者仍可用全文搜索。等新索引通过检查，再切换过去。
 
-**动手想一想**：假设新模型的向量维度不同。重建期间要让读者继续用哪一种搜索？你会用什么检查决定能不能切换？只需阅读设计记录，不用安装 App 或提供 API key。
+**动手想一想**：假设旧模型每次给 3 个数字，新模型给 5 个。重建期间，读者还能用哪种搜索？切换前，你会怎么检查新索引？只需阅读设计记录。
 
 </details>
 
