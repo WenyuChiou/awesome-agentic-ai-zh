@@ -1441,7 +1441,7 @@ pages:
       zh-Hans: resources/advanced-rag.zh-Hans.md
     max_visible_chars:
       zh-TW: 6600
-      en: 11005
+      en: 11590
       zh-Hans: 6600
     max_open_details: 0
     required_details_count: 2

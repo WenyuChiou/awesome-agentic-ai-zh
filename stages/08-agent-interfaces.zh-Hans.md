@@ -368,7 +368,7 @@ Amazon 案件也不能简化成“某 browser 被全面禁止访问 Amazon”。
 
 ## 📚 22 项完整学习资源与限制
 
-<small>内容核查：原有 21 项沿用 2026-08-28 UTC 核查日期；Cortex README 中 typed MCP tools 与 gRPC schema 限制的说明于 2026-10-13 UTC 核查。GitHub repository metadata snapshot 另于 2026-10-13 UTC 核查。星号是本项目的教学推荐度，不是 GitHub stars。</small>
+<small>内容核查：原有 21 项沿用 2026-08-28 UTC 核查日期；Cortex README 中 typed MCP tools 与 gRPC schema 限制的说明于 2026-10-13 UTC 核查。GitHub repository metadata snapshot 另于 2026-10-13 UTC 核查。UI-TARS-desktop 的归档状态于 2026-11-25 UTC 核查。星号是本项目的教学推荐度，不是 GitHub stars。</small>
 
 <table align="center">
 <thead>
@@ -387,7 +387,7 @@ Amazon 案件也不能简化成“某 browser 被全面禁止访问 Amazon”。
 <tr><td><a href="https://github.com/microsoft/playwright-mcp">playwright-mcp</a></td><td>把 browser 接给 MCP client。</td><td>仍需限制 origin、权限与数据。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/cortex-docs/cortex">cortex</a></td><td>把 API spec 转成 typed MCP tools。</td><td>gRPC 只提供 schema 资源，不生成可调用方法。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/trycua/cua">cua</a></td><td>研究跨平台 computer-use stack。</td><td>依 README 与 release 验证实际 backend。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>研究开放桌面 agent。</td><td>本地控制风险高；先用测试环境。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>参考早期桌面 Agent 的设计。</td><td>已归档。如果试跑，请用隔离的测试环境。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Sandbox／runtime</th><td><a href="https://github.com/e2b-dev/E2B">E2B</a></td><td>agent 需要远程 code workspace。</td><td>Apache-2.0 repo；托管服务另有费用与政策。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
