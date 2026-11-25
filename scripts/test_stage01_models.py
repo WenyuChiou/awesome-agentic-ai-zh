@@ -69,21 +69,31 @@ def test_stage01_qwen4_max_does_not_replace_local_models(page: Path) -> None:
     assert "1M tokens" in cells[3]
     assert all(term in cells[4] for term in ("Virginia", "1.50", "4.50"))
     assert "https://www.alibabacloud.com/help/en/model-studio/qwen4-max" in cells[7]
-    assert "2026-11-24 UTC" in text
     outside_reference = text.split("<summary>Qwen</summary>", 1)
+    assert "2026-11-25 UTC" in outside_reference[1].split("<table", 1)[0]
     assert "qwen4-max" not in outside_reference[0]
     assert "qwen4-max" not in outside_reference[1].split("</details>", 1)[1]
     assert 'model="qwen2.5:3b"' in text
     assert "ollama pull gemma4:e4b" in text
 
 
-@pytest.mark.parametrize("page", [item[0] for item in PAGES])
-def test_stage01_glm54_announcement_keeps_glm53_api_reference(page: Path) -> None:
+@pytest.mark.parametrize(
+    ("page", "api_limit", "weights_limit"),
+    (
+        (PAGES[0][0], "公開模型 API 仍待安全評估", "發布時未釋出開放權重"),
+        (PAGES[1][0], "公开模型 API 仍待安全评估", "发布时未发布开放权重"),
+        (PAGES[2][0], "public model API is pending a security assessment", "no open weights at launch"),
+    ),
+)
+def test_stage01_glm54_announcement_keeps_glm53_api_reference(
+    page: Path, api_limit: str, weights_limit: str
+) -> None:
     text = page.read_text(encoding="utf-8")
     note = text.split("<summary>GLM</summary>", 1)[1].split("<table", 1)[0]
     assert all(x in note for x in (
         "GLM-5.4", "2026-11-23", "Coding Plan", "ZCode", "Z.ai Chat",
         "https://z.ai/blog/glm-5.4", "GLM-5.3",
+        "https://docs.z.ai/guides/llm/glm-5.4", "2026-11-25 UTC", api_limit, weights_limit,
     ))
     cells = family_cells(text, "GLM")
     assert cells[1].strip() == "GLM-5.3"

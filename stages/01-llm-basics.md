@@ -821,12 +821,12 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details class="model-family" markdown="1">
 <summary>Qwen</summary>
 
-<p class="model-release-note"><small>Qwen4-Max 查核：2026-11-24 UTC，僅核對官方文件，未實測 API。</small></p>
+<p class="model-release-note"><small>Qwen4-Max 查核：2026-11-25 UTC，僅核對官方文件，未實測 API。</small></p>
 
 <table data-model-family="Qwen" align="center">
   <thead><tr><th scope="col">欄位</th><th scope="col">內容</th></tr></thead>
   <tbody data-field="models">
-    <tr><th scope="row">目前推薦型號</th><td>Qwen4-Max (<code>qwen4-max</code>)</td></tr>
+    <tr><th scope="row">目前推薦型號</th><td>Qwen4-Max（<code>qwen4-max</code>）</td></tr>
   </tbody>
   <tbody data-field="status">
     <tr><th scope="row">狀態</th><td>Alibaba Cloud Model Studio 正式提供的託管 API</td></tr>
@@ -835,7 +835,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
     <tr><th scope="row">Context</th><td>1M tokens</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">價格或授權</th><td>API 依地區與部署範圍定價。例如美國維吉尼亞區的 Virginia 範圍，標準呼叫每百萬輸入／輸出 tokens 為 USD 1.50／4.50。</td></tr>
+    <tr><th scope="row">價格或授權</th><td>API 依地區與部署範圍定價。以美國維吉尼亞區的 Virginia 部署為例。標準呼叫每百萬 token 的輸入價為 USD 1.50，輸出價為 USD 4.50。</td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">適合做什麼</th><td>可用文字、圖片或影片當輸入，並以文字回傳；適合試作需要工具呼叫或結構化輸出的工作流。</td></tr>
@@ -853,7 +853,7 @@ print(f"💡 跑這次完全沒花錢（除了你的電力）")
 <details class="model-family" markdown="1">
 <summary>GLM</summary>
 
-<p class="model-release-note">Z.ai 於 2026-11-23 公布 GLM-5.4，已在 Coding Plan、ZCode 和 Z.ai Chat 提供。公告說公開 API 將稍後開放，當時未釋出開放權重。下表仍是 GLM-5.3 的 API 規格，不適用於 5.4。 <a href="https://z.ai/blog/glm-5.4">Z.ai 公告</a></p>
+<p class="model-release-note">Z.ai 於 2026-11-23 公布 GLM-5.4。Coding Plan、ZCode 和 Z.ai Chat 已提供。公開模型 API 仍待安全評估，發布時未釋出開放權重。下表為 GLM-5.3 的 API 規格。 <a href="https://z.ai/blog/glm-5.4">Z.ai 公告</a> · <a href="https://docs.z.ai/guides/llm/glm-5.4">開發者文件</a> · <small>2026-11-25 UTC 查核</small></p>
 
 <table data-model-family="GLM" align="center">
   <thead><tr><th scope="col">欄位</th><th scope="col">內容</th></tr></thead>

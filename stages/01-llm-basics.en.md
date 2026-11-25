@@ -821,7 +821,7 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
 <details class="model-family" markdown="1">
 <summary>Qwen</summary>
 
-<p class="model-release-note"><small>Qwen4-Max checked 2026-11-24 UTC against official documentation only; no live API test.</small></p>
+<p class="model-release-note"><small>Qwen4-Max checked 2026-11-25 UTC against official documentation only; no live API test.</small></p>
 
 <table data-model-family="Qwen" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
@@ -835,7 +835,7 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
     <tr><th scope="row">Context</th><td>1M tokens</td></tr>
   </tbody>
   <tbody data-field="pricing">
-    <tr><th scope="row">Price or license</th><td>API pricing varies by region and deployment scope. For example, standard calls in the US (Virginia) region with Virginia deployment scope cost USD 1.50 input and USD 4.50 output per million tokens.</td></tr>
+    <tr><th scope="row">Price or license</th><td>API pricing varies by region and deployment scope. For example, in the US (Virginia) region with Virginia deployment scope, standard calls cost USD 1.50 for input and USD 4.50 for output per million tokens.</td></tr>
   </tbody>
   <tbody data-field="use">
     <tr><th scope="row">Good for</th><td>Accepts text, images or video and returns text. Try it for workflows that need tool calls or structured outputs.</td></tr>
@@ -853,7 +853,7 @@ Verified 2026-11-09: Fable 5.2 and Mythos 5.2 were released on 2026-11-09. This 
 <details class="model-family" markdown="1">
 <summary>GLM</summary>
 
-<p class="model-release-note">Z.ai announced GLM-5.4 on 2026-11-23 and made it available in Coding Plan, ZCode and Z.ai Chat. The announcement said public API access would come later; open weights were not released at launch. The API details below apply to GLM-5.3 only. <a href="https://z.ai/blog/glm-5.4">Z.ai announcement</a></p>
+<p class="model-release-note">Z.ai announced GLM-5.4 on 2026-11-23. It is available in Coding Plan, ZCode and Z.ai Chat. The public model API is pending a security assessment. Z.ai released no open weights at launch. The API details below apply to GLM-5.3. <a href="https://z.ai/blog/glm-5.4">Z.ai announcement</a> · <a href="https://docs.z.ai/guides/llm/glm-5.4">Developer docs</a> · <small>Checked 2026-11-25 UTC</small></p>
 
 <table data-model-family="GLM" align="center">
   <thead><tr><th scope="col">Field</th><th scope="col">Details</th></tr></thead>
