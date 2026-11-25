@@ -8,6 +8,8 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ## 2026-11-25
 
+- **resources / MCP catalog / Heym** · 三語 MCP／Skills catalog 第 12 類新增 Heym（NOASSERTION，MIT + Commons Clause）。條目區分具名伺服器公開的選定工作流程，以及 `heym_chat` 較廣的管理權限；也註明預設伺服器會列出記憶工具。新增固定 v0.0.165、只綁本機的試跑步驟：每一步要前一步成功才執行，最多等 Postgres 60 秒，清除只移除這次建立的容器、網路與匿名 volume。已在 zsh 實測具名伺服器的 `tools/list`，並確認同名網路已存在時會停止且保留先前的資源。重新查核全部 271 個仍被引用的 repo，並更新機器快照。
+
 - **content / MCP／Skills 目錄** · 三語新增 last30days 進階選讀。用公開查詢比較 Hacker News 和 GitHub 的結果排序，並回到原始連結查核。在無金鑰、無登入的容器跑過 v4.6.0。同時更新資源索引。
 
 - **release / v2026.11.25** · 三語發布說明對齊 #384、#387、#388 與 #389。
