@@ -159,12 +159,11 @@
 3. 排名正确，再看 prompt 是否要求引用与拒答。
 4. 最后才检查生成模型；不要用更大模型掩盖 retrieval 错误。
 
+</details>
 
 **选读案例：换掉 Embedding 模型，旧索引怎么办？** [Pagekin 的设计记录](https://github.com/EthanYoQ/Pagekin/blob/v1.5.3/docs/adr/0004-versioned-project-embedding-space.md)分开记录用的是哪个模型、每串向量有几个数字，以及索引是哪一版。换模型时先保留旧索引，读者仍可用全文搜索。等新索引通过检查，再切换过去。
 
 **动手想一想**：假设旧模型每次给 3 个数字，新模型给 5 个。重建期间，读者还能用哪种搜索？切换前，你会怎么检查新索引？只需阅读设计记录。
-
-</details>
 
 ## 🎯 精选 Projects 与学习资源
 
