@@ -1234,42 +1234,40 @@ npx -y jacobian mcp
 **起始配置**：创建命名服务器，只分配任务需要的工作流，并停用 Heym Capabilities（`heym_chat`）。
 **权限边界**：默认服务器即使停用 `heym_chat`，仍会列出 `get_user_memory` 与 `set_user_memory`。命名服务器不会列出这两个独立的记忆工具。启用 `heym_chat` 后，管理权限超出选定的工作流列表。它可修改工作流与数据，测试运行也会产生实际副作用。
 **许可限制**：源码可获取，但受 Commons Clause 限制；使用前请读下方原始条款。
-**核查范围**：2026-11-21 UTC 在 zsh 按下方命令实测 v0.0.165。命名服务器只列出 `echo_text`，默认服务器另列出两个记忆工具。清理后没有留下容器、网络或 volume。未测 OAuth 客户端与 `heym_chat`。
+**核查范围**：2026-11-25 UTC 在 zsh 按下方命令实测 v0.0.165。命名服务器只列出 `echo_text`，默认服务器另列出两个记忆工具。清理后没有留下这次的容器、网络或 volume。先前留下的同名网络、容器与 volume 存在时，第二次执行会在第一步停止，并保留它们。未测 OAuth 客户端与 `heym_chat`。
 **怎么跑**：用 v0.0.165 开一个只能从本机连接的临时环境。
 ```bash
-docker network create heym-mcp-demo
-docker run -d --name heym-mcp-demo-db --network heym-mcp-demo \
-  -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=heym postgres:16-alpine
-# 最多等 60 秒；Postgres 就绪后才启动 Heym
-ready=0
+# 每一步都要前一步成功才会执行；容器不用固定名称，清理只删除这次创建的 ID
+# 若 heym-mcp-demo 网络已存在，就不会启动任何东西，也不会动到它
+net= db= app=
+net=$(docker network create heym-mcp-demo) &&
+db=$(docker run -d --rm --network "$net" --network-alias db \
+  -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=heym postgres:16-alpine) &&
 for i in $(seq 1 60); do
-  docker exec heym-mcp-demo-db pg_isready -q -h 127.0.0.1 -U postgres 2>/dev/null && { ready=1; break; }
+  docker exec "$db" pg_isready -q -h 127.0.0.1 -U postgres 2>/dev/null && break
   sleep 1
-done
-if [ "$ready" -eq 1 ]; then
-  docker run -d --name heym-mcp-demo --network heym-mcp-demo -p 127.0.0.1:4017:4017 \
-    -e DATABASE_URL=postgresql+asyncpg://postgres:postgres@heym-mcp-demo-db:5432/heym \
-    -e SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')" \
-    -e ENCRYPTION_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
-    ghcr.io/heymrun/heym:0.0.165
-else
-  echo "已停止：Postgres 60 秒内未就绪。请看 docker logs heym-mcp-demo-db，再执行下方清理。"
-fi
+done &&
+docker exec "$db" pg_isready -q -h 127.0.0.1 -U postgres 2>/dev/null &&
+app=$(docker run -d --rm --network "$net" -p 127.0.0.1:4017:4017 \
+  -e DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/heym \
+  -e SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')" \
+  -e ENCRYPTION_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
+  ghcr.io/heymrun/heym:0.0.165) ||
+echo "已停止，Heym 没有启动：某一步失败，或 Postgres 60 秒内未就绪。请执行下方清理。"
 # 打开 http://localhost:4017 注册，创建 Echo text 工作流：Input → Output，Message Template 填 $start.body.text
 # MCP / A2A 标签页：创建命名服务器，复制 MCP Endpoint 与 API Key，只分配 Echo text，Heym Capabilities 保持关闭
 curl -s "<MCP Endpoint>" -H "X-MCP-Key: <API Key>" -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
-# 清理：删除两个容器及其匿名 volume，再删除网络
-vols=($(docker container inspect -f '{{range .Mounts}}{{if eq .Type "volume"}}{{.Name}} {{end}}{{end}}' heym-mcp-demo heym-mcp-demo-db 2>/dev/null))
-docker rm -f -v heym-mcp-demo heym-mcp-demo-db; docker network rm heym-mcp-demo
-# 检查：容器、网络与 volume 都删除后，下面两行不会输出任何内容
-docker ps -aq --filter name=heym-mcp-demo; docker network ls -q --filter name=heym-mcp-demo
-for v in "${vols[@]}"; do docker volume ls -q --filter name="$v"; done
+# 清理：只删除这次的容器与网络；--rm 与 -v 会一并删除容器的匿名 volume
+vols=($(docker container inspect -f '{{range .Mounts}}{{if eq .Type "volume"}}{{.Name}} {{end}}{{end}}' $app $db 2>/dev/null))
+[ -n "$app$db" ] && docker rm -f -v $app $db; [ -n "$net" ] && docker network rm "$net"
+# 检查：这次的容器、网络与 volume 都删除后，这行不会输出任何内容
+for id in $app $db $net "${vols[@]}"; do docker inspect "$id" >/dev/null 2>&1 && echo "still there: $id"; done
 ```
 **预期结果**：命名服务器的 `tools/list` 只返回 `echo_text`。
 **文档与条款**：[MCP 设置](https://github.com/heymrun/heym/blob/v0.0.165/frontend/src/docs/content/tabs/mcp-tab.md)；[Commons Clause](https://github.com/heymrun/heym/blob/main/COMMONS-CLAUSE.md)。
 
-<small>Heym v0.0.165 本机实测：2026-11-21 UTC</small>
+<small>Heym v0.0.165 本机实测：2026-11-25 UTC</small>
 
 </details>
 ## 13. 研究工作流 Skills（学术 / paper / 文献）
