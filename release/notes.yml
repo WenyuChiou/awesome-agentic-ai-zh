@@ -1,47 +1,39 @@
 schema_version: 1
-release_version: v2026.11.21
+release_version: v2026.11.25
 changes:
-- id: agent-safety-basics
-  category: learning-safety
-  zh-TW: 新增 Agent 安全入門。用同一個研究摘要案例練習工具權限、連接 MCP 或加入 Skill 前要問的事，以及核准和續跑。離線練習可核對拒絕 0 筆、核准 1 筆、重跑仍 1 筆。Stage 8 補充文件、搜尋結果和工具回傳內容也可能帶入提示注入。
-  zh-Hans: 新增 Agent 安全入门。用同一个研究摘要案例练习工具权限、连接 MCP 或添加 Skill 前要问的事，以及批准和续跑。离线练习可核对拒绝 0 条、批准 1 条、重跑仍 1 条。Stage 8 补充文档、搜索结果和工具返回内容也可能带来提示注入。
-  en: 'A new Agent safety guide uses one research-summary example to teach tool permissions, checks before connecting MCP or adding a Skill, and approval and resume. The offline exercise shows 0 entries on rejection, 1 on approval, and still 1 after retry. Stage 8 explains that documents, search results, and tool outputs can carry prompt injection.'
-  links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/381
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/378
-- id: stage-one-model-reference
+- id: qwen4-max-glm54
   category: model-reference
-  zh-TW: Stage 1 更新 Mistral Large 4 的開放權重、價格與授權，並更新 Claude Fable／Mythos 5.2 的型號、價格與使用條件。補上 GPT-6.2 Astra／Sol、Gemini 4 Hydrogen／Neon，以及 Carbon 的付費 API 與優惠期限。
-  zh-Hans: Stage 1 更新 Mistral Large 4 的开放权重、价格与授权，并更新 Claude Fable／Mythos 5.2 的型号、价格与使用条件。补上 GPT-6.2 Astra／Sol、Gemini 4 Hydrogen／Neon，以及 Carbon 的付费 API 与优惠期限。
-  en: Stage 1 updates open weights, pricing and licensing for Mistral Large 4, plus model IDs, pricing and access for Claude Fable and Mythos 5.2. It adds GPT-6.2 Astra and Sol, Gemini 4 Hydrogen and Neon, and details for Carbon's paid API and introductory pricing deadline.
+  zh-TW: Stage 1 更新 Qwen4-Max 的託管 API、1M token 上下文和區域價格。GLM-5.4 已提供給 Coding Plan 使用者，公開模型 API 仍待安全評估。保留 GLM-5.3 API 資料和本機練習。
+  zh-Hans: Stage 1 更新 Qwen4-Max 的托管 API、1M token 上下文和地区价格。GLM-5.4 已提供给 Coding Plan 用户，公开模型 API 仍待安全评估。保留 GLM-5.3 API 资料和本地练习。
+  en: Stage 1 updates the Qwen4-Max hosted API, 1M-token context, and regional pricing. GLM-5.4 is available to Coding Plan users, and the public model API is pending a security assessment. The GLM-5.3 API reference and local exercises stay in place.
   links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/370
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/374
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/376
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/377
-- id: qmd-and-playwright-cli
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/388
+- id: catalog-safety-mirrors
+  category: learning-safety
+  zh-TW: 英文與簡中 MCP／Skills 目錄補齊 15 類原有的使用與安全提醒，讀者展開項目前就能看到。同步修正 GLM-4.5 的來源說明。
+  zh-Hans: 英文与简中 MCP／Skills 目录补齐 15 类原有的使用与安全提醒，读者展开项目前就能看到。同步修正 GLM-4.5 的来源说明。
+  en: The English and Simplified Chinese MCP and Skills catalogs add 15 existing usage and safety notes above the expandable entries. The GLM-4.5 source note also matches the Traditional Chinese catalog.
+  links:
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/387
+- id: pagekin-embedding-migration
   category: learning-resources
-  zh-TW: 進階 RAG 加入 QMD，用同一批本機筆記比較三種搜尋。A3 加入 Playwright CLI，用本機練習頁檢查按鈕行為。
-  zh-Hans: 进阶 RAG 加入 QMD，用同一批本地笔记比较三种搜索。A3 加入 Playwright CLI，用本地练习页检查按钮行为。
-  en: Advanced RAG adds QMD to compare three search modes on the same local notes. A3 adds Playwright CLI to check button behavior on a local practice page.
+  zh-TW: 進階 RAG 新增 Pagekin 的選讀案例。換 Embedding 模型時，讀者可以看懂怎麼保留舊索引和全文搜尋，等新索引通過檢查再切換。可直接閱讀設計紀錄。
+  zh-Hans: 进阶 RAG 新增 Pagekin 的选读案例。换 Embedding 模型时，读者可以看懂怎么保留旧索引和全文搜索，等新索引通过检查再切换。可直接阅读设计记录。
+  en: Advanced RAG adds an optional Pagekin reading case. It shows how to preserve the old index and full-text search while changing the Embedding model, then switch after checking the new index. The design record is available to read directly.
   links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/379
-- id: framework-reference-health
-  category: reference-maintenance
-  zh-TW: Microsoft Agent Framework 改連 Microsoft Learn。OpenShell 改連目前的官方 repo。AutoGen 的教材標示已封存，保留供查閱舊範例及準備遷移。Stage 1 的 LLM Leaderboard 改連新版網址。
-  zh-Hans: Microsoft Agent Framework 改连 Microsoft Learn。OpenShell 改连当前的官方 repo。AutoGen 的教材标明已归档，保留供查阅旧示例及准备迁移。Stage 1 的 LLM Leaderboard 改连新版网址。
-  en: Microsoft Agent Framework links now point to Microsoft Learn, and OpenShell links use its current repository. AutoGen is marked archived and remains a reference for existing examples and migration. Stage 1 follows LLM Leaderboard to its new address.
-  links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/380
-  - https://github.com/ai-openshell/openshell
-  - https://github.com/microsoft/autogen
-- id: docs-and-ci-dependencies
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/389
+- id: dependency-review-action-501
   category: maintenance
-  zh-TW: 更新文件站的 Markdown、PyMdown Extensions 與 MkDocs Material，並調整 PR 檢查用的 requests 版本，讓文件建置和相依套件維持相容。
-  zh-Hans: 更新文档站的 Markdown、PyMdown Extensions 与 MkDocs Material，并调整 PR 检查用的 requests 版本，让文档构建和依赖保持兼容。
-  en: The docs site updates Markdown, PyMdown Extensions and MkDocs Material. PR checks update requests to keep the documentation build and its dependencies compatible.
+  zh-TW: PR 的相依套件檢查更新到 Dependency Review 5.0.1，採用官方發布的固定提交。
+  zh-Hans: PR 的依赖检查更新到 Dependency Review 5.0.1，采用官方发布的固定提交。
+  en: PR dependency checks now use Dependency Review 5.0.1, pinned to the official release commit.
   links:
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/364
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/365
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/366
-  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/369
+  - https://github.com/WenyuChiou/awesome-agentic-ai-zh/pull/384
+
+- id: ui-tars-archive-status
+  category: reference-maintenance
+  zh-TW: Stage 8 將已封存的 UI-TARS-desktop 標為歷史設計參考。若要試跑，請使用隔離的測試環境。
+  zh-Hans: Stage 8 将已归档的 UI-TARS-desktop 标为历史设计参考。如果试跑，请使用隔离的测试环境。
+  en: Stage 8 marks the archived UI-TARS-desktop repository as a historical design reference. Use an isolated test environment if you try it.
+  links:
+  - https://github.com/bytedance/UI-TARS-desktop

@@ -386,7 +386,7 @@ Choose only one to start:
 <tr><td><a href="https://github.com/microsoft/playwright-mcp">playwright-mcp</a></td><td>Connect a browser to an MCP client.</td><td>Restrict origins, permissions, and data.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/cortex-docs/cortex">cortex</a></td><td>Turn API specifications into typed MCP tools.</td><td>gRPC exposes schema resources but no callable methods.</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/trycua/cua">cua</a></td><td>Study a cross-platform computer-use stack.</td><td>Verify the actual backend from current README and releases.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>Study an open desktop agent.</td><td>Local control is high risk; use a test environment.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>Study an earlier desktop Agent design.</td><td>Archived. Use an isolated test environment if you try it.</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Sandbox / runtime</th><td><a href="https://github.com/e2b-dev/E2B">E2B</a></td><td>An agent needs a remote code workspace.</td><td>Apache-2.0 repo; managed service has separate cost and policy.</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>

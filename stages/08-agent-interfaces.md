@@ -384,7 +384,7 @@ Amazon 案件也不能簡化成「某 browser 被全面禁止存取 Amazon」。
 <tr><td><a href="https://github.com/microsoft/playwright-mcp">playwright-mcp</a></td><td>把 browser 接給 MCP client。</td><td>仍需限制 origin、權限與資料。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/cortex-docs/cortex">cortex</a></td><td>把 API spec 轉成 typed MCP tools。</td><td>gRPC 只提供 schema 資源，不產生可呼叫方法。</td><td align="center" valign="middle">⭐⭐⭐</td></tr>
 <tr><td><a href="https://github.com/trycua/cua">cua</a></td><td>研究跨平台 computer-use stack。</td><td>依 README 與 release 驗證實際 backend。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
-<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>研究開放桌面 agent。</td><td>本地控制風險高；先用測試環境。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
+<tr><td><a href="https://github.com/bytedance/UI-TARS-desktop">UI-TARS-desktop</a></td><td>參考早期桌面 Agent 的設計。</td><td>已封存。若試跑，請用隔離的測試環境。</td><td align="center" valign="middle">⭐⭐⭐⭐</td></tr>
 </tbody>
 <tbody>
 <tr><th scope="rowgroup" rowspan="4" align="center" valign="middle">Sandbox／runtime</th><td><a href="https://github.com/e2b-dev/E2B">E2B</a></td><td>agent 需要遠端 code workspace。</td><td>Apache-2.0 repo；受管服務另有費用與政策。</td><td align="center" valign="middle">⭐⭐⭐⭐⭐</td></tr>
